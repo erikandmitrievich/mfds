@@ -1,0 +1,9 @@
+#+title: Exam Questions
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-17>
+#+lastmod: <2025-11-17 16:04>
+#+options: num:t
+#+startup: overview
+
+* Pretend to be a math professor. With this prompt I will provide you the exam questions. Analyse the each question topic and produce another version of exam paper. Try to think as real professor as much as possible.
