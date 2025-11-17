@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-28>
-#+lastmod: <2025-11-11 21:32>
+#+lastmod: <2025-11-17 13:39>
 #+options: num:t
 #+startup: overview
 
@@ -21,7 +21,7 @@
 ∉ - is not an element of.
 ⊂ - is a subset of.
 ⊆ - is a subset of or equal to.
-⊄ - is not a subset of.
+⊄̸ - is not a subset of.
 ∅ - empty set.
 ∪ - union.
 ∩ - intersection.
