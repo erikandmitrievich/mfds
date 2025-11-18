@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-11>
-#+lastmod: <2025-11-16 16:32>
+#+lastmod: <2025-11-18 21:58>
 #+options: num:t
 #+startup: overview
 
@@ -266,3 +266,6 @@ Nov 5. Lecture 29. Polynomials-2.
 Nov 6. Lecture 30. Complex numbers.
 
 Nov 7. Lecture 31. Complex numbers-2.
+
+
+Grade: 4
