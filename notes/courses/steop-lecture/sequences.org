@@ -1,0 +1,88 @@
+#+title: Sequences
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-19>
+#+lastmod: <2025-11-19 14:06>
+#+options: num:t
+#+startup: overview
+
+* Sequences
+** Original
+A sequnce (an) or (an)[∞,n=1] is a collection
+        a1, a2, a3, ...
+
+where the order is important
+
+        1, 1/2, 1/3, 1/4, ...
+
+        (-1)^n
+
+        x1 = 1, x[n+1] = (x[n] + 1)/(2)         (recursive formula)
+
+Def. A sequence is a f-n whose domain is ℕ.
+f(n) = an
+
+We always consider real sequence
+(a[n]) ⊂ ℝ.
+
+Def. A sequence (a[n]) is (∀n)
+1. Increasing : a[n] <= a[n+1]
+2. Decreasing : a[n] >= a[n+1]
+3. Strictly increasing: a[n] < a[n+1]
+4. Strictly decreasing: a[n] > a[n+1]
+5. Monotone : a[n] is increasing or decreasing
+6. Striclty monotone : a[n] is strictly increasing or strictly decreasing.
+7. Bounded above : ∃M : a[n] <= M
+                        ∀n
+7. Bounded below : ∃M : a[n] >= M
+                        ∀n
+7. Bounded : ∃M : |a[n]| <= M
+                   ∀n
+
+Def. A sequence (a[n]) converges to a∈ℝ if ∀e > 0, ∃N∈ℕ, ∀n>=N, |a[n] - a| < e
+
+** Reviewed
+1. Sequence: a sequence, denoted as (an) or (an) from n=1 to ∞, is an ordered collection of numbers a1, a2, a3, and so on.
+
+   The order of these numbers matter. As for example, given the sequence 1, 1/2, 1/3, 1/4, ..., each item is smaller than the previous one. Another example is (-1)^n, where the sequence oscillates between -1 and 1.
+
+   A sequence can also be defined recursively, as in the example x1=1, x[n+1] = (x[n] + 1)/2. In this case, the value of each term depends on the value of the previous number.
+
+2. Definition: Functionally, a sequence could be seen as a function whose domain is ℕ, and range is usually ℝ.
+
+   In this function f(n) = an, the nth term of the sequence is the result of the function f at n.
+
+3. Types of sequences:
+   - *Increasing* : If each term in the sequence is less or equal to next number.
+     a[n] <= a[n+1]
+
+   - *Decreasing* : If each term in the sequence is greater or equal to next number.
+     a[n] <= a[n+1]
+
+   - *Strictly increasing* : If each term in the sequence is less than next number.
+     a[n] < a[n+1]
+
+   - *Striclty decreasing* : If each term in the sequence is greater than next number.
+     a[n] > a[n+1]
+
+   - *Monotone* : If the sequence is either increasing or decreasing.
+
+   - *Strictly monotone* : If the sequence is either strictly increasing or striclty decreasing.
+
+   - *Bounded above* : If there exists M∈ℝ such that,
+
+     a[n] <= M for all n.
+
+     This means that the sequence never exceeds a certain value.
+
+   - *Bounded below* : If there exists M∈ℝ such that,
+
+     a[n] >= M for all n.
+
+     This means that sequence never goes below a certain value.
+
+   - *Bounded* : If there exists a real number (M), so that the absolute value of each term in the sequence is less than or equal to M, i.e.,
+
+     |a[n]| <= M for all n.
+
+     This means the sequence neither increases nor decreases beyond a certain magnitude.

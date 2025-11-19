@@ -1,0 +1,63 @@
+#+title: Lecture Explaner
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-19>
+#+lastmod: <2025-11-19 13:40>
+#+options: num:t
+#+startup: overview
+
+* Below I provide you some part of the notes from the mathematical lecture on sequences. Please, go through them and clarify/explain them in more detailed and clean way.
+
+** Notes:
+A sequnce (an) or (an)[∞,n=1] is a collection
+        a1, a2, a3, ...
+
+where the order is important
+
+        1, 1/2, 1/3, 1/4, ...
+
+        (-1)^n
+
+        x1 = 1, x[n+1] = (x[n] + 1)/(2)         (recursive formula)
+
+Def. A sequence is a f-n whose domain is ℕ.
+f(n) = an
+
+We always consider real sequence
+(a[n]) ⊂ ℝ.
+
+Def. A sequence (a[n]) is (∀n)
+1. Increasing : a[n] <= a[n+1]
+2. Decreasing : a[n] >= a[n+1]
+3. Strictly increasing: a[n] < a[n+1]
+4. Strictly decreasing: a[n] > a[n+1]
+5. Monotone : a[n] is increasing or decreasing
+6. Striclty monotone : a[n] is strictly increasing or strictly decreasing.
+7. Bounded above : ∃M : a[n] <= M
+                        ∀n
+7. Bounded below : ∃M : a[n] >= M
+                        ∀n
+7. Bounded : ∃M : |a[n]| <= M
+                   ∀n
+
+Def. A sequence (a[n]) converges to a∈ℝ if ∀e > 0, ∃N∈ℕ, ∀n>=N, |a[n] - a| < e
+
+** Response
+Sure, let's break down these notes into a more detailed explanation.
+
+1. Sequence: A sequence, denoted as (an) or (an) from n=1 to ∞, is an ordered collection of numbers a1, a2, a3, and so on. The order of these numbers is important. For example, given the sequence 1, 1/2, 1/3, 1/4, each term is smaller than the previous one. Another example is (-1)^n, where the sequence oscillates between -1 and 1. A sequence can also be defined recursively, as in the example x1 = 1, x[n+1] = (x[n] + 1)/2. In this case, the value of each term depends on the value of the previous one.
+
+2. Definition: Functionally, a sequence could be seen as a function whose domain is natural numbers, denoted as ℕ, and range is usually real numbers, denoted as ℝ. In this function, f(n) = an, the nth term of the sequence is the result of the function f at n.
+
+3. Types of sequences: Sequences can be classified based on their properties:
+   - Increasing: If each term in the sequence is less than or equal to the next term, i.e., a[n] <= a[n+1].
+   - Decreasing: If each term in the sequence is greater than or equal to the next term, i.e., a[n] >= a[n+1].
+   - Strictly increasing: If each term in the sequence is less than the next term, i.e., a[n] < a[n+1].
+   - Strictly decreasing: If each term in the sequence is greater than the next term, i.e., a[n] > a[n+1].
+   - Monotone: If a sequence is either increasing or decreasing.
+   - Strictly monotone: If a sequence is either strictly increasing or strictly decreasing.
+   - Bounded above: If there exists some real number (M) such that a[n] <= M for all n. This means that the sequence never exceeds a certain value.
+   - Bounded below: If there exists a real number (M) such that a[n] >= M for all n. This means that the sequence never goes below a certain value.
+   - Bounded: If there exists a real number (M), so that the absolute value of each term in the sequence is less than or equal to M, i.e., |a[n]| <= M for all n. This means the sequence neither increases nor decreases beyond a certain magnitude.
+
+4. Convergence of a sequence: A sequence (a[n]) converges to a real number "a" if for every positive number e, there is a positive integer N such that for all n greater than or equal to N, the absolute value of (a[n] - a) is less than e. This implies, as n grows arbitrarily large, terms of the sequence get as close as we like to the value "a".

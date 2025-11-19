@@ -1,0 +1,14 @@
+#+title: General
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-19>
+#+lastmod: <2025-11-19 14:08>
+#+options: num:t
+#+startup: overview
+
+* Do I understand right that the monotone sequences and strictly monotone sequences are generalisation of increasing/decreasing sequences and strictly increasing/strictly decreasing sequences?
+
+** Response
+Yes, you're correct. A sequence is monotone if it is either entirely non-increasing or entirely non-decreasing, while a sequence is strictly monotone if it is either strictly increasing or strictly decreasing.
+
+So, increasing and decreasing sequences are specific cases of monotone sequences, and strictly increasing and strictly decreasing sequences are specific cases of strictly monotone sequences.
