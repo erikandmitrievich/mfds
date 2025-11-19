@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-28>
-#+lastmod: <2025-11-17 13:39>
+#+lastmod: <2025-11-19 14:27>
 #+options: num:t
 #+startup: overview
 
@@ -51,3 +51,4 @@
 ⊕ - direct sum.
 ⊗ - tensor product.
 ∞ - infinity.
+ε - epsilon

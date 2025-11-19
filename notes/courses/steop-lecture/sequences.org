@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-19>
-#+lastmod: <2025-11-19 14:06>
+#+lastmod: <2025-11-19 14:29>
 #+options: num:t
 #+startup: overview
 
@@ -34,9 +34,9 @@ Def. A sequence (a[n]) is (∀n)
 6. Striclty monotone : a[n] is strictly increasing or strictly decreasing.
 7. Bounded above : ∃M : a[n] <= M
                         ∀n
-7. Bounded below : ∃M : a[n] >= M
+8. Bounded below : ∃M : a[n] >= M
                         ∀n
-7. Bounded : ∃M : |a[n]| <= M
+9. Bounded : ∃M : |a[n]| <= M
                    ∀n
 
 Def. A sequence (a[n]) converges to a∈ℝ if ∀e > 0, ∃N∈ℕ, ∀n>=N, |a[n] - a| < e
@@ -86,3 +86,5 @@ Def. A sequence (a[n]) converges to a∈ℝ if ∀e > 0, ∃N∈ℕ, ∀n>=N, |a
      |a[n]| <= M for all n.
 
      This means the sequence neither increases nor decreases beyond a certain magnitude.
+
+4. Convergence of a sequence: a sequence is said to converge to a limit L as n approaches infinity if, for every positive number ε (epsilon) there exists a positive integer N such that for all terms a_n for n > N, the absolute difference between a_n and L is less then ε (epsilon). Essentially, this means the terms of the sequence get arbitrary close to L as you go further along in the sequence.
