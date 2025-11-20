@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-19>
-#+lastmod: <2025-11-20 15:09>
+#+lastmod: <2025-11-20 17:04>
 #+options: num:t
 #+startup: overview
 
@@ -98,11 +98,16 @@ Example.
    |n/(n+2) - 1 | = 2/(n+2) <= 2/(N+2)
 
    <ε
+*** Page 4
+Skip, as its just examples that I already got and wrote.
 
+*** Page 5
 
 ** Reviewed
 :LOGBOOK:
-CLOCK: [2025-11-20 Thu 14:46]
+CLOCK: [2025-11-20 Thu 16:52]
+CLOCK: [2025-11-20 Thu 16:18]--[2025-11-20 Thu 16:43] =>  0:25
+CLOCK: [2025-11-20 Thu 14:46]--[2025-11-20 Thu 15:11] =>  0:25
 :END:
 1. Sequence: a sequence, denoted as (an) or (an) from n=1 to ∞, is an ordered collection of numbers a1, a2, a3, and so on.
 
@@ -163,7 +168,7 @@ CLOCK: [2025-11-20 Thu 14:46]
 
    as n tends to ∞. In terms of limits we can write this as lim(n->∞)(a_n = a), indicating that 'a' is the limit of the sequence (a_n).
 
-   On the other hand, if a sequence does not converge to any real number 'a', we call it devergent. And formally, we say that the sequence (a_n) does not converge to 'a' : a_n !-> a, if and only if there exists some ε > 0 such that for all natural numbers N, there exists a number n greater than or equal to N where the absolute difference |a_n - a| is greater than or equal to ε.
+   On the other hand, if a sequence does not converge to any real number 'a', we call it divergent. And formally, we say that the sequence (a_n) does not converge to 'a' : a_n !-> a, if and only if there exists some ε > 0 such that for all natural numbers N, there exists a number n greater than or equal to N where the absolute difference |a_n - a| is greater than or equal to ε.
 
         ∃ε>0 ∀N∈ℕ ∃n>=N : |a_n - a| >= ε
 
@@ -197,3 +202,42 @@ CLOCK: [2025-11-20 Thu 14:46]
            ∀n>=N 2/(n+2) < ε.
 
      This proves lim(n->∞)(n/(n+2)) = 1.
+
+   - lim(n->∞)((2n^2 + 3)/(n^2 + n + 1)) = 2
+
+     Show: ∀ε>0 ∃N∈ℕ ∀n>=N : |(2n^2 + 3)/(n^2 + n + 1) - 2| < ε.
+
+     *Proof.*
+
+     Simplify: |(2n^2 + 3)/(n^2 + n + 1) - 2| <--> |((2n^2 + 3) - 2(n^2 + n + 1))/(n^2 + n + 1)|
+                                              <--> |(-2n + 1)/(n^2 + n + 1)|
+                                              <--> |(-2n + 1)/(n^2 + n + 1)|
+
+     Notice: |-2n + 1| <= 2n + 1 < 2n + n (for n >= 1).
+
+     Hence, |(-2n + 1)/(n^2 + n + 1)| <= 3n/(n^2 + n + 1) < 3n/n^2 = 3/n.
+
+     Let ε>0. Choose N∈ℕ such that 3/N < ε.
+
+     Thus, ∀n>=N 3/n <= 3/N < ε.
+
+     Therefore, lim(n->∞)((2n^2 + 3)/(n^2 + n + 1)) = 2 is proved.
+
+   - Show that (-1)^n is divirgent.
+
+     Solution:
+
+     Suppose (-1)^n -> a. Then
+
+     ∀ε>0 ∃N∈ℕ ∀n>=N : |(-1)^n - a| < ε
+
+     - If n >= N is odd, then |-1 - a| = |1 + a| < ε.
+
+     - If n >= N is even, then |1 - a| < ε.
+
+     Hence, |1 + a| + |1 - a| < 2ε
+     --> 2ε > |1 + a| + |1 - a| >= |1 + a + 1 - a| = 2
+
+     Contradiction if ε = 1/2.
+
+     Therefore, (-1)^n is divergent.
