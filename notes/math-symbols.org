@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-28>
-#+lastmod: <2025-11-19 14:27>
+#+lastmod: <2025-11-19 15:31>
 #+options: num:t
 #+startup: overview
 
@@ -13,8 +13,6 @@
 ∧ - and.
 ∨ - or.
 ¬ - not.
-⇒ - implies.
-↔ - if and only if.
 
 ** Set Theory
 ∈ - is an element of.
@@ -29,14 +27,8 @@
 ** Equality and Inequality
 = - is equal to.
 ≠ - is not equal to.
-< - less than.
-> - greater than.
-≤ - less than or equal to.
-≥ - greater than or equal to.
 ≈ - is approximately equal to.
 ≡ - is equivalent to.
-
-** Curvy Inequalities
 ≼ - less than or equivalent to (curvy).
 ≽ - greater than or equivalent to (curvy).
 

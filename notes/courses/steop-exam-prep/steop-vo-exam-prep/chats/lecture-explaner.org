@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-19>
-#+lastmod: <2025-11-19 13:40>
+#+lastmod: <2025-11-19 15:34>
 #+options: num:t
 #+startup: overview
 
@@ -61,3 +61,40 @@ Sure, let's break down these notes into a more detailed explanation.
    - Bounded: If there exists a real number (M), so that the absolute value of each term in the sequence is less than or equal to M, i.e., |a[n]| <= M for all n. This means the sequence neither increases nor decreases beyond a certain magnitude.
 
 4. Convergence of a sequence: A sequence (a[n]) converges to a real number "a" if for every positive number e, there is a positive integer N such that for all n greater than or equal to N, the absolute value of (a[n] - a) is less than e. This implies, as n grows arbitrarily large, terms of the sequence get as close as we like to the value "a".
+
+* Lets do the same thing but better. Pretend that you are the professor. Use the notes that you wrote and "recreate" the parts of the lecture by notes:
+
+** Notes:
+*** Page 2
+Def. Let ε (epsilon) > 0, a ∈ ℝ. An epsilon-neiborhood of a is the set ∪ε(a) = {x ∈ ℝ : |x-a| < ε"}.
+
+Alternative def. of convergence.
+A sequence (a_n) converges to a if every epsilon-neiborhood of a (ε>0) contains all but infinite number of elements of (a_n).
+
+Notation: a_n --> a (as n->∞)
+        lim(n->∞)(a_n = a)      (a is limit of a_n)
+
+Def. If (a_n) does not converge to any a∈ℝ, then it is divergent.
+
+a_n !-> a : (a_n) does not converge to a :
+
+∃ε > 0  ∀N∈ℕ ∃n>=N:
+        |a_n-a| >= ε
+
+We play the game:
+- You want to show a_n -> a.
+- I want to show a_n !->a.
+
+- I give you ε-neighborhood
+- You give me N
+- We both check whether
+  a_n, a_n+1, a_n+2, ... are in this ε-neighborhood
+
+*** Page 3
+Example.
+1. lim(n->∞)(1/n) = 0
+
+   Solution. We must show
+
+   ∀ε>0 ∃N∈ℕ ∀n>=N |1/n - 0| < ε <--> 1/n < ε <--> n > 1/ε
+   N>1/ε --> n>=N>1/ε

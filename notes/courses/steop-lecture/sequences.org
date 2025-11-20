@@ -2,12 +2,13 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-19>
-#+lastmod: <2025-11-19 14:29>
+#+lastmod: <2025-11-20 15:09>
 #+options: num:t
 #+startup: overview
 
 * Sequences
 ** Original
+*** Page 1
 A sequnce (an) or (an)[∞,n=1] is a collection
         a1, a2, a3, ...
 
@@ -40,8 +41,69 @@ Def. A sequence (a[n]) is (∀n)
                    ∀n
 
 Def. A sequence (a[n]) converges to a∈ℝ if ∀e > 0, ∃N∈ℕ, ∀n>=N, |a[n] - a| < e
+*** Page 2
+Def. Let ε (epsilon) > 0, a ∈ ℝ. An epsilon-neiborhood of a is the set ∪ε(a) = {x ∈ ℝ : |x-a| < ε"}.
+
+Alternative def. of convergence.
+A sequence (a_n) converges to a if every epsilon-neiborhood of a (ε>0) contains all but infinite number of elements of (a_n).
+
+Notation: a_n --> a (as n->∞)
+        lim(n->∞)(a_n = a)      (a is limit of a_n)
+
+Def. If (a_n) does not converge to any a∈ℝ, then it is divergent.
+
+a_n !-> a : (a_n) does not converge to a :
+
+∃ε > 0  ∀N∈ℕ ∃n>=N:
+        |a_n-a| >= ε
+
+We play the game:
+- You want to show a_n -> a.
+- I want to show a_n !->a.
+
+- I give you ε-neighborhood
+- You give me N
+- We both check whether
+  a_n, a_n+1, a_n+2, ... are in this ε-neighborhood
+
+*** Page 3
+Example.
+1. lim(n->∞)(1/n) = 0
+
+   Solution. We must show
+
+   ∀ε>0 ∃N∈ℕ ∀n>=N |1/n - 0| < ε <--> 1/n < ε <--> n > 1/ε
+   N>1/ε --> n>=N>1/ε
+
+
+   Let ε>0. Let N>1/ε. Then
+
+   ∀n>=N  |1/n - 0| < ε
+   <--> n > 1/ε
+
+   ε = 10^-6 if N > 1/10^-6 = 10^6
+
+2. lim(n->∞)(n/(n+2)) = 1
+
+   Solution
+   (Game): We must prove:
+   ∀ε>0 ∃N∈ℕ ∀n>=N |n/(n+2) - 1| < ε
+   <--> 2/(n+2) < ε
+   <--> n+2 > 2/ε <--> n > 2/ε - 2
+
+
+   Let ε>0. Let N>(2/ε - 2). Then
+
+   ∀n>=N
+   |n/(n+2) - 1 | = 2/(n+2) <= 2/(N+2)
+
+   <ε
+
 
 ** Reviewed
+:LOGBOOK:
+CLOCK: [2025-11-20 Thu 14:46]
+:END:
 1. Sequence: a sequence, denoted as (an) or (an) from n=1 to ∞, is an ordered collection of numbers a1, a2, a3, and so on.
 
    The order of these numbers matter. As for example, given the sequence 1, 1/2, 1/3, 1/4, ..., each item is smaller than the previous one. Another example is (-1)^n, where the sequence oscillates between -1 and 1.
@@ -88,3 +150,50 @@ Def. A sequence (a[n]) converges to a∈ℝ if ∀e > 0, ∃N∈ℕ, ∀n>=N, |a
      This means the sequence neither increases nor decreases beyond a certain magnitude.
 
 4. Convergence of a sequence: a sequence is said to converge to a limit L as n approaches infinity if, for every positive number ε (epsilon) there exists a positive integer N such that for all terms a_n for n > N, the absolute difference between a_n and L is less then ε (epsilon). Essentially, this means the terms of the sequence get arbitrary close to L as you go further along in the sequence.
+
+5. Epsilon neighbourhood: Imagine an ε (epsilon) a positive number, and real number a∈ℝ. We say that an epsilon neighborhood of a is the set of all real numbers, x, for which the absolute difference between the x and a is less than epsilon. In notation it looks:
+
+        ∪ε(a) = {x ∈ ℝ : |x-a| < ε}
+
+   Another alternative definition of convergence for sequences is: a sequence denoted as (a_n), converges to 'a' if, given any epsilon-neighborhood of 'a', all but a finite number of elements of the sequence reside within this epsilon neighborhood.
+
+   We denote the convergence of a sequence (a_n) to 'a' as
+
+        (a_n) --> a,
+
+   as n tends to ∞. In terms of limits we can write this as lim(n->∞)(a_n = a), indicating that 'a' is the limit of the sequence (a_n).
+
+   On the other hand, if a sequence does not converge to any real number 'a', we call it devergent. And formally, we say that the sequence (a_n) does not converge to 'a' : a_n !-> a, if and only if there exists some ε > 0 such that for all natural numbers N, there exists a number n greater than or equal to N where the absolute difference |a_n - a| is greater than or equal to ε.
+
+        ∃ε>0 ∀N∈ℕ ∃n>=N : |a_n - a| >= ε
+
+6. Practice:
+   - lim(n->∞)(1/n) = 0
+
+     Show: ∀ε>0 ∃N∈ℕ ∀n>=N : |1/n - 0| < ε.
+
+     Which translates to: For all epsilons that are greater than 0, there exists a natural number N, for which all n numbers greater than N, such that the absolute difference between 1/n - 0 would be less than epsilon. In super simple words, show that there are infinite amount of numbers, such that 1/n would be less than another very small number.
+
+     *Proof.*
+     Let ε>0. Choose N∈ℕ such that 1/N < ε <--> N > 1/ε.
+     Thus, ∀n>=N, 1/n <= 1/N < ε  <--> 1/n < ε.
+
+   - lim(n->∞)(n/(n+2)) = 1
+
+     Show: ∀ε>0 ∃N∈ℕ ∀n>=n : |n/(n+2) - 1| < ε.
+
+     *Proof.*
+
+     Simplify: n/(n+2) - 1
+
+        n/(n+2) - 1 = n/(n+2) - (n+2)/(n+2)
+                    = 2/(n+2)
+
+     Hence, |n/(n+2) - 1| < ε <--> |2/(n+2)| < ε.
+
+     Let ε>0. Choose N∈ℕ such that (2/(N+2)) < ε <--> N > 2/ε - 2.
+
+     Thus, ∀n>=N 2/(n+2) <= 2/(N+2) < ε.
+           ∀n>=N 2/(n+2) < ε.
+
+     This proves lim(n->∞)(n/(n+2)) = 1.

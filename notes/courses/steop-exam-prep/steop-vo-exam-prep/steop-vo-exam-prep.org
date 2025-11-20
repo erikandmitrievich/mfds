@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-19>
-#+lastmod: <2025-11-19 13:00>
+#+lastmod: <2025-11-20 10:53>
 #+options: num:t
 #+startup: overview
 
@@ -17,7 +17,6 @@
 - [ ] Sequences: Convergence, More sequences
 - [ ] Vectors, Scalar product, Equation of lines and planes
 - [ ] Exponential function
-
 
 * Covered Topics
 - [X] Logistics: Introduction to the course, Julia tutorials
