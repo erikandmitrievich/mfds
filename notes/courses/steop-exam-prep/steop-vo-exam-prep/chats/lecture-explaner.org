@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-19>
-#+lastmod: <2025-11-19 15:34>
+#+lastmod: <2025-11-20 18:30>
 #+options: num:t
 #+startup: overview
 
@@ -62,6 +62,7 @@ Sure, let's break down these notes into a more detailed explanation.
 
 4. Convergence of a sequence: A sequence (a[n]) converges to a real number "a" if for every positive number e, there is a positive integer N such that for all n greater than or equal to N, the absolute value of (a[n] - a) is less than e. This implies, as n grows arbitrarily large, terms of the sequence get as close as we like to the value "a".
 
+
 * Lets do the same thing but better. Pretend that you are the professor. Use the notes that you wrote and "recreate" the parts of the lecture by notes:
 
 ** Notes:
@@ -98,3 +99,119 @@ Example.
 
    ∀ε>0 ∃N∈ℕ ∀n>=N |1/n - 0| < ε <--> 1/n < ε <--> n > 1/ε
    N>1/ε --> n>=N>1/ε
+
+
+   Let ε>0. Let N>1/ε. Then
+
+   ∀n>=N  |1/n - 0| < ε
+   <--> n > 1/ε
+
+   ε = 10^-6 if N > 1/10^-6 = 10^6
+
+2. lim(n->∞)(n/(n+2)) = 1
+
+   Solution
+   (Game): We must prove:
+   ∀ε>0 ∃N∈ℕ ∀n>=N |n/(n+2) - 1| < ε
+   <--> 2/(n+2) < ε
+   <--> n+2 > 2/ε <--> n > 2/ε - 2
+
+
+   Let ε>0. Let N>(2/ε - 2). Then
+
+   ∀n>=N
+   |n/(n+2) - 1 | = 2/(n+2) <= 2/(N+2)
+
+   <ε
+
+
+**/ Lecture Recreation from Notes */
+
+(Page 2) Today, we will start by defining an ε (epsilon) neighborhood. So, imagine an ε, a positive number, and a, a real number. We say that an epsilon neighborhood of a is the set of all real numbers, x, for which the absolute difference between x and a is less than epsilon. In notation, it is represented as ∪ε(a) = {x ∈ ℝ : |x-a| < ε}.
+
+We are going to introduce an alternative definition of convergence for sequences. A sequence, denoted as (a_n), converges to a if, given any epsilon-neighborhood of a, all but a finite number of elements of the sequence reside within this epsilon-neighborhood.
+
+We denote the convergence of a sequence (a_n) to a as (a_n) --> a, as n tends to ∞. In terms of limits we can write this as lim(n->∞)(a_n = a), indicating that 'a' is the limit of the sequence (a_n).
+
+On the other hand, if a sequence (a_n) does not converge to any real number 'a', we call it divergent. And formally, we say that a sequence (a_n) does not converge to 'a': a_n !-> a, if and only if there exists some ε > 0 such that for all natural numbers N, there exists a number n greater than or equal to N where the absolute difference |a_n - a| is greater than or equal to ε. This seems like a game where one person is trying to show the convergence of the sequence and the other is trying to oppose it.
+
+(Page 3) Let's put these definitions into practice. Let's consider two examples.
+
+For the first example, we will prove that the sequence 1/n converges to 0 as n tends to ∞. According to our definition of convergence, for every ε>0 there must exist a natural number N such that for all n≥N, the absolute difference |1/n - 0| is less than ε. Hence it implies that 1/n < ε, which implies n > 1/ε. Hence, If we choose our N to be greater than 1/ε, this condition is satisfied for all n>=N.
+
+For instance, consider ε = 10^-6. If N = 1/10^-6 = 10^6, it holds that for all n>=N, we will have n > 1/ε, satisfying the convergence condition.
+
+In the second example, we consider the sequence n/(n+2) and prove that it converges to 1.
+
+To do this, we employ the 'convergence game'. The challenge here is to prove that for every ε>0 there exists a natural number N such that for all n≥N, the absolute difference between |n/(n+2) - 1| and ε is less than ε.
+
+Or equivalently we need to prove: 2/(n+2) < ε implying n+2 > 2/ε and therefore, n > 2/ε - 2. Hence, if we choose N to be greater than 2/ε - 2, all n≥N will indeed satisfy the condition 2/(n+2) < ε. So, here, for all values of n≥N, |n/(n+2) - 1| equals 2/(n+2) which is always less than ε, hence establishing the convergence of the sequence.
+
+
+* Pretend that you are the professor. Use the notes that I wrote and "recreate" the parts of the lecture by notes:
+
+** Notes:
+*Thm.* If a sequence (a_n) converges, then its limit is unique.
+
+*Proof.* Suppose a_n -> a
+         and a_n -> b, and a != b.
+
+∀ε>0 ∃N_1∈ℕ : ∀n>=N_1 |a_n - a| < ε
+∀ε>0 ∃N_2∈ℕ : ∀n>=N_2 |a_n - b| < ε
+
+∀n >= max{N1, N2}
+      |a_n-a| < ε
+      |a_n-b| < ε
+
+By triangle inequality
+2ε > |a_n - a| + |a_n - b| >= |a_n - a - (a_n - b)| = |a - b|
+ε >= |a-b|/2 - contradiction to a being arbitrary.
+
+
+*Remember:* |x| + |y| >= |x+y| and |x| + |y| >= |x-y|
+
+*Thm.* Every convergent sequence is bounded.
+
+*Proof.*
+[drawing of line with points on a_1, a_n, a-ε, a, a+ε, a_3, a_4]
+
+Take ε>0. Since a_n -> a --> ∃N ∀n>=N |a_n - a| < ε.
+
+∀n>= N
+-ε < a_n - a < ε
+<--> a - ε < a_n < a + ε
+a_1, a_2, ..., a_N-1
+
+M = max{|a_1|, |a_2|, ..., |a_N-1|, |a+ε|, |a-ε|}
+
+Then |a_n| <= M ∀n
+
+** Response
+:LOGBOOK:
+CLOCK: [2025-11-20 Thu 18:10]
+:END:
+**Lecture Reconstruction:*
+
+Today we'll be discussing some crucial properties of convergent sequences in the realm of real numbers.
+
+*Theorem*: If a sequence {a_n} converges, then its limit is unique.
+
+Let's prove it. Suppose for contradiction that a_n converges to two distinct limits, a and b.
+
+For every positive ε, by the definition of convergence, there exist natural numbers N_1 and N_2 such that for all n greater than or equal to N_1 or N_2, the distance from a_n to a and b respectively is less than ε. Hence, consider any n which is greater than or equal to the maximum of N_1 and N_2.
+
+For this n, we have |a_n - a| < ε and |a_n - b| < ε. However, by the triangle inequality, we have |a_n - a| + |a_n - b| >= |a - b|. Thus 2ε > |a - b|, resulting in ε > |a - b|/2, which contradicts our assumption that a and b are distinct.
+
+So, if a sequence converges, then its limit is unique.
+
+*Lemma:* |x| + |y| always is greater than or equal to the absolute value of x+y and x-y.
+
+Next, we have another theorem that asserts that every convergent sequence is bounded.
+
+*Theorem:* Every convergent sequence is bounded.
+
+Proof: Assume that a_n converges to a. Given any positive ε, there exists a natural number N such that for all n greater than or equal to N, |a_n - a| < ε. Rewriting this inequality, we can see that a - ε < a_n < a + ε.
+
+Consider the set {a_1, a_2, ..., a_{N-1}}, together with the numbers a + ε and a - ε. Let M be the maximum absolute value among these numbers. Then it follows that the absolute value of a_n is less than or equal to M for all n, implying that the sequence is bounded.
+
+So, we can see that convergence has some important implications about the behavior of a sequence.
