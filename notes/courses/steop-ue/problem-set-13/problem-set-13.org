@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-20>
-#+lastmod: <2025-11-21 12:25>
+#+lastmod: <2025-11-21 19:41>
 #+options: num:t
 #+startup: overview
 
@@ -101,10 +101,74 @@ Show by definition that:
 
     Therefore, lim(n->∞)((3n^2 - n + 1)/(n^2 - n + 1)) = 3.
 
-* Problem 2
+* Problem 2 [DONE]
 ** Task
+Using the definition of convergence, find the following limits:
+ a) lim(n->∞)( (2n)/(n^2 + 1) )
+ b) lim(n->∞)( (sin(n))/(sqrt{n}) )
+
 ** Notes
+:LOGBOOK:
+CLOCK: [2025-11-21 Fri 14:42]--[2025-11-21 Fri 15:07] =>  0:25
+CLOCK: [2025-11-21 Fri 12:46]--[2025-11-21 Fri 13:14] =>  0:28
+:END:
+ a) lim(n->∞)( (2n)/(n^2 + 1) )
+
+    Let ε>0. We need to show ∃N∈ℕ : ∀n>=N (a_n - a) < ε.
+
+    Choose N = max(1, 2/ε + 1)
+
+    Hence, 2/N < ε.
+
+    2/N = 2N/N^2 > 2N/(N^2 + 1)
+
+    Then,
+
+    ∀n>=N 2/n <= 2/N < ε.
+
+    Therefore, ∀ε>0 ∃N∈ℕ : ∀n>=N |a_n - 0| < ε. Hence, lim(n->∞)( (2n)/(n^2 + 1) ) = 0.
+
+ b) lim(n->∞)( (sin(n))/(sqrt{n}) )
+
 ** Solution
+:LOGBOOK:
+CLOCK: [2025-11-21 Fri 19:33]
+CLOCK: [2025-11-21 Fri 15:23]--[2025-11-21 Fri 15:48] =>  0:25
+:END:
+ a) lim(n->∞)( (2n)/(n^2 + 1) )
+
+    Let ε>0. Show ∀ε>0 ∃N∈ℕ : ∀n>=N |a_n - a| < ε.
+
+    In this case, lim(n->∞)( (2n)/(n^2 + 1) ) is obviously equals to 0.
+
+    Hence, |a_n - 0| < ε.
+
+    Notice: |(2n)/(n^2 + 1) - 0| < ε <--> (2n)/(n^2 + 1) < ε.
+
+    (2n)/(n^2 + 1) < (2n)/(n^2) = 2/n
+
+    Choose N = max(1, 2/ε + 1)
+
+    Thus, N > 2/ε <--> 2/N < ε.
+
+    Hence, ∀n>=N |a_n - 0| <= 2/n <= 2/N < ε.
+
+    Therefore, ∀ε>0 ∃N∈ℕ : ∀n>=N |a_n - 0| < ε. Thus lim(n->∞)( (2n)/(n^2 + 1) ) = 0.
+
+ b) lim(n->∞)( (sin(n))/(sqrt{n}) )
+
+    Let ε>0. Show ∀ε>0 ∃N∈ℕ : ∀n>=N |sin(n)/sqrt{n} - 0| < ε.
+
+    Notice: |sin(n)/sqrt{n} - 0| = |sin(n)|/sqrt{n} <= 1/sqrt{n}.
+
+    Choose N∈ℕ : N > 1/ε^2.
+
+    N > 1/sqrt{ε} <--> 1/sqrt{N} < ε
+
+    Hence, ∀n>=N |sin(n)/sqrt{n}| <= 1/sqrt{n} <= 1/sqrt{N} < ε.
+
+    Therefore, ∀ε>0 ∃N∈ℕ : ∀n>=N |sin(n)/sqrt{n}| < ε. Thus, lim(n->∞)( (sin(n))/(sqrt{n}) ) = 0
+
 * Problem 3
 ** Task
 ** Notes

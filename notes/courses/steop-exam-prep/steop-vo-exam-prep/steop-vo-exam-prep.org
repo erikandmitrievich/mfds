@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-19>
-#+lastmod: <2025-11-20 18:31>
+#+lastmod: <2025-11-21 14:34>
 #+options: num:t
 #+startup: overview
 
@@ -22,7 +22,7 @@
 - [X] Logistics: Introduction to the course, Julia tutorials
 - [X] Sets: Basic definitions, operations with sets
 - [X] Propositional logic, Quantifiers
-- [ ] Induction
+- [X] Induction
 - [ ] Proofs
 - [ ] Numbers: integer, rational, real, decimal representation
 - [ ] Integers
