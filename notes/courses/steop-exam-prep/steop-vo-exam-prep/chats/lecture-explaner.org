@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-19>
-#+lastmod: <2025-11-20 18:30>
+#+lastmod: <2025-11-20 18:31>
 #+options: num:t
 #+startup: overview
 
@@ -188,7 +188,7 @@ Then |a_n| <= M ∀n
 
 ** Response
 :LOGBOOK:
-CLOCK: [2025-11-20 Thu 18:10]
+CLOCK: [2025-11-20 Thu 18:10]--[2025-11-20 Thu 18:31] =>  0:21
 :END:
 **Lecture Reconstruction:*
 
