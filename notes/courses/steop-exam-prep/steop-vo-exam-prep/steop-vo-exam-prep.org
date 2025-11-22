@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-19>
-#+lastmod: <2025-11-21 14:34>
+#+lastmod: <2025-11-22 10:24>
 #+options: num:t
 #+startup: overview
 

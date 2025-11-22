@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-19>
-#+lastmod: <2025-11-20 18:30>
+#+lastmod: <2025-11-22 11:20>
 #+options: num:t
 #+startup: overview
 
@@ -285,19 +285,17 @@ CLOCK: [2025-11-20 Thu 14:46]--[2025-11-20 Thu 15:11] =>  0:25
 
    *Theorem.* If a sequence {a_n} converges, then its limit is unique.
 
-   Lets prove it. Suppose for contradiction that a_n converges to two distrinct limits, a and b.
+   *Proof.*
+   Let a_n -> L and a_n -> M. Assume for contradiction L != M.
 
-        a_n -> a, a_n -> b, and a != b
+   Hence, |L - M| > 0.
+   Choose ε = |L - M|/2.
 
-   For every positive ε, by the definition of convergence, there exist natural numbers N_1 and N_2 such that for all n greater than N_1 or N_2, the distance between a_n and a, would be less than ε. Hence, consider any n which is greater than or equal to the maximum of N_1 and N_2.
+   Since, a_n -> L, ∃N1∈ℕ : ∀n>=N1 |a_n - L| < ε.
+   Similarly, a_n -> M, ∃N2∈ℕ : ∀n>=N2 |a_n - M| < ε.
 
-        ∀ε>0 ∃N_1∈ℕ : ∀n>=N_1 |a_n - a| < ε
-        ∀ε>0 ∃N_2∈ℕ : ∀n>=N_2 |a_n - b| < ε
+   Choose n >= max(N1, N2). Thus, both inequalities hold.
+   Triangle inequality: |L - M| = |L - a_n + a_n - M| <= |L - a_n| + |M - a_n| < 2ε = |L - M|
+   <--> |L - M| < |L - M|, contradiction!
 
-        ∀n >= max{N1, N2}
-              |a_n-a| < ε
-              |a_n-b| < ε
-
-   For this n, we have |a_n - a| < ε and |a_n - b| < ε. However, by the triangle inequality, we have |a_n - a| + |a_n - b| >= |a - b|. Thus, 2ε > |a - b|, resulting in ε > |a - b|/2, which contradicts our assumption that a and b are distinct.
-
-   - [ ] TODO tomorrow. Don't really see the point in it. Have a look on the general explanation of Uniqueness of limit, seems like Yuriy wrote some bullshit.
+   Hence, initial assumption L != M is false. Thus, L = M.
