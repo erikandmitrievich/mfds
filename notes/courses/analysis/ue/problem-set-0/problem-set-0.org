@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-23>
-#+lastmod: <2025-11-23 16:53>
+#+lastmod: <2025-11-23 18:18>
 #+options: num:t
 #+startup: overview
 
@@ -37,7 +37,7 @@ println(myPQnaive(2,1))
 : myPQnaive (generic function with 1 method)
 : (3.732050807568877, 0.2679491924311228)
 
-* Problem 2
+* Problem 2 [DONE]
 ** Task
 Visualize the following sequences
 a) a_n := (1 + 1/n)^n for n = 1, 2, ...
@@ -48,7 +48,77 @@ d) Find and illustrate the largest element in the sequence (x_n)n∈ℕ, given b
         x_n = n^2 / 2^n, n∈ℕ.
 
 ** Notes
+
 ** Solution
+*** a)
+#+begin_src julia :session none :results output
+using Pkg
+Pkg.add("Plots")
+using Plots
+#+end_src
+
+#+begin_src julia :tangle plot_script.jl
+using Plots
+x = range(1, stop=100, length=100)
+y = (1 .+ 1 ./ x) .^ x
+p = plot(x, y)
+savefig(p, "plots/plot-a.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/university/notes/courses/analysis/ue/problem-set-0/plots/plot-a.png
+
+*** b)
+#+begin_src julia :tangle plot_script.jl
+using Plots
+
+x = range(1, stop=10, length=100)
+y1 = 1 ./ 2 .^ x
+y2 = 1 ./ x .^ 2
+
+p = plot(x, y1, label="1/2^x")
+plot!(p, x, y2, label="1/x^2")
+
+savefig(p, "plots/plot-b.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/university/notes/courses/analysis/ue/problem-set-0/plots/plot-b.png
+
+*** c)
+#+begin_src julia :tangle plot_script.jl
+using Plots
+
+is_perfect_square(n) = n ≥ 0 && floor(sqrt(n))^2 == n
+
+get_y(x) = is_perfect_square(x) ? 1 : 1/(x+1)
+
+x = range(1, stop=10, length=100)
+y = get_y.(x)
+p = plot!(x, y)
+
+savefig(p, "plots/plot-c.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/university/notes/courses/analysis/ue/problem-set-0/plots/plot-c.png
+
+*** d)
+#+begin_src julia :tangle plot_script.jl
+using Plots
+
+get_x_n(n) = n^2 / 2^n
+
+n = range(1, stop=100, length=100)
+x_n = get_x_n.(n)
+p = plot!(n, x_n)
+
+savefig(p, "plots/plot-d.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/university/notes/courses/analysis/ue/problem-set-0/plots/plot-d.png
+
 * Problem 3
 ** Task
 ** Notes
