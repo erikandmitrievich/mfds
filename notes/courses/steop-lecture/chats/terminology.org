@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-01>
-#+lastmod: <2025-10-03 13:56>
+#+lastmod: <2025-11-23 12:08>
 #+options: num:t
 #+startup: overview
 
@@ -243,3 +243,24 @@ A is called a subset of B if all elements of A are present in set of B
 
 
 The mathematical symbol that stands for "belongs to" is ∈. It's also known as the element of set notation.
+
+
+
+*** What is the formal definition of a vector, collinear vector, equal vectors, linear combination, vector basis, span, coplanar vectors, non-coplanar vectors?
+
+
+1. *Vector*: In the geometric sense, a vector is a quantity defined by both magnitude and direction. Formally, a vector in a real or complex vector space is an element of that space, often represented as an ordered list of numbers (coordinates) in mathematics or as an arrow in physics.
+
+2. *Collinear Vectors*: Two or more vectors are collinear if they lie along the same line. For vectors to be collinear, there must exist a scalar multiple relationship between the vectors.
+
+3. *Equal Vectors*: Two vectors are equal if they have the same magnitude (length) and direction, irrespective of their initial points.
+
+4. *Linear Combination*: A vector v is a linear combination of a set of vectors {v1, v2, ..., vn} if v can be expressed as a1*v1 + a2*v2 + ... + an*vn, where a1, a2, ..., an are scalars.
+
+5. *Vector Basis*: A basis of a vector space is a set of vectors that are linearly independent and that span the vector space. Every vector in the space can be expressed as a linear combination of basis vectors.
+
+6. *Span*: The span of a set of vectors is the set of all possible linear combinations of the vectors. It's the smallest vector space that contains all the vectors in the set.
+
+7. *Coplanar Vectors*: Three or more vectors are coplanar if they lie in the same plane in three-dimensional space. For three vectors a, b, c, they're coplanar if their scalar triple product a.(bxc) = 0.
+
+8. *Non-Coplanar Vectors*: Vectors are non-coplanar if they do not lie in the same plane. No scalar triple product vanishes among them.

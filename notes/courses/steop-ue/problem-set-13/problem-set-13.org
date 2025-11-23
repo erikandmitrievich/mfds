@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-20>
-#+lastmod: <2025-11-21 20:20>
+#+lastmod: <2025-11-22 14:47>
 #+options: num:t
 #+startup: overview
 
@@ -201,7 +201,7 @@ And, since n>=N>=1, let ε = 1/2, then 1<=n<1/2 is contradiction. Thus, sequence
 
 ** Solution
 :LOGBOOK:
-CLOCK: [2025-11-21 Fri 20:15]
+CLOCK: [2025-11-21 Fri 20:15]--[2025-11-21 Fri 20:55] =>  0:40
 :END:
 #+begin_quote
 *Proof.*

@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-19>
-#+lastmod: <2025-11-22 10:24>
+#+lastmod: <2025-11-22 14:51>
 #+options: num:t
 #+startup: overview
 
@@ -37,9 +37,10 @@
 - [ ] Complex numbers
 - [ ] Rings and fields
 - [ ] Polynomial Rings, Polar coordinates
-- [ ] Sequences: Convergence, More sequences
+- [X] Sequences: Convergence, More sequences
 - [ ] Vectors, Scalar product, Equation of lines and planes
 - [ ] Exponential function
+- [ ] R^n and vector spaces over arbitrary field
 
 * Lectures Topics
 Lecture 0.      Introduction to the course. Logistics. Julia.
@@ -71,5 +72,8 @@ Lecture 34.     Polynomial Rings. Polar coordinates.
 Lecture 35.     Sequences. Convergence.
 Lecture 36.     Sequences-2.
 Lecture 37.     More sequences.
-Lecture 38.     Vectors. Lecture 39. Sequences and the exponential function.
+Lecture 38.     Vectors.
+Lecture 39.     Sequences and the exponential function.
 Lecture 40.     Vectors, scalar product, equation of lines and planes.
+Lecture 41.     R^n and vector spaces.
+Lecture 42.     Vector spaces over an arbitrary field.
