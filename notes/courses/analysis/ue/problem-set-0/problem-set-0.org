@@ -1,0 +1,8 @@
+#+title: Problem Set 0
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-23>
+#+lastmod: <2025-11-23 16:27>
+#+options: num:t
+#+startup: overview
+
