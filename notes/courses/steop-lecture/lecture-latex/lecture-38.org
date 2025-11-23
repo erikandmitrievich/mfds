@@ -1,0 +1,77 @@
+#+title: Lecture 38
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-23>
+#+lastmod: <2025-11-23 15:57>
+#+options: num:t
+#+startup: overview
+
+* Vector Fundamentals
+** Definition and Notation
+- *Definition*: Vectors are defined by two properties: length (magnitude) and direction.
+- *Notation*: A vector from point $A$ to $B$ is denoted as $\vec{AB}$ or by a bold lowercase letter like $\mathbf{a}$.
+- *Magnitude*: The length is a scalar denoted by $|\vec{AB}|$ or $|\mathbf{a}|$.
+- *Collinear Vectors*: Vectors are considered collinear if they lie on the same line or on parallel lines.
+- *Equality*: Two vectors are equal if they have the same length and direction.
+
+** Operations
+*** Addition
+Vector addition satisfies the following laws:
+- *Commutative*: $\mathbf{a} + \mathbf{b} = \mathbf{b} + \mathbf{a}$
+- *Associative*: $\mathbf{a} + (\mathbf{b} + \mathbf{c}) = (\mathbf{a} + \mathbf{b}) + \mathbf{c}$
+
+*** Scalar Multiplication
+Multiplying a vector $\mathbf{a}$ by a scalar $\lambda \in \mathbb{R}$ scales the length of the vector. Linearity properties include:
+- $(\alpha + \beta)\mathbf{a} = \alpha\mathbf{a} + \beta\mathbf{a}$
+- $\alpha(\mathbf{a} + \mathbf{b}) = \alpha\mathbf{a} + \alpha\mathbf{b}$
+
+* Segment Division and Position Vectors
+** Segment Division Formula
+Given a segment $AB$ and a point $C$ on it such that the segment is divided in a specific ratio $\frac{AC}{CB} = \frac{\alpha}{\beta}$. We want to find the position vector $\vec{OC}$ relative to an origin $O$.
+
+Using vector addition $\vec{OC} = \vec{OA} + \vec{AC}$ and the ratio property, we derive:
+
+$$ \vec{OC} = \frac{\beta}{\alpha + \beta}\vec{OA} + \frac{\alpha}{\alpha + \beta}\vec{OB} $$
+
+** The Centroid of a Triangle
+*Theorem*: The medians of a triangle intersect at a single unique point (the centroid $M$), which divides the medians in a ratio of $2:1$ (counting from the vertex).
+
+*** Proof
+1. Let $M$ be a point on median $AA_1$ such that $AM : MA_1 = 2:1$.
+2. The point $A_1$ is the midpoint of $BC$, so $\vec{OA_1} = \frac{1}{2}\vec{OB} + \frac{1}{2}\vec{OC}$.
+3. Applying the segment division formula to $M$:
+   $$ \vec{OM} = \frac{1}{3}\vec{OA} + \frac{2}{3}\vec{OA_1} $$
+4. Substituting $\vec{OA_1}$:
+   $$ \vec{OM} = \frac{1}{3}\vec{OA} + \frac{2}{3}\left(\frac{1}{2}\vec{OB} + \frac{1}{2}\vec{OC}\right) $$
+   $$ \vec{OM} = \frac{1}{3}(\vec{OA} + \vec{OB} + \vec{OC}) $$
+
+*Uniqueness*: If we choose point $N$ on median $BB_1$ or point $R$ on median $CC_1$ with the same ratio, we arrive at the exact same expression. Thus, $M = N = R$.
+
+* Linear Independence and Basis
+** Linear Combinations
+A linear combination of vectors $\mathbf{a}_1, \dots, \mathbf{a}_n$ is the sum $\alpha_1\mathbf{a}_1 + \dots + \alpha_n\mathbf{a}_n$.
+
+** Collinear Theorem
+*Theorem*: If $\mathbf{a}$ and $\mathbf{b}$ are non-collinear vectors, then:
+$$ \alpha\mathbf{a} + \beta\mathbf{b} = \mathbf{0} \iff \alpha = \beta = 0 $$
+
+*Proof*:
+Suppose $\alpha\mathbf{a} + \beta\mathbf{b} = \mathbf{0}$. If $\alpha \neq 0$, then $\mathbf{a} = -\frac{\beta}{\alpha}\mathbf{b}$, which implies the vectors are collinear. This is a contradiction.
+
+** Basis in a Plane
+- *Definition*: A vector basis for a plane is any set of two non-collinear vectors $\{\mathbf{e}_1, \mathbf{e}_2\}$.
+- *Theorem*: For any vector $\mathbf{a}$ on the plane, there exist unique scalars $\alpha_1, \alpha_2 \in \mathbb{R}$ such that:
+  $$ \mathbf{a} = \alpha_1\mathbf{e}_1 + \alpha_2\mathbf{e}_2 $$
+
+* Coordinates
+If $\mathbf{a} = \alpha_1\mathbf{e}_1 + \alpha_2\mathbf{e}_2$, the pair $(\alpha_1, \alpha_2)$ are the coordinates of the vector in that basis.
+
+** Operations in Coordinates
+Given $\mathbf{a} = (\alpha_1, \alpha_2)$ and $\mathbf{b} = (\beta_1, \beta_2)$:
+1. *Equality*: $\mathbf{a} = \mathbf{b} \iff \alpha_1 = \beta_1 \text{ and } \alpha_2 = \beta_2$
+2. *Scalar Multiplication*: $\lambda\mathbf{a} = (\lambda\alpha_1, \lambda\alpha_2)$
+3. *Addition*: $\mathbf{a} + \mathbf{b} = (\alpha_1 + \beta_1, \alpha_2 + \beta_2)$
+
+** Extension to $\mathbb{R}^3$
+- *Coplanar*: Vectors are coplanar if they lie in the same plane or parallel planes.
+- *Basis in $\mathbb{R}^3$*: Any three non-coplanar vectors form a basis in 3D space.

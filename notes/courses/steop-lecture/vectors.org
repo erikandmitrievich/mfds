@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-22>
-#+lastmod: <2025-11-23 11:58>
+#+lastmod: <2025-11-23 12:38>
 #+options: num:t
 #+startup: overview
 
@@ -10,10 +10,32 @@
 
 * Terminology
 - Vector :: is a quantity defined by both magnitude and direction.
+
 - Basis Vector :: is a set of vectors that are linearly independent and that span the vector space.
+
 - Span :: of the set of vectors is the set of all possible linear combinations o fhte vectors.
+
 - Collinear Vectors :: are vectors that lie along the same line, or there must exist a scalar multiple relationship between teh vectors.
+
 - Coplanar Vectors :: are vectors that lie in the same plane in three-dimensional space.
+
 - Non-Coplanar Vectors :: vectors that do not lie on the same plane in three dimensional space.
+
 - Equal Vectors :: are vectors that have the same magnitude and direction, irrespective of their original points.
+
 - Linear Combination :: is a set of vectors {v1, v2, ..., vn} if v can be exressed as a1*v1 + a2*v2, ..., an*vn, where a1, a2, ..., an are scalars.
+
+- Orthogonal Vectors :: are vectors that are perpendicular to each other. Notation: A⊥B.
+
+- Rectangular Cartesian Coordinate System :: is a set of the point O and two unit vector e1, e2 orthogonal to each other (two-dimansional plane).
+
+- A Scalar/Inner/Dot Product :: of two vector A and B is the number |A| * |B| * cos(x), where x is the angle between A and B. Notation: A.B <--> <a,b>
+
+  Proporties:
+  1. A⊥B <--> <A,B> = 0
+  2. Angle is acute if <A,B> > 0
+  3. Angle is obtuse if <A,B> < 0
+  4. <A,B> = <B,A>
+  5. <xA,B> = x<A,B>
+  6. <A+B,C> = <A,C> + <B,C>
+  7. <A,A> >= 0, <A,A> = 0 <--> A=0
