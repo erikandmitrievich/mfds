@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-24>
-#+lastmod: <2025-11-24 16:01>
+#+lastmod: <2025-11-24 16:07>
 #+options: num:t
 #+startup: overview
 
@@ -46,8 +46,6 @@ where $\varphi$ is the angle between $a$ and $b$.
 2. $\langle \lambda a, b \rangle = \lambda \langle a, b \rangle$ for $\lambda \in \mathbb{R}$ (Linearity)
 3. $\langle a + b, c \rangle = \langle a, c \rangle + \langle b, c \rangle$ (Distributivity)
 4. $\langle a, a \rangle = 0 \iff a = 0$ (Positive definiteness)
-5. $\langle a+b, c \rangle = \langle a, c \rangle + \langle b, c \rangle$
-6. $\langle a, a \rangle \geq 0, \langle a, a \rangle \iff a = 0$
 
 * Inner Product in Coordinates
 ** Derivation in $\mathbb{R}^2$
