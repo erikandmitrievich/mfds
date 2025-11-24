@@ -1,0 +1,117 @@
+#+title: Lecture 30
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-24>
+#+lastmod: <2025-11-24 20:20>
+#+options: num:t
+#+startup: overview
+
+* Introduction and Motivation
+** Solvability of Equations
+Different number systems allow for the solution of different types of equations.
+- The equation $x^2 + 5 = 0$ has no solution in $\mathbb{R}$.
+- The equation $\frac{2}{x} = 3$ has a solution in $\mathbb{Q}$.
+- The equation $x^2 = 2$ has no solution in $\mathbb{Q}$, but it has a solution in $\mathbb{R}$.
+
+** Cardano's Formula
+Consider the cubic equation $y^3 + py + q = 0$.
+The roots are given by the formula:
+$$ y = \sqrt[3]{-\frac{q}{2} + \sqrt{R}} + \sqrt[3]{-\frac{q}{2} - \sqrt{R}} $$
+where $R = (\frac{p}{3})^3 + (\frac{q}{2})^2$.
+
+*** Example
+Solve $y^3 - 7y + 6 = 0$.
+Here $p = -7$ and $q = 6$.
+$$ R = \left(-\frac{7}{3}\right)^3 + 3^2 < 0 $$
+Despite $R < 0$, the equation has real solutions: $y_1 = 1, y_2 = 2, y_3 = -3$.
+This paradox (roots of negative numbers yielding real solutions) necessitates the introduction of complex numbers.
+
+** Definition
+Let $i$ be a symbol such that $i^2 = -1$.
+A complex number $z$ is defined as $z = a + bi$ for $a, b \in \mathbb{R}$.
+- $\text{Re } z = a$ (Real part of $z$)
+- $\text{Im } z = b$ (Imaginary part of $z$)
+- $|z| = \sqrt{a^2 + b^2}$ (Modulus of $z$)
+- $\bar{z} = a - bi$ (Complex conjugate)
+
+*** Example Calculation
+Solve $x^2 - 2x + 3 = 0$.
+$$ D = 4 - 12 = -8 $$
+$$ x_{1,2} = \frac{2 \pm \sqrt{-8}}{2} = \frac{2 \pm 2\sqrt{2}i}{2} = 1 \pm \sqrt{2}i $$
+
+* Operations
+Let $z = a + bi$ and $w = c + di$.
+
+** Addition
+$$ z + w = (a + c) + (b + d)i $$
+
+** Multiplication
+$$ z \cdot w = (a + bi)(c + di) = ac + adi + bci + bdi^2 $$
+$$ = (ac - bd) + (ad + bc)i $$
+
+** Division
+$$ \frac{z}{w} = \frac{a + bi}{c + di} = \frac{(a + bi)(c - di)}{(c + di)(c - di)} $$
+$$ = \frac{(ac + bd) + (bc - ad)i}{c^2 + d^2} $$
+
+** Set Cardinality
+$\mathbb{C}$ is the set of all complex numbers.
+$$ |\mathbb{C}| = |\mathbb{R}^2| = |\mathbb{R}| = \mathfrak{c} $$
+
+* Geometric Representation
+Complex numbers can be represented as points in a plane (Argand plane).
+- x-axis: Real axis
+- y-axis: Imaginary axis
+
+** Polar / Trigonometric Form
+Let $z = a + bi$.
+- $a = |z| \cos \theta = r \cos \theta$
+- $b = |z| \sin \theta = r \sin \theta$
+$$ z = r(\cos \theta + i \sin \theta) $$
+where $r = |z| = \sqrt{a^2 + b^2}$.
+
+** Properties
+- $z \cdot \bar{z} = |z|^2$
+- $\theta = \arg z$ (Argument, measured counterclockwise).
+- Multiplication by $i$ corresponds to a $90^\circ$ rotation.
+  Example: $z = (1 + 2i)i = i + 2i^2 = -2 + i$.
+
+* Properties of Modulus
+For $z, w \in \mathbb{C}$:
+1. $|z \cdot w| = |z| \cdot |w|$
+2. $|\frac{z}{w}| = \frac{|z|}{|w|}$
+3. $|\text{Re } z| \le |z|$
+4. $|\text{Im } z| \le |z|$
+5. $|z + w| \le |z| + |w|$ (Triangle Inequality)
+
+** Proofs
+*** Proof of (1)
+$$ |z \cdot w|^2 = (ac - bd)^2 + (ad + bc)^2 $$
+$$ = a^2c^2 - 2abcd + b^2d^2 + a^2d^2 + 2abcd + b^2c^2 $$
+$$ = a^2(c^2 + d^2) + b^2(c^2 + d^2) $$
+$$ = (a^2 + b^2)(c^2 + d^2) = |z|^2 |w|^2 $$
+
+*** Proof of (5)
+We want to show $|z + w| \le |z| + |w|$.
+Square both sides:
+$$ |z + w|^2 = (a + c)^2 + (b + d)^2 = |z|^2 + |w|^2 + 2(ac + bd) $$
+$$ (|z| + |w|)^2 = |z|^2 + |w|^2 + 2|z||w| $$
+The inequality holds if:
+$$ ac + bd \le |z||w| = \sqrt{a^2 + b^2}\sqrt{c^2 + d^2} $$
+Squaring again (Cauchy-Schwarz context):
+$$ (ac + bd)^2 \le (a^2 + b^2)(c^2 + d^2) $$
+$$ a^2c^2 + 2abcd + b^2d^2 \le a^2c^2 + a^2d^2 + b^2c^2 + b^2d^2 $$
+$$ 2abcd \le a^2d^2 + b^2c^2 $$
+$$ 0 \le a^2d^2 - 2abcd + b^2c^2 = (ad - bc)^2 $$
+This is always true.
+
+* Geometric Problems
+** Sets in the Complex Plane
+1. $\{ z \in \mathbb{C} : \arg(z) = 0 \}$ (Positive real axis).
+2. $\{ z \in \mathbb{C} : |z| \le 1 \}$ (Unit disk centered at origin).
+   3. $\{ z \in \mathbb{C} : |z - i| \le 1 \}$ (Disk of radius 1 centered at $i$).
+
+** Geometric Meaning of Inequality
+Consider $|z - 1| \le |\arg z|$ for $|z| = 1$.
+- $|z - 1|$ is the chord length connecting $1$ and $z$ on the unit circle.
+- $|\arg z|$ is the arc length connecting $1$ and $z$ on the unit circle.
+- The inequality states that the chord length is less than or equal to the arc length.

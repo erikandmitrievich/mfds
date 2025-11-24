@@ -1,0 +1,105 @@
+#+title: Lecture 32
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-24>
+#+lastmod: <2025-11-24 20:07>
+#+options: num:t
+#+startup: overview
+
+* Binary Operations and Axioms
+** Definitions
+A binary operation (or function) over a set $S$ is a function $f: S \times S \to S$.
+- Example: Addition $+: \mathbb{R} \times \mathbb{R} \to \mathbb{R}$ where $+(1, 2) = 3$.
+
+Let $S$ be a set with two binary operations:
+1.  $+$ (called addition).
+2.  $\cdot$ (called multiplication).
+
+** Axioms
+We define the following axioms for elements $x, y, z \in S$:
+
+*** Addition Axioms (A)
+- **A1 (Closure):** If $x, y \in S$, then $x+y \in S$.
+- **A2 (Commutativity):** $x + y = y + x$.
+- **A3 (Associativity):** $x + (y + z) = (x + y) + z$.
+- **A4 (Zero/Identity):** There exists an element $0$ such that $x + 0 = 0 + x = x$ for all $x \in S$.
+- **A5 (Additive Inverse):** For every $x \in S$, there exists an element $(-x) \in S$ such that $x + (-x) = 0$. The equation $a + x = 0$ has a unique solution.
+
+*** Multiplication Axioms (M)
+- **M1 (Closure):** If $x, y \in S$, then $x \cdot y \in S$.
+- **M2 (Commutativity):** $xy = yx$.
+- **M3 (Associativity):** $x(yz) = (xy)z$.
+- **M4 (Identity):** There exists an element $1 \in S$ such that $x \cdot 1 = 1 \cdot x = x$ for all $x \in S$.
+- **M5 (Multiplicative Inverse):** For all $x \in S$ where $x \neq 0$, there exists an element $x^{-1} \in S$ such that $x \cdot x^{-1} = x^{-1} \cdot x = 1$. Every equation $ax = 1$ ($a \neq 0$) has a unique solution.
+
+*** Distributive Axiom (D)
+- **D:** $x(y+z) = xy + xz$ and $(x+y)z = xz + yz$.
+
+* Algebraic Structures
+We classify algebraic structures based on which axioms they satisfy.
+
+** Definitions
+1.  **Ring:** A set $(S, +, \cdot)$ that satisfies axioms **A1-A5**, **M1**, **M3**, and **D**.
+2.  **Commutative Ring:** A ring that also satisfies **M2**.
+3.  **Commutative Ring with Identity:** A ring that satisfies **A1-A5**, **M1-M4**, and **D**.
+4.  **Integral Domain:** A commutative ring with identity that has no zero divisors.
+    - Condition: If $xy = 0$, then $x = 0$ or $y = 0$.
+5.  **Field:** A set $(S, +, \cdot)$ that satisfies all axioms (**A1-A5, M1-M5, D**).
+
+** Hierarchy
+Field $\subset$ Integral Domain $\subset$ Commutative Ring with Identity $\subset$ Commutative Ring $\subset$ Ring.
+
+* Examples
+1.  **Reals:** $(\mathbb{R}, +, \cdot)$ with usual operations is a field.
+2.  **Integers:** $(\mathbb{Z}, +, \cdot)$ is an integral domain.
+3.  **Rationals:** $(\mathbb{Q}, +, \cdot)$ is a field.
+4.  **Modulo Arithmetic:** $\mathbb{Z}_m = \{0, 1, 2, \dots, m-1\}$ with modulo operations.
+    - If $m=6$, $\mathbb{Z}_6$ is a commutative ring with identity but *not* an integral domain.
+    - *Reason:* $\overline{2} \cdot \overline{3} = \overline{0}$, but $\overline{2} \neq \overline{0}$ and $\overline{3} \neq \overline{0}$.
+5.  **Even Integers:** $2\mathbb{Z} = \{2n : n \in \mathbb{Z}\}$ with usual operations is a commutative ring. It does not have an identity element.
+6.  **Odd Integers:** $S = \{2n + 1 : n \in \mathbb{Z}\}$ is *not* a ring because it is not closed under addition.
+7.  **Functions:** $S = \{f: \mathbb{R} \to \mathbb{R}\}$ with pointwise addition $(f+g)(x) = f(x) + g(x)$ and multiplication $(fg)(x) = f(x)g(x)$.
+    - Zero element: $h(x) = 0$ for all $x$.
+    - Identity element: $g(x) = 1$ for all $x$.
+    - This is a commutative ring with identity.
+    - Is it an integral domain? No, if $f \cdot g = 0$, it does not imply $f=0$ or $g=0$ (functions can be zero on disjoint intervals).
+
+* Properties and Theorems
+** Lemma: Properties of Rings
+Let $R$ be a ring. Then for all $a, b \in R$:
+1.  $a \cdot 0 = 0 \cdot a = 0$.
+2.  $a \cdot (-b) = (-a) \cdot b = -(ab)$.
+3.  $(-a)(-b) = ab$.
+
+*** Proof of (1)
+$$ a \cdot 0 = a \cdot (0 + 0) = a \cdot 0 + a \cdot 0 $$
+Adding the additive inverse $-(a \cdot 0)$ to both sides implies $0 = a \cdot 0$.
+
+*** Proof of (2)
+We show that $a(-b)$ is the additive inverse of $ab$, i.e., $ab + a(-b) = 0$.
+$$ ab + a(-b) = a(b + (-b)) = a \cdot 0 = 0 $$
+Thus, $a(-b) = -(ab)$. Similarly for $(-a)b$.
+
+** Theorem: Fields and Integral Domains
+Every field is an integral domain.
+
+*** Proof
+Let $F$ be a field. Let $x, y \in F$ such that $x \cdot y = 0$.
+Suppose $x \neq 0$. By M5, $x^{-1}$ exists.
+Multiply by $x^{-1}$:
+$$ x^{-1} \cdot (x \cdot y) = x^{-1} \cdot 0 $$
+$$ (x^{-1} \cdot x) \cdot y = 0 $$
+$$ 1 \cdot y = 0 \implies y = 0 $$
+Thus, no zero divisors exist.
+
+** Theorem: Finite Integral Domains
+A finite integral domain is a field.
+
+*** Proof
+Let $D = \{x_1, x_2, \dots, x_n\}$ be a finite integral domain.
+Consider any $a \in D$ with $a \neq 0$.
+Consider the set of products $\{ax_1, ax_2, \dots, ax_n\}$.
+These elements are all distinct.
+*Reason:* If $ax_i = ax_j$, then $a(x_i - x_j) = 0$. Since $D$ is an integral domain and $a \neq 0$, it implies $x_i - x_j = 0$, so $x_i = x_j$.
+Since the set of products equals $D$ (surjection onto a finite set), one of the elements must be the identity $1$.
+Therefore, there exists some $x_k$ such that $a \cdot x_k = 1$, which implies $x_k = a^{-1}$.

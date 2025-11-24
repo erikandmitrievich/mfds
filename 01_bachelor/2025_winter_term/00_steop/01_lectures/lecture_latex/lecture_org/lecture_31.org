@@ -1,0 +1,126 @@
+#+title: Lecture 31
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-24>
+#+lastmod: <2025-11-24 20:10>
+#+options: num:t
+#+startup: overview
+
+* Polar Representation of Complex Numbers
+** Definitions
+Let $z = r(\cos \theta + i\sin \theta)$.
+The conjugate is given by:
+$$ \overline{z} = r(\cos \theta - i\sin \theta) = r(\cos(-\theta) + i\sin(-\theta)) $$
+
+** Multiplication in Polar Form
+Given two complex numbers:
+$$ z_1 = r_1(\cos \theta_1 + i\sin \theta_1) $$
+$$ z_2 = r_2(\cos \theta_2 + i\sin \theta_2) $$
+
+The product is:
+$$ z_1 \cdot z_2 = r_1 r_2 (\cos(\theta_1 + \theta_2) + i\sin(\theta_1 + \theta_2)) $$
+
+** Rotation by $i$
+Since $i = 1(\cos \frac{\pi}{2} + i\sin \frac{\pi}{2})$, multiplying a number $z$ by $i$ rotates it by $90^\circ$ ($\frac{\pi}{2}$):
+$$ z \cdot i = r(\cos(\theta + \frac{\pi}{2}) + i\sin(\theta + \frac{\pi}{2})) $$
+
+* De Moivre's Theorem
+** Statement
+If $z = r(\cos \theta + i\sin \theta)$ and $n$ is an integer, then:
+$$ z^n = r^n (\cos(n\theta) + i\sin(n\theta)) $$
+
+** Proof Sketch
+- For $n \ge 0$, the proof proceeds by mathematical induction.
+  - Base cases ($n=1, n=2$) satisfy the formula via the multiplication rule.
+  - The inductive step assumes the formula for $n$ and proves for $n+1$.
+- For negative integers ($n < 0$), let $m = -n$ where $m > 0$.
+  $$ z^{-m} = \frac{1}{z^m} = \frac{\overline{z}^m}{|z|^{2m}} $$
+  Alternatively, using polar properties directly:
+  $$ z^{-n} = r^{-n}(\cos(-n\theta) + i\sin(-n\theta)) = r^{-n}(\cos(n\theta) - i\sin(n\theta)) $$
+
+* Example Calculation
+** Problem
+Calculate $(-\sqrt{3} + i)^{11}$.
+
+** Solution
+1.  **Convert to Polar Form:**
+    Let $z = -\sqrt{3} + i$.
+    - Modulus: $r = \sqrt{(-\sqrt{3})^2 + 1^2} = \sqrt{3 + 1} = 2$.
+    - Angle: Since $x = -\sqrt{3}$ and $y = 1$, the point is in the 2nd quadrant.
+      $$ z = 2(-\frac{\sqrt{3}}{2} + i\frac{1}{2}) $$
+      We know $\cos \frac{5\pi}{6} = -\frac{\sqrt{3}}{2}$ and $\sin \frac{5\pi}{6} = \frac{1}{2}$.
+      Thus, $\theta = \frac{5\pi}{6}$.
+
+2.  **Apply De Moivre's Theorem:**
+    $$ z^{11} = 2^{11} \left( \cos\left(11 \cdot \frac{5\pi}{6}\right) + i\sin\left(11 \cdot \frac{5\pi}{6}\right) \right) $$
+
+3.  **Simplify the Angle:**
+    $$ \frac{55\pi}{6} = \frac{54\pi + \pi}{6} = 9\pi + \frac{\pi}{6} = 8\pi + \pi + \frac{\pi}{6} $$
+    This is equivalent to $\pi + \frac{\pi}{6}$ (3rd quadrant).
+    - $\cos(\pi + \frac{\pi}{6}) = -\cos \frac{\pi}{6} = -\frac{\sqrt{3}}{2}$
+    - $\sin(\pi + \frac{\pi}{6}) = -\sin \frac{\pi}{6} = -\frac{1}{2}$
+
+4.  **Final Result:**
+    $$ z^{11} = 2^{11} \left( -\frac{\sqrt{3}}{2} - i\frac{1}{2} \right) = -2^{10}(\sqrt{3} + i) $$
+
+* Roots of Complex Numbers
+** Finding $n$-th Roots
+Given $z = r(\cos \theta + i\sin \theta)$, we want to find $w$ such that $w^n = z$.
+Let $w = s(\cos \varphi + i\sin \varphi)$. Then $w^n = s^n(\cos n\varphi + i\sin n\varphi)$.
+
+Equating $w^n = z$:
+1.  $s^n = r \implies s = \sqrt[n]{r}$ (real positive root).
+2.  $n\varphi = \theta + 2\pi k$ for $k \in \mathbb{Z}$.
+
+The distinct roots are given by $k = 0, 1, \dots, n-1$:
+$$ w_k = \sqrt[n]{r} \left( \cos \frac{\theta + 2\pi k}{n} + i\sin \frac{\theta + 2\pi k}{n} \right) $$
+
+* Exponential Notation and Euler's Identity
+** Definitions
+- **Exponential Form:** $e^{i\theta} := \cos \theta + i\sin \theta$.
+- **Conjugate:** $\overline{z} = re^{-i\theta}$.
+- **Multiplication:** $e^{i\theta_1} \cdot e^{i\theta_2} = e^{i(\theta_1 + \theta_2)}$.
+- **Powers:** $(re^{i\theta})^n = r^n e^{in\theta}$.
+
+** Equality of Complex Numbers
+Let $z = re^{i\theta}$ and $w = se^{i\varphi}$.
+$$ z = w \iff r = s \land \theta - \varphi = 2\pi k \quad (k \in \mathbb{Z}) $$
+
+** Euler's Identity
+$$ e^{i\pi} = \cos \pi + i\sin \pi = -1 + 0 $$
+$$ e^{i\pi} + 1 = 0 $$
+
+* Roots of Unity
+** Cube Roots of Unity ($x^3 = 1$)
+We solve $x^3 - 1 = 0$:
+$$ (x-1)(x^2 + x + 1) = 0 $$
+- One root is $x_0 = 1$.
+- The quadratic equation $x^2 + x + 1 = 0$ yields:
+  $$ x = \frac{-1 \pm \sqrt{1 - 4}}{2} = \frac{-1 \pm i\sqrt{3}}{2} $$
+  $$ x_1 = -\frac{1}{2} + i\frac{\sqrt{3}}{2} = e^{i\frac{2\pi}{3}} $$
+  $$ x_2 = -\frac{1}{2} - i\frac{\sqrt{3}}{2} = e^{i\frac{4\pi}{3}} $$
+
+** General Roots of Unity
+The solutions to $x^n = 1$ are:
+$$ w_k = \cos \frac{2\pi k}{n} + i\sin \frac{2\pi k}{n} = e^{i \frac{2\pi k}{n}} $$
+for $k = 0, 1, \dots, n-1$.
+
+* Problems
+** Problem 1: Divisibility
+Find $n$ such that $x^2 + x + 1$ divides $x^{2n} + x^n + 1$.
+*(Note: Setup provided, solution depends on substituting roots of unity).*
+
+** Problem 2: Conjugate Equation
+Solve $z^4 = \overline{z}^4$.
+
+**Solution:**
+Let $z = re^{i\theta}$. Then $\overline{z} = re^{-i\theta}$.
+$$ r^4 e^{i4\theta} = r^4 e^{-i4\theta} $$
+Assuming $z \ne 0$ (so $r \ne 0$), we divide by $r^4$:
+$$ e^{i4\theta} = e^{-i4\theta} $$
+This implies the angles differ by a multiple of $2\pi$:
+$$ 4\theta - (-4\theta) = 2\pi k $$
+$$ 8\theta = 2\pi k $$
+$$ \theta = \frac{2\pi k}{8} = \frac{\pi k}{4} $$
+The solutions are complex numbers with arguments equal to multiples of $\frac{\pi}{4}$:
+$$ z = r e^{i \frac{\pi k}{4}}, \quad k \in \{0, 1, \dots, 7\}, r \in \mathbb{R} $$
