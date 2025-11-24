@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-24>
-#+lastmod: <2025-11-24 09:21>
+#+lastmod: <2025-11-24 17:00>
 #+options: num:t
 #+startup: overview
 
@@ -37,7 +37,7 @@ For all $x, y, z \in \mathbb{R}^n$ and $\alpha, \beta \in \mathbb{R}$:
 
 * The Standard Basis and Inner Product
 ** The Standard Basis
-We define the special basis vectors $e_i$ where the $i$-th component is 1 and all others are 0:
+We define the special basis vectors $e_i$ where the i-th component is 1 and all others are 0:
 $$ e_1 = (1, 0, \dots, 0)^T $$
 $$ e_2 = (0, 1, \dots, 0)^T $$
 $$ e_n = (0, 0, \dots, 1)^T $$
