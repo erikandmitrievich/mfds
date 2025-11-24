@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-24>
-#+lastmod: <2025-11-24 09:11>
+#+lastmod: <2025-11-24 16:01>
 #+options: num:t
 #+startup: overview
 
@@ -46,20 +46,22 @@ where $\varphi$ is the angle between $a$ and $b$.
 2. $\langle \lambda a, b \rangle = \lambda \langle a, b \rangle$ for $\lambda \in \mathbb{R}$ (Linearity)
 3. $\langle a + b, c \rangle = \langle a, c \rangle + \langle b, c \rangle$ (Distributivity)
 4. $\langle a, a \rangle = 0 \iff a = 0$ (Positive definiteness)
+5. $\langle a+b, c \rangle = \langle a, c \rangle + \langle b, c \rangle$
+6. $\langle a, a \rangle \geq 0, \langle a, a \rangle \iff a = 0$
 
 * Inner Product in Coordinates
 ** Derivation in $\mathbb{R}^2$
 Let $a = a_1e_1 + a_2e_2$ and $b = b_1e_1 + b_2e_2$.
 Using the properties of the inner product and the fact that coordinates are orthonormal ($\langle e_i, e_j \rangle = \delta_{ij}$):
 
-$$
+
 \begin{aligned}
 \langle a, b \rangle &= \langle a_1e_1 + a_2e_2, b_1e_1 + b_2e_2 \rangle \\
 &= a_1b_1\langle e_1, e_1 \rangle + a_1b_2\langle e_1, e_2 \rangle + a_2b_1\langle e_2, e_1 \rangle + a_2b_2\langle e_2, e_2 \rangle \\
 &= a_1b_1(1) + a_1b_2(0) + a_2b_1(0) + a_2b_2(1) \\
 &= a_1b_1 + a_2b_2
 \end{aligned}
-$$
+
 
 ** Formula for Angle
 Since $\langle a, b \rangle = |a| \cdot |b| \cdot \cos \varphi = a_1b_1 + a_2b_2$:
