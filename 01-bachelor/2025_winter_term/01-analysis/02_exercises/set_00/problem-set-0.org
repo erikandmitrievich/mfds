@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-23>
-#+lastmod: <2025-11-23 21:07>
+#+lastmod: <2025-11-24 09:01>
 #+options: num:t
 #+startup: overview
 
@@ -29,12 +29,13 @@ myPQnaive(p,q) = begin
     return (x1, x2)
 end
 
-println(myPQnaive(2,1))
+println(myPQnaive(1,2))
 #+end_src
 
 #+RESULTS:
 : myPQnaive (generic function with 1 method)
-: (3.732050807568877, 0.2679491924311228)
+: sorry buddy, don't work with complex numbers(
+: nothing
 
 * Problem 2 [DONE]
 ** Task

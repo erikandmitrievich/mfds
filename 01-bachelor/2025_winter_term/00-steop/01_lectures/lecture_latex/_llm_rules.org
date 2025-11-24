@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-23>
-#+lastmod: <2025-11-23 16:05>
+#+lastmod: <2025-11-24 09:11>
 #+options: num:t
 #+startup: overview
 
@@ -17,6 +17,8 @@ The AI acts as an expert academic note-taker and LaTeX specialist. The goal is t
 - *Hierarchy*: Use standard Org-mode headings:
   - =*= for Main Sections
   - =**= for Subsections
+- *Additional notes*: You are allowed to add additional notes if it is justified by its importance.
+- *Org headers*: There is no need to include any of the org headers.
 
 ** 2. Mathematical Formatting
 - *Syntax*: Use strict LaTeX syntax for all math.
