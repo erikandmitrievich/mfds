@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-24>
-#+lastmod: <2025-11-24 17:00>
+#+lastmod: <2025-11-24 17:18>
 #+options: num:t
 #+startup: overview
 
@@ -62,7 +62,7 @@ $$ |x| = \|x\| = \sqrt{x^T x} = \sqrt{x_1^2 + x_2^2 + \dots + x_n^2} $$
 *** Examples of Inner Product Operations
 1.  Selecting a component: $e_i^T x = x_i$
 2.  Summing components: Let $\mathbf{1} = (1, 1, \dots, 1)^T$. Then $\mathbf{1}^T x = x_1 + \dots + x_n$.
-3.  Averaging components: $\frac{\mathbf{1}^T}{n} x = \frac{x_1 + \dots + x_n}{n}$.
+3.  Averaging components: $\frac{\mathbf{1}}{n}^T x = \frac{x_1 + \dots + x_n}{n}$.
 4.  Zero vector: $0 = (0, \dots, 0) \in \mathbb{R}^n$.
 
 * Hyperplanes
