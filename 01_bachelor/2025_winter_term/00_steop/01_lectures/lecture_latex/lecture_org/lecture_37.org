@@ -1,0 +1,108 @@
+#+title: Lecture 37
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-24>
+#+lastmod: <2025-11-24 12:29>
+#+options: num:t
+#+startup: overview
+
+* Infinite Limits
+** Divergence to Infinity
+*** Definition
+We say that a sequence $(a_n)$ *diverges to* $+\infty$ if for every $M \in \mathbb{N}$, there exists an $N \in \mathbb{N}$ such that for all $n \ge N$:
+$$ a_n > M $$
+[cite_start][cite: 440, 442, 443]
+
+[cite_start]Similarly, $(a_n)$ *diverges to* $-\infty$ if for every $M$, eventually $a_n < -M$[cite: 444, 446].
+
+*** Notation
+If $(a_n)$ diverges to $+\infty$, we write:
+$$ \lim_{n \to \infty} a_n = +\infty $$
+[cite_start][cite: 447, 449]
+
+*** Distinction in Terminology
+The term "divergent" has two meanings:
+1.  [cite_start]**General Divergence:** The sequence simply does not converge (e.g., $a_n = (-1)^n$ oscillates)[cite: 455].
+2.  [cite_start]**Proper Divergence:** The sequence goes to $+\infty$ or $-\infty$ (e.g., $a_n = n$)[cite: 456, 459].
+
+** The Extended Real Line
+[cite_start]We define the extended real line as $\overline{\mathbb{R}} = \mathbb{R} \cup \{+\infty, -\infty\}$[cite: 462].
+
+*** Arithmetic Rules involving Infinity
+1.  **Addition:**
+    - [cite_start]$a + (+\infty) = +\infty$ for any $a \in \mathbb{R}$[cite: 496].
+    - [cite_start]$(+\infty) + (+\infty) = +\infty$[cite: 494].
+    - [cite_start]$(-\infty) + (+\infty)$ is **undefined**[cite: 494].
+
+2.  **Multiplication:**
+    $$ a \cdot (+\infty) = \begin{cases} +\infty & \text{if } a > 0 \\ -\infty & \text{if } a < 0 \\ 0 & \text{if } a > 0 \text{ (context dependent, usually } 0 \cdot \infty \text{ is undefined)} \\ \text{undefined} & \text{if } a = 0 \end{cases} $$
+    [cite_start][cite: 495]
+
+** Relationship between Null Sequences and Infinity
+*Theorem:* Let $(a_n)$ be a positive sequence ($a_n > 0$). Then:
+$$ a_n \to 0 \iff \frac{1}{a_n} \to +\infty $$
+[cite_start][cite: 464, 468, 470]
+
+*Proof Sketch:*
+[cite_start]If $a_n$ becomes arbitrarily small (positive), its reciprocal becomes arbitrarily large ($> M$)[cite: 460, 482].
+
+** Indeterminate Forms
+One cannot simply subtract limits that are infinite.
+*Example:*
+$$ \lim_{n \to \infty} (\sqrt{n+1} - \sqrt{n}) $$
+- [cite_start]Naive attempt: $\lim \sqrt{n+1} - \lim \sqrt{n} = +\infty - (+\infty)$ which is undefined[cite: 478, 480].
+- Correct approach using conjugation:
+  $$ \sqrt{n+1} - \sqrt{n} = \frac{(\sqrt{n+1} - \sqrt{n})(\sqrt{n+1} + \sqrt{n})}{\sqrt{n+1} + \sqrt{n}} = \frac{1}{\sqrt{n+1} + \sqrt{n}} $$
+  [cite_start]As $n \to \infty$, the denominator $\to \infty$, so the limit is $0$[cite: 487, 489].
+
+* Monotone Convergence Theorem (MCT)
+** Statement
+1.  [cite_start]Every **increasing** sequence that is **bounded above** converges[cite: 493, 497, 498].
+2.  [cite_start]Every **decreasing** sequence that is **bounded below** converges[cite: 499].
+
+** Proof (for Increasing Sequences)
+Let $A = \{a_1, a_2, a_3, \dots\}$ be the set of terms. [cite_start]Let $a = \sup A$ (the least upper bound)[cite: 503, 504].
+Since $a$ is the supremum:
+1.  [cite_start]$a_n \le a$ for all $n$[cite: 504].
+2.  [cite_start]For any $\epsilon > 0$, $a - \epsilon$ is not an upper bound, so there exists some $N$ such that $a - \epsilon < a_N$[cite: 513].
+
+
+Because $(a_n)$ is increasing, for all $n \ge N$:
+$$ a - \epsilon < a_N \le a_n \le a < a + \epsilon $$
+Thus, $|a_n - a| [cite_start]< \epsilon$, proving convergence[cite: 520, 523, 525].
+
+* Example: Recursive Sequence
+Consider the sequence defined by:
+$$ x_1 = 2, \quad x_{n+1} = \frac{1}{2}\left(x_n + \frac{1}{x_n}\right) $$
+[cite_start][cite: 533]
+
+** 1. Calculate First Terms
+- $x_1 = 2$
+- [cite_start]$x_2 = \frac{1}{2}(2 + 0.5) = 1.25 = \frac{5}{4}$ [cite: 516]
+- [cite_start]$x_3 = \frac{1}{2}(\frac{5}{4} + \frac{4}{5}) = \frac{41}{40}$ [cite: 518]
+
+** 2. Proof of Convergence
+To use MCT, we check boundedness and monotonicity.
+
+*** Boundedness (Below)
+[cite_start]We claim $x_n \ge 1$ for all $n$[cite: 528].
+*Proof:*
+Using the arithmetic-geometric mean inequality (or completing the square):
+$$ x_{n+1} = \frac{1}{2}\left(x_n + \frac{1}{x_n}\right) \ge \sqrt{x_n \cdot \frac{1}{x_n}} = 1 $$
+[cite_start]Alternatively: $(\sqrt{x_n} - \frac{1}{\sqrt{x_n}})^2 \ge 0 \implies x_n + \frac{1}{x_n} \ge 2 \implies x_{n+1} \ge 1$[cite: 537].
+
+*** Monotonicity (Decreasing)
+We check if $x_{n+1} \le x_n$:
+$$ \frac{1}{2}\left(x_n + \frac{1}{x_n}\right) \le x_n $$
+$$ x_n + \frac{1}{x_n} \le 2x_n $$
+$$ \frac{1}{x_n} \le x_n \implies 1 \le x_n^2 $$
+Since we proved $x_n \ge 1$, this inequality holds. [cite_start]Thus, $(x_n)$ is decreasing[cite: 519, 521, 524].
+
+** 3. Calculating the Limit
+Since the sequence is decreasing and bounded below, it converges to some limit $x$.
+$$ \lim_{n \to \infty} x_n = x $$
+Applying the limit to the recurrence relation:
+$$ x = \frac{1}{2}\left(x + \frac{1}{x}\right) $$
+[cite_start][cite: 539, 541]
+$$ 2x = x + \frac{1}{x} \implies x = \frac{1}{x} \implies x^2 = 1 $$
+[cite_start]Since $x_n > 0$, the limit is $x = 1$[cite: 541].

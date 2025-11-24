@@ -1,0 +1,113 @@
+#+title: Lecture 39
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-24>
+#+lastmod: <2025-11-24 12:25>
+#+options: num:t
+#+startup: overview
+
+* Limits and Sequences
+** Examples of Limits
+1.  *Squeeze Theorem Application*:
+    $$ \lim_{n \to \infty} \frac{\sin n}{n} = 0 $$
+    *Proof:* Since $-1 \le \sin n \le 1$, we have:
+    $$ -\frac{1}{n} \le \frac{\sin n}{n} \le \frac{1}{n} $$
+    As $n \to \infty$, both bounds go to 0, so the limit is 0.
+
+2.  *Trigonometric Sequence*:
+    $$ \lim_{n \to \infty} n \cdot \pi \cdot \sin(n\pi) = 0 $$
+    *Reasoning:* Since $n$ is an integer, $\sin(n\pi) = 0$ for all $n$. The sequence is constantly 0.
+
+** Quiz / Problems
+1.  Calculate the limit:
+    $$ \lim_{n \to \infty} \frac{2n + n^2}{2025! + n} = +\infty $$
+    *Reasoning:* The numerator grows as $n^2$. The denominator is linear in $n$ ($2025!$ is a large constant). The term $n^2$ dominates.
+
+2.  Standard Factorial Limit:
+    $$ \lim_{n \to \infty} \frac{n!}{n^n} = 0 $$
+    *Proof sketch:*
+    $$ 0 < \frac{1 \cdot 2 \cdot \dots \cdot n}{n \cdot n \cdot \dots \cdot n} = \frac{1}{n} \cdot \frac{2}{n} \cdot \dots \cdot \frac{n}{n} \le \frac{1}{n} $$
+    By the Squeeze Theorem, the limit is 0.
+
+* Construction of Real Numbers and Exponentials
+** Real Numbers as Limits
+Real numbers can be defined as limits of sequences of rational numbers.
+- *Example:* $\sqrt{2} \approx 1.414235\dots$
+  Consider the sequence $a_n \in \mathbb{Q}$:
+  $$ 1, 1.4, 1.41, 1.414, 1.4142, \dots $$
+  This sequence is increasing and bounded above. Therefore, it must converge.
+  $$ \sqrt{2} = \lim_{n \to \infty} a_n $$
+
+** Exponential Functions
+We want to define $a^x$ for $a > 1$ and $x \in \mathbb{R}$.
+We already know $a^x$ for $x \in \mathbb{Q}$ (rational exponents).
+
+*** Proposition: Monotonicity on $\mathbb{Q}$
+The function $f: \mathbb{Q} \to \mathbb{R}$ defined by $f(q) = a^q$ is increasing.
+*Proof Sketch:*
+Let $\frac{m_1}{n_1} < \frac{m_2}{n_2}$. This implies $m_1 n_2 < m_2 n_1$.
+Since $a > 1$, raising to positive integers preserves order.
+Eventually, this leads to showing $a^{q_1} < a^{q_2}$.
+
+*** Definition for Real Exponents
+To define $a^x$ for $x \in \mathbb{R}$, we approximate $x$ with a rational sequence $(q_n)$ such that $\lim q_n = x$.
+- *Example:* $a^{\sqrt{2}}$.
+  Using the sequence approximating $\sqrt{2}$:
+  $$ a^{\sqrt{2}} = \lim_{n \to \infty} \{ a^1, a^{1.4}, a^{1.41}, a^{1.414}, \dots \} $$
+
+Alternatively, using the supremum definition:
+$$ a^x = \sup \{ a^q : q \le x \land q \in \mathbb{Q} \} $$
+
+** Properties of the Exponential Function
+Let $f: \mathbb{R} \to \mathbb{R}$ where $f(x) = a^x$.
+1.  *Algebraic Properties:*
+    $$ a^{x+y} = a^x \cdot a^y $$
+    $$ (a^x)^y = a^{xy} $$
+2.  *Range:*
+    $$ f(\mathbb{R}) = (0, +\infty) $$
+    *Proof:* For any $y \in (0, +\infty)$, there exists $x \in \mathbb{R}$ such that $a^x = y$ (existence of logarithms).
+3.  *Case $0 < a < 1$:*
+    Defined via reciprocal:
+    $$ a^x = \frac{1}{(1/a)^x} $$
+    Since $1/a > 1$, we use the previous definition.
+
+* Recursive Sequences and Convergence
+** Problem 1: Nested Radical
+Consider the sequence defined by:
+$$ x_1 = \sqrt{2}, \quad x_{n+1} = \sqrt{2 + x_n} $$
+Find its limit.
+$$ \sqrt{2 + \sqrt{2 + \sqrt{2 + \dots}}} $$
+
+*Solution:*
+1.  *Boundedness:* We show $x_n \le 2$ by induction.
+    - Base case: $\sqrt{2} < 2$.
+    - Step: If $x_n \le 2$, then $x_{n+1} = \sqrt{2 + x_n} \le \sqrt{2+2} = 2$.
+2.  *Monotonicity:* $(x_n)$ is increasing.
+    $$ x_{n+1} \ge x_n \iff \sqrt{2+x_n} \ge x_n \iff 2+x_n \ge x_n^2 \iff x_n^2 - x_n - 2 \le 0 $$
+    The roots of $x^2 - x - 2$ are $2$ and $-1$. Since $0 < x_n < 2$, the inequality holds.
+3.  *Limit Calculation:*
+    Since the sequence is bounded and increasing, it converges to some limit $L$.
+    $$ L = \lim_{n \to \infty} x_{n+1} = \lim_{n \to \infty} \sqrt{2 + x_n} = \sqrt{2+L} $$
+    $$ L^2 = 2 + L \implies L^2 - L - 2 = 0 $$
+    Solutions: $L_1 = 2$, $L_2 = -1$.
+    Since limits of positive sequences must be non-negative, $L = 2$.
+
+** Inequalities in Limits
+*Question:* If $a_n > b_n$ for all $n$, and the sequences converge to $A$ and $B$, is it true that $A > B$?
+
+*Answer:* **No.** The strict inequality is not necessarily preserved in the limit.
+- *Counter-example:*
+  Let $a_n = \frac{1}{n}$ and $b_n = 0$.
+  Clearly $a_n > b_n$ for all $n$.
+  However, $\lim a_n = 0$ and $\lim b_n = 0$, so $A = B$.
+
+*Theorem:* If $a_n \ge b_n$ (or $a_n > b_n$) and limits exist, then $\lim a_n \ge \lim b_n$.
+
+** Problem 2 (Homework/Exercise)
+Consider the sequence:
+$$ x_1 = 3, \quad x_{n+1} = \frac{1}{4 - x_n} $$
+
+** Heron's Method (Newton's Method for Square Roots)
+To approximate $\sqrt{2}$:
+$$ x_1 = 2, \quad x_{n+1} = \frac{1}{2}\left( x_n + \frac{2}{x_n} \right) $$
+This sequence converges to $\sqrt{2}$ very rapidly.
