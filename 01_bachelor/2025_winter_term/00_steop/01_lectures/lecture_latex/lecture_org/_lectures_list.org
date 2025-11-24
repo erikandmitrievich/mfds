@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-24>
-#+lastmod: <2025-11-24 12:30>
+#+lastmod: <2025-11-24 12:38>
 #+options: num:t
 #+startup: overview
 
@@ -33,8 +33,8 @@
 - [ ] Lecture 31 :: Complex numbers-2.
 - [ ] Lecture 32 :: Rings and fields.
 - [ ] Lecture 34 :: Polynomial Rings. Polar coordinates.
-- [ ] Lecture 35 :: Sequences. Convergence.
-- [ ] Lecture 36 :: Sequences-2.
+- [X] Lecture 35 :: Sequences. Convergence.
+- [X] Lecture 36 :: Sequences-2.
 - [X] Lecture 37 :: More sequences.
 - [X] Lecture 38 :: Vectors.
 - [X] Lecture 39 :: Sequences and the exponential function.

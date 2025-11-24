@@ -1,0 +1,124 @@
+#+title: Lecture 35
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-24>
+#+lastmod: <2025-11-24 12:37>
+#+options: num:t
+#+startup: overview
+
+* Sequences
+** Definitions
+A sequence $(a_n)$ is a collection $a_1, a_2, a_3, \dots$ where the order is important.
+Alternatively, a sequence is a function $f: \mathbb{N} \to \mathbb{R}$ where $f(n) = a_n$.
+
+*** Recursive Formula
+A sequence can be defined recursively.
+Example: $x_1 = 1$, $x_{n+1} = \frac{x_n + 1}{2}$ (reading from context cues, though handwriting is ambiguous).
+
+*** Monotonicity
+A sequence $(a_n)$ is called:
+1. *Increasing* if $a_n \le a_{n+1}$.
+2. *Decreasing* if $a_n \ge a_{n+1}$.
+3. *Strictly increasing* if $a_n < a_{n+1}$.
+4. *Strictly decreasing* if $a_n > a_{n+1}$.
+5. *Monotone* if it is either increasing or decreasing.
+
+*** Boundedness
+We always consider real sequences $((a_n) \subset \mathbb{R})$.
+1. *Bounded above*: $\exists M$ such that $a_n \le M$.
+2. *Bounded below*: $\exists m$ such that $a_n \ge m$.
+3. *Bounded*: $\exists M$ such that $|a_n| \le M$.
+
+** Convergence
+*** Definition
+A sequence $(a_n)$ *converges* to $a \in \mathbb{R}$ if:
+$$ \forall \epsilon > 0, \exists N \in \mathbb{N} \text{ such that } \forall n \ge N, |a_n - a| < \epsilon $$
+
+
+*** Neighborhoods
+Let $\epsilon > 0$. An $\epsilon$-neighborhood of $a$ is the set:
+$$ U_\epsilon(a) = \{ x \in \mathbb{R} : |x - a| < \epsilon \} $$
+Geometric interpretation: The interval $(a - \epsilon, a + \epsilon)$.
+
+*Alternative Definition:*
+A sequence $(a_n)$ converges to $a$ if every $\epsilon$-neighborhood of $a$ contains all but a finite number of elements of $(a_n)$.
+
+*** Notation
+- Limit: $\lim_{n \to \infty} a_n = a$
+- Arrow: $a_n \to a$
+- If $(a_n)$ does not converge to any $a \in \mathbb{R}$, it is *divergent*.
+
+*** The "Game" of Limits
+To prove $a_n \to a$:
+1. *Challenger*: Gives an arbitrary $\epsilon > 0$ (error tolerance).
+2. *Defender*: Must find an index $N$ (threshold).
+3. *Check*: For all indices $n \ge N$, the value $a_n$ must lie inside $(a - \epsilon, a + \epsilon)$.
+
+* Examples
+** Example 1: Basic Null Sequence
+$$ \lim_{n \to \infty} \frac{1}{n} = 0 $$
+*Proof:*
+We must show: $\forall \epsilon > 0, \exists N, \forall n \ge N, |\frac{1}{n} - 0| < \epsilon$.
+Analysis:
+$$ \frac{1}{n} < \epsilon \iff n > \frac{1}{\epsilon} $$
+Let $\epsilon > 0$. Choose $N > \frac{1}{\epsilon}$ (e.g., if $\epsilon = 10^{-6}$, take $N = 10^6 + 1$).
+Then for all $n \ge N$, $|\frac{1}{n}| < \epsilon$.
+
+** Example 2: Rational Sequence
+$$ \lim_{n \to \infty} \frac{n}{n+2} = 1 $$
+*Proof:*
+We must ensure $|\frac{n}{n+2} - 1| < \epsilon$.
+Simplify the expression:
+$$ \left| \frac{n}{n+2} - 1 \right| = \left| \frac{n - (n+2)}{n+2} \right| = \left| \frac{-2}{n+2} \right| = \frac{2}{n+2} $$
+Inequality check:
+$$ \frac{2}{n+2} < \epsilon \iff n+2 > \frac{2}{\epsilon} \iff n > \frac{2}{\epsilon} - 2 $$
+Let $\epsilon > 0$. Take $N > \frac{2}{\epsilon} - 2$.
+Then for all $n \ge N$, $|\frac{n}{n+2} - 1| < \epsilon$.
+
+** Example 3: Quadratic Rational Sequence
+$$ \lim_{n \to \infty} \frac{2n^2 + 3}{n^2 + n + 1} = 2 $$
+*Proof:*
+We examine the difference:
+$$ \left| \frac{2n^2 + 3}{n^2 + n + 1} - 2 \right| = \left| \frac{2n^2 + 3 - 2(n^2 + n + 1)}{n^2 + n + 1} \right| $$
+$$ = \left| \frac{2n^2 + 3 - 2n^2 - 2n - 2}{n^2 + n + 1} \right| = \left| \frac{1 - 2n}{n^2 + n + 1} \right| = \frac{2n - 1}{n^2 + n + 1} $$
+We estimate with a simpler expression (finding an upper bound):
+$$ \frac{2n - 1}{n^2 + n + 1} < \frac{2n}{n^2} = \frac{2}{n} $$
+Goal: $\frac{2}{n} < \epsilon$.
+Let $\epsilon > 0$. Take $N > \frac{2}{\epsilon}$.
+Then for $n \ge N$:
+$$ \left| \frac{2n^2 + 3}{n^2 + n + 1} - 2 \right| < \frac{2}{n} \le \frac{2}{N} < \epsilon $$
+
+** Example 4: Divergence
+Show that $(-1)^n$ is divergent.
+*Proof (by contradiction):*
+Suppose $(-1)^n \to a$.
+Then $\forall \epsilon > 0, \exists N$ such that $\forall n \ge N, |(-1)^n - a| < \epsilon$.
+- If $n$ is odd, $(-1)^n = -1$, so $|-1 - a| < \epsilon$.
+- If $n$ is even, $(-1)^n = 1$, so $|1 - a| < \epsilon$.
+Using the Triangle Inequality:
+$$ 2 = |1 - (-1)| = |1 - a + a - (-1)| \le |1 - a| + |a - (-1)| < \epsilon + \epsilon = 2\epsilon $$
+If we choose $\epsilon = \frac{1}{2}$ (or any $\epsilon \le 1$), we get $2 < 1$ (or $2 < 2\epsilon$), which is a contradiction.
+
+* Theorems
+** Uniqueness of Limit
+*Theorem:* If a sequence $(a_n)$ converges, then its limit is unique.
+*Proof:*
+Suppose $a_n \to a$ and $a_n \to b$ with $a \ne b$.
+For any $\epsilon > 0$, there exist $N_1, N_2$ such that:
+- $\forall n \ge N_1, |a_n - a| < \epsilon$
+- $\forall n \ge N_2, |a_n - b| < \epsilon$
+Let $N = \max\{N_1, N_2\}$. For $n \ge N$:
+$$ |a - b| = |a - a_n + a_n - b| \le |a - a_n| + |a_n - b| < \epsilon + \epsilon = 2\epsilon $$
+Since this must hold for any $\epsilon$, choose $\epsilon = \frac{|a-b|}{2}$ (or smaller).
+Then $|a - b| < |a - b|$, a contradiction.
+
+** Boundedness of Convergent Sequences
+*Theorem:* Every convergent sequence is bounded.
+*Proof:*
+Let $a_n \to a$. Take a specific $\epsilon$, say $\epsilon = 1$.
+There exists $N$ such that for all $n \ge N$:
+$$ |a_n - a| < 1 \implies a - 1 < a_n < a + 1 $$
+This bounds the "tail" of the sequence.
+For the initial finite terms $a_1, a_2, \dots, a_{N-1}$, let:
+$$ M = \max \{ |a_1|, |a_2|, \dots, |a_{N-1}|, |a| + 1 \} $$
+Then $|a_n| \le M$ for all $n$.

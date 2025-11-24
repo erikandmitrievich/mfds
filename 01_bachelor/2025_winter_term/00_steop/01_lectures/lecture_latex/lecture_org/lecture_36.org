@@ -1,0 +1,109 @@
+#+title: Lecture 36
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-24>
+#+lastmod: <2025-11-24 12:32>
+#+options: num:t
+#+startup: overview
+
+* Convergence and Boundedness
+** Question
+Is every bounded sequence convergent?
+- *Answer*: No.
+- *Counter-example*: Let $a_n = (-1)^n$. The sequence is bounded ($-1 \le a_n \le 1$) but does not converge.
+
+* Arithmetic of Limits
+** Theorem
+Let $(a_n)$ and $(b_n)$ be convergent sequences such that $\lim_{n \to \infty} a_n = a$ and $\lim_{n \to \infty} b_n = b$. Then:
+1. $\lim_{n \to \infty} (a_n + b_n) = a + b$
+2. $\lim_{n \to \infty} (c \cdot a_n) = c \cdot a$ for any $c \in \mathbb{R}$
+3. $\lim_{n \to \infty} (a_n \cdot b_n) = a \cdot b$
+4. If $b \ne 0$ and $b_n \ne 0$, then $\lim_{n \to \infty} \frac{a_n}{b_n} = \frac{a}{b}$
+
+** Proof of Property (3): Product Rule
+We want to show that for any $\epsilon > 0$, there exists an $N$ such that $|a_n b_n - ab| < \epsilon$ for all $n \ge N$.
+
+Using the triangle inequality:
+$$ |a_n b_n - ab| = |a_n b_n - a b_n + a b_n - ab| $$
+$$ \le |b_n| \cdot |a_n - a| + |a| \cdot |b_n - b| $$
+
+Since $(b_n)$ is convergent, it is bounded. Let $M_b = \sup \{|b_n|\}$.
+Let $M = \max \{ M_b, |a| \}$.
+Then:
+$$ |a_n b_n - ab| \le M (|a_n - a| + |b_n - b|) $$
+
+Since $a_n \to a$ and $b_n \to b$:
+- $\exists N_1$ such that $\forall n \ge N_1, |a_n - a| < \frac{\epsilon}{2M}$.
+- $\exists N_2$ such that $\forall n \ge N_2, |b_n - b| < \frac{\epsilon}{2M}$.
+
+Let $N = \max \{N_1, N_2\}$. For all $n \ge N$:
+$$ |a_n b_n - ab| \le M \left( \frac{\epsilon}{2M} + \frac{\epsilon}{2M} \right) = \epsilon $$
+
+* Examples and Common Pitfalls
+** Exercise
+Calculate the limit:
+$$ \lim_{n \to \infty} \frac{2n^2 + 3}{n^2 + n + 1} $$
+Divide numerator and denominator by $n^2$:
+$$ = \lim_{n \to \infty} \frac{2 + \frac{3}{n^2}}{1 + \frac{1}{n} + \frac{1}{n^2}} = \frac{2 + 0}{1 + 0 + 0} = 2 $$
+
+** A Common Misconception
+Consider:
+$$ 1 = \lim_{n \to \infty} 1 = \lim_{n \to \infty} \underbrace{\left(\frac{1}{n} + \frac{1}{n} + \dots + \frac{1}{n}\right)}_{n \text{ times}} $$
+One might incorrectly apply the sum rule:
+$$ = \lim_{n \to \infty} \frac{1}{n} + \dots + \lim_{n \to \infty} \frac{1}{n} = 0 + \dots + 0 = 0 $$
+*Result*: $1 = 0$ (Contradiction).
+*Reason*: The arithmetic rule for the sum applies to a *fixed* number of sequences, not a sum where the number of terms grows with $n$.
+
+* The Squeeze Theorem (Sandwich Theorem)
+** Theorem
+Let $(a_n), (b_n), (c_n)$ be sequences such that $a_n \le b_n \le c_n$ for all $n$.
+If $\lim_{n \to \infty} a_n = a$ and $\lim_{n \to \infty} c_n = a$, then $\lim_{n \to \infty} b_n = a$.
+
+** Proof
+We need to show $|b_n - a| < \epsilon$ for sufficiently large $n$.
+Given convergence of $a_n$ and $c_n$:
+- $\exists N_1$ such that $\forall n \ge N_1, |a_n - a| < \epsilon \iff -\epsilon < a_n - a < \epsilon$.
+- $\exists N_2$ such that $\forall n \ge N_2, |c_n - a| < \epsilon \iff -\epsilon < c_n - a < \epsilon$.
+
+Let $N = \max \{N_1, N_2\}$. For $n \ge N$:
+$$ -\epsilon < a_n - a \le b_n - a \le c_n - a < \epsilon $$
+$$ \implies -\epsilon < b_n - a < \epsilon $$
+$$ \implies |b_n - a| < \epsilon $$
+
+* Special Limits involving Roots
+** Theorem 1: $n$-th root of a constant
+Let $a > 0$. Then $\lim_{n \to \infty} \sqrt[n]{a} = 1$.
+
+*** Proof (for $a > 1$)
+Let $\sqrt[n]{a} = 1 + x_n$ where $x_n > 0$.
+Raise to the power $n$:
+$$ a = (1 + x_n)^n $$
+Using Bernoulli's Inequality $(1+x)^n \ge 1 + nx$:
+$$ a \ge 1 + n x_n $$
+$$ n x_n \le a - 1 \implies 0 < x_n \le \frac{a - 1}{n} $$
+As $n \to \infty$, $\frac{a-1}{n} \to 0$. By the Squeeze Theorem, $x_n \to 0$.
+Thus, $\lim_{n \to \infty} \sqrt[n]{a} = \lim_{n \to \infty} (1 + x_n) = 1$.
+
+** Example
+Calculate $\lim_{n \to \infty} \sqrt[n]{2^n + 7^n}$.
+Bounds:
+$$ \sqrt[n]{7^n} \le \sqrt[n]{2^n + 7^n} \le \sqrt[n]{7^n + 7^n} $$
+$$ 7 \le \sqrt[n]{2^n + 7^n} \le 7 \cdot \sqrt[n]{2} $$
+Since $\sqrt[n]{2} \to 1$, both bounds converge to 7.
+$$ \lim_{n \to \infty} \sqrt[n]{2^n + 7^n} = 7 $$
+
+** Theorem 2: $n$-th root of $n$
+$$ \lim_{n \to \infty} \sqrt[n]{n} = 1 $$
+
+*** Proof
+Let $\sqrt[n]{n} = 1 + x_n$ where $x_n \ge 0$.
+$$ n = (1 + x_n)^n $$
+Using the Binomial Theorem, for $n \ge 2$:
+$$ n = 1 + n x_n + \binom{n}{2} x_n^2 + \dots + x_n^n $$
+Discarding positive terms:
+$$ n > \binom{n}{2} x_n^2 = \frac{n(n-1)}{2} x_n^2 $$
+$$ 1 > \frac{n-1}{2} x_n^2 $$
+$$ x_n^2 < \frac{2}{n-1} $$
+$$ 0 \le x_n < \sqrt{\frac{2}{n-1}} $$
+As $n \to \infty$, $\sqrt{\frac{2}{n-1}} \to 0$. Thus $x_n \to 0$.
+Therefore, $\lim_{n \to \infty} \sqrt[n]{n} = 1$.
