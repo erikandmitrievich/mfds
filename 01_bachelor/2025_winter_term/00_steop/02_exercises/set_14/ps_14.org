@@ -1,0 +1,44 @@
+#+title: Ps 14
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-24>
+#+lastmod: <2025-11-24 19:59>
+#+options: num:t
+#+startup: overview
+
+* Problem 1
+** Task
+** Notes
+** Solution
+* Problem 2
+** Task
+** Notes
+** Solution
+* Problem 3
+** Task
+** Notes
+** Solution
+* Problem 4
+** Task
+** Notes
+** Solution
+* Problem 5
+** Task
+** Notes
+** Solution
+* Problem 6
+** Task
+** Notes
+** Solution
+* Problem 7
+** Task
+** Notes
+** Solution
+* Problem 8
+** Task
+** Notes
+** Solution
+* Problem 9
+** Task
+** Notes
+** Solution

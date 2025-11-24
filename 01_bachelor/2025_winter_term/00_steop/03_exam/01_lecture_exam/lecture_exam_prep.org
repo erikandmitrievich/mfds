@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-19>
-#+lastmod: <2025-11-24 16:53>
+#+lastmod: <2025-11-24 19:56>
 #+options: num:t
 #+startup: overview
 
@@ -42,7 +42,7 @@
 - [ ] Exponential function
 - [ ] R^n and vector spaces over arbitrary field
 
-* Course Progress [16/35]
+* Course Progress [18/35]
 - [X] Lecture 0 :: Introduction to the course. Logistics. Julia.
 - [X] Lecture 1 :: Sets. Basic definitions and operations with sets.
 - [X] Lectures 2-3 :: Propositional logic. Quantifiers.
@@ -76,5 +76,5 @@
 - [X] Lecture 38 :: Vectors.
 - [ ] Lecture 39 :: Sequences and the exponential function.
 - [X] Lecture 40 :: Vectors, scalar product, equation of lines and planes.
-- [ ] Lecture 41 :: R^n and vector spaces.
-- [ ] Lecture 42 :: Vector spaces over an arbitrary field.
+- [X] Lecture 41 :: R^n and vector spaces.
+- [X] Lecture 42 :: Vector spaces over an arbitrary field.
