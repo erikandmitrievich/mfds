@@ -1,0 +1,118 @@
+#+title: Lecture 42
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-24>
+#+lastmod: <2025-11-24 09:29>
+#+options: num:t
+#+startup: overview
+
+* Mathematical Paradoxes
+** The Horse Paradox (Fake Induction)
+*Theorem:* All horses have the same color.
+*Proof (by induction):*
+- *Base case ($n=1$):* In a set containing only one horse, clearly all horses have the same color.
+- *Inductive step:* Assume the statement is true for any set of $n$ horses. Consider a set of $n+1$ horses $\{h_1, h_2, \dots, h_n, h_{n+1}\}$.
+  1. Remove $h_{n+1}$. The remaining set $\{h_1, \dots, h_n\}$ has $n$ horses, so by hypothesis, they share the same color.
+  2. Remove $h_1$. The remaining set $\{h_2, \dots, h_{n+1}\}$ has $n$ horses, so they share the same color.
+  3. Therefore, $h_1$ has the same color as the middle horses, and $h_{n+1}$ has the same color as the middle horses. Thus, all $n+1$ horses have the same color.
+
+*The Flaw:* The argument fails at $n=2$ (going from 1 to 2). The two subsets $\{h_1\}$ and $\{h_2\}$ have no intersection (no "middle horses") to carry the color property across.
+
+** Set Theory Paradoxes
+*** Russell's Paradox
+Let $A = \{ x : x \notin x \}$.
+*Question:* Is $A \in A$?
+- If $A \in A$, then by definition $A \notin A$ (contradiction).
+- If $A \notin A$, then by definition $A \in A$ (contradiction).
+
+*** The Barber Paradox
+A male barber shaves everyone who does not shave himself.
+*Question:* Does the barber shave himself?
+- If he does, he shouldn't.
+- If he doesn't, he must.
+
+** Other Paradoxes
+*** Berry's Paradox
+Consider the set of natural numbers. Define $n$ as:
+"The smallest positive integer not definable in under sixty letters."
+The definition itself has fewer than sixty letters, leading to a contradiction.
+
+*** The Liar Paradox
+Epimenides, a Cretan, stated: "All Cretans are liars."
+- If true, he is lying (contradiction).
+- If false, then there exists a Cretan who tells the truth (consistent, provided Epimenides is lying).
+
+*** Interesting Numbers
+*Theorem:* All natural numbers are interesting.
+*Proof (by contradiction):*
+Suppose there are non-interesting numbers. Let $S$ be the set of non-interesting numbers. Since $S \subset \mathbb{N}$, by the Well-Ordering Principle, $S$ has a minimum element $s = \min(S)$.
+However, $s$ is the "smallest non-interesting number," which makes it a very interesting property. Thus $s$ is interesting, creating a contradiction.
+
+** Axiom of Choice
+Let $(S_i)_{i \in I}$ be an indexed family of nonempty sets. The Axiom of Choice states that there exists a choice function (Cartesian product is non-empty):
+$$ \prod_{i \in I} S_i \neq \emptyset $$
+This axiom leads to counter-intuitive results like the *Banach-Tarski Paradox*.
+
+
+* Logic Theorems
+** The Drinker Principle
+*Theorem:* In every pub, there is a person such that if this person drinks, then everyone is drinking.
+$$ \exists x (D(x) \implies \forall y D(y)) $$
+*Proof:*
+1.  *Case 1:* Everyone drinks. Then the statement is true for any person.
+2.  *Case 2:* There is a person who doesn't drink. Let this person be $P$. The premise "$P$ drinks" is false. In logic, False $\implies$ Anything is a True statement.
+
+* Constructive vs. Non-Constructive Proofs
+** Problem
+Prove there exist two irrational numbers $x$ and $y$ such that $x^y \in \mathbb{Q}$.
+
+** Non-Constructive Solution
+Consider the number $\sqrt{2}^{\sqrt{2}}$.
+1.  Case 1: If $\sqrt{2}^{\sqrt{2}} \in \mathbb{Q}$, let $x = \sqrt{2}$ and $y = \sqrt{2}$. Done.
+2.  Case 2: If $\sqrt{2}^{\sqrt{2}} \notin \mathbb{Q}$, let $x = \sqrt{2}^{\sqrt{2}}$ and $y = \sqrt{2}$.
+    Then:
+    $$ x^y = (\sqrt{2}^{\sqrt{2}})^{\sqrt{2}} = \sqrt{2}^{\sqrt{2} \cdot \sqrt{2}} = \sqrt{2}^2 = 2 \in \mathbb{Q} $$
+We proved existence without knowing which case is true.
+
+** Constructive Solution
+Let $x = \sqrt{2}$ and $y = \log_{\sqrt{2}} 3$.
+Then $x^y = (\sqrt{2})^{\log_{\sqrt{2}} 3} = 3 \in \mathbb{Q}$.
+*Proof that $y$ is irrational:*
+Suppose $y = \frac{m}{n} \in \mathbb{Q}$.
+$$ \log_{\sqrt{2}} 3 = \frac{m}{n} \iff (\sqrt{2})^{\frac{m}{n}} = 3 $$
+$$ \sqrt{2}^m = 3^n \implies 2^{m/2} = 3^n \implies 2^m = 3^{2n} $$
+By the Fundamental Theorem of Arithmetic, $2^m$ (even factors) cannot equal $3^{2n}$ (odd factors) unless $m=n=0$, which is impossible here. Thus $y \notin \mathbb{Q}$.
+
+* Famous Theorems and Series
+** Fermat's Last Theorem
+The equation $x^n + y^n = z^n$ has no integer solutions for $n \ge 3$.
+- For $n=2$ (Pythagoras): $3^2 + 4^2 = 5^2$.
+- Proven completely by Andrew Wiles in 1995.
+
+** The Harmonic Series
+Consider the sequence of partial sums:
+$$ a_n = \sum_{k=1}^n \frac{1}{k} = 1 + \frac{1}{2} + \frac{1}{3} + \dots + \frac{1}{n} $$
+
+*** Divergence Proof (Oresme)
+We group terms to show the sum grows without bound.
+Consider terms up to $2^n$:
+$$ S = 1 + \frac{1}{2} + \left(\frac{1}{3} + \frac{1}{4}\right) + \left(\frac{1}{5} + \frac{1}{6} + \frac{1}{7} + \frac{1}{8}\right) + \dots $$
+$$ S > 1 + \frac{1}{2} + \left(\frac{1}{4} + \frac{1}{4}\right) + \left(\frac{1}{8} + \dots + \frac{1}{8}\right) + \dots $$
+$$ S \ge 1 + \frac{1}{2} + \frac{1}{2} + \frac{1}{2} + \dots $$
+For $2^k$ terms, the sum is $\ge 1 + \frac{k}{2}$.
+$$ \lim_{n \to \infty} a_n = +\infty $$
+
+
+*** Euler-Mascheroni Constant
+The harmonic series diverges logarithmically:
+$$ \sum_{k=1}^n \frac{1}{k} \sim \ln n + \gamma $$
+where $\gamma \approx 0.57$ is the Euler-Mascheroni constant.
+
+* Iterative Methods
+** Square Root Approximation (Heron's Method)
+To find $\sqrt{q}$:
+Let $x_1 = 1$.
+Define the recurrence:
+$$ x_{n+1} = \frac{1}{2} \left( x_n + \frac{q}{x_n} \right) $$
+Then:
+$$ \lim_{n \to \infty} x_n = \sqrt{q} $$
