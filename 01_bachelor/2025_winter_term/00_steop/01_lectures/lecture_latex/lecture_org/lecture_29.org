@@ -1,0 +1,108 @@
+#+title: Lecture 29
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-24>
+#+lastmod: <2025-11-24 20:27>
+#+options: num:t
+#+startup: overview
+
+* Newton Sums and Symmetric Polynomials
+** Newton Sums for Quadratics
+Consider the polynomial $ax^2 + bx + c$ with roots $x_1, x_2$.
+Let $S_n = x_1^n + x_2^n$.
+The recurrence relation for the sums of powers is given by:
+$$ aS_n + bS_{n-1} + cS_{n-2} = 0 $$
+
+** Cubic Polynomials and Vieta's Formulas
+Consider a cubic polynomial $p(x) = x^3 + ax^2 + bx + c$.
+Let the roots be $x_1, x_2, x_3$.
+Any symmetric polynomial in the roots, $Q(x_1, x_2, x_3)$, remains unchanged under any permutation of variables (e.g., $Q(x_2, x_1, x_3) = Q(x_1, x_2, x_3)$).
+
+*** Vieta's Formulas
+By expanding the factored form $p(x) = (x-x_1)(x-x_2)(x-x_3)$:
+$$ p(x) = x^3 - (x_1 + x_2 + x_3)x^2 + (x_1x_2 + x_2x_3 + x_1x_3)x - x_1x_2x_3 $$
+Comparing coefficients with $x^3 + ax^2 + bx + c$:
+1. $x_1 + x_2 + x_3 = -a$
+2. $x_1x_2 + x_2x_3 + x_1x_3 = b$
+3. $x_1x_2x_3 = -c$
+
+*** Asymptotic Behavior
+- If the leading coefficient is positive:
+  - As $x \to +\infty$, $p(x) \to +\infty$.
+  - As $x \to -\infty$, $p(x) \to -\infty$.
+- A cubic polynomial with real coefficients must have at least one real root (Intermediate Value Theorem).
+
+* Solving Polynomial Equations
+** Cubic Equations (Cardano's Formula)
+For the depressed cubic $y^3 + py + q = 0$, the roots are given by:
+$$ y = \sqrt[3]{-\frac{q}{2} + \sqrt{R}} + \sqrt[3]{-\frac{q}{2} - \sqrt{R}} $$
+where the discriminant is $R = \left(\frac{p}{3}\right)^3 + \left(\frac{q}{2}\right)^2$.
+*Note:* General cubics $x^3 + ax^2 + bx + c = 0$ are converted to depressed form via the substitution $x = y - \frac{a}{3}$.
+
+** Higher Degree Polynomials
+- **Quartic (Degree 4):** Solvable by radicals (Ferrari's method).
+- **Quintic (Degree 5) and higher:** No general formula involving only arithmetic operations and radicals exists (Abel-Ruffini Theorem / Galois Theory, c. 1830).
+
+* Problems
+** Problem 1: Constructing Polynomials
+Find a polynomial in $\mathbb{Z}[x]$ with root $\sqrt{3} + 2$.
+*Solution:*
+Let $x = 2 + \sqrt{3}$.
+Since coefficients are integers, the conjugate $2 - \sqrt{3}$ must also be a root.
+$$ p(x) = (x - (2+\sqrt{3}))(x - (2-\sqrt{3})) $$
+$$ p(x) = ((x-2) - \sqrt{3})((x-2) + \sqrt{3}) $$
+$$ p(x) = (x-2)^2 - 3 = x^2 - 4x + 4 - 3 = x^2 - 4x + 1 $$
+
+** Problem 2: System of Power Sums
+Solve for $x, y, z$:
+$$ \begin{cases} x + y + z = 2 \\ x^2 + y^2 + z^2 = 14 \\ x^3 + y^3 + z^3 = 20 \end{cases} $$
+
+*Solution:*
+Let $e_1, e_2, e_3$ be the elementary symmetric polynomials.
+1. $e_1 = x+y+z = 2$.
+2. From $(x+y+z)^2 = x^2+y^2+z^2 + 2(xy+yz+zx)$:
+   $$ 2^2 = 14 + 2e_2 \implies 4 = 14 + 2e_2 \implies 2e_2 = -10 \implies e_2 = -5 $$
+3. Using the algebraic identity relating power sums:
+   $$ (x+y+z)(x^2+y^2+z^2 - (xy+yz+zx)) + 3xyz = x^3+y^3+z^3 $$
+   $$ e_1(14 - e_2) + 3e_3 = 20 $$
+   $$ 2(14 - (-5)) + 3e_3 = 20 $$
+   $$ 2(19) + 3e_3 = 20 \implies 38 + 3e_3 = 20 \implies 3e_3 = -18 \implies e_3 = -6 $$
+
+The variables $x, y, z$ are roots of the cubic equation:
+$$ t^3 - e_1t^2 + e_2t - e_3 = 0 $$
+$$ t^3 - 2t^2 - 5t + 6 = 0 $$
+By inspection, $t_1 = 1$ is a root ($1 - 2 - 5 + 6 = 0$).
+Dividing by $(t-1)$:
+$$ t^3 - 2t^2 - 5t + 6 = (t-1)(t^2 - t - 6) = (t-1)(t-3)(t+2) $$
+The roots are $1, 3, -2$.
+*Answer:* The set $\{x, y, z\}$ is $\{1, 3, -2\}$.
+
+** Problem 3: Polynomial Identity
+Solve for $x$:
+$$ c \frac{(x-a)(x-b)}{(c-a)(c-b)} + b \frac{(x-a)(x-c)}{(b-a)(b-c)} + a \frac{(x-b)(x-c)}{(a-b)(a-c)} = x $$
+*Solution:*
+Define $P(x)$ as the LHS. $P(x)$ is a polynomial of degree $\le 2$.
+Let $Q(x) = P(x) - x$. The degree of $Q(x)$ is $\le 2$.
+Check specific values:
+- At $x=c$: $P(c) = c \cdot 1 + 0 + 0 = c$. So $Q(c) = 0$.
+- At $x=b$: $P(b) = 0 + b \cdot 1 + 0 = b$. So $Q(b) = 0$.
+- At $x=a$: $P(a) = 0 + 0 + a \cdot 1 = a$. So $Q(a) = 0$.
+Since $Q(x)$ has 3 distinct roots ($a, b, c$) but degree $\le 2$, it must be the zero polynomial.
+Thus, the equation holds for all $x$.
+
+* Lagrange Interpolation
+** Problem Statement
+Given $n+1$ distinct points $(x_1, y_1), (x_2, y_2), \dots, (x_{n+1}, y_{n+1})$, is there a polynomial that passes through these points? i.e., $p(x_i) = y_i$.
+
+** Construction
+We construct basis polynomials that are $1$ at a specific node and $0$ at all others.
+For the first point $(x_1, y_1)$:
+$$ p_1(x) = y_1 \cdot \frac{(x-x_2)(x-x_3)\dots(x-x_{n+1})}{(x_1-x_2)(x_1-x_3)\dots(x_1-x_{n+1})} $$
+Observe that:
+- $p_1(x_1) = y_1$
+- $p_1(x_k) = 0$ for $k \ne 1$.
+
+** General Formula
+The interpolating polynomial is the sum of these basis polynomials:
+$$ P(x) = \sum_{i=1}^{n+1} p_i(x) = \sum_{i=1}^{n+1} y_i \prod_{j \ne i} \frac{x-x_j}{x_i-x_j} $$
+This polynomial satisfies $P(x_k) = y_k$ for all $k$, and $\deg(P) \le n$.

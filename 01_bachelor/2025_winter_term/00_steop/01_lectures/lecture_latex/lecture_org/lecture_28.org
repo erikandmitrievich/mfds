@@ -1,0 +1,127 @@
+#+title: Lecture 28
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-24>
+#+lastmod: <2025-11-24 20:38>
+#+options: num:t
+#+startup: overview
+
+* Definition of Polynomials
+A function $f$ can be represented as:
+$$ f(x) = a_n x^n + \dots + a_1 x + a_0 $$
+where:
+- $a_n, \dots, a_0$ are *coefficients*.
+- $a_n$ is the *leading coefficient* (if $a_n \ne 0$).
+- $a_n x^n$ is the *leading term*.
+- $a_k x^k$ is a *monomial*.
+
+** Notation
+- $\mathbb{R}[x]$ is the set of all polynomials with real coefficients.
+- $\mathbb{Z}[x]$ is the set of all polynomials with integer coefficients.
+- $\deg f = n$ is the *degree* of the polynomial $f$.
+
+** Classification by Degree
+- Degree 1: Linear (Affine)
+- Degree 2: Quadratic
+- Degree 3: Cubic
+- Degree 4: Quartic
+- Degree 5: Quintic
+
+** Roots / Zeros
+Let $f \in \mathbb{R}[x]$. A number $\alpha \in \mathbb{R}$ is a *root* (or *zero*) of $f$ if $f(\alpha) = 0$.
+
+* Operations
+Let $f(x) = a_n x^n + \dots + a_0$ and $g(x) = b_m x^m + \dots + b_0$.
+1. *Addition*: $(f+g)(x)$.
+2. *Multiplication by a constant*: $(cf)(x) = c \cdot a_n x^n + c \cdot a_{n-1} x^{n-1} + \dots$.
+3. *Product*: $(f \cdot g)(x)$.
+4. *Composition*: $f(g(x))$.
+
+* Division with Remainder
+** Theorem (Polynomial Division)
+For $a(x), b(x) \in \mathbb{R}[x]$ (with $b(x) \ne 0$), there exist unique polynomials $q(x)$ (quotient) and $r(x)$ (remainder) in $\mathbb{R}[x]$ such that:
+$$ a(x) = b(x) \cdot q(x) + r(x) $$
+where $\deg r < \deg b$.
+This is analogous to integer division: $a = bq + r$ with $0 \le r < b$.
+
+** Example Calculation
+Divide $a(x) = 2x^4 + 3x^3 - 5x^2 - 7x + 1$ by $b(x) = x^2 - 4x + 2$.
+
+
+\begin{array}{r}
+  2x^2 + 11x + 35 \\
+  x^2 - 4x + 2 \big) \overline{2x^4 + 3x^3 - 5x^2 - 7x + 1} \\
+  \underline{-(2x^4 - 8x^3 + 4x^2)} \phantom{-7x+1} \\
+  11x^3 - 9x^2 - 7x \phantom{+1} \\
+  \underline{-(11x^3 - 44x^2 + 22x)} \phantom{+1} \\
+  35x^2 - 29x + 1 \\
+  \underline{-(35x^2 - 140x + 70)} \\
+  111x - 69
+\end{array}
+
+Result: $q(x) = 2x^2 + 11x + 35$ and $r(x) = 111x - 69$.
+
+** Proof of Uniqueness
+Suppose there are two representations:
+$$ a(x) = b(x) q_1(x) + r_1(x) $$
+$$ a(x) = b(x) q_2(x) + r_2(x) $$
+Subtracting gives:
+$$ 0 = b(x)(q_1(x) - q_2(x)) + (r_1(x) - r_2(x)) $$
+$$ r_2(x) - r_1(x) = b(x)(q_1(x) - q_2(x)) $$
+If $q_1 \ne q_2$, then $\deg(RHS) \ge \deg b$.
+However, $\deg(r_2 - r_1) < \deg b$.
+This is a contradiction, so $q_1 = q_2$ and $r_1 = r_2$.
+
+* Divisibility and Roots
+** Definition
+$a(x)$ is divisible by $b(x)$ (written $b(x) | a(x)$) if there exists $q(x) \in \mathbb{R}[x]$ such that $a(x) = b(x) q(x)$.
+
+** Corollary
+Let $f(x) \in \mathbb{R}[x]$.
+$(x - \alpha)$ divides $f(x)$ if and only if $\alpha$ is a root of $f$.
+
+*** Proof
+1. *Direction ($\implies$)*:
+   If $(x - \alpha) | f(x)$, then $f(x) = (x - \alpha) q(x)$.
+   Evaluating at $\alpha$: $f(\alpha) = (\alpha - \alpha) q(\alpha) = 0$.
+
+2. *Direction ($\Longleftarrow$)*:
+   Suppose $\alpha$ is a root ($f(\alpha) = 0$).
+   By division algorithm: $f(x) = (x - \alpha) g(x) + r(x)$, where $\deg r < \deg(x - \alpha) = 1$.
+   Thus, $r(x)$ is a constant $r$.
+   $f(\alpha) = 0 \cdot g(\alpha) + r \implies 0 = r$.
+   So $f(x) = (x - \alpha) g(x)$, meaning $(x - \alpha) | f(x)$.
+
+** Theorem: Bound on Roots
+A non-constant polynomial $f(x) \in \mathbb{R}[x]$ of degree $n$ has at most $n$ real roots.
+
+*** Proof (by Induction)
+- *Base case ($n=1$)*: Obvious (linear equation has 1 root).
+- *Inductive step*: Assume true for degree $n$. Consider $f$ with $\deg f = n+1$.
+  If $f$ has a root $\alpha$, then $f(x) = (x - \alpha) g(x)$, where $\deg g = n$.
+  By hypothesis, $g$ has at most $n$ roots. Therefore, $f$ has at most $n+1$ roots.
+
+* Quadratic Polynomials
+Given $f(x) = ax^2 + bx + c$.
+Roots are given by:
+$$ x_{1,2} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$
+
+** Derivation
+$$ ax^2 + bx + c = 0 \iff 4a^2x^2 + 4abx + 4ac = 0 $$
+$$ (2ax)^2 + 2(2ax)b + b^2 - b^2 + 4ac = 0 $$
+$$ (2ax + b)^2 = b^2 - 4ac $$
+Let discriminant $D = b^2 - 4ac$.
+- If $D > 0$: Two distinct real roots.
+- If $D = 0$: One real root ($x_1 = x_2$).
+- If $D < 0$: No real roots.
+
+** Vieta's Formulas
+If $x_1, x_2$ are roots:
+$$ f(x) = a(x - x_1)(x - x_2) = a(x^2 - (x_1 + x_2)x + x_1 x_2) $$
+Comparing coefficients:
+$$ \begin{cases} x_1 + x_2 = -\frac{b}{a} \\ x_1 x_2 = \frac{c}{a} \end{cases} $$
+
+** Newton Sums Problem
+Let $x_1, x_2 \in \mathbb{R}$ be roots of $ax^2 + bx + c$.
+Let $S_n = x_1^n + x_2^n$.
+*Prove:* $a S_n + b S_{n-1} + c S_{n-2} = 0$ for $n \ge 2$.
