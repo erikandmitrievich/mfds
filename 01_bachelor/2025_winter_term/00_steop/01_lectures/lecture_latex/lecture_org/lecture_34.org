@@ -1,0 +1,107 @@
+#+title: Lecture 34
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-24>
+#+lastmod: <2025-11-24 12:44>
+#+options: num:t
+#+startup: overview
+
+* Polynomial Rings
+** Definition
+Let $R$ be a commutative ring with identity. The sum
+$$ a_n x^n + a_{n-1}x^{n-1} + \dots + a_1 x + a_0 $$
+where $a_i \in R$, is a polynomial in the variable $x$ (symbol).
+The set of all such polynomials is a ring, denoted $R[x]$.
+Note: $R \subset R[x]$.
+
+** Examples
+- $\mathbb{R}[x], \mathbb{Z}[x], \mathbb{Q}[x], \mathbb{C}[x]$.
+
+*** Example in $\mathbb{Z}_3[x]$
+Let $p(x) = x^3 + 2x + 1$ and $g(x) = x^2 + x + 2$.
+Calculating the sum (coefficients modulo 3):
+$$ p(x) + g(x) = x^3 + x^2 + (2+1)x + (1+2) = x^3 + x^2 $$
+
+** The Importance of the Ring
+The properties of a polynomial depend on the ring over which it is defined.
+
+*** Example: Is $x^2 + 1$ a perfect square?
+1.  *In $\mathbb{Z}[x]$*: **No.**
+    Suppose $x^2 + 1 = p(x)^2$.
+    Degree analysis: $\deg(p^2) = 2 \implies \deg(p) = 1$. Let $p(x) = ax + b$.
+    $$ p(x)^2 = a^2x^2 + 2abx + b^2 $$
+    Comparing coefficients: $a^2 = 1, b^2 = 1$, and $2ab = 0$.
+    Since $a, b \neq 0$, $2ab \neq 0$ in $\mathbb{Z}$. Thus, impossible.
+
+2.  *In $\mathbb{Z}_2[x]$*: **Yes.**
+    $$ (x+1)^2 = x^2 + 2x + 1 = x^2 + 1 $$
+    (Since $2 \equiv 0$ in $\mathbb{Z}_2$).
+
+* Roots and Factorization
+** Fundamental Theorem of Algebra
+Every non-constant polynomial in $\mathbb{C}[x]$ has a complex root.
+Every polynomial in $\mathbb{C}[x]$ has a unique factorization:
+$$ p(x) = a(x - x_1) \cdot \dots \cdot (x - x_n) $$
+where $a \neq 0$ and $x_1, \dots, x_n \in \mathbb{C}$.
+
+** Conjugate Roots Lemma
+If a polynomial $p(x) \in \mathbb{R}[x]$ has a root $z = a + bi$, then it has a root $\bar{z} = a - bi$.
+$$ p(a+bi) = 0 \iff p(a-bi) = 0 $$
+
+*** Proof
+Let $p(x) = a_n x^n + \dots + a_1 x + a_0$ with $a_i \in \mathbb{R}$.
+Suppose $p(z) = 0$.
+$$ a_n z^n + \dots + a_1 z + a_0 = 0 $$
+Take the conjugate of the entire equation:
+$$ \overline{a_n z^n + \dots + a_1 z + a_0} = \overline{0} $$
+Using properties of conjugation ($\overline{z_1 + z_2} = \overline{z_1} + \overline{z_2}$ and $\overline{z_1 z_2} = \overline{z_1} \cdot \overline{z_2}$):
+$$ \overline{a_n} \overline{z}^n + \dots + \overline{a_1} \overline{z} + \overline{a_0} = 0 $$
+Since the coefficients are real ($a_i \in \mathbb{R}$), $\overline{a_i} = a_i$.
+$$ a_n \overline{z}^n + \dots + a_1 \overline{z} + a_0 = 0 $$
+Thus, $p(\bar{z}) = 0$.
+
+*** Note on the Ring
+The ring matters! Consider $p(x) = x^2 + ix$ in $\mathbb{C}[x]$. This logic does not hold because coefficients are not all real.
+
+** Equality of Polynomials
+Question: When is $p = g$?
+1.  *Algebraic perspective:* $p = g$ if and only if $\deg(p) = \deg(g)$ and corresponding coefficients are equal.
+2.  *Functional perspective:* Let $p: D \to R$ and $g: D \to R$. $p = g$ if and only if $D = D'$ and $p(x) = g(x)$ for all $x \in D$.
+
+* Polar Coordinates
+** Definitions
+- *Cartesian Coordinates:* $P(x, y)$
+- *Polar Coordinates:* $P(r, \theta)$
+  - $r = |OP|$ (distance from origin)
+  - $\theta$ is the angle between $OP$ and the x-axis.
+  - Domains: $\theta \in [0, 2\pi)$ or $\theta \in (-\pi, \pi]$.
+
+** Graphing in Polar Coordinates
+Let $f$ be a function. The graph of $f$ in polar coordinates is the collection of all points $(r, \theta)$ such that $r = f(\theta)$.
+
+** Conversion Formulas
+From Polar to Cartesian:
+$$ x = r \cos \theta $$
+$$ y = r \sin \theta $$
+
+From Cartesian to Polar:
+$$ r = \sqrt{x^2 + y^2} $$
+$$ \theta = \arctan\left(\frac{y}{x}\right) $$
+
+** Examples
+*** 1. Constant Radius
+Equation: $r = 2$
+Shape: Circle centered at origin with radius 2.
+In Cartesian: $x^2 + y^2 = 2^2$.
+
+*** 2. Archimedean Spiral
+Equation: $r = \theta$
+Shape: A spiral starting at the origin and expanding as $\theta$ increases.
+
+*** 3. Cardioid
+Equation: $r = 1 - \sin \theta$
+Shape: A heart shape.
+- $\theta = 0 \implies r = 1$
+- $\theta = \frac{\pi}{2} \implies r = 0$ (Cusp at origin)
+- $\theta = \pi \implies r = 1$
+- $\theta = \frac{3\pi}{2} \implies r = 2$

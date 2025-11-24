@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-24>
-#+lastmod: <2025-11-24 12:38>
+#+lastmod: <2025-11-24 15:45>
 #+options: num:t
 #+startup: overview
 
@@ -32,7 +32,7 @@
 - [ ] Lecture 30 :: Complex numbers.
 - [ ] Lecture 31 :: Complex numbers-2.
 - [ ] Lecture 32 :: Rings and fields.
-- [ ] Lecture 34 :: Polynomial Rings. Polar coordinates.
+- [X] Lecture 34 :: Polynomial Rings. Polar coordinates.
 - [X] Lecture 35 :: Sequences. Convergence.
 - [X] Lecture 36 :: Sequences-2.
 - [X] Lecture 37 :: More sequences.
