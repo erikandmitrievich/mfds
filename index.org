@@ -2,31 +2,91 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-25>
-#+lastmod: <2025-10-31 10:52>
+#+lastmod: <2025-11-24 10:55>
 #+options: num:t
 #+startup: overview
 
-* Navigation
-** Core Study Materials
-- [[file:how-to-study/how-to-study.org][How to Study Guide]]
-- [[file:math-symbols.org][Math Symbols Reference]]
+🧠 The Dashboard (Current Focus)
+:PROPERTIES:
+:VISIBILITY: all
+:END:
 
-** STeOP Courses
-*** Lecture Notes
-- [[file:courses/steop-lecture/logic.org][Logic]]
-- [[file:courses/steop-lecture/sets.org][Sets]]
-- [[file:courses/steop-lecture/induction.org][Induction]]
-- [[file:courses/steop-lecture/direct-proof.org][Direct Proof]]
-- [[file:courses/steop-lecture/counting.org][Counting]]
-- [[file:courses/steop-lecture/relations.org][Relations]]
-- [[file:courses/steop-lecture/functions.org][Functions]]
+Welcome to my digital garden. This repository contains my entire workflow for my Bachelor's degree, written primarily in Org-mode, Julia, and LaTeX.
 
-*** Problem Sets
-- [[file:courses/steop-ue/problem-set-1/problem-set-1.org][problem-set-1]]
-- [[file:courses/steop-ue/problem-set-2/problem-set-2.org][problem-set-2]]
-- [[file:courses/steop-ue/problem-set-3/problem-set-3.org][problem-set-3]]
-- [[file:courses/steop-ue/problem-set-4/problem-set-4.org][problem-set-4]]
-- [[file:courses/steop-ue/problem-set-5/problem-set-5.org][problem-set-5]]
-- [[file:courses/steop-ue/problem-set-6/problem-set-6.org][problem-set-6]]
-- [[file:courses/steop-ue/problem-set-7/problem-set-7.org][problem-set-7]]
-- [[file:courses/steop-ue/problem-set-8/problem-set-8.org][problem-set-8]]
+Current Term: Winter Semester 2025
+
+| Course                | Lecture Notes (VO) | Problem Sets (UE)   | Exam Prep      |
+|-----------------------+--------------------+---------------------+----------------|
+| Intro to Math (STEOP) | [[file:01_bachelor/2025_winter_term/00_steop/01_lectures/][Lectures Directory]] | [[file:01_bachelor/2025_winter_term/00_steop/02_exercises/][Exercises Directory]] | [[file:01_bachelor/2025_winter_term/00_steop/03_exam/][Exam Resources]] |
+| Analysis 1            | [[file:01_bachelor/2025_winter_term/01_analysis/01_lectures/][Lectures Directory]] | [[file:01_bachelor/2025_winter_term/01_analysis/02_exercises/][Exercises Directory]] | /In Progress/  |
+| Linear Algebra 1      | [[file:01_bachelor/2025_winter_term/02_linear_algebra/01_lectures/][Lectures Directory]] | [[file:01_bachelor/2025_winter_term/02_linear_algebra/02_exercises/][Exercises Directory]] | /In Progress/  |
+
+📂 Global Resources
+Reference materials independent of specific semesters.
+
+[[file:00_global/books/][📚 Bookshelf]] :: PDFs of standard texts (Pinter, Liebeck, Cummings).
+
+[[file:00_global/code_playground/][💻 Code Playground]] :: Non-course specific code (Julia) & snippet tests.
+
+[[file:00_global/how_to_study/][🧠 Meta-Learning]] :: Study techniques, Spanish drills, and Org-mode tips.
+
+[[file:00_global/math_symbols.org][∑ Math Symbols Reference]] :: LaTeX/Org quick reference for notation.
+
+🎓 Academic Archive
+** [[file:01_bachelor/2025_winter_term/][2025 Winter Term]]
+*** [[file:01_bachelor/2025_winter_term/00_steop/][00_steop (Intro to Math)]]
+
+Focus: Logic, Sets, Relations, Functions, Proofs.
+
+Key Files:
+
+[[file:01_bachelor/2025_winter_term/00_steop/01_lectures/notes/logic.org][Logic Notes]]
+
+[[file:01_bachelor/2025_winter_term/00_steop/01_lectures/notes/sets.org][Set Theory]]
+
+[[file:01_bachelor/2025_winter_term/00_steop/03_exam/02_exercise_exam/exam_prep.org][UE Exam Preparation]]
+
+*** [[file:01_bachelor/2025_winter_term/01_analysis/][01_analysis]]
+- Focus: Real numbers, sequences, series, continuity.
+- Status: Active problem sets.
+
+*** [[file:01_bachelor/2025_winter_term/02_linear_algebra/][02_linear_algebra]]
+- Status: Setup phase.
+
+🛠 Workflow & Conventions
+For visitors navigating this structure:
+
+** Directory Structure
+
+00_global: Persistent resources (Books, Scripts).
+
+01_bachelor: Sorted by ~Year_Term~ -> ~Course~.
+
+~00_admin~: Syllabi and administrative documents.
+
+~01_lectures~: Theory, encompassing:
+
+~notes/~: My personal Org-mode notes.
+
+~slides/~: Original professor PDFs.
+
+~02_exercises~: Weekly problem sets (~set_XX~).
+
+~03_exam~: Review sheets and past exams.
+
+** Naming Legend
+
+ps_XX.org :: Problem Set source files (Org-mode).
+
+ps_XX_source.pdf :: The original assignment sheet (PDF).
+
+_chats/ :: AI/LLM context logs for study assistance.
+
+📝 Quick Tasks
+** TODO Review Linear Algebra setup
+** TODO Migrate "how to study" notes into Spaced Repetition (Org Drill)
+** TODO Finish [[file:01_bachelor/2025_winter_term/00_steop/03_exam/02_exercise_exam/problem_sets_redo/problem_set_8.org][Problem Set 8 Redo]] for STEOP
+
+#+BEGIN_QUOTE
+"Mathematics is the art of giving the same name to different things." — Henri Poincaré
+#+END_QUOTE
