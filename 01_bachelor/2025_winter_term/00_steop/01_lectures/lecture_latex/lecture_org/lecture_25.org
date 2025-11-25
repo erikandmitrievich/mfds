@@ -1,0 +1,133 @@
+#+title: Lecture 25
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-25>
+#+lastmod: <2025-11-25 08:45>
+#+options: num:t
+#+startup: overview
+
+* Cardinality of Sets
+** Finite Sets
+Let $A$ and $B$ be finite sets.
+We denote $|A|$ as the number of elements in $A$.
+Two sets have the same size if they have the same number of elements:
+$$ |A| = |B| \iff \text{number of elements in } A = \text{number of elements in } B $$
+
+** Infinite Sets and Equivalence
+For infinite sets, we cannot simply count elements.
+*** Definition
+Two sets $A$ and $B$ are said to have equal size (or *cardinality*), or are *equivalent*, if there exists a bijection from $A$ to $B$.
+- *Notation:* $A \sim B$ or $|A| = |B|$.
+
+*** Theorem: Equivalence Relation
+The relation $\sim$ is an equivalence relation.
+*Proof:*
+1.  *Reflexive:* $A \sim A$.
+    The identity map $id_A: A \to A$ is a bijection.
+2.  *Symmetric:* If $A \sim B$, then $B \sim A$.
+    If $f: A \to B$ is a bijection, then the inverse function $f^{-1}: B \to A$ exists and is also a bijection.
+3.  *Transitive:* If $A \sim B$ and $B \sim C$, then $A \sim C$.
+    Let $f: A \to B$ and $g: B \to C$ be bijections. The composition $g \circ f: A \to C$ is a bijection.
+
+* Countable Sets
+** Definition
+A set $A$ is called *countable* (or denumerable) if $A \sim \mathbb{N}$ (the set of natural numbers).
+- *Notation:* The cardinality of $\mathbb{N}$ is denoted by $\aleph_0$ (aleph-null).
+
+*** Terminology Note
+There is sometimes ambiguity in terminology:
+1.  *Denumerable / Infinitely Countable:* Specifically $A \sim \mathbb{N}$.
+2.  *Countable:* Either finite or denumerable.
+In this context, we often focus on infinite countable sets.
+
+** Examples
+1.  *Hilbert's Hotel:* An infinite hotel with rooms $1, 2, 3, \dots$ is full. If a new guest arrives, move guest in room $n$ to $n+1$. Room 1 becomes free. The set $\mathbb{N} \cup \{x\} \sim \mathbb{N}$.
+2.  *Even Natural Numbers:* Let $E = \{2n : n \in \mathbb{N}\} = \{2, 4, 6, \dots\}$.
+    Define $f: \mathbb{N} \to E$ by $f(n) = 2n$. This is a bijection, so $E \sim \mathbb{N}$.
+3.  *Integers ($\mathbb{Z}$):* $\mathbb{Z} = \{0, 1, -1, 2, -2, \dots\}$.
+    We can list them: $0 \to 1, 1 \to 2, -1 \to 3, 2 \to 4, -2 \to 5, \dots$
+    Thus $\mathbb{Z} \sim \mathbb{N}$.
+
+** Theorems on Countability
+*** Theorem: Infinite Subsets
+Every infinite subset of $\mathbb{N}$ is countable.
+*Proof Sketch:*
+Let $A \subset \mathbb{N}$ be infinite.
+We can list elements of $A$ in increasing order:
+- $a_1 = \min A$
+- $a_2 = \min (A \setminus \{a_1\})$
+- $a_3 = \min (A \setminus \{a_1, a_2\})$
+- ...
+This defines a bijection $f: \mathbb{N} \to A$ where $f(i) = a_i$.
+
+*** Theorem: Rationals ($\mathbb{Q}$)
+The set of rational numbers $\mathbb{Q}$ is countable ($|\mathbb{Q}| = \aleph_0$).
+*Proof Strategy:*
+1.  Show positive rationals $\mathbb{Q}_{>0}$ are countable.
+    Arrange fractions $p/q$ in a 2D grid:
+    $$
+    \begin{matrix}
+    1/1 & 1/2 & 1/3 & 1/4 & \dots \\
+    2/1 & 2/2 & 2/3 & 2/4 & \dots \\
+    3/1 & 3/2 & 3/3 & 3/4 & \dots \\
+    4/1 & 4/2 & 4/3 & 4/4 & \dots \\
+    \vdots & \vdots & \vdots & \vdots & \ddots
+    \end{matrix}
+    $$
+    Traverse diagonals (snake-like path): $\frac{1}{1}, \frac{1}{2}, \frac{2}{1}, \frac{3}{1}, \frac{2}{2}, \frac{1}{3}, \dots$.
+    Skip fractions that are not in simplest form (repetitions like $2/2$).
+    This creates a listing $q_1, q_2, q_3, \dots$.
+2.  Extend to all rationals $\mathbb{Q}$ by interleaving:
+    $\mathbb{Q} = \{0, q_1, -q_1, q_2, -q_2, \dots\}$.
+
+*** Theorem: Union of Countable Sets
+The union of countably many countable sets is countable.
+*Proof Sketch:*
+Let $A_1, A_2, A_3, \dots$ be countable sets.
+Let $A_n = \{a_{n1}, a_{n2}, a_{n3}, \dots\}$.
+We can arrange all elements $a_{nm}$ in a grid and traverse diagonals (similar to the proof for $\mathbb{Q}$).
+$$ \bigcup_{n=1}^\infty A_n = \{a_{11}, a_{21}, a_{12}, a_{13}, a_{22}, a_{31}, \dots\} $$
+
+* Uncountable Sets
+** Comparing Cardinalities
+- We say $|A| \le |B|$ if there exists an *injection* from $A$ to $B$.
+- We say $|A| < |B|$ if $|A| \le |B|$ and $|A| \ne |B|$ (i.e., no bijection exists).
+
+** Cantor's Theorem: Uncountability of (0,1)
+The open interval $(0,1)$ is uncountable.
+*Proof (Cantor's Diagonal Argument):*
+Suppose for contradiction that $A = (0,1)$ is countable.
+Then we can list all real numbers in $(0,1)$ as a sequence $r_1, r_2, r_3, \dots$.
+We use the unique decimal representation (avoiding infinite strings of 9s).
+
+$$
+\begin{aligned}
+r_1 &= 0.a_{11} a_{12} a_{13} \dots \\
+r_2 &= 0.a_{21} a_{22} a_{23} \dots \\
+r_3 &= 0.a_{31} a_{32} a_{33} \dots \\
+&\vdots
+\end{aligned}
+$$
+
+We construct a new number $b = 0.b_1 b_2 b_3 \dots \in (0,1)$ that is not in the list.
+Define the digit $b_n$ as:
+$$
+b_n = \begin{cases}
+1 & \text{if } a_{nn} \ne 1 \\
+2 & \text{if } a_{nn} = 1
+\end{cases}
+$$
+(Note: Using 1 and 2 ensures the decimal expansion does not end in infinite 9s, avoiding representation ambiguity).
+
+For every $n$, the number $b$ differs from $r_n$ in the $n$-th decimal place ($b_n \ne a_{nn}$).
+Therefore, $b \ne r_n$ for any $n \in \mathbb{N}$.
+This contradicts the assumption that the list contains all numbers in $(0,1)$.
+Thus, $(0,1)$ is uncountable.
+
+** Theorem: Supersets of Uncountable Sets
+Let $A \subset B$. If $A$ is uncountable, then $B$ is uncountable.
+*Proof:*
+Assume $B$ is countable.
+Since any subset of a countable set is countable, $A$ must be countable.
+This contradicts the hypothesis that $A$ is uncountable.
+Therefore, $B$ must be uncountable.
