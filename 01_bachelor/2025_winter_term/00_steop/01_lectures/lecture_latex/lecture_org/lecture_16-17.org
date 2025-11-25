@@ -1,0 +1,133 @@
+#+title: Lecture 16-17
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-25>
+#+lastmod: <2025-11-25 09:30>
+#+options: num:t
+#+startup: overview
+
+* Relations
+** Definition
+Let $A$ and $B$ be sets. A relation from $A$ to $B$ is a subset $R \subset A \times B$.
+
+Notation:
+- $(a, b) \in R \iff aRb$
+- $(a, b) \notin R \iff a \not{R} b$
+
+If $A = B$, then $R$ is called a relation on $A$.
+
+** Examples
+*** Example 1: Relation between distinct sets
+Let $A = \{1, 2, 3, 4\}$ and $B = \{a, b, c\}$.
+Let $R = \{(1, a), (1, c), (2, b), (2, c), (3, c)\}$.
+This can be represented by a mapping diagram where arrows point from elements in $A$ to elements in $B$.
+
+*** Example 2: Inequality relation on a set
+Let $R \subset A \times A$ where $A = \{1, 2, 3, 4\}$.
+Let $aRb \iff a < b$.
+Then $R = \{(1, 2), (1, 3), (1, 4), (2, 3), (2, 4), (3, 4)\}$.
+Note: In the scanned text, there seems to be a mistake listing $(4, 2), (4, 3)$ etc., which would correspond to $>$ rather than $<$. Given the context of standard relations, $a < b$ usually implies the pairs listed above.
+
+*** Example 3: Identity/Diagonal relation
+Let $A = \{1, 2, 3, 4\}$.
+Let $aRb \iff a = b$.
+Then $R = \{(1, 1), (2, 2), (3, 3), (4, 4)\}$.
+
+* Properties of Relations
+Let $R$ be a relation on a set $S$.
+
+** 1. Reflexive
+$R$ is reflexive if for all $a \in S$, $aRa$.
+- Example of reflexive relation: $R_1 = \{(1,1), (1,2), (2,1), (2,2), (3,4), (4,1), (4,4)\}$ on $\{1,2,3,4\}$. Wait, looking closely at $R_1$, $(3,3)$ is missing, so $R_1$ is actually *not* reflexive on $\{1,2,3,4\}$.
+- $R_5$ (from the table) contains $(1,1), (2,2), (3,3), (4,4)$, so it is reflexive.
+
+** 2. Symmetric
+$R$ is symmetric if for all $a, b \in S$, $aRb \implies bRa$.
+- Examples from text: $R_2$ and $R_3$ are symmetric.
+- Note: $R_2 = \{(1,1), (1,2), (2,1)\}$. Since $(1,2) \in R_2 \implies (2,1) \in R_2$, it is symmetric.
+
+** 3. Antisymmetric
+$R$ is antisymmetric if for all $a, b \in S$, ($aRb \land bRa$) $\implies a = b$.
+- Examples from text: $R_4, R_5, R_6$.
+- $R_4$ represents a strictly less than or similar partial order relation where no two distinct elements relate to each other both ways.
+
+** 4. Transitive
+$R$ is transitive if for all $a, b, c \in S$, ($aRb \land bRc$) $\implies aRc$.
+- Examples from text: $R_4, R_5, R_6$.
+
+** Counting Relations
+If $|S| = n$, then $|S \times S| = n^2$.
+The number of possible relations on $S$ is the number of subsets of $S \times S$, which is $|\mathcal{P}(S \times S)| = 2^{n^2}$.
+
+* Equivalence Relations
+** Definition
+A relation $R$ on a set $S$ is called an *equivalence relation* if $R$ is:
+1. Reflexive
+2. Symmetric
+3. Transitive
+
+Notation: $a \sim b$ is often used for equivalence relations.
+
+** Examples
+1. $S = \mathbb{Z}$, $aRb \iff |a| = |b|$. (Reflexive, Symmetric, Transitive -> YES)
+2. $S = \mathbb{R}$, $aRb \iff |a - b| \le 2$. (Reflexive? Yes. Symmetric? Yes. Transitive? No, e.g., $0R1.5$ and $1.5R3$ but not $0R3$. -> NOT an equivalence relation).
+3. $S = \text{PEOPLE}$, $aRb \iff a$ is a sibling of $b$. (Transitivity fails if you don't count oneself as a sibling, or if you consider half-siblings in a specific way. Usually NOT transitive in strict definitions without care).
+4. $S = \text{CITIES}$, $aRb \iff a$ is in the same country as $b$. (YES, this partitions cities by country).
+5. Modular Arithmetic: $S = \mathbb{Z}$, fix $m \in \mathbb{N}, m \ge 2$. Define $aRb \iff a \equiv b \pmod m$. (YES).
+
+* Equivalence Classes
+** Definition
+Let $R$ be an equivalence relation on $S$ and $a \in S$. The set
+$$ [a] = \{ s \in S : (a, s) \in R \} $$
+is called the *equivalence class* of $a$.
+
+** Theorem (Properties of Equivalence Classes)
+Let $R$ be an equivalence relation on $S$, and $a, b \in S$. Then the following are equivalent (TFAE):
+1. $aRb$
+2. $[a] = [b]$
+3. $[a] \cap [b] \ne \emptyset$
+
+*** Proof
+- $(i) \implies (ii)$: Assume $aRb$. We want to show $[a] \subset [b]$ and $[b] \subset [a]$.
+  Let $x \in [a]$, so $aRx$. Since $R$ is symmetric, $bRa$. Since $R$ is transitive and $bRa \land aRx$, we have $bRx$, so $x \in [b]$. Thus $[a] \subset [b]$. The reverse inclusion holds similarly.
+- $(ii) \implies (iii)$: If $[a] = [b]$, then since $R$ is reflexive, $a \in [a]$, so $a \in [b]$. Thus $a \in [a] \cap [b]$, so the intersection is not empty.
+- $(iii) \implies (i)$: Assume $[a] \cap [b] \ne \emptyset$. Let $s \in [a] \cap [b]$.
+  Then $aRs$ and $bRs$. By symmetry $sRb$. By transitivity $aRs \land sRb \implies aRb$.
+
+** Partitions
+A partition of a set $S$ is a collection of disjoint non-empty subsets $S_1, \dots, S_k$ such that $\bigcup S_i = S$.
+The set of equivalence classes forms a partition of $S$.
+$$ S = \bigcup_{x \in S} [x] $$
+and distinct equivalence classes are disjoint.
+
+** Example: Modular Arithmetic
+For $S = \mathbb{Z}$ and relation modulo 4:
+- $[0] = \{\dots, -8, -4, 0, 4, 8, \dots\}$
+- $[1] = \{\dots, -7, -3, 1, 5, 9, \dots\}$
+- $[2] = \{\dots, -6, -2, 2, 6, 10, \dots\}$
+- $[3] = \{\dots, -5, -1, 3, 7, 11, \dots\}$
+These sets form a partition of $\mathbb{Z}$.
+
+* Partial Orders
+** Definition
+A relation $R$ on a set $S$ is a *partial order* if it is:
+1. Reflexive
+2. Antisymmetric
+3. Transitive
+
+Notation: $(S, R)$ or $(S, \le)$ is called a *partially ordered set* (or *poset*).
+
+** Examples
+1. $S = \mathbb{R}$, $xRy \iff x \le y$. (Standard less-than-or-equal).
+2. $S = \mathcal{P}(A)$ (Power set of $A$), $X R Y \iff X \subseteq Y$. (Subset inclusion).
+3. $S = \mathbb{N}$, $xRy \iff x | y$ (Divisibility).
+   - Reflexive: $x|x$.
+   - Antisymmetric: $x|y \land y|x \implies x=y$ (for positive integers).
+   - Transitive: $x|y \land y|z \implies x|z$.
+4. Lexicographic order (dictionary order) on strings. "bard" $R$ "bark" because 'd' comes before 'k'.
+
+** Comparability
+Let $R$ be a partial order on $S$. Elements $a, b \in S$ are *comparable* if $aRb$ or $bRa$.
+If every pair of elements in $S$ is comparable, the partial order is called a *total* (or *linear*) order.
+- Example of partial but not total: Subset inclusion. $\{1, 2\}$ and $\{2, 3\}$ are not comparable.
+- Example of total order: $(\mathbb{R}, \le)$.

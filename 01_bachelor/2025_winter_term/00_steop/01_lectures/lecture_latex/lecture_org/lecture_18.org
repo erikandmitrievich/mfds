@@ -1,0 +1,102 @@
+#+title: Lecture 18
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-25>
+#+lastmod: <2025-11-25 09:28>
+#+options: num:t
+#+startup: overview
+
+* Special Elements in Posets
+Let $(S, \le)$ be a partially ordered set (poset).
+
+** Definitions
+1.  *Greatest Element:* An element $g \in S$ is called a *greatest element* of $S$ if $a \le g$ for all $a \in S$.
+    - Notation: $\forall a \in S, a \le g$.
+2.  *Maximal Element:* An element $m \in S$ is called a *maximal element* of $S$ if there is no element greater than it.
+    - Notation: $\neg (\exists a \in S : m < a)$.
+3.  *Least (Smallest) Element:* An element $l \in S$ is called a *least element* of $S$ if $l \le a$ for all $a \in S$.
+    - Notation: $\forall a \in S, l \le a$.
+4.  *Minimal Element:* An element $p \in S$ is called a *minimal element* of $S$ if there is no element smaller than it.
+    - Notation: $\neg (\exists a \in S : a < p)$.
+
+** Examples
+*** Example 1: Real Numbers Interval
+Let $S = [0, 1]$ with standard $\le$.
+- *Greatest:* 1
+- *Maximal:* 1
+- *Least:* 0
+- *Minimal:* 0
+
+*** Example 2: Set Inclusion
+Let $S = \{ \{1\}, \{1, 2\}, \{1, 2, 3\} \}$ with $\subseteq$.
+- *Greatest:* $\{1, 2, 3\}$
+- *Maximal:* $\{1, 2, 3\}$
+- *Least:* $\{1\}$
+- *Minimal:* $\{1\}$
+
+*** Example 3: Set Inclusion (Partial Chain)
+Let $S = \{ \{1\}, \{2\}, \{1, 2, 3\}, \{1, 2\} \}$ with $\subseteq$.
+- *Greatest:* $\{1, 2, 3\}$
+- *Maximal:* $\{1, 2, 3\}$
+- *Least:* None (Neither $\{1\}$ nor $\{2\}$ is a subset of the other).
+- *Minimal:* $\{1\}, \{2\}$
+
+*** Example 4: Discrete Graph
+Let $S = \{A, B\}$ with no relations (discrete order).
+- *Greatest:* None
+- *Maximal:* A, B
+- *Least:* None
+- *Minimal:* A, B
+
+*** Example 5: Tree Structure (Genealogy)
+Let $S$ be a set of nodes in a tree where $x \le y$ if $x$ is a descendant of $y$.
+- *Greatest:* Root node (ancestor of all).
+- *Maximal:* Root node.
+- *Least:* None (if multiple branches exist).
+- *Minimal:* All leaf nodes.
+
+** Theorems on Uniqueness
+*** Theorem 1: Uniqueness of Greatest Element
+A poset has no more than one greatest element.
+
+*Proof:*
+Suppose by contradiction that there are two greatest elements $g_1, g_2 \in S$.
+- Since $g_1$ is greatest, $g_2 \le g_1$.
+- Since $g_2$ is greatest, $g_1 \le g_2$.
+By antisymmetry, $g_1 = g_2$. Thus, the greatest element is unique.
+
+*** Theorem 2: Relationship between Greatest and Maximal
+The greatest element of a poset is its only maximal element.
+
+*Proof:*
+Let $g$ be the greatest element.
+1.  *Maximal:* Suppose $g$ is not maximal. Then there exists $b \in S$ such that $g < b$. But since $g$ is greatest, $b \le g$. This is a contradiction. Thus, $g$ is maximal.
+2.  *Uniqueness:* Suppose there is another maximal element $m \ne g$. Since $g$ is greatest, $m \le g$. Since $m \ne g$, we have $m < g$. This contradicts the maximality of $m$ (as $g$ is strictly greater). Thus, $m$ cannot exist.
+
+* Bounds (Upper and Lower)
+Let $(S, \le)$ be a poset and $A \subseteq S$.
+
+** Definitions
+1.  *Upper Bound:* An element $u \in S$ is an upper bound of $A$ if $a \le u$ for all $a \in A$.
+2.  *Supremum (Least Upper Bound):* The least element among all upper bounds of $A$.
+    - Notation: $\sup A$ or l.u.b.
+3.  *Lower Bound:* An element $l \in S$ is a lower bound of $A$ if $l \le a$ for all $a \in A$.
+4.  *Infimum (Greatest Lower Bound):* The greatest element among all lower bounds of $A$.
+    - Notation: $\inf A$ or g.l.b.
+
+** Examples
+Let $S = [0, 2]$ with standard $\le$.
+
+*** Example A: Closed Interval
+Let $A = [0, 1]$.
+- *Upper bounds:* $[1, 2]$ (e.g., 1, 1.5, 2).
+- *Supremum:* 1.
+- *Lower bounds:* $[0, 0]$ (only 0, since $S$ starts at 0).
+- *Infimum:* 0.
+
+*** Example B: Open Interval
+Let $A = (0, 1)$.
+- *Upper bounds:* $[1, 2]$ (e.g., 1, 1.5, 2).
+- *Supremum:* 1 (Note: $\sup A$ does not need to be in $A$).
+- *Lower bounds:* 0.
+- *Infimum:* 0.

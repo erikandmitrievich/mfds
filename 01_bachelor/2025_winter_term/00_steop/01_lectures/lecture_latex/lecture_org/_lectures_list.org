@@ -2,11 +2,11 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-24>
-#+lastmod: <2025-11-25 09:17>
+#+lastmod: <2025-11-25 09:25>
 #+options: num:t
 #+startup: overview
 
-* [58%]
+* [61%]
 - [ ] Lecture 0 :: Introduction to the course. Logistics. Julia.
 - [ ] Lecture 1 :: Sets. Basic definitions and operations with sets.
 - [ ] Lectures 2-3 :: Propositional logic. Quantifiers.
@@ -21,7 +21,7 @@
 - [ ] Lectures 14-15 :: Counting. Binomial theorem. Inclusion-exclusion formula.
 - [ ] Lectures 16-17 :: Relations.
 - [ ] Lecture 18 :: Extremal elements in a poset.
-- [ ] Lecture 19 :: Pigeonhole principle.
+- [X] Lecture 19 :: Pigeonhole principle.
 - [X] Lecture 20 :: Functions.
 - [X] Lecture 21 :: Julia tutorial.
 - [X] Lecture 22 :: Functions (continuation).
