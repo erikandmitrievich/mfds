@@ -1,0 +1,107 @@
+#+title: Lecture 19
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-25>
+#+lastmod: <2025-11-25 09:24>
+#+options: num:t
+#+startup: overview
+
+* The Pigeonhole Principle
+
+** Statement
+If there are $n+1$ pigeons and $n$ pigeonholes, then there will be at least one pigeonhole with at least 2 pigeons. This is also known as the Dirichlet Drawer Principle.
+
+** Proof
+We prove this by contradiction.
+Suppose every pigeonhole $P_i$ has fewer than 2 pigeons ($|P_i| < 2$). Since the number of pigeons must be an integer, this implies $|P_i| \le 1$ for all $i$.
+The total number of pigeons would be:
+$$ \sum_{i=1}^n |P_i| \le \sum_{i=1}^n 1 = n $$
+However, we are given $n+1$ pigeons. This is a contradiction. Therefore, at least one pigeonhole must contain 2 or more pigeons.
+
+** Generalized Principle
+If there are $nk+1$ pigeons and $n$ pigeonholes, then there is at least one pigeonhole with $k+1$ pigeons.
+
+* Problems and Applications
+
+** 1. The Birthday Problem
+*Problem:* There are 80 students in a class. Prove that at least 7 have their birthday in the same month.
+
+*Solution:*
+- *Pigeons:* 80 students.
+- *Pigeonholes:* 12 months.
+
+Using the generalized Pigeonhole Principle with $n=12$:
+We are looking for $k$ such that $12k + 1 \le 80$.
+$$ 80 = 12 \times 6 + 8 $$
+Here, we have $12 \times 6 + 8$ pigeons. Since $80 > 12 \times 6$, there must be at least $6 + 1 = 7$ students in the same month.
+
+** 2. Points in a Square
+*Problem:* We put 5 points into a unit square (side length 1). Prove that there are two points within a distance of $\frac{\sqrt{2}}{2}$.
+
+*Solution:*
+Divide the unit square into 4 smaller squares, each with side length $1/2$.
+- *Pigeons:* 5 points.
+- *Pigeonholes:* 4 small squares.
+
+By the Pigeonhole Principle, at least 2 points must fall into the same small square.
+The maximum distance between any two points in a square of side $s = 1/2$ is the length of the diagonal:
+$$ d = \sqrt{\left(\frac{1}{2}\right)^2 + \left(\frac{1}{2}\right)^2} = \sqrt{\frac{1}{4} + \frac{1}{4}} = \sqrt{\frac{1}{2}} = \frac{\sqrt{2}}{2} $$
+Thus, the two points in that small square are within distance $\frac{\sqrt{2}}{2}$.
+
+** 3. Antipodes on Earth
+*Problem:* Suppose the Earth is a ball with 70% of its surface covered by water. Prove that there exist two antipodes (diametrically opposite points) that are both in water.
+
+*Solution:*
+Let $S$ be the total surface area of the Earth. Let $W$ be the set of points covered by water. Given $\text{Area}(W) = 0.7 S$.
+Let $W'$ be the set of points antipodal to points in $W$. Geometrically, this is the projection of the water surface through the center to the other side. Area is preserved, so $\text{Area}(W') = \text{Area}(W) = 0.7 S$.
+
+If there were no pair of antipodes both in water, then $W$ and $W'$ would be disjoint sets (i.e., $W \cap W' = \emptyset$).
+The area of their union would be:
+$$ \text{Area}(W \cup W') = \text{Area}(W) + \text{Area}(W') = 0.7 S + 0.7 S = 1.4 S $$
+This implies the area is greater than the total surface area $S$ ($1.4S > S$), which is a contradiction.
+Therefore, $W \cap W' \neq \emptyset$, meaning there exists a point $p \in W$ such that its antipode $p' \in W$.
+
+** 4. Friends in a Class
+*Problem:* In a class of 80 people, prove that there are 2 persons with the same number of friends within the class.
+
+*Solution:*
+- *Pigeons:* 80 people.
+- *Pigeonholes:* The possible number of friends a person can have.
+
+Potential friend counts range from 0 to 79. However, it is structurally impossible for a person with 0 friends and a person with 79 friends to exist in the same group of 80 people.
+- If someone has 79 friends (knows everyone else), then no one can have 0 friends (because everyone is known by the first person). The possible counts are $\{1, 2, \dots, 79\}$.
+- If someone has 0 friends, then no one can have 79 friends. The possible counts are $\{0, 1, \dots, 78\}$.
+
+In either case, there are only 79 possible values (pigeonholes) for 80 people (pigeons).
+By the Pigeonhole Principle, at least 2 people must have the same number of friends.
+
+** 5. Ramsey Theory Example
+*Problem:* In a group of 6 people, prove that there are at least 3 who are either mutual friends or mutual strangers.
+
+*Solution:*
+Represent the people as vertices in a graph. Connect two vertices with a solid line (or one color) if they are friends, and a dashed line (or another color) if they are strangers.
+Consider one person, say $A$. $A$ has 5 relationships with the other people.
+By the Pigeonhole Principle, at least $\lceil 5/2 \rceil = 3$ of these relationships are of the same type.
+
+Suppose $A$ has 3 friends: $B, C, D$.
+- If any pair among $B, C, D$ are friends (e.g., $B$ and $C$), then $A, B, C$ form a triangle of mutual friends.
+- If no pair among $B, C, D$ are friends, then $B, C, D$ form a triangle of mutual strangers.
+
+The argument is symmetric if $A$ starts with 3 strangers.
+Thus, a monochromatic triangle (3 mutual friends or 3 mutual strangers) always exists.
+
+** 6. Divisibility Problem
+*Problem:* A 3-year-old only knew the digit 1. He claimed he could write a number divisible by 743,123. Is he right?
+
+*Solution:*
+Consider the sequence of numbers consisting only of the digit 1:
+$$ a_1 = 1, a_2 = 11, a_3 = 111, \dots $$
+Consider these numbers modulo $m = 743,123$. There are $m$ possible remainders: $\{0, 1, \dots, m-1\}$.
+If we list $m+1$ such numbers ($a_1, \dots, a_{m+1}$), by the Pigeonhole Principle, at least two of them must have the same remainder modulo $m$.
+Let $a_i$ and $a_j$ be these numbers with $i > j$.
+$$ a_i \equiv a_j \pmod{m} \implies a_i - a_j \equiv 0 \pmod{m} $$
+The difference is:
+$$ a_i - a_j = \underbrace{11\dots1}_{i} - \underbrace{11\dots1}_{j} = \underbrace{11\dots1}_{i-j}\underbrace{00\dots0}_{j} = a_{i-j} \times 10^j $$
+Since $m = 743,123$ is not divisible by 2 or 5 (it ends in 3), $\gcd(m, 10^j) = 1$.
+Therefore, $m$ must divide $a_{i-j}$.
+Thus, the child is right; there exists a number consisting only of 1s that is divisible by 743,123.

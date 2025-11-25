@@ -1,0 +1,168 @@
+#+title: Lecture 23 24
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-25>
+#+lastmod: <2025-11-25 09:12>
+#+options: num:t
+#+startup: overview
+
+* Range of Functions
+** Example 1: Rational Function Range
+Let $f: \mathbb{R} \to \mathbb{R}$ be defined by $f(x) = \frac{2x}{1+x^2}$. Find the range $f(\mathbb{R})$.
+
+*** Solution Method 1 (Inequalities)
+We know $(x-1)^2 \ge 0 \implies x^2 - 2x + 1 \ge 0 \implies 2x \le 1+x^2$.
+Similarly, $(x+1)^2 \ge 0 \implies x^2 + 2x + 1 \ge 0 \implies -2x \le 1+x^2$.
+Thus, $-1 \le \frac{2x}{1+x^2} \le 1$.
+The range is contained in $[-1, 1]$.
+
+*** Solution Method 2 (Inverting)
+Let $y = \frac{2x}{1+x^2}$. We solve for $x$ in terms of $y$.
+$$ 2x = y(1+x^2) $$
+$$ yx^2 - 2x + y = 0 $$
+
+Case 1: $y = 0$. Then $-2x = 0 \implies x = 0$.
+Case 2: $y \ne 0$. This is a quadratic equation in $x$.
+For $x$ to be real, the discriminant must be non-negative:
+$$ D = (-2)^2 - 4(y)(y) = 4 - 4y^2 \ge 0 $$
+$$ 1 - y^2 \ge 0 \implies y^2 \le 1 \implies y \in [-1, 1] $$
+Solving for $x$:
+$$ x = \frac{2 \pm \sqrt{4-4y^2}}{2y} = \frac{1 \pm \sqrt{1-y^2}}{y} $$
+*Answer:* The range is $[-1, 1]$.
+
+* Injective Functions on $\mathbb{N}$
+** Example 2
+Find all injective functions $f: \mathbb{N} \to \mathbb{N}$ such that $f(n) \le n$ for all $n$.
+
+*** Solution
+- For $n=1$: $f(1) \le 1 \implies f(1) = 1$.
+- For $n=2$: $f(2) \le 2 \implies f(2) \in \{1, 2\}$. Since $f$ is injective and $f(1)=1$, we must have $f(2)=2$.
+- For $n=3$: $f(3) \in \{1, 2, 3\}$. Since $f(1)=1, f(2)=2$, we must have $f(3)=3$.
+
+*Hypothesis:* $f(n) = n$ for all $n$.
+*Proof by Induction:*
+1.  *Base Case:* $f(1)=1$ (Done).
+2.  *Step:* Suppose $f(k)=k$ for $k=1, 2, \dots, n$.
+3.  Consider $f(n+1)$. We know $f(n+1) \le n+1$, so $f(n+1) \in \{1, 2, \dots, n, n+1\}$.
+    Since $f$ is injective and the values $1, \dots, n$ are already taken by $f(1), \dots, f(n)$, the only remaining option is $f(n+1) = n+1$.
+
+* Bijections
+** Example 3: Quadratic Bijection
+Prove $f: [3, \infty) \to [5, \infty)$ defined by $f(x) = x^2 - 6x + 14$ is a bijection.
+
+*** Solution
+Let $y \in [5, \infty)$. We solve $x^2 - 6x + 14 = y$.
+$$ x^2 - 6x + 9 = y - 5 $$
+$$ (x-3)^2 = y - 5 $$
+$$ x - 3 = \pm \sqrt{y-5} $$
+$$ x = 3 \pm \sqrt{y-5} $$
+Since the domain is $[3, \infty)$, we require $x \ge 3$.
+Thus, we must choose the positive root: $x = 3 + \sqrt{y-5}$.
+Since $y \ge 5$, $y-5 \ge 0$, so the square root exists.
+This shows for every $y$, there is a unique $x$, so $f$ is a bijection.
+
+** Example 4: Modular Arithmetic
+Let $f: \mathbb{Z}_4 \to \mathbb{Z}_4$ defined by $f(\bar{x}) = \overline{3x+1}$. Prove $f$ is bijective.
+
+*** Solution
+We evaluate $f$ for all elements in $\mathbb{Z}_4 = \{\bar{0}, \bar{1}, \bar{2}, \bar{3}\}$:
+- $f(\bar{0}) = \overline{1}$
+- $f(\bar{1}) = \overline{3(1)+1} = \overline{4} = \overline{0}$
+- $f(\bar{2}) = \overline{3(2)+1} = \overline{7} = \overline{3}$
+- $f(\bar{3}) = \overline{3(3)+1} = \overline{10} = \overline{2}$
+Since the range is $\{\bar{1}, \bar{0}, \bar{3}, \bar{2}\}$, which is all of $\mathbb{Z}_4$, $f$ is bijective.
+
+** Example 5: Circle Segment
+Let $f: [0, 1] \to [0, 1]$ defined by $f(x) = \sqrt{1-x^2}$. Prove it is a bijection and find $f^{-1}$.
+
+*** Solution
+Let $y = \sqrt{1-x^2}$. Since range is $[0,1]$, $y \ge 0$.
+$$ y^2 = 1 - x^2 $$
+$$ x^2 = 1 - y^2 $$
+$$ x = \pm \sqrt{1-y^2} $$
+Since domain is $[0,1]$, $x \ge 0$, so $x = \sqrt{1-y^2}$.
+Thus, the inverse function is $f^{-1}(y) = \sqrt{1-y^2}$. Note that $f = f^{-1}$.
+
+* Permutations
+** Counting Bijections
+How many bijections are there from a set of $n$ elements to itself?
+*Answer:* $n!$ (n factorial).
+
+** Composition and Inverse of Permutations
+Let $\alpha = \begin{pmatrix} 1 & 2 & 3 & 4 & 5 \\ 3 & 1 & 2 & 5 & 4 \end{pmatrix}$.
+
+- Find $\alpha^{-1}$: Swap rows and sort.
+  $$ \alpha^{-1} = \begin{pmatrix} 1 & 2 & 3 & 4 & 5 \\ 2 & 3 & 1 & 5 & 4 \end{pmatrix} $$
+  Check: $\alpha \circ \alpha^{-1} = id$.
+
+** Example 6: Solving Permutation Equations
+Let $\alpha = \begin{pmatrix} 1 & 2 & 3 & 4 & 5 \\ 3 & 4 & 5 & 1 & 2 \end{pmatrix}$ and $\beta = \begin{pmatrix} 1 & 2 & 3 & 4 & 5 \\ 4 & 2 & 5 & 1 & 3 \end{pmatrix}$.
+Find the permutation $x$ such that $\alpha \circ x = \beta$.
+
+*** Solution
+Multiply by $\alpha^{-1}$ on the left:
+$$ x = \alpha^{-1} \circ \beta $$
+First, find $\alpha^{-1}$:
+$$ \alpha^{-1} = \begin{pmatrix} 1 & 2 & 3 & 4 & 5 \\ 4 & 5 & 1 & 2 & 3 \end{pmatrix} $$
+Now compute composition (apply $\beta$ first, then $\alpha^{-1}$):
+- $1 \xrightarrow{\beta} 4 \xrightarrow{\alpha^{-1}} 2$
+- $2 \xrightarrow{\beta} 2 \xrightarrow{\alpha^{-1}} 5$
+- $3 \xrightarrow{\beta} 5 \xrightarrow{\alpha^{-1}} 3$
+- $4 \xrightarrow{\beta} 1 \xrightarrow{\alpha^{-1}} 4$
+- $5 \xrightarrow{\beta} 3 \xrightarrow{\alpha^{-1}} 1$
+$$ x = \begin{pmatrix} 1 & 2 & 3 & 4 & 5 \\ 2 & 5 & 3 & 4 & 1 \end{pmatrix} $$
+
+* Piecewise Functions and Inverses
+** Example 7
+Let $f: \mathbb{R} \to \mathbb{R}$ defined by:
+$$ f(x) = \begin{cases} \sqrt{x-1} & \text{if } x \ge 1 \\ \frac{1}{x-1} & \text{if } x < 1 \end{cases} $$
+Find $f^{-1}(y)$.
+
+*** Solution
+Analyze the range of each piece:
+1.  For $x \ge 1$: $y = \sqrt{x-1} \ge 0$.
+    $$ y^2 = x - 1 \implies x = y^2 + 1 $$
+2.  For $x < 1$: $x - 1 < 0 \implies y = \frac{1}{x-1} < 0$.
+    $$ x - 1 = \frac{1}{y} \implies x = \frac{1}{y} + 1 $$
+
+Combining these inverses based on the value of $y$:
+$$ f^{-1}(y) = \begin{cases} y^2 + 1 & \text{if } y \ge 0 \\ \frac{1}{y} + 1 & \text{if } y < 0 \end{cases} $$
+
+* Classification of Functions
+** Symmetry (Even and Odd Functions)
+Let $D \subset \mathbb{R}$ be symmetric around 0 ($x \in D \iff -x \in D$).
+- **Odd Function:** $f(-x) = -f(x)$. (Graph symmetric about origin).
+  Example: $f(x) = x^3$, $f(x) = \sin x$.
+- **Even Function:** $f(-x) = f(x)$. (Graph symmetric about y-axis).
+  Example: $f(x) = x^2$, $f(x) = \cos x$.
+
+** Monotonicity
+- **Increasing:** $x_2 \ge x_1 \implies f(x_2) > f(x_1)$. (Strictly: $>$).
+- **Non-decreasing:** $x_2 > x_1 \implies f(x_2) \ge f(x_1)$.
+
+** Periodicity
+- **Periodic:** $\exists T > 0$ such that $f(x+T) = f(x)$ for all $x$.
+- The smallest such $T$ is the *fundamental period*.
+
+* Specific Function Types
+1.  **Linear/Affine:** $f(x) = ax + b$.
+    - Odd if $b=0$.
+2.  **Quadratic:** $f(x) = ax^2 + bx + c$.
+    - Even iff $b=0$ (Vertex on y-axis).
+3.  **Cubic:** $f(x) = ax^3 + bx^2 + cx + d$.
+4.  **Power Function:** $f(x) = x^n$ ($n \in \mathbb{N}$).
+5.  **Polynomial:** $f(x) = a_n x^n + \dots + a_0$.
+6.  **Rational:** $f(x) = \frac{P(x)}{Q(x)}$.
+
+* Rational Power Functions and Inverse
+Let $f(x) = x^n$ for $x \in [0, \infty)$.
+The inverse is $g(x) = x^{1/n} = \sqrt[n]{x}$.
+- Graphs of $f$ and $f^{-1}$ are symmetric about $y=x$.
+
+** Rational Exponents
+$$ f(x) = x^{m/n} = (x^{1/n})^m = (\sqrt[n]{x})^m $$
+
+** Irrational Exponents
+How to define $x^{\sqrt{2}}$?
+We approximate $\sqrt{2}$ with a sequence of rationals: $1.4, 1.41, 1.414, \dots$
+Then $x^{\sqrt{2}}$ is the limit of the sequence $x^{1.4}, x^{1.41}, \dots$.

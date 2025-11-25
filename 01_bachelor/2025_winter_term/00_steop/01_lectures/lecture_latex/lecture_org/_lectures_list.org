@@ -2,11 +2,11 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-24>
-#+lastmod: <2025-11-25 08:46>
+#+lastmod: <2025-11-25 09:17>
 #+options: num:t
 #+startup: overview
 
-* [47%]
+* [58%]
 - [ ] Lecture 0 :: Introduction to the course. Logistics. Julia.
 - [ ] Lecture 1 :: Sets. Basic definitions and operations with sets.
 - [ ] Lectures 2-3 :: Propositional logic. Quantifiers.
@@ -22,10 +22,10 @@
 - [ ] Lectures 16-17 :: Relations.
 - [ ] Lecture 18 :: Extremal elements in a poset.
 - [ ] Lecture 19 :: Pigeonhole principle.
-- [ ] Lecture 20 :: Functions.
-- [ ] Lecture 21 :: Julia tutorial.
-- [ ] Lecture 22 :: Functions (continuation).
-- [ ] Lectures 23-24 :: Even more functions.
+- [X] Lecture 20 :: Functions.
+- [X] Lecture 21 :: Julia tutorial.
+- [X] Lecture 22 :: Functions (continuation).
+- [X] Lectures 23-24 :: Even more functions.
 - [X] Lecture 25 :: Infinite sets.
 - [X] Lectures 26 :: Infinite sets.
 - [X] Lectures 27 :: Cantor-Schröder-Bernstein theorem.
