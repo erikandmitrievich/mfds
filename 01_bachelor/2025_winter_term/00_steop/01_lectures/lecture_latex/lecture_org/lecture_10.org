@@ -1,0 +1,93 @@
+#+title: Lecture 10
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-25>
+#+lastmod: <2025-11-25 10:33>
+#+options: num:t
+#+startup: overview
+
+* Coprimality and Divisibility
+** Definitions and Corollaries
+- *Definition*: Natural numbers $a$ and $b$ are called *coprime* (or relatively prime) if $\gcd(a, b) = 1$.
+  - *Examples*:
+    - $\gcd(7, 17) = 1$ (Coprime)
+    - $\gcd(8, 9) = 1$ (Coprime)
+
+- *Corollary*: Let $a, b \in \mathbb{N}$. Any common factor of $a$ and $b$ also divides $\gcd(a, b)$.
+
+*** Proof
+We know that there exist integers $x, y \in \mathbb{Z}$ such that:
+$$ \gcd(a, b) = ax + by $$
+Let $d$ be a common divisor such that $d \mid a$ and $d \mid b$.
+Since $d$ divides both terms $a$ and $b$, it must divide any linear combination of them:
+$$ d \mid (ax + by) \implies d \mid \gcd(a, b) $$
+
+- *Example*: Consider $a=64, b=28$.
+  - $\gcd(64, 28) = 4$.
+  - The common factors of 64 and 28 are $\{1, 2, 4\}$.
+  - Note that 1, 2, and 4 all divide the GCD (4).
+
+** Euclid's Lemma
+*Theorem*: Let $a, b, c \in \mathbb{Z}$.
+1. If $\gcd(a, c) = 1$ and $a \mid bc$, then $a \mid b$.
+2. If $p$ is a prime number and $p \mid ab$, then $p \mid a$ or $p \mid b$.
+
+*** Proof of Part 1
+Since $\gcd(a, c) = 1$, by Bézout's identity, there exist integers $x, y$ such that:
+$$ 1 = ax + cy $$
+Multiply the entire equation by $b$:
+$$ b = abx + bcy $$
+We analyze the divisibility of the Right Hand Side (RHS) by $a$:
+- $a \mid abx$ (obviously, as it has a factor of $a$).
+- $a \mid bcy$ (since we are given that $a \mid bc$).
+Since $a$ divides both terms on the RHS, $a$ must divide the LHS.
+Therefore, $a \mid b$.
+
+*** Proof of Part 2
+Let $p$ be a prime such that $p \mid ab$.
+If $p \mid a$, we are done.
+Suppose $p \nmid a$. Since $p$ is prime, the only divisors of $p$ are 1 and $p$. Because $p \nmid a$, they share no common factors other than 1.
+$$ \implies \gcd(a, p) = 1 $$
+By Part 1 of this theorem (letting $c=p$), if $\gcd(a, p) = 1$ and $p \mid ab$, then $p \mid b$.
+Thus, $p \mid a$ or $p \mid b$.
+
+* The Fundamental Theorem of Arithmetic
+** Statement
+1. *Existence*: Any natural number $n \ge 2$ can be represented as a product of prime numbers (prime factorization).
+2. *Uniqueness*: This representation is unique, up to the ordering of the factors.
+
+** Proof of Existence
+We use *Strong Induction* on $n$.
+- *Base Case*: $n=2$. 2 is prime, so it is a product of primes (itself).
+
+- *Inductive Step*: Suppose the theorem holds for all integers $k$ such that $2 \le k \le n$. We must show it holds for $n+1$.
+  - *Case 1*: $n+1$ is prime. Then $n+1 = (n+1)$ is the factorization. Done.
+  - *Case 2*: $n+1$ is composite. Then there exist integers $a, b$ such that:
+    $$ n+1 = a \cdot b \quad \text{with} \quad 2 \le a, b \le n $$
+    By the inductive hypothesis, both $a$ and $b$ can be written as products of primes.
+    $$ a = \prod p_i, \quad b = \prod q_j $$
+    Therefore, $n+1 = (\prod p_i)(\prod q_j)$ is a product of primes.
+
+** Proof of Uniqueness
+Suppose, for the sake of contradiction, that the factorization is not unique.
+Let $n$ be an integer with two different prime factorizations:
+$$ n = p_1 p_2 \dots p_k = q_1 q_2 \dots q_l $$
+Assume the primes are ordered such that $p_1 \le p_2 \le \dots \le p_k$ and $q_1 \le q_2 \le \dots \le q_l$.
+
+Cancel all common primes from both sides. We obtain a reduced equation:
+$$ p_{i_1} \dots p_{i_m} = q_{j_1} \dots q_{j_s} $$
+where the set of remaining $p$'s and $q$'s are disjoint (no common primes).
+
+Consider $p_{i_1}$ (the first prime on the LHS).
+$$ p_{i_1} \mid p_{i_1} \dots p_{i_m} \implies p_{i_1} \mid q_{j_1} \dots q_{j_s} $$
+By Euclid's Lemma (extended to multiple factors), if a prime divides a product, it must divide at least one of the factors.
+$$ \implies p_{i_1} \mid q_{j_r} \quad \text{for some } r $$
+Since $q_{j_r}$ is also a prime, the only way $p_{i_1}$ can divide it is if:
+$$ p_{i_1} = q_{j_r} $$
+This contradicts the fact that we assumed we had already canceled all common primes.
+Therefore, the factorization must be unique.
+
+** Canonical Representation
+Based on the Fundamental Theorem, we can write any natural number $n$ uniquely as:
+$$ n = p_1^{\alpha_1} p_2^{\alpha_2} \dots p_k^{\alpha_k} $$
+where $p_1 < p_2 < \dots < p_k$ are primes and $\alpha_i \in \mathbb{N}$.

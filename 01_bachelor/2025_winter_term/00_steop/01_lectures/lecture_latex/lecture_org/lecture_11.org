@@ -1,0 +1,157 @@
+#+title: Lecture 11
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-25>
+#+lastmod: <2025-11-25 10:30>
+#+options: num:t
+#+startup: overview
+
+* Rationality of Square Roots (Continued Proof)
+** Theorem: Rational Square Roots of Integers
+Let $n \in \mathbb{N}$. Then $\sqrt{n}$ is rational if and only if $n$ is a perfect square.
+
+*** Proof
+We use the Fundamental Theorem of Arithmetic (Unique Prime Factorization).
+
+Let the prime factorization of $n$ be:
+$$ n = p_1^{\alpha_1} p_2^{\alpha_2} \dots p_k^{\alpha_k} $$
+
+*Forward Direction ($\Leftarrow$)*:
+If $n$ is a perfect square, then $n = a^2$ for some $a \in \mathbb{Z}$. Thus $\sqrt{n} = a \in \mathbb{Q}$.
+
+*Reverse Direction ($\Rightarrow$)*:
+Suppose $\sqrt{n} \in \mathbb{Q}$. Then we can write $\sqrt{n} = \frac{a}{b}$ where $a, b \in \mathbb{Z}, b \neq 0$, and $\gcd(a, b) = 1$ (fraction is in simplest form).
+
+Squaring both sides:
+$$ n = \frac{a^2}{b^2} \implies n \cdot b^2 = a^2 $$
+
+Let the prime factorizations be:
+$$ n = \prod p_i^{\alpha_i}, \quad b = \prod q_j^{\beta_j}, \quad a = \prod r_l^{\gamma_l} $$
+
+Substituting these into the equation $n \cdot b^2 = a^2$:
+$$ \left( \prod p_i^{\alpha_i} \right) \cdot \left( \prod q_j^{\beta_j} \right)^2 = \left( \prod r_l^{\gamma_l} \right)^2 $$
+$$ \prod p_i^{\alpha_i} \cdot \prod q_j^{2\beta_j} = \prod r_l^{2\gamma_l} $$
+
+By the Fundamental Theorem of Arithmetic, the exponent of any prime factor on the Left Hand Side (LHS) must equal the exponent of that prime on the Right Hand Side (RHS).
+- The exponents on the RHS ($2\gamma_l$) are all *even*.
+- The exponents coming from $b^2$ on the LHS ($2\beta_j$) are all *even*.
+- Therefore, the exponents from $n$ ($\alpha_i$) must also be *even* to maintain equality.
+
+Since all $\alpha_i$ are even, let $\alpha_i = 2k_i$. Then:
+$$ n = p_1^{2k_1} \dots p_k^{2k_k} = (p_1^{k_1} \dots p_k^{k_k})^2 $$
+Thus, $n$ is a perfect square.
+
+*** Example
+Let $n = 3^2 \cdot 5^7$. Is $\sqrt{n}$ rational?
+- The exponent of 5 is 7 (odd).
+- Therefore, $n$ is not a perfect square, and $\sqrt{n}$ is irrational.
+
+* Modular Arithmetic
+** Introduction: Parity Arithmetic
+Before defining general modular arithmetic, consider the arithmetic of Even ($e$) and Odd ($o$) numbers.
+
+| $+$ | $e$ | $o$ |
+|-----+-----+-----|
+| $e$ | $e$ | $o$ |
+| $o$ | $o$ | $e$ |
+
+| $\times$ | $e$ | $o$ |
+|----------+-----+-----|
+| $e$      | $e$ | $e$ |
+| $o$      | $e$ | $o$ |
+
+This arithmetic corresponds to calculations modulo 2.
+
+** Definition: Congruence Modulo $m$
+Let $a, b, m \in \mathbb{Z}$ with $m > 1$.
+We say $a$ is congruent to $b$ modulo $m$ if $m$ divides the difference $a - b$.
+
+$$ a \equiv b \pmod{m} \iff m \mid (a - b) $$
+
+*** Properties
+Congruence is an equivalence relation. For $m > 1$:
+1.  *Reflexive*: $a \equiv a \pmod{m}$ (since $m \mid 0$).
+2.  *Symmetric*: $a \equiv b \pmod{m} \iff b \equiv a \pmod{m}$.
+3.  *Transitive*: If $a \equiv b \pmod{m}$ and $b \equiv c \pmod{m}$, then $a \equiv c \pmod{m}$.
+
+** Arithmetic Operations
+If $a \equiv c \pmod{m}$ and $b \equiv d \pmod{m}$, then:
+1.  $a + b \equiv c + d \pmod{m}$
+2.  $a \cdot b \equiv c \cdot d \pmod{m}$
+
+*** Example: Clock Arithmetic
+Consider time modulo 12 ($m=12$).
+- $9:00 + 5:00 = 14:00$.
+- $14 \equiv 2 \pmod{12}$.
+- So, $9 + 5 \equiv 2 \pmod{12}$.
+
+** Proofs of Arithmetic Properties
+*** Addition Property
+*Claim*: $a \equiv c \pmod{m}$ and $b \equiv d \pmod{m} \implies a + b \equiv c + d \pmod{m}$.
+
+*Proof*:
+By definition:
+$$ a - c = k_1 m $$
+$$ b - d = k_2 m $$
+Adding the equations:
+$$ (a - c) + (b - d) = k_1 m + k_2 m $$
+$$ (a + b) - (c + d) = m(k_1 + k_2) $$
+Since $k_1 + k_2$ is an integer, $m \mid ((a+b) - (c+d))$.
+Therefore, $a + b \equiv c + d \pmod{m}$.
+
+*** Multiplication Property
+*Claim*: $a \equiv c \pmod{m}$ and $b \equiv d \pmod{m} \implies ab \equiv cd \pmod{m}$.
+
+*Proof*:
+We write $a = c + mk_1$ and $b = d + mk_2$.
+$$ ab = (c + mk_1)(d + mk_2) $$
+$$ ab = cd + c(mk_2) + d(mk_1) + m^2 k_1 k_2 $$
+$$ ab - cd = m(ck_2 + dk_1 + m k_1 k_2) $$
+Since the RHS is a multiple of $m$, $m \mid (ab - cd)$.
+Therefore, $ab \equiv cd \pmod{m}$.
+
+*** Power Property
+By induction on the multiplication property:
+If $a \equiv b \pmod{m}$, then $a^n \equiv b^n \pmod{m}$ for $n \in \mathbb{N}$.
+
+* Applications and Problems
+** Problem 1: Calculating Large Powers
+Calculate the remainder of $6^{30}$ when divided by 5, 7, and 13.
+
+*** Case 1: Modulo 5
+$$ 6 \equiv 1 \pmod{5} $$
+$$ 6^{30} \equiv 1^{30} \equiv 1 \pmod{5} $$
+
+*** Case 2: Modulo 7
+$$ 6 \equiv -1 \pmod{7} $$
+$$ 6^{30} \equiv (-1)^{30} \equiv 1 \pmod{7} $$
+
+*** Case 3: Modulo 13
+We compute powers of 6 modulo 13 until we find a pattern (usually 1 or -1):
+- $6^1 \equiv 6$
+- $6^2 = 36 = 2 \cdot 13 + 10 \equiv 10 \equiv -3 \pmod{13}$
+- $6^3 \equiv 6 \cdot (-3) = -18 \equiv -5 \pmod{13}$ (Note: $-18 = -2 \cdot 13 + 8$, so also 8)
+- $6^4 \equiv 6 \cdot (-5) = -30 \equiv -4 \equiv 9 \pmod{13}$
+- $6^5 \equiv 6 \cdot (-4) = -24 \equiv 2 \pmod{13}$
+- $6^6 \equiv 6 \cdot 2 = 12 \equiv -1 \pmod{13}$
+
+Using $6^6 \equiv -1 \pmod{13}$:
+$$ 6^{30} = (6^6)^5 \equiv (-1)^5 \equiv -1 \equiv 12 \pmod{13} $$
+
+** Problem 2: Diophantine Equation
+Solve $x^2 - 3y = 2$ in integers.
+
+*** Solution
+We analyze the equation modulo 3.
+$$ x^2 - 3y = 2 \implies x^2 \equiv 2 \pmod{3} $$
+
+We check all possible values of $x \pmod{3}$ to see if $x^2 \equiv 2$ is possible.
+| $x \pmod{3}$ | $x^2 \pmod{3}$ |
+|--------------+----------------|
+| $0$          | $0$            |
+| $1$          | $1$            |
+| $2$          | $4 \equiv 1$   |
+|              |                |
+
+*Observation*: The square of an integer modulo 3 is always 0 or 1. It is never 2.
+*Conclusion*: There are no integer solutions for $x^2 - 3y = 2$.
