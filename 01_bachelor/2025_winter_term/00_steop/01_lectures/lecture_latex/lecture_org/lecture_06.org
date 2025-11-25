@@ -1,0 +1,119 @@
+#+title: Lecture 06
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-25>
+#+lastmod: <2025-11-25 10:47>
+#+options: num:t
+#+startup: overview
+
+* Proof Methods
+** Direct Proof
+We want to prove an implication of the form $P \Rightarrow Q$.
+
+*** Theorem 1: Odd Integers
+*Statement*: The square of an odd integer is odd.
+*Proof*:
+Assume $x$ is odd. Then there exists an integer $n \in \mathbb{Z}$ such that:
+$$ x = 2n + 1 $$
+Squaring $x$:
+$$ x^2 = (2n + 1)^2 = 4n^2 + 4n + 1 = 4n(n+1) + 1 $$
+Since $4n(n+1)$ is divisible by 2 (it is even), adding 1 makes the result odd.
+$$ 2 \nmid x^2 $$
+Therefore, $x^2$ is odd.
+
+*** Theorem 2: Transitivity of Divisibility
+*Statement*: Let $a, b, c \in \mathbb{Z}$. If $a \mid b$ and $b \mid c$, then $a \mid c$.
+*Proof*:
+- If $a \mid b$, then there exists an integer $m$ such that $b = a \cdot m$.
+- If $b \mid c$, then there exists an integer $n$ such that $c = b \cdot n$.
+Substituting $b$:
+$$ c = (a \cdot m)n = a(mn) $$
+Since $mn$ is an integer, $a \mid c$.
+
+*** Theorem 3: Parity of Polynomial
+*Statement*: If $x$ is an even integer, then $x^2 - 6x + 5$ is odd.
+*Proof*:
+If $x$ is even, there exists $n \in \mathbb{Z}$ such that $x = 2n$.
+Substituting into the expression:
+$$ x^2 - 6x + 5 = (2n)^2 - 6(2n) + 5 $$
+$$ = 4n^2 - 12n + 5 $$
+$$ = 4n^2 - 12n + 4 + 1 $$
+$$ = 4(n^2 - 3n + 1) + 1 $$
+The term $4(n^2 - 3n + 1)$ is clearly even. Thus, the sum is odd.
+
+** Proof by Contraposition
+To prove $P \Rightarrow Q$, we prove the logically equivalent statement $\neg Q \Rightarrow \neg P$.
+
+*** Theorem 4: Oddness Implication
+*Statement*: Let $n \in \mathbb{N}$. If $3n + 2$ is odd, then $n$ is odd.
+*Proof (by Contraposition)*:
+- Assume $\neg P$: Suppose $n$ is even.
+- Then there exists $k$ such that $n = 2k$.
+- Substitute into the expression:
+  $$ 3n + 2 = 3(2k) + 2 = 6k + 2 = 2(3k + 1) $$
+- Since $2(3k + 1)$ is divisible by 2, $3n + 2$ is even.
+- This proves $\neg P \Rightarrow \neg Q$, which is equivalent to $Q \Rightarrow P$. (Note: The labels $P$ and $Q$ in the source text seem swapped relative to standard notation, where the hypothesis is $P$. Here, the source uses $\neg Q \Rightarrow \neg P$ to prove the original statement).
+
+*Attempt at Direct Proof (for comparison)*:
+If $3n + 2$ is odd:
+$$ 3n + 2 = 2a + 1 $$
+$$ 3n + 1 = 2a $$
+This path is less clear algebraically than the contrapositive method.
+
+*** Theorem 5: Even Square
+*Statement*: Let $n \in \mathbb{N}$. If $n^2$ is even, then $n$ is even.
+*Proof (by Contraposition)*:
+- Assume $n$ is odd.
+- We must prove that $n^2$ is odd.
+- This was already proven in "Theorem 1".
+- Since $n$ odd $\implies n^2$ odd, the contrapositive ($n^2$ even $\implies n$ even) holds true.
+
+** Proof by Contradiction (Reductio ad absurdum)
+To prove $P \Rightarrow Q$, we assume $P$ is true and $Q$ is false, then derive a contradiction (False).
+
+*** Theorem 6: Prime Divisors Sum
+*Statement*: Let $n \in \mathbb{N}$. If the sum of positive divisors of $n$ is $n+1$, then $n$ is prime.
+*Proof*:
+- Assume the statement is false. That is, assume the sum of divisors is $n+1$, but $n$ is *not* prime (composite).
+- If $n$ is composite, it has a divisor $a$ such that $1 < a < n$ and $a \mid n$.
+- The set of positive divisors includes at least $\{1, a, n\}$.
+- The sum of divisors is at least $1 + a + n$.
+- Since $a > 0$, $1 + a + n > n + 1$.
+- This contradicts the hypothesis that the sum is exactly $n + 1$.
+- Therefore, the assumption that $n$ is composite must be wrong. $n$ is prime.
+
+*** Theorem 7: Irrationality of $\sqrt{2}$
+*Statement*: $\sqrt{2}$ is irrational.
+*Proof*:
+- Assume the contrary: $\sqrt{2}$ is rational.
+- Then there exist integers $m, n \in \mathbb{N}$ such that $\sqrt{2} = \frac{m}{n}$, where the fraction is in lowest terms (i.e., $m$ and $n$ share no common factors).
+- Squaring both sides:
+  $$ 2 = \frac{m^2}{n^2} \implies m^2 = 2n^2 $$
+- This implies $m^2$ is even. By Theorem 5, $m$ must be even.
+- Let $m = 2k$ for some integer $k$. Substitute back:
+  $$ (2k)^2 = 2n^2 $$
+  $$ 4k^2 = 2n^2 $$
+  $$ 2k^2 = n^2 $$
+- This implies $n^2$ is even, so $n$ must be even.
+- *Contradiction*: We concluded that both $m$ and $n$ are even (divisible by 2). This contradicts the assumption that $\frac{m}{n}$ is in lowest terms (no common factors).
+- Therefore, $\sqrt{2}$ must be irrational.
+
+*** Theorem 8: Infinitude of Primes
+*Statement*: There are infinitely many prime numbers.
+*Proof*:
+- Assume there is a finite number of primes: $p_1, p_2, \dots, p_n$.
+- Consider the number $a = p_1 \cdot p_2 \cdot \dots \cdot p_n + 1$.
+- This number $a$ is not divisible by any of the primes $p_i$ (dividing by any $p_i$ leaves a remainder of 1).
+- Therefore, $a$ must either be prime itself or have a prime factor not in the list $\{p_1, \dots, p_n\}$.
+- Both cases contradict the assumption that the list contains *all* primes.
+
+** Additional Problem: Sequence Averaging
+*Problem*: Given a sequence $a_1, a_2, \dots, a_{2025}$ such that $a_1 = a_{2025} = 90$ and every element is the average of its neighbors ($a_i = \frac{a_{i-1} + a_{i+1}}{2}$), prove that all numbers are equal.
+
+*Proof Sketch*:
+- Assume not all $a_i$ are equal.
+- Let $a_k$ be the largest element (maximum).
+- Since $a_k = \frac{a_{k-1} + a_{k+1}}{2}$, $a_k$ is the average of its neighbors.
+- This equality holds only if $a_{k-1} = a_k = a_{k+1}$ (if neighbors were smaller, the average would be smaller).
+- Propagating this logic implies the neighbors of the neighbors are also equal to the maximum, and so on.
+- Thus, the sequence must be constant.

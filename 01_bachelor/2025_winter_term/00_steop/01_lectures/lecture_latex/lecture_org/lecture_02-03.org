@@ -1,0 +1,211 @@
+#+title: Lecture 02-03
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-25>
+#+lastmod: <2025-11-25 10:52>
+#+options: num:t
+#+startup: overview
+
+* Propositional Logic
+** Definitions and Basics
+- *Definition*: A **proposition** is a statement that has a definite truth value (True or False, but not both).
+- *Notation*: We use $P, Q, R, \dots$ to denote propositions.
+  - $T = \text{True} = 1$
+  - $F = \text{False} = 0$
+- *Example*: $P(x)$: "A number $x$ is a prime number". (This becomes a proposition when $x$ is assigned a value).
+
+** Connectives
+*** Conjunction (AND)
+- *Definition*: $P \wedge Q$ is true if **both** $P$ and $Q$ are true, and false otherwise.
+
+| P | Q | $P \wedge Q$ |
+|---+---+--------------|
+| T | T | T            |
+| T | F | F            |
+| F | T | F            |
+| F | F | F            |
+
+*** Disjunction (OR)
+- *Definition*: $P \vee Q$ is true if $P$ is true, **or** $Q$ is true, **or both**. It is false otherwise.
+- *Note*: In mathematics, "or" is **inclusive**. In English, it is often exclusive (e.g., "soup or salad").
+
+| P | Q | $P \vee Q$ |
+|---+---+------------|
+| T | T | T          |
+| T | F | T          |
+| F | T | T          |
+| F | F | F          |
+
+*** Negation (NOT)
+- *Definition*: $\neg P$ (or $\sim P$, $\bar{P}$) means "it is not true that P".
+
+| P | $\neg P$ |
+|---+----------|
+| T | F        |
+| F | T        |
+
+** Truth Tables and Examples
+*** Example Truth Table
+Let's construct the truth table for $\neg(P \wedge Q) \vee \neg R$.
+
+| P | Q | R | $P \wedge Q$ | $\neg(P \wedge Q)$ | $\neg R$ | $\text{Result}$ |
+|---+---+---+--------------+--------------------+----------+-----------------|
+| 1 | 1 | 1 |            1 |                  0 |        0 |               0 |
+| 1 | 1 | 0 |            1 |                  0 |        1 |               1 |
+| 1 | 0 | 1 |            0 |                  1 |        0 |               1 |
+| 1 | 0 | 0 |            0 |                  1 |        1 |               1 |
+| 0 | 1 | 1 |            0 |                  1 |        0 |               1 |
+| 0 | 1 | 0 |            0 |                  1 |        1 |               1 |
+| 0 | 0 | 1 |            0 |                  1 |        0 |               1 |
+| 0 | 0 | 0 |            0 |                  1 |        1 |               1 |
+
+*Note*: The table demonstrates that logical expressions can be evaluated algorithmically for every combination of inputs.
+
+** Logical Laws
+*** 1. De Morgan's Laws
+- $\neg(P \wedge Q) = \neg P \vee \neg Q$
+- $\neg(P \vee Q) = \neg P \wedge \neg Q$
+
+*Explanation*: The negation of "A and B" is "Not A or Not B". If it is not true that I ate both soup and salad, then I must have skipped at least one (Not soup or Not salad).
+
+*** 2. Associative Laws
+- $(P \wedge Q) \wedge R = P \wedge (Q \wedge R)$
+- $(P \vee Q) \vee R = P \vee (Q \vee R)$
+
+*** 3. Commutative Laws
+- $P \wedge Q = Q \wedge P$
+- $P \vee Q = Q \vee P$
+
+*** 4. Distributive Laws
+- $P \wedge (Q \vee R) = (P \wedge Q) \vee (P \wedge R)$
+- $P \vee (Q \wedge R) = (P \vee Q) \wedge (P \vee R)$
+
+*** 5. Double Negation Law
+- $\neg(\neg P) = P$
+
+** Conditional Propositions (Implication)
+- *Definition*: $P \Rightarrow Q$ (or $P \rightarrow Q$) is read "If P, then Q".
+- $P$ is the **hypothesis** (or antecedent).
+- $Q$ is the **conclusion** (or consequent).
+
+*** Truth Table for Implication
+
+| P | Q | $P \Rightarrow Q$ |
+|---+---+-------------------|
+| T | T | T                 |
+| T | F | F                 |
+| F | T | T                 |
+| F | F | T                 |
+
+- *Crucial Note*: The implication is only false when $P$ is True and $Q$ is False.
+- *Vacuous Truth*: If $P$ is False, the statement $P \Rightarrow Q$ is automatically True.
+  - *Example*: "If I am elected, I will lower taxes." If I am not elected, the statement is not falsified regardless of whether taxes are lowered.
+
+*** Equivalent Form
+$$ P \Rightarrow Q \equiv \neg P \vee Q $$
+
+*** Terminology for $P \Rightarrow Q$
+- If $P$, then $Q$.
+- $Q$ if $P$.
+- $P$ is sufficient for $Q$.
+- $Q$ when $P$.
+- A necessary condition for $P$ is $Q$.
+- $Q$ unless $\neg P$.
+- $P$ implies $Q$.
+- $P$ only if $Q$.
+- $Q$ follows from $P$.
+
+*** Variations of Conditional Statements
+Given $P \Rightarrow Q$:
+1.  **Converse**: $Q \Rightarrow P$
+2.  **Contrapositive**: $\neg Q \Rightarrow \neg P$
+    - *Note*: The contrapositive is logically equivalent to the original statement ($P \Rightarrow Q \equiv \neg Q \Rightarrow \neg P$).
+3.  **Inverse**: $\neg P \Rightarrow \neg Q$
+
+** Biconditional Propositions
+- *Definition*: $P \Leftrightarrow Q$ (or $P \leftrightarrow Q$) means "$P$ is equivalent to $Q$".
+- It represents $(P \Rightarrow Q) \wedge (Q \Rightarrow P)$.
+- *Phrasing*: "$P$ if and only if $Q$" (iff).
+- *Truth Table*: True only when $P$ and $Q$ have the same truth value.
+
+| P | Q | $P \Leftrightarrow Q$ |
+|---+---+-----------------------|
+| T | T | T                     |
+| T | F | F                     |
+| F | T | F                     |
+| F | F | T                     |
+
+** Boolean Variables
+- **Bit**: A binary digit that takes two values: 0 or 1.
+- **Boolean Variable**: A variable that takes two values: True or False.
+
+* Quantifiers
+Let $X = \{x_1, x_2, \dots\}$.
+
+** Universal Quantifier ($\forall$)
+- *Definition*: "For all" or "For every".
+- Notation: $\forall x \in X, P(x)$.
+- Meaning: $P(x_1) \wedge P(x_2) \wedge \dots$ is true. All elements in $X$ have property $A$.
+
+** Existential Quantifier ($\exists$)
+- *Definition*: "There exists" or "There is".
+- Notation: $\exists x \in X, P(x)$.
+- Meaning: $P(x_1) \vee P(x_2) \vee \dots$ is true. There is at least one element in $X$ that has property $A$.
+
+** Negation of Quantifiers (Generalized De Morgan's Laws)
+- $\neg (\forall x \in X, P(x)) \equiv \exists x \in X, \neg P(x)$
+- $\neg (\exists x \in X, P(x)) \equiv \forall x \in X, \neg P(x)$
+
+*** Examples
+1.  *Statement*: "For all real $x$, there is a real $y$ such that $x = y^3$."
+    - Notation: $\forall x \in \mathbb{R}, \exists y \in \mathbb{R} : x = y^3$.
+    - *Negation*: $\exists x \in \mathbb{R}, \forall y \in \mathbb{R} : x \neq y^3$.
+2.  *Truth Value Check*:
+    - $\forall x \in \mathbb{R} : x^2 > 0$ $\rightarrow$ **False** (Counterexample: $x=0$).
+    - $\forall x \in \mathbb{R}, \exists n \in \mathbb{N} : x^n \ge 0$ $\rightarrow$ **True** (For any $x$, if $n$ is even, $x^n \ge 0$).
+    - $\exists a \in \mathbb{R}, \forall x \in \mathbb{R} : a \cdot x = x$ $\rightarrow$ **True** (Let $a=1$).
+
+* Set Theory and Logic Connection
+There is a direct correspondence between Logical Operators and Set Operators. Let $P$ correspond to $x \in A$ and $Q$ correspond to $x \in B$.
+
+| Logic                 | Set Theory           | Meaning                                 |
+|-----------------------+----------------------+-----------------------------------------|
+| $P \wedge Q$          | $A \cap B$           | Intersection ($x$ in $A$ and $B$)       |
+| $P \vee Q$            | $A \cup B$           | Union ($x$ in $A$ or $B$)               |
+| $\neg P$              | $A^c$ (or $\bar{A}$) | Complement ($x$ not in $A$)             |
+| $P \Rightarrow Q$     | $A \subseteq B$      | Subset (If $x$ in $A$, then $x$ in $B$) |
+| $P \Leftrightarrow Q$ | $A = B$              | Equality                                |
+
+** Set Laws
+The logical laws translate directly to sets:
+- **De Morgan's Laws**:
+  - $(A \cup B)^c = A^c \cap B^c$
+  - $(A \cap B)^c = A^c \cup B^c$
+- **Distributive Laws**:
+  - $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$
+  - $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$
+
+** Proofs with Sets
+*** Task 1: Subset Definition
+$A \subseteq B \iff (\forall x)(x \in A \rightarrow x \in B)$.
+
+*** Task 2: Set Equality
+$A = B \iff A \subseteq B \wedge B \subseteq A$.
+To prove equality, we usually prove two inclusions:
+1.  $x \in A \Rightarrow x \in B$
+2.  $x \in B \Rightarrow x \in A$
+
+*** Problem: Prove $A \cup B = A \cup (B \setminus A)$
+*Proof*:
+1.  ($\subseteq$) Let $x \in A \cup B$.
+    - If $x \in A$, then $x \in A \cup (B \setminus A)$.
+    - If $x \notin A$, then since $x \in A \cup B$, $x$ must be in $B$. Thus $x \in B$ and $x \notin A$, which means $x \in B \setminus A$. Therefore $x \in A \cup (B \setminus A)$.
+2.  ($\supseteq$) Let $x \in A \cup (B \setminus A)$.
+    - This means $x \in A$ or $x \in (B \setminus A)$.
+    - If $x \in A$, then $x \in A \cup B$.
+    - If $x \in B \setminus A$, then $x \in B$. Thus $x \in A \cup B$.
+
+*** Homework Problem
+Prove $\{4k + 5 : k \in \mathbb{Z}\} = \{4k + 1 : k \in \mathbb{Z}\}$.
+*Hint*: Show that any number of the form $4k+5$ can be written as $4m+1$ and vice versa.
+- Note that $4k + 5 = 4k + 4 + 1 = 4(k+1) + 1$. Let $m = k+1$.

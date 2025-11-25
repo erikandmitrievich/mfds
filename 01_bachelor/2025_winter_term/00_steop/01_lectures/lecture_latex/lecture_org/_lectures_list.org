@@ -2,16 +2,15 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-24>
-#+lastmod: <2025-11-25 10:45>
+#+lastmod: <2025-11-25 10:55>
 #+options: num:t
 #+startup: overview
 
-* [85%]
-- [ ] Lecture 0 :: Introduction to the course. Logistics. Julia.
-- [ ] Lecture 1 :: Sets. Basic definitions and operations with sets.
-- [ ] Lectures 2-3 :: Propositional logic. Quantifiers.
-- [ ] Lecture 4-5 :: Induction.
-- [ ] Lecture 6 :: Proofs.
+* [100%]
+- [X] Lecture 1 :: Sets. Basic definitions and operations with sets.
+- [X] Lectures 2-3 :: Propositional logic. Quantifiers.
+- [X] Lecture 4-5 :: Induction.
+- [X] Lecture 6 :: Proofs.
 - [X] Lecture 7 :: Numbers: integer, rational, real. Decimal representation.
 - [X] Lectures 8-9 :: Numbers. Decimal representation. Integers.
 - [X] Lecture 10 :: Integers.

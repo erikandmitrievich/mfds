@@ -1,0 +1,189 @@
+#+title: Lecture 04-05
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-25>
+#+lastmod: <2025-11-25 10:49>
+#+options: num:t
+#+startup: overview
+
+* Mathematical Induction
+** Introduction
+Mathematical induction is a proof technique used to prove a statement $P(n)$ for all natural numbers $n \in \mathbb{N}$.
+
+*** Analogy
+Imagine a row of ducks (or birds).
+1.  The first duck flies away.
+2.  If any duck flies away, the next one also flies away.
+Conclusion: All ducks fly away.
+
+*** The Principle of Mathematical Induction
+To prove that a statement $P(n)$ is true for all $n \ge 1$:
+1.  *Basis Step*: Prove that $P(1)$ is true.
+2.  *Inductive Step*: Assume that $P(n)$ is true (this is called the Inductive Hypothesis). Show that $P(n) \implies P(n+1)$.
+    - Meaning: Assuming the statement holds for $n$, we must prove it holds for $n+1$.
+
+** Problem 1: Sum of Squares
+*Proposition*: For all $n \in \mathbb{N}$:
+$$ 1^2 + 2^2 + \dots + n^2 = \frac{n(n+1)(2n+1)}{6} $$
+
+*** Proof
+1.  *Basis*: Let $n=1$.
+    $$ 1^2 = 1 $$
+    $$ \frac{1(1+1)(2(1)+1)}{6} = \frac{1 \cdot 2 \cdot 3}{6} = 1 $$
+    The statement is true for $n=1$.
+
+2.  *Assumption*: Assume the statement is true for $n$.
+    $$ \sum_{i=1}^{n} i^2 = \frac{n(n+1)(2n+1)}{6} $$
+
+3.  *Inductive Step*: We must show it is true for $n+1$, i.e.,
+    $$ \sum_{i=1}^{n+1} i^2 = \frac{(n+1)(n+2)(2n+3)}{6} $$
+
+    *Derivation*:
+    $$ \text{LHS} = \left( \sum_{i=1}^{n} i^2 \right) + (n+1)^2 $$
+    Using the assumption:
+    $$ = \frac{n(n+1)(2n+1)}{6} + (n+1)^2 $$
+    Factor out $(n+1)$:
+    $$ = (n+1) \left[ \frac{n(2n+1)}{6} + \frac{6(n+1)}{6} \right] $$
+    $$ = \frac{n+1}{6} [ 2n^2 + n + 6n + 6 ] $$
+    $$ = \frac{n+1}{6} [ 2n^2 + 7n + 6 ] $$
+    Factoring the quadratic $2n^2 + 7n + 6 = (n+2)(2n+3)$:
+    $$ = \frac{(n+1)(n+2)(2n+3)}{6} = \text{RHS} $$
+    Q.E.D.
+
+** Problem 2: Divisibility
+*Proposition*: Prove that $6 \mid (n^3 + 5n)$ for all $n \in \mathbb{N}$.
+*(Notation: $a \mid b$ means "a divides b")*
+
+*** Proof
+1.  *Basis*: Let $n=1$.
+    $$ 1^3 + 5(1) = 6 $$
+    Since $6 \mid 6$, the statement is true.
+
+2.  *Assumption*: Assume $6 \mid (n^3 + 5n)$.
+    This implies $n^3 + 5n = 6k$ for some integer $k$.
+
+3.  *Inductive Step*: Consider $P(n+1)$. We examine $(n+1)^3 + 5(n+1)$.
+    $$ (n+1)^3 + 5(n+1) = (n^3 + 3n^2 + 3n + 1) + (5n + 5) $$
+    Group the terms from the assumption $(n^3 + 5n)$:
+    $$ = (n^3 + 5n) + 3n^2 + 3n + 6 $$
+    $$ = (n^3 + 5n) + 3n(n+1) + 6 $$
+
+    *Analysis of terms*:
+    - $(n^3 + 5n)$ is divisible by 6 (by assumption).
+    - $6$ is divisible by 6.
+    - Consider $3n(n+1)$: The term $n(n+1)$ is the product of two consecutive integers, so it is always even (divisible by 2).
+      $$ n(n+1) = 2m \implies 3n(n+1) = 3(2m) = 6m $$
+      Thus, $3n(n+1)$ is divisible by 6.
+
+    Since all terms are divisible by 6, the sum is divisible by 6.
+
+** Problem 3: Sum of Odd Numbers
+*Conjecture*: $1 + 3 + 5 + \dots + (2n-1) = n^2$.
+
+*** Proof
+1.  *Basis*: Let $n=1$.
+    $$ 2(1)-1 = 1 $$
+    $$ 1^2 = 1 $$
+    True.
+
+2.  *Assumption*: Assume $\sum_{i=1}^{n} (2i-1) = n^2$.
+
+3.  *Inductive Step*: Prove for $n+1$.
+    $$ \sum_{i=1}^{n+1} (2i-1) = \sum_{i=1}^{n} (2i-1) + (2(n+1)-1) $$
+    Using the assumption:
+    $$ = n^2 + (2n + 2 - 1) $$
+    $$ = n^2 + 2n + 1 $$
+    $$ = (n+1)^2 $$
+    Q.E.D.
+
+** Problem 4: Inequality and Hypothesis Strengthening
+*Proposition*: Prove $\sum_{i=1}^{n} \frac{1}{i^2} < 2$ for all $n \in \mathbb{N}$.
+
+*** Attempt 1 (Standard Induction) - Fails
+- *Basis*: $1 < 2$. True.
+- *Assumption*: $\sum_{i=1}^{n} \frac{1}{i^2} < 2$.
+- *Step*: $\sum_{i=1}^{n+1} \frac{1}{i^2} = \sum_{i=1}^{n} \frac{1}{i^2} + \frac{1}{(n+1)^2} < 2 + \frac{1}{(n+1)^2}$.
+- *Issue*: This does not prove the sum is strictly less than 2. It shows it is less than something slightly larger than 2. The inductive hypothesis is too weak.
+
+*** Attempt 2 (Strengthened Hypothesis)
+*New Conjecture*: $\sum_{i=1}^{n} \frac{1}{i^2} \le 2 - \frac{1}{n}$.
+
+*Proof*:
+1.  *Basis*: $n=1$.
+    $$ \frac{1}{1^2} \le 2 - \frac{1}{1} \implies 1 \le 1 $$
+    True.
+
+2.  *Assumption*: $\sum_{i=1}^{n} \frac{1}{i^2} \le 2 - \frac{1}{n}$.
+
+3.  *Inductive Step*: Show $\sum_{i=1}^{n+1} \frac{1}{i^2} \le 2 - \frac{1}{n+1}$.
+    Using the assumption:
+    $$ \sum_{i=1}^{n+1} \frac{1}{i^2} = \sum_{i=1}^{n} \frac{1}{i^2} + \frac{1}{(n+1)^2} \le \left( 2 - \frac{1}{n} \right) + \frac{1}{(n+1)^2} $$
+    We need to prove:
+    $$ 2 - \frac{1}{n} + \frac{1}{(n+1)^2} \le 2 - \frac{1}{n+1} $$
+    Subtract 2 from both sides and rearrange:
+    $$ \frac{1}{(n+1)^2} \le \frac{1}{n} - \frac{1}{n+1} $$
+    $$ \frac{1}{(n+1)^2} \le \frac{n+1 - n}{n(n+1)} $$
+    $$ \frac{1}{(n+1)^2} \le \frac{1}{n(n+1)} $$
+    Multiplying both sides by positive terms $(n+1)^2$ and $n(n+1)$ or simply observing denominators:
+    $$ (n+1)^2 \ge n(n+1) $$
+    $$ n^2 + 2n + 1 \ge n^2 + n $$
+    $$ n + 1 \ge 0 $$
+    This is clearly true for $n \in \mathbb{N}$. Thus, the inequality holds.
+
+** Problem 5: Triangle Inequality Generalization
+*Proposition*: For all $n$, $|X_1 + \dots + X_n| \le |X_1| + \dots + |X_n|$.
+
+*** Proof
+1.  *Basis*: $n=1$ is trivial ($|X_1| \le |X_1|$).
+    $n=2$ is the standard Triangle Inequality: $|X_1 + X_2| \le |X_1| + |X_2|$.
+
+2.  *Assumption*: Assume it holds for $n$.
+    $$ |\sum_{i=1}^{n} X_i| \le \sum_{i=1}^{n} |X_i| $$
+
+3.  *Inductive Step*:
+    $$ |\sum_{i=1}^{n+1} X_i| = |(\sum_{i=1}^{n} X_i) + X_{n+1}| $$
+    Treat $(\sum_{i=1}^{n} X_i)$ as a single term $A$. By the standard triangle inequality ($n=2$ case):
+    $$ |A + X_{n+1}| \le |A| + |X_{n+1}| $$
+    $$ \le |\sum_{i=1}^{n} X_i| + |X_{n+1}| $$
+    By the inductive assumption for the first term:
+    $$ \le (\sum_{i=1}^{n} |X_i|) + |X_{n+1}| = \sum_{i=1}^{n+1} |X_i| $$
+    Q.E.D.
+
+** Problem 6: Factorial Identity
+*Proposition*: $\sum_{k=1}^{n} k \cdot k! = (n+1)! - 1$.
+*(Note: $n! = 1 \cdot 2 \cdot \dots \cdot n$ and $0! = 1$)*
+
+*** Proof Idea
+1.  *Basis*: $1 \cdot 1! = 1$. $(1+1)! - 1 = 2 - 1 = 1$. True.
+2.  *Step*:
+    $$ \text{LHS for } n+1 = [(n+1)! - 1] + (n+1)(n+1)! $$
+    $$ = (n+1)! [ 1 + (n+1) ] - 1 $$
+    $$ = (n+1)! (n+2) - 1 $$
+    $$ = (n+2)! - 1 $$
+    Q.E.D.
+
+** Problem 7: Tiling with Triminoes
+*Problem*: A $2^n \times 2^n$ chessboard with exactly one square removed can be tiled using L-shaped triminoes (tiles covering 3 squares).
+
+*** Proof
+1.  *Basis ($n=1$)*: A $2 \times 2$ board has 4 squares. If we remove 1, we have 3 squares in an L-shape. This can be perfectly covered by one trimino.
+
+2.  *Assumption*: Assume any $2^n \times 2^n$ board with one square removed can be tiled.
+
+3.  *Inductive Step*: Consider a $2^{n+1} \times 2^{n+1}$ board with one missing square.
+    - Divide the board into four $2^n \times 2^n$ quadrants.
+    - The missing square is located in one of these quadrants.
+    - By hypothesis, the quadrant with the missing square can be tiled.
+    - For the other three quadrants, place a single trimino at the center of the large board such that it covers one corner square of each of the three "full" quadrants.
+    - Now, each of these three quadrants has exactly one square "removed" (occupied by the center trimino).
+    - By the inductive hypothesis, these three quadrants can also be tiled.
+    - Thus, the entire board is tiled.
+
+** Additional Examples
+*** Coin/Stamp Problem
+*Problem*: One can form any amount $n \ge 8$ using only 3 and 5 euro coins/stamps.
+*Basis*:
+- $8 = 3 + 5$
+- $9 = 3 + 3 + 3$
+- $10 = 5 + 5$
+*Step*: If we can form $k$, we can form $k+3$ by adding a 3 euro coin (Generalizing via strong induction or cases).

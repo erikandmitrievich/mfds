@@ -1,0 +1,134 @@
+#+title: Lecture 01
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-25>
+#+lastmod: <2025-11-25 10:54>
+#+options: num:t
+#+startup: overview
+
+* Sets
+** Definition
+A set is a collection of objects. Objects are called elements of the set.
+- Example: $S = \{1, 2, 3\}$
+- Example: $A = \{ \text{apple}, 2, \text{student} \}$
+- Example: $B = \{2, 3, 1\}$
+
+** Empty Set
+The empty set is the set containing no elements.
+- Notation: $\{\} = \emptyset$
+- Question: Is this true? $\emptyset = \{\emptyset\}$
+- Answer: NO (The set on the right contains one element: the empty set).
+
+** Equality
+Two sets $A$ and $B$ are equal if all elements of $A$ are elements of $B$ and vice versa.
+- Order and repetition do not matter.
+- Example: $C = \{1, 2, 3, 3, 1\} = \{1, 2, 3\}$
+
+** Cardinality
+The cardinality of a finite set is the number of its elements.
+- Notation: $|A|$ denotes the cardinality of $A$.
+
+** Standard Sets
+- $\mathbb{N} = \{1, 2, 3, \dots\}$ (Natural numbers)
+- $\mathbb{Z} = \{\dots, -2, -1, 0, 1, 2, \dots\}$ (Integers)
+- $\mathbb{R} = (-\infty, +\infty)$ (Real numbers)
+
+** Notation
+- If $x$ is an element of $A$: $x \in A$
+- If $x$ is not an element of $A$: $x \notin A$
+
+* Constructing Sets
+** Set-Builder Notation
+$S = \{ \text{expression} : \text{rule} \}$
+- Example: $A = \{ a \in \mathbb{N} : a < 5 \} = \{1, 2, 3, 4\}$
+- Example: $\mathbb{Q} = \{ \frac{m}{n} : m \in \mathbb{Z}, n \in \mathbb{N} \}$ (Rational numbers)
+
+** Cartesian Product
+For sets $A$ and $B$, the Cartesian product is the set of ordered pairs $(a, b)$ where $a \in A$ and $b \in B$.
+- Notation: $A \times B = \{ (a, b) : a \in \mathbb{N}, b \in B \}$
+- Note: $(a, b) \neq (b, a)$ generally. But $(2, 2) = (2, 2)$.
+- Example:
+  - $A = \{1, 2\}$
+  - $B = \{2, 3, 4\}$
+  - $A \times B = \{(1, 2), (1, 3), (1, 4), (2, 2), (2, 3), (2, 4)\}$
+  - Cardinality: $|A \times B| = |A| \cdot |B| = 2 \cdot 3 = 6$
+- $\mathbb{R} \times \mathbb{R} = \mathbb{R}^2$ (The 2D plane)
+
+* Subsets
+** Definition
+$A$ is called a subset of $B$ if all elements of $A$ are elements of $B$.
+- Notation: $A \subset B$ or $A \subseteq B$
+
+** Theorem: Number of Subsets
+If a set has $n$ elements, then it has $2^n$ subsets.
+
+*** Proof Idea
+Consider a set $S = \{x_1, x_2, \dots, x_n\}$.
+We can represent any subset by a binary string of length $n$.
+- For each element $x_i$, we write $1$ if $x_i$ is in the subset, and $0$ if it is not.
+- Example: $01011\dots$
+- There are $2$ choices for each of the $n$ positions.
+- Total combinations: $\underbrace{2 \times 2 \times \dots \times 2}_{n \text{ times}} = 2^n$.
+
+* Power Set
+** Definition
+The power set of the set $A$ is the set that contains all subsets of $A$.
+- Notation: $\mathcal{P}(A)$ or $2^A$
+- $\mathcal{P}(A) = \{ B : B \subseteq A \}$
+- Cardinality: $|\mathcal{P}(A)| = 2^{|A|}$
+
+** Example Analysis
+Let $S = \{1, \{1\}\}$.
+1. $1 \in \{1, \{1\}\}$ ? **Yes**.
+2. $1 \subseteq \{1, \{1\}\}$ ? **No** (1 is an element, not a set).
+3. $\{1\} \in \{1, \{1\}\}$ ? **Yes**.
+4. $\{1\} \subseteq \{1, \{1\}\}$ ? **Yes** (Because the element $1$ is in $S$).
+
+* Basic Operations
+** Union
+The union of $A$ and $B$ is the set of elements that are in $A$ or $B$.
+- $A \cup B = \{ x : x \in A \lor x \in B \}$
+
+** Intersection
+The intersection of $A$ and $B$ is the set of elements that are both in $A$ and $B$.
+- $A \cap B = \{ x : x \in A \land x \in B \}$
+
+** Difference
+The difference of $A$ and $B$ is the set of elements that are in $A$ but not in $B$.
+- Notation: $A \setminus B$ (or $A - B$)
+- $A \setminus B = \{ x : x \in A \land x \notin B \}$
+
+** Example
+Let $A = \{1, 2, 3, 4\}$ and $B = \{2, 5\}$.
+- $A \cup B = \{1, 2, 3, 4, 5\}$
+- $A \cap B = \{2\}$
+- $A \setminus B = \{1, 3, 4\}$
+- $B \setminus A = \{5\}$
+
+** Precedence Note
+$A \cup B \cap C$ usually implies $A \cup (B \cap C)$ due to standard operator precedence (intersection binds tighter than union), but parentheses should be used for clarity.
+
+* Universal Set and Complements
+** Universal Set
+$U$ denotes the universal set (the set containing all objects currently under consideration).
+
+** Complement
+The complement of set $A$ is the set $U \setminus A$.
+- Notation: $A^c$, $\bar{A}$, or $A'$
+- $A^c = \{ x \in U : x \notin A \}$
+- Example: If $U = \mathbb{Z}$, the complement of the set of all even numbers is the set of all odd numbers.
+
+** Generalized Notation
+- Summation: $\sum_{i=1}^n a_i = a_1 + \dots + a_n$
+- Cartesian Product: $\prod_{i=1}^n A_i = A_1 \times A_2 \times \dots \times A_n$
+- Union: $\bigcup_{i=1}^n A_i = A_1 \cup \dots \cup A_n$
+- Intersection: $\bigcap_{i=1}^n A_i = A_1 \cap \dots \cap A_n$
+
+* Quiz
+1. $|\{ x \in \mathbb{N} : |x| < 10 \}|$ ?
+   - Since $\mathbb{N} = \{1, 2, \dots\}$, the elements are $\{1, 2, 3, 4, 5, 6, 7, 8, 9\}$.
+   - Cardinality is 9.
+2. $\mathcal{P}(\{2, \{3, 4\}\})$ ?
+   - The set has 2 elements: $2$ and $\{3, 4\}$.
+   - The power set has $2^2 = 4$ elements.
+   - Elements: $\emptyset, \{2\}, \{\{3, 4\}\}, \{2, \{3, 4\}\}$.
