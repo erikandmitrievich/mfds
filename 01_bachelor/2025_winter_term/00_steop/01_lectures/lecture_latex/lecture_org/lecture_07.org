@@ -1,0 +1,112 @@
+#+title: Lecture 07
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-25>
+#+lastmod: <2025-11-25 10:45>
+#+options: num:t
+#+startup: overview
+
+* Sets of Numbers
+** Basic Definitions
+- *Natural Numbers*: $\mathbb{N} = \{1, 2, 3, \dots\}$
+- *Integers*: $\mathbb{Z} = \{\dots, -2, -1, 0, 1, 2, \dots\}$
+- *Rational Numbers*:
+  $$ \mathbb{Q} = \left\{ \frac{m}{n} : m \in \mathbb{Z}, n \in \mathbb{N} \right\} $$
+  - Note: The denominator $n$ cannot be zero ($n \in \mathbb{N}$ ensures this).
+
+** Irreducible Fractions
+A fraction $\frac{m}{n}$ is *irreducible* (or in lowest terms) if $m$ and $n$ have no common factor greater than 1.
+$$ \gcd(m, n) = 1 $$
+
+* Properties of Rational Numbers
+** Density of Rational Numbers
+*Theorem*: Between any two rational numbers, there is another rational number.
+
+*** Proof
+Let $a, b \in \mathbb{Q}$ with $a < b$.
+Consider the midpoint $c$:
+$$ c = \frac{a + b}{2} $$
+Clearly, $a < c < b$. We must show that $c \in \mathbb{Q}$.
+Let $a = \frac{m}{n}$ and $b = \frac{p}{q}$ where $m, p \in \mathbb{Z}$ and $n, q \in \mathbb{N}$.
+$$ c = \frac{1}{2} \left( \frac{m}{n} + \frac{p}{q} \right) = \frac{mq + np}{2nq} $$
+Since numerator and denominator are integers (and denominator $\neq 0$), $c \in \mathbb{Q}$.
+
+* Real and Irrational Numbers
+** Existence of Irrational Numbers
+*Question*: Are there other numbers in $\mathbb{R}$ besides $\mathbb{Q}$?
+*Proposition*: There is a real number $x$ such that $x^2 = 2$.
+*Definition*: The set of *irrational numbers* is defined as $\mathbb{R} \setminus \mathbb{Q}$.
+- Notation: $x = \sqrt{2}$. We previously proved that $\sqrt{2} \notin \mathbb{Q}$.
+
+** Arithmetic of Irrational Numbers
+We explore operations between rational and irrational numbers.
+
+1.  *Sum of two irrational numbers*: Can be rational.
+    - Example: $\sqrt{2} + (-\sqrt{2}) = 0 \in \mathbb{Q}$.
+
+2.  *Sum of a rational and an irrational number*: Is always irrational.
+    - *Claim*: If $a \in \mathbb{Q}$ and $b \notin \mathbb{Q}$, then $a + b \notin \mathbb{Q}$.
+    - *Proof (by contradiction)*:
+      Suppose $a + b = x$ where $x \in \mathbb{Q}$.
+      Then $b = x - a$.
+      Since $\mathbb{Q}$ is closed under subtraction, $x - a \in \mathbb{Q}$, which implies $b \in \mathbb{Q}$.
+      This contradicts the assumption that $b$ is irrational.
+
+3.  *Product of a non-zero rational and an irrational number*: Is always irrational.
+    - *Claim*: If $a \in \mathbb{Q}, a \neq 0$ and $b \notin \mathbb{Q}$, then $a \cdot b \notin \mathbb{Q}$.
+    - *Proof*: Similar to the sum proof, if $ab = x \in \mathbb{Q}$, then $b = x/a$. Since rationals are closed under division (for non-zero divisors), $b$ would be rational, a contradiction.
+
+** Density of Irrational Numbers
+*Theorem*: Between any two real numbers, there is an irrational number.
+
+*** Proof
+Let $a, b \in \mathbb{R}$ with $a < b$. We want to find an irrational $x$ such that $a < x < b$.
+We choose a large enough integer $n$ such that the step size is smaller than the gap $b - a$.
+$$ n > \frac{\sqrt{2}}{b - a} \implies \frac{\sqrt{2}}{n} < b - a $$
+
+We construct $x$ based on the nature of $a$:
+- *Case 1*: If $a \in \mathbb{Q}$.
+  Consider $x = a + \frac{\sqrt{2}}{n}$.
+  Since $a$ is rational and $\frac{\sqrt{2}}{n}$ is irrational (quotient of irrational and rational), the sum is irrational.
+  Also, $a < a + \frac{\sqrt{2}}{n} < b$ (by our choice of $n$).
+
+- *Case 2*: If $a \notin \mathbb{Q}$.
+  Consider $x = a + \frac{1}{n}$.
+  Since $a$ is irrational and $\frac{1}{n}$ is rational, the sum is irrational.
+  Also, $a < a + \frac{1}{n} < b$ (assuming $n$ is chosen such that $1/n < b-a$).
+
+*Note*: The handwritten notes for Case 2 are slightly fragmented but imply adding a rational increment to an irrational base keeps the result irrational.
+
+* Decimal Representations
+** Representation Structure
+Any real number $x$ has a decimal representation:
+$$ x = b_k \dots b_0 . a_1 a_2 a_3 \dots $$
+$$ x = \sum_{i=0}^k b_i 10^i + \sum_{i=1}^\infty \frac{a_i}{10^i} $$
+where digits $a_i \in \{0, 1, \dots, 9\}$.
+
+** Geometric Series and Repeating Decimals
+*Proposition*:
+1.  Finite Sum: $x + x^2 + \dots + x^n = \frac{x(1-x^n)}{1-x}$ (for $x \neq 1$).
+2.  Infinite Sum (for $0 < |x| < 1$):
+    $$ S = x(1 + x + x^2 + \dots) \implies S = \frac{x}{1-x} $$
+
+*** Example: $0.333\dots$
+$$ 0.333\dots = \frac{3}{10} + \frac{3}{100} + \dots = 3 \left( \frac{1}{10} + \frac{1}{100} + \dots \right) $$
+Using the formula with first term $x = 1/10$:
+$$ 3 \cdot \frac{1/10}{1 - 1/10} = 3 \cdot \frac{1/10}{9/10} = 3 \cdot \frac{1}{9} = \frac{1}{3} $$
+
+** Existence of Decimal Representation
+*Theorem*: Every $x \in (0, 1)$ has a decimal representation.
+
+*** Construction Logic
+1.  Divide the interval $[0, 1]$ into 10 sub-intervals of length $1/10$.
+2.  Find the sub-interval $[\frac{a_1}{10}, \frac{a_1+1}{10}]$ that contains $x$. This determines the first digit $a_1$.
+    $$ \frac{a_1}{10} \le x < \frac{a_1+1}{10} $$
+3.  Subdivide that interval into 10 smaller parts to find $a_2$, and so on.
+    $$ x = 0.a_1 a_2 \dots $$
+
+** Positional Notation Examples
+- $12 = 1 \cdot 10^1 + 2 \cdot 10^0$
+- $12.5 = 1 \cdot 10^1 + 2 \cdot 10^0 + 5 \cdot 10^{-1}$
+- Notation varies: $12.5$ (dot) vs $12,5$ (comma).
+- Approximation: $\sqrt{2} \approx 1.4142\dots$

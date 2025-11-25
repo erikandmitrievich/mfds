@@ -1,0 +1,192 @@
+#+title: Lecture 8-9
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-25>
+#+lastmod: <2025-11-25 10:42>
+#+options: num:t
+#+startup: overview
+
+* Real Numbers and Decimal Representations
+** Uniqueness of Decimal Representation
+*Problem*: Is the decimal representation of a real number unique?
+
+Consider $x \in (0,1)$.
+$$ x = 0.a_1 a_2 a_3 \dots $$
+$$ x = 0.b_1 b_2 b_3 \dots $$
+
+If these are two different representations of the same number, how do they differ?
+
+*** Theorem (Non-uniqueness Condition)
+If a real number has two different decimal representations, then one of them ends in an infinite sequence of 0s and the other in an infinite sequence of 9s.
+
+*Example*:
+$$ 0.5000\dots = 0.4999\dots $$
+$$ 0.2600\dots = 0.25999\dots $$
+
+*Proof of $0.999\dots = 1$*:
+Using the geometric series formula $\sum_{n=0}^{\infty} ar^n = \frac{a}{1-r}$:
+$$ 0.999\dots = 9 \cdot 10^{-1} + 9 \cdot 10^{-2} + \dots = \sum_{n=1}^{\infty} \frac{9}{10^n} = \frac{9/10}{1 - 1/10} = \frac{0.9}{0.9} = 1 $$
+
+*** Proof of General Case
+Let the two representations be $0.a_1 a_2 \dots$ and $0.b_1 b_2 \dots$.
+Let $k$ be the first index where the digits differ, i.e., $a_i = b_i$ for $i < k$, and $a_k \neq b_k$.
+Without loss of generality, assume $a_k < b_k$.
+
+Since they represent the same number, the "smaller" starting sequence must be maximized in its tail, and the "larger" starting sequence must be minimized in its tail to meet.
+
+1.  *Maximize $a$-sequence*: The largest possible value starting with $a_k$ is $0.a_1 \dots a_k 9 9 9 \dots$.
+2.  *Minimize $b$-sequence*: The smallest possible value starting with $b_k$ is $0.b_1 \dots b_k 0 0 0 \dots$.
+
+For equality to hold:
+$$ 0.a_1 \dots a_k 99\dots = 0.a_1 \dots b_k 00\dots $$
+This implies $b_k = a_k + 1$, and the tails must be strictly infinite 9s and infinite 0s respectively.
+
+** Periodic Decimals and Rational Numbers
+*Definition*: A periodic decimal is a number of the form:
+$$ 0.a_1 \dots a_k (c_1 \dots c_m) \quad \text{or} \quad 0.a_1 \dots a_k \overline{c_1 \dots c_m} $$
+where $c_1 \dots c_m$ is the repeating period.
+
+*Examples*:
+- $\frac{1}{3} = 0.333\dots = 0.\overline{3}$
+- $\frac{10}{7} = 1.428571428571\dots = 1.\overline{428571}$
+
+*Counter-example (Irrational)*:
+$$ 0.12345678910111213\dots $$
+$$ 0.101001000100001\dots $$
+These do not repeat periodically.
+
+*** Theorem 1: Rational $\implies$ Periodic
+Any rational number has a periodic decimal representation.
+
+*Proof*:
+Let $x = \frac{m}{n} \in \mathbb{Q}$.
+Perform long division of $m$ by $n$. At each step, we calculate a remainder $r_i$.
+The possible values for any remainder are $\{0, 1, \dots, n-1\}$.
+Since there are only $n$ distinct possible remainders, by the Pigeonhole Principle, a remainder must eventually repeat. Once a remainder repeats, the sequence of digits produced in the quotient will also repeat cyclically.
+
+*** Theorem 2: Periodic $\implies$ Rational
+If a real number has a periodic decimal representation, then it is rational.
+
+*Proof*:
+Let $\Gamma = 0.a_1 \dots a_k \overline{c_1 \dots c_m}$.
+We can split this into a finite (non-periodic) part and an infinite (periodic) part.
+$$ \Gamma = \underbrace{0.a_1 \dots a_k}_{\text{Part I}} + \underbrace{0.00\dots0 \overline{c_1 \dots c_m}}_{\text{Part II}} $$
+
+1.  *Part I*: This is a terminating decimal, which is clearly rational ($Q$).
+2.  *Part II*: This can be written as a geometric series.
+    $$ \text{Part II} = 10^{-k} \cdot (0.\overline{c_1 \dots c_m}) $$
+    Let $P = c_1 \dots c_m$ be the integer value of the period block.
+    $$ 0.\overline{c_1 \dots c_m} = \frac{P}{10^m} + \frac{P}{10^{2m}} + \dots = P \sum_{j=1}^{\infty} (10^{-m})^j $$
+    This is a convergent geometric series with ratio $r = 10^{-m} < 1$, which sums to a rational value.
+
+Since $\Gamma$ is the sum of two rationals, $\Gamma \in \mathbb{Q}$.
+
+* Numeral Systems
+** Positional Systems
+A number $n$ can be represented in base $b$ ($b > 1$) as:
+$$ n = (a_k a_{k-1} \dots a_1 a_0)_b = \sum_{i=0}^{k} a_i \cdot b^i $$
+where coefficients $a_i \in \{0, 1, \dots, b-1\}$.
+
+*** Examples
+- *Binary* ($b=2$):
+  $$ (10011)_2 = 1 \cdot 2^4 + 0 \cdot 2^3 + 0 \cdot 2^2 + 1 \cdot 2^1 + 1 \cdot 2^0 = 16 + 2 + 1 = 19 $$
+- *Hexadecimal* ($b=16$): Digits $0-9, A-F$.
+  $$ (A21)_{16} = 10 \cdot 16^2 + 2 \cdot 16^1 + 1 \cdot 16^0 $$
+
+*** Theorem (Existence and Uniqueness)
+Let $b \in \mathbb{N}, b > 1$. Then any $n \in \mathbb{N}$ can be uniquely represented in base $b$.
+
+** Non-Positional Systems
+Example: Roman Numerals (e.g., MMXXV). The value depends on fixed symbols rather than position powers (though order matters for subtraction/addition).
+
+* Number Theory Basics
+** Divisibility and The Division Algorithm
+*Definition*: Let $a, b \in \mathbb{Z}$. We say $a$ divides $b$ (notation $a \mid b$) if there exists $c \in \mathbb{Z}$ such that $b = a \cdot c$.
+
+*Theorem (Division Algorithm)*: Let $a, b \in \mathbb{Z}$ with $a > 0$. There exist unique integers $q$ (quotient) and $r$ (remainder) such that:
+$$ b = a \cdot q + r, \quad 0 \le r < a $$
+
+** Prime Numbers
+*Definition*: A number $p > 1$ is prime if it has exactly two divisors: 1 and $p$.
+- 101? Prime (YES).
+- 57? Not Prime ($57 = 3 \times 19$, NO).
+
+** Greatest Common Divisor (GCD)
+*Definition*: Let $a, b \in \mathbb{Z}$. A number $c$ is a common divisor if $c \mid a$ and $c \mid b$.
+The *Greatest Common Divisor* (GCD), denoted $\gcd(a, b)$, is the largest integer that divides both $a$ and $b$.
+
+*Examples*:
+- Factors of 6: 1, 2, 3, 6.
+- Factors of 10: 1, 2, 5, 10.
+- $\gcd(6, 10) = 2$.
+- $\gcd(8, 16) = 8$.
+- $\gcd(2, 5) = 1$ (Relatively prime).
+
+* Euclid's Algorithm
+A method to compute $\gcd(a, b)$.
+
+** The Procedure
+To find $\gcd(a, b)$:
+1.  $a = q_1 b + r_1$ where $0 \le r_1 < b$
+2.  $b = q_2 r_1 + r_2$ where $0 \le r_2 < r_1$
+3.  $r_1 = q_3 r_2 + r_3$
+4.  ...
+5.  $r_{n-2} = q_n r_{n-1} + r_n$
+6.  $r_{n-1} = q_{n+1} r_n + 0$
+
+The algorithm terminates when the remainder is 0. The GCD is the *last non-zero remainder* $r_n$.
+
+*** Example
+Find $\gcd(49, 21)$.
+1.  $49 = 2 \cdot 21 + 7$
+2.  $21 = 3 \cdot 7 + 0$
+$\implies \gcd(49, 21) = 7$.
+
+** Correctness Lemma
+*Lemma*: Let $a = bq + r$. Then $\gcd(a, b) = \gcd(b, r)$.
+
+*Proof*:
+Let $S_1$ be the set of common divisors of $a$ and $b$.
+Let $S_2$ be the set of common divisors of $b$ and $r$.
+
+1.  If $d \in S_1$, then $d \mid a$ and $d \mid b$. Since $r = a - bq$, $d$ must divide linear combination $a - bq$, so $d \mid r$. Thus $d \in S_2$.
+2.  If $d \in S_2$, then $d \mid b$ and $d \mid r$. Since $a = bq + r$, $d$ must divide $bq + r$, so $d \mid a$. Thus $d \in S_1$.
+
+Since the sets of common divisors are identical, their greatest elements must be identical.
+
+* Bézout's Identity (Extended Euclidean Algorithm)
+** Theorem
+Let $a, b \in \mathbb{N}$. Then there exist integers $x, y \in \mathbb{Z}$ such that:
+$$ \gcd(a, b) = a \cdot x + b \cdot y $$
+
+*** Example
+For $\gcd(49, 21) = 7$:
+$$ 7 = 49(1) + 21(-2) $$
+Here $x = 1, y = -2$.
+
+** Proof 1: Constructive (Back-substitution)
+We can express the remainders in Euclid's algorithm linearly.
+From the algorithm:
+$$ r_i = r_{i-2} - q_i r_{i-1} $$
+If previous remainders are linear combinations of $a$ and $b$, then $r_i$ is also a linear combination.
+By induction, since $r_1 = a - q_1 b$ (linear combination), all subsequent remainders, including $\gcd(a,b)$, are linear combinations of $a$ and $b$.
+
+** Proof 2: Non-constructive (Well-Ordering Principle)
+Consider the set of all positive linear combinations:
+$$ S = \{ ax + by \mid x, y \in \mathbb{Z}, ax + by > 0 \} $$
+Let $m = \min(S)$. By the Well-Ordering Principle, a minimum exists.
+We claim $m = \gcd(a, b)$.
+
+1.  *Proof that $m$ is a common divisor*:
+    Suppose $m$ does not divide $a$. By the Division Algorithm, $a = qm + r$ with $0 < r < m$.
+    $$ r = a - qm = a - q(ax + by) = a(1-qx) + b(-qy) $$
+    This implies $r$ is a linear combination of $a$ and $b$. Since $r > 0$, $r \in S$.
+    But $r < m$, which contradicts that $m$ is the minimum of $S$.
+    Thus $m \mid a$. Similarly, $m \mid b$.
+
+2.  *Proof that $m$ is the greatest*:
+    Let $d$ be any common divisor of $a$ and $b$.
+    Since $m = ax + by$ and $d$ divides both $a$ and $b$, $d$ must divide $ax + by$, so $d \mid m$.
+    Therefore, $d \le m$.
+
+Thus $m = \gcd(a, b)$.
