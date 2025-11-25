@@ -1,0 +1,184 @@
+#+title: Lecture 14 15
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-25>
+#+lastmod: <2025-11-25 10:22>
+#+options: num:t
+#+startup: overview
+
+* Counting Principles
+** The Sum Rule
+If there are $m$ ways to choose element $a$ and $n$ ways to choose element $b$ (independent of $a$), then there are $m+n$ ways to choose $a$ or $b$.
+
+- *Set Theory Notation*: $|A \cup B| = |A| + |B|$ (if sets are disjoint).
+
+*** Example: Path Counting
+Consider a graph with nodes A, B, C, D.
+- *Path 1*: A to C via B.
+  - A to B: 3 paths.
+  - B to C: 4 paths.
+  - Total ways via B: $3 \times 4 = 12$.
+- *Path 2*: A to C via D.
+  - A to D: 2 paths.
+  - D to C: 3 paths.
+  - Total ways via D: $2 \times 3 = 6$.
+
+*Problem*: How many ways from A to C?
+$$3 \times 4 + 2 \times 3 = 12 + 6 = 18$$
+
+** The Product Rule
+If there are $m$ ways to choose element $a$ and $n$ ways to choose element $b$, then there are $m \times n$ ways to choose the pair $(a, b)$.
+
+- *Set Theory Notation*: $|A \times B| = |A| \cdot |B|$.
+
+*** Problem: 6-digit Numbers
+How many 6-digit numbers are there?
+- The first digit cannot be 0 (options: 1-9 $\rightarrow$ 9 ways).
+- The remaining 5 digits can be 0-9 (10 ways each).
+$$9 \cdot 10^5$$
+
+*** Problem: Even Digits Constraint
+How many 6-digit numbers contain at least one even digit?
+- *Strategy*: Use the complement (Total numbers - Numbers with only odd digits).
+- Odd digits: $\{1, 3, 5, 7, 9\}$ (5 options).
+- Numbers with only odd digits: $5^6$ (Assuming 6 positions filled with 5 options each).
+$$9 \cdot 10^5 - 5^6$$
+- *Note*: The term $5^6$ assumes the first digit (being odd) is valid. Since 0 is even, it is not in the set of odd digits, so the first digit restriction (non-zero) is automatically satisfied by choosing from $\{1,3,5,7,9\}$.
+
+*** Problem: Divisibility by 5
+How many 6-digit numbers are divisible by 5?
+- Last digit must be 0 or 5 (2 options).
+- First digit: 9 options.
+- Middle digits: 10 options.
+$$9 \cdot 10^4 \cdot 2 = 18 \cdot 10^4$$
+
+* Permutations and Arrangements
+** Permutations
+Let $S$ be a set with $n$ elements. The number of arrangements of its elements in order is $n!$.
+$$n! = 1 \cdot 2 \cdot \dots \cdot n$$
+
+- *Example*: $S = \{a, b, c\}$.
+  - Permutations: $abc, acb, bca, bac, cab, cba$.
+  - Total: $3! = 6$.
+
+** Ordered Selections (k-Permutations)
+The number of ordered selections of $m$ elements from a set $S$ of size $n$.
+$$P(n,m) = n \cdot (n-1) \cdot \dots \cdot (n-m+1) = \frac{n!}{(n-m)!}$$
+
+*** Example: Selecting Officers
+From 100 students, choose a President, VP, and WP (positions are distinct/ordered).
+$$100 \cdot 99 \cdot 98$$
+
+** Unordered Selections (Combinations)
+The number of unordered selections of $m$ elements from a set $S$ of size $n$.
+$$\binom{n}{m} = \frac{P(n,m)}{m!} = \frac{n!}{m!(n-m)!}$$
+- *Notation*: $C_n^m = C(n,m) = \binom{n}{m}$.
+- This represents the number of subsets of cardinality $m$.
+
+*** Example: Selecting Interviewees
+From 100 students, choose 3 for interviews (no distinct roles/unordered).
+$$\binom{100}{3} = \frac{100 \cdot 99 \cdot 98}{6}$$
+
+* Binomial Coefficients and Identities
+** Basic Properties
+- $\binom{n}{0} = 1$
+- $\binom{n}{1} = n$
+- $\binom{n}{n} = 1$
+- $\binom{n}{2} = \frac{n(n-1)}{2}$
+- *Symmetry*: For $0 \le m \le n$, $\binom{n}{m} = \binom{n}{n-m}$.
+
+** Applied Problems
+*** Handshake Problem
+If $n$ people at a party all shake hands exactly once, how many handshakes occurred?
+$$\binom{n}{2} = \frac{n(n-1)}{2}$$
+
+*** Committee Selection
+There are 2 Math professors and 8 CS professors. We need a committee of 6, with at least 1 Math professor.
+- *Method 1 (Direct Sum)*:
+  $$(1 \text{ Math} \land 5 \text{ CS}) + (2 \text{ Math} \land 4 \text{ CS})$$
+  $$\binom{2}{1}\binom{8}{5} + \binom{2}{2}\binom{8}{4}$$
+- *Method 2 (Complement)*:
+  Total committees - Committees with no Math professors.
+  $$\binom{10}{6} - \binom{8}{6}$$
+
+*** Candy Exchange
+Alice has 6 different chocolates. Bob has 8 different gummy bears. They want to exchange 5 candies.
+- Alice chooses 5 to give: $\binom{6}{5}$.
+- Bob chooses 5 to give: $\binom{8}{5}$.
+- Total ways: $\binom{6}{5} \cdot \binom{8}{5}$.
+
+** The Binomial Theorem
+$$(x+y)^n = \sum_{k=0}^{n} \binom{n}{k} x^{n-k} y^k$$
+
+*** Examples
+- $(x+y)^2 = x^2 + 2xy + y^2$
+- $(x+y)^3 = x^3 + 3x^2y + 3xy^2 + y^3$
+
+*** Coefficient Problem
+What is the coefficient of $x^5 y^8$ in $(x+y)^{13}$?
+- Here $n=13$. We need $y^8$, so $k=8$.
+- Solution: $\binom{13}{8}$ (which is equal to $\binom{13}{5}$).
+
+** Pascal's Identity
+For $0 \le m \le n$:
+$$\binom{n}{m} = \binom{n-1}{m-1} + \binom{n-1}{m}$$
+
+*** Proofs
+1.  *Algebraic*: Expand the factorials $\frac{(n-1)!}{(m-1)!(n-m)!} + \dots$ and simplify.
+2.  *Combinatorial*: Let $S = \{a_1, \dots, a_n\}$. To choose a subset of size $m$:
+    - *Case 1*: Subset contains $a_n$. We must choose remaining $m-1$ elements from the other $n-1$. $\rightarrow \binom{n-1}{m-1}$.
+    - *Case 2*: Subset does not contain $a_n$. We must choose all $m$ elements from the other $n-1$. $\rightarrow \binom{n-1}{m}$.
+
+** Sum of Binomial Coefficients
+$$\sum_{k=0}^{n} \binom{n}{k} = 2^n$$
+
+*** Proofs
+1.  *Combinatorial*: The LHS counts subsets of size 0, 1, ..., $n$. The total number of subsets of a set with size $n$ is $2^n$.
+2.  *Algebraic*: Use the Binomial Theorem with $x=1, y=1$.
+    $$(1+1)^n = \sum_{k=0}^n \binom{n}{k} 1^{n-k} 1^k = 2^n$$
+
+* Integer Solutions (Stars and Bars)
+*Problem*: How many solutions for $x + y + z = 10$ exist in non-negative integers?
+
+*** Method
+We can represent the number 10 as ten ones (stars) and use dividers (bars) to separate variables.
+- Example Solution: $x=1, y=0, z=9$.
+- Representation: $1 | | 1 1 1 1 1 1 1 1 1$
+- Total items to arrange: 10 stars + 2 bars = 12 positions.
+- We choose positions for the 2 bars.
+$$\binom{12}{2}$$
+
+* The Inclusion-Exclusion Principle
+** Two Sets
+$$|A \cup B| = |A| + |B| - |A \cap B|$$
+
+*** Problem: Student Programs
+Total students: 160.
+- 80 chose Math ($M$).
+- 70 chose Programming ($P$).
+- 40 chose both ($M \cap P$).
+
+How many chose neither?
+- $|M \cup P| = 80 + 70 - 40 = 110$.
+- Neither $= 160 - 110 = 50$.
+
+*Note*: The handwritten source contains a calculation error or typo ($160-150=10$), likely miscalculating the union. The standard Inclusion-Exclusion calculation is provided above based on the given subset values.
+
+** Three Sets
+$$|A \cup B \cup C| = |A| + |B| + |C| - (|A \cap B| + |A \cap C| + |B \cap C|) + |A \cap B \cap C|$$
+
+*** Problem: Divisibility
+How many numbers $n \le 1000$ are divisible by 7 or 11?
+Define sets:
+- $A = \{n \le 1000 : 7 | n\}$
+- $B = \{n \le 1000 : 11 | n\}$
+
+Calculate cardinalities:
+- $|A| = \lfloor \frac{1000}{7} \rfloor = 142$
+- $|B| = \lfloor \frac{1000}{11} \rfloor = 90$
+- $|A \cap B| = \lfloor \frac{1000}{77} \rfloor = 12$
+
+Calculate Union:
+$$|A \cup B| = 142 + 90 - 12 = 220$$
+
+*Note*: The handwritten notes show "80" for $|B|$ in the final summation line, which is inconsistent with $\lfloor 1000/11 \rfloor = 90$. The correct value (90) is used here to match the final result of 220.

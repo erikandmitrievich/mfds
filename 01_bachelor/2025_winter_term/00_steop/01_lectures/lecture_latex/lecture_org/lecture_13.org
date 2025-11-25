@@ -1,0 +1,150 @@
+#+title: Lecture 13
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-25>
+#+lastmod: <2025-11-25 10:26>
+#+options: num:t
+#+startup: overview
+
+* Modular Arithmetic and Congruence Classes
+** Problem 1: Integer Solutions
+*Problem*: Find all $n \in \mathbb{N}$ such that $\frac{n^2+1}{3} \in \mathbb{Z}$.
+
+*** Analysis
+Let the expression be an integer $m$.
+$$ \frac{n^2+1}{3} = m \implies n^2 + 1 = 3m \implies n^2 + 1 \equiv 0 \pmod{3} $$
+This implies:
+$$ n^2 \equiv -1 \equiv 2 \pmod{3} $$
+
+*** Checking Residues
+We examine the quadratic residues modulo 3 by testing all possible congruence classes for $n$:
+- If $n \equiv 0 \pmod{3} \implies n^2 \equiv 0 \pmod{3}$.
+- If $n \equiv 1 \pmod{3} \implies n^2 \equiv 1 \pmod{3}$.
+- If $n \equiv 2 \pmod{3} \implies n^2 \equiv 4 \equiv 1 \pmod{3}$.
+
+*Conclusion*: $n^2 \pmod{3}$ can only be $0$ or $1$. It can never be $2$.
+Therefore, there is *no such $n$* for which $\frac{n^2+1}{3}$ is an integer.
+
+*** Empirical Check (Table)
+| $n$ | $\frac{n^2+1}{3}$ | Result              |
+|-----+-------------------+---------------------|
+|   1 | $2/3$             | $\notin \mathbb{Z}$ |
+|   2 | $5/3$             | $\notin \mathbb{Z}$ |
+|   3 | $10/3$            | $\notin \mathbb{Z}$ |
+|   4 | $17/3$            | $\notin \mathbb{Z}$ |
+|   5 | $26/3$            | $\notin \mathbb{Z}$ |
+
+** Definition: Congruence Classes
+Let $a, n, m \in \mathbb{N}$. The set of all integers congruent to $a$ modulo $m$ is called the *congruence class* of $a$ modulo $m$, denoted as $\overline{a}$ or $[a]_m$.
+
+$$ \overline{a} = \{ x \in \mathbb{Z} : x \equiv a \pmod{m} \} $$
+
+*** Example: Modulo 3 ($m=3$)
+There are 3 distinct classes:
+- $\overline{0} = \{ \dots, -3, 0, 3, 6, 9, \dots \}$ (Multiples of 3)
+- $\overline{1} = \{ \dots, -2, 1, 4, 7, 10, \dots \}$ (Remainder 1)
+- $\overline{2} = \{ \dots, -1, 2, 5, 8, 11, \dots \}$ (Remainder 2)
+Note that $\overline{4} = \overline{1}$.
+
+** Arithmetic in $\mathbb{Z}_m$
+$\mathbb{Z}_m$ is the set of all congruence classes modulo $m$: $\mathbb{Z}_m = \{ \overline{0}, \overline{1}, \dots, \overline{m-1} \}$.
+
+Operations are defined component-wise:
+- *Addition*: $\overline{a} + \overline{b} = \overline{a+b}$
+- *Subtraction*: $\overline{a} - \overline{b} = \overline{a-b}$
+- *Multiplication*: $\overline{a} \cdot \overline{b} = \overline{a \cdot b}$
+
+*** Examples
+- *Modulo 5*:
+  - $\overline{2} + \overline{3} = \overline{5} = \overline{0}$
+  - $\overline{2} + \overline{4} = \overline{6} = \overline{1}$
+  - $\overline{3} \cdot \overline{4} = \overline{12} = \overline{2}$
+- *Modulo 12*:
+  - $\overline{7} \times \overline{9} = \overline{63}$. Since $63 = 5 \times 12 + 3$, $\overline{63} = \overline{3}$.
+
+* Diophantine Equations
+** Problem 2: Cubic Equation
+*Problem*: Solve $4x^2 = y^3 + 1$ in $\mathbb{N}$ (integers).
+
+*** Solution
+1. *Rearrange the equation*:
+   $$ 4x^2 - 1 = y^3 $$
+   $$ (2x-1)(2x+1) = y^3 $$
+
+2. *Parity Analysis*:
+   Since $y^3 = 4x^2 - 1$ is odd, $y$ must be odd.
+
+3. *GCD Analysis*:
+   Consider the greatest common divisor of the two factors:
+   $$ \gcd(2x-1, 2x+1) $$
+   Using the Euclidean algorithm property $\gcd(a, b) = \gcd(a, b-a)$:
+   $$ \gcd(2x-1, (2x+1)-(2x-1)) = \gcd(2x-1, 2) $$
+   Since $2x-1$ is odd, it shares no factors with 2. Thus, $\gcd(2x-1, 2x+1) = 1$.
+
+4. *Cubic Factors*:
+   If the product of two coprime integers is a perfect cube, then each factor must be a perfect cube.
+   $$ 2x-1 = a^3 $$
+   $$ 2x+1 = b^3 $$
+
+5. *Difference of Cubes*:
+   Subtract the first equation from the second:
+   $$ b^3 - a^3 = (2x+1) - (2x-1) = 2 $$
+
+6. *Check for Solutions*:
+   We look for two perfect cubes separated by a difference of 2.
+   Let's check the gap between consecutive cubes $t^3$ and $(t+1)^3$ for integer $t$:
+   $$ (t+1)^3 - t^3 = t^3 + 3t^2 + 3t + 1 - t^3 = 3t^2 + 3t + 1 $$
+   - If $t=0$: Diff = 1 ($1^3 - 0^3 = 1$).
+   - If $t=1$: Diff = 7 ($2^3 - 1^3 = 8 - 1 = 7$).
+   - If $t \ge 1$: The difference strictly increases.
+   - For negative integers, the gap magnitude behaves similarly. The only integer cubes with difference 2 could potentially be $-1$ and $1$ ($1 - (-1) = 2$), implying $b=1, a=-1$.
+     - If $a=-1 \implies 2x-1 = -1 \implies x=0$.
+     - If we restrict solutions to $\mathbb{N}$ (natural numbers $\ge 1$), $x=0$ is not a solution.
+
+*Conclusion*: There are no solutions for $x, y \in \mathbb{N}$ (positive integers).
+
+* Prime Generating Functions
+** Problem 3: Euler's Polynomial
+*Problem*: Is it true that $n^2 + n + 41$ is prime for all $n \in \mathbb{N}$?
+
+*** Investigation
+Let $f(n) = n^2 + n + 41$.
+- $n=1 \implies 1 + 1 + 41 = 43$ (Prime)
+- $n=2 \implies 4 + 2 + 41 = 47$ (Prime)
+- $n=3 \implies 9 + 3 + 41 = 53$ (Prime)
+- $n=4 \implies 16 + 4 + 41 = 61$ (Prime)
+- $n=5 \implies 25 + 5 + 41 = 71$ (Prime)
+
+*** Counter-example
+Try $n=40$:
+$$ 40^2 + 40 + 41 = 40(40+1) + 41 = 40 \cdot 41 + 41 = 41(40+1) = 41^2 $$
+$41^2$ is obviously divisible by 41, so it is *not prime*.
+Therefore, the statement is *false*.
+
+* Mathematical Induction (Paradox)
+** Theorem: "All horses are the same color"
+*Claim*: In any set of $n$ horses, all horses have the same color.
+
+*** Proof (Flawed)
+We use induction on the number of horses $n$.
+
+1. *Base Case ($n=1$)*:
+   In a set containing only one horse, clearly all horses in the set have the same color.
+
+2. *Inductive Step*:
+   Assume that for any set of $n$ horses, they all have the same color. We want to show this holds for $n+1$ horses.
+   Consider a set of $n+1$ horses: $\{ H_1, H_2, \dots, H_n, H_{n+1} \}$.
+
+   - *First Group*: Consider the subset of the first $n$ horses $\{ H_1, \dots, H_n \}$. By the inductive hypothesis, they all have the same color (say, Color A).
+   - *Second Group*: Consider the subset of the last $n$ horses $\{ H_2, \dots, H_{n+1} \}$. By the inductive hypothesis, they all have the same color (say, Color B).
+   - *Overlap*: The horses $\{ H_2, \dots, H_n \}$ belong to both groups.
+   - *Deduction*: Since $H_2$ is in the first group, it has Color A. Since it is in the second group, it has Color B. Therefore, Color A = Color B.
+   - Consequently, $H_1$ (Color A) and $H_{n+1}$ (Color B) match, and all $n+1$ horses have the same color.
+
+*** The Flaw
+The argument fails at the transition from $n=1$ to $n=2$.
+- When $n=1$, we move to $n+1=2$ horses: $\{H_1, H_2\}$.
+- The "First Group" is $\{H_1\}$.
+- The "Second Group" is $\{H_2\}$.
+- The *intersection* $\{H_2, \dots, H_n\}$ is *empty*.
+- There is no "middle horse" to bridge the color between $H_1$ and $H_2$. Therefore, the inductive step implies logic that requires $n \ge 2$ to verify $n+1$. The chain of induction is broken at the very start.
