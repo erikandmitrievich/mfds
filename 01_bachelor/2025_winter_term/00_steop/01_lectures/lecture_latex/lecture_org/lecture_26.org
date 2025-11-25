@@ -1,0 +1,72 @@
+#+title: Lecture 26
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-25>
+#+lastmod: <2025-11-25 08:39>
+#+options: num:t
+#+startup: overview
+
+* Cardinality of Intervals
+** Equivalence of Intervals
+*Theorem:* Any two finite open intervals $(a,b)$ and $(c,d)$ have the same cardinality. Furthermore, finite intervals have the same cardinality as $\mathbb{R}$.
+
+*Proof (Geometric):*
+To prove $(a,b) \sim (0,1)$, we can construct a linear bijection.
+1. Shift the interval to start at 0: $y = x - a$.
+2. Scale the length $b-a$ to $1$: $f(x) = \frac{x-a}{b-a}$.
+This function $f: (a,b) \to (0,1)$ is a bijection.
+
+*Proof (Bijection with $\mathbb{R}$):*
+We show $(0,1) \sim \mathbb{R}$.
+Consider the function $f(x) = \tan(x)$.
+1. First, map $(0,1)$ to $(-\frac{\pi}{2}, \frac{\pi}{2})$ via a linear transformation.
+2. The function $\tan: (-\frac{\pi}{2}, \frac{\pi}{2}) \to \mathbb{R}$ is a bijection.
+3. Therefore, by composition, $(0,1) \sim \mathbb{R}$.
+The cardinality of $\mathbb{R}$ is denoted by $c$ (continuum).
+
+* Equivalence of Open and Closed Intervals
+*Theorem:* All intervals $(0,1)$, $[0,1]$, $(0,1]$, and $[0,1)$ have the same cardinality.
+
+*Note:* While intuition suggests $[0,1]$ has "two more points" than $(0,1)$, in the context of infinite sets, adding finite elements does not change cardinality. This is rigorously proven later using the Cantor-Schröder-Bernstein theorem, but a direct bijection can be constructed for specific cases like $(0,1) \sim (0,1]$ by "shifting" a countable sequence of points (e.g., $1/n \to 1/(n+1)$) to accommodate the endpoint.
+
+* Cardinality of Higher Dimensions
+*Theorem:* $|\mathbb{R}^2| = |\mathbb{R}|$.
+(The plane has the same number of points as the line).
+
+*Proof Strategy (Interleaving Digits):*
+We construct a bijection (or at least an injection) $(0,1] \times (0,1] \to (0,1]$.
+Let $(x,y) \in (0,1] \times (0,1]$. We can represent $x$ and $y$ by their decimal expansions.
+$$ x = 0.x_1 x_2 x_3 \dots $$
+$$ y = 0.y_1 y_2 y_3 \dots $$
+We attempt to construct $z \in (0,1)$ by interleaving the digits:
+$$ z = 0.x_1 y_1 x_2 y_2 x_3 y_3 \dots $$
+
+*Technical Issue:* Decimal representations are not unique (e.g., $0.5000\dots = 0.4999\dots$). The simple interleaving $x_i, y_i$ fails if we map to a representation ending in infinite zeros while the pre-image ended in infinite nines.
+*Resolution:* We group digits. Instead of taking single digits, we read from left to right until the first non-zero digit is found, treating that block as a single "digit" for interleaving.
+*Example:*
+$$ x = 0.01502\dots \quad (\text{Groups}: 01, 5, 02 \dots) $$
+$$ y = 0.45\dots \quad (\text{Groups}: 4, 5 \dots) $$
+$$ z = 0.0145502\dots $$
+This modification ensures the mapping is reversible and handles the non-uniqueness issue.
+
+* Cantor's Theorem
+*Theorem:* For any set $A$, the cardinality of the power set $\mathcal{P}(A)$ is strictly greater than the cardinality of $A$.
+$$ |A| < |\mathcal{P}(A)| $$
+
+*Proof:*
+1. *Injection:* It is trivial that $|A| \le |\mathcal{P}(A)|$ via the map $a \mapsto \{a\}$.
+2. *No Surjection:* We must show there is no surjective function $g: A \to \mathcal{P}(A)$.
+   Suppose for the sake of contradiction that such a surjection $g$ exists.
+   Consider the set $B = \{ x \in A : x \notin g(x) \}$.
+   Since $B \subseteq A$, $B \in \mathcal{P}(A)$.
+   Because $g$ is surjective, there must exist some $y \in A$ such that $g(y) = B$.
+
+   Now, ask: Is $y \in B$?
+   - If $y \in B$, then by definition of $B$, $y \notin g(y)$. Since $g(y) = B$, this means $y \notin B$. (Contradiction).
+   - If $y \notin B$, then by definition of $B$, $y \in g(y)$. Since $g(y) = B$, this means $y \in B$. (Contradiction).
+
+   Since both cases lead to a contradiction, $g$ cannot be surjective. Thus $|A| < |\mathcal{P}(A)|$.
+
+*Consequence:*
+$$ |\mathbb{N}| < |\mathcal{P}(\mathbb{N})| < |\mathcal{P}(\mathcal{P}(\mathbb{N}))| < \dots $$
+There is an infinite hierarchy of infinities.

@@ -2,11 +2,11 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-24>
-#+lastmod: <2025-11-24 20:39>
+#+lastmod: <2025-11-25 08:43>
 #+options: num:t
 #+startup: overview
 
-* [40%]
+* [44%]
 - [ ] Lecture 0 :: Introduction to the course. Logistics. Julia.
 - [ ] Lecture 1 :: Sets. Basic definitions and operations with sets.
 - [ ] Lectures 2-3 :: Propositional logic. Quantifiers.
@@ -27,7 +27,8 @@
 - [ ] Lecture 22 :: Functions (continuation).
 - [ ] Lectures 23-24 :: Even more functions.
 - [ ] Lecture 25 :: Infinite sets.
-- [ ] Lectures 26-27 :: Infinite sets. Cantor-Schröder-Bernstein theorem.
+- [X] Lectures 26 :: Infinite sets.
+- [X] Lectures 27 :: Cantor-Schröder-Bernstein theorem.
 - [X] Lecture 28 :: Polynomials.
 - [X] Lecture 29 :: Polynomials-2.
 - [X] Lecture 30 :: Complex numbers.
