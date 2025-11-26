@@ -1,0 +1,173 @@
+#+title: Exam Paper 01
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-26>
+#+lastmod: <2025-11-26 10:34>
+#+options: num:t
+#+startup: overview
+
+* Instructions
+- Time Allowed: 120 Minutes.
+- Total Marks: 100.
+- Section A: 20 Multiple Choice Questions (2 marks each).
+- Section B: 10 Open Problems (6 marks each).
+- Show all steps for Section B.
+
+* Section A: Multiple Choice
+1. Which statement is logically equivalent to $P \Rightarrow Q$?
+   A. $Q \Rightarrow P$
+   B. $\neg P \lor Q$
+   C. $P \land \neg Q$
+   D. $\neg Q \Rightarrow P$
+
+2. If $|A| = n$, what is $|\mathcal{P}(A)|$?
+   A. $n^2$
+   B. $2^n$
+   C. $2n$
+   D. $n!$
+
+3. An equivalence relation is:
+   A. Reflexive, Antisymmetric, Transitive
+   B. Reflexive, Symmetric, Transitive
+   C. Irreflexive, Symmetric, Transitive
+   D. Reflexive, Symmetric, Antitransitive
+
+4. $f: \mathbb{Z} \to \mathbb{Z}, f(n) = 2n$ is:
+   A. Injective only
+   B. Surjective only
+   C. Bijective
+   D. Neither
+
+5. $\gcd(2^{50} - 1, 2^{20} - 1)$ is:
+   A. $2^{20} - 1$
+   B. $2^{10} - 1$
+   C. $2^{5} - 1$
+   D. 1
+
+6. Compute $5^{3} \pmod{7}$.
+   A. 2
+   B. 4
+   C. 5
+   D. 6
+
+7. In induction, proving $P(1)$ and $P(k) \Rightarrow P(k+2)$ proves $P(n)$ for:
+   A. All $n$
+   B. Odd $n$
+   C. Even $n$
+   D. None
+
+8. Arrangements of "BANANA":
+   A. $6!$
+   B. $6! / (3! 2! 1!)$
+   C. $6! / 3!$
+   D. $2^6$
+
+9. Coefficient of $x^2 y^3$ in $(x+y)^5$:
+   A. 5
+   B. 10
+   C. 20
+   D. 1
+
+10. $|3 + 4i|$:
+    A. 7
+    B. 5
+    C. 25
+    D. $\sqrt{7}$
+
+11. $i$ in exponential form:
+    A. $e^{i\pi}$
+    B. $e^{i\pi/2}$
+    C. $e^{-i\pi/2}$
+    D. $e^{i2\pi}$
+
+12. If $1+i$ is a root of $P(x) \in \mathbb{R}[x]$, another root is:
+    A. $1-i$
+    B. $-1+i$
+    C. $-1-i$
+    D. $i$
+
+13. Sequence $a_n = (-1)^n$:
+    A. Converges to 0
+    B. Converges to 1
+    C. Bounded but Divergent
+    D. Unbounded
+
+14. $\lim_{n \to \infty} \frac{3n^2 + 5n}{2n^2 - 1}$:
+    A. $3/2$
+    B. $0$
+    C. $\infty$
+    D. $5/2$
+
+15. If $\mathbf{u} \cdot \mathbf{v} = 0$, vectors are:
+    A. Parallel
+    B. Orthogonal
+    C. Equal
+    D. Collinear
+
+16. Which is a Field?
+    A. $\mathbb{Z}$
+    B. $\mathbb{Z}_6$
+    C. $\mathbb{Q}$
+    D. $\mathbb{R}^{2}$
+
+17. Injection $A \to B$ and $B \to A$ implies:
+    A. $A = B$
+    B. $|A| < |B|$
+    C. $|A| = |B|$
+    D. $A \subseteq B$
+
+18. 13 pigeons, 12 holes. One hole has:
+    A. Exactly 1
+    B. Exactly 2
+    C. At least 2
+    D. 0
+
+19. Negation of $\forall x, \exists y, x < y$:
+    A. $\exists x, \forall y, x \ge y$
+    B. $\forall x, \exists y, x \ge y$
+    C. $\exists x, \exists y, x < y$
+    D. $\exists x, \forall y, x < y$
+
+20. $x^2 + y^2 + z^2 = 9$:
+    A. Line
+    B. Plane
+    C. Sphere radius 3
+    D. Sphere radius 9
+
+* Section B: Open Problems
+
+** Problem B1
+Prove by induction for $n \ge 1$: $\sum_{i=1}^{n} (2i - 1) = n^2$.
+
+** Problem B2
+Let $f: \mathbb{R} \setminus \{3\} \to \mathbb{R} \setminus \{2\}$, $f(x) = \frac{2x + 1}{x - 3}$.
+1. Prove $f$ is injective.
+2. Prove $f$ is surjective.
+3. Find $f^{-1}(x)$.
+
+** Problem B3
+Prove $x R y \iff 4 \mid (3x + y)$ is an equivalence relation on $\mathbb{Z}$.
+
+** Problem B4
+Solve for smallest positive $x$:
+$$ \begin{cases} x \equiv 2 \pmod 3 \\ x \equiv 3 \pmod 5 \\ x \equiv 2 \pmod 7 \end{cases} $$
+
+** Problem B5
+Committee of 5 from 8 Math, 6 CS profs.
+1. Total ways?
+2. Ways with at least 1 Math prof?
+
+** Problem B6
+Solve $z^3 = -27i$.
+
+** Problem B7
+$P(x) \in \mathbb{R}[x]$ has roots $1$ and $2+i$. Find $P(x)$.
+
+** Problem B8
+Prove $\lim_{n \to \infty} \frac{2n + 1}{n + 3} = 2$ using $\epsilon-N$ definition.
+
+** Problem B9
+Equation of plane through $(1,0,0), (0,2,0), (0,0,3)$.
+
+** Problem B10
+Prove $(0,1)$ is uncountable.
