@@ -2,12 +2,12 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-25>
-#+lastmod: <2025-11-25 18:35>
+#+lastmod: <2025-11-26 19:44>
 #+options: num:t
 #+startup: overview
 
 #+begin_quote
-Just so you know, it was LLM generated, I was not bothered to make a comprehensive index file. So please if you find something completely embarassing like "digital garden" just blame Gemini.
+Just so you know, it was LLM generated, I was not bothered to make a comprehensive index file. So please if you find something completely embarassing like "digital garden" just blame Sam Altman.
 #+end_quote
 
 🧠 The Dashboard (Current Focus)
