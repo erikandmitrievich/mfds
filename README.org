@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-13>
-#+lastmod: <2025-11-26 19:42>
+#+lastmod: <2025-11-26 19:46>
 #+options: num:t
 #+startup: overview
 
@@ -41,7 +41,7 @@ This is a living document. Contributions are highly encouraged!
 3. Submit a Pull Request.
 
 *If you are not a Git user:*
-You can still help! Send your summaries or code snippets to me via [Discord: YourHandle / Email: your.email@univie.ac.at], and I will integrate them.
+You can still help! Send your summaries or code snippets to me via [Telegram: @johannes_de_silentio / Email: obluda2173@gmail.com], and I will integrate them.
 
 * License
 This project is open for our cohort.
