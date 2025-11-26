@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-26>
-#+lastmod: <2025-11-26 19:01>
+#+lastmod: <2025-11-26 20:14>
 #+options: num:t
 #+startup: overview
 
@@ -157,7 +157,7 @@ $$|z - 2i| = 2|z + i|$$
 Given $$P(x) = x^3 + px + q$$, find $$\sum x_i^2$$ (the sum of the squares of the roots) in terms of $p$.
 
 ** Problem B7 (Sequences)
-Prove that the sequence defined by $$a_{n+1} = \sqrt{2 + a_n}$$ converges to 2.
+Prove that the sequence defined by $$ a_n = \sqrt{2}, \quad a_{n+1} = \sqrt{2 + a_n}, \quad n \in \mathbb{N}$$ converges to 2.
 
 ** Problem B8 (Limits)
 Prove $$\lim_{x \to 2} x^2 = 4$$ using the $\varepsilon-\delta$ definition.
