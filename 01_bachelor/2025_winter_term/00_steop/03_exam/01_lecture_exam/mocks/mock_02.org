@@ -2,166 +2,169 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-26>
-#+lastmod: <2025-11-26 10:59>
+#+lastmod: <2025-11-26 11:04>
 #+options: num:t
 #+startup: overview
 
 * Instructions
-- Time Allowed: 120 Minutes.
-- Total Marks: 100.
-- Section A: 20 Multiple Choice Questions (2 marks each).
-- Section B: 10 Open Problems (6 marks each).
-- Note: This paper focuses on rigorous proof and synthesis of concepts.
+- Time Allowed :: 120 Minutes
+- Total Marks :: 100
+- Section A :: 20 Multiple Choice Questions (2 marks each)
+- Section B :: 10 Open Problems (6 marks each)
+- Note :: This paper focuses on rigorous proof and synthesis of concepts.
 
 * Section A: Multiple Choice
+
 1. Logical contrapositive of "Convergent implies Bounded":
-   A. Bounded implies Convergent
-   B. Not Bounded implies Not Convergent
-   C. Not Convergent implies Not Bounded
-   D. Convergent iff Bounded
+   - A. Bounded implies Convergent
+   - B. Not Bounded implies Not Convergent
+   - C. Not Convergent implies Not Bounded
+   - D. Convergent iff Bounded
 
 2. Set Identity (Always true):
-   A. A \ B = A ∩ B^c
-   B. (A ∪ B)^c = A^c ∪ B^c
-   C. A ⊆ B ⇔ A ∪ B = A
-   D. |A ∪ B| = |A| + |B|
+   - A. $A \setminus B = A \cap B^c$
+   - B. $(A \cup B)^c = A^c \cup B^c$
+   - C. $A \subseteq B \iff A \cup B = A$
+   - D. $|A \cup B| = |A| + |B|$
 
-3. Cardinality > ℵ₀:
-   A. ℚ
-   B. ℤ × ℤ
-   C. Finite bit strings
-   D. Functions f: ℕ → {0,1}
+3. Cardinality $> \aleph_0$:
+   - A. $\mathbb{Q}$
+   - B. $\mathbb{Z} \times \mathbb{Z}$
+   - C. Finite bit strings
+   - D. Functions $f: \mathbb{N} \to \{0,1\}$
 
-4. R = {(1,1), (2,2), (3,3), (1,2), (2,1)} fails:
-   A. Reflexivity
-   B. Symmetry
-   C. Transitivity
-   D. None (It is Equivalence)
+4. The relation $R = \{(1,1), (2,2), (3,3), (1,2), (2,1)\}$ fails:
+   - A. Reflexivity
+   - B. Symmetry
+   - C. Transitivity
+   - D. None (It is an Equivalence Relation)
 
-5. If g ∘ f is injective:
-   A. g is injective
-   B. f is injective
-   C. Both injective
-   D. g surjective
+5. If $g \circ f$ is injective:
+   - A. $g$ is injective
+   - B. $f$ is injective
+   - C. Both are injective
+   - D. $g$ is surjective
 
 6. No solution exists for:
-   A. 2x ≡ 1 (mod 5)
-   B. 3x ≡ 1 (mod 6)
-   C. x² ≡ 1 (mod 8)
-   D. x² ≡ 2 (mod 7)
+   - A. $2x \equiv 1 \pmod 5$
+   - B. $3x \equiv 1 \pmod 6$
+   - C. $x^2 \equiv 1 \pmod 8$
+   - D. $x^2 \equiv 2 \pmod 7$
 
-7. Last digit of 7^2025:
-   A. 1
-   B. 3
-   C. 7
-   D. 9
+7. Last digit of $7^{2025}$:
+   - A. 1
+   - B. 3
+   - C. 7
+   - D. 9
 
 8. 10 indistinguishable items into 3 distinguishable boxes (none empty):
-   A. C(10,3)
-   B. C(9,2)
-   C. C(12,2)
-   D. 3^10
+   - A. $C(10,3)$
+   - B. $C(9,2)$
+   - C. $C(12,2)$
+   - D. $3^{10}$
 
-9. Geometry of roots z^4 = 1:
-   A. Rectangle
-   B. Rhombus
-   C. Square in unit circle
-   D. Line
+9. Geometry of roots $z^4 = 1$:
+   - A. Rectangle
+   - B. Rhombus
+   - C. Square in unit circle
+   - D. Line
 
-10. Locus |z - 2| = |z + 2|:
-    A. Circle
-    B. Real axis
-    C. Imaginary axis
-    D. Ellipse
+10. Locus $|z - 2| = |z + 2|$:
+    - A. Circle
+    - B. Real axis
+    - C. Imaginary axis
+    - D. Ellipse
 
-11. P(x) integer coeffs, P(0) odd, P(1) odd. Integer roots?
-    A. At least one
-    B. None
-    C. Only even
-    D. Only odd
+11. $P(x)$ has integer coefficients, $P(0)$ is odd, $P(1)$ is odd. Integer roots?
+    - A. At least one
+    - B. None
+    - C. Only even
+    - D. Only odd
 
-12. Limit of n! / n^n:
-    A. 1
-    B. 0
-    C. e
-    D. ∞
+12. Limit of $n! / n^n$:
+    - A. 1
+    - B. 0
+    - C. $e$
+    - D. $\infty$
 
-13. Limit (√(n² + n) - n):
-    A. 0
-    B. 1
-    C. 1/2
-    D. ∞
+13. Limit of $(\sqrt{n^2 + n} - n)$:
+    - A. 0
+    - B. 1
+    - C. 1/2
+    - D. $\infty$
 
-14. Supremum of { n/(n+1) }:
-    A. 1
-    B. 1/2
-    C. 0
-    D. None
+14. Supremum of $\{\frac{n}{n+1}\}$:
+    - A. 1
+    - B. 1/2
+    - C. 0
+    - D. None
 
-15. NOT a subspace of R²:
-    A. y = 2x
-    B. x + y = 0
-    C. x + y = 1
-    D. {(0,0)}
+15. NOT a subspace of $\mathbb{R}^2$:
+    - A. $y = 2x$
+    - B. $x + y = 0$
+    - C. $x + y = 1$
+    - D. $\{(0,0)\}$
 
-16. a·b if |a|=3, |b|=4, angle=60°:
-    A. 12
-    B. 6
-    C. 6√3
-    D. 0
+16. $\mathbf{a} \cdot \mathbf{b}$ if $|\mathbf{a}|=3, |\mathbf{b}|=4$, angle $= 60^\circ$:
+    - A. 12
+    - B. 6
+    - C. $6\sqrt{3}$
+    - D. 0
 
 17. "There is a smallest positive real":
-    A. ∃x∀y(x ≤ y)
-    B. ∀x∃y(y < x)
-    C. ∃x∀y(y ≤ x)
-    D. ∀x∃y(x < y)
+    - A. $\exists x \forall y (x \leq y)$
+    - B. $\forall x \exists y (y < x)$
+    - C. $\exists x \forall y (y \leq x)$
+    - D. $\forall x \exists y (x < y)$
 
-18. Uncountable A minus Countable B is:
-    A. Finite
-    B. Countable
-    C. Uncountable
-    D. Empty
+18. Uncountable set $A$ minus Countable set $B$ is:
+    - A. Finite
+    - B. Countable
+    - C. Uncountable
+    - D. Empty
 
 19. Strong Induction step proves:
-    A. P(k) ⇒ P(k+1)
-    B. (P(1)∧...∧P(k)) ⇒ P(k+1)
-    C. P(1) ⇒ P(n)
-    D. P(k) ⇒ P(k+2)
+    - A. $P(k) \implies P(k+1)$
+    - B. $(P(1) \land \dots \land P(k)) \implies P(k+1)$
+    - C. $P(1) \implies P(n)$
+    - D. $P(k) \implies P(k+2)$
 
-20. Zero divisor in Z_12:
-    A. 1
-    B. 5
-    C. 7
-    D. 4
+20. Zero divisor in $\mathbb{Z}_{12}$:
+    - A. 1
+    - B. 5
+    - C. 7
+    - D. 4
 
 * Section B: Open Problems
 
 ** Problem B1 (Induction)
-Prove 2^n < n! for n ≥ 4.
+Prove $$2^n < n!$$ for $$n \geq 4$$.
 
 ** Problem B2 (Set Theory)
-Prove f⁻¹(A ∩ B) = f⁻¹(A) ∩ f⁻¹(B).
+Prove $$f^{-1}(A \cap B) = f^{-1}(A) \cap f^{-1}(B)$$.
 
 ** Problem B3 (Number Theory)
-Prove no integer solutions for 15x² - 7y² = 9.
+Prove there are no integer solutions for $$15x^2 - 7y^2 = 9$$.
 
 ** Problem B4 (Combinatorics)
-Solve x1 + x2 + x3 + x4 = 20 with x1≥2, x2≥0, x3≥1, x4≥3.
+Solve $$x_1 + x_2 + x_3 + x_4 = 20$$ with constraints:
+$$x_1 \geq 2, \quad x_2 \geq 0, \quad x_3 \geq 1, \quad x_4 \geq 3$$
 
 ** Problem B5 (Complex Geometry)
-Identify and sketch |z - 2i| = 2|z + i|.
+Identify and sketch the locus defined by:
+$$|z - 2i| = 2|z + i|$$
 
 ** Problem B6 (Polynomials)
-P(x) = x³ + px + q. Find Σ(x_i²) in terms of p.
+Given $$P(x) = x^3 + px + q$$, find $$\sum x_i^2$$ (the sum of the squares of the roots) in terms of $p$.
 
 ** Problem B7 (Sequences)
-Prove a_{n+1} = √(2 + a_n) converges to 2.
+Prove that the sequence defined by $$a_{n+1} = \sqrt{2 + a_n}$$ converges to 2.
 
 ** Problem B8 (Limits)
-Prove lim_{x→2} x² = 4 using ε-δ.
+Prove $$\lim_{x \to 2} x^2 = 4$$ using the $\varepsilon-\delta$ definition.
 
 ** Problem B9 (Vectors)
-Decompose (1,2,3) into parallel/perp components to (1,0,-1).
+Decompose the vector $(1,2,3)$ into components parallel and perpendicular to $(1,0,-1)$.
 
 ** Problem B10 (Cardinality)
-Prove |(0,1)| = |[0,1]| using CSB Theorem.
+Prove $$|(0,1)| = |[0,1]|$$ using the Cantor-Schröder-Bernstein (CSB) Theorem.
