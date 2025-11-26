@@ -2,14 +2,14 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-26>
-#+lastmod: <2025-11-26 10:33>
+#+lastmod: <2025-11-26 10:42>
 #+options: num:t
 #+startup: overview
 
 #+begin_quote
 *Suggestions for students:*
 - Read the whole prompt for better understanding of what actually is going on.
-- Provide the LLM orf files of lectures, not the pdf's. LLM analyses .org files much easier and faster.
+- Provide the LLM .org files of lectures, not the pdf's. LLM analyses .org files much easier and faster.
 - Most of the ps_XX.org have questions inside, however some lacks questions, e.g. ps_13, ps_14, hence, provide pdfs.
 #+end_quote
 
