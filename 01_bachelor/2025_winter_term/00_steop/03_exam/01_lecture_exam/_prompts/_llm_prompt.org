@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-26>
-#+lastmod: <2025-11-26 12:11>
+#+lastmod: <2025-11-26 19:58>
 #+options: num:t
 #+startup: overview
 
@@ -22,7 +22,7 @@
 
 ** PHASE 1: Data Ingestion (Current Phase)
    - I will provide you with "Seminar Exercises" and "Lecture Notes" in chunks.
-   - **CRITICAL PROTOCOL:** When I upload files or paste text, you must strictly only:
+   - *CRITICAL PROTOCOL:* When I upload files or paste text, you must strictly only:
      1. Read and index the content.
      2. Reply with the specific phrase: "Received. Standing by for more."
    - Do *not* generate questions, analyze content, or offer summaries yet.
@@ -30,37 +30,48 @@
 
 ** PHASE 2: Analysis & Strategy (Triggered by "Sent everything")
    Once I confirm all data is sent, you will perform the following analysis before generating the exam:
-   1. **Topic Frequency Analysis:** Identify which concepts appeared most frequently across seminars and lectures to weigh them heavily in the exam.
-   2. **Time Calibration:**
+   1. *Topic Frequency Analysis:* Identify which concepts appeared most frequently across seminars and lectures.
+   2. *Time Calibration & Structure:*
       - Total Time: 120 Minutes.
-      - Total Items: 20 Multiple Choice (MCQ) + 10 Open Problems.
-      - Calculate the average time per question required to finish on time.
-      - If the standard exercises provided are too long to fit 30 of them in 2 hours, you must simplify the exam questions to ensure feasibility.
-   3. **Difficulty Distribution:**
-      - Aim for a Bell Curve distribution:
-        - 25% Easy (Basic definition/application)
-        - 50% Medium (Standard seminar difficulty)
-        - 25% Hard (Complex synthesis/novel application)
+      - Total Items: 10 MCQ (Part A) + 10 Short Open (Part B) + 8 Complex Open (Part C).
+      - *Code Constraint:* You must include **2-3 questions total** involving Julia code or Pseudo-code (Level: Upper Beginner). These should be distributed between Part A or Part B.
+      - Feasibility Check:
+        - Part A: Solvable in under 2 minutes each.
+        - Part B: Short solutions solvable in under 5 minutes each.
+        - Part C: Allocate remaining time for complex problem solving.
+   3. *Difficulty Distribution:*
+      - *Part A:* Basic conceptual understanding and quick calculations.
+      - *Part B:* Standard seminar difficulty but with immediate/short solutions.
+      - *Part C:* Hardest difficulty, requiring complex synthesis and deep analysis.
 
 ** PHASE 3: Exam Generation
    After the analysis, generate the exam paper with the following structure:
 
-*** Section A: Multiple Choice (20 Questions)
+*** Section A: Multiple Choice (10 Questions)
+    - Value: 1 point each.
     - Format: Question text followed by options A-D (or A-E).
-    - Constraint: Questions must test conceptual understanding and quick calculations.
-    - Note: Clearly state if multiple answers are possible for specific questions.
+    - Constraint: Questions must test conceptual understanding. Do not exceed 2 minutes of effort per question.
+    - Content Note: Include 1-2 questions involving reading/interpreting Julia or Pseudo-code snippets if appropriate.
 
-*** Section B: Open Problems (10 Questions)
+*** Section B: Short Open Problems (10 Questions)
+    - Value: 1.5 points each.
     - Format: Standard academic problem presentation.
-    - Constraint: These must mirror the "Seminar Exercises" in style but use new values or contexts to prevent memorization.
-    - Coverage: Must span the entire breadth of the provided lecture notes.
+    - Constraint: These must mirror the "Seminar Exercises" in style but use new values or contexts.
+    - Time Constraint: Solutions must be short and solvable within 5 minutes.
+    - Content Note: Can include writing short Julia/Pseudo-code functions (Upper Beginner level).
 
-*** Section C: Answer Key & Grading Rubric
+*** Section C: Complex Open Problems (8 Questions)
+    - Value: 2 points each.
+    - Format: Advanced academic problem presentation.
+    - Constraint: These are the hardest problems. They require more time and synthesis of multiple concepts.
+    - Note: Generate all 8 questions.
+
+*** Section D: Answer Key & Grading Rubric
     - Provide the correct answers for Section A.
-    - Provide step-by-step solutions for Section B.
+    - Provide step-by-step solutions for Sections B and C.
     - Suggest a marking scheme (points per step) for the open problems.
 
-*** Section D: Exam Paper Format
+*** Section E: Exam Paper Format
     - Format: Org with latex expressions
     - Context: Provide questions in a format of Org file text with latex expressions if needed.
     - Constraint: Provide it in a easy to copy format as well.
