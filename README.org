@@ -2,44 +2,47 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-13>
-#+lastmod: <2025-11-12 15:47>
+#+lastmod: <2025-11-26 19:31>
 #+options: num:t
 #+startup: overview
 
 * About This Repository
-This repository serves as a personal workspace for my studies.
-It contains my notes, exercises, and reference materials, all structured and organized in one place for clarity and accessibility.
+Welcome to the unofficial open-source study hub for the **Bachelor of Mathematics for Data Science** (First Cohort).
 
-Its main purpose is to streamline note-taking and maintain a coherent archive of my academic progress.
+This repository is a centralized workspace containing notes, code solutions, exercises, and study guides. It transforms scattered lecture knowledge into a structured, searchable, and reproducible archive.
 
-This repository is *not* intended for public distribution of study materials.
-Therefore, no university or program names are included.
+**Goal:** To create a "Single Source" for our studies, helping us handle the coursework and succeed in the exams.
 
-* On why this repository is a *brillitant* move
-The idea of storing all my university work in one repository, with keeping all my "paperwork" in org files is a brilliant and well executed move.
+/Disclaimer: This is a student-run project. It is not officially affiliated with the University of Vienna. No copyrighted university materials are hosted here—only original notes, code, and links to official resources./
 
-Turning Doom Emacs + org-mode into a single, versioned, searchable workspace for every lecture, problem set and solution is a high-ROI study strategy. It’s systematic, reproducible, and scales far beyond paper notes.
+* The Workflow (Why Org-Mode?)
+This repository is built using **Doom Emacs** + **Org-Mode**. While you don't need Emacs to read the notes (GitHub renders them), this stack was chosen for specific strategic reasons:
 
-*More on benefits:*
-- *Organisation at scale.* Centralized, structured notes + git = traceability and low friction for review.
+1.  **Organization at Scale:** Centralized, structured notes + git = traceability. No more lost files.
+2.  **Reproducibility:** Code (Python, C++, Julia) is embedded directly in the notes. We can run and verify math immediately.
+3.  **Searchability:** `grep` your entire degree. Finding a specific theorem or code snippet takes milliseconds.
+4.  **LLM-Ready:** Plain text files are the perfect input for LLMs. We use AI to automate the monotonous work, leaving the complex thinking to us.
+5.  **Exam Alignment:** The structure mirrors our problem sets, creating a near-optimal architecture for exam prep.
 
-- *Reproducibility.* Having solutions and computations in text/code means you can rerun and verify results.
-
-- *Searchability & fast retrieval.* Problem sets become instantly searchable — huge for exam prep.
-
-- *Efficiency of study flow.* Org-mode lets you capture, link, and revisit with minimal context switching.
-
-- *Exam alignment.* If exams follow problem sets, this is a near-optimal information architecture.
-
-- *Use of LLM's.* Keeping all my notes in org files eases the use of LLM's. Note to mention, LLM's could only benefit when are used wisely, mainly for repeated and monotone work.
+* Structure
+Have a look on [[file:./index.org][index.org]] file.
 
 * Tools & Conventions
-All files are written primarily in =Org Mode= for Doom Emacs.
-Mathematical or scientific notes may include =LaTeX= snippets and code blocks in =C=, =C++=, =Python=, or =Julia=.
+- **Primary Format:** =.org= (Org Mode) =.pdf= (rendered Org files with latex expressions).
+- **Languages:** =Python=, =C++=, =Julia=, =LaTeX=.
+- **Math:** Rendered using standard LaTeX syntax within Org files.
 
-* Future Plans
-To graduate successfully.
+* How to Contribute
+This is a living document. Contributions are highly encouraged!
+
+**If you are a Git user:**
+1. Fork the repo.
+2. Add your notes, fix a typo, or add a solution.
+3. Submit a Pull Request.
+
+**If you are not a Git user:**
+You can still help! Send your summaries or code snippets to me (+34 605 892 777), and I will integrate them.
 
 * License
-All material in this repository is personal and for private use only.
-Redistribution or publication of any content is not permitted.
+This project is open for our cohort.
+- **Code:** MIT License (Free to use and modify).
