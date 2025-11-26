@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-26>
-#+lastmod: <2025-11-26 10:42>
+#+lastmod: <2025-11-26 12:11>
 #+options: num:t
 #+startup: overview
 
@@ -11,6 +11,7 @@
 - Read the whole prompt for better understanding of what actually is going on.
 - Provide the LLM .org files of lectures, not the pdf's. LLM analyses .org files much easier and faster.
 - Most of the ps_XX.org have questions inside, however some lacks questions, e.g. ps_13, ps_14, hence, provide pdfs.
+- Note that I have forgot to include Julia/pseudocode questions (which should be around 2-3 on the exam).
 #+end_quote
 
 * SYSTEM CONTEXT: The Professor Persona
