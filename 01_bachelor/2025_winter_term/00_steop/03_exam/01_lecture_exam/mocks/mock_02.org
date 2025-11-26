@@ -1,0 +1,167 @@
+#+title: Mock 02
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-26>
+#+lastmod: <2025-11-26 10:59>
+#+options: num:t
+#+startup: overview
+
+* Instructions
+- Time Allowed: 120 Minutes.
+- Total Marks: 100.
+- Section A: 20 Multiple Choice Questions (2 marks each).
+- Section B: 10 Open Problems (6 marks each).
+- Note: This paper focuses on rigorous proof and synthesis of concepts.
+
+* Section A: Multiple Choice
+1. Logical contrapositive of "Convergent implies Bounded":
+   A. Bounded implies Convergent
+   B. Not Bounded implies Not Convergent
+   C. Not Convergent implies Not Bounded
+   D. Convergent iff Bounded
+
+2. Set Identity (Always true):
+   A. A \ B = A ∩ B^c
+   B. (A ∪ B)^c = A^c ∪ B^c
+   C. A ⊆ B ⇔ A ∪ B = A
+   D. |A ∪ B| = |A| + |B|
+
+3. Cardinality > ℵ₀:
+   A. ℚ
+   B. ℤ × ℤ
+   C. Finite bit strings
+   D. Functions f: ℕ → {0,1}
+
+4. R = {(1,1), (2,2), (3,3), (1,2), (2,1)} fails:
+   A. Reflexivity
+   B. Symmetry
+   C. Transitivity
+   D. None (It is Equivalence)
+
+5. If g ∘ f is injective:
+   A. g is injective
+   B. f is injective
+   C. Both injective
+   D. g surjective
+
+6. No solution exists for:
+   A. 2x ≡ 1 (mod 5)
+   B. 3x ≡ 1 (mod 6)
+   C. x² ≡ 1 (mod 8)
+   D. x² ≡ 2 (mod 7)
+
+7. Last digit of 7^2025:
+   A. 1
+   B. 3
+   C. 7
+   D. 9
+
+8. 10 indistinguishable items into 3 distinguishable boxes (none empty):
+   A. C(10,3)
+   B. C(9,2)
+   C. C(12,2)
+   D. 3^10
+
+9. Geometry of roots z^4 = 1:
+   A. Rectangle
+   B. Rhombus
+   C. Square in unit circle
+   D. Line
+
+10. Locus |z - 2| = |z + 2|:
+    A. Circle
+    B. Real axis
+    C. Imaginary axis
+    D. Ellipse
+
+11. P(x) integer coeffs, P(0) odd, P(1) odd. Integer roots?
+    A. At least one
+    B. None
+    C. Only even
+    D. Only odd
+
+12. Limit of n! / n^n:
+    A. 1
+    B. 0
+    C. e
+    D. ∞
+
+13. Limit (√(n² + n) - n):
+    A. 0
+    B. 1
+    C. 1/2
+    D. ∞
+
+14. Supremum of { n/(n+1) }:
+    A. 1
+    B. 1/2
+    C. 0
+    D. None
+
+15. NOT a subspace of R²:
+    A. y = 2x
+    B. x + y = 0
+    C. x + y = 1
+    D. {(0,0)}
+
+16. a·b if |a|=3, |b|=4, angle=60°:
+    A. 12
+    B. 6
+    C. 6√3
+    D. 0
+
+17. "There is a smallest positive real":
+    A. ∃x∀y(x ≤ y)
+    B. ∀x∃y(y < x)
+    C. ∃x∀y(y ≤ x)
+    D. ∀x∃y(x < y)
+
+18. Uncountable A minus Countable B is:
+    A. Finite
+    B. Countable
+    C. Uncountable
+    D. Empty
+
+19. Strong Induction step proves:
+    A. P(k) ⇒ P(k+1)
+    B. (P(1)∧...∧P(k)) ⇒ P(k+1)
+    C. P(1) ⇒ P(n)
+    D. P(k) ⇒ P(k+2)
+
+20. Zero divisor in Z_12:
+    A. 1
+    B. 5
+    C. 7
+    D. 4
+
+* Section B: Open Problems
+
+** Problem B1 (Induction)
+Prove 2^n < n! for n ≥ 4.
+
+** Problem B2 (Set Theory)
+Prove f⁻¹(A ∩ B) = f⁻¹(A) ∩ f⁻¹(B).
+
+** Problem B3 (Number Theory)
+Prove no integer solutions for 15x² - 7y² = 9.
+
+** Problem B4 (Combinatorics)
+Solve x1 + x2 + x3 + x4 = 20 with x1≥2, x2≥0, x3≥1, x4≥3.
+
+** Problem B5 (Complex Geometry)
+Identify and sketch |z - 2i| = 2|z + i|.
+
+** Problem B6 (Polynomials)
+P(x) = x³ + px + q. Find Σ(x_i²) in terms of p.
+
+** Problem B7 (Sequences)
+Prove a_{n+1} = √(2 + a_n) converges to 2.
+
+** Problem B8 (Limits)
+Prove lim_{x→2} x² = 4 using ε-δ.
+
+** Problem B9 (Vectors)
+Decompose (1,2,3) into parallel/perp components to (1,0,-1).
+
+** Problem B10 (Cardinality)
+Prove |(0,1)| = |[0,1]| using CSB Theorem.
