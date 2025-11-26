@@ -1,0 +1,144 @@
+#+title: Mock 03
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-26>
+#+lastmod: <2025-11-26 20:09>
+#+options: num:t
+#+startup: overview
+
+* Instructions
+- Time Allowed: 120 Minutes.
+- Total Marks: 41 (Scaled internally).
+- Section A: 10 MCQ (1 point each).
+- Section B: 10 Short Open (1.5 points each).
+- Section C: 8 Complex Open (2 points each).
+- Note: Includes Julia code interpretation and writing.
+
+* Section A: Multiple Choice (1 Point Each)
+1. Which set is countable?
+   A. Functions f: N -> {0,1}
+   B. Infinite bit strings
+   C. Power set of N
+   D. Finite subsets of N
+
+2. Julia Code Output:
+   #+begin_src
+   S = Set([1, 2, 3])
+   res = Set()
+   for x in S
+       if x % 2 != 0 push!(res, x^2) end
+   end
+   #+end_src
+
+   A. Set([1, 4, 9])
+   B. Set([1, 9])
+   C. Set([2])
+   D. Set([4])
+
+3. Negation of P -> Q is:
+   A. P & !Q
+   B. !P | Q
+   C. !P & Q
+   D. P | !Q
+
+4. Locus |z - 1| + |z + 1| = 4 is:
+   A. Circle
+   B. Ellipse
+   C. Segment
+   D. Hyperbola
+
+5. Antisymmetric but NOT reflexive relation on {a,b,c}:
+   A. {(a,a), (b,b), (c,c)}
+   B. {(a,b), (b,a)}
+   C. {(a,b), (b,c), (a,c)}
+   D. {(a,b), (b,a), (a,a)}
+
+6. If a = b (mod m), which is FALSE?
+   A. a+c = b+c
+   B. ac = bc
+   C. a^2 = b^2
+   D. c^a = c^b
+
+7. NOT a vector space:
+   A. Polynomials deg=3
+   B. Polynomials deg<=3
+   C. Continuous functions
+   D. Solutions to y''+y=0
+
+8. Integer solutions x1+x2+x3=10, xi>=1:
+   A. C(12,2)
+   B. C(9,2)
+   C. C(10,3)
+   D. 3^10
+
+9. Bounded sequence implies:
+   A. Convergence
+   B. Convergent subsequence
+   C. Monotonicity
+   D. Finite range
+
+10. Units in Z_10:
+    A. {1,3,7,9}
+    B. {1,2,3,4,5}
+    C. All elements
+    D. {1,5}
+
+* Section B: Short Open Problems (1.5 Points Each)
+
+** Problem B1
+Write a Julia function `CountDivisible(n, k)` that counts numbers in 1:n divisible by k but NOT by k^2.
+
+** Problem B2
+Simplify $(P \to Q) \land (P \to \neg Q)$ to show it implies $\neg P$.
+
+** Problem B3
+Calculate $(1 + i)^{10}$ in the form $a + bi$.
+
+** Problem B4
+Prove or disprove: $A \setminus (B \cup C) = (A \setminus B) \cup (A \setminus C)$.
+
+** Problem B5
+Permutations of "SUCCESS" with 'C's NOT adjacent.
+
+** Problem B6
+Find $3^{100} \pmod 7$.
+
+** Problem B7
+Remainder of $P(x) = x^{2025} - x + 1$ divided by $x - i$.
+
+** Problem B8
+Prove $f(x) = x^3 + x$ is injective.
+
+** Problem B9
+Projection of $(3, 1, 2)$ onto $(1, -1, 0)$.
+
+** Problem B10
+Limit of $\sqrt{n^2 + 5n} - n$.
+
+* Section C: Complex Open Problems (2 Points Each)
+
+** Problem C1
+Prove $\sum_{i=1}^n i \cdot i! = (n+1)! - 1$.
+
+** Problem C2
+Prove that if $a^2 = a$ for all $a$ in ring $R$, then $R$ is commutative.
+
+** Problem C3
+Prove the set of circles in plane with rational center and radius is countable.
+
+** Problem C4
+Prove $\lim \frac{3n^2+1}{2n^2-n} = 1.5$ using $\epsilon-N$.
+
+** Problem C5
+Solve system: $2x \equiv 1 \pmod 5$ AND $3x \equiv 2 \pmod 7$.
+
+** Problem C6
+If $|z_k|=1$, prove $\arg(z_1/z_2) = 2\arg((z_1-z_3)/(z_2-z_3))$.
+
+** Problem C7
+Prove $f$ injective iff $f(A \cap B) = f(A) \cap f(B)$ for all subsets.
+
+** Problem C8
+Distance between skew lines:
+r = (1,0,0) + t(1,1,0)
+r = (0,1,1) + s(0,1,1)
