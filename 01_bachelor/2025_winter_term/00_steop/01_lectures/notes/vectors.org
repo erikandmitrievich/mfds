@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-22>
-#+lastmod: <2025-11-23 12:38>
+#+lastmod: <2025-11-26 12:24>
 #+options: num:t
 #+startup: overview
 
@@ -31,11 +31,8 @@
 
 - A Scalar/Inner/Dot Product :: of two vector A and B is the number |A| * |B| * cos(x), where x is the angle between A and B. Notation: A.B <--> <a,b>
 
-  Proporties:
-  1. A⊥B <--> <A,B> = 0
-  2. Angle is acute if <A,B> > 0
-  3. Angle is obtuse if <A,B> < 0
-  4. <A,B> = <B,A>
-  5. <xA,B> = x<A,B>
-  6. <A+B,C> = <A,C> + <B,C>
-  7. <A,A> >= 0, <A,A> = 0 <--> A=0
+  Properties:
+  1. <A,B> = <B,A> (symmetry)
+  2. <xA,B> = x<A,B> (Linearity)
+  3. <A+B,C> = <A,C> + <B,C> (distributivity)
+  4. <A,A> >= 0, <A,A> = 0 <--> A=0 (Positive definiteness)

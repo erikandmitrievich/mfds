@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-19>
-#+lastmod: <2025-11-26 10:14>
+#+lastmod: <2025-11-26 16:11>
 #+options: num:t
 #+startup: overview
 
@@ -15,7 +15,7 @@
 - [ ] Rings and fields
 - [ ] Polynomial Rings, Polar coordinates
 - [ ] Sequences: Convergence, More sequences
-- [ ] Vectors, Scalar product, Equation of lines and planes
+- [X] Vectors, Scalar product, Equation of lines and planes
 - [ ] Exponential function
 
 * Covered Topics
@@ -33,14 +33,14 @@
 - [ ] Functions
 - [ ] Infinite sets
 - [ ] Cantor-Schröder-Bernstein theorem
-- [ ] Polynomials
+- [X] Polynomials
 - [ ] Complex numbers
 - [ ] Rings and fields
 - [ ] Polynomial Rings, Polar coordinates
 - [X] Sequences: Convergence, More sequences
-- [ ] Vectors, Scalar product, Equation of lines and planes
+- [X] Vectors, Scalar product, Equation of lines and planes
 - [ ] Exponential function
-- [ ] R^n and vector spaces over arbitrary field
+- [X] R^n and vector spaces over arbitrary field
 
 * Course Progress [18/35]
 - [X] Lecture 0 :: Introduction to the course. Logistics. Julia.
@@ -78,3 +78,37 @@
 - [X] Lecture 40 :: Vectors, scalar product, equation of lines and planes.
 - [X] Lecture 41 :: R^n and vector spaces.
 - [X] Lecture 42 :: Vector spaces over an arbitrary field.
+
+* Exam Syllabus and Strategy Coverage
+The course covers a vast breadth of discrete and continuous mathematics. Based on the lecture depth and problem set coverage, the exam will be weighted as follows:
+
+** Topic Weight Breakdown
+*** High Weight (Core Skills)
+- *Proof Techniques:* Mathematical Induction (Weak/Strong) and Proof by Contradiction appear repeatedly.
+- *Functions & Relations:* Injectivity/Surjectivity/Bijectivity and Equivalence Relations/Partial Orders are fundamental.
+- *Number Theory:* Modular arithmetic, GCD/Euclidean algorithm, and Diophantine equations.
+- *Sequences & Limits:* $\epsilon-N$ definitions and convergence tests are heavily emphasized in the later lectures.
+
+*** Medium Weight
+- *Cardinality:* Countable vs. Uncountable sets (Cantor's diagonalization).
+- *Combinatorics:* Permutations, combinations, and the Inclusion-Exclusion Principle.
+- *Polynomials & Complex Numbers:* Roots, factorization, and polar forms.
+
+*** Lower Weight (but present)
+- *Vectors & Geometry:* Dot products, lines, and planes.
+- *Algebraic Structures:* Rings and Fields definitions.
+
+** Time Calibration (120 Minutes)
+*** Section A (20 MCQs)
+- *Target:* 30 minutes (1.5 mins/question).
+- *Focus:* Definitions, simple counter-examples, and immediate calculations.
+
+*** Section B (10 Open Problems)
+- *Target:* 90 minutes (9 mins/question).
+- *Constraint:* Standard textbook proofs often take 15+ minutes.
+- *Strategy:* The Open Problems will be specific and computational where possible (e.g., "Find the inverse" or "Calculate the limit") or standard, concise proofs (e.g., "Prove by induction that..."). Open-ended "Essay" style proofs for harder topics like construction of real numbers will be avoided to ensure the exam is finishable.
+
+** Difficulty Distribution Strategy
+- *Easy (25%):* Basic set operations, computing limits of rational functions, modular arithmetic calculations.
+- *Medium (50%):* Standard induction proofs, finding inverse functions, solving combinatorial problems, complex number powers (De Moivre).
+- *Hard (25%):* $\epsilon-N$ limit proofs, proofs involving cardinality of specific sets, and rigorous proofs regarding equivalence relations or polynomial properties.
