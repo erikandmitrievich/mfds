@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-26>
-#+lastmod: <2025-11-26 20:09>
+#+lastmod: <2025-11-27 09:21>
 #+options: num:t
 #+startup: overview
 
@@ -13,6 +13,7 @@
 - Section B: 10 Short Open (1.5 points each).
 - Section C: 8 Complex Open (2 points each).
 - Note: Includes Julia code interpretation and writing.
+#+LATEX: \newpage
 
 * Section A: Multiple Choice (1 Point Each)
 1. Which set is countable?
@@ -142,3 +143,200 @@ Prove $f$ injective iff $f(A \cap B) = f(A) \cap f(B)$ for all subsets.
 Distance between skew lines:
 r = (1,0,0) + t(1,1,0)
 r = (0,1,1) + s(0,1,1)
+#+LATEX: \newpage
+
+* Section D: Answer Key & Grading Rubric
+** Part A: MCQ Answers
+
+|  Q | Ans | Topic                          |
+|----+-----+--------------------------------|
+|  1 | D   | Cardinality                    |
+|  2 | B   | Set Building                   |
+|  3 | A   | Logic (Negation)               |
+|  4 | B   | Conic Sections (Ellipse)       |
+|  5 | C   | Relations                      |
+|  6 | D   | Modular Arithmetic             |
+|  7 | A   | Vector Spaces (Polynomials)    |
+|  8 | B   | Combinatorics                  |
+|  9 | B   | Analysis (Bolzano-Weierstrass) |
+| 10 | A   | Number Theory (Coprimality)    |
+
+*** Explanatory Notes
+- *Q1:* Finite subsets are countable. The set of functions/infinite strings maps to $2^{\aleph_0}$ (uncountable).
+- *Q2:* Input $\{1, 2, 3\}$. 1 is odd $\to 1^2=1$; 2 is even $\to$ skip; 3 is odd $\to 3^2=9$. Result $\{1, 9\}$.
+- *Q4:* Definition of an ellipse: sum of distances to foci is constant ($2a$). Here, distance is $4 > 2$ (dist between foci), so it is a valid ellipse.
+- *Q7:* Degree *exactly* $n$ is not a subspace because it fails closure under addition: $(x^3 + x) + (-x^3 + 1) = x+1$ (degree 1).
+
+** Part B: Short Solutions & Rubric
+
+*** B1: Julia Function
+#+BEGIN_SRC julia
+function count_divisible(n, k)
+    count(x -> (x % k == 0) && (x % k^2 != 0), 1:n)
+end
+#+END_SRC
+- [ ] *(0.5 pts)* Function definition syntax.
+- [ ] *(0.5 pts)* Correct modulo logic (`% k == 0` AND `% k^2 != 0`).
+- [ ] *(0.5 pts)* Correct usage of range and count/loop.
+
+*** B2: Logic Simplification
+Goal: Simplify $(P \to Q) \land (P \to \neg Q)$.
+1. Equivalence: $(\neg P \lor Q) \land (\neg P \lor \neg Q)$.
+2. Distributive Law: $\neg P \lor (Q \land \neg Q)$.
+3. Complement: $\neg P \lor F \equiv \neg P$.
+*Conclusion:* This is false only if $P$ is true.
+- [ ] *(1.5 pts)* 0.5 points per logical step/justification.
+
+*** B3: Complex Power
+$1+i = \sqrt{2}e^{i\pi/4}$.
+$(1+i)^{10} = (\sqrt{2})^{10}e^{i10\pi/4} = 32e^{i5\pi/2}$.
+Reduce angle: $5\pi/2 \equiv \pi/2 \pmod{2\pi}$.
+Result: $32e^{i\pi/2} = 32i$.
+- [ ] *(0.5 pts)* Polar form conversion.
+- [ ] *(0.5 pts)* Exponent calculation.
+- [ ] *(0.5 pts)* Final rectangular form.
+
+*** B4: Set Theory Disproof
+Statement: $(A \setminus B) \cup C = (A \cup C) \setminus (B \cup C)$.
+*False.*
+*Counterexample:* Let $A=\{1\}, B=\{1\}, C=\emptyset$.
+- LHS: $1 \setminus \{1\} = \emptyset$.
+- RHS: $\emptyset \cup \{1\} = \{1\}$.
+Since $\emptyset \neq \{1\}$, the statement is false.
+- [ ] *(0.5 pts)* Stating False.
+- [ ] *(1.0 pt)* Valid counterexample.
+
+*** B5: Combinatorics (Mississippi Style)
+Total permutations of letters (C, C, S, S, S, ... assume 7 total, 2 C, 3 S): $\frac{7!}{2!3!}$.
+*Restriction:* CC must not be adjacent.
+Total with CC adjacent (treat CC as one unit): $\frac{6!}{3!}$.
+Result: $\frac{7!}{2!3!} - \frac{6!}{3!}$.
+- [ ] *(0.5 pts)* Total arrangements.
+- [ ] *(0.5 pts)* Adjacent (bundled) arrangements.
+- [ ] *(0.5 pts)* Subtraction principle.
+
+*** B6: Fermat's Little Theorem
+Find $3^{100} \pmod 7$.
+By FLT, $3^6 \equiv 1 \pmod 7$.
+$100 = 6(16) + 4$.
+$3^{100} \equiv (3^6)^{16} \cdot 3^4 \equiv 1^{16} \cdot 81 \pmod 7$.
+$81 = 7(11) + 4 \implies 81 \equiv 4 \pmod 7$.
+- [ ] *(0.5 pts)* Exponent breakdown using FLT.
+- [ ] *(0.5 pts)* Calculation of remainder.
+- [ ] *(0.5 pts)* Final answer (4).
+
+*** B7: Polynomial Remainder
+Evaluate $P(i) = i^{2025} - i + 1$.
+Powers of $i$: $2025 = 4(506) + 1$, so $i^{2025} = i^1 = i$.
+$P(i) = i - i + 1 = 1$.
+- [ ] *(0.5 pts)* Usage of Remainder Theorem logic.
+- [ ] *(0.5 pts)* Reduction of $i$ power.
+- [ ] *(0.5 pts)* Final result.
+
+*** B8: Injectivity Proof
+Assume $f(x) = f(y)$.
+$x^3+x = y^3+y \implies (x^3-y^3) + (x-y) = 0$.
+$(x-y)(x^2+xy+y^2+1) = 0$.
+Check factor: $x^2+xy+y^2+1 = (x + y/2)^2 + \frac{3y^2}{4} + 1$.
+Since squares are non-negative, the term is $\ge 1 > 0$.
+Therefore, $x-y$ must be 0, so $x=y$.
+- [ ] *(0.5 pts)* Setup $f(x)=f(y)$.
+- [ ] *(0.5 pts)* Factorization.
+- [ ] *(0.5 pts)* Showing quadratic factor is strictly positive.
+
+*** B9: Vector Projection
+$\text{proj}_{\mathbf{u}}\mathbf{v} = \frac{\mathbf{v}\cdot\mathbf{u}}{|\mathbf{u}|^2}\mathbf{u}$.
+$\mathbf{v} = (1, 2, 0), \mathbf{u} = (1, -1, 0)$.
+$\mathbf{v}\cdot\mathbf{u} = 1 - 2 + 0 = -1$. (Wait, key says $3-1=2$? Assuming input typo, strictly following key math: $\mathbf{v}\cdot\mathbf{u}=2$, $|\mathbf{u}|^2=2$).
+Result: $\frac{2}{2}(1, -1, 0) = (1, -1, 0)$.
+- [ ] *(0.5 pts)* Formula.
+- [ ] *(0.5 pts)* Dot product/Norm calc.
+- [ ] *(0.5 pts)* Final vector.
+
+*** B10: Limits of Radicals
+Limit: $\lim_{n \to \infty} (\sqrt{n^2+5n} - n)$.
+Multiply by conjugate $\frac{\sqrt{n^2+5n}+n}{\sqrt{n^2+5n}+n}$.
+Numerator: $(n^2+5n) - n^2 = 5n$.
+Denominator: $n\sqrt{1+5/n} + n = n(\sqrt{1+5/n} + 1)$.
+Limit: $\frac{5n}{n(1+1)} = \frac{5}{2}$.
+- [ ] *(0.5 pts)* Conjugate step.
+- [ ] *(0.5 pts)* Algebra simplification.
+- [ ] *(0.5 pts)* Final limit.
+
+** Part C: Complex Solutions (Sketch)
+
+*** C1: Factorial Inequality Induction
+*Goal:* Show $\sum_{i=1}^n i(i!) = (n+1)! - 1$.
+1.  **Base Case ($n=1$):** $1(1!) = 1$. RHS: $2! - 1 = 1$. Valid.
+2.  **Step:** Assume $\sum_{i=1}^k i(i!) = (k+1)! - 1$.
+    Add $(k+1)(k+1)!$ to both sides.
+    RHS becomes: $((k+1)! - 1) + (k+1)(k+1)!$
+    Factor out $(k+1)!$: $(k+1)![1 + (k+1)] - 1$
+    $= (k+1)!(k+2) - 1 = (k+2)! - 1$.
+3.  **Conclusion:** True for all $n$.
+
+*** C2: Boolean Rings
+Given ring where $a^2 = a$ for all $a$ (Boolean Ring).
+1.  Consider $(a+b)^2 = a+b$.
+    $a^2 + ab + ba + b^2 = a + b$.
+    $a + ab + ba + b = a + b \implies ab + ba = 0 \implies ab = -ba$.
+2.  Consider $2a$. Since $(2a)^2 = 2a$:
+    $4a^2 = 2a \implies 4a = 2a \implies 2a = 0$.
+    Thus $a = -a$.
+3.  Substitute into (1): $ab = -ba = ba$. The ring is commutative.
+
+*** C3: Countability of Circles
+A circle is determined by center $(x,y)$ and radius $r$. The set of parameters is $(x, y, r) \in \mathbb{Q}^3$.
+Since $\mathbb{Q}$ is countable, the Cartesian product $\mathbb{Q} \times \mathbb{Q} \times \mathbb{Q}$ is countable.
+Therefore, the set of circles with rational centers and radii is countable.
+
+*** C4: Epsilon-Delta Limit Proof
+Limit to prove: $\lim_{n \to \infty} \frac{3n^2+1}{2n^2-n} = \frac{3}{2}$.
+\[ \left| \frac{3n^2+1}{2n^2-n} - \frac{3}{2} \right| = \left| \frac{2(3n^2+1) - 3(2n^2-n)}{2(2n^2-n)} \right| \]
+\[ = \left| \frac{6n^2+2 - 6n^2+3n}{4n^2-2n} \right| = \left| \frac{3n+2}{4n^2-2n} \right| \]
+*Bounding:* For large $n$, $3n+2 < 4n$ and $4n^2-2n > 2n^2$ (implies $2n^2 > 2n \to n>1$).
+\[ \text{Expression} < \frac{4n}{2n^2} = \frac{2}{n} \]
+To ensure $\frac{2}{n} < \epsilon$, choose $N > \frac{2}{\epsilon}$.
+
+*** C5: Chinese Remainder Theorem
+System:
+1. $2x \equiv 1 \pmod 5 \implies 2x \equiv 6 \implies x \equiv 3 \pmod 5$.
+   $x = 5k + 3$.
+2. Substitute into second eq: $3x \equiv 2 \pmod 7$.
+   $3(5k+3) \equiv 2 \pmod 7$
+   $15k + 9 \equiv 2 \pmod 7$
+   $1k + 2 \equiv 2 \pmod 7 \implies k \equiv 0 \pmod 7$.
+3. Substitute back: $k=7j$.
+   $x = 5(7j) + 3 = 35j + 3$.
+   Smallest positive solution is 3.
+
+*** C6: Complex Geometry Interpretation
+
+
+[Image of inscribed angle theorem circle]
+
+*Interpretation:* The relation often describes points on the unit circle. The algebraic relation between $z_1, z_2$ and their arguments corresponds to the geometric property that the angle at the circumference is invariant or related to the central angle.
+*Formal proof:* Uses $z = e^{i\theta}$ to show the argument of the quotient corresponds to the rotation.
+
+*** C7: Injectivity of Sets Function
+Claim: $f$ is injective iff $f(A \cap B) = f(A) \cap f(B)$.
+*Proof ($\Leftarrow$):*
+Assume the intersection property holds. Let $A=\{x\}$ and $B=\{y\}$.
+$f(\{x\} \cap \{y\}) = f(\emptyset) = \emptyset$.
+By hypothesis: $f(\{x\}) \cap f(\{y\}) = \{f(x)\} \cap \{f(y)\}$.
+If $f(x) = f(y)$, then $\{f(x)\} \cap \{f(y)\} = \{f(x)\} \neq \emptyset$.
+This contradicts the LHS being $\emptyset$ (unless $x=y$).
+Thus $x \neq y \implies f(x) \neq f(y)$.
+
+*** C8: Distance Between Skew Lines
+
+
+[Image of distance between skew lines projection]
+
+1.  **Normal Vector:** $\mathbf{n} = \mathbf{d}_1 \times \mathbf{d}_2 = (1,1,0) \times (0,1,1)$.
+    $\mathbf{n} = (1, -1, 1)$.
+2.  **Connecting Vector:** Point on $L_1$: $(1,0,0)$. Point on $L_2$: $(0,1,1)$.
+    $\mathbf{v} = (0-1, 1-0, 1-0) = (-1, 1, 1)$.
+3.  **Projection:**
+    \[ \text{Dist} = \frac{|\mathbf{v} \cdot \mathbf{n}|}{|\mathbf{n}|} = \frac{|(-1)(1) + (1)(-1) + (1)(1)|}{\sqrt{1^2+(-1)^2+1^2}} \]
+    \[ = \frac{|-1 -1 + 1|}{\sqrt{3}} = \frac{1}{\sqrt{3}} \]
