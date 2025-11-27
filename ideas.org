@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-27>
-#+lastmod: <2025-11-27 13:21>
+#+lastmod: <2025-11-27 14:12>
 #+options: num:t
 #+startup: overview
 
@@ -10,3 +10,11 @@
 - A massive file with a list of topics and links to the best explanatory resources.
 
   Example: my favourite resource to learn proof of binomual theorem by induction is the [[https://www.youtube.com/watch?v=l_VgvueBwuA][video of some professor in medival clothes in church explaining it]].
+
+- Another silly idea is to add list of nice places to eat around the main buildings.
+
+  Examples:
+  - Ikea store has a free hot drinks for 1 hour everyday, on weekdays its pretty chill study place.
+  - [[https://fam.tuwien.ac.at/contact/restaurants.pdf][List of places to eat near TU Wien]]
+
+- List of study places
