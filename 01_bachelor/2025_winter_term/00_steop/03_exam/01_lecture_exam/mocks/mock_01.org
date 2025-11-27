@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-26>
-#+lastmod: <2025-11-26 10:34>
+#+lastmod: <2025-11-27 09:11>
 #+options: num:t
 #+startup: overview
 
@@ -12,7 +12,7 @@
 - Section A: 20 Multiple Choice Questions (2 marks each).
 - Section B: 10 Open Problems (6 marks each).
 - Show all steps for Section B.
-
+#+LATEX: \newpage
 * Section A: Multiple Choice
 1. Which statement is logically equivalent to $P \Rightarrow Q$?
    A. $Q \Rightarrow P$
@@ -171,3 +171,80 @@ Equation of plane through $(1,0,0), (0,2,0), (0,0,3)$.
 
 ** Problem B10
 Prove $(0,1)$ is uncountable.
+#+LATEX: \newpage
+* Answers
+** Section A
+| Q | A |  Q | A |  Q | A |  Q | A |
+|---+---+----+---+----+---+----+---|
+| 1 | B |  6 | D | 11 | B | 16 | C |
+| 2 | B |  7 | B | 12 | A | 17 | C |
+| 3 | B |  8 | B | 13 | C | 18 | C |
+| 4 | A |  9 | B | 14 | A | 19 | A |
+| 5 | B | 10 | B | 15 | B | 20 | C |
+
+** Section B
+*** B1: Induction
+- *Base Case* ($n=1$): LHS $\sum_{1}^1 (2(1)-1) = 1$, RHS $1^2 = 1$. ✓ (1 pt)
+- *Hypothesis*: Assume $\sum_{i=1}^k (2i-1) = k^2$. (1 pt)
+- *Step*:
+  $\sum_{i=1}^{k+1} (2i-1) = k^2 + (2(k+1)-1) = k^2 + 2k + 1 = (k+1)^2$. (3 pts)
+- *Conclusion*: Holds for all $n$. (1 pt)
+
+*** B2: Functions
+- *Injective*:
+  $f(x)=f(y) \Rightarrow \frac{2x+1}{x-3} = \frac{2y+1}{y-3} \Rightarrow x=y$. (2 pts)
+- *Surjective*:
+  Solve $y=\frac{2x+1}{x-3}$ → $x=\frac{3y+1}{y-2}$, valid for $y\neq2$. (2 pts)
+- *Inverse*:
+  $f^{-1}(x)=\frac{3x+1}{x-2}$. (2 pts)
+
+*** B3: Relations
+- *Reflexive*: $4 | (3x+x)$ → $4|4x$. True. (1.5 pts)
+- *Symmetric*: Assume $4 | (3x+y)$. Then $3x+y = 4x - (x-y)$ ⇒ $x-y$ divisible by 4 ⇒ $3y+x$ divisible by 4. (2.5 pts)
+- *Transitive*:
+  If $4|3x+y$ and $4|3y+z$, add: $3x+4y+z$ → $3x+z$ divisible by 4. (2 pts)
+
+*** B4: System of Congruences
+- $x = 3k + 2$
+- $3k+2 \equiv 3 \pmod{5}$ → $3k \equiv 1$ → $k = 2 \pmod 5$
+- $k = 5j + 2$
+- $x = 15j + 8$
+- $15j+8 \equiv 2 \pmod 7$ → $j \equiv 1 \pmod 7$
+- $x = 105m + 23$
+- *Smallest positive solution*: **23**. (6 pts)
+
+*** B5: Combinatorics
+1. Total ways: $\binom{14}{5} = 2002$. (2 pts)
+2. Forbidden case: all CS → $\binom{6}{5}=6$. (2 pts)
+3. Result: $2002 - 6 = 1996$. (2 pts)
+
+*** B6: Complex Numbers
+- $z^3 = 27 e^{i3\pi/2}$
+- Roots: $z_k = 3 e^{i(3\pi/2 + 2\pi k)/3}$
+  - $k=0$: $3i$
+  - $k=1$: $3(-\frac{\sqrt{3}}{2} - \frac12 i)$
+  - $k=2$: $3(\frac{\sqrt{3}}{2} - \frac12 i)$
+(2 pts each)
+
+*** B7: Polynomials
+1. Third root: $\overline{2+i}=2-i$. (2 pts)
+2. Coefficients:
+   - $(x-(2+i))(x-(2-i)) = x^2 - 4x + 5$
+   - $P(x) = (x-1)(x^2 - 4x + 5)$
+   - $P(x) = x^3 - 5x^2 + 9x - 5$
+   - $a=-5,\; b=9,\; c=-5$. (4 pts)
+
+*** B8: Epsilon–N Limit
+- Manipulation: $\left|\frac{2n+1}{n+3} - 2\right| = \frac{5}{n+3}$.
+- Given $\epsilon > 0$, choose $N > \frac{5}{\epsilon} - 3$.
+- For $n>N$: $\frac{5}{n+3} < \epsilon$. (6 pts)
+
+*** B9: Plane Equation
+- $\vec{AB}=(-1,2,0)$, $\vec{AC}=(-1,0,3)$. (2 pts)
+- Normal: $\vec{n} = (6,3,2)$. (2 pts)
+- Plane: $6(x-1)+3y+2z=0$ → $6x+3y+2z = 6$. (2 pts)
+
+*** B10: Uncountability
+- Assume list $x_1,x_2,\dots$
+- Construct $y$ differing from $x_n$ in the $n$-th decimal place.
+- $y$ not in the list → contradiction. (6 pts)
