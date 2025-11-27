@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-13>
-#+lastmod: <2025-11-26 19:46>
+#+lastmod: <2025-11-27 10:51>
 #+options: num:t
 #+startup: overview
 
@@ -14,6 +14,15 @@ This repository is a centralized workspace containing notes, code solutions, exe
 *Goal:* To create a "Single Source" for our studies, helping us handle the coursework and succeed in the exams.
 
 /Disclaimer: This is a student-run project. It is not officially affiliated with the University of Vienna. No copyrighted university materials are hosted here—only original notes, code, and links to official resources./
+
+* What Will Interest You
+What I believe would interest you the most are:
+- *Lecture Notes*: Clean, LaTeX-rendered PDFs of all STEOP lectures.
+- *Exam Prep*: Relevant mock exam papers and study guides.
+- *Solutions*: Verified answers for problem sets.
+- *Resources*: Centralized access to required textbooks and references.
+
+*But* if you are familiar with *Git*, *Emacs*, and *Org-Mode*, you can clone this repo to interact with the code, run the math and code blocks locally, and utilize the full reproducibility of the notes.
 
 * The Workflow (Why Org-Mode?)
 This repository is built using *Doom Emacs* + *Org-Mode*. While you don't need Emacs to read the notes (GitHub renders them), this stack was chosen for specific strategic reasons:
@@ -35,13 +44,23 @@ Have a look on [[file:./index.org][index.org]] file.
 * How to Contribute
 This is a living document. Contributions are highly encouraged!
 
-*If you are a Git user:*
+If you are thinking "man, this project is an excellent idea", then *absolutely* don't hesitate to contribute in any way. Any additional notes, papers, solutions are highly welcomed and would help all the students.
+
+** Level 1: Quick Fixes (No Code Required) See a typo or a mistake?
+1. Click the file name.
+2. Click the ✏️ (Pencil Icon) in the top right.
+3. Make your change and click *Commit changes*.
+
+** Level 2: Git Users
+
 1. Fork the repo.
-2. Add your notes, fix a typo, or add a solution.
+2. Add your notes or solutions.
 3. Submit a Pull Request.
 
-*If you are not a Git user:*
-You can still help! Send your summaries or code snippets to me via [Telegram: @johannes_de_silentio / Email: obluda2173@gmail.com], and I will integrate them.
+** Level 3: Non-Git Users You can still help! Send your summaries or code snippets to me, and I will integrate them.
+
+- *Telegram*: @johannes_de_silentio
+- *Email*: obluda2173@gmail.com
 
 * License
 This project is open for our cohort.
