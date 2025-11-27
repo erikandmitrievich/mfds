@@ -2,12 +2,12 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-13>
-#+lastmod: <2025-11-27 10:51>
+#+lastmod: <2025-11-27 13:22>
 #+options: num:t
 #+startup: overview
 
 * About This Repository
-Welcome to the unofficial open-source study hub for the *Bachelor of Mathematics for Data Science* (First Cohort).
+Welcome to the unofficial open-source study hub for the *Bachelor of Mathematical Foundations of Data Science* (First Cohort).
 
 This repository is a centralized workspace containing notes, code solutions, exercises, and study guides. It transforms scattered lecture knowledge into a structured, searchable, and reproducible archive.
 
