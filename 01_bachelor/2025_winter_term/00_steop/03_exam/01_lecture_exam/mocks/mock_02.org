@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-26>
-#+lastmod: <2025-11-26 20:14>
+#+lastmod: <2025-11-27 09:17>
 #+options: num:t
 #+startup: overview
 
@@ -12,7 +12,7 @@
 - Section A :: 20 Multiple Choice Questions (2 marks each)
 - Section B :: 10 Open Problems (6 marks each)
 - Note :: This paper focuses on rigorous proof and synthesis of concepts.
-
+#+LATEX: \newpage
 * Section A: Multiple Choice
 
 1. Logical contrapositive of "Convergent implies Bounded":
@@ -167,3 +167,125 @@ Decompose the vector $(1,2,3)$ into components parallel and perpendicular to $(1
 
 ** Problem B10 (Cardinality)
 Prove $$|(0,1)| = |[0,1]|$$ using the Cantor-Schröder-Bernstein (CSB) Theorem.
+#+LATEX: \newpage
+* Answers
+** Part 1: Section A (MCQ) Answers
+
+| Q  | Ans | Q  | Ans | Q  | Ans | Q  | Ans |
+|----+-----+----+-----+----+-----+----+-----|
+| 1  | B   | 6  | B   | 11 | B   | 16 | B   |
+| 2  | A   | 7  | C   | 12 | B   | 17 | A   |
+| 3  | D   | 8  | B   | 13 | C   | 18 | C   |
+| 4  | C   | 9  | C   | 14 | A   | 19 | B   |
+| 5  | B   | 10 | C   | 15 | C   | 20 | D   |
+
+*** Explanatory Notes
+- *Q6:* $3x \equiv 1 \pmod 6$ implies $3x = 6k + 1 \implies 3(x-2k) = 1$. This is impossible (a multiple of 3 cannot equal 1).
+- *Q11:* If $P(0)$ is odd, the constant term is odd. If $P(1)$ is odd, the sum of coefficients is odd. If an integer root $k$ exists, $P(k)=0$ (which is even). Parity arguments show this is impossible.
+- *Q20:* $4 \times 3 = 12 \equiv 0 \pmod{12}$, therefore 4 is a zero divisor.
+
+** Part 2: Section B Solutions & Rubric
+
+*** B1: Inequality Induction
+- [ ] *(1 pt)* **Base Case:** $n=4$. $2^4=16$ and $4!=24$. Since $16 < 24$, the base case holds.
+- [ ] *(1 pt)* **Hypothesis:** Assume $2^k < k!$ for some $k \ge 4$.
+- [ ] *(3 pts)* **Inductive Step:**
+  \[ 2^{k+1} = 2 \cdot 2^k < 2 \cdot k! \]
+  We need to show $2 \cdot k! < (k+1)!$. Note that $(k+1)! = (k+1)k!$.
+  Since $k \ge 4$, it is clear that $2 < k+1$.
+  Thus: $2 \cdot k! < (k+1)k! = (k+1)!$.
+- [ ] *(1 pt)* **Conclusion:** By PMI, true for all $n \ge 4$.
+
+*** B2: Set Theory Proof
+- [ ] *(3 pts)* **($\subseteq$) Direction:**
+  Let $x \in f^{-1}(A \cap B)$. By definition, $f(x) \in A \cap B$.
+  $\implies f(x) \in A \land f(x) \in B$
+  $\implies x \in f^{-1}(A) \land x \in f^{-1}(B)$
+  $\implies x \in f^{-1}(A) \cap f^{-1}(B)$.
+- [ ] *(3 pts)* **($\supseteq$) Direction:**
+  Let $x \in f^{-1}(A) \cap f^{-1}(B)$.
+  $\implies x \in f^{-1}(A) \land x \in f^{-1}(B)$
+  $\implies f(x) \in A \land f(x) \in B$
+  $\implies f(x) \in A \cap B$
+  $\implies x \in f^{-1}(A \cap B)$.
+
+*** B3: Diophantine Impossibility
+- [ ] *(2 pts)* **Analyze Modulo 3:**
+  $15x^2 - 7y^2 = 9 \implies 0 - 7y^2 \equiv 0 \pmod 3$.
+  $-y^2 \equiv 0 \pmod 3 \implies y \equiv 0 \pmod 3$.
+  Let $y = 3k$.
+- [ ] *(2 pts)* **Substitute and simplify:**
+  $15x^2 - 7(9k^2) = 9 \implies 15x^2 - 63k^2 = 9$.
+  Divide by 3: $5x^2 - 21k^2 = 3$.
+- [ ] *(2 pts)* **Analyze Modulo 5:**
+  $0 - 21k^2 \equiv 3 \pmod 5$.
+  $-k^2 \equiv 3 \pmod 5 \implies k^2 \equiv -3 \equiv 2 \pmod 5$.
+  *Check quadratic residues mod 5:* $0^2=0, 1^2=1, 2^2=4, 3^2=4, 4^2=1$.
+  There is no integer whose square is $2 \pmod 5$. Thus, no solutions exist.
+
+*** B4: Advanced Combinatorics
+- [ ] *(3 pts)* **Variable Transformation:**
+  Let $y_1 = x_1-2, y_2=x_2, y_3=x_3-1, y_4=x_4-3$, where $y_i \ge 0$.
+  New equation: $(y_1+2) + y_2 + (y_3+1) + (y_4+3) = 20$.
+  $y_1+y_2+y_3+y_4 = 20 - 6 = 14$.
+- [ ] *(3 pts)* **Stars and Bars:**
+  $n=14, k=4$.
+  $\binom{n+k-1}{k-1} = \binom{14+3}{3} = \binom{17}{3}$.
+  Calculation: $\frac{17 \cdot 16 \cdot 15}{6} = 17 \cdot 8 \cdot 5 = 680$.
+
+*** B5: Complex Locus
+- [ ] *(2 pts)* **Algebraic Setup:**
+  $|z - 2i|^2 = 4|z + i|^2$. Let $z = x + iy$.
+  $x^2 + (y-2)^2 = 4[x^2 + (y+1)^2]$.
+- [ ] *(2 pts)* **Expansion & Simplification:**
+  $x^2 + y^2 - 4y + 4 = 4(x^2 + y^2 + 2y + 1)$.
+  $x^2 + y^2 - 4y + 4 = 4x^2 + 4y^2 + 8y + 4$.
+  $3x^2 + 3y^2 + 12y = 0 \implies x^2 + y^2 + 4y = 0$.
+- [ ] *(2 pts)* **Result:**
+  Complete square: $x^2 + (y+2)^2 = 4$.
+  Locus is a circle centered at $(0, -2)$ with radius $2$.
+
+*** B6: Polynomials
+- [ ] *(2 pts)* **Vieta's Formulas:**
+  $\sum x_i = 0$ (no $x^2$ term) and $\sum x_i x_j = p$.
+- [ ] *(2 pts)* **Square Identity:**
+  $(x_1+x_2+x_3)^2 = \sum x_i^2 + 2\sum x_i x_j$.
+  $0^2 = \sum x_i^2 + 2p \implies \sum x_i^2 = -2p$.
+- [ ] *(2 pts)* **Conclusion:**
+  If the sum of squares is 0, then $-2p = 0 \implies p=0$. (Note: If roots are real, $x_i=0$; if complex, sum of squares can be zero, but coefficient logic holds).
+
+*** B7: Sequence Analysis
+- [ ] *(2 pts)* **Boundedness ($<2$):**
+  Base $a_1=\sqrt{2}<2$. Assume $a_k < 2$. Then $a_{k+1} = \sqrt{2+a_k} < \sqrt{2+2} = 2$.
+- [ ] *(2 pts)* **Monotonicity (Increasing):**
+  $a_{n+1} > a_n \iff \sqrt{2+a_n} > a_n \iff 2+a_n > a_n^2 \iff a_n^2 - a_n - 2 < 0$.
+  Roots of $x^2-x-2$ are $2, -1$. Since $0 < a_n < 2$, the parabola is negative, so the inequality holds.
+- [ ] *(2 pts)* **Limit:**
+  Let $L = \lim a_n$. $L = \sqrt{2+L} \implies L^2 - L - 2 = 0$.
+  $(L-2)(L+1)=0$. Since $a_n > 0$, $L=2$.
+
+*** B8: $\epsilon-\delta$ Proof
+- [ ] *(4 pts)* **Finding $\delta$:**
+  Goal: $|x^2 - 4| < \epsilon \iff |x-2||x+2| < \epsilon$.
+  Restrict $\delta \le 1 \implies 1 < x < 3 \implies |x+2| < 5$.
+  We need $|x-2| \cdot 5 < \epsilon$.
+  Choose $\delta = \min(1, \epsilon/5)$.
+- [ ] *(2 pts)* **Verification:** Formal write-up of steps.
+
+*** B9: Vector Decomposition
+- [ ] *(3 pts)* **Parallel Component:**
+  $\mathbf{b} = (1, 0, -1)$, $|\mathbf{b}|^2 = 2$.
+  $\mathbf{a} \cdot \mathbf{b} = 1(1) + 2(0) + 3(-1) = -2$.
+  $\mathbf{a}_{\parallel} = \text{proj}_{\mathbf{b}} \mathbf{a} = \frac{-2}{2} (1, 0, -1) = (-1, 0, 1)$.
+- [ ] *(3 pts)* **Perpendicular Component:**
+  $\mathbf{a}_{\perp} = \mathbf{a} - \mathbf{a}_{\parallel} = (1, 2, 3) - (-1, 0, 1) = (2, 2, 2)$.
+  *Check:* $(2, 2, 2) \cdot (1, 0, -1) = 2 + 0 - 2 = 0$.
+
+*** B10: Cantor-Schröder-Bernstein
+- [ ] *(2 pts)* **Injection $f: (0,1) \to [0,1]$:**
+  Define $f(x) = x$. This is a trivial injection.
+- [ ] *(2 pts)* **Injection $g: [0,1] \to (0,1)$:**
+  Map $0 \to 1/2$, $1 \to 1/3$, $1/n \to 1/(n+2)$ for integers $n \ge 2$, identity otherwise.
+  *Alternatively:* $g(x) = \frac{x+1}{3}$ maps $[0,1] \to [1/3, 2/3] \subset (0,1)$.
+- [ ] *(2 pts)* **Conclusion:**
+  Since injections exist in both directions, $|(0,1)| = |[0,1]|$ by CSB theorem.
