@@ -1,0 +1,12 @@
+#+title: Ideas
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-27>
+#+lastmod: <2025-11-27 13:21>
+#+options: num:t
+#+startup: overview
+
+* List of ideas to implement in this repository:
+- A massive file with a list of topics and links to the best explanatory resources.
+
+  Example: my favourite resource to learn proof of binomual theorem by induction is the [[https://www.youtube.com/watch?v=l_VgvueBwuA][video of some professor in medival clothes in church explaining it]].
