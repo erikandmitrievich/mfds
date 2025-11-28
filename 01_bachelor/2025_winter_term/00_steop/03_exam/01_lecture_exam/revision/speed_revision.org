@@ -1,0 +1,151 @@
+#+title: Speed Revision
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-28>
+#+lastmod: <2025-11-28 11:38>
+#+options: num:t
+#+startup: overview
+
+#+LATEX: \vspace{2em}
+#+LATEX: \begin{quote}\textbf{Disclaimer:} This paper can contain irrelevant material.\end{quote}
+#+LATEX: \newpage
+
+* Logic & Proof Techniques
+** Implication & Equivalences
+- *Standard Implication:* $P \to Q \equiv \neg P \lor Q$.
+- *Contrapositive:* $P \to Q \equiv \neg Q \to \neg P$.
+  - /Application:/ Used to prove "Convergent $\implies$ Bounded" by showing "Not Bounded $\implies$ Not Convergent".
+- *Negation:* $\neg(P \to Q) \equiv P \land \neg Q$.
+- *Quantifiers:*
+  - Negation of $\forall x \exists y, P(x,y)$ is $\exists x \forall y, \neg P(x,y)$.
+  - "Smallest positive real" logical form: $\forall x \exists y (y < x)$ implies no smallest, versus $\exists x \forall y (x \le y)$.
+
+** Induction Skeletons
+- *Standard Induction:*
+  1. *Base Case:* Verify $P(1)$.
+  2. *Hypothesis:* Assume $P(k)$ is true.
+  3. *Inductive Step:* Show $P(k) \implies P(k+1)$ (or $P(k+2)$ depending on step size).
+  4. *Conclusion:* True for all $n$ by PMI.
+- *Inequality Induction:*
+  - /Example:/ Proving $2^n < n!$ for $n \ge 4$.
+  - /Technique:/ Manipulate one side to match the other: $2^{k+1} = 2 \cdot 2^k < 2 \cdot k! < (k+1)k!$.
+- *Strong Induction:* Uses $\big(\bigwedge_{i=1}^k P(i)\big) \implies P(k+1)$.
+
+* Set Theory & Functions
+** Cardinality
+- *Countable:* Finite sets, $\mathbb{N}, \mathbb{Z}, \mathbb{Q}$, finite subsets of $\mathbb{N}$ (e.g., finite bit strings), $\mathbb{Z} \times \mathbb{Z}$.
+- *Uncountable:* $\mathbb{R}, (0,1)$, infinite bit strings, functions $f: \mathbb{N} \to \{0,1\}$.
+  - /Cantor-Schröder-Bernstein (CSB):/ If there exist injections $f: A \to B$ and $g: B \to A$, then $|A|=|B|$. Used to prove $|(0,1)| = |[0,1]|$.
+- *Power Set:* If $|A| = n$, then $|\mathcal{P}(A)| = 2^n$.
+
+** Function Properties
+- *Injectivity (One-to-One):*
+  - /Definition:/ $f(x) = f(y) \implies x = y$.
+  - /Calculus Check:/ If $f'(x) > 0$ (strictly increasing), $f$ is injective.
+- *Surjectivity (Onto):*
+  - /Definition:/ For every $y \in \text{Codomain}$, $\exists x$ such that $f(x) = y$.
+- *Composition:* If $g \circ f$ is injective, $f$ (inner) must be injective.
+- *Inverse Images:*
+  - Identity: $f^{-1}(A \cap B) = f^{-1}(A) \cap f^{-1}(B)$.
+  - /Note:/ $f$ is injective $\iff f(A \cap B) = f(A) \cap f(B)$ for all subsets.
+
+* Relations
+** Properties
+- *Reflexive:* $\forall x, (x,x) \in R$.
+- *Symmetric:* $(x,y) \in R \implies (y,x) \in R$.
+- *Transitive:* $(x,y) \in R \land (y,z) \in R \implies (x,z) \in R$.
+- *Antisymmetric:* $(x,y) \in R \land (y,x) \in R \implies x = y$.
+
+** Equivalence Relations
+- Must be Reflexive, Symmetric, and Transitive.
+- /Example:/ $x R y \iff 4 \mid (3x + y)$ is an equivalence relation.
+
+* Number Theory
+** Modular Arithmetic
+- *Properties:*
+  - If $a \equiv b \pmod m$, then $a^k \equiv b^k$ and $ac \equiv bc$.
+  - *Zero Divisors:* Elements $a \ne 0$ where $ab \equiv 0 \pmod n$ (e.g., 4 in $\mathbb{Z}_{12}$).
+  - *Units:* Elements coprime to $n$ have inverses (e.g., $\{1, 3, 7, 9\}$ in $\mathbb{Z}_{10}$).
+
+** Solving Equations
+- *Linear Congruences:* $ax \equiv b \pmod n$. Solvable if $\gcd(a,n) \mid b$.
+- *Chinese Remainder Theorem (CRT):*
+  - System: $x \equiv a \pmod n, \quad x \equiv b \pmod m$ (where $\gcd(n,m)=1$).
+  - /Method:/ Express $x = nk + a$, substitute into second equation.
+- *Diophantine Impossibility:*
+  - To prove no integer solutions for $15x^2 - 7y^2 = 9$:
+  - Analyze modulo 3 or 5. Check quadratic residues ($x^2 \pmod 5 \in \{0, 1, 4\}$). Contradiction arises (e.g., needing $k^2 \equiv 2 \pmod 5$).
+
+* Complex Numbers
+** Forms & Powers
+- *Representations:* Rectangular $z = a+bi$, Exponential $z = re^{i\theta}$.
+- *De Moivre:* $(re^{i\theta})^n = r^n e^{in\theta}$.
+- *Roots of Unity:* $z^n = 1$ forms a regular polygon.
+
+** Geometry (Loci)
+- *Circle:* $|z - a| = r$.
+- *Perpendicular Bisector:* $|z - a| = |z - b|$.
+- *Ellipse:* $|z - a| + |z - b| = k$ where $k > |a-b|$.
+- *Apollonius Circle:* $|z - a| = k|z - b|$ ($k \ne 1$).
+  - /Proof:/ Square both sides $|z-a|^2 = k^2|z-b|^2$ and expand using $z=x+iy$.
+
+* Analysis (Sequences & Limits)
+** Sequences
+- *Boundedness:* Convergent $\implies$ Bounded.
+- *Monotone Convergence:* A bounded, monotonic sequence converges.
+- *Recursive Limits:*
+  - Given $a_{n+1} = \sqrt{2 + a_n}$, prove bounded ($<2$) and increasing.
+  - Find limit $L$: Solve $L = \sqrt{2+L} \implies L=2$.
+
+** Limit Computations
+- *Conjugate Trick:* For $\lim (\sqrt{n^2+5n} - n)$, multiply by $\frac{\sqrt{\dots}+n}{\sqrt{\dots}+n}$ to remove radical.
+- *Factorials:* $\lim \frac{n!}{n^n} = 0$.
+
+** Formal Proofs
+- *Epsilon-N ($\epsilon-N$):*
+  - Goal: $|a_n - L| < \epsilon$ for $n > N$.
+  - Strategy: Bound term by $\frac{C}{n}$, set $\frac{C}{N} < \epsilon$.
+- *Epsilon-Delta ($\epsilon-\delta$):*
+  - Goal: $0 < |x-c| < \delta \implies |f(x) - L| < \epsilon$.
+  - /Example:/ $\lim_{x \to 2} x^2 = 4$. Decompose $|x^2-4| = |x-2||x+2|$. Bound $|x+2|$ by assuming $\delta \le 1$.
+
+* Combinatorics
+** Counting Techniques
+- *Permutations:* $n!$ for distinct items.
+- *Mississippi Rule:* For indistinguishable items: $\frac{n!}{n_1! n_2! \dots}$.
+- *Stars and Bars:*
+  - Integer solutions to $x_1 + \dots + x_k = n$ is $\binom{n+k-1}{k-1}$.
+  - /Constraints:/ If $x_i \ge c$, substitution $y_i = x_i - c$ reduces $n$ by $\sum c$.
+
+** Binomial Coefficients
+- Coefficient of $x^k y^{n-k}$ in $(x+y)^n$ is $\binom{n}{k}$.
+
+* Linear Algebra & Vector Spaces
+** Vector Spaces
+- *Subspaces:* Must contain $\mathbf{0}$, be closed under addition, and closed under scalar multiplication.
+  - /Fails:/ Lines not through origin ($x+y=1$), Polynomials of degree *exactly* $n$.
+
+** Vector Geometry
+- *Dot Product:* $\mathbf{u} \cdot \mathbf{v} = 0 \iff \mathbf{u} \perp \mathbf{v}$.
+- *Projection:* $\text{proj}_{\mathbf{u}}\mathbf{v} = \frac{\mathbf{v} \cdot \mathbf{u}}{|\mathbf{u}|^2}\mathbf{u}$.
+- *Decomposition:* $\mathbf{v} = \mathbf{v}_{\parallel} + \mathbf{v}_{\perp}$.
+- *Plane Equation:*
+  - Normal $\mathbf{n} = \vec{AB} \times \vec{AC}$.
+  - Equation: $\mathbf{n} \cdot (\mathbf{r} - \mathbf{r}_0) = 0$.
+- *Skew Lines Distance:* $D = \frac{|(\mathbf{r}_2 - \mathbf{r}_1) \cdot (\mathbf{d}_1 \times \mathbf{d}_2)|}{||\mathbf{d}_1 \times \mathbf{d}_2||}$.
+
+* Polynomials & Rings
+** Polynomial Properties
+- *Vieta's Formulas:*
+  - $\sum x_i = -a_{n-1}/a_n$.
+  - $\sum x_i^2 = (\sum x_i)^2 - 2\sum x_i x_j$.
+- *Remainder Theorem:* Remainder of $P(x) \div (x-c)$ is $P(c)$.
+- *Conjugate Roots:* If coefficients are real, roots come in pairs $a \pm bi$.
+
+** Ring Theory
+- *Boolean Ring:* If $a^2 = a$ for all $a$, the ring is commutative ($ab = ba$).
+
+* Computational (Julia)
+- *Sets:* `Set([1, 2, 2])` results in `Set([1, 2])` (unique elements).
+- *Control Flow:* `for x in S`, `if x % 2 != 0` (modulo check).
+- *Modifying Collections:* `push!(collection, item)` appends data.
