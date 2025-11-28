@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-26>
-#+lastmod: <2025-11-27 09:17>
+#+lastmod: <2025-11-28 09:55>
 #+options: num:t
 #+startup: overview
 
@@ -176,7 +176,7 @@ Prove $$|(0,1)| = |[0,1]|$$ using the Cantor-Schröder-Bernstein (CSB) Theorem.
 | 1  | B   | 6  | B   | 11 | B   | 16 | B   |
 | 2  | A   | 7  | C   | 12 | B   | 17 | A   |
 | 3  | D   | 8  | B   | 13 | C   | 18 | C   |
-| 4  | C   | 9  | C   | 14 | A   | 19 | B   |
+| 4  | D   | 9  | C   | 14 | A   | 19 | B   |
 | 5  | B   | 10 | C   | 15 | C   | 20 | D   |
 
 *** Explanatory Notes
