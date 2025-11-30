@@ -1,0 +1,101 @@
+#+title: Ps 01
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-30>
+#+lastmod: <2025-11-30 23:20>
+#+options: num:t
+#+startup: overview
+
+* Problem 1
+** Task
+Let $\Omega$ be any nonempty set. Define the function $d_{\Omega}:\Omega\times\Omega\rightarrow\mathbb{R}$ by
+(1) Show that $d_{\Omega}$ is a metric on $\Omega$.
+(2)
+$d_{\Omega}(x,y)=\begin{cases}0,&if~x=y,\\ 1,&if~x\ne y.\end{cases}$
+Let $(x_{n})_{n\in\mathbb{N}}$ be a sequence in $\Omega$. Show that $(x_{n})_{n\in\mathbb{N}}$ converges in $(\Omega,d_{\Omega})$ if and only if it is even- tually constant.
+(... properly define what we mean by "eventually constant"...)
+
+** Notes
+- What is a metric?
+
+  Metric is a mathematical generalisation of the concept of "distance." For a function $d: \Omega \times \Omega \rightarrow \mathbb{R}$ to be considered a metric, it must satisfy three specific rules (axioms) for all points $x, y, z$ in the set $\Omega$:
+
+  1. *Positive Definiteness:*
+     - $d(x, y) \ge 0$ (distance is never negative)
+     - $d(x, y) = 0 \iff a = b$ (distance is zero if you are at the same point)
+
+  2. *Symmetry:*
+     - $d(x, y) = d(y, x)$ (distance from x to y same as y to x)
+
+  3. *Triangle Inequality:*
+     - $d(x, z) \le d(x, y) + d(y, z)$ (trivial guys)
+
+- What does  $d_{\Omega}$ mean?
+
+  The notation $d_\Omega$ is simply the name of the specific function defined in the problem.
+
+  - $d$ stands for distance (metric).
+
+  - $\Omega$ (omega) is the subscript indicating that the distance is defined on the set $\Omega$.
+
+  - *Meaning:* This specific function is called the *Discrete Metric*. It treats all distinct points as being exactly one unit apart, no matter what they are. It creates a space where every point is isolated from every other point.
+
+** Solution
+*** Show that $d_{\Omega}$ is a metric on $\Omega$.
+To verify that the function $d_\Omega$ is a metric on $\Omega$, we must show it satisfies all three metric axioms.
+
+- *Axiom 1: Positive Definiteness*
+  - The output of the $d_\Omega$ is either 0 or 1, both of which are $\ge 0$.
+  - By definition, $d_\Omega = 0$ exactly when $x = y$.
+  - Axiom holds.
+
+- *Axiom 2: Symmetry*
+  - Case 1: if $x = y$, then $y = x$. Thus, $d_\Omega(x, y) = 0$ and $d_\Omega(y, x) = 0$.
+  - Case 2: if $x \neq y$, then $y \neq x$. Thus, $d_\Omega(x, y) = 1$ and $d_\Omega(y, x) = 1$.
+  - Axiom holds.
+
+- *Axiom 3: Triangle Inequality*
+  - Case 1: $x = z$, then $d_\Omega(x, z) = 0$. Since distances are non-negative, the sum of RHS of:
+
+    \[ $\qquad d_\Omega(x, z) \le d_\Omega(x, y) + d_\Omega(y, z)$ \]
+
+    is always $\ge 0$.
+
+  - Case 2: If $x \neq y$, then $d_\Omega(x, z) = 1$.
+    - Since $x \neq y$, then $y$ can not be equal to both $x$ and $z$ at the same time.
+    - Therefore, at least *one* of these statements are true: $y \neq x$ *or* $y \neq z$.
+    - This means that at least one of $d_\Omega(x, y)$ and $d_\Omega(y, z)$ equals to 1.
+    - Thus, $1 \le d_\Omega(x, y) + d_\Omega(y, z)$ holds.
+
+  - Axiom holds.
+
+- *Conlusion:* $d_\Omega$ is a metric.
+
+* Problem 2
+** Task
+Consider $\mathbb{R}^{2}$ with the metric
+$d(x,y)=|x_{1}-y_{1}|+|x_{2}-y_{2}|$, $x=(x_{1},x_{2})^{T}$ $y=(y_{1},y_{2})^{T}\in\mathbb{R}^{2}$.
+Consider the sequences $(a_{n})_{n\in\mathbb{N}},(b_{n})_{n\in\mathbb{N}}\subseteq\mathbb{R}^{2}$
+$a_{n}=(\begin{matrix}\frac{1}{n+1}\\ 2+\frac{n}{n^{2}+1}\end{matrix})$
+$b_{n}=(\begin{matrix}\sqrt{4+n}-\sqrt{n}\\ (-1)^{n}\end{matrix})$
+and determine their behavior in regards to convergence in $(\mathbb{R}^{2},d)?$ In addition, investigate/illustrate also in Julia.
+** Notes
+** Solution
+
+* Problem 3
+** Task
+Consider the series
+$\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}.$
+(1) Show that it converges towards a limit $a\in\mathbb{R}$ Does it converge absolutely?
+(2) Use Julia to guess the limit of $\sum_{k=0}^{\infty}\frac{a^{k}}{k!}$
+** Notes
+** Solution
+
+* Problem 4
+** Task
+We want to show that the sequence $(a_{n})_{n\in\mathbb{N}}=((1+\frac{1}{n+1})^{n+1})_{n\in\mathbb{N}}$ contains a convergent subsequence by verifying the following steps:
+(1) Show that $(a_{n})_{n\in\mathbb{N}}$ is bounded. Hint for the upper bound: use the binomial theorem to verify
+$(1+\frac{1}{n})^{n}\le\sum_{k=0}^{n}\frac{1}{k!},$ $n=1,2,....$
+(2) Argue now that $(a_{n})_{n\in\mathbb{N}}$ has a convergent subsequence. Make additionally numerical checks in Julia to collect some evidence that $(a_{n})_{n\in\mathbb{N}}$ is monoton and hence convergent.
+** Notes
+** Solution
