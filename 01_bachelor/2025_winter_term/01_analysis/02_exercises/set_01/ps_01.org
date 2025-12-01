@@ -2,11 +2,11 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-30>
-#+lastmod: <2025-11-30 23:20>
+#+lastmod: <2025-12-01 07:03>
 #+options: num:t
 #+startup: overview
 
-* Problem 1
+* [ ] Problem 1 :DONE:
 ** Task
 Let $\Omega$ be any nonempty set. Define the function $d_{\Omega}:\Omega\times\Omega\rightarrow\mathbb{R}$ by
 (1) Show that $d_{\Omega}$ is a metric on $\Omega$.
@@ -71,7 +71,41 @@ To verify that the function $d_\Omega$ is a metric on $\Omega$, we must show it 
 
 - *Conlusion:* $d_\Omega$ is a metric.
 
-* Problem 2
+*** Let $(x_{n})_{n\in\mathbb{N}}$ be a sequence in $\Omega$. Show that $(x_{n})_{n\in\mathbb{N}}$ converges in $(\Omega,d_{\Omega})$ if and only if it is even- tually constant.
+
+
+*Definition: Eventually Constant*
+A sequence $(x_n)_{n\in\mathbb{N}}$ is eventually constant if there exists an index $N \in \mathbb{N}$ and a point $c \in \Omega$ such that for all $n \ge N$, $x_n = c$.
+(In simple terms: the sequence might jump around at the start, but eventually it lands on one value and never changes back.)
+
+*Proof.*
+
+*Direction 1: $(\Leftarrow)$ If a sequence is eventually constant it converges.*
+- Let $x_n$ be eventually constant.
+- There exists an $N$ such that $x_n = c$ for some $n \ge N$.
+- To show convergence to c, for any $\epsilon > 0$, we check the distance.
+- For all $n \ge N$:
+
+  \[ $d_{\Omega}(x_n, c) = d_{\Omega}(c, c) = 0$ \]
+
+- Since $0 < \epsilon$ is always true, the sequence converges to c.
+
+*Direction 2: $(\Leftarrow)$ If sequence converges, it is eventually constant.*
+- Let $(x_n)$ converge to a limit $L$.
+- By the definition of convergence: For any $\epsilon > 0 \quad \exists \quad N \in \mathbb{N} : \forall n \ge N, \quad d_\Omega(x_n, L) < \epsilon$.
+- The Trick: Since we can pick any $\epsilon$, let us choose an $\epsilon$ that is smaller than 1, for example, $\epsilon = 0.5$.
+- There exists an $N$ such that for all $n \ge N$:
+  $$d_{\Omega}(x_n, L) < 0.5$$
+- However, in the discrete metric, the distance can only be 0 or 1. It is impossible for the distance to be 1 because $1 \not< 0.5$.
+- Therefore, the distance must be 0.
+
+  $$d_{\Omega}(x_n, L) = 0 \implies x_n = L$$
+
+- This means for all $n \ge N$, $x_n = L$.
+
+*Conclusion:* The sequence is eventually constant.
+
+* [ ] Problem 2 :DONE:
 ** Task
 Consider $\mathbb{R}^{2}$ with the metric
 $d(x,y)=|x_{1}-y_{1}|+|x_{2}-y_{2}|$, $x=(x_{1},x_{2})^{T}$ $y=(y_{1},y_{2})^{T}\in\mathbb{R}^{2}$.
@@ -79,17 +113,131 @@ Consider the sequences $(a_{n})_{n\in\mathbb{N}},(b_{n})_{n\in\mathbb{N}}\subset
 $a_{n}=(\begin{matrix}\frac{1}{n+1}\\ 2+\frac{n}{n^{2}+1}\end{matrix})$
 $b_{n}=(\begin{matrix}\sqrt{4+n}-\sqrt{n}\\ (-1)^{n}\end{matrix})$
 and determine their behavior in regards to convergence in $(\mathbb{R}^{2},d)?$ In addition, investigate/illustrate also in Julia.
-** Notes
-** Solution
 
-* Problem 3
+** Notes
+
+
+** Solution
+- Analysis of Sequence $(a_n)$
+Consider the sequence defined by:
+\[
+a_{n} = \begin{pmatrix} \frac{1}{n+1} \\ 2+\frac{n}{n^{2}+1} \end{pmatrix}
+\]
+
+ - *Step 1: Guess the Limit*
+Let's look at the behavior of the coordinates as $n \to \infty$:
+
+ - *Coordinate 1:* $\frac{1}{n+1}$. As $n$ gets huge, this clearly approaches $0$.
+ - *Coordinate 2:* $2 + \frac{n}{n^2+1}$. The fraction term behaves like $\frac{n}{n^2} = \frac{1}{n}$, which approaches $0$. So the whole coordinate approaches $2$.
+
+*Hypothesis:* The sequence converges to the point $L = \begin{pmatrix} 0 \\ 2 \end{pmatrix}$.
+
+ - *Step 2: Formal Proof using the Metric*
+   We need to prove that the distance $d(a_n, L)$ goes to $0$ as $n \to \infty$.
+
+   The metric is defined as:
+   \[
+   d(a_n, L) = |(a_n)_1 - L_1| + |(a_n)_2 - L_2|
+   \]
+
+   Substitute the values:
+   \[
+   d(a_n, L) = \left| \frac{1}{n+1} - 0 \right| + \left| \left(2 + \frac{n}{n^2+1}\right) - 2 \right|
+   \]
+
+   Simplify:
+   \[
+   d(a_n, L) = \frac{1}{n+1} + \left| \frac{n}{n^2+1} \right|
+   \]
+
+   Since $n$ is positive, we can remove the absolute value bars:
+   \[
+   d(a_n, L) = \frac{1}{n+1} + \frac{n}{n^2+1}
+   \]
+
+   As $n \to \infty$:
+   1. $\frac{1}{n+1} \to 0$
+   2. $\frac{n}{n^2+1} < \frac{n}{n^2} = \frac{1}{n} \to 0$
+
+   Since the distance goes to $0$, the sequence $(a_n)$ *converges* to $\begin{pmatrix} 0 \\ 2 \end{pmatrix}$.
+- Analysis of Sequence $(b_n)$
+  Consider the sequence:
+
+  \[ b_{n} = \begin{pmatrix} \sqrt{4+n}-\sqrt{n} \\ (-1)^{n} \end{pmatrix} \]
+
+ - Step 1: Coordinate 1 Analysis
+   Let $x_n = \sqrt{4+n}-\sqrt{n}$. This limit form is "$\infty - \infty$", which is indeterminate. We must manipulate it using the conjugate.
+
+   \[
+   x_n = \frac{(\sqrt{4+n}-\sqrt{n})(\sqrt{4+n}+\sqrt{n})}{\sqrt{4+n}+\sqrt{n}}
+   \]
+
+   \[
+   x_n = \frac{(4+n) - n}{\sqrt{4+n}+\sqrt{n}} = \frac{4}{\sqrt{4+n}+\sqrt{n}}
+   \]
+
+   As $n \to \infty$, the denominator becomes huge, so $x_n \to 0$. The first coordinate converges.
+
+ - Step 2: Coordinate 2 Analysis
+   Let $y_n = (-1)^n$.
+
+   This sequence bounces back and forth: $-1, 1, -1, 1 \dots$
+
+   This sequence *diverges*. It never settles on a single value.
+
+ - Step 3: Conclusion
+   For a vector sequence to converge in $\mathbb{R}^2$, *all* coordinates must converge. Since the second coordinate oscillates, the sequence cannot settle on a specific location in the plane.
+
+   Therefore, the sequence $(b_n)$ *diverges*.
+
+* [ ] Problem 3 :DONE:
 ** Task
 Consider the series
-$\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}.$
+
+\[ \sum_{n=1}^\infty \frac{(-1)^{n+1}}{n} \]
+
 (1) Show that it converges towards a limit $a\in\mathbb{R}$ Does it converge absolutely?
 (2) Use Julia to guess the limit of $\sum_{k=0}^{\infty}\frac{a^{k}}{k!}$
 ** Notes
+
 ** Solution
+Analysis of the Series $\sum \frac{(-1)^{n+1}}{n}$
+
+- (1) Convergence Analysis
+  Let the series be defined as $S = \sum_{n=1}^\infty a_n$, where $a_n = \frac{(-1)^{n+1}}{n}$.
+
+  - Step A: Show Conditional Convergence
+    We apply the *Alternating Series Test* (Leibniz Test).
+    Let $b_n = |a_n| = \frac{1}{n}$. We must satisfy three conditions:
+
+    1. *Positive terms:* $b_n > 0$ for all $n \ge 1$. (True).
+    2. *Decreasing sequence:* We must show $b_{n+1} \le b_n$.
+       \[ \frac{1}{n+1} < \frac{1}{n} \]
+       This holds for all $n \in \mathbb{N}$.
+    3. *Limit is zero:*
+       \[ \lim_{n \to \infty} b_n = \lim_{n \to \infty} \frac{1}{n} = 0 \]
+
+    *Conclusion:* By the Alternating Series Test, the series converges to a limit $a \in \mathbb{R}$.
+    (Note: It is a standard result that this limit $a = \ln(2)$).
+
+  - Step B: Check Absolute Convergence
+    Does the series converge *absolutely*? We check the sum of absolute values:
+    \[ \sum_{n=1}^\infty \left| \frac{(-1)^{n+1}}{n} \right| = \sum_{n=1}^\infty \frac{1}{n} \]
+
+    This is the **Harmonic Series** ($p$-series with $p=1$).
+    It is a well-known result that the Harmonic Series *diverges* to infinity.
+
+    *Conclusion:* The series converges, but *not* absolutely. It is **conditionally convergent**.
+
+- (2) The Second Series (Connection to $e^x$)
+  We are asked to investigate $\sum_{k=0}^{\infty}\frac{a^{k}}{k!}$.
+
+  Recall the Taylor Series expansion for the exponential function $e^x$:
+  \[ e^x = \sum_{k=0}^{\infty} \frac{x^k}{k!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \dots \]
+
+  If we substitute our limit $a$ into this series, we are calculating $e^a$.
+  Since $a = \ln(2)$, theoretically:
+  \[ \sum_{k=0}^{\infty}\frac{a^{k}}{k!} = e^{\ln(2)} = 2 \]
 
 * Problem 4
 ** Task
