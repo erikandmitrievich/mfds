@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-02>
-#+lastmod: <2025-12-02 16:46>
+#+lastmod: <2025-12-02 17:05>
 #+options: num:t
 #+startup: overview
 
@@ -160,6 +160,7 @@ What about writing definitons on top of this document and use the same citation 
 
   f) *Distributivity:* $\alpha \boxtimes (\beta \boxplus \gamma) = (\alpha \boxtimes \beta) \boxplus (\alpha \boxtimes \gamma)$ for any $\alpha, \beta, \gamma \in \mathbb{F}$.
 #+end_quote
+
 *** a. Every element has a unique additive inverse.
 Let $a \in \mathbb{F}$. Assume $\exists b,c : a \boxplus b = 0, \ a \boxplus c = 0$. Hence,
 
@@ -170,6 +171,18 @@ $b = (a \boxplus b) \boxplus c$ (Definition 1.a)
 $b = c$ (since $a \boxplus b = 0$)
 
 *Conclusion:* Since $b = c$, additive inverse is unique.
+
+*** b. Every element distinct from $0$ has a unique multiplicative inverse.
+Let $a \in \mathbb{F} \backslash \{0\}$. Assume $\exists b,c : a \boxtimes b = 1, \ a \boxtimes c = 1$. Hence,
+
+$a \boxtimes b = 1 = a \boxtimes c$ by definition.
+$a \boxtimes b = a \boxtimes c$ (simplifying)
+$a \boxtimes b \boxtimes b = a \boxtimes c \boxtimes b$ (multiply both sides by $b$)
+$(a \boxtimes b) \boxtimes b = (a \boxtimes b) \boxtimes c$ (Definitions 1.a, 1.b)
+$1 \boxtimes b = 1 \boxtimes c$ (simplifying)
+$b = c$ (Definition 1.c)
+
+*Conslusion:* Since $b = c$, miltiplicative inverse is unique.
 
 * Problem 3
 ** Task
