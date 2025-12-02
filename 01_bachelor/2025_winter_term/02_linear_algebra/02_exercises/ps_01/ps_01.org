@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-02>
-#+lastmod: <2025-12-02 15:25>
+#+lastmod: <2025-12-02 16:46>
 #+options: num:t
 #+startup: overview
 
@@ -124,10 +124,52 @@ Does your solution rely on the uniqueness of the additive inverses?
 
 (i) Additive inversion is an involution: if is an additive inverse of $\alpha\in\mathbb{F}$ and $y$ is an additive inverse of , then $\alpha=\gamma$.
 Hint: consider the expression $\alpha\oplus\beta\oplus\gamma$.
+
 ** Notes
-[empty]
+In this problem I will practice using field definitions, splitting all field arithmetic operations into elementary and axiom level.
+
+All below problems would imply a field $\mathbb{F}$ with some additive and multiplicative functions $\boxplus$ and $\boxtimes$ and set of $\{0, 1\}$.
+
+Definitions addopted from `II.1.5 of Vladimir Kazeev's paper`.
+
+$0 \boxplus 0 = 1 \boxplus 1 = 0$ and $1 \boxplus 0 = 0 \boxplus 1 = 1$
+$0 \boxtimes 0 = 1 \boxtimes 0 = 0 \boxtimes 1 = 0$ and $1 \boxtimes 1 = 1$
+
+No, actually this is wrong. I misread the exercise, it actually says "Show the following properties of a field $\mathbb{F}$ ... with additive and multiplicative identity elements $0$ and $1$.". Hence,
+
+- size of set $\mathbb{F}$ is unknown
+- element that behaves as additive identity is labelled as $'0'$
+- element that behaves as multiplicative identity is labelled as $'1'$
+
+What about writing definitons on top of this document and use the same citation as it is done in Kazeev's paper? It will be more structred I believe.
+
 ** Solution
-[empty]
+*** Definitons
+#+begin_quote
+*Definition 1: (field)* Consider a set $\mathbb{F}$ with distinct $0,1 \in \mathbb{F}$ and functions $\boxplus: \mathbb{F} \times \mathbb{F} \to \mathbb{F}$ and $\boxtimes: \mathbb{F} \times \mathbb{F} \to \mathbb{F}$. The set $\mathbb{F}$ is called a /field/ with operations $\boxplus$ and $\boxtimes$ of /addition/ and /multiplication/ and with /additive/ and /multiplicative identity elements/ $0$ and $1$ if the following conditions are satisfied.
+
+  a) *Commutativity:* $\alpha \boxplus \beta = \beta \boxplus \alpha$ and $\alpha \boxtimes \beta = \beta \boxtimes \alpha$ for any $\alpha, \beta \in \mathbb{F}$.
+
+  b) *Associativity:* $(\alpha \boxplus \beta) \boxplus \gamma = \alpha \boxplus (\beta \boxplus \gamma)$ and $(\alpha \boxtimes \beta) \boxtimes \gamma = \alpha \boxtimes (\beta \boxtimes \gamma)$ for any $\alpha, \beta, \gamma \in \mathbb{F}$.
+
+  c) *Neutrality of identity elements:* $0 \boxplus \alpha = \alpha$ and $1 \boxtimes \alpha = \alpha$ for any $\alpha \in \mathbb{F}$.
+
+  d) *Additive inversion:* For every $\alpha \in \mathbb{F}$, there exists $\beta \in \mathbb{F}$ such that $\alpha \boxplus \beta = 0$.
+
+  e) *Multiplicative inversion:* For every $\alpha \in \mathbb{F}$ such that $\alpha \neq 0$, there exists $\beta \in \mathbb{F}$ such that $\alpha \boxtimes \beta = 1$.
+
+  f) *Distributivity:* $\alpha \boxtimes (\beta \boxplus \gamma) = (\alpha \boxtimes \beta) \boxplus (\alpha \boxtimes \gamma)$ for any $\alpha, \beta, \gamma \in \mathbb{F}$.
+#+end_quote
+*** a. Every element has a unique additive inverse.
+Let $a \in \mathbb{F}$. Assume $\exists b,c : a \boxplus b = 0, \ a \boxplus c = 0$. Hence,
+
+$b = b \boxplus 0$
+$b = b \boxplus (a \boxplus c)$ (Definition 1.c)
+$b = (b \boxplus a) \boxplus c$ (Definition 1.b)
+$b = (a \boxplus b) \boxplus c$ (Definition 1.a)
+$b = c$ (since $a \boxplus b = 0$)
+
+*Conclusion:* Since $b = c$, additive inverse is unique.
 
 * Problem 3
 ** Task
