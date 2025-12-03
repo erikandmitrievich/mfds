@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-02>
-#+lastmod: <2025-12-03 14:51>
+#+lastmod: <2025-12-03 16:24>
 #+options: num:t
 #+startup: overview
 
@@ -164,6 +164,10 @@ In 2.e, I should show equivalence, which should mean both of them should lead to
   f) *Distributivity:* $\alpha \boxtimes (\beta \boxplus \gamma) = (\alpha \boxtimes \beta) \boxplus (\alpha \boxtimes \gamma)$ for any $\alpha, \beta, \gamma \in \mathbb{F}$.
 #+end_quote
 
+#+begin_quote
+*Definition 2: (antisymmetric relation)* If $aRb$ with $a \neq b$, then $bRa$ must *not* hold.
+#+end_quote
+
 *** a. Every element has a unique additive inverse.
 Let $a \in \mathbb{F}$. Assume $\exists b,c : a \boxplus b = 0, \ a \boxplus c = 0$. Hence,
 
@@ -237,8 +241,22 @@ $\alpha \boxtimes 1 = \beta \boxtimes 1$ (Defintion 1.e)
 $\alpha = \beta$ (Defintion 1.c)
 
 *Moral of the story:* Implication holds.
-*** g.
+*** g. Every $\alpha\in\mathbb{F}$ fulfills $0 \times \alpha = 0$.
 
+$0 = 0 \boxplus 0$ (Definition 1.c)
+$0 \boxtimes \alpha = (0 \boxplus 0) \boxtimes \alpha$ (well-defined operation)
+$0 \boxtimes \alpha = (0 \boxtimes \alpha) \boxplus (0 \boxtimes \alpha)$ (Definition 1.f)
+Let $\beta = 0 \boxtimes \alpha$. Hence,
+$\beta = \beta \boxplus \beta$ (substitution)
+Let $-\beta$ be additive inverse of $\beta$.
+$\beta \boxplus -\beta = \beta \boxplus \beta \boxplus -\beta$ (well defined operation)
+$0 = \beta \boxplus \beta \boxplus -\beta$ (Definition 1.d)
+$0 = \beta \boxplus (\beta \boxplus -\beta)$ (Definition 1.b)
+$0 = \beta \boxplus 0$ (Definition 1.d)
+$0 = \beta$ (Definition 1.c)
+$0 = \alpha \boxtimes 0$ (substitution)
+
+*Moral of the story:* Multiplication by zero results in zero.
 
 * Problem 3
 ** Task
