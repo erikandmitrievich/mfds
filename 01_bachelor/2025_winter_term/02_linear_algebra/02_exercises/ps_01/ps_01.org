@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-02>
-#+lastmod: <2025-12-03 13:39>
+#+lastmod: <2025-12-03 13:54>
 #+options: num:t
 #+startup: overview
 
@@ -168,6 +168,7 @@ $b = b \boxplus 0$ (Definition 1.c)
 $b = b \boxplus (a \boxplus c)$ (Definition 1.d)
 $b = (b \boxplus a) \boxplus c$ (Definition 1.b)
 $b = (a \boxplus b) \boxplus c$ (Definition 1.a)
+$b = 0 \boxplus c$ (Definition 1.d)
 $b = c$ (Definition 1.c)
 
 *Moral of the story:* Since $b = c$, additive inverse is unique.
@@ -189,7 +190,7 @@ $b = c$ (Definition 1.c)
 Let $\delta$ be additive inverse of $\gamma$ (Definition 1.d)
 $\alpha \boxplus \gamma = \beta \boxplus \gamma$ (by definition)
 $\alpha \boxplus \gamma \boxplus \delta = \beta \boxplus \gamma \boxplus \delta$ (adding $\delta$ to both sides)
-$\alpha \boxplus (\delta \boxplus \gamma) = \beta \boxplus (\delta \boxplus \gamma)$ (Definition 1.b)
+$\alpha \boxplus (\gamma \boxplus \delta) = \beta \boxplus (\gamma \boxplus \delta)$ (Definition 1.b)
 $\alpha \boxplus 0 = \beta \boxplus 0$ (Definition 1.d)
 $\alpha = \beta$ (Definition 1.c)
 
@@ -197,7 +198,14 @@ $\alpha = \beta$ (Definition 1.c)
 
 *** d. The implication $(\gamma \boxplus \alpha = \gamma \boxplus \beta) \Rightarrow (\alpha = \beta)$ holds for any $\alpha, \beta, \gamma\in\mathbb{F}$.
 
+$\gamma \boxplus \alpha = \gamma \boxplus \beta$ (by definition)
+$\alpha \boxplus \gamma = \beta \boxplus \gamma$ (Definition 1.a)
 
+As shown in part c, $\alpha, \beta, \gamma \in \mathbb{F}, \ \alpha \boxplus \gamma = \beta \boxplus \gamma \implies \alpha = \beta$.
+
+Hence, $\alpha = \beta$.
+
+*Moral of the story:* Implication holds.
 
 * Problem 3
 ** Task
