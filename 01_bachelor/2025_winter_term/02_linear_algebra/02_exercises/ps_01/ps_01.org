@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-02>
-#+lastmod: <2025-12-03 14:41>
+#+lastmod: <2025-12-03 14:51>
 #+options: num:t
 #+startup: overview
 
@@ -213,7 +213,7 @@ Hence, $\alpha = \beta$.
 
 1. $(\alpha \boxtimes \gamma = \beta \boxtimes \gamma) \implies \alpha = \beta$
 
-   Let $\delta$ be the multiplicative inverse of $\gamma$ (exists by Definition 1.e since $\gamma \neq 0$).
+   Let $\delta$ be the multiplicative inverse of $\gamma$ (Definition 1.e, since $\gamma \neq 0$).
    $\alpha \boxtimes \gamma = \beta \boxtimes \gamma$ (by definition)
    $\alpha \boxtimes \gamma \boxtimes \delta = \beta \boxtimes \gamma \boxtimes \delta$ (multiply both sides by $\delta$)
    $\alpha \boxtimes (\gamma \boxtimes \delta) = \beta \boxtimes (\gamma \boxtimes \delta)$ (Definition 1.b)
@@ -228,7 +228,16 @@ Hence, $\alpha = \beta$.
 *Moral of the story:* Equivalency holds.
 *** f. Consider $\alpha,\beta,\gamma\in\mathbb{F}$ such that $\gamma\ne0$ and $\gamma \boxtimes \alpha = \gamma \boxtimes \beta$. Then $\alpha=\beta$.
 
+Let $\delta$ be multiplicative inverse of $\gamma$ (Definition 1.e, since $\gamma \neq 0$).
+$\gamma \boxtimes \alpha = \gamma \boxtimes \beta$ (by definition)
+$\alpha \boxtimes \gamma = \beta \boxtimes \gamma$ (Definition 1.a)
+$\alpha \boxtimes \gamma \boxtimes \delta = \beta \boxtimes \gamma \boxtimes \delta$ (well-defined operation)
+$\alpha \boxtimes (\gamma \boxtimes \delta) = \beta \boxtimes (\gamma \boxtimes \delta)$ (Definition 1.b)
+$\alpha \boxtimes 1 = \beta \boxtimes 1$ (Defintion 1.e)
+$\alpha = \beta$ (Defintion 1.c)
 
+*Moral of the story:* Implication holds.
+*** g.
 
 
 * Problem 3
