@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-02>
-#+lastmod: <2025-12-03 16:24>
+#+lastmod: <2025-12-03 16:58>
 #+options: num:t
 #+startup: overview
 
@@ -117,9 +117,9 @@ Show the following properties of a field $\mathbb{F}$ with operations and of add
 (g) Every $\alpha\in\mathbb{F}$ fulfills $0 \times \alpha = 0$.
     Hint: this statement expresses a non-symmetric relation between the two field operations, so the proof clearly has to use one or several of the field axioms that introduce dissimilarities of the operations.
 
-(h) Let-1 denote the additive inverse of $1$ in $\mathbb{F}$. Then every $\alpha\in\mathbb{F}$ and $the^{I}$ additive inverse $a$ of $a$ satisfies $-\alpha=(-1)\otimes \alpha$.
-Does your solution prove the uniqueness of the additive inverses?
-Does your solution rely on the uniqueness of the additive inverses?
+(h) Let $-1$ denote /the/ additive inverse of $1$ in $\mathbb{F}$. Then every $\alpha\in\mathbb{F}$ and /the/ additive inverse $-a$ of $a$ satisfies $-\alpha = (-1) \boxtimes \alpha$.
+h.i Does your solution prove the uniqueness of the additive inverses?
+h.ii Does your solution rely on the uniqueness of the additive inverses?
 
 (i) Additive inversion is an involution: if is an additive inverse of $\alpha\in\mathbb{F}$ and $y$ is an additive inverse of , then $\alpha=\gamma$.
 Hint: consider the expression $\alpha\oplus\beta\oplus\gamma$.
@@ -257,6 +257,26 @@ $0 = \beta$ (Definition 1.c)
 $0 = \alpha \boxtimes 0$ (substitution)
 
 *Moral of the story:* Multiplication by zero results in zero.
+
+*** h. Let $-1$ denote /the/ additive inverse of $1$ in $\mathbb{F}$. Then every $\alpha\in\mathbb{F}$ and /the/ additive inverse $-a$ of $a$ satisfies $-\alpha = (-1) \boxtimes \alpha$.
+h.i Does your solution prove the uniqueness of the additive inverses?
+h.ii Does your solution rely on the uniqueness of the additive inverses?
+
+Assumption: $\alpha \boxplus ((-1) \boxtimes \alpha) = 0$.
+l$\implies (1 \boxtimes \alpha) \boxplus ((-1) \boxtimes \alpha)$ (Definition 1.c)
+$\implies (1 \boxplus (-1)) \boxtimes \alpha$ (Definition 1.f)
+$\implies 0 \boxtimes \alpha$ (Definition 1.d)
+$\implies 0$ (part g)
+
+Since $\alpha \boxplus ((-1) \boxtimes \alpha)$ behaves like additive inverse, and as proved in part a, which states the uniqueness of an additive inverse, above expression is indeed an additive inverse.
+
+*Moral of the story:* $-\alpha = (-1) \boxtimes \alpha$
+
+- h.i
+  No, it was proven in part a of the same exercise.
+
+- h.ii
+  Yes. The final point heavily relies on the uniqueness of the additive inverse.
 
 * Problem 3
 ** Task
