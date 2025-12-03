@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-02>
-#+lastmod: <2025-12-02 17:05>
+#+lastmod: <2025-12-03 13:39>
 #+options: num:t
 #+startup: overview
 
@@ -78,8 +78,6 @@ $0 \boxtimes 0 = 1 \boxtimes 0 = 0 \boxtimes 1 = 0$ and $1 \boxtimes 1 = 1$
 
 4. *Existence Inverse.*
 
-   show: a + b = 0 and a * b = 1
-
    $0 \boxplus 0 = 1 \boxplus 1 = 0$,
    $1 \boxtimes 1 = 1$ by definition. Hence, existence inverse holds.
 
@@ -108,9 +106,9 @@ Show the following properties of a field $\mathbb{F}$ with operations and of add
 
 (b) Every element distinct from $0$ has a unique multiplicative inverse.
 
-(c) For any $\alpha, \beta, \gamma \in \mathbb{F}$, $\alpha = \beta y$ implies $\alpha=\beta$
+(c) For any $\alpha, \beta, \gamma \in \mathbb{F}$, $\alpha \boxplus \gamma = \beta \boxplus \gamma$ implies $\alpha=\beta$
 
-(d) The implication $(\gamma\oplus\alpha=\gamma\oplus\beta)\Rightarrow(\alpha=\beta)$ holds for any $\alpha, \beta, \gamma\in\mathbb{F}.$
+(d) The implication $(\gamma \boxplus \alpha = \gamma \boxplus \beta) \Rightarrow (\alpha = \beta)$ holds for any $\alpha, \beta, \gamma \in \mathbb{F}$.
 
 (e) The statements $a \otimes\gamma=\beta\mathbb{N}$ and $\alpha=\beta$ are equivalent for any $\alpha,\beta\in\mathbb{F}$ and $\gamma\in\mathbb{F}\backslash\{0\}$
 
@@ -143,6 +141,8 @@ No, actually this is wrong. I misread the exercise, it actually says "Show the f
 
 What about writing definitons on top of this document and use the same citation as it is done in Kazeev's paper? It will be more structred I believe.
 
+Moral of the story: "Moral of the story" looks more funnier than the boring "Conclusion:"
+
 ** Solution
 *** Definitons
 #+begin_quote
@@ -164,25 +164,40 @@ What about writing definitons on top of this document and use the same citation 
 *** a. Every element has a unique additive inverse.
 Let $a \in \mathbb{F}$. Assume $\exists b,c : a \boxplus b = 0, \ a \boxplus c = 0$. Hence,
 
-$b = b \boxplus 0$
-$b = b \boxplus (a \boxplus c)$ (Definition 1.c)
+$b = b \boxplus 0$ (Definition 1.c)
+$b = b \boxplus (a \boxplus c)$ (Definition 1.d)
 $b = (b \boxplus a) \boxplus c$ (Definition 1.b)
 $b = (a \boxplus b) \boxplus c$ (Definition 1.a)
-$b = c$ (since $a \boxplus b = 0$)
+$b = c$ (Definition 1.c)
 
-*Conclusion:* Since $b = c$, additive inverse is unique.
+*Moral of the story:* Since $b = c$, additive inverse is unique.
 
 *** b. Every element distinct from $0$ has a unique multiplicative inverse.
 Let $a \in \mathbb{F} \backslash \{0\}$. Assume $\exists b,c : a \boxtimes b = 1, \ a \boxtimes c = 1$. Hence,
 
-$a \boxtimes b = 1 = a \boxtimes c$ by definition.
+$a \boxtimes b = 1 = a \boxtimes c$ (by definition)
 $a \boxtimes b = a \boxtimes c$ (simplifying)
 $a \boxtimes b \boxtimes b = a \boxtimes c \boxtimes b$ (multiply both sides by $b$)
 $(a \boxtimes b) \boxtimes b = (a \boxtimes b) \boxtimes c$ (Definitions 1.a, 1.b)
 $1 \boxtimes b = 1 \boxtimes c$ (simplifying)
 $b = c$ (Definition 1.c)
 
-*Conslusion:* Since $b = c$, miltiplicative inverse is unique.
+*Moral of the story:* Since $b = c$, miltiplicative inverse is unique.
+
+*** c. For any $\alpha, \beta, \gamma \in \mathbb{F}$, $\alpha \boxplus \gamma = \beta \boxplus \gamma$ implies $\alpha=\beta$
+
+Let $\delta$ be additive inverse of $\gamma$ (Definition 1.d)
+$\alpha \boxplus \gamma = \beta \boxplus \gamma$ (by definition)
+$\alpha \boxplus \gamma \boxplus \delta = \beta \boxplus \gamma \boxplus \delta$ (adding $\delta$ to both sides)
+$\alpha \boxplus (\delta \boxplus \gamma) = \beta \boxplus (\delta \boxplus \gamma)$ (Definition 1.b)
+$\alpha \boxplus 0 = \beta \boxplus 0$ (Definition 1.d)
+$\alpha = \beta$ (Definition 1.c)
+
+*Moral of the story:* Implication holds.
+
+*** d. The implication $(\gamma \boxplus \alpha = \gamma \boxplus \beta) \Rightarrow (\alpha = \beta)$ holds for any $\alpha, \beta, \gamma\in\mathbb{F}$.
+
+
 
 * Problem 3
 ** Task
