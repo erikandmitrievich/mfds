@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-02>
-#+lastmod: <2025-12-03 14:38>
+#+lastmod: <2025-12-03 14:41>
 #+options: num:t
 #+startup: overview
 
@@ -112,9 +112,10 @@ Show the following properties of a field $\mathbb{F}$ with operations and of add
 
 (e) The statements $a \boxtimes \gamma = \beta \boxtimes \gamma$ and $\alpha=\beta$ are equivalent for any $\alpha,\beta\in\mathbb{F}$ and $\gamma\in\mathbb{F}\backslash\{0\}$.
 
-(f) Consider $\alpha,\beta,\gamma\in\mathbb{F}$ such that $\gamma\ne0$ and $\gamma\otimes\alpha=\gamma\otimes\beta$. Then $\alpha=\beta$. Every $\alpha\in\mathbb{F}$ fulfills $)\times\alpha=0$.
+(f) Consider $\alpha,\beta,\gamma\in\mathbb{F}$ such that $\gamma\ne0$ and $\gamma \boxtimes \alpha = \gamma \boxtimes \beta$. Then $\alpha=\beta$.
 
-(g) Hint: this statement expresses a non-symmetric relation between the two field operations, so the proof clearly has to use one or several of the field axioms that introduce dissimilarities of the operations.
+(g) Every $\alpha\in\mathbb{F}$ fulfills $0 \times \alpha = 0$.
+    Hint: this statement expresses a non-symmetric relation between the two field operations, so the proof clearly has to use one or several of the field axioms that introduce dissimilarities of the operations.
 
 (h) Let-1 denote the additive inverse of $1$ in $\mathbb{F}$. Then every $\alpha\in\mathbb{F}$ and $the^{I}$ additive inverse $a$ of $a$ satisfies $-\alpha=(-1)\otimes \alpha$.
 Does your solution prove the uniqueness of the additive inverses?
@@ -225,6 +226,10 @@ Hence, $\alpha = \beta$.
    $\alpha \boxtimes \gamma = \beta \boxtimes \gamma$ (operation is well-defined)
 
 *Moral of the story:* Equivalency holds.
+*** f. Consider $\alpha,\beta,\gamma\in\mathbb{F}$ such that $\gamma\ne0$ and $\gamma \boxtimes \alpha = \gamma \boxtimes \beta$. Then $\alpha=\beta$.
+
+
+
 
 * Problem 3
 ** Task
