@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-02>
-#+lastmod: <2025-12-03 16:58>
+#+lastmod: <2025-12-03 17:46>
 #+options: num:t
 #+startup: overview
 
@@ -121,8 +121,8 @@ Show the following properties of a field $\mathbb{F}$ with operations and of add
 h.i Does your solution prove the uniqueness of the additive inverses?
 h.ii Does your solution rely on the uniqueness of the additive inverses?
 
-(i) Additive inversion is an involution: if is an additive inverse of $\alpha\in\mathbb{F}$ and $y$ is an additive inverse of , then $\alpha=\gamma$.
-Hint: consider the expression $\alpha\oplus\beta\oplus\gamma$.
+(i) Additive inversion is an involution: if $\beta$ is an additive inverse of $\alpha\in\mathbb{F}$ and $\gamma$ is an additive inverse of $\beta$, then $\alpha=\gamma$.
+Hint: consider the expression $\alpha \boxplus \beta \boxplus \gamma$.
 
 ** Notes
 In this problem I will practice using field definitions, splitting all field arithmetic operations into elementary and axiom level.
@@ -277,6 +277,65 @@ Since $\alpha \boxplus ((-1) \boxtimes \alpha)$ behaves like additive inverse, a
 
 - h.ii
   Yes. The final point heavily relies on the uniqueness of the additive inverse.
+
+*** i. Additive inversion is an involution: if $\beta$ is an additive inverse of $\alpha\in\mathbb{F}$ and $\gamma$ is an additive inverse of $\beta$, then $\alpha=\gamma$.
+
+- Involution :: is a function or operation that is its own inverse, meaning applying it twice returns the original value.
+
+**** Solution 1 (wrong)
+Let $-1$ be the additive inverse of $1$ in $\mathbb{F}$.
+Assume $\beta = (-1) \boxtimes \alpha$ (part h) and $\gamma = (-1) \boxtimes \beta$.
+Hence, $\gamma = (-1) \boxtimes ((-1) \boxtimes \alpha)$
+$\Leftrightarrow (-1) \boxtimes (-1) \boxtimes \alpha$ (Defintion 1.b)
+$\Leftrightarrow 1 \boxtimes \alpha$ (part h)
+$\Leftrightarrow \alpha$ (part c)
+
+Hence, $\gamma \Leftrightarrow \alpha$.
+
+*Moral of the story:* Inversion function is an involution.
+
+(why wrong? because proof in part h means $-1$ is the inverse of $1$, with no direct link to $(-1) \boxtimes (-1) = 1$)
+
+**** Solution 2 (another wrong)
+
+Assume $\beta = (-1) \boxtimes \alpha$ (part h) and $\gamma = (-1) \boxtimes \beta$.
+
+$\alpha \boxplus \beta \boxplus \gamma$
+$\Leftrightarrow \alpha \boxplus ((-1) \boxtimes \alpha) \boxplus ((-1) \boxtimes ((-1) \boxtimes \alpha))$ (well-defined operation)
+$\Leftrightarrow \alpha \boxplus (-\alpha) \boxplus ((-1) \boxtimes (-\alpha))$ (part h)
+$\Leftrightarrow \alpha \boxplus (-\alpha) \boxplus \alpha$ (part h)
+$\Leftrightarrow \alpha \boxplus ((-\alpha) \boxplus \alpha)$ (Definition 1.b)
+$\Leftrightarrow \alpha \boxplus 0$ (Definition 1.d)
+$\Leftrightarrow \alpha$ (Definition 1.c)
+
+
+$\alpha \boxplus \beta \boxplus \gamma$
+$\Leftrightarrow \alpha \boxplus ((-1) \boxtimes \alpha) \boxplus \gamma$ (well-defined operation)
+$\Leftrightarrow \alpha \boxplus (-\alpha) \boxplus \gamma$ (part h)
+$\Leftrightarrow (\alpha \boxplus (-\alpha)) \boxplus \gamma$ (Definition 1.b)
+$\Leftrightarrow 0 \boxplus \gamma$ (Definition 1.d)
+$\Leftrightarrow \gamma$ (Definition 1.c)
+
+Hence, $\alpha = \alpha \boxplus \beta \boxplus \gamma = \gamma$.
+
+*Moral of the story:* Inversion function is an involution.
+
+**** Solution 3
+
+$(\alpha \boxplus \beta) \boxplus \gamma$
+Since $\beta$ is the additive inverse of $\alpha$ (given):
+$= 0 \boxplus \gamma$ (Definition 1.d)
+$= \gamma$ (Definition 1.c)
+
+$\alpha \boxplus (\beta \boxplus \gamma)$
+Since $\gamma$ is the additive inverse of $\beta$ (given):
+$= \alpha \boxplus 0$ (Definition 1.d)
+$= \alpha$ (Definition 1.c)
+
+Since $(\alpha \boxplus \beta) \boxplus \gamma = \alpha \boxplus (\beta \boxplus \gamma)$ due to Definition 1.b, the results must be equal.
+Therefore, $\gamma = \alpha$.
+
+*Moral of the story:* Inversion function is an involution.
 
 * Problem 3
 ** Task
