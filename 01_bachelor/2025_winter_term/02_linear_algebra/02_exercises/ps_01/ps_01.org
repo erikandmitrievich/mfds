@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-02>
-#+lastmod: <2025-12-03 13:54>
+#+lastmod: <2025-12-03 14:38>
 #+options: num:t
 #+startup: overview
 
@@ -110,7 +110,7 @@ Show the following properties of a field $\mathbb{F}$ with operations and of add
 
 (d) The implication $(\gamma \boxplus \alpha = \gamma \boxplus \beta) \Rightarrow (\alpha = \beta)$ holds for any $\alpha, \beta, \gamma \in \mathbb{F}$.
 
-(e) The statements $a \otimes\gamma=\beta\mathbb{N}$ and $\alpha=\beta$ are equivalent for any $\alpha,\beta\in\mathbb{F}$ and $\gamma\in\mathbb{F}\backslash\{0\}$
+(e) The statements $a \boxtimes \gamma = \beta \boxtimes \gamma$ and $\alpha=\beta$ are equivalent for any $\alpha,\beta\in\mathbb{F}$ and $\gamma\in\mathbb{F}\backslash\{0\}$.
 
 (f) Consider $\alpha,\beta,\gamma\in\mathbb{F}$ such that $\gamma\ne0$ and $\gamma\otimes\alpha=\gamma\otimes\beta$. Then $\alpha=\beta$. Every $\alpha\in\mathbb{F}$ fulfills $)\times\alpha=0$.
 
@@ -142,6 +142,8 @@ No, actually this is wrong. I misread the exercise, it actually says "Show the f
 What about writing definitons on top of this document and use the same citation as it is done in Kazeev's paper? It will be more structred I believe.
 
 Moral of the story: "Moral of the story" looks more funnier than the boring "Conclusion:"
+
+In 2.e, I should show equivalence, which should mean both of them should lead to one another. Lets try.
 
 ** Solution
 *** Definitons
@@ -206,6 +208,23 @@ As shown in part c, $\alpha, \beta, \gamma \in \mathbb{F}, \ \alpha \boxplus \ga
 Hence, $\alpha = \beta$.
 
 *Moral of the story:* Implication holds.
+*** e. The statements $a \boxtimes \gamma = \beta \boxtimes \gamma$ and $\alpha=\beta$ are equivalent for any $\alpha,\beta\in\mathbb{F}$ and $\gamma\in\mathbb{F}\backslash\{0\}$
+
+1. $(\alpha \boxtimes \gamma = \beta \boxtimes \gamma) \implies \alpha = \beta$
+
+   Let $\delta$ be the multiplicative inverse of $\gamma$ (exists by Definition 1.e since $\gamma \neq 0$).
+   $\alpha \boxtimes \gamma = \beta \boxtimes \gamma$ (by definition)
+   $\alpha \boxtimes \gamma \boxtimes \delta = \beta \boxtimes \gamma \boxtimes \delta$ (multiply both sides by $\delta$)
+   $\alpha \boxtimes (\gamma \boxtimes \delta) = \beta \boxtimes (\gamma \boxtimes \delta)$ (Definition 1.b)
+   $\alpha \boxtimes 1 = \beta \boxtimes 1$ (Definition 1.e)
+   $\alpha = \beta$ (Definition 1.c)
+
+2. $\alpha = \beta \implies (\alpha \boxtimes \gamma = \beta \boxtimes \gamma)$
+
+   $\alpha = \beta$ (by definition)
+   $\alpha \boxtimes \gamma = \beta \boxtimes \gamma$ (operation is well-defined)
+
+*Moral of the story:* Equivalency holds.
 
 * Problem 3
 ** Task
