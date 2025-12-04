@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-13>
-#+lastmod: <2025-11-27 13:22>
+#+lastmod: <2025-12-04 20:28>
 #+options: num:t
 #+startup: overview
 
@@ -19,7 +19,6 @@ This repository is a centralized workspace containing notes, code solutions, exe
 What I believe would interest you the most are:
 - *Lecture Notes*: Clean, LaTeX-rendered PDFs of all STEOP lectures.
 - *Exam Prep*: Relevant mock exam papers and study guides.
-- *Solutions*: Verified answers for problem sets.
 - *Resources*: Centralized access to required textbooks and references.
 
 *But* if you are familiar with *Git*, *Emacs*, and *Org-Mode*, you can clone this repo to interact with the code, run the math and code blocks locally, and utilize the full reproducibility of the notes.
