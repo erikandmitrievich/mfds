@@ -2,10 +2,11 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-02>
-#+lastmod: <2025-12-03 17:46>
+#+lastmod: <2025-12-04 15:49>
 #+options: num:t
 #+startup: overview
 
+#+LATEX: \newpage
 * Problem 1
 ** Task
 Verifying the definition of a field
@@ -376,7 +377,185 @@ Hint: rewrite (3a)-(3d) for arbitrary $k,j\in\{1,...,m\}$ in an equivalent expli
 Hint: to verify that two matrices are equal, you can evaluate their difference and use the function norm from the package LinearAlgebra.
 
 (e) Repeat part (d) for $l=8$
+
 ** Notes
-[empty]
 ** Solution
-[empty]
+** Solution
+*** Definitions
+#+begin_quote
+*Definition 3: (DFT Matrix)* For dimension $n$, $F \in \mathbb{C}^{n \times n}$ is defined as:
+$$F_{pq}=\exp\left[i\frac{2\pi}{n}(p-1)(q-1)\right]$$
+for indices $p,q \in \{1, \dots, n\}$.
+#+end_quote
+
+#+begin_quote
+*Definition 4: (Submatrices)*
+For $n=2m$, we split $F$ into four $m \times m$ submatrices:
+- $F_{11}$: Rows $1, 3, \dots, 2m-1$ (odd); Columns $1, \dots, m$ (first half).
+- $F_{21}$: Rows $2, 4, \dots, 2m$ (even); Columns $1, \dots, m$ (first half).
+- $F_{12}$: Rows $1, 3, \dots, 2m-1$ (odd); Columns $m+1, \dots, 2m$ (second half).
+- $F_{22}$: Rows $2, 4, \dots, 2m$ (even); Columns $m+1, \dots, 2m$ (second half).
+#+end_quote
+
+#+begin_quote
+*Definition 5: (Twiddle factors)*
+For $k \in \{1, \dots, m\}$:
+$$e_{k}=\exp\frac{i\pi(k-1)}{m}$$
+#+end_quote
+
+*** a. Verify equalities (3a)-(3d)
+We verify the equalities by expanding the definition of $F$ for the specific row/column indices mapped to $k, j \in \{1, \dots, m\}$.
+
+Note: $\hat{F}$ is the DFT matrix of size $m$. Hence $\hat{F}_{kj} = \exp\left[i\frac{2\pi}{m}(k-1)(j-1)\right]$.
+
+ - 1. Verify $F_{11} = \hat{F}$
+   The entry $(F_{11})_{kj}$ corresponds to $F$ at row $p = 2k-1$ and column $q = j$.
+   Substituting into Definition 3:
+   $$(F_{11})_{kj} = \exp\left[ i \frac{2\pi}{2m} ((2k-1)-1)(j-1) \right]$$
+   $$= \exp\left[ i \frac{\pi}{m} (2k-2)(j-1) \right]$$
+   $$= \exp\left[ i \frac{2\pi}{m} (k-1)(j-1) \right]$$
+   This matches the definition of $\hat{F}_{kj}$.
+
+   *Moral of the story:* $(F_{11})_{kj}=\hat{F_{kj}}$ holds.
+
+ - 2. Verify $F_{21} = E \odot \hat{F}$ (term-wise)
+   The entry $(F_{21})_{kj}$ corresponds to row $p = 2k$ and column $q = j$.
+   $$(F_{21})_{kj} = \exp\left[ i \frac{2\pi}{2m} (2k-1)(j-1) \right]$$
+   $$= \exp\left[ i \frac{\pi}{m} (2k-1)(j-1) \right]$$
+   We need to match this to $e_j \cdot \hat{F}_{kj}$. Let's expand the RHS:
+   $$e_j \cdot \hat{F}_{kj} = \exp\left[\frac{i\pi(j-1)}{m}\right] \cdot \exp\left[ i\frac{2\pi}{m}(k-1)(j-1) \right]$$
+   Using exponent rules ($x^a \cdot x^b = x^{a+b}$):
+   $$= \exp\left[ \frac{i\pi}{m}(j-1) + \frac{i\pi}{m}2(k-1)(j-1) \right]$$
+   Factor out $\frac{i\pi}{m}(j-1)$:
+   $$= \exp\left[ \frac{i\pi}{m}(j-1) [1 + 2k - 2] \right]$$
+   $$= \exp\left[ \frac{i\pi}{m}(j-1)(2k-1) \right]$$
+   This matches $(F_{21})_{kj}$.
+
+   *Moral of the story:* $(F_{21})_{kj}=e_{j}\cdot\hat{F_{kj}}$ holds.
+
+- 3. Verify $F_{12} = F_{11}$
+  The entry $(F_{12})_{kj}$ corresponds to row $p=2k-1$ and column $q=m+j$.
+  $$(F_{12})_{kj} = \exp\left[ i \frac{2\pi}{2m} (2k-2)(m+j-1) \right]$$
+  $$= \exp\left[ i \frac{2\pi}{m} (k-1)(m + j - 1) \right]$$
+  Split the exponent sum:
+  $$= \exp\left[ i \frac{2\pi}{m} (k-1)m + i \frac{2\pi}{m} (k-1)(j-1) \right]$$
+  $$= \underbrace{\exp[ i 2\pi (k-1) ]}_{=1 \text{ (integer multiple of } 2\pi)} \cdot \exp\left[ i \frac{2\pi}{m} (k-1)(j-1) \right]$$
+  $$= \hat{F}_{kj}$$
+  Since $(F_{11})_{kj} = \hat{F}_{kj}$ (from step 1), the equality holds.
+
+  *Moral of the story:* $(F_{12})_{kj}=(F_{11})_{kj}$ holds.
+
+- 4. Verify $F_{22} = -F_{21}$
+  The entry $(F_{22})_{kj}$ corresponds to row $p=2k$ and column $q=m+j$.
+  $$(F_{22})_{kj} = \exp\left[ i \frac{2\pi}{2m} (2k-1)(m+j-1) \right]$$
+  $$= \exp\left[ i \frac{\pi}{m} (2k-1)(m + j - 1) \right]$$
+  Expand terms inside the exponent:
+  $$= \exp\left[ i\pi(2k-1) + i\frac{\pi}{m}(2k-1)(j-1) \right]$$
+  Separate the first term:
+  $$= \exp[ i\pi(2k-1) ] \cdot \underbrace{\exp\left[ i\frac{\pi}{m}(2k-1)(j-1) \right]}_{(F_{21})_{kj}}$$
+  Since $2k-1$ is always an odd integer, $e^{i\pi(odd)} = -1$.
+  $$= -1 \cdot (F_{21})_{kj}$$
+
+  *Moral of the story:* $(F_{22})_{kj}=-(F_{21})_{kj}$ holds.
+
+*** b. Matrix Equalities
+We need to express the relationships found in part (a) using matrix multiplication.
+
+Let $D \in \mathbb{C}^{m \times m}$ be a diagonal matrix such that $D = \text{diag}(e_1, e_2, \dots, e_m)$.
+From (3b), we saw that column $j$ of $\hat{F}$ is scaled by $e_j$. In matrix algebra, scaling columns corresponds to post-multiplication by a diagonal matrix.
+
+Thus, the four submatrices of $F$ can be written as:
+
+1.  $F_{11} = \hat{F}$
+2.  $F_{21} = \hat{F} D$
+3.  $F_{12} = \hat{F}$
+4.  $F_{22} = - \hat{F} D$
+
+*Moral of the story:* The recursive structure is revealed.
+$$
+F = \begin{pmatrix} \hat{F} & \hat{F} \\ \hat{F}D & -\hat{F}D \end{pmatrix} = \begin{pmatrix} I_m & I_m \\ D & -D \end{pmatrix} \begin{pmatrix} \hat{F} & 0 \\ 0 & \hat{F} \end{pmatrix} P^T
+$$
+(Though the permutation matrix $P$ is implicit in how we sorted rows/cols).
+
+*** c. Julia Implementation
+Here is the implementation of the ~dft_matrix~ function.
+
+#+begin_src julia
+using LinearAlgebra
+
+"""
+    dft_matrix(l::Int)
+
+Creates the DFT matrix F of order n = 2^l.
+"""
+function dft_matrix(l::Int)
+    n = 2^l
+    # Initialize matrix with Complex type
+    F = zeros(ComplexF64, n, n)
+
+    # Definition 1: F_pq = exp(i * 2pi/n * (p-1)(q-1))
+    for p in 1:n
+        for q in 1:n
+            F[p, q] = exp(im * 2 * pi / n * (p - 1) * (q - 1))
+        end
+    end
+
+    return F
+end
+#+end_src
+
+*** d. & e. Verification for l=3 and l=8
+We perform the verification by constructing $F$, extracting the submatrices based on Definition 4 (odd/even rows, left/right columns), and checking the norms of the differences.
+
+#+begin_src julia
+function verify_dft_properties(l::Int)
+    n = 2^l
+    m = 2^(l-1)
+
+    # Generate matrices
+    F = dft_matrix(l)
+    F_hat = dft_matrix(l-1)
+
+    # Extract submatrices (Definition 4)
+    # F11: Odd rows, First m cols
+    F11 = F[1:2:end, 1:m]
+    # F21: Even rows, First m cols
+    F21 = F[2:2:end, 1:m]
+    # F12: Odd rows, Last m cols
+    F12 = F[1:2:end, m+1:end]
+    # F22: Even rows, Last m cols
+    F22 = F[2:2:end, m+1:end]
+
+    # Create auxiliary diagonal matrix D
+    # e_k = exp(i * pi * (k-1) / m)
+    e = [exp(im * pi * (k - 1) / m) for k in 1:m]
+    D = Diagonal(e)
+
+    # Check 3a: F11 = F_hat
+    check_a = norm(F11 - F_hat)
+
+    # Check 3b: F21 = F_hat * D
+    check_b = norm(F21 - F_hat * D)
+
+    # Check 3c: F12 = F11
+    check_c = norm(F12 - F11)
+
+    # Check 3d: F22 = -F21
+    check_d = norm(F22 - (-F21))
+
+    println("Verification for l=$l (n=$n, m=$m):")
+    println("  (3a) ||F11 - F_hat||      = $check_a")
+    println("  (3b) ||F21 - F_hat * D||  = $check_b")
+    println("  (3c) ||F12 - F11||        = $check_c")
+    println("  (3d) ||F22 - (-F21)||     = $check_d")
+
+    # Return true if all errors are negligible (approx 0)
+    return all([check_a, check_b, check_c, check_d] .< 1e-10)
+end
+
+# Run verifications
+verify_dft_properties(3)
+verify_dft_properties(8)
+#+end_src
+
+#+RESULTS:
