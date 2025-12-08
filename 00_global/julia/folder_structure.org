@@ -1,0 +1,25 @@
+#+title: Folder Structure
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-12-07>
+#+lastmod: <2025-12-07 21:23>
+#+options: num:t
+#+startup: overview
+
+* On what this is
+This is a sub-directory that is fully focused on Julia for the MFDS bachelor.
+
+* Structrure
+#+begin_src
+Repo_Root/
+└── Julia_Quickstart/
+    ├── README.org                <-- The Landing Page (Installation + "Why Julia?")
+    ├── 00_Setup_Script.jl        <-- The "One-Click" Installer (mainly packages)
+    ├── 01_Crash_Course.org       <-- Syntax cheat sheet (Arrays, Loops, Functions)
+    ├── 02_Package_Manager.org    <-- How to use Pkg (The ']' key)
+    └── Cookbooks/                <-- The "Banger" Section (Copy-Paste Code)
+        ├── Plotting_Guide.jl     <-- Plots.jl examples
+        ├── Combinatorics.jl      <-- Permutations/Combinations
+        ├── LinearAlgebra.jl      <-- Matrix operations
+        └── DataScience.jl        <-- DataFrames + CSV
+#+end_src
