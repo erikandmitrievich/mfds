@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-27>
-#+lastmod: <2025-12-07 20:57>
+#+lastmod: <2025-12-08 15:12>
 #+options: num:t
 #+startup: overview
 
@@ -19,7 +19,7 @@
 
 - List of study places
 
-- WHat would be an absolute banger is to add a directory with all julia tutorials. This will include:
+- What would be an absolute banger is to add a directory with all julia tutorials. This will include:
   - Installation of Julia
   - Instructions on how to download packages
   - List of the most important packages (e.g. Plots, Combinatorics and etc)
