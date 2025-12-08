@@ -2,103 +2,57 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-08>
-#+lastmod: <2025-12-08 17:53>
+#+lastmod: <2025-12-08 17:55>
 #+options: num:t
 #+startup: overview
 
 
 * Latex symbols
 
-|----------------------+---------------+-------------+------------------------------|
-| Category             | Symbol        | Command     | Description                  |
-|----------------------+---------------+-------------+------------------------------|
-| **Greek Letters**    | $\alpha$      | \alpha      | Alpha                        |
-|                      | $\beta$       | \beta       | Beta                         |
-|                      | $\gamma$      | \gamma      | Gamma                        |
-|                      | $\theta$      | \theta      | Theta                        |
-|                      | $\pi$         | \pi         | Pi                           |
-|                      | $\Delta$      | \Delta      | Delta (Capital)              |
-|                      | $\Sigma$      | \Sigma      | Sigma (Capital - Summation)  |
-|                      | $\Omega$      | \Omega      | Omega (Capital)              |
-|----------------------+---------------+-------------+------------------------------|
-| **Binary Operators** | $+$           | +           | Plus                         |
-|                      | $-$           | -           | Minus                        |
-|                      | $\times$      | \times      | Multiplication (Cross)       |
-|                      | $\cdot$       | \cdot       | Multiplication (Dot)         |
-|                      | $\div$        | \div        | Division                     |
-|                      | $\pm$         | \pm         | Plus-minus                   |
-|                      | $\cap$        | \cap        | Intersection                 |
-|                      | $\cup$        | \cup        | Union                        |
-|----------------------+---------------+-------------+------------------------------|
-| **Relations**        | $=$           | =           | Equals                       |
-|                      | $\neq$        | \neq        | Not equal                    |
-|                      | $\approx$     | \approx     | Approximately                |
-|                      | $<$           | <           | Less than                    |
-|                      | $>$           | >           | Greater than                 |
-|                      | $\leq$        | \leq        | Less than or equal to        |
-|                      | $\geq$        | \geq        | Greater than or equal to     |
-|                      | $\in$         | \in         | Element of                   |
-|                      | $\subset$     | \subset     | Proper subset                |
-|----------------------+---------------+-------------+------------------------------|
-| **Logic & Arrows**   | $\forall$     | \forall     | For all                      |
-|                      | $\exists$     | \exists     | There exists                 |
-|                      | $\to$         | \to         | Right arrow (implication)    |
-|                      | $\Rightarrow$ | \Rightarrow | Right double arrow (implies) |
-|                      | $\iff$        | \iff        | If and only if               |
-|                      | $\neg$        | \neg        | Negation                     |
-|----------------------+---------------+-------------+------------------------------|
-| **Calculus & Misc**  | $\infty$      | \infty      | Infinity                     |
-|                      | $\partial$    | \partial    | Partial derivative           |
-|                      | $\nabla$      | \nabla      | Nabla (Gradient)             |
-|                      | $\int$        | \int        | Integral                     |
-|                      | $\sum$        | \sum        | Summation (operator)         |
-|                      | $\prod$       | \prod       | Product (operator)           |
-|                      | $\sqrt{x}$    | \sqrt{x}    | Square root                  |
-|                      | $\emptyset$   | \emptyset   | Empty set                    |
-|----------------------+---------------+-------------+------------------------------|
-
-| Category             | Symbol        | Command       | Description                  |
-|----------------------+---------------+---------------+------------------------------|
-| **Greek Letters**    | $\alpha$      | ~\alpha~      | Alpha                        |
-|                      | $\beta$       | ~\beta~       | Beta                         |
-|                      | $\gamma$      | ~\gamma~      | Gamma                        |
-|                      | $\theta$      | ~\theta~      | Theta                        |
-|                      | $\pi$         | ~\pi~         | Pi                           |
-|                      | $\Delta$      | ~\Delta~      | Delta (Capital)              |
-|                      | $\Sigma$      | ~\Sigma~      | Sigma (Capital - Summation)  |
-|                      | $\Omega$      | ~\Omega~      | Omega (Capital)              |
-|----------------------+---------------+---------------+------------------------------|
-| **Binary Operators** | $+$           | ~+~           | Plus                         |
-|                      | $-$           | ~-~           | Minus                        |
-|                      | $\times$      | ~\times~      | Multiplication (Cross)       |
-|                      | $\cdot$       | ~\cdot~       | Multiplication (Dot)         |
-|                      | $\div$        | ~\div~        | Division                     |
-|                      | $\pm$         | ~\pm~         | Plus-minus                   |
-|                      | $\cap$        | ~\cap~        | Intersection                 |
-|                      | $\cup$        | ~\cup~        | Union                        |
-|----------------------+---------------+---------------+------------------------------|
-| **Relations**        | $=$           | ~=~           | Equals                       |
-|                      | $\neq$        | ~\neq~        | Not equal                    |
-|                      | $\approx$     | ~\approx~     | Approximately                |
-|                      | $<$           | ~<~           | Less than                    |
-|                      | $>$           | ~>~           | Greater than                 |
-|                      | $\leq$        | ~\leq~        | Less than or equal to        |
-|                      | $\geq$        | ~\geq~        | Greater than or equal to     |
-|                      | $\in$         | ~\in~         | Element of                   |
-|                      | $\subset$     | ~\subset~     | Proper subset                |
-|----------------------+---------------+---------------+------------------------------|
-| **Logic & Arrows**   | $\forall$     | ~\forall~     | For all                      |
-|                      | $\exists$     | ~\exists~     | There exists                 |
-|                      | $\to$         | ~\to~         | Right arrow (implication)    |
-|                      | $\Rightarrow$ | ~\Rightarrow~ | Right double arrow (implies) |
-|                      | $\iff$        | ~\iff~        | If and only if               |
-|                      | $\neg$        | ~\neg~        | Negation                     |
-|----------------------+---------------+---------------+------------------------------|
-| **Calculus & Misc**  | $\infty$      | ~\infty~      | Infinity                     |
-|                      | $\partial$    | ~\partial~    | Partial derivative           |
-|                      | $\nabla$      | ~\nabla~      | Nabla (Gradient)             |
-|                      | $\int$        | ~\int~        | Integral                     |
-|                      | $\sum$        | ~\sum~        | Summation (operator)         |
-|                      | $\prod$       | ~\prod~       | Product (operator)           |
-|                      | $\sqrt{x}$    | ~\sqrt{x}~    | Square root                  |
-|                      | $\emptyset$   | ~\emptyset~   | Empty set                    |
+|--------------------+---------------+---------------+------------------------------|
+| *Category*         | *Symbol*      | *Command*     | *Description*                |
+|--------------------+---------------+---------------+------------------------------|
+| *Greek Letters*    | $\alpha$      | ~\alpha~      | Alpha                        |
+|                    | $\beta$       | ~\beta~       | Beta                         |
+|                    | $\gamma$      | ~\gamma~      | Gamma                        |
+|                    | $\theta$      | ~\theta~      | Theta                        |
+|                    | $\pi$         | ~\pi~         | Pi                           |
+|                    | $\Delta$      | ~\Delta~      | Delta (Capital)              |
+|                    | $\Sigma$      | ~\Sigma~      | Sigma (Capital - Summation)  |
+|                    | $\Omega$      | ~\Omega~      | Omega (Capital)              |
+|--------------------+---------------+---------------+------------------------------|
+| *Binary Operators* | $+$           | ~+~           | Plus                         |
+|                    | $-$           | ~-~           | Minus                        |
+|                    | $\times$      | ~\times~      | Multiplication (Cross)       |
+|                    | $\cdot$       | ~\cdot~       | Multiplication (Dot)         |
+|                    | $\div$        | ~\div~        | Division                     |
+|                    | $\pm$         | ~\pm~         | Plus-minus                   |
+|                    | $\cap$        | ~\cap~        | Intersection                 |
+|                    | $\cup$        | ~\cup~        | Union                        |
+|--------------------+---------------+---------------+------------------------------|
+| *Relations*        | $=$           | ~=~           | Equals                       |
+|                    | $\neq$        | ~\neq~        | Not equal                    |
+|                    | $\approx$     | ~\approx~     | Approximately                |
+|                    | $<$           | ~<~           | Less than                    |
+|                    | $>$           | ~>~           | Greater than                 |
+|                    | $\leq$        | ~\leq~        | Less than or equal to        |
+|                    | $\geq$        | ~\geq~        | Greater than or equal to     |
+|                    | $\in$         | ~\in~         | Element of                   |
+|                    | $\subset$     | ~\subset~     | Proper subset                |
+|--------------------+---------------+---------------+------------------------------|
+| *Logic & Arrows*   | $\forall$     | ~\forall~     | For all                      |
+|                    | $\exists$     | ~\exists~     | There exists                 |
+|                    | $\to$         | ~\to~         | Right arrow (implication)    |
+|                    | $\Rightarrow$ | ~\Rightarrow~ | Right double arrow (implies) |
+|                    | $\iff$        | ~\iff~        | If and only if               |
+|                    | $\neg$        | ~\neg~        | Negation                     |
+|--------------------+---------------+---------------+------------------------------|
+| *Calculus & Misc*  | $\infty$      | ~\infty~      | Infinity                     |
+|                    | $\partial$    | ~\partial~    | Partial derivative           |
+|                    | $\nabla$      | ~\nabla~      | Nabla (Gradient)             |
+|                    | $\int$        | ~\int~        | Integral                     |
+|                    | $\sum$        | ~\sum~        | Summation (operator)         |
+|                    | $\prod$       | ~\prod~       | Product (operator)           |
+|                    | $\sqrt{x}$    | ~\sqrt{x}~    | Square root                  |
+|                    | $\emptyset$   | ~\emptyset~   | Empty set                    |
+|--------------------+---------------+---------------+------------------------------|
