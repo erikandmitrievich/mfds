@@ -1,0 +1,93 @@
+#+title: 02 02 Column Vectors
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-12-09>
+#+lastmod: <2025-12-09 18:01>
+#+options: num:t
+#+startup: overview
+
+#+latex: \newpage
+* § II.2. Column vectors
+** § II.2.i. Definitions and linear properties of column vectors
+
+*** Column Vector
+**** The Engineering Logic
+     - **Type:** Ordered n-tuple (Array of length $n$).
+     - **Data Structure:** Stores $n$ elements (components/entries) from a field $\mathbb{F}$.
+     - **Syntax Variations:**
+       - Tuple notation: $x = (x_1, ..., x_n)$.
+       - Vertical stack (Matrix notation): $x = [x_j]_{j=1}^n$.
+     - **Syntax Alert:** The text uses "$\equiv$" to denote notational equivalence (e.g., tuple vs. vertical stack).
+     - **Ambiguity Warning:** Watch the index scope. $x_1$ usually means the first component, but could denote the first vector in a sequence x_1, x_2, ...
+
+**** The Intuitive Explanation
+     A column vector is simply a list of numbers where the order matters. Think of it as a specific data record—like a single row in a spreadsheet (transposed to stand vertically), or the coordinates of a point in space.
+
+**** Formal Definition
+     Let $n \in \mathbb{N}$. A column vector over $\mathbb{F}$ with $n$ components is an element:
+     $$x = (x_1, ..., x_n) \equiv [x_j]_{j=1}^n$$
+     where $x_1, ..., x_n \in \mathbb{F}$.
+
+*** The Vector Space $\mathbb{F}^n$
+**** The Engineering Logic
+     - **Type:** Set (Collection of all possible vectors of size $n$).
+     - **Constraint:** All vectors in this set must have exactly $n$ components from field $\mathbb{F}$.
+     - **Analogy:** The class definition `Vector<F, n>`.
+
+**** The Intuitive Explanation
+     This represents the "universe" of all possible vectors of a certain size. If $n=2$ and $\mathbb{F}=\mathbb{R}$, this is the entire 2D plane.
+
+**** Formal Definition
+     $$\mathbb{F}^n = \{ (x_j)_{j=1}^n : x_1, ..., x_n \in \mathbb{F} \} = \times_{j=1}^n \mathbb{F}$$
+
+*** Linear Operations: Addition and Scalar Multiplication
+**** The Engineering Logic
+     - **Operation 1: Addition (+)**
+       - **Input:** Two vectors $x, y \in \mathbb{F}^n$.
+       - **Process:** Element-wise addition (parallel operation).
+       - **Condition:** Vectors must be of the same size $n$.
+     - **Operation 2: Scalar Multiplication ($\cdot$)**
+       - **Input:** One vector $x \in \mathbb{F}^n$, one scalar $\alpha \in \mathbb{F}$.
+       - **Process:** Broadcast the scalar $\alpha$ to every component of $x$.
+
+**** The Intuitive Explanation
+     - **Addition:** Combining two movements. If you walk path $x$ and then path $y$, your total displacement is $x+y$.
+     - **Scalar Multiplication:** Scaling or resizing. Multipling by 2 stretches the vector to double its length. Multiplying by -1 reverses its direction.
+
+**** Formal Definition
+     For $x = [x_j]_{j=1}^n$ and $y = [y_j]_{j=1}^n$ in $\mathbb{F}^n$, and $\alpha \in \mathbb{F}$:
+     $$x + y = [x_j \oplus y_j]_{j=1}^n$$
+     $$\alpha \cdot x = [\alpha \otimes x_j]_{j=1}^n$$
+     (Where $\oplus$ and $\otimes$ are addition and multiplication in $\mathbb{F}$).
+
+*** Zero Column Vector
+**** The Engineering Logic
+     - **Type:** Constant / Identity Element.
+     - **Value:** An array where every entry is the scalar $0$.
+     - **Notation:** Often written simply as $0$.
+     - **Ambiguity Alert:** The symbol $0$ is overloaded. It can mean the number 0 or the vector $[0, ..., 0]$. Context determines the type.
+
+**** The Intuitive Explanation
+     The "origin" or "starting point". It represents no movement or an empty quantity.
+
+**** Formal Definition
+     $$[0]_{j=1}^n = \begin{bmatrix} 0 \\ \vdots \\ 0 \end{bmatrix} \in \mathbb{F}^n$$
+
+*** Linear Structure Properties (Proposition II.2.8)
+**** The Engineering Logic
+     - **System Constraints:** The set $\mathbb{F}^n$ guarantees specific behaviors (an "Interface").
+     - **Properties:**
+       - **Commutativity:** $x + y = y + x$ (Order doesn't matter).
+       - **Associativity:** $(x + y) + z = x + (y + z)$ (Grouping doesn't matter).
+       - **Identity (0):** $0 + x = x$ (Zero vector is a "no-op").
+       - **Inverse:** $x + (-x) = 0$ (Every action can be undone).
+       - **Distributivity:** Operations play nice together (e.g., $\alpha(x+y) = \alpha x + \alpha y$).
+
+**** The Intuitive Explanation
+     These are the "Rules of the Road" for vector algebra. They ensure that vectors behave logically, just like regular numbers. You don't have to worry about the order in which you add things up; the result is always the same.
+
+**** Formal Definition
+     For any $x, y, z \in \mathbb{F}^n$ and $\alpha, \beta \in \mathbb{F}$:
+     - Commutativity: $x + y = y + x$
+     - Associativity: $(x + y) + z = x + (y + z)$ and $(\alpha \beta) \cdot x = \alpha \cdot (\beta \cdot x)$
+     - Distributivity: $(\alpha + \beta) \cdot x = (\alpha \cdot x) + (\beta \cdot x)$ and $\alpha \cdot (x + y) = (\alpha \cdot x) + (\alpha \cdot y)$
