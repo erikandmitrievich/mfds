@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-30>
-#+lastmod: <2025-12-09 11:28>
+#+lastmod: <2025-12-09 11:32>
 #+options: num:t
 #+startup: overview
 
@@ -59,6 +59,11 @@ If the source PDF contains a typo, **preserve the typo**. Do not correct "calucl
 Maintain the numbering system used in the original document for the Problem Header.
 - Source: "Q1", Output: ~* Problem Q1~
 - Source: "3.5", Output: ~* Problem 3.5~
+
+** 5. Citations
+Do not include any citations in the text.
+- **Bad output**: [cite_start]Consider the following matrices over the field $\mathbb{R}$ of real numbers[cite: 13]:
+- **Good output**: Consider the following matrices over the field $\mathbb{R}$ of real numbers:
 
 * EXAMPLE OUTPUT
 Below is an example of how a specific input should be transformed.
