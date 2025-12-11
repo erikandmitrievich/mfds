@@ -1,0 +1,135 @@
+#+title: 03 Continuity
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-12-11>
+#+lastmod: <2025-12-11 19:33>
+#+options: num:t
+#+startup: overview
+#+latex: \newpage
+
+* The Concept of Continuity (Sequential Definition)
+** The Logic & Spec View (QA approach)
+   - **Goal:** To ensure the system preserves "stability" or "convergence." If inputs settle down, outputs must also settle down to the predicted value.
+   - **The Test (Input):** A sequence of inputs $(x_n)$ converging to a specific target $\hat{x}$.
+   - **The Expectation:** The corresponding sequence of outputs $f(x_n)$ must converge to $f(\hat{x})$.
+   - **Failure Condition:** If the input approaches $\hat{x}$ but the output jumps to a value different from $f(\hat{x})$ (or oscillates), the function is "discontinuous" or "broken" at that point.
+   - **Algorithmic Implication:** You can compute the limit of the function by just plugging in the limit of the sequence. $f(\lim x_n) = \lim f(x_n)$. The operation "commutes" with the limit.
+
+** The Intuitive Explanation
+   - **No Teleporting:** Imagine walking along the number line towards a specific point. On the graph, your height (function value) should approach the height of the destination. You shouldn't suddenly "warp" to a different height the moment you arrive.
+   - **Predictability:** If you know where you are going, you should know where you will end up. Continuity guarantees no surprises at the destination.
+
+** Formal Definition
+   Let $(\Omega, d_{\Omega})$ and $(\tilde{\Omega}, d_{\tilde{\Omega}})$ be metric spaces. A function $f: \Omega \to \tilde{\Omega}$ is **continuous at** $\hat{x} \in \Omega$ if for every sequence $(x_n)_{n \in \mathbb{N}} \subseteq \Omega$ with $x_n \to \hat{x}$:
+   $$ \lim_{n \to \infty} f(x_n) = f(\hat{x}) $$
+   We write $\lim_{x \to \hat{x}} f(x) = f(\hat{x})$.
+
+* Examples of Continuity and Discontinuity
+** Polynomials vs. Piecewise Functions
+*** The Logic & Spec View
+    - **Polynomials ($2x^2+3$):** Built from basic arithmetic operations (multiplication, addition) which are themselves continuous. They pass the stability test everywhere.
+    - **Piecewise (Step Functions):** These contain "conditional branching" (if $x \ge 0$ do A, else do B).
+    - **The Bug:** At the branching point ($x=0$), approaching from the left (negative) executes logic B, approaching from the right (positive) executes logic A. If $A \neq B$, the system crashes (discontinuity).
+
+*** The Intuitive Explanation
+    - **Polynomial:** A roller coaster track. Smooth, no breaks.
+    - **Piecewise Discontinuity:** A drawbridge that is stuck open. The road exists on both sides, but they don't meet in the middle. Approaching $0$ from $-0.0001$ puts you at height 2. Arriving at $0$ puts you at height 1. That's a vertical jump (or gap).
+
+*** Formal Verification
+    - For $f(x) = 2x^2+3$: If $x_n \to 2$, then $f(x_n) \to 2(2^2)+3 = 11 = f(2)$. (Continuous).
+    - For $f(x) = \begin{cases} 2x+1 & x \ge 0 \\ 4x^2+2 & x < 0 \end{cases}$:
+      Let $x_n = -1/n \to 0$. Then $f(x_n) = 4(-1/n)^2 + 2 \to 2$.
+      But $f(0) = 2(0)+1 = 1$.
+      Since $2 \neq 1$, $f$ is discontinuous at $0$.
+
+* Composition of Functions
+** The Logic & Spec View
+   - **Concept:** Chaining systems. System A pipes data into System B.
+   - **Logic:** If System A is stable (continuous) and System B is stable (continuous), the combined pipeline $B(A(x))$ is stable.
+   - **Verification:**
+     1. Input $x_n \to x$.
+     2. Since $f$ is continuous, intermediate output $y_n = f(x_n) \to f(x) = y$.
+     3. Since $g$ is continuous, final output $g(y_n) \to g(y)$.
+     4. Result: $g(f(x_n)) \to g(f(x))$.
+
+** The Intuitive Explanation
+   - If a map is continuous (no tearing), and you draw a path on it continuously, the projection of that path onto a globe is also continuous. "Smooth plus smooth equals smooth."
+
+** Formal Lemma
+   If $f: \Omega \to \tilde{\Omega}$ and $g: \tilde{\Omega} \to \Omega'$ are continuous, then $g \circ f: \Omega \to \Omega'$ is continuous.
+
+* Intermediate Value Theorem (IVT)
+** The Logic & Spec View
+   - **Goal:** Existence check. Can we guarantee a solution (a zero) exists?
+   - **Pre-conditions (Inputs):**
+     1. A continuous process $f$ on a closed interval $[a, b]$.
+     2. A sign change: Start negative ($f(a) < 0$), end positive ($f(b) > 0$).
+   - **Guarantee (Output):** There exists at least one input $\xi$ where the output is exactly zero.
+   - **Algorithm (Bisection):** This is the theoretical basis for Binary Search. You can chop the interval in half repeatedly to locate the zero.
+
+** The Intuitive Explanation
+   - **The River Crossing:** If you are on the south bank (negative) and want to get to the north bank (positive), and you cannot fly or teleport (function is continuous), you *must* get wet (cross the water at 0) at some point.
+
+** Formal Theorem
+   Let $f: [a, b] \to \mathbb{R}$ be continuous.
+   $$ f(a) < 0 \land f(b) > 0 \implies \exists \xi \in (a, b) \text{ such that } f(\xi) = 0 $$
+   *Corollary:* If $f(a) < y < f(b)$, there exists $x \in (a, b)$ such that $f(x) = y$. (Image of an interval is an interval).
+
+* Compactness (Min-Max Theorem)
+** The Logic & Spec View
+   - **Goal:** Boundary analysis. Does the system have a definitive "worst case" (minimum) and "best case" (maximum)?
+   - **Pre-conditions:**
+     1. Continuous function.
+     2. "Compact" domain: Closed and Bounded interval $[a, b]$.
+   - **Edge Cases:** If the interval is open $(0, 1)$ or infinite $[0, \infty)$, the max might be approached but never reached (like $1/x$ approaching $\infty$ or $x^2$ on $(0,1)$ approaching 1).
+   - **Guarantee:** You will actually hit the maximum and minimum values at specific points $p, q$ inside the domain.
+
+** The Intuitive Explanation
+   - **Physical Limits:** If you drive a car for a fixed time on a continuous road, there was a specific moment where you were going fastest, and a specific moment where you were slowest. You can't just "get faster and faster forever" (unbounded) or "approach 60mph but never hit it" (open set).
+
+** Formal Theorem
+   Let $f: [a, b] \to \mathbb{R}$ be continuous. There exist $p, q \in [a, b]$ such that:
+   $$ f(p) = \sup_{x \in [a, b]} f(x) \quad \text{and} \quad f(q) = \inf_{x \in [a, b]} f(x) $$
+
+* Epsilon-Delta Definition (Alternative View)
+** The Logic & Spec View
+   - **Goal:** To define continuity without relying on sequences (time), but using "proximity" (space).
+   - **The Challenge ($\epsilon$):** User specifies a tolerance for error in the output. "Output must be within $\pm \epsilon$ of the target."
+   - **The Response ($\delta$):** Engineer specifies the required precision of the input. "Input must be within $\pm \delta$ of the source."
+   - **The Loop:** For *any* error tolerance $\epsilon$, *there exists* a precision setting $\delta$.
+
+** The Intuitive Explanation
+   - **Target Practice:** To hit the bullseye (output) within a certain ring size ($\epsilon$), how steady (close to center) does your hand (input) need to be ($\delta$)? If you can always steady your hand enough to hit any size ring, you are a "continuous" shooter.
+
+** Formal Lemma
+   $f$ is continuous at $x$ if and only if:
+   $$ \forall \epsilon > 0, \exists \delta > 0 \text{ such that } d_{\Omega}(x, y) < \delta \implies d_{\tilde{\Omega}}(f(x), f(y)) < \epsilon $$
+
+* Inverse Functions
+** The Logic & Spec View
+   - **Goal:** Reversibility. Can we run the system backwards?
+   - **Condition:** The function must be strictly strictly monotone (always increasing or always decreasing). This ensures a 1-to-1 mapping (no collisions).
+   - **Result:** If $f$ is continuous and strictly monotone on an interval, the inverse $f^{-1}$ is also continuous.
+
+** The Intuitive Explanation
+   - **Climbing a Ladder:** If you climb up a ladder without ever stepping down (strictly increasing), every rung corresponds to a unique height. You can look at a height and know exactly which rung you are on. If the ladder is unbroken (continuous), the path back down is also unbroken.
+
+** Formal Proposition
+   If $f: [a, b] \to [A, B]$ is continuous and strictly monotonically increasing, then $f$ is bijective and $f^{-1}: [A, B] \to [a, b]$ is continuous.
+
+* The Logarithm and Powers
+** The Logic & Spec View
+   - **Exponential ($exp$):** We established it's continuous and strictly increasing.
+   - **Logarithm ($\log$):** Defined as the inverse of $exp$. By the Inverse Function theorem above, $\log$ is automatically continuous.
+   - **Power ($a^x$):** Defined via composition: $a^x := \exp(x \log a)$. Since $\exp$, multiplication, and $\log$ are continuous, their composition $a^x$ is continuous.
+
+** The Intuitive Explanation
+   - **Tool Building:** We built the "Hammer" (Exponential). We used the Hammer to build the "Nail Puller" (Logarithm). We used both to build the "Power Drill" ($a^x$). Since the parts are solid, the tools are solid.
+
+** Formal Definition (Power Function)
+   For $a > 0$ and $x \in \mathbb{R}$:
+   $$ a^x := \exp(x \log a) $$
+   Properties derived from continuity and functional equations:
+   + $a^{x+y} = a^x a^y$
+   + $\log(a^x) = x \log a$
+   + $(a^x)^y = a^{xy}$
