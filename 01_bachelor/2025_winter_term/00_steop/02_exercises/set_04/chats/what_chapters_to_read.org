@@ -1,0 +1,116 @@
+#+title: What Chapters To Read
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-10-15>
+#+lastmod: <2025-10-15 08:53>
+#+options: num:t
+#+startup: overview
+
+* Below I provide you the exercises along with the chapters content of the book. Please go through each of the exercise, determine its topic and link it to the chapter of the book for me to read. Please be very attentive. If the exercise topic does not match the content of the book, then just mention the topic to research.
+
+** exercises:
+
+Problem 1. Let x and y be nonnegative numbers. Prove that if x ≤ y, then p
+x ≤
+py.
+Problem 2. For n ∈ N prove that 4 | (1 + (−1)
+n
+(2n − 1)).
+Problem 3. Prove that log2 3 is irrational.
+Problem 4. Five children found nine mushrooms. Prove that at least two of them found an equal
+number of mushrooms.
+Problem 5. Calculate (a) 0.12 + 0.122; (b) 0.3 · 0.4
+Problem 6. Find digits a and b such that p
+0.a = 0.b.
+Problem 7. Find a mistake in the proof of the last statement from today’s lecture (Oct 13) by induction.
+(Hint: To find it, simulate the proof by considering every i = 1, 2, 3 . . . manually.)
+Problem 8. Find (a) gcd(10223, 33341); (b) gcd(2n + 1, 3n + 2).
+Problem 9. Convert (110100101011011)2
+to decimal representation. Without converting, can you
+know for sure whether this number is greater than 215?
+
+** book content:
+1 Intuitive Proofs 1
+1.1 1.2 1.3 1.4 Chessboard Problems . . . . . . . . . . . . . . . . . . . . . . . . . . . 1
+Naming Results . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+The Pigeonhole Principle . . . . . . . . . . . . . . . . . . . . . . . . . Bonus Examples . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Exercises . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+21
+30
+2 Direct Proofs 35
+2.1 2.2 2.3 2.4 2.5 2.6 Working From Definitions . . . . . . . . . . . . . . . . . . . . . . . . Proofs by Cases . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Divisibility . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Greatest Common Divisors . . . . . . . . . . . . . . . . . . . . . . . Modular Arithmetic . . . . . . . . . . . . . . . . . . . . . . . . . . . Bonus Examples . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Exercises . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+41
+42
+46
+50
+61
+68
+3 Sets 73
+3.1 3.2 3.3 3.4 3.5 3.6 Definitions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Proving A ✓B. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Proving A= B. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Set Operations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Two Final Topics . . . . . . . . . . . . . . . . . . . . . . . . . . . . . Bonus Examples . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 73
+77
+81
+82
+91
+93
+Exercises . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 100
+4 Induction 107
+4.1 4.2 4.3 4.4 4.5 Dominoes, Ladders and Chips . . . . . . . . . . . . . . . . . . . . . . 107
+Examples . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 109
+Strong Induction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 124
+Non-Examples . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 133
+Bonus Examples . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 135
+Exercises . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 148
+iii
+5 Logic 155
+5.1 5.2 5.3 5.4 5.5 5.6 Statements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 155
+Truth Tables . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 162
+Quantifiers and Negations . . . . . . . . . . . . . . . . . . . . . . . . 167
+Proving Quantified Statements . . . . . . . . . . . . . . . . . . . . . 174
+Paradoxes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 175
+Bonus Examples . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 179
+Exercises . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 188
+6 The Contrapositive 197
+6.1 Finding the Contrapositive of a Statement . . . . . . . . . . . . . . . 199
+6.2 6.3 Proofs Using the Contrapositive . . . . . . . . . . . . . . . . . . . . . 200
+Bonus Examples . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 205
+Exercises . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 210
+7 Contradiction 213
+7.1 7.2 7.3 7.4 7.5 Two Warm-Up Examples . . . . . . . . . . . . . . . . . . . . . . . . . 215
+Examples . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 218
+The Most Famous Proof in History . . . . . . . . . . . . . . . . . . . 219
+The Pythagoreans . . . . . . . . . . . . . . . . . . . . . . . . . . . . 223
+Bonus Examples . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 230
+Exercises . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 239
+Introduction to Game Theory. . . . . . . . . . . . . . . . . . . . . . 241
+8 Functions 247
+8.1 8.2 8.3 8.4 8.5 Approaching Functions . . . . . . . . . . . . . . . . . . . . . . . . . . 247
+Injections, Surjections and Bijections . . . . . . . . . . . . . . . . . . 251
+The Composition . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 262
+Invertibility . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 266
+Bonus Examples . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 270
+Exercises . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 276
+Introduction to Cardinality. . . . . . . . . . . . . . . . . . . . . . . . 283
+9 Relations 291
+9.1 9.2 9.3 Equivalence Relations . . . . . . . . . . . . . . . . . . . . . . . . . . 291
+Abstraction and Generalization . . . . . . . . . . . . . . . . . . . . . 303
+Bonus Examples . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 306
+Exercises . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 311
+Introduction to Group Theory. . . . . . . . . . . . . . . . . . . . . . 319
+
+** Here is the correspondence for each problem:
+1. Problem 1: This problem is related to the chapter of Direct Proofs (Chapter 2), specifically "Working From Definitions" (2.1). The topic is inequalities.
+
+2. Problem 2: This problem corresponds to "Direct Proofs" (Chapter 2), in particular, "Divisibility"(2.3). The topic is divisibility and natural numbers.
+
+3. Problem 3: This problem does not directly map to any chapters in the book. The topic to research is Logarithms and Irrational Numbers.
+
+4. Problem 4: The mapping chapter for this problem is "Intuitive Proofs"(Chapter 1), with emphasis on "The Pigeonhole Principle" (1.3). The topic is Principle of Pigeonhole.
+
+5. Problem 5: It does not directly match with any chapter in the book. This is a basic arithmetic problem involving decimal addition and multiplication.
+
+6. Problem 6: This problem doesn't link directly with the provided chapters as it involves square roots and decimal representations.
+
+7. Problem 7: This problem is related to "Induction" (Chapter 4). We need the specific lecture statement to provide more precise guidance. It will likely involve mathematical induction.
+
+8. Problem 8: This problem belongs to "Direct proofs" (Chapter 2), particularly "Greatest Common Divisors" (2.4). The topic is greatest common divisors (gcd).
+
+9. Problem 9: This problem is not covered in the book provided, as it deals with binary number systems and base conversions. The topic to research is Binary to Decimal Conversion.

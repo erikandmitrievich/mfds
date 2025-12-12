@@ -1,0 +1,72 @@
+#+title: Exam Questions
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-17>
+#+lastmod: <2025-11-18 11:27>
+#+options: num:t
+#+startup: overview
+
+* Pretend to be a math professor. With this prompt I will provide you the exam questions. Analyse the each question topic and produce another version of exam paper. Try to think as real professor as much as possible.
+
+
+Sure, I can help generate a similar set of questions based on the topics covered in the original exam.
+
+1. *Problem 1: Logic Operations*
+
+   Construct the full truth table for the logical expression: =P ∧ ¬Q -> P ∨ Q=
+
+2. *Problem 2: Euclidean Algorithm*
+
+   Compute: gcd(300, 180)
+
+3. *Problem 3: Mathematical Induction*
+
+   Prove by induction that =∑(n, i = 1)(1/(i(i+2))) = n/(n+2)=
+
+4. *Problem 4: Number Theory*
+
+   If the numbers =a= and =b= are not divisible by 5 (=5 !| a=, =5 !| b=), then prove that 5 divides =(a^3 - b^3)=
+
+5. *Problem 5: Set Theory*
+
+   Let =S = {1,2,3,5}= and consider the relation on P(S) such that =x≼y= if and only if =x ⊆ y=.
+   - Prove that it is a partial order.
+   - Show whether it is a total order.
+
+6. *Problem 6: Function Properties*
+
+   Let =f(x) = (2x^2 / 3) - 2=.
+   - Prove if it is surjective
+   - Check whether it is injective
+   - Determine whether it is bijective
+
+7. *Problem 7: Countability and Cardinality*
+
+   - The set A is defined as ={e * p : p ∈ ℤ}=
+   - The interval =(0, 1/n)=
+   - Decide whether the given set(s) are countable or uncountable.
+
+8. *Problem 8: Permutations*
+
+   Using the set of letters =S = {A, B, C, D, E, F, G, H}=, compute how many 8-letter words can be formed such that:
+   a) Each letter is only used once
+   b) Letters may be reused as many times as desired
+   c) E must appear before F in the word
+
+9. *Problem 9: Modular Arithmetic*
+
+   Find the remainder when:
+   - 800 divided by 23
+   - 12439 divided by 23
+
+10. *Problem 10: Complex Numbers*
+
+   Solve the equation in algebraic or trigonometric form
+
+   =z^3 = 16i=
+
+11. *Problem 11: Polynomial Division*
+
+   Divide and simplify:
+
+   =(3x^4 + 2x + 1) / (x - 1)=

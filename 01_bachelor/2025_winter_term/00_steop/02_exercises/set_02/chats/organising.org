@@ -1,0 +1,78 @@
+#+title: Organising
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-10-07>
+#+lastmod: <2025-10-07 16:02>
+#+options: num:t
+#+startup: overview
+
+*** Organise the following notes in org file:
+**** 2.1 Statements
+- Statement :: is a sentence or a mathematical expression that is either definitely true or definitely false.
+
+  Statements are either correct or incorrect.
+
+  Statements are pieces of information that mathematicians apply logic to to produce pieces of information.
+
+***** Example 2.1
+- If a circle has radius r, then its area is Pi * r^2
+- 2 ∈ N
+- 2^(1/2) ∉ N
+
+In mathematics statements would be often represented as a letters P, Q, R, S to stand for specific statements.
+
+- P: For every integer n > 1, the number 2^n - 1 is prime
+- Q: Every polynomial of degree n has at most n roots
+- R: The funtion f(x) = x^2 is continious
+
+Some statements can contain variables:
+
+- P: If an integer x is a multiple of 6, then x is even.
+
+When sentences or statements contain a variable such as x, mathematicians sometimes denote it as P(x) to indicate that it is saying about x. Thus it looks like this:
+
+- P(x): If an integer x is a multiple of 6, then x is even.
+
+A statement containing 2 or more variables can be written like: P(x, y)
+
+
+Example like this:
+
+- Q(x): The integer x is even.
+
+is not the statement, since it can be true or false depending on the value of the x. Therefore, since it can not be definitely said that the Q(x) is either definitely true or definitely false we conclude that it is not a statement, but rather an =open sentence=.
+
+- Open sentence :: is a "statement" which is either true or false depending on the value of variable it operates with.
+
+Sure, in Org file, the notes would look like following:
+
+#+begin_src
+**** 2.1 Statements
+  - Statement :: is a sentence or a mathematical expression that is either definitely true or definitely false.
+    - Statements are either correct or incorrect.
+    - Statements are pieces of information that mathematicians apply logic to to produce pieces of information.
+
+    -  Example 2.1
+      - If a circle has radius r, then its area is Pi * r^2
+      - 2 ∈ N
+      - 2^(1/2) ∉ N
+
+  In mathematics, statements are often represented as letters P, Q, R, S to stand for specific statements.
+   - P: For every integer n > 1, the number 2^n - 1 is prime
+   - Q: Every polynomial of degree n has at most n roots
+   - R: The function f(x) = x^2 is continuous
+
+   Some statements can contain variables:
+   - P: If an integer x is a multiple of 6, then x is even.
+
+   When sentences or statements contain a variable such as x, mathematicians sometimes denote it as P(x) to indicate that it is saying about x.
+   - P(x): If an integer x is a multiple of 6, then x is even.
+
+   A statement containing 2 or more variables can be written like: P(x, y)
+
+   An example like this:
+   - Q(x): The integer x is even.
+
+   is not a statement since it can be true or false depending on the value of x. Therefore, since it cannot definitely be said that Q(x) is either definitely true or definitely false, we conclude that it is not a statement but rather an =open sentence=.
+
+   - Open sentence :: is a "statement" which is either true or false depending on the value of the variable it operates with.

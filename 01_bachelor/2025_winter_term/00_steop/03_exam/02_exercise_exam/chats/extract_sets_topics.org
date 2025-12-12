@@ -1,0 +1,94 @@
+#+title: Extract Sets Topics
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-12>
+#+lastmod: <2025-11-12 13:37>
+#+options: num:t
+#+startup: overview
+
+* With this prompt I provide you the problem set. Please, analyse all the questions and assing each of them one (or multiple, but no recommended to do so) topic and general technique to solve it (try to generalise it). Return the topics to me in the following format:
+
+- Problem X
+
+  Topic: X
+
+  Technique: X
+
+- Problem Y
+
+  Topic: Y
+
+  Technique: Y
+
+
+- Problem 1
+
+  Topic: Set Theory
+
+  Technique: Listing Elements of a Set
+
+- Problem 2
+
+  Topic: Set Theory
+
+  Technique: Set-Builder Notation
+
+- Problem 3
+
+  Topic: Set Theory
+
+  Technique: Creating Sets Through Cross Products and Power Sets
+
+- Problem 4
+
+  Topic: Set Theory
+
+  Technique: Determining Subsets of a Given Set
+
+- Problem 5
+
+  Topic: Set Theory
+
+  Technique: Listing Elements of Power Sets
+
+- Problem 6
+
+  Topic: Set Theory, Software (Julia)
+
+  Technique: Implementing Set Operations in Julia
+
+- Problem 7
+
+  Topic: Software (Julia)
+
+  Technique: Writing a Julia Function to obtain Cartesian Product of Two Sets
+
+- Problem 8
+
+  Topic: Set Theory
+
+  Technique: Determining Power Sets and Set Cross Products
+
+- Problem 9
+
+  Topic: Set Theory
+
+  Technique: Drawing Euler-Venn Diagrams for Set Operations
+
+- Problem 10
+
+  Topic: Set Theory
+
+  Technique: Sketching Sets on a Plane
+
+- Problem 11
+
+  Topic: Set Theory
+
+  Technique: Simplifying Set Expressions
+
+- Problem 12
+
+  Topic: Set Theory, Software (Julia)
+
+  Technique: Writing a Function in Julia to Output Power Sets

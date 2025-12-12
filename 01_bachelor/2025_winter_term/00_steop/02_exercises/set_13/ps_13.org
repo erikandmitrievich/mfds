@@ -1,0 +1,236 @@
+#+title: Problem Set 13
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-20>
+#+lastmod: <2025-11-26 16:13>
+#+options: num:t
+#+startup: overview
+
+* Problem 1 [DONE]
+** Task
+:LOGBOOK:
+CLOCK: [2025-11-20 Thu 18:35]--[2025-11-20 Thu 19:00] =>  0:25
+:END:
+Show by definition that:
+ a) lim(n->∞)( ((-1)^n)/n ) = 0
+ b) lim(n->∞)((3n^2 - n + 1)/(n^2 - n + 1)) = 3
+
+** Notes
+ a) lim(n->∞)( ((-1)^n)/n ) = 0
+
+    n = 1 : ((-1)^1)/1 = -1
+    n = 2 : ((-1)^2)/2 = 1/2
+    n = 3 : ((-1)^3)/3 = -1/3
+    n = 4 : ((-1)^4)/4 = 1/4
+
+    Hence, split into two cases: n being odd, n being even.
+
+    Show: ∀ε>0 ∃N∈ℕ ∀n>=N |((-1)^n)/n - 0| <--> |((-1)^n)/n| < ε.
+
+    Let ε>0. Choose N∈ℕ such that |((-1)^N)/N| < ε <--> 1/N < ε <--> N > 1/ε.
+
+    Hence, ∀n>=N |((-1)^n)/n| = 1/n <= 1/N < ε.
+
+    Therefore, lim(n->∞)( ((-1)^n)/n ) = 0.
+
+ b) lim(n->∞)((3n^2 - n + 1)/(n^2 - n + 1)) = 3
+
+    First, we have to simplify the fraction.
+
+    (3n^2 - n + 1)/(n^2 - n + 1) = 3 + (2n - 2)/(n^2 - n + 1)
+
+    Notice: (2n - 2)/(n^2 - n + 1) > 2n/(n^2 - n) = 2/(n - 1)
+
+    Thus, (3n^2 - n + 1)/(n^2 - n + 1) > 3 + 2/(n - 1) > 2/(n - 1)
+
+    Hence, we need to show ∀ε>0 ∃N∈ℕ ∀n>=N |(3n^2 - n + 1)/(n^2 - n + 1) - 3| < ε.
+
+    Since |(3n^2 - n + 1)/(n^2 - n + 1) - 3| > 3 + 2/(n-1) - 3 = 2/(n-1),
+
+    2/(n-1) < ε.
+
+    Thus, let ε>0. Choose N∈ℕ such that N > 2/ε + 1. Thus,
+
+    ∀n>=N 2/(n-1) <= 2/(N-1) < ε.
+
+    Therefore, lim(n->∞)((3n^2 - n + 1)/(n^2 - n + 1)) = 3.
+
+** Solution
+ a) lim(n->∞)( ((-1)^n)/n ) = 0
+
+    Show: ∀ε>0 ∃N∈ℕ ∀n>=N |((-1)^n)/n - 0| <--> |((-1)^n)/n| < ε <--> 1/N < ε <--> N > 1/ε.
+
+    Let ε>0. Choose N∈ℕ such that N > 1/ε.
+
+    Hence, ∀n>=N |((-1)^n)/n| = 1/n <= 1/N < ε.
+
+    Therefore, lim(n->∞)( ((-1)^n)/n ) = 0.
+
+ b) lim(n->∞)((3n^2 - n + 1)/(n^2 - n + 1)) = 3
+
+    Simplify the fraction. I need to find something:
+
+    |(3n^2 - n + 1)/(n^2 - n + 1) - 3| <= something < ε.
+
+    Hence,
+
+    --> |(3n^2 - n + 1)/(n^2 - n + 1) - 3| = |(3n^2 - n + 1 - 3(n^2 - n + 1))/(n^2 - n + 1)|
+                                           = (2n - 2)/(n^2 - n + 1)
+
+    (2n - 2)/(n^2 - n + 1) = (2(n-1))/(n(n-1) + 1) < (2(n-1))/(n(n-1)) = 2/n
+
+    Hence, |(3n^2 - n + 1)/(n^2 - n + 1) - 3| < 2/n < ε.
+
+    Show: ∀ε>0 ∃N∈ℕ : ∀n>=N |(3n^2 - n + 1)/(n^2 - n + 1) - 3| < ε.
+
+    *Proof.*
+
+    Let ε>0. Choose N∈ℕ : N > 2/ε.
+
+    N > 2/ε <--> 2/N < ε.
+
+    2/N = (2(N-1))/(N(N-1)) > (2(N-1))/(N(N-1) + 1) = (2N - 2)/(N^2 - N + 1)
+
+    (2N - 2)/(N^2 - N + 1) = |(3N^2 - N + 1 - 3(N^2 - N + 1))/(N^2 - N + 1)|
+                           = |(3N^2 - N + 1)/(N^2 - N + 1) - 3|
+
+    Hence, 2/N > |(3N^2 - N + 1)/(N^2 - N + 1) - 3|.
+
+    Thus, ∀n>=N |(3n^2 - n + 1)/(n^2 - n + 1) - 3| < 2/n <= 2/N.
+          ∀n>=N |a_n - a| < 2/n <= 2/N < ε.
+
+    Therefore, lim(n->∞)((3n^2 - n + 1)/(n^2 - n + 1)) = 3.
+
+* Problem 2 [DONE]
+** Task
+Using the definition of convergence, find the following limits:
+ a) lim(n->∞)( (2n)/(n^2 + 1) )
+ b) lim(n->∞)( (sin(n))/(sqrt{n}) )
+
+** Notes
+:LOGBOOK:
+CLOCK: [2025-11-21 Fri 14:42]--[2025-11-21 Fri 15:07] =>  0:25
+CLOCK: [2025-11-21 Fri 12:46]--[2025-11-21 Fri 13:14] =>  0:28
+:END:
+ a) lim(n->∞)( (2n)/(n^2 + 1) )
+
+    Let ε>0. We need to show ∃N∈ℕ : ∀n>=N (a_n - a) < ε.
+
+    Choose N = max(1, 2/ε + 1)
+
+    Hence, 2/N < ε.
+
+    2/N = 2N/N^2 > 2N/(N^2 + 1)
+
+    Then,
+
+    ∀n>=N 2/n <= 2/N < ε.
+
+    Therefore, ∀ε>0 ∃N∈ℕ : ∀n>=N |a_n - 0| < ε. Hence, lim(n->∞)( (2n)/(n^2 + 1) ) = 0.
+
+ b) lim(n->∞)( (sin(n))/(sqrt{n}) )
+
+** Solution
+:LOGBOOK:
+CLOCK: [2025-11-21 Fri 19:33]--[2025-11-21 Fri 19:58] =>  0:25
+CLOCK: [2025-11-21 Fri 15:23]--[2025-11-21 Fri 15:48] =>  0:25
+:END:
+ a) lim(n->∞)( (2n)/(n^2 + 1) )
+
+    Let ε>0. Show ∀ε>0 ∃N∈ℕ : ∀n>=N |a_n - a| < ε.
+
+    In this case, lim(n->∞)( (2n)/(n^2 + 1) ) is obviously equals to 0.
+
+    Hence, |a_n - 0| < ε.
+
+    Notice: |(2n)/(n^2 + 1) - 0| < ε <--> (2n)/(n^2 + 1) < ε.
+
+    (2n)/(n^2 + 1) < (2n)/(n^2) = 2/n
+
+    Choose N = max(1, 2/ε + 1)
+
+    Thus, N > 2/ε <--> 2/N < ε.
+
+    Hence, ∀n>=N |a_n - 0| <= 2/n <= 2/N < ε.
+
+    Therefore, ∀ε>0 ∃N∈ℕ : ∀n>=N |a_n - 0| < ε. Thus lim(n->∞)( (2n)/(n^2 + 1) ) = 0.
+
+ b) lim(n->∞)( (sin(n))/(sqrt{n}) )
+
+    Let ε>0. Show ∀ε>0 ∃N∈ℕ : ∀n>=N |sin(n)/sqrt{n} - 0| < ε.
+
+    Notice: |sin(n)/sqrt{n} - 0| = |sin(n)|/sqrt{n} <= 1/sqrt{n}.
+
+    Choose N∈ℕ : N > 1/ε^2.
+
+    N > 1/sqrt{ε} <--> 1/sqrt{N} < ε
+
+    Hence, ∀n>=N |sin(n)/sqrt{n}| <= 1/sqrt{n} <= 1/sqrt{N} < ε.
+
+    Therefore, ∀ε>0 ∃N∈ℕ : ∀n>=N |sin(n)/sqrt{n}| < ε. Thus, lim(n->∞)( (sin(n))/(sqrt{n}) ) = 0
+
+* Problem 3 [DONE]
+** Task
+Prove that the sequence (a_n), given by a_n = n + n(-1)^n, is divergent.
+
+** Notes
+It should be proven by contradiction.
+
+Assume a_n has a limit. Therefore,
+
+∀ε>0 ∃N∈ℕ : ∀n>=N |(n + n(-1)^n) - a| < ε
+
+Lets, have a look what happens when n->∞:
+
+n=1 : 1 + 1(-1)^1 = 0
+n=2 : 2 + 2(-1)^2 = 4
+n=3 : 3 + 3(-1)^3 = 0
+n=4 : 4 + 4(-1)^4 = 8
+n=5 : 5 + 5(-1)^5 = 0
+n=6 : 6 + 6(-1)^6 = 12
+
+Thus, for all n = 2k + 1, k∈ℕ, (n + n(-1)^n) = 0. While, for n = 2k, (n + n(-1)^n) = 2n.
+
+∀ε>0 ∃N∈ℕ : ∀n>=N |(n + n(-1)^n) - a| < ε.
+- If n is odd, then |0 - a| = |a| < ε.
+- If n is even, then |2n - a| < ε.
+
+Hence, |a| + |2n - a| < 2ε <--> |2n - a + a| < 2ε <--> 2n < 2ε <--> n < ε.
+
+And, since n>=N>=1, let ε = 1/2, then 1<=n<1/2 is contradiction. Thus, sequence (a_n) is divergent.
+
+** Solution
+:LOGBOOK:
+CLOCK: [2025-11-21 Fri 20:15]--[2025-11-21 Fri 20:55] =>  0:40
+:END:
+#+begin_quote
+*Proof.*
+
+Assume (a_n) converges into some real a. Then,
+
+        ∀ε>0 ∃N∈ℕ : ∀n>=N |a_n - a| < ε.
+
+Now pick two indices of different parity that are both >=N: choose the odd index m>=N and even index n>=N. Hence,
+- For odd index m: a_m = 0, so |0 - a| = |a| < ε.
+- For even index n: a_n = 2n, so |2n - a| < ε.
+
+Add two inequalities: |a| + |2n - a| < 2ε.
+By triangle inequality: 2n = |2n| <= |a + (2n - a)| = |a| + |2n - a| < ε.
+
+Hence, 2n < 2ε <--> n < ε.
+
+Choose ε = 1/2. Thus, 1 <= N <= n < 1/2 = ε, which simplifies to 1 < 1/2, which is a contradiction. Thus, sequence (a_n) is divergent.
+#+end_quote
+
+* Problem 4
+** Task
+** Notes
+** Solution
+* Problem 5
+** Task
+** Notes
+** Solution
+* Problem 6
+** Task
+** Notes
+** Solution

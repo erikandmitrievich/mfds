@@ -1,0 +1,8 @@
+#+title: General
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-11>
+#+lastmod: <2025-11-11 11:52>
+#+options: num:t
+#+startup: overview
+

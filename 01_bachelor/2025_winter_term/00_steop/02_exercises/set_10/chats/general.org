@@ -1,0 +1,124 @@
+#+title: General
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-04>
+#+lastmod: <2025-11-07 09:07>
+#+options: num:t
+#+startup: overview
+
+* Below I provide you my notes on the current math problem I am solving. Please have a look on them and tell me whether the approach is correct or not. If correct, then please teach me how to put it into a more structured way. If not show me the way how it should be done and where do I had a wrong assumption:
+
+** Problem 1
+*** Task
+Prove that the set of finite bit strings is countable. (A bit string is a sequence of 0 and 1. like 0001101.)
+
+*** Notes
+So I understand the set of finite of bit strings as:
+
+{"0000", "0001", "0010", "0011", ...}
+
+With each next element being a natural binary number (including 0).
+
+Though, we should notice that problem states "sequence of 0 and 1", meaning that set lacks "0000" and "1111".
+
+
+How to prove?
+
+We can link each element of the bit strings set to a natural number, in our case it would look like:
+
+We imagine each of the bits being the 2^n, where n is the index of the bit (it doesn't really matter if we count it from right or from left).
+
+Thus, it would look like this:
+
+|---+-----+-----+-----+-----|
+|   | 2^3 | 2^2 | 2^1 | 2^0 |
+|---+-----+-----+-----+-----|
+| 1 |   0 |   0 |   0 |   1 |
+|---+-----+-----+-----+-----|
+| 2 |   0 |   0 |   1 |   0 |
+|---+-----+-----+-----+-----|
+| 3 |   0 |   0 |   1 |   1 |
+|---+-----+-----+-----+-----|
+0001 <-> 1
+0010 <-> 2
+0011 <-> 3
+0100 <-> 4
+...
+
+And since a *countable set* is the set all of whose elements can be put into one-to-one relation with the natural numbers, means its elements can be listed in a sequence.
+
+And since all binary strigns are repesentation of natural numbers in binary number system, meaning that each element of binary strings set is into one-to-one relation with a natural numbers.
+
+** Answer
+Your logic is technically correct but it's more complicated than it needs to be and could use a bit of fine-tuning. Here's a simpler approach:
+
+We are trying to show that the set of all finite bit strings is countable. To do this, we need to find a way to list all the bit strings in a sequence which includes every bit string exactly once.
+
+We can list the bit strings in order of length, and for those of equal length, in dictionary order (also known as lexicographic order). In this way:
+
+	empty string
+	0
+	1
+	00
+	01
+	10
+	11
+	000
+	001
+	...
+
+For each natural number n, there is a corresponding bit string at the nth position in this sequence. So, we have set up a one-to-one correspondence between the set of all finite bit strings and the set of natural numbers, which means the set of all finite bit strings is countably infinite.
+
+You mentioned that the set lacks "0000" and "1111", but these strings are not absented in your set. In binary language, "0000" represents the number 0 and "1111" represents the number 15, so they should be added in the proper sequence.
+
+Also, all leading zeros are usually dropped from binary representations of natural numbers, so the sequence will be as above. However, you could include leading zeros or not, what matters is that there is a finite number of strings of each length, and each such string corresponds to a distinct natural number.
+
+And remember that the empty string is usually considered a part of the set of all finite bit strings.
+
+* How to prove this mathematically?
+How many non-intersecting circles can be drawn on a plane (circles may have an arbitrary radius)?
+
+
+An infinite number of non-intersecting circles can be drawn on a plane, given that the radius of the circles can become arbitrarily small.
+
+This can be imagined by starting with one circle and then dividing the remaining space into smaller and smaller pieces where each piece can have an inscribed circle. As we can make the radius of these circles arbitrarily small, this process can be continued indefinitely, hence we get an infinite number of circles.
+
+* Is this a valid mathematical proof? if not show me a correct mathematical proof:
+
+This can be imagined as starting with one circle and inscribing smaller circles inside of it.
+
+For circles to not be intersecting in this case, r1 != r2.
+
+Thus, radius of all circles can be represented as set of ℝ in [0,1], which is infinite.
+
+
+Your proof is not fully formal, but it illustrates the correct concept. This problem can be simplified into countability problem. A more formal proof could be:
+
+We can map each one of the non-intersecting circles to a unique point in the plane that lies in its interior. Since there are uncountably many points (real numbers) in the plane (let's say ℝ^2 for simplicity), then there must be uncountably many non-intersecting circles that can be drawn on the plane.
+
+However, if we limit our circles to have rational radii and center coordinates, then we get countably infinite circles because rational numbers are countable. The difference here comes from distinguishing between "countable infinity" and "uncountable infinity". Uncountable infinity is a larger set than countable infinity.
+
+In your proof, stating that the radius of all circles can be represented as the set of ℝ in [0,1] implies uncountability, because real numbers between 0 and 1 are uncountable. But remember, we must also consider the positions of the circles, not just their radii.
+
+* How to prove this mathematically?
+Prove that the set of all functions f : ℕ -> {0,1} is uncountable.
+
+You can show that this set is uncountable using Cantor's diagonal argument, which is usually used to prove that the set of all real numbers is uncountable.
+
+Each function f : ℕ -> {0,1} can be represented as an infinite sequence of 0s and 1s. There are two outcomes (0 or 1) for each natural number. So the set of all such sequences is equivalent to the power set of natural numbers (2^ℕ).
+
+1. Assume for contradiction that the set of all functions f : ℕ -> {0,1} is countable, meaning we can create a list of every such function:
+
+   f1 = 0, 1, 0, 1, 0, 1, ...
+
+   f2 = 1, 1, 1, 1, 1, 1, ...
+
+   f3 = 0, 0, 0, 0, 0, 0, ...
+
+   ( and so on ...)
+
+2. Now construct a new function g : ℕ -> {0,1} that is not in that list. The construction rule can be as follows: if the ith function in the list assigns the value 1 to the input i then the new function g assigns 0; if the ith function assigns 0 to i then g assigns 1. In other words, we swap the digit in the ith place of the ith function.
+
+3. Therefore, this function g does not match any function in the list, because it differs in the ith place from  the function fi. Hence, our original assumption that the set of all functions ℕ -> {0,1} was countable is shown to be false - that is, this set is uncountable.
+
+This contradicts the assumption that all such functions can be listed, thus proving that the set of all functions from ℕ to {0,1} is uncountable.

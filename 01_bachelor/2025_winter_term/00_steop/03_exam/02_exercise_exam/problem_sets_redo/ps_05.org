@@ -1,0 +1,236 @@
+#+title: Problem Set 5
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-14>
+#+lastmod: <2025-11-15 15:18>
+#+options: num:t
+#+startup: overview
+
+* Analysis
+
+- Look closely for Problem 2,3 little proof tricks
+
+* Problem 1 [SKIP]
+** Task
+Find gcd(11...1, 11...1)
+            n       m
+
+** Solution
+* Problem 2 [DONE]
+** Task
+Find all n ∈ ℕ for which the fraction (n^2 - n + 1)/(n^2 + 1) is irreduciable.
+
+** Solution
+By irreducible, means that gcd(n^2 - n + 1, n^2 + 1) = 1. Thus,
+
+gcd(n^2 - n + 1, n^2 + 1)
+
+(n^2 + 1) - (n^2 - n + 1) = n
+
+Thus,
+gcd(n^2 - n + 1, n)
+
+(n^2 - n + 1) - (n)n = - n + 1
+
+Thus,
+gcd(n^2 - n + 1, n) = gcd(n, n - 1)
+
+(n - 1) - (n) = -1
+
+Thus,
+gcd(n, n - 1) = gcd(n, 1)
+
+And,
+gcd(n, 1) = 1
+
+Hence, fraction (n^2 - n + 1)/(n^2 + 1) is irreducible for all n ∈ ℕ.
+
+* Problem 3 [DONE]
+** Task
+Prove that if n is an odd integer, then n^2 ≡ 1 (mod 8).
+
+** Solution
+#+begin_quote
+*Proposition.* If n is an odd integer, then n^2 ≡ 1 (mod 8).
+
+*Proof.*
+Let k = 2j + 1, j ∈ ℤ+.
+
+Hence,
+(2j + 1)^2 = 4j^2 + 4j + 1
+           = 4(j^2 + j) + 1
+
+But 2|(j^2 + j), as
+(j^2 + j) = j(j + 1) (a product of 2 consequitive integers)
+j(j + 1) = 2m, m ∈ ℕ
+
+Therefore,
+k = 4 * 2m + 1
+k = 8m + 1 ≡ 1 (mod 8)
+
+Thus, every odd n satisfies n^2 ≡ 1 (mod 8).
+#+end_quote
+
+* Problem 4 [DONE]
+** Task
+Find the remainder from the division of 2^2025 by 11.
+
+** Solution
+2^2025 = 2^2020 * 2^5
+       = (2^10)^202 * 2^5
+
+#+begin_quote
+Ferma's Little Theorem:
+
+If p is prime, and (thus) gcd(a,p) = 1, then,
+
+        a^p ≡ a (mod p)
+
+        or equvalently
+
+        a^(p-1) ≡ 1 (mod p)
+#+end_quote
+
+Goal: bring to 2^(11-1) ≡ 1 (mod 11)
+
+2^2025 = (2^10)^202 * 2^5
+
+Hence,
+2^10 ≡ 1 (mod 11)
+(2^10)^202 ≡ 1^202 (mod 11)
+(2^10)^202 * 2^5 ≡ 1 * 2^5 (mod 11)
+
+2^5 = 32 ≡ 10 (mod 11)
+
+Therefore,
+2^2025 ≡ 10 (mod 11)
+
+* Problem 5 [DONE]
+** Task
+Solve the equation x^2 - 16y = 3, where x, y ∈ ℤ.
+
+** Solution
+x^2 - 16y = 3
+x^2 = 16y + 3
+
+Hence,
+x^2 ≡ 3 (mod 16)
+
+x = 0 : x^2 = 0 : 0 ≡ 0 (mod 16)
+x = 1 : x^2 = 1 : 1 ≡ 1 (mod 16)
+x = 2 : x^2 = 4 : 4 ≡ 4 (mod 16)
+x = 3 : x^2 = 9 : 9 ≡ 9 (mod 16)
+x = 4 : x^2 = 16 : 16 ≡ 0 (mod 16)
+x = 5 : x^2 = 25 : 25 ≡ 9 (mod 16)
+x = 6 : x^2 = 36 : 36 ≡ 4 (mod 16)
+x = 7 : x^2 = 49 : 49 ≡ 1 (mod 16)
+x = 8 : x^2 = 64 : 64 ≡ 0 (mod 16)
+
+Hence, all x^2 have remainders of {0, 1, 4, 9}.
+
+Therefore, there are no solutions for x^2 - 16y = 3 where x,y ∈ ℤ.
+
+* Problem 6 [DONE]
+** Task
+Prove that a number whose decimal representation contains three 1 and several 0 can not be a perfect square.
+
+** Solution
+*** Lemmas
+- Fundamental Theorem of Arithmetics
+  Each number can be exressed as the product of prime numbers.
+- Square <--> Even exponent
+  An integer is a perfect square iff in its prime factorisation every prime has an even exponent.
+- Congruence of powers of 10 mod 9
+  10 ≡ 1 (mod 9), thus, 10^k ≡ 1 (mod 9), k ∈ ℕ.
+- Quadratic remainders mod 9
+  The only possible remainder of perfect square are: {0, 1, 4, 7}.
+
+*** Proof
+Express such a number as:
+N = 10^a + 10^b + 10^c, such that,
+a > b > c; a,b,c ∈ ℕ.
+
+1. Factor out 10^c
+   N = 10^a + 10^b + 10^c
+   N = 10^c * (10^(a-c) + 10^(b-c) + 1)
+   Let M = 10^(a-c) + 10^(b-c) + 1
+   Thus,
+   N = 10^c * M
+
+2. Case 1: c is odd
+   Notice that 10^k ≡ 0 (mod 2) and 10^k ≡ 0 (mod 5). Hence,
+
+   M = 10^(a-c) + 10^(b-c) + 1 = 0 + 0 + 1 ≡ 1 (mod 2), and
+                               = 0 + 0 + 1 ≡ 1 (mod 5).
+
+   Hence, M does not contribute any of the 2's and 5's to the overall expression.
+   Meaning, that there should be even exponents of 2 and 5 in 10^c.
+
+   However, since c is odd, 10^c = 2^c * 5^c, prime factors 2 and 5 have an odd exponent.
+   Due to lemma of square having even exponents, N can not be a perfect square.
+
+3. Case 2: c is even
+   Let c = 2t, then, (10^t)^2, which is a perfect square.
+   Thus, M should also be a perfect square.
+   Since congruence of perfect squares by mod 9 are only {0, 1, 4, 7},
+
+   M ≡ x (mod 9), x ∈ {0, 1, 4, 7}.
+
+   Let r = a-c, q = b-c. Thus,
+
+   M = 10^r + 10^q + 1 ≡ 1 + 1 + 1 ≡ 3 (mod 9)
+
+   Hence,
+   3 ∉ {0, 1, 4, 7}, implies that M is not a perfect square.
+
+   Therefore, N is not a perfect square either.
+
+*Conlusion:* In both cases, N can not be a perfect square.
+
+* Problem 7 [DONE]
+** Task
+Find all p ∈ ℕ such that p, p + 10, and p + 14 are prime numbers.
+
+** Solution
+Notice that:
+
+0 ≡ 0 (mod 3)
+10 ≡ 1 (mod 3)
+14 ≡ 2 (mod 3)
+
+Meaning that congruence of 0, 10, 14 are different from each other.
+
+Prime: 2, 3, 5, 7, 11, 13, 17, 19, 23, ...
+
+All real numbers have 3 possible remainders when divided by 3: {0, 1, 2}.
+
+Since all p, p + 10, and p + 14 have different remainders, and also are all prime, means that none of them should be divisible by 3, unless one is equal to 3.
+
+Since p ∈ ℕ, and p < p + 10 < p + 14, p = 3.
+
+Hence, p + 10 = 13, and p + 14 = 17, which are both prime.
+
+And due to the fact that p, p + 10, and p + 14 have different remainders, and none of them should be divisible by 3 (since they would not be primes), unless one of them equal to 3, there are no other solutions other than 3, 13, 17.
+
+* Problem 8 [DONE]
+** Task
+It is October today. What are the chances that, in 250 months’ time, people will be swimming in the Danube?
+
+** Solution
+(250 + 10) % 12 = 8 which is August.
+
+* Problem 9 [SKIP]
+** Task
+Prove that there exists an n ∈ N for which 11 | (2^n − 1).
+
+** Solution
+* Problem 10 [SKIP]
+** Task
+Prove that there exists a power of 3 that ends with the digits 001. (In other words, 3n = ...001 for some n ∈ N.)
+
+** Solution
+* Problem 11 [SKIP]
+** Task
+A natural number is called perfect if it is equal to the sum of all its divisors. For example, 28 is perfect, because 28 = 1 + 2 + 4 + 7 + 14. Find all perfect numbers under 10000.
+
+** Solution

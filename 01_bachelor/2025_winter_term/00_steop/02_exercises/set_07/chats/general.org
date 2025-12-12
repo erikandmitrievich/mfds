@@ -1,0 +1,146 @@
+#+title: General
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-10-27>
+#+lastmod: <2025-10-28 15:42>
+#+options: num:t
+#+startup: overview
+
+* What is the difference between a partial order and a total order in mathematical relations?
+
+A partial order is a binary relation "≤" over a set P satisfying three conditions:
+
+1. Reflexivity: Every element is less than or equal to itself. a ≤ a.
+2. Antisymmetry: If a ≤ b and b ≤ a then a = b.
+3. Transitivity: If a ≤ b and b ≤ c then a ≤ c.
+
+It is "partial" because not every pair of elements need to be comparable. For example, in a set of subsets, set A is only less than or equal to set B if every member of A is also a member of B.
+
+A total order is a partial order with the additional property of comparability or totality:
+
+4. Comparability / Totality: For any two elements a and b, a ≤ b or b ≤ a.
+
+In a total order, every pair of elements is comparable. For example, the usual order of numbers is a total order because for any two numbers, one number is always less than or equal to the other.
+
+* Give me a hint on how to solve the following problem:
+
+In a basketball tournament, each team plays every other team exactly once. Define a relation ≼ on the set of all teams as: for two teams A and B, we say A ≼ B <--> the final ranking of B is at least as high as that of A. Is ≼ a partial order? Is it a total order?
+
+
+To qualify as a partial order, a relation needs to be reflexive, antisymmetric, and transitive.
+
+1. Reflexive: A team is always ranked as highly as itself. So, A ≼ A. Thus, the relation is reflexive.
+
+2. Antisymmetric: If A ≼ B and B ≼ A, then A = B. This holds true since two teams can't rank higher than each other at the same time in this tournament. If A ranks as high as B and vice versa, they are in the same rank. Thus, the relation is antisymmetric.
+
+3. Transitive: If A ≼ B and B ≼ C, then A ≼ C. If team B is ranked as high as team A and team C is ranked as high as team B, then C is ranked as high as A. Thus, the relation is transitive.
+
+Since ≼ is reflexive, antisymmetric, and transitive, it is a partial order.
+
+To qualify as a total order, a relation needs to be a partial order and connex (or comparability property must hold), i.e., either A ≼ B or B ≼ A for all A and B.
+
+In a basketball tournament, we could always compare any two teams, either A ≼ B or B ≼ A due to the rule that every team plays every other team exactly once. This relation satisfies the comparability property. Thus, ≼ is a total order as well.
+
+* Do I understand rigth partial relation, specifically the "antisymmetry"?
+I understand partial relation to be relation that satisfies the follwing points:
+
+- *Reflexivity:* Every element is less than or equal to itself. a ≼ a.
+- *Antisymmetry:* If a ≼ b and b ≼ a then a = b.
+- *Transitivity:* If a ≼ b and b ≼ c then a ≼ c.
+
+In which, antisymmetry is basically expecting a=b, if a ≼ b and b ≼ a. Please give me some tables like this that shows how does antisymmetry looks like.
+
+|---+---+---+---|
+|   | a | b | c |
+|---+---+---+---|
+| a | T |   |   |
+|---+---+---+---|
+| b |   | T |   |
+|---+---+---+---|
+| c |   |   | T |
+|---+---+---+---|
+
+Yes, you have correctly defined a partial relation and its antisymmetry property. The table you've provided shows an antisymmetric relation because for all a, b, and c, if a ≼ b and b ≼ a, then a must equal b. Here, this is only true when a, b, and c are the same (pairs aa, bb, cc), thus it is an antisymmetric relation. So T (True) only appears in cells where the relationship is reflexive (where the row and column are the same), and this is indeed an indication of antisymmetry. Remember, an antisymmetric relation allows equal pairs, but if a distinct pair (like ab where a≠b) is in the relation, its reverse (ba) cannot be.
+
+* NO, I want you to provide such a table right here in this chat. Do it GPT!
+
+I apologize for the confusion. Please find below such a table, which represents an antisymmetric relation:
+
+|   | a | b | c |
+|---|---|---|---|
+| a | T | F | F |
+| b | F | T | F |
+| c | F | F | T |
+
+Here, T stands for True, representing the presence of a relation, and F stands for False, representing the absence of a relation. The only "True" values are found on the diagonal, since in antisymmetric relations, a ≼ a is the only case when a ≼ b and b ≼ a hold at the same time.
+
+* Could you please exlain in more detail problem 10 maximal and minimal element:
+** Task
+For the problems above, where there is a partial order, decide which elements are:
+- greatest/least
+- maximal/minimal
+
+** Solution
+*Greatest element:* an element g ∈ S, such that for every x ∈ S, x ≼ g.
+Unique element
+
+*Least element:* an element l ∈ S, such that for every x ∈ S, l ≼ x.
+Unique element
+
+*Maximal element:* an element m ∈ S, is maximal iff there is no x ∈ S, (m ≼ x) ∧ (x != m).
+Multiple elements possible
+
+*Minimal element:* an element n ∈ S, is minimal iff there is no x ∈ S, (x ≼ m) ∧ (x != m).
+Multiple elements possible
+
+Therefore,
+
+*** Problem 10
+*Greatest:*
+Suppose, for contradiction, that (x, y) ∈ ℝ² is a greatest element. Then for all (a, b) ∈ ℝ², we must have (a, b) ≼ (x, y), which means:
+
+.|x - a| <= y - b
+
+Consider the point (x, y - 1) ∈ ℝ². Since (x, y) is assumed to be a greatest element, we require:
+
+.|x - x| <= y - (y - 1)
+0 <= 1
+
+This holds. However, we also need this for (x + 2, y - 1):
+
+.|x - (x + 2)| <= y - (y - 1)
+
+2 <= 1
+
+*Least:*
+Suppose, for contradiction, that (x, y) ∈ ℝ² is a least element. Then for all (a, b) ∈ ℝ², we must have (x, y) ≼ (a, b), which means:
+
+.|a − x| <= b − y
+
+Consider the point (x + 1, y - 2) ∈ ℝ². Since (x, y) is assumed to be a least element, we require:
+
+.|(x+1) - x| <= (y - 2) - y
+1 <= -2
+
+This is a contradiction. Therefore, no least element exists.
+
+*Maximal elements:*
+Proof. Let (x, y) ∈ ℝ² be arbitrary. Suppose (a, b) ∈ ℝ² satisfies (x, y) ≼ (a, b). By the same argument as in the proof for minimal elements (with roles reversed), we can show that (a, b) ≼ (x, y), and consequently (x, y) = (a, b).
+Therefore, there is no element (a, b) ≠ (x, y) with (x, y) ≼ (a, b) and (a, b) ⋠ (x, y). Hence (x, y) is maximal. Since (x, y) was arbitrary, every element of ℝ² is maximal. ∎
+
+*Minimal elements:*
+Suppose (a, b) ≼ (x, y), so |x - a| ≤ y - b
+For (a, b) to be "strictly below" (x, y), we'd need (x, y) ⋠ (a, b)
+But if |x - a| ≤ y - b, then moving back requires |a - x| ≤ b - y
+Since |a - x| = |x - a| ≤ y - b, we'd need y - b ≤ b - y, so y ≤ b
+Combined with y - b ≥ 0 (from |x - a| ≥ 0), we get y = b and thus x = a
+So there's no point strictly below any given point!
+
+
+Your explanation outlines the concept of greatest, least, maximal, and minimal elements in set theory and partial orders in detail. It then applies this knowledge to problem 10, finding out the nature of these elements in the set ℝ² under the given partial order ≼.
+
+Just to summarize:
+
+1. You demonstrated that there is no greatest or least element in ℝ² under this relation. You've used contradiction technique, showing that for each candidate supposed to be a greatest or least element, you can always find another point in ℝ² so that the requirement for being the greatest or the least is not satisfied.
+
+2. The same approach shows that every element in ℝ² is both maximal and minimal. You've reasoned that for any given element, there exists no other element that is strictly above or strictly below it under the given partial order. Thus, every element is maximal and minimal because it cannot be surpassed or belittled by any other distinct element.

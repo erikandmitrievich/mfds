@@ -1,0 +1,463 @@
+#+title: Problem Set 6
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-10-20>
+#+lastmod: <2025-11-16 10:37>
+#+options: num:t
+#+startup: overview
+
+* Counting notes
+** What are permutations?
+- Permutation :: is the number of arrangements from a set of n items taken k at a time, where the order of arrangement matters. It's represented as P(n, k) or nPk.
+
+The formula of permutation is: P(n, k) = n! / (n - k)!
+
+So, when we start to select the objects starting from n, we go like this:
+
+n, n-1, n-2, ..., 1   (each number relate to the number of possible object choice at that moment)
+
+When we have to find the all lists with the lenght of the choice list, with no repetition in values we basically go from n * n-1 * n-2 * ... * 1.
+
+However, when we need to find lists with certain length we won't need to multiply any further n - k, where k is the length of the wanted list.
+
+Therefore,
+
+n! / (n - k)!
+
+where (n - k)! stands for the multiplications of numbers from 1 to (n - k) (multiplications that we don't need.)
+
+** What are combinations?
+- Combination :: is a numebr of subsets that can be made from a larger set. It's represented as C(3, 4).
+
+Putting into a simple words, a combination is a permutation, but with no rearanged lists. Meaning while there are:
+
+[1, 2, 3]
+[2, 3, 1]
+[3, 2, 1]
+...
+
+there is only one
+
+[1, 2, 3]
+
+in combinations.
+
+Notice that there are always k! repetitions of a same list in permutations. Therefore, to get rid of them in combinations we simply divide all permutations by k!!:
+
+C(n, k) = n! / (n - k)! * k!
+
+* Problem 1 [DONE] [CHECKED]
+** Task
+In a s  chool, every boy knows 32 girls, and every girl knows 29 boys. Who are there more of in the school: boys or girls, and by how many times?
+
+** Solution
+Let B be the number of boys, and G be the number of girls.
+
+- Each boy knows 32 girls: total aquaintances = 32B.
+- Each girl knows 29 boys: total aquaintances = 29G.
+
+Since both count the same edges, so 32B = 29G.
+
+Hence G/B = 32/29 = 1,10345.
+
+So there are more girls, about 1.10345 times.
+
+* Problem 2 [DONE] [CHECKED]
+** Task
+How many 10-digit numbers are there in which there are at least two identical digits?
+
+** Solution
+*** If with 0
+If the problem does not involve numbers with 0 at the start it complicates problem drastically.
+
+I will assume that 0 can be at the start.
+
+Again, 10^10 of all possible lists.
+
+10! ways to organise number with no repeated digit.
+
+Thus, 10^10 - 10!
+
+*** If without 0
+We have a range of all possible lists of 9000000000 (9999999999 - 1000000000 + 1).
+
+Lists with no repetition: 9 * 9!.
+
+Thus, 9 * 10^9 - 9 * 9!
+
+* Problem 3 [DONE] [CHECKED]
+** Task
+How many permutations of the letters ABCDEFGH contain the string 'ABC'?
+
+** Solution
+*** Solution 1
+Uhhh, so...
+
+Lets imagine the list of ((A, B, C), D, E, F, G, H).
+
+We will stick A, B, C together, like it is a list within a list.
+
+We can imagine it to move around like this:
+
+((A, B, C), D, E, F, G, H)
+(D, (A, B, C), E, F, G, H)
+(D, E, (A, B, C), F, G, H)
+(D, E, F, (A, B, C), G, H)
+(D, E, F, G, (A, B, C), H)
+(D, E, F, G, H, (A, B, C))
+
+Here we can notice that (A, B, C) had a total of a 6 positions inside of the list.
+
+Next we can imagine other letters to rearange with stationary (A, B, C):
+
+((A, B, C), E, D, F, G, H)
+((A, B, C), E, F, D, G, H)
+((A, B, C), E, F, G, D, H)
+((A, B, C), E, F, G, H, D)
+...
+
+This gives us a hint to see a shuffle in letters part as a separate permitation that we can find out.
+
+List (E, D, F, G, H) has a total of 5 objects. No repetitions are allowed, so the total amount of lists is 5!.
+
+Therefore, combining two small steps into one we get 6 * 5! of total lists having (A, B, C) in order.
+*** Solution revised
+Consider 'ABC' being one element in the list of strings, like this:
+
+['ABC', 'D', 'E', 'F', 'G', 'H']
+
+Hence, there are a total of 6 elements in a list. Meaning that there are a total of 6! permutations.
+
+* Problem 4 [DONE] [CHECKED]
+** Task
+Are there more seven-digits numbers that contain the digit 1, or more that don't?
+
+** Solution
+*** Notes
+Well, we have
+
+from
+1000000 to
+9999999
+
+maybe we can go through all cases like
+[1] [?] [?] [?] [?] [?] [?]
+
+or maybe we can go like this:
+
+from 1000000 to 1999999 is 999999
+from ?100000 to ?199999 is 99999
+from ??10000 to ??19999 is 9999
+from ???1000 to ???1999 is 999
+from ????100 to ????199 is 99
+from ?????10 to ?????19 is 9
+from ??????0 to ??????1 is 1
+
+so it becomes
+999999 + 99999 + 9999 + 999 + 99 + 9 + 1 = 1,111,105
+
+
+Calculate the number of lists of length 7 that do not consist of digit 1.
+
+Its a permutation.
+
+Therefore,
+
+9^6 * 8 = 4251528 (how many numbers that do not include digit 1) (* 8 since the first digit can not be equal to 0 and 1)
+
+total amount of lists is 9000000
+
+therefore, 9000000 - 4251528 = 4748472
+
+*** Polished
+We better start by calculating the amount of cases when there are no digit 1 in the list of 7 digits.
+
+This would be
+        8 * 9^6 = 4251528
+
+8 because the first digit can not be 0 and 1
+9^6 because calculating all lists containing 7 objects (with repetitions)
+
+We have a range of all possible lists of 9000000 (9999999 - 100000 + 1).
+
+Therefore, 9000000 - 4251528 = 4748472 lists with digit '1' being an object in it.
+
+* Problem 5 [DONE] [CHECHED]
+** Task
+Give a proof of the Binomial Theorem by induction on n.
+
+** Solution
+Lemmas:
+- Pascal's Identity
+
+  nC(r-1) + nCr =
+
+  = (n!) / (n-r+1)!*(r-1) + (n!) / (n-r)!*(r!)          (multiply first by r, second by (n-r+1))
+
+  = (r*n!) / (n-r+1)!*(r!) + (n!)(n-r+1) / (n-r+1)!*(r!)
+
+  = (r*n!)+(n-r+1)*(n!) / (n-r+1)!*(r!)
+
+  = (r+n-r+1)*n! / (n-r+1)!*(r!)
+
+  = (n+1)n! / (n-r+1)!*(r!)
+
+  = (n+1)! / (n-r+1)!*(r!)
+
+  = (n+1)C(r)
+
+*Proposition.* If (x + y)^n, then
+        (x + y)^n = nC0 * x^n * y^0 + nC1 * x^(n-1) * y^(1) + nC2 * x^(n-2) * y^(2) + ...
+        ... + nCn * x^(n-n) * y^(n),
+        for all n ∈ N.
+
+*Base case.* n = 1. (x + y)^1 = 1C0 * x^1 + 1C1 * y^1 = x + y. Base holds.
+
+*Induction hypothesis.* (x + y)^n =
+nC0 * x^n * y^0 + nC1 * x^(n-1) * y^(1) + nC2 * x^(n-2) * y^(2) + ... + nCn * x^(n-n) * y^(n), for all n ∈ N.
+
+*Induction step.*
+(x + y)^n = nC0 * x^n * y^0 + nC1 * x^(n-1) * y^(1) + nC2 * x^(n-2) * y^(2) + ... + nCn * x^(n-n) * y^(n)
+
+multiply both sides by x and y
+
+x(x + y)^n = nC0 * x^(n+1) * y^0 + nC1 * x^(n) * y^(1) + nC2 * x^(n-1) * y^(2) + ... + nCn * x^(1) * y^(n)
+y(x + y)^n = nC0 * x^(n) * y^(1) + nC1 * x^(n-1) * y^(2) + nC2 * x^(n-2) * y^(3) + ... + nCn * x^(n-n) * y^(n+1)
+
+notice that (x^n * y^(1)) and others are being present in both lines.
+
+x(x + y)^n = nC0 * x^(n+1) * y^0 + nC1 * x^(n) * y^(1) + nC2 * x^(n-1) * y^(2) + ... + nCn * x^(1) * y^(n)
+                      y(x + y)^n = nC0 * x^(n) * y^(1) + nC1 * x^(n-1) * y^(2) + nC2 * x^(n-2) * y^(3) + ... + nCn * x^(n-n) * y^(n+1)
+
+
+therefore, we shall add both equations
+
+*LHS* = x(x + y)^n + y(x + y)^n
+      = (x + y)(x + y)^n
+      = (x + y)^(n+1).
+
+*RHS* = nC0 * x^(n+1) * y^0  +  (x^(n) * y^(1))*(nC0 + nc1) + ... + nCn * x^(n-n) * y^(n+1)
+      = nC0 * x^(n+1) * y^0  +  (x^(n) * y^(1))*((n+1)C1) + ... + nCn * x^(n-n) * y^(n+1)
+      = (n+1)C0 * x^(n+1) * y^0  +  (x^(n) * y^(1))*((n+1)C1) + ... + (n+1)C(n+1) * x^(n-n) * y^(n+1)
+
+*Conclusion.* Therefore, by induction,
+        (x + y)^n = nC0 * x^n * y^0 + nC1 * x^(n-1) * y^(1) + nC2 * x^(n-2) * y^(2) + ...
+        ... + nCn * x^(n-n) * y^(n),
+        for all n ∈ N.
+
+* Problem 6 [DONE] [CHECKED]
+** Task
+Find the coefficient of x^4 in (2x^3 - 1/x^2)^8
+
+** Solution
+(2x^3 - 1/x^2)^8 = (2x^3 - x^-2)^8
+
+3 * (8 - i) - 2 * (i) = 4
+24 - 3i - 2i = 4
+i = 4
+
+Therefore,
+... + 8C4 * (2x^3)^4 * (-x^-2)^4 + ...
+... + 70 * 16x^12 * x^-8 + ...
+... + 1120x^4 + ...
+
+Thus, coefficient of x^4 is equal to 1120.
+
+* Problem 7 [DONE] [CHECKED]
+** Task
+Let p be prime and 1 <= k <= p. Prove that p|(p k).
+
+** Solution
+(p k) is basically
+
+(p k) = p! / (p - k)! * k!
+
+(p k) * (p - k)! * k! = p!
+
+(p k) * (p - k)! * k! = p * (p-1)!
+
+Therefore, p|((p k) * (p - k)! * k!) or p|LHS
+
+- k! = 1 * 2 * ... * k, where k < p
+- (p-k)! = 1 * 2 * ... * (p-k), where (p-k) < p
+  (remember that p is prime, thus can not be represented as any product)
+
+Therefore, as neither k! and (p-k)! contribute the p factor to the LHS, (p k) must be a multiple of p.
+
+* Problem 8 [DONE] [CHECKED]
+** Task
+Prove if n and m are integers with 1 <= m <= n, then m * nCm = n * (n-1)C(m-1). (Try to provide a combinatorial proof as well as an algebraic one.)
+
+** Solution
+*** Algebraic
+m * nCm = n * (n-1)C(m-1)
+
+m*n! / ((n-m)!(m)!) = n(n-1)! / ((n-m)!(m-1)!)
+
+n! / ((n-m)!(m-1)!) = n! / ((n-m)!(m-1)!)
+
+*** Combinatorial
+m * nCm = n * (n-1)C(m-1)
+
+- LHS: counts ways to choose m items from n items, from these m items, chooses the special one.
+
+- RHS: chooses the special item from all n items, then chooses the remaining m-1 items from n-1 items in total.
+
+Both count the same thing, the number of ways to select m items from n, where one of the m items is designated as special.
+
+* Problem 9 [DONE] [CHECKED]
+** Task
+How many permutations of the 26 letters of the English alphabet do not contain any of the strings 'math', 'love', 'quiz'?
+
+** Solution
+*** Notes
+**** Silly
+- What does the question really mean?
+   I think it meant to find the number of lists (permutations) in which there would be no 'substrings' of 'math', 'love' and 'quiz'.
+
+It does not look like there are any repeating letters in those words, so I would say I understood the question right.
+
+Question also did not specify whether the words can come in that specific order or not. So I would assume it to be free. (no word sequence)
+
+All of the words are of length 4, with total of 12 letters, which leaves us with 14 'floating' letters.
+
+Maybe this question can be solved like the question 3?
+
+I think it is obvious that I shall find the possibilities fo the list having all of the three words and substract it from all lists.
+
+All lists size is 26!
+
+I imagine it like this:
+
+((m,a,t,h),(l,o,v,e),(q,u,i,z),b,c,d,f,g,j,k,n,p,r,s,w,x,y)
+
+I mean, I can find the number of lists that form exactly one word.
+
+That would be:
+26 - 4 = 22! of all lists with no math in it.
+
+Word 'math' can be located in 23 locations.
+
+Therefore, 23 * 22! = 23! - all lists with word math in it.
+
+Same for all of them ('love' aand 'quiz')
+
+I have the feeling that 23! might be an answer, since when there is a 'math' substring inside of the list, there can also be placed both 'love' and 'quiz'.
+
+*** Solution
+Here I will use the Iclusion-Exclusion Principle.
+- |A u B u C| = |A| + |B| + |C| - |A ∩ B| - |B ∩ C| - |A ∩ C| + |A ∩ B ∩ C|
+  It can be presented in Venn diagram.
+
+The idea is to find the number of permutations for all cases, such as:
+- 1 word present
+- 2 words present
+- 3 words present
+
+(in permutations, we will consider a word to be one object in a list instead of 4 seperate letters)
+
+*Permutations for 1 word:*
+        (1 + (26 - 4))! = 23!
+
+*Permutations for 2 word:*
+        (2 + (26 - 8))! = 20!
+
+*Permutations for 3 word:*
+        (3 + (26 - 12))! = 17!
+
+*Total permutations:* 26!
+
+Therefore,
+
+answer = 26! - (3 * 23! - 3 * 20! + 17!)
+       = 26! - 3 * 23! + 3 * 20! - 17!
+
+* Problem 10 [DONE]
+** Task
+How many 6 digits numbers have strictly decreasing digits from left to right?
+For example 987654.
+
+** Solution
+Maybe we can look on it as an array:
+
+[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+
+from which we need to remove 4 digits.
+
+So looking on it from different angle, we can rephrase it as:
+
+Find all combinations of 4 digits with no repetition that we can remove from the array.
+
+This way we will go though all the lists without changing the descending order.
+
+To be even more accurate, we don't even work with the ordered numbers. We work with the numbers that we remove from the list, since they are bijective to the descneding order numbers.
+
+Therefore, we can do a combination calculation:
+
+10! / (10 - 4)! * 4!
+
+** TODO
+- [X] Not very sure of why exaclty did the answer from the Problem 10 is a combination and not a permutation. Specifically, not getting why combinations, since they do not store the rearanged combinations.
+  - Got it, we don't need the rearanged removed objects, since that does not make any sense to remove the objects in different objects.
+
+* Problem 11 [DONE] [CHECKED]
+** Task
+Let m, n ∈ ℕ. How many solutions does the equation
+        x1 + x2 + ... xm = n
+have if
+1. all xi are nonnegative integer numbers.
+2. all xi are natural numbers?
+
+/Hint. If you are not confident in your solution, try verifying particular cases for small values of m and n./
+
+** Solution
+*** Original
+**** 1.
+Let x1, x2, ..., xm be some boxes, and we have n number of abstract 1's.
+
+Therefore, we can regard this problem as /stars and bars/ type of problem.
+
+Thus, we have a total number of n+m-1 elements (boxes and 1's).
+
+Thus, we have to choose m-1 elements (bars) from the list of elements of size n+m-1.
+
+Therefore, the answer is (n+m-1)C(m-1)
+
+**** 2.
+Let x1, x2, ..., xm be sme boxes, and we have n number of abstract 1's.
+
+In this case, we are not allowed to put zero 1's into the box.
+
+Therefore, the total number of elements would be reduced by m. (We imagine putting 1 item to all boxes.)
+
+Thus, we have a total number of n+m-1-m = n-1.
+
+Thus, we have to choose the same m-1 elements from the list of elements of size n-1.
+
+Therefore, the answer is (n-1)C(m-1).
+
+*** Polished
+**** 1. Nonnegative Integer Solutions
+I use the stars and bars method. Consider n indistinguishable objects (stars) to be among m distinguishable boxes (variables x1, x2, ..., xm).
+
+To represent distribution, I arrange n stars and m-1 separators in a sequence. Each arrangement corresponds to a unique solution.
+
+- The stars before first bar represent x1.
+- The stars between first and last bars represent x2, x3, ..., x(m-1).
+- The stars after last bar represent xm.
+
+The total number of positions in this arrengement is n+(m-1) (stars + bars).
+
+I choose m-1 positions in this arrangement n+m-1 positions for the bars.
+
+Answer: (n+m-1)C(m-1).
+
+**** 2. Positive Integer Solutions
+Since each of xi must be at least 1, I allocate one unit to each of the m variables. This accounts for m unite of the total n.
+
+The remaining n-m units can be distributed freely among the m variables as nonnegative integers.
+
+By part 1, the number of ways to distribute n-m units among m variables (with nonnegative integer values) is:
+        (n-m+m-1)C(m-1) = (n-1)C(m-1)
+
+Answer: (n-1)C(m-1).
