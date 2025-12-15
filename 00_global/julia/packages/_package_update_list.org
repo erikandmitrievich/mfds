@@ -1,0 +1,11 @@
+#+title:  Package Update List
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-12-14>
+#+lastmod: <2025-12-14 19:49>
+#+options: num:t
+#+startup: overview
+
+* List of packages to inlcude and what to explore
+- Plots
+- LinearAlgebra

@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-30>
-#+lastmod: <2025-12-12 18:07>
+#+lastmod: <2025-12-15 09:19>
 #+options: num:t
 #+startup: overview
 
@@ -72,7 +72,7 @@ If a problem explicitly requires using the Julia language to find a solution:
 - Format: Use #+begin_src julia with the following header arguments:
   - :results value
   - :export both
-  - :tangle p_{ID}.jl (where {ID} is the exact Problem Identifier, e.g., Q1, 3.5).
+  - :tangle julia/p_{ID}.jl (where {ID} is the exact Problem Identifier, e.g., 01, 01_02).
 - Constraint: The body of the code block must be empty. DO NOT generate solution code.
 
 * EXAMPLE OUTPUT

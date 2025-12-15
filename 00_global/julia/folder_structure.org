@@ -2,12 +2,15 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-07>
-#+lastmod: <2025-12-08 17:40>
+#+lastmod: <2025-12-14 19:53>
 #+options: num:t
 #+startup: overview
 
 * On what this is
 This is a sub-directory that is fully focused on Julia for the MFDS bachelor.
+
+* Goals
+To build a comprehensive explanation guide on every aspect of Julia's usage at MFDS and general basics of coding.
 
 * Structrure
 #+begin_src
@@ -25,7 +28,7 @@ Repo_Root/
 #+end_src
 
 * What to add
-- [ ] Basic intruduction to Julia.
+- [ ] Basic introduction to Julia (README).
   - [ ] On why Jupiter Notebook sucks.
   - [ ] VS Code section.
   - [ ] Instruction on how to install packages with package file.

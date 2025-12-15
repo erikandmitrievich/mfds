@@ -1,0 +1,88 @@
+#+title: Readme
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-12-14>
+#+lastmod: <2025-12-15 09:19>
+#+options: num:t
+#+startup: overview
+
+* Introduction
+Many of Vienna University MFDS Bachelor courses involve numerical computation, with the main language being Julia. However, the amount of actual coding lectures approaches zero.
+
+This repository is dedicated to filling that teaching gap. I will guide you through the *whole* coding basics required to survive the semester.
+
+** What this covers
+By "all," I mean:
+- How to install Julia and VS Code properly.
+- A "One-Click" script to download all necessary packages.
+- Guides for the most important libraries used in the Bachelor (LinearAlgebra, Plots, etc.).
+- How to integrate LaTeX for your notes and exercise papers.
+- Basics of how to use Git and GitHub
+
+* Why Julia?
+Julia is a relatively new high-level language. While this historically meant there were fewer tutorials, it is the superior choice for MFDS for three reasons:
+1. *Speed:* It approaches the speed of C/C++, meaning your numerical integrations and matrix operations finish instantly compared to Python.
+2. *Math-Friendly Syntax:* The code looks like the math on your paper. You can literally use symbols like $\in$, $\le$, or $\sigma$ as variable names.
+3. *Multiple Dispatch:* It handles mathematical types (like complex numbers) much more naturally than object-oriented languages.
+
+* The Workflow: Why "The Cloud" Sucks
+You might be tempted to run Julia in a browser (Jupyter Notebooks, or if you are netakusya Binder, Colab). *Don't do it.*
+
+** Why Browser-based coding fails:
+1. *State Issues:* Running cells out of order creates reproducible bugs that will cost you marks.
+2. *Resource Limits:* Free cloud tiers often time out or crash during heavy matrix operations or large data processing.
+3. *No Persistence:* Managing files, saving plots, and using Git is a nightmare in the browser.
+
+** The Solution: VS Code
+I strictly recommend using *Visual Studio Code* installed locally. It offers a full IDE experience with a variable explorer, plot viewer, and instant feedback, without the chaos of browser notebooks.
+
+* Installation Guide
+Follow these steps exactly to get a working environment.
+
+** Step 1: Install Julia (The Modern Way)
+We use `juliaup`, the official version manager and updater.
+
+*** Windows
+Open PowerShell (Win+R, type `powershell`) and run:
+#+begin_src powershell
+winget install julia -s msstore
+#+end_src
+
+*** Mac / Linux
+Open your terminal and run:
+#+begin_src bash
+curl -fsSL https://install.julialang.org | sh
+#+end_src
+
+/Note: Restart your terminal after installation./
+
+** Step 2: Install VS Code
+Download it here: [[https://code.visualstudio.com/][code.visualstudio.com]]
+
+** Step 3: Connect them
+1. Open VS Code.
+2. Go to Extensions (Ctrl+Shift+X).
+3. Search for "Julia" and install the official extension by Julia Graphics.
+
+* Repository Structure
+Here is how to navigate this guide:
+
+#+begin_src text
+Repo_Root/
+└── Julia_Quickstart/
+    ├── README.org                <-- You are here.
+    ├── 00_Setup_Script.jl        <-- Run this FIRST to install packages.
+    ├── 01_Crash_Course.org       <-- Syntax cheat sheet (Arrays, Loops, Functions).
+    ├── 02_Package_Manager.org    <-- How to use Pkg (The ']' key).
+    └── Cookbooks/                <-- The "Banger" Section (Copy-Paste Code)
+        ├── Plotting_Guide.jl     <-- Plots.jl examples & LaTeX export.
+        ├── Combinatorics.jl      <-- Permutations/Combinations.
+        ├── LinearAlgebra.jl      <-- Matrix operations.
+        └── DataScience.jl        <-- DataFrames + CSV handling.
+#+end_src
+
+* Getting Started
+1. Clone this repository.
+2. Open the folder in VS Code.
+3. Open `00_Setup_Script.jl`.
+4. Press `Shift + Enter` to run the lines and install your dependencies.
