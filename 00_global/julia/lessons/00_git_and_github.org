@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-23>
-#+lastmod: <2025-12-23 15:04>
+#+lastmod: <2025-12-23 15:25>
 #+options: num:t
 #+startup: overview
 
@@ -14,11 +14,11 @@ In our case:
 - *Git* is your personal "Time Machine." Unlike a simple video editor, Git records every change you make to your files. If you make a mistake, you can "rewind" your project to exactly how it looked an hour, a day, or a year ago.
 - *GitHub* is YouTube. It is the cloud platform where you upload your project. It hosts your code so others can view it, download it, or help you fix bugs.
 
-There are three main reasons why this is the industry standard:
+There are four main reasons why this is the industry standard:
 - *Safety (Git):* It keeps a history of your project. You can experiment fearlessly because you can always revert to a working version.
 - *Backup (GitHub):* It stores your code in the cloud. If your laptop dies or you spill coffee on it, your work is safe.
 - *Collaboration (GitHub):* It allows multiple people to work on the same project at the same time without overwriting each other's work.
-- *Portfolio*: In the world of programming, everyone is expected to have their GitHub page with their projects be considered as a portfolio.
+- *Portfolio (GitHub):* In the programming world, your GitHub profile serves as your portfolio, showcasing your projects to potential employers.
 
 In short: Git tracks the work on your computer, and GitHub shares that work with the world.
 
@@ -67,6 +67,15 @@ Copy the long string of text that appears (it starts with =ssh-ed25519=).
 4. Paste the text into the "Key" box and give it a Title (e.g., "My Laptop").
 5. Click *Add SSH key*.
 
+*** Step 3: Test the connection
+Let's make sure it works before we move on. Run this command:
+
+#+BEGIN_SRC sh
+ssh -T git@github.com
+#+END_SRC
+
+If you see a message like "Hi [username]! You've successfully authenticated...", you are good to go!
+
 ** Creating a Repository (Repo)
 A *Repository* (or "repo") is just a fancy name for a project folder. Currently, your project only exists in your head. Let's create the cloud storage for it.
 
@@ -77,18 +86,28 @@ A *Repository* (or "repo") is just a fancy name for a project folder. Currently,
 5. Leave the other settings alone for now.
 6. Click *Create repository*.
 
-You now have an empty project waiting on the cloud! Keep this page open, we will need the link from it in the next step.
+You now have an empty project waiting on the cloud!
 
-** Making your first commit!!!
-Now, in the blue box in the middle of the repo webpage, click on =SSH= option and copy the link that looks like this: =git@github.com:[your username]/[project name].git=.
+** Making your first commit
+Now, look at the blue box in the middle of your new GitHub repo page. Click the *SSH* option and copy the link. It looks like this:
+=git@github.com:[your-username]/[project-name].git=
 
-Open a terminal, write command =cd Desktop= (just change location from root to Desktop) and press Enter. Now write =git clone [copied link]= and press Enter.
+*** Clone the Repo
+We need to download this empty folder to your computer.
 
-You have cloned the repo! But be careful, right now you are still on your Desktop. You need to enter the folder you just created:
-
-#+BEGIN_SRC sh
-cd hello-world
-#+END_SRC
+1. Open your terminal.
+2. Move to your Desktop (so you can find the folder easily):
+   #+BEGIN_SRC sh
+   cd Desktop
+   #+END_SRC
+3. Clone (download) the repository using the link you copied:
+   #+BEGIN_SRC sh
+   git clone git@github.com:YOUR_USERNAME/hello-world.git
+   #+END_SRC
+4. *Important:* Enter the new folder:
+   #+BEGIN_SRC sh
+   cd hello-world
+   #+END_SRC
 
 *** What is a Commit?
 A commit is basically a "Save Point" for your project.
@@ -125,22 +144,27 @@ Let's try it out.
    #+BEGIN_SRC sh
    git commit -m "Created the readme file"
    #+END_SRC
-   You have now saved your work locally! But remember, this change is only on your laptop. In the next step, we will send this box to the cloud.
+   You have now saved your work locally! But remember, this change is only on your laptop.
 
 5. *Push (Send the truck).*
-   Your box is taped and labeled, but it is still sitting in your room (your laptop). We need to send it to the GitHub warehouse (the cloud) so others can see it.
+   Your box is taped and labeled, but it is still sitting in your room. We need to send it to the GitHub warehouse (the cloud) so others can see it.
 
-   Since this is your very first time sending code for this project, we need to tell Git exactly where to send it:
-
+   Since this is your first time sending code for this project, tell Git to link your computer to the cloud:
    #+BEGIN_SRC sh
    git push -u origin main
    #+END_SRC
 
-   *Breakdown:*
-   - =push=: Upload changes.
-   - =-u origin main=: "Set the destination to 'origin' (GitHub) and track the 'main' branch."
-   - /Note: You only need to type the full command the first time. In the future, you can simply type =git push=./
-
    Now, go back to your GitHub page in the browser and *refresh* it. You should see your =README.md= file and your commit message displayed there.
 
    *Congratulations!* You have officially contributed to the open-source world.
+
+* Summary (Cheat Sheet)
+Here are the commands you will use 99% of the time:
+
+| Action           | Command                   |
+| ---              | ---                       |
+| Check status     | =git status=              |
+| Add all files    | =git add .=               |
+| Save snapshot    | =git commit -m "message"= |
+| Upload to cloud  | =git push=                |
+| Download changes | =git pull=                |
