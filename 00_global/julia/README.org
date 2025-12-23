@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-14>
-#+lastmod: <2025-12-23 14:52>
+#+lastmod: <2025-12-23 20:17>
 #+options: num:t
 #+startup: overview
 
@@ -106,3 +106,20 @@ Here is how to navigate this guide:
    julia ./00_global/julia/00_setup_script.jl
    #+end_src
 5. Be happy as now you would not need to install any other package for the rest of the bachelor (hopefully).
+
+* Acknowledgments
+The initial inspiration for this project came from [[https://github.com/mitmath/julia-mit][MIT's legendary Julia repository]], which shares the noble goal of making numerical computing accessible to undergraduates.
+
+While inspired by their spirit, this guide has evolved to serve a specific purpose for the **University of Vienna MFDS** curriculum:
+- **Broader Scope:** We don't just teach the language; we teach the *ecosystem* (Git, VS Code, Linux basics, LaTeX) that is often skipped in standard math courses.
+- **Curriculum-Aligned:** The examples and cookbooks are designed to match the specific problems you will face in your bachelor's degree.
+- **Beginner-First:** This guide assumes zero prior experience with command-line tools, bridging the gap between high school math and computational science.
+
+* Contributing
+Found a typo? Know a better way to solve a linear algebra problem?
+Since you now know how to use Git:
+1. Fork this repo.
+2. Fix the issue.
+3. Open a **Pull Request**.
+
+This project is for students, by students. Let's make it better together.
