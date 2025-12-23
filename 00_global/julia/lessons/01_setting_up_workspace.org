@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-23>
-#+lastmod: <2025-12-23 19:48>
+#+lastmod: <2025-12-23 19:53>
 #+options: num:t
 #+startup: overview
 
@@ -16,8 +16,8 @@ IDE stands for "Integrated Development Environment" ☝️🤓
 #+end_quote
 
 * Step 1: The Essentials
-1. **Download VS Code:** Get it from [[https://code.visualstudio.com/][code.visualstudio.com]].
-2. **Install the Julia Extension:**
+1. *Download VS Code:* Get it from [[https://code.visualstudio.com/][code.visualstudio.com]].
+2. *Install the Julia Extension:*
    - Open VS Code.
    - Click the generic "Tetris block" icon on the left sidebar (Extensions).
    - Search for =Julia=.
@@ -49,10 +49,10 @@ The *REPL* (Read-Eval-Print Loop) is where you talk to Julia. It has "moods" (mo
 
 | Key    | Color      | Name       | Function                                                    |
 | :---   | :---       | :---       | :---                                                        |
-| (None) | **Green**  | **Julian** | Standard coding (math, variables, functions).               |
-| =?=    | **Yellow** | **Help**   | Search documentation. Type =?sin= to see how sine works.    |
-| =]=    | **Blue**   | **Pkg**    | Package Manager (installing stuff).                         |
-| =;=    | **Red**    | **Shell**  | System commands. Use =ls= or =mkdir= without leaving Julia. |
+| (None) | *Green*   | *Julian*   | Standard coding (math, variables, functions).               |
+| =?=    | *Yellow*  | *Help*     | Search documentation. Type =?sin= to see how sine works.    |
+| =]=    | *Blue*    | *Pkg*      | Package Manager (installing stuff).                         |
+| =;=    | *Red*     | *Shell*    | System commands. Use =ls= or =mkdir= without leaving Julia. |
 
 *How to exit a mode?* Just press =Backspace= on an empty line to return to Green.
 
