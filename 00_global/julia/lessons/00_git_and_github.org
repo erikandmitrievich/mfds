@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-23>
-#+lastmod: <2025-12-23 14:45>
+#+lastmod: <2025-12-23 15:04>
 #+options: num:t
 #+startup: overview
 
@@ -21,3 +21,126 @@ There are three main reasons why this is the industry standard:
 - *Portfolio*: In the world of programming, everyone is expected to have their GitHub page with their projects be considered as a portfolio.
 
 In short: Git tracks the work on your computer, and GitHub shares that work with the world.
+
+* Installation and Setup
+Before we can start coding, we need to get the tools ready and introduce your computer to GitHub.
+
+** Installing Git
+If you don't have Git installed yet, go to the official website and download the version for your OS.
+- [[https://git-scm.com/downloads][Download Git Here]]
+
+Once installed, open your terminal (or Git Bash on Windows) and tell Git who you are. This adds a signature to your work so everyone knows who wrote the code:
+
+#+BEGIN_SRC sh
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+#+END_SRC
+
+** The Keys (SSH)
+This part often confuses beginners, but think of it this way:
+
+GitHub is like a high-security bank vault. You don't want to type a password every single time you want to save a file. Instead, we use *SSH Keys*. Imagine a special lock and key set:
+1. *The Private Key:* This stays on your laptop. It is your personal ID card.
+2. *The Public Key:* This is the lock mechanism. You give this to GitHub.
+
+When you try to upload code, GitHub checks if your "ID card" fits the "Lock" you gave them. If it fits, they let you in without a password.
+
+*** Step 1: Generate the key
+Run this command in your terminal. You can just press Enter for all the prompts (you don't strictly need a passphrase for now).
+
+#+BEGIN_SRC sh
+ssh-keygen -t ed25519 -C "your.email@example.com"
+#+END_SRC
+
+*** Step 2: Give the lock to GitHub
+Now we need to copy the *public* key (the lock) so we can paste it into GitHub.
+
+Run this to display your key:
+#+BEGIN_SRC sh
+cat ~/.ssh/id_ed25519.pub
+#+END_SRC
+
+Copy the long string of text that appears (it starts with =ssh-ed25519=).
+1. Go to GitHub.com -> Click your profile photo -> *Settings*.
+2. On the left sidebar, click *SSH and GPG keys*.
+3. Click the green button *New SSH key*.
+4. Paste the text into the "Key" box and give it a Title (e.g., "My Laptop").
+5. Click *Add SSH key*.
+
+** Creating a Repository (Repo)
+A *Repository* (or "repo") is just a fancy name for a project folder. Currently, your project only exists in your head. Let's create the cloud storage for it.
+
+1. Go to the main GitHub page.
+2. Click the *+* icon in the top right corner and select *New repository*.
+3. *Repository name:* Give it a name (e.g., =hello-world=).
+4. *Public/Private:* Keep it Public.
+5. Leave the other settings alone for now.
+6. Click *Create repository*.
+
+You now have an empty project waiting on the cloud! Keep this page open, we will need the link from it in the next step.
+
+** Making your first commit!!!
+Now, in the blue box in the middle of the repo webpage, click on =SSH= option and copy the link that looks like this: =git@github.com:[your username]/[project name].git=.
+
+Open a terminal, write command =cd Desktop= (just change location from root to Desktop) and press Enter. Now write =git clone [copied link]= and press Enter.
+
+You have cloned the repo! But be careful, right now you are still on your Desktop. You need to enter the folder you just created:
+
+#+BEGIN_SRC sh
+cd hello-world
+#+END_SRC
+
+*** What is a Commit?
+A commit is basically a "Save Point" for your project.
+
+Imagine you are packing a box for shipping:
+1. *Working Directory:* You create a new item or modify an old one (Writing code).
+2. *Staging Area (git add):* You put the item inside the box. You can put multiple items in the box before you close it.
+3. *Commit (git commit):* You tape the box shut and stick a label on it describing what is inside.
+
+Once the box is labeled (committed), it is part of the history.
+
+*** The Workflow
+Let's try it out.
+
+1. Create a file named =README.md= in your folder. You can do this via your text editor, or just run this command:
+   #+BEGIN_SRC sh
+   echo "Hello World" > README.md
+   #+END_SRC
+
+2. Check the status. This is your best friend. It tells you what is going on:
+   #+BEGIN_SRC sh
+   git status
+   #+END_SRC
+   Git will tell you there is an "Untracked file". It sees the file, but it is not in the "box" yet.
+
+3. *Stage the changes (Fill the box).*
+   This command adds all current changes to the staging area:
+   #+BEGIN_SRC sh
+   git add .
+   #+END_SRC
+
+4. *Commit the changes (Label the box).*
+   Now we permanently save this snapshot. You *must* add a message explaining what you did:
+   #+BEGIN_SRC sh
+   git commit -m "Created the readme file"
+   #+END_SRC
+   You have now saved your work locally! But remember, this change is only on your laptop. In the next step, we will send this box to the cloud.
+
+5. *Push (Send the truck).*
+   Your box is taped and labeled, but it is still sitting in your room (your laptop). We need to send it to the GitHub warehouse (the cloud) so others can see it.
+
+   Since this is your very first time sending code for this project, we need to tell Git exactly where to send it:
+
+   #+BEGIN_SRC sh
+   git push -u origin main
+   #+END_SRC
+
+   *Breakdown:*
+   - =push=: Upload changes.
+   - =-u origin main=: "Set the destination to 'origin' (GitHub) and track the 'main' branch."
+   - /Note: You only need to type the full command the first time. In the future, you can simply type =git push=./
+
+   Now, go back to your GitHub page in the browser and *refresh* it. You should see your =README.md= file and your commit message displayed there.
+
+   *Congratulations!* You have officially contributed to the open-source world.

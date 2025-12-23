@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-14>
-#+lastmod: <2025-12-23 14:24>
+#+lastmod: <2025-12-23 14:52>
 #+options: num:t
 #+startup: overview
 
@@ -66,7 +66,7 @@ winget install julia -s msstore
 
 *** Mac / Linux
 Open your terminal and run:
-#+begin_src bash
+#+begin_src sh
 curl -fsSL https://install.julialang.org | sh
 #+end_src
 
@@ -102,7 +102,7 @@ Here is how to navigate this guide:
 2. Open the folder in VS Code.
 3. Open terminal in VS Code.
 4. Run:
-   #+begin_src bash
+   #+begin_src sh
    julia ./00_global/julia/00_setup_script.jl
    #+end_src
 5. Be happy as now you would not need to install any other package for the rest of the bachelor (hopefully).
