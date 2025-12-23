@@ -1,0 +1,23 @@
+#+title: 00 Git And Github
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-12-23>
+#+lastmod: <2025-12-23 14:45>
+#+options: num:t
+#+startup: overview
+
+* What are Git and GitHub?
+Imagine you are a YouTuber. You create and edit videos on your computer. Once you are happy with your work, you upload it to YouTube so the world can see it.
+
+In our case:
+- *The Code* is the video.
+- *Git* is your personal "Time Machine." Unlike a simple video editor, Git records every change you make to your files. If you make a mistake, you can "rewind" your project to exactly how it looked an hour, a day, or a year ago.
+- *GitHub* is YouTube. It is the cloud platform where you upload your project. It hosts your code so others can view it, download it, or help you fix bugs.
+
+There are three main reasons why this is the industry standard:
+- *Safety (Git):* It keeps a history of your project. You can experiment fearlessly because you can always revert to a working version.
+- *Backup (GitHub):* It stores your code in the cloud. If your laptop dies or you spill coffee on it, your work is safe.
+- *Collaboration (GitHub):* It allows multiple people to work on the same project at the same time without overwriting each other's work.
+- *Portfolio*: In the world of programming, everyone is expected to have their GitHub page with their projects be considered as a portfolio.
+
+In short: Git tracks the work on your computer, and GitHub shares that work with the world.
