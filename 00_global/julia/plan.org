@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-23>
-#+lastmod: <2025-12-23 15:29>
+#+lastmod: <2025-12-23 19:49>
 #+options: num:t
 #+startup: overview
 
@@ -19,13 +19,13 @@
     - [X] add
     - [X] commits
     - [X] push
-- [ ] Setting up the Workspace (IDE)   <-- NEW
-  - [ ] VS Code + Julia Extension
-  - [ ] REPL basics (help mode ?, shell mode ;)
-- [ ] Julia Project Management (Critical!) <-- NEW
-  - [ ] Why we don't install globally
-  - [ ] Pkg.activate (Making a project)
-  - [ ] Pkg.instantiate (Running someone else's code)
+- [X] Setting up the Workspace (IDE)   <-- NEW
+  - [X] VS Code + Julia Extension
+  - [X] REPL basics (help mode ?, shell mode ;)
+- [X] Julia Project Management (Critical!) <-- NEW
+  - [X] Why we don't install globally
+  - [X] Pkg.activate (Making a project)
+  - [X] Pkg.instantiate (Running someone else's code)
 - [ ] Julia CheatSheet
   - [ ] Basic Syntax
   - [ ] Arrays/Matrices
