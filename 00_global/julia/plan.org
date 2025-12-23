@@ -1,0 +1,31 @@
+#+title: Plan
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-12-23>
+#+lastmod: <2025-12-23 14:21>
+#+options: num:t
+#+startup: overview
+
+* Plan
+- [X] Julia pakcages installer
+- [X] More reasonable explanation of local Julia vs cloud in readme
+- [ ] Git/GitHub
+- [ ] Latex in notes and exercise sheets
+- [ ] Packages instructions
+  - [ ] LinearAlgebra
+  - [ ] Statistics
+  - [ ] DataFrames
+  - [ ] CSV
+  - [ ] Plots
+  - [ ] Pluto
+  - [ ] StatsPlots
+  - [ ] Revise
+  - [ ] Distributions
+  - [ ] HypothesisTests
+  - [ ] GLM
+  - [ ] Symbolics
+  - [ ] DifferentialEquations
+  - [ ] JuMP
+  - [ ] MLJ
+  - [ ] Flux
+- [ ] Julia CheatSheet

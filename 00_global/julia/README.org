@@ -2,22 +2,26 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-14>
-#+lastmod: <2025-12-15 09:19>
+#+lastmod: <2025-12-23 14:19>
 #+options: num:t
 #+startup: overview
 
 * Introduction
 Many of Vienna University MFDS Bachelor courses involve numerical computation, with the main language being Julia. However, the amount of actual coding lectures approaches zero.
 
-This repository is dedicated to filling that teaching gap. I will guide you through the *whole* coding basics required to survive the semester.
+This repository is dedicated to filling that teaching gap. I will guide you through the *whole* coding basics of the *whole* bachelor.
 
 ** What this covers
-By "all," I mean:
+By "all" I mean:
 - How to install Julia and VS Code properly.
 - A "One-Click" script to download all necessary packages.
 - Guides for the most important libraries used in the Bachelor (LinearAlgebra, Plots, etc.).
 - How to integrate LaTeX for your notes and exercise papers.
 - Basics of how to use Git and GitHub
+
+#+begin_quote
+Keep in mind! By default I will assume you to work in UNIX based OS (MacOS or any distribution of Linux), as some of the shell commands and other stuff would be only be working on UNIX.
+#+end_quote
 
 * Why Julia?
 Julia is a relatively new high-level language. While this historically meant there were fewer tutorials, it is the superior choice for MFDS for three reasons:
@@ -26,15 +30,27 @@ Julia is a relatively new high-level language. While this historically meant the
 3. *Multiple Dispatch:* It handles mathematical types (like complex numbers) much more naturally than object-oriented languages.
 
 * The Workflow: Why "The Cloud" Sucks
-You might be tempted to run Julia in a browser (Jupyter Notebooks, or if you are netakusya Binder, Colab). *Don't do it.*
+You might be tempted to run Julia in a browser (Jupyter Notebooks, or if you are /netakusya/ Binder, Colab). *Don't do it.*
 
 ** Why Browser-based coding fails:
-1. *State Issues:* Running cells out of order creates reproducible bugs that will cost you marks.
-2. *Resource Limits:* Free cloud tiers often time out or crash during heavy matrix operations or large data processing.
-3. *No Persistence:* Managing files, saving plots, and using Git is a nightmare in the browser.
+1. *State Issues (The Grading Trap)* Browser notebooks allow you to run code out of order, hiding bugs.
+
+   *Student Reality*: You submit code that works on your screen, but crashes when the professor runs it from top-to-bottom. Result: You lose marks.
+
+2. *Resource Limits (The "Timeout" Risk)* Free cloud servers are weak and disconnect easily
+
+   *Student Reality*: As your math models get complex, cloud notebooks will crash or time out in the middle of a calculation, forcing you to restart hours of work.
+
+3. *No Persistence (The File Nightmare)* Browsers isolate you from your file system.
+
+   *Student Reality*: You have to re-upload your data every time you open the page. Coding locally means your datasets, plots, and versions are saved permanently on your drive.
+
+4. *Offline Independence* Browser coding requires stable internet.
+
+   *Student Reality*: A local setup lets you code on the train, in a cafe, or during a WiFi outage.
 
 ** The Solution: VS Code
-I strictly recommend using *Visual Studio Code* installed locally. It offers a full IDE experience with a variable explorer, plot viewer, and instant feedback, without the chaos of browser notebooks.
+If you are begginer, I strictly recommend using *Visual Studio Code* installed locally. It offers a full IDE experience with a variable explorer, plot viewer, and instant feedback, without the chaos of browser notebooks.
 
 * Installation Guide
 Follow these steps exactly to get a working environment.
@@ -68,21 +84,25 @@ Download it here: [[https://code.visualstudio.com/][code.visualstudio.com]]
 Here is how to navigate this guide:
 
 #+begin_src text
-Repo_Root/
-└── Julia_Quickstart/
+00_global/
+└── julia/
     ├── README.org                <-- You are here.
-    ├── 00_Setup_Script.jl        <-- Run this FIRST to install packages.
-    ├── 01_Crash_Course.org       <-- Syntax cheat sheet (Arrays, Loops, Functions).
-    ├── 02_Package_Manager.org    <-- How to use Pkg (The ']' key).
-    └── Cookbooks/                <-- The "Banger" Section (Copy-Paste Code)
-        ├── Plotting_Guide.jl     <-- Plots.jl examples & LaTeX export.
-        ├── Combinatorics.jl      <-- Permutations/Combinations.
-        ├── LinearAlgebra.jl      <-- Matrix operations.
-        └── DataScience.jl        <-- DataFrames + CSV handling.
+    ├── 00_setup_Script.jl        <-- Run this FIRST to install packages.
+    ├── 01_crash_Course.org       <-- Syntax cheat sheet (Arrays, Loops, Functions).
+    ├── 02_package_Manager.org    <-- How to use Pkg (The ']' key).
+    └── cookbooks/                <-- The "Banger" Section (Copy-Paste Code)
+        ├── plotting_guide.jl     <-- Plots.jl examples & LaTeX export.
+        ├── combinatorics.jl      <-- Permutations/Combinations.
+        ├── linear_algebra.jl      <-- Matrix operations.
+        └── data_science.jl        <-- DataFrames + CSV handling.
 #+end_src
 
 * Getting Started
 1. Clone this repository.
 2. Open the folder in VS Code.
-3. Open `00_Setup_Script.jl`.
-4. Press `Shift + Enter` to run the lines and install your dependencies.
+3. Open terminal in VS Code.
+4. Run:
+   #+begin_src
+   julia ./00_global/julia/00_setup_script.jl
+   #+end_src
+5. Be happy as now you would not need to install any other package for the rest of the bachelor (hopefully).
