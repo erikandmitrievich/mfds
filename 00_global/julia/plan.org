@@ -2,12 +2,12 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-23>
-#+lastmod: <2025-12-23 15:05>
+#+lastmod: <2025-12-23 15:29>
 #+options: num:t
 #+startup: overview
 
 * Plan
-- [X] Julia pakcages installer
+- [X] Julia packages installer
 - [X] More reasonable explanation of local Julia vs cloud in readme
 - [X] Git/GitHub
   - [X] Explain idea
@@ -19,22 +19,34 @@
     - [X] add
     - [X] commits
     - [X] push
+- [ ] Setting up the Workspace (IDE)   <-- NEW
+  - [ ] VS Code + Julia Extension
+  - [ ] REPL basics (help mode ?, shell mode ;)
+- [ ] Julia Project Management (Critical!) <-- NEW
+  - [ ] Why we don't install globally
+  - [ ] Pkg.activate (Making a project)
+  - [ ] Pkg.instantiate (Running someone else's code)
+- [ ] Julia CheatSheet
+  - [ ] Basic Syntax
+  - [ ] Arrays/Matrices
+  - [ ] Functions
 - [ ] Latex in notes and exercise sheets
 - [ ] Packages instructions
-  - [ ] LinearAlgebra
-  - [ ] Statistics
-  - [ ] DataFrames
-  - [ ] CSV
-  - [ ] Plots
-  - [ ] Pluto
-  - [ ] StatsPlots
-  - [ ] Revise
-  - [ ] Distributions
-  - [ ] HypothesisTests
-  - [ ] GLM
-  - [ ] Symbolics
-  - [ ] DifferentialEquations
-  - [ ] JuMP
-  - [ ] MLJ
-  - [ ] Flux
-- [ ] Julia CheatSheet
+  - [ ] The "Must Haves"
+    - [ ] Revise (workflow speedup)
+    - [ ] Pluto (notebooks)
+  - [ ] Data Science Stack
+    - [ ] DataFrames
+    - [ ] CSV
+    - [ ] Statistics
+    - [ ] StatsPlots
+  - [ ] Math & Calculus
+    - [ ] LinearAlgebra
+    - [ ] Symbolics
+    - [ ] DifferentialEquations
+  - [ ] Modeling & ML (Advanced)
+    - [ ] Distributions
+    - [ ] HypothesisTests
+    - [ ] GLM
+    - [ ] JuMP (Optimization)
+    - [ ] MLJ / Flux (Machine Learning)
