@@ -1,0 +1,8 @@
+#+title: Set 04
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-01-08>
+#+lastmod: <2026-01-08 11:20>
+#+options: num:t
+#+startup: overview
+

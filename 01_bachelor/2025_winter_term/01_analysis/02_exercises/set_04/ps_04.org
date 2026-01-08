@@ -2,11 +2,12 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-04>
-#+lastmod: <2026-01-04 14:30>
+#+lastmod: <2026-01-06 20:10>
 #+options: num:t
 #+startup: overview
+#+latex: \newpage
 
-* Problem 1
+* Problem 1 :DONE:
 ** Task
 Verify the following trigonometric identities and check them in Julia.
 $\cos(-x)=\cos(x)$
@@ -19,51 +20,315 @@ $\cos(x+\pi)=-\cos(x)$,
 ** Notes
 
 ** Solution
-#+begin_src julia :results value :export both :tangle julia/p_1.jl
+*** $\cos(-x)=\cos(x)$
+#+begin_quote
+Tailor Series Expansion
+$$
+cos(x) = \sum_{k=0}^{\infty} \dfrac{(-1)^k x^{2k}}{(2k)!} \qquad
+sin(x) = \sum_{k=0}^{\infty} \dfrac{(-1)^k x^{2k+1}}{(2k+1)!} \qquad
+$$
+#+end_quote
+
+Lets assume $cos(-x) = cos(x)$. Hence,
+
+$\sum_{k=0}^{\infty} \dfrac{(-1)^k (-x)^{2k}}{(2k)!} = \sum_{k=0}^{\infty} \dfrac{(-1)^k x^{2k}}{(2k)!}$
+
+Since $k \in \mathbb{N}_0$, $(-x)^{2k} = x^{2k}$. Thus,
+
+$\sum_{k=0}^{\infty} \dfrac{(-1)^k x^{2k}}{(2k)!} = \sum_{k=0}^{\infty} \dfrac{(-1)^k x^{2k}}{(2k)!}$
+
+$cos(-x) = cos(x)$
+
+*** $\sin(-x)=-\sin(x)$
+#+begin_quote
+Tailor Series Expansion
+$$
+cos(x) = \sum_{k=0}^{\infty} \dfrac{(-1)^k x^{2k}}{(2k)!} \qquad
+sin(x) = \sum_{k=0}^{\infty} \dfrac{(-1)^k x^{2k+1}}{(2k+1)!} \qquad
+$$
+#+end_quote
+
+$sin(-x) = \sum_{k=0}^{\infty} \dfrac{(-1)^k (-x)^{2k+1}}{(2k+1)!}$
+
+Expression $2k+1$, where $k \in \mathbb{N}_0$ would always be odd.
+
+$sin(-x) = -\sum_{k=0}^{\infty} \dfrac{(-1)^k (x)^{2k+1}}{(2k+1)!}$
+
+$sin(-x) = -sin(x)$
+
+*** $\cos(x)=\sin(x+\frac{\pi}{2})$
+#+begin_quote
+Trigonometric identity:
+$$\sin(A + B) = \sin(A)\cos(B) + \cos(A)\sin(B)$$
+#+end_quote
+
+$sin(x + \dfrac{\pi}{2}) = sin(x)cos(\dfrac{\pi}{2}) + cos(x)sin(\dfrac{\pi}{2})$
+
+$sin(x + \dfrac{\pi}{2}) = cos(x)$
+
+*** $\sin(x)=\cos(x-\frac{\pi}{2})$
+#+begin_quote
+Trigonometric identity:
+$$\cos(A - B) = cos(A)cos(B) + sin(A)sin(B)$$
+#+end_quote
+
+$\cos(x - \dfrac{\pi}{2}) = cos(x)cos(\dfrac{\pi}{2}) + sin(x)sin(\dfrac{\pi}{2})$
+
+$\cos(x - \dfrac{\pi}{2}) = sin(x)$
+
+*** $\sin(x+\pi)=-\sin(x)$
+#+begin_quote
+Trigonometric identity:
+$$\sin(A + B) = \sin(A)\cos(B) + \cos(A)\sin(B)$$
+#+end_quote
+
+$\sin(x + \pi) = \sin(x)\cos(\pi) + \cos(x)\sin(\pi)$
+
+$\sin(x + \pi) = -\sin(x)$
+
+*** $\cos(x+\pi)=-\cos(x)$
+#+begin_quote
+Trigonometric identity:
+$$\cos(A + B) = cos(A)cos(B) - sin(A)sin(B)$$
+#+end_quote
+
+$\cos(x + \pi) = cos(x)cos(\pi) - sin(x)sin(\pi)$
+
+$\cos(x + \pi) = -cos(x)$
+
+*** code
+#+begin_src julia :results output :export both :tangle julia/p_1.jl
+using Symbolics
+
+euler_cos(θ) = (exp(im*θ) + exp(-im*θ)) / 2
+euler_sin(θ) = (exp(im*θ) - exp(-im*θ)) / (2im)
+
+function validate(label, LHS, RHS)
+    # symbolic difference
+    diff = LHS - RHS
+
+    sym_diff = simplify(diff)
+
+    @variables x
+    num_diff = substitute(sym_diff, Dict(x => 1.0))
+
+    val = Symbolics.unwrap(num_diff)
+
+    if abs(val) < 1e-12
+        println(rpad(label, 30), " ✅ Q.E.D.")
+    else
+        println(rpad(label, 30), " ❌ Not proven. Diff ≈ $val")
+    end
+end
+
+@variables x
+
+println("--- PROOFS (Euler + Numerical Check) ---")
+validate("cos(-x) = cos(x)",       euler_cos(-x), euler_cos(x))
+validate("sin(-x) = -sin(x)",      euler_sin(-x), -euler_sin(x))
+validate("cos(x) = sin(x + π/2)",  euler_cos(x),   euler_sin(x + pi/2))
+validate("sin(x) = cos(x - π/2)",  euler_sin(x),   euler_cos(x - pi/2))
+validate("sin(x + π) = -sin(x)",   euler_sin(x+pi), -euler_sin(x))
+validate("cos(x + π) = -cos(x)",   euler_cos(x+pi), -euler_cos(x))
 #+end_src
 
-* Problem 2
+#+RESULTS:
+#+begin_example
+euler_cos (generic function with 1 method)
+euler_sin (generic function with 1 method)
+validate (generic function with 1 method)
+1-element Vector{Num}:
+ x
+--- PROOFS (Euler + Numerical Check) ---
+cos(-x) = cos(x)               ✅ Q.E.D.
+sin(-x) = -sin(x)              ✅ Q.E.D.
+cos(x) = sin(x + π/2)          ✅ Q.E.D.
+sin(x) = cos(x - π/2)          ✅ Q.E.D.
+sin(x + π) = -sin(x)           ✅ Q.E.D.
+cos(x + π) = -cos(x)           ✅ Q.E.D.
+#+end_example
+
+* Problem 2 :DONE:
 ** Task
 Determine the derivative of arccos and check in Julia.
 
 ** Notes
 
 ** Solution
-#+begin_src julia :results value :export both :tangle julia/p_2.jl
+*** Derivation
+$y = cos^{-1}(x)$
+
+$cos(y) = x$
+
+$\dfrac{d}{dx} [cos(y)] = \dfrac{d}{dx} [x]$
+
+$-sin(y) \dfrac{dy}{dx} = 1$
+
+$\dfrac{dy}{dx} = -\dfrac{1}{sin(y)}$
+
+$sin(y)^2 + cos(y)^2 = 1$
+
+$sin(y)^2 + x^2 = 1$
+
+$sin(y) = \sqrt{1 - x^2}$
+
+$\dfrac{dy}{dx} = -\dfrac{1}{\sqrt{1 - x^2}}$
+
+*** Code
+#+begin_src julia
+import Pkg; Pkg.add("Symbolics")
 #+end_src
+
+#+RESULTS:
+: nil
+
+#+begin_src julia :results output :export both :tangle julia/p_2.jl
+using Symbolics
+
+@variables x
+D = Differential(x)
+
+expr = acos(x)
+
+calculated_derivative = expand_derivatives(D(expr))
+
+println("Function:   ", expr)
+println("Derivative: ", calculated_derivative)
+
+manual_formula = -1 / sqrt(1 - x^2)
+
+difference = simplify(calculated_derivative - manual_formula)
+
+if isequal(difference, 0)
+    println("✅ Verification Successful.")
+else
+    println("❌ Verification Failed.")
+end
+#+end_src
+
+#+RESULTS:
+#+begin_example
+1-element Vector{Num}:
+ x
+Differential(x)
+acos(x)
+-(1 / sqrt(1 - (x^2)))
+Function:   acos(x)
+Derivative: -(1 / sqrt(1 - (x^2)))
+-1 / sqrt(1 - (x^2))
+0
+✅ Verification Successful.
+#+end_example
 
 * Problem 3
 ** Task
-Suppose that $f,g:U\rightarrow\mathbb{R}$ are continuous in $x_{0}\in U$ Prove that if $f$ is also differentiable in $x_{0}$ and $f(x_{0})=0,$ then the product $f g$ is differentiable in $x_{0}$.
+Suppose that $f,g:U\rightarrow\mathbb{R}$ are continuous in $x_{0}\in U$ Prove that if $f$ is also differentiable in $x_{0}$ and $f(x_{0})=0$ then the product $f g$ is differentiable in $x_{0}$.
 Illustrate this claim in Julia for the functions $f(x)=x$ and $g(x)=|x|$.
 
 ** Notes
 
 ** Solution
+*** Derivation
+
+
+*** Code
 #+begin_src julia :results value :export both :tangle julia/p_3.jl
 #+end_src
 
-* Problem 4
+* Problem 4 :DONE:
 ** Task
 The aim is to prove $(1+\frac{1}{n})^{n}\rightarrow e$
 (a) Determine the values of $\log(1)$ $\log^{\prime}(1)$ and verify the identity
-$\log^{\prime}(1)=\lim_{n\rightarrow\infty}n~\log(1+\frac{1}{n}).$
+$\log^{\prime}(1)=\lim_{n\rightarrow\infty}n~\log(1+\frac{1}{n})$
 (b) Use the definition of the general exponential to prove $(1+\frac{1}{n})^{n}\rightarrow \exp(1)$.
 (This determines the limit of the sequence in Problem 4 of Problem Set 1)
 
 ** Notes
 
 ** Solution
+*** a
 
-* Problem 5
+$\dfrac{d}{dx} f(x) = \lim_{h \rightarrow 0} \dfrac{f(x+h) - f(x)}{h}$
+
+$\log(1) = 0$
+
+$\log'(1) = \dfrac{d}{dx} \left( \log(1) \right) = \lim_{n \rightarrow 0} \dfrac{\log(1+n) - \log(1)}{n}$
+
+$\log'(1) = \lim_{n\rightarrow0} \dfrac{\log(1+n)}{n}$
+
+$\log'(1) = \lim_{n\rightarrow\infty} \dfrac{\log(1+\dfrac{1}{n})}{\dfrac{1}{n}}$
+$\log'(1) = \lim_{n\rightarrow\infty} n\log(1+\dfrac{1}{n})$
+
+*** b
+
+$\log'(1) = \dfrac{1}{1} = 1$
+
+$1 = \lim_{n\rightarrow\infty} n\log(1+\dfrac{1}{n})$
+
+$1 = \lim_{n\rightarrow\infty} \log((1+\dfrac{1}{n})^n)$
+
+$1 = \log(\lim_{n\rightarrow\infty} (1+\dfrac{1}{n})^n)$
+
+$e = \lim_{n\rightarrow\infty} (1+\dfrac{1}{n})^n$
+
+* Problem 5 :DONE:
 ** Task
 Prove by induction (and using the product rule) that, for $1\le n\in\mathbb{N}$ the derivative of $f:\mathbb{R}\rightarrow\mathbb{R}$, $f(x)=x^{n}$ is given by $f^{\prime}(x)=nx^{n-1}$.
 
 ** Notes
+#+begin_quote
+*Proposition* The statement S1, S2, S3, S4, ... are all true.
+
+Proof. (Induction)
+1. Prove that the first statement S1 is true
+2. Given any integer k >= 1, prove that the statement Sk => Sk+1 is true.
+
+It follows by mathematical induction that every Sn is true.
+#+end_quote
 
 ** Solution
+*Proposition.* For $1 \le n \in \mathbb{N} : f : \mathbb{R} \rightarrow \mathbb{R}, f(x) = x^n \implies f'(x) = nx^{n-1}$.
 
-* Problem 6
+*Proof.*
+
+*Base Case.* $n = 1$.
+$f(x) = x^1 = x$.
+Using the limit definition:
+$f'(x) = \lim_{h\rightarrow0} \dfrac{(x+h) - x}{h} = \lim_{h\rightarrow0} \dfrac{h}{h} = 1$.
+
+Using the formula:
+$nx^{n-1} = 1x^{1-1} = 1$.
+
+Base holds.
+
+*Induction Hypothesis.* Assume statement holds for $n = k : \dfrac{d}{dx}(x^k) = kx^{k-1}$.
+
+*Inductive Step.*
+We must show that the statement holds for $n = k+1$.
+Target: $\dfrac{d}{dx}(x^{k+1}) = (k+1)x^k$.
+
+Rewrite the term:
+$x^{k+1} = x \cdot x^k$
+
+Apply the Product Rule ($u=x, v=x^k$):
+$\dfrac{d}{dx}(x^{k+1}) = \dfrac{d}{dx} \left[ x \cdot x^k \right]$
+
+$\dfrac{d}{dx}(x \cdot x^k) = \left[ \dfrac{d}{dx} x \right] \cdot x^k + x \cdot \left[ \dfrac{d}{dx} x^k \right]$
+
+Substitute derivatives (Base Case and Hypothesis):
+$\dfrac{d}{dx}(x \cdot x^k) = (1) \cdot x^k + x \cdot (kx^{k-1})$
+
+Simplify:
+$\dfrac{d}{dx}(x^{k+1}) = x^k + kx^{1 + k - 1}$
+$\dfrac{d}{dx}(x^{k+1}) = x^k + kx^k$
+
+Factor:
+$\dfrac{d}{dx}(x^{k+1}) = (1+k)x^k$
+$\dfrac{d}{dx}(x^{k+1}) = (k+1)x^k$
+
+*Conclusion.* Since $S_1$ is true and $S_k \implies S_{k+1}$, the proposition is true for all $n \in \mathbb{N}$ by mathematical induction.
+
+* Problem 6 :DONE:
 ** Task
 Compute the derivative of the following functions:
 1. $f(x)=\sin(x^{2})$
@@ -75,10 +340,106 @@ Compute the derivative of the following functions:
 Visualize all functions and their derivatives in Julia.
 
 ** Notes
+#+begin_quote
+Chain Rule:
+
+$$\dfrac{d}{dx} \left[ f(g(x)) \right] = f'(g(x)) \cdot g'(x)$$
+
+Product Rule:
+
+$$\dfrac{d}{dx} \left[ f(x)g(x) \right] = f(x)g'(x) + f'(x)g(x)$$
+
+Derivatives of Logarithmic Functions:
+
+$$\dfrac{d}{dx} log_a \left[ f(x) \right] = \dfrac{1}{f(x) ln(a)} \cdot f'(x)$$
+
+
+#+end_quote
 
 ** Solution
-#+begin_src julia :results value :export both :tangle julia/p_6.jl
+*** $f(x)=\sin(x^{2})$
+
+Using the chain rule:
+$f'(x) = \cos(x^2) \cdot \frac{d}{dx}(x^2)$
+$f'(x) = 2x \cos(x^2)$
+
+*** $g(x)=e^{3x+1}$
+
+Using the chain rule:
+$g'(x) = e^{3x+1} \cdot \frac{d}{dx}(3x+1)$
+$g'(x) = 3e^{3x+1}$
+
+*** $f(x)=\ln(5x^{2}-x+4)$
+
+Using the chain rule ($\frac{u'}{u}$):
+$f'(x) = \frac{\frac{d}{dx}(5x^2 - x + 4)}{5x^2 - x + 4}$
+$f'(x) = \frac{10x - 1}{5x^2 - x + 4}$
+
+*** $g(x)=(2x^{3}-x)^{5}$
+
+Using the general power rule:
+$g'(x) = 5(2x^3 - x)^4 \cdot \frac{d}{dx}(2x^3 - x)$
+$g'(x) = 5(2x^3 - x)^4 (6x^2 - 1)$
+
+*** $f(x)=\sqrt{1+e^{2x}}$
+
+Rewrite as $f(x) = (1+e^{2x})^{\frac{1}{2}}$.
+$f'(x) = \frac{1}{2} (1 + e^{2x})^{-\frac{1}{2}} \cdot \frac{d}{dx}(1+e^{2x})$
+$f'(x) = \frac{1}{2\sqrt{1 + e^{2x}}} \cdot 2e^{2x}$
+$f'(x) = \frac{e^{2x}}{\sqrt{1 + e^{2x}}}$
+
+*** $g(x)=\cos(\ln x)$, $x>0$
+
+Using the chain rule:
+$g'(x) = -\sin(\ln x) \cdot \frac{d}{dx}(\ln x)$
+$g'(x) = -\frac{\sin(\ln x)}{x}$
+
+*** Code
+#+begin_src julia :results output :export both :tangle julia/p_6.jl
+using Plots
+
+const PATH = "./figs/"
+
+# format: (function, derivative, range, title, name)
+data = [
+    (x -> sin(x^2),          x -> 2x * cos(x^2),                 -3:0.01:3,     "f(x) = sin(x^2)",     "fig_1"),
+    (x -> exp(3x + 1),       x -> 3 * exp(3x + 1),               -1:0.01:0.5,   "g(x) = e^(3x+1)",     "fig_2"),
+    (x -> log(5x^2 - x + 4), x -> (10x - 1) / (5x^2 - x + 4),    -3:0.01:3,     "f(x) = ln(5x^2-x+4)", "fig_3"),
+    (x -> (2x^3 - x)^5,      x -> 5 * (2x^3 - x)^4 * (6x^2 - 1), -1.1:0.01:1.1, "g(x) = (2x^3-x)^5",   "fig_4"),
+    (x -> sqrt(1 + exp(2x)), x -> exp(2x) / sqrt(1 + exp(2x)),   -2:0.01:2,     "f(x) = sqrt(1+e^2x)", "fig_5"),
+    (x -> cos(log(x)),       x -> -sin(log(x)) / x,              0.2:0.01:6,    "g(x) = cos(ln x)",    "fig_6")
+]
+
+plots = map(data) do (f, df, r, t, n)
+    p = plot(r, f, label="f(x)", linewidth=2, title=t, legend=:topleft)
+    plot!(p, r, df, label="f'(x)", linewidth=2, title=t, linestyle=:dash)
+    savefig(joinpath(PATH, n))
+    p
+end
+
+final_plot = plot(plots..., layout=(3, 2), size=(1000, 1200), plot_title="Functions and Derivatives")
+savefig(joinpath(PATH, "derivatives"))
 #+end_src
+
+#+RESULTS:
+#+begin_example
+"./figs/"
+6-element Vector{Tuple{Function, Function, StepRangeLen{Float64, Base.TwicePrecision{Float64}, Base.TwicePrecision{Float64}, Int64}, String, String}}:
+ (var"#1#13"(), var"#2#14"(), -3.0:0.01:3.0, "f(x) = sin(x^2)", "fig_1")
+ (var"#3#15"(), var"#4#16"(), -1.0:0.01:0.5, "g(x) = e^(3x+1)", "fig_2")
+ (var"#5#17"(), var"#6#18"(), -3.0:0.01:3.0, "f(x) = ln(5x^2-x+4)", "fig_3")
+ (var"#7#19"(), var"#8#20"(), -1.1:0.01:1.1, "g(x) = (2x^3-x)^5", "fig_4")
+ (var"#9#21"(), var"#10#22"(), -2.0:0.01:2.0, "f(x) = sqrt(1+e^2x)", "fig_5")
+ (var"#11#23"(), var"#12#24"(), 0.2:0.01:6.0, "g(x) = cos(ln x)", "fig_6")
+6-element Vector{Plots.Plot{Plots.GRBackend}}:
+ Plot{Plots.GRBackend() n=2}
+ Plot{Plots.GRBackend() n=2}
+ Plot{Plots.GRBackend() n=2}
+ Plot{Plots.GRBackend() n=2}
+ Plot{Plots.GRBackend() n=2}
+ Plot{Plots.GRBackend() n=2}
+"/Users/ziro2173/personal/university/01_bachelor/2025_winter_term/01_analysis/02_exercises/set_04/figs/derivatives.png"
+#+end_example
 
 * Problem 7
 ** Task
@@ -106,15 +467,110 @@ Let $(x_{n})_{n\ge0}$ be defined by $x_{0}=1$, $x_{n+1}=\frac{1}{2}(x_{n}+\frac{
 #+begin_src julia :results value :export both :tangle julia/p_8.jl
 #+end_src
 
-* Problem 9
+* Problem 9 :DONE:
 ** Task
 Consider $f:\mathbb{R}\rightarrow\mathbb{R}$ $f(x)=\cos(x)$ and the sequence
 $x_{0}=2$, $x_{n+1}=x_{n}-\frac{f(x_{n})}{f^{\prime}(x_{n})}$
-$n\in\mathbb{N}.$
+$n\in\mathbb{N}$
 Implement the sequence in Julia and compare with the bisection method in the interval [0, 2].
 
 ** Notes
 
 ** Solution
-#+begin_src julia :results value :export both :tangle julia/p_9.jl
+#+begin_src julia :results output :export both :tangle julia/p_9.jl
+using Plots
+
+# ensure output directory exists
+mkpath("./figs")
+
+# define functions
+f(x) = cos(x)
+df(x) = -sin(x)
+newton_step(x) = x - f(x) / df(x)
+
+# shared settings
+iterations = 5
+
+# --- part 1: Newton's Method ---
+x0 = 2.0
+n_history = Float64[x0]
+
+for i in 1:iterations
+    current_x = last(n_history)
+    next_x = newton_step(current_x)
+
+    push!(n_history, next_x)
+    println("Newton Iter $i: $next_x")
+end
+
+# --- part 2: Bisection Method ---
+a, b = 0.0, 2.0
+b_history = Float64[]
+
+curr_a, curr_b = a, b
+
+for i in 1:iterations
+    global curr_a, curr_b
+
+    c = (curr_a + curr_b) / 2
+    push!(b_history, c)
+
+    if f(c) * f(curr_a) < 0
+        curr_b = c
+    else
+        curr_a = c
+    end
+    println("Bisection Iter $i: $c" )
+end
+
+
+# plotting
+indices_n = 0:(length(n_history) - 1)
+indices_b = 1:length(b_history)
+
+plot(title="Convergence Comparison: Newton vs Bisection",
+     xlabel="Iteration", ylabel="Value", legend=:topright)
+
+# plot Newton
+plot!(indices_n, n_history,
+      label="Newton (x_n)",
+      linewidth=2, marker=:circle, color=:blue)
+
+# plot Bisection
+plot!(indices_b, b_history,
+      label="Bisection (midpoints)",
+      linewidth=2, marker=:square, color=:green, linestyle=:dash)
+
+# reference Line
+hline!([pi/2], label="True Root (π/2)", color=:red, linestyle=:dot)
+
+savefig("./figs/p_9")
 #+end_src
+
+#+RESULTS:
+#+begin_example
+"./figs"
+f (generic function with 1 method)
+df (generic function with 1 method)
+newton_step (generic function with 1 method)
+5
+2.0
+1-element Vector{Float64}:
+ 2.0
+Newton Iter 1: 1.5423424456397141
+Newton Iter 2: 1.5708040082580965
+Newton Iter 3: 1.5707963267948966
+Newton Iter 4: 1.5707963267948966
+Newton Iter 5: 1.5707963267948966
+(0.0, 2.0)
+Float64[]
+(0.0, 2.0)
+Bisection Iter 1: 1.0
+Bisection Iter 2: 1.5
+Bisection Iter 3: 1.75
+Bisection Iter 4: 1.625
+Bisection Iter 5: 1.5625
+0:5
+1:5
+"/Users/ziro2173/personal/university/01_bachelor/2025_winter_term/01_analysis/02_exercises/set_04/figs/p_9.png"
+#+end_example

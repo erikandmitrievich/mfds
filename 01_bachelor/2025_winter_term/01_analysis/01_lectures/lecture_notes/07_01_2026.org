@@ -1,0 +1,8 @@
+#+title: 07 01 2026
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-01-07>
+#+lastmod: <2026-01-07 08:04>
+#+options: num:t
+#+startup: overview
+
