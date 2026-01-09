@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-08>
-#+lastmod: <2026-01-09 16:12>
+#+lastmod: <2026-01-09 19:44>
 #+options: num:t
 #+startup: overview
 
@@ -120,8 +120,8 @@ Show the following properties of a field $\mathbb{F}$ with operations of additio
 (a) Every element has a unique additive inverse.
 (b) Every element distinct from $0$ has a unique multiplicative inverse.
 (c) For any $\alpha, \beta, \gamma\in\mathbb{F}$, $\alpha \boxplus \gamma = \beta \boxplus \gamma$ implies $\alpha=\beta$.
-(d) The implication $(\gamma\oplus\alpha=\gamma\oplus\beta)\Rightarrow(\alpha=\beta)$ holds for any $\alpha, \beta, \gamma\in\mathbb{F}$
-(e) The statements $a \otimes\gamma=\beta\mathbb{N}$ and $\alpha=\beta$ are equivalent for any $\alpha,\beta\in\mathbb{F}$ and $\gamma\in\mathbb{F}\backslash\{0\}$
+(d) The implication $(\gamma \boxplus \alpha = \gamma \boxplus \beta) \Rightarrow (\alpha = \beta)$ holds for any $\alpha, \beta, \gamma\in\mathbb{F}$.
+(e) The statements $\alpha \boxtimes \gamma = \beta \boxtimes \gamma$ and $\alpha=\beta$ are equivalent for any $\alpha,\beta\in\mathbb{F}$ and $\gamma\in\mathbb{F}\backslash\{0\}$.
 (f) Consider $\alpha,\beta,\gamma\in\mathbb{F}$ such that $\gamma\ne0$ and $\gamma\otimes\alpha=\gamma\otimes\beta$. Then $\alpha=\beta$.
 (g) Every $\alpha\in\mathbb{F}$ fulfills $)\mathbb{\times}\alpha=0$. Hint: this statement expresses a non-symmetric relation between the two field operations, so the proof clearly has to use one or several of the field axioms that introduce dissimilarities of the operations.
 (h) Let $-1$ denote the additive inverse of $1$ in $\mathbb{F}$. Then every $\alpha\in\mathbb{F}$ and the additive inverse $a$ of $\alpha$ satisfies $-\alpha=(-1)\otimes \alpha$. Does your solution prove the uniqueness of the additive inverses? Does your solution rely on the uniqueness of the additive inverses?
@@ -181,8 +181,45 @@ $\begin{aligned}
 
 *Conclusion*:  $\alpha, \beta, \gamma\in\mathbb{F}, \alpha \boxplus \gamma = \beta \boxplus \gamma \implies \alpha=\beta$.
 
-*** (d) The implication $(\gamma\oplus\alpha=\gamma\oplus\beta)\Rightarrow(\alpha=\beta)$ holds for any $\alpha, \beta, \gamma\in\mathbb{F}$
-*** (e) The statements $a \otimes\gamma=\beta\mathbb{N}$ and $\alpha=\beta$ are equivalent for any $\alpha,\beta\in\mathbb{F}$ and $\gamma\in\mathbb{F}\backslash\{0\}$
+*** (d) The implication $(\gamma \boxplus \alpha = \gamma \boxplus \beta) \Rightarrow (\alpha = \beta)$ holds for any $\alpha, \beta, \gamma\in\mathbb{F}$.
+
+Let $\alpha, \beta, \gamma \in \mathbb{F}$. Assume $\gamma \boxplus \alpha = \gamma \boxplus \beta$. Due to axiom of additive inverse, $\exists (-\gamma) \in \mathbb{F}$.
+
+$\begin{aligned}
+\gamma \boxplus \alpha &= \gamma \boxplus \beta & \text{(assumption)} \\
+\alpha \boxplus \gamma &= \gamma \boxplus \beta & \text{(additive commutativity on LHS)} \\
+\alpha \boxplus \gamma &= \beta \boxplus \gamma & \text{(additive commutativity on RHS)} \\
+(\alpha \boxplus \gamma) \boxplus (-\gamma) &= (\beta \boxplus \gamma) \boxplus (-\gamma) & \text{(well-defined operation)} \\
+\alpha \boxplus (\gamma \boxplus (-\gamma)) &= \beta \boxplus (\gamma \boxplus (-\gamma)) & \text{(additive associativity)} \\
+\alpha \boxplus 0 &= \beta \boxplus 0 & \text{(additive inverse)} \\
+\alpha &= \beta & \text{(additive identity)} \\
+\end{aligned}$
+
+Hence, $(\gamma \boxplus \alpha = \gamma \boxplus \beta) \Rightarrow (\alpha = \beta)$ holds for any $\alpha, \beta, \gamma\in\mathbb{F}$
+
+*** (e) The statements $\alpha \boxtimes \gamma = \beta \boxtimes \gamma$ and $\alpha=\beta$ are equivalent for any $\alpha,\beta\in\mathbb{F}$ and $\gamma\in\mathbb{F}\backslash\{0\}$.
+
+- $(\alpha \boxtimes \gamma = \beta \boxtimes \gamma) \Rightarrow (\alpha = \beta)$
+
+  Assume $\alpha \boxtimes \gamma = \beta \boxtimes \gamma$. Since $\gamma \in \mathbb{F} \textbackslash \left\{ 0 \right\}, \quad \exists \gamma^{-1} \in \mathbb{F}$.
+
+  $\begin{aligned}
+  \alpha \boxtimes \gamma &= \beta \boxtimes \gamma & \text{(assumption)} \\
+  (\alpha \boxtimes \gamma) \boxtimes (\gamma^{-1}) &= (\beta \boxtimes \gamma) \boxtimes (\gamma^{-1}) & \text{(well-defined operation)} \\
+  \alpha \boxtimes (\gamma \boxtimes (\gamma^{-1})) &= \beta \boxtimes (\gamma \boxtimes (\gamma^{-1})) & \text{(multiplicative associativity)} \\
+  \alpha \boxtimes 1 &= \beta \boxtimes 1 & \text{(multiplicative inverse)} \\
+  \alpha &= \beta & \text{(multiplicative identity)} \\
+  \end{aligned}$
+
+- $(\alpha = \beta) \Rightarrow (\alpha \boxtimes \gamma = \beta \boxtimes \gamma)$
+
+  $\begin{aligned}
+  \alpha &= \beta & \text{(assumption)} \\
+  \alpha \boxtimes \gamma &= \beta \boxtimes \gamma & \text{(well-defined operation)} \\
+  \end{aligned}$
+
+*Conclusion*: Since both expressions imply each other, they are equivalent.
+
 *** (f) Consider $\alpha,\beta,\gamma\in\mathbb{F}$ such that $\gamma\ne0$ and $\gamma\otimes\alpha=\gamma\otimes\beta$. Then $\alpha=\beta$.
 *** (g) Every $\alpha\in\mathbb{F}$ fulfills $)\mathbb{\times}\alpha=0$. Hint: this statement expresses a non-symmetric relation between the two field operations, so the proof clearly has to use one or several of the field axioms that introduce dissimilarities of the operations.
 *** (h) Let $-1$ denote the additive inverse of $1$ in $\mathbb{F}$. Then every $\alpha\in\mathbb{F}$ and the additive inverse $a$ of $\alpha$ satisfies $-\alpha=(-1)\otimes \alpha$. Does your solution prove the uniqueness of the additive inverses? Does your solution rely on the uniqueness of the additive inverses?
