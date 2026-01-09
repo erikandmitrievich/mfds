@@ -1,0 +1,171 @@
+#+title: Ps 01
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-01-08>
+#+lastmod: <2026-01-09 13:24>
+#+options: num:t
+#+startup: overview
+
+* Problem 1 :DONE:
+** Task
+Verifying the definition of a field
+
+Show that $\mathbb{F}_{2}$ is indeed a field (see example II.1.5 in the lecture notes).
+
+** Notes
+#+begin_quote
+*Definition. (Field)* Field is a set $F$, equipped with two binary operations called *addition* ($\boxplus$) and *multiplication* ($\boxtimes$), such that the following axioms hold for all elements $a, b, c \in F$:
+
+A. Axioms of Addition:
+   1. *Associativity*: $(a \boxplus b) \boxplus c = a \boxplus (b \boxplus c)$.
+   2. *Commutativity*: $a \boxplus b = b \boxplus a$.
+   3. *Additive Identity*: $\forall a \in F, \exists 0 \in F : a \boxplus 0 = a$.
+   4. *Additive Inverse*: $\forall a \in F, \exists (-a) \in F : a \boxplus (-a) = 0$.
+
+B. Axioms of Multiplication
+   5. *Associativity*: $(a \boxtimes b) \boxtimes c = a \boxtimes (b \boxtimes c)$.
+   6. *Commutativity*: $a \boxtimes b = b \boxtimes a$.
+   7. *Multiplicative Identity*: $\forall a \in F, \exists 1 \in F : 1 \neq 0 : a \boxtimes 1 = a$.
+   8. *Multiplicative Inverse*: $\forall a \in F : a \neq 0, \exists a^{-1} \in F : a \boxtimes a^{-1} = 1$.
+
+C. Distributive Law
+   9. *Distributivity*: $a \boxtimes (b \boxplus c) = (a \boxtimes b) \boxplus (a \boxtimes c)$.
+#+end_quote
+
+** Solution
+*Goal*: Show $\mathbb{F}_2$ is a field by definition.
+
+*Definition*:
+
+$\mathbb{F}_2 = (\{0, 1\}, \boxplus, \boxtimes) \quad : \quad \boxplus, \boxtimes: \mathbb{F}_2 \times \mathbb{F}_2 \rightarrow \mathbb{F}_2$
+
+$0 \boxplus 0 = 1 \boxplus 1 = 0, \quad 1 \boxplus 0 = 0 \boxplus 1 = 1$
+
+$0 \boxtimes 0 = 1 \boxtimes 0 = 0 \boxtimes 1 = 0, \quad 1 \boxtimes 1 = 1$
+
+*Proof.*
+
+- Axioms of Addition:
+  1. *Associativity*:
+
+     |---+---+---+-----------------------------+-----------------------------|
+     | a | b | c | $(a \boxplus b) \boxplus c$ | $a \boxplus (b \boxplus c)$ |
+     |---+---+---+-----------------------------+-----------------------------|
+     | 0 | 0 | 0 |                           0 |                           0 |
+     |---+---+---+-----------------------------+-----------------------------|
+     | 0 | 0 | 1 |                           1 |                           1 |
+     |---+---+---+-----------------------------+-----------------------------|
+     | 0 | 1 | 0 |                           1 |                           1 |
+     |---+---+---+-----------------------------+-----------------------------|
+     | 0 | 1 | 1 |                           0 |                           0 |
+     |---+---+---+-----------------------------+-----------------------------|
+     | 1 | 0 | 0 |                           1 |                           1 |
+     |---+---+---+-----------------------------+-----------------------------|
+     | 1 | 0 | 1 |                           0 |                           0 |
+     |---+---+---+-----------------------------+-----------------------------|
+     | 1 | 1 | 0 |                           0 |                           0 |
+     |---+---+---+-----------------------------+-----------------------------|
+     | 1 | 1 | 1 |                           1 |                           1 |
+     |---+---+---+-----------------------------+-----------------------------|
+     Holds.
+
+  2. *Commutativity*: $(1 \boxplus 0 = 0 \boxplus 1) \wedge (1 \boxplus 1 = 1 \boxplus 1) \wedge (0 \boxplus 0 = 0 \boxplus 0)$ by definition. Holds.
+  3. *Additive Identity*: $1 \boxplus 0 = 1, \quad 0 \boxplus 0 = 0$ by definition. Holds.
+  4. *Additive Inverse*: $0 \boxplus 0 = 1 \boxplus 1 = 0 \implies 0 = -0 \wedge 1 = -1$ by definition. Holds.
+
+- Axioms of Multiplication:
+  1. *Associativity*:
+
+     |---+---+---+-------------------------------+-------------------------------|
+     | a | b | c | $(a \boxtimes b) \boxtimes c$ | $a \boxtimes (b \boxtimes c)$ |
+     |---+---+---+-------------------------------+-------------------------------|
+     | 0 | 0 | 0 |                             0 |                             0 |
+     |---+---+---+-------------------------------+-------------------------------|
+     | 0 | 0 | 1 |                             0 |                             0 |
+     |---+---+---+-------------------------------+-------------------------------|
+     | 0 | 1 | 0 |                             0 |                             0 |
+     |---+---+---+-------------------------------+-------------------------------|
+     | 0 | 1 | 1 |                             0 |                             0 |
+     |---+---+---+-------------------------------+-------------------------------|
+     | 1 | 0 | 0 |                             0 |                             0 |
+     |---+---+---+-------------------------------+-------------------------------|
+     | 1 | 0 | 1 |                             0 |                             0 |
+     |---+---+---+-------------------------------+-------------------------------|
+     | 1 | 1 | 0 |                             0 |                             0 |
+     |---+---+---+-------------------------------+-------------------------------|
+     | 1 | 1 | 1 |                             1 |                             1 |
+     |---+---+---+-------------------------------+-------------------------------|
+     Holds.
+
+  2. *Commutativity*: $(1 \boxtimes 0 = 0 \boxtimes 1) \wedge (1 \boxtimes 1 = 1 \boxtimes 1) \wedge (0 \boxtimes 0 = 0 \boxtimes 0)$ by definition. Holds.
+  3. *Multiplicative Identity*: $1 \boxtimes 1 = 1 \quad 0 \boxtimes 1 = 0$ by definition. Holds.
+  4. *Multiplicative Inverse*: $1 \boxtimes 1 = 1$ by definition. Holds.
+
+- Distributive Law
+  - Case 1 $(a = 0)$: $0 \boxtimes (b \boxplus c) = 0$ and $0 \boxplus 0 = 0$
+  - Case 2 $(a = 1)$: $1 \boxtimes(b \boxplus c) = b \boxplus c$ and $(1 \boxtimes b) \boxplus (1 \boxtimes c) = b \boxplus c$
+
+  Holds.
+
+*Conclusion*: All axioms holds. $(\{0,1\}, \boxplus, \boxtimes)$ is a field.
+
+* Problem 2
+** Task
+Properties of fields
+
+In the remainder of the course, we will use field arithmetic operations rather casually, tacitly relying on the respective axioms and their consequences instead of explicitly citing them to justify every elementary arithmetic transformation. Even for completely new specific or even abstract sets and operations, that will be very similar to how you have been using arithmetic operations over natural, integer, rational and real numbers in your mathematical journey so far. This problem, however, is different: we will practice the explicit use of the definition of a field, presenting arguments in elementary steps, each relying on and explicitly justified by a single stipulation of the definition (an axiom or another detail of the definition). Examples of such steps are logical implications and arithmetic transformations, and each single one should be elementary in the above sense. Section II.1(ii) of the lecture notes presents examples of arguments structured into such elementary steps. An exception: in each problem part, a step relying on a single statement claimed to be true in a preceding problem part is considered elementary, i.e., statements from preceding problem parts may be used (with a proper reference).
+
+Show the following properties of a field $\mathbb{F}$ with operations of addition and multiplication and with additive and multiplicative identity elements $0$ and $1$.
+
+(a) Every element has a unique additive inverse.
+(b) Every element distinct from $0$ has a unique multiplicative inverse.
+(c) For any $\alpha, \beta, \gamma\in\mathbb{F}$, $\alpha = \beta y$ implies $\alpha=\beta$
+(d) The implication $(\gamma\oplus\alpha=\gamma\oplus\beta)\Rightarrow(\alpha=\beta)$ holds for any $\alpha, \beta, \gamma\in\mathbb{F}$
+(e) The statements $a \otimes\gamma=\beta\mathbb{N}$ and $\alpha=\beta$ are equivalent for any $\alpha,\beta\in\mathbb{F}$ and $\gamma\in\mathbb{F}\backslash\{0\}$
+(f) Consider $\alpha,\beta,\gamma\in\mathbb{F}$ such that $\gamma\ne0$ and $\gamma\otimes\alpha=\gamma\otimes\beta$. Then $\alpha=\beta$.
+(g) Every $\alpha\in\mathbb{F}$ fulfills $)\mathbb{\times}\alpha=0$. Hint: this statement expresses a non-symmetric relation between the two field operations, so the proof clearly has to use one or several of the field axioms that introduce dissimilarities of the operations.
+(h) Let $-1$ denote the additive inverse of $1$ in $\mathbb{F}$. Then every $\alpha\in\mathbb{F}$ and the additive inverse $a$ of $\alpha$ satisfies $-\alpha=(-1)\otimes \alpha$. Does your solution prove the uniqueness of the additive inverses? Does your solution rely on the uniqueness of the additive inverses?
+(i) Additive inversion is an involution: if $\gamma$ is an additive inverse of $\alpha\in\mathbb{F}$ and $y$ is an additive inverse of $\gamma$, then $\alpha=\gamma$. Hint: consider the expression $\alpha\oplus\beta\oplus\gamma$.
+
+** Notes
+
+** Solution
+
+* Problem 3
+** Task
+Discrete cosine and Fourier transforms
+
+Introduction. In several exercise sheets, we will be exploring the discrete cosine and Fourier transforms (DCTs and DFT). Apart from being intimately connected with and serving as approximations to the (real) trigonometric and (complex) Fourier series, which you will study in the Analysis course, such transforms are instrumental for interpolation with trigonometric and algebraic polynomials (we will come to that later in the course). That makes them an important topic in numerical mathematics and numerous applications, including signal and image processing. In fact, you must have been unwittingly using DCT-II daily for a long time now: the transform underlies the JPEG standard for image compression and the MPEG and H.26x standards for video compression.
+
+In this assignment, we start with the DFT and investigate the similarity in how the DFT maps the two halves of the input column vector into the two halves of the output column vector. This will later lead us a fast DFT algorithm, known as the fast Fourier transform (FFT). The somewhat more modern term quantum Fourier transform (QFT) refers to a realization of the same FFT algorithm on a quantum computer. Apart from the challenges associated with quantum hardware and from the unfortunate notations favored by physicists due to historical reasons, the QFT algorithm itself has nothing quantum in it and perfectly falls into the scope of our course.
+
+To the point. For a data dimension $n\in\mathbb{N}$, the DFT involves the matrix $F\in\mathbb{C}^{n\times n}$ defined entrywise as follows:
+$$F_{ij}=\exp[i\frac{2\pi}{n}(i-1)(j-1)] \text{ for all } i,j\in\{1,...,n\}, \quad (1)$$
+where $i$ is the imaginary unit (see § 1.2 in the lecture notes).
+
+For $m\in\mathbb{N}$ and $n=2m,$ we consider the matrix $F\in\mathbb{C}^{n\times n}$ given by (1). Our goal is to relate this matrix to the smaller matrix $\hat{F}\in\mathbb{C}^{m\times m}$ given by (1) with $m$ in place of $n$. To this end, we select four submatrices of size $m\times m$ in $F$ as follows. For all $\alpha,\beta\in\{1,2\}$ the submatrices $F_{\alpha\beta}$ are formed by the $m$ odd (for $\alpha=1$) or by the $m$ even (for $\alpha=2$) rows and by the first $m$ (for $\beta=1)$ or by the last $m(\beta=2)$ columns of $F$. In each case, the rows and columns are selected in the original order, as they follow in $F$. Formalizing this definition is part of this exercise.
+
+For every $k\in\{1,...,m\}$, we set
+$$e_{k}=\exp\frac{i\pi(k-1)}{m} \quad (2)$$
+
+(a) Verify the following equalities for all $k,j\in\{1,...,m\}$
+$$(F_{11})_{kj}=\hat{F_{kj}} \quad (3a)$$
+$$(F_{21})_{kj}=e_{j}\cdot\hat{F_{kj}} \quad (3b)$$
+$$(F_{12})_{kj}=(F_{11})_{kj}, \quad (3c)$$
+$$(F_{22})_{kj}=-(F_{21})_{kj}. \quad (3d)$$
+Hint: rewrite (3a)-(3d) for arbitrary $k,j\in\{1,...,m\}$ in an equivalent explicit form not using the matrices introduced above. Prove the resulting equalities for arbitrary $k, j\in\{1,...,m\}$ using properties of the complex exponential function (see § 1.2(vii) in the lecture notes).
+
+(b) Rewrite equalities of (3a)-(3d) with $k,j\in\{1,...,m\}$ as four matrix equalities (involving matrix multiplication and auxiliary matrices where necessary but not involving individual entries) expressing $F_{11}$, $F_{21}$, $F_{12}$ and $F_{22}$ in terms of $\hat{F}$.
+
+(c) Implement a Julia function dft matrix that, for any (reasonable) $l\in\mathbb{N}$ produces the DFT matrix $F=$ dft matrix(l) of order $n=2^{l}$ as defined by (1).
+
+(d) For $l=3$, $n=2^{l}$ and $m=2^{l-1}$, use dft matrix to form the DFT matrices $F$ and $\hat{F}$ of orders $n$ and $m$, extract the submatrices $F_{11},$ $F_{21}$, $F_{12}$ and $F_{22}$ of $F$ and verify (3a)-(3d). Hint: to verify that two matrices are equal, you can evaluate their difference and use the function norm from the package LinearAlgebra.
+
+(e) Repeat part (d) for $l=8$
+
+** Notes
+
+** Solution
+#+begin_src julia :results value :export both :tangle julia/p_3.jl
+
+#+end_src

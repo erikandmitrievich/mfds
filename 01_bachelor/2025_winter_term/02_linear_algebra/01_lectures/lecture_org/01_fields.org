@@ -1,0 +1,39 @@
+#+title: 01 Fields
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-01-08>
+#+lastmod: <2026-01-08 18:20>
+#+options: num:t
+#+startup: overview
+
+* Definitions
+#+begin_quote
+*Definition (Object)* A member of a mathematical discourse whose properties and relations are specified within a given formal system.
+#+end_quote
+
+#+begin_quote
+*Definition (Element)* Element is a single member of a set.
+#+end_quote
+
+#+begin_quote
+*Definition (Set)* Set is a well-defined collection of distinct elements treated as a single mathematical entity.
+#+end_quote
+
+#+begin_quote
+*Definition. (Field)* Field is a set $F$, equipped with two binary operations called *addition* ($\boxplus$) and *multiplication* ($\boxtimes$), such that the following axioms hold for all elements $a, b, c \in F$:
+
+A. Axioms of Addition:
+   1. *Associativity*: $(a \boxplus b) \boxplus c = a \boxplus (b \boxplus c)$.
+   2. *Commutativity*: $a \boxplus b = b \boxplus a$.
+   3. *Additive Identity*: $\forall a \in F, \exists 0 \in F : a \boxplus 0 = a$.
+   4. *Additive Inverse*: $\forall a \in F, \exists (-a) \in F : a \boxplus (-a) = 0$.
+
+B. Axioms of Multiplication
+   5. *Associativity*: $(a \boxtimes b) \boxtimes c = a \boxtimes (b \boxtimes c)$.
+   6. *Commutativity*: $a \boxtimes b = b \boxtimes a$.
+   7. *Multiplicative Identity*: $\forall a \in F, \exists 1 \in F : 1 \neq 0 : a \boxtimes 1 = a$.
+   8. *Multiplicative Inverse*: $\forall a \in F : a \neq 0, \exists a^{-1} \in F : a \boxtimes a^{-1} = 1$.
+
+C. Distributive Law
+   9. *Distributivity*: $a \boxtimes (b \boxplus c) = (a \boxtimes b) \boxplus (a \boxtimes c)$.
+#+end_quote

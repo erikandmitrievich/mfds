@@ -1,0 +1,45 @@
+#+title: Recap
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-01-08>
+#+lastmod: <2026-01-08 11:59>
+#+options: num:t
+#+startup: overview
+
+* Linear Algebra
+1. Fields
+   - [ ] Definitions and examples
+   - [ ] Properties of fields as consequences of field axioms
+   - [ ] Scope of chapter II in regard of field axioms
+2. Column vectors
+   - [ ] Definitions and linear properties of column vectors
+3. Matrices: linear structure
+   - [ ] Definitions and properties of matrices with regard to linear operations
+   - [ ] Sparsity patterns and patterned matrices
+   - [ ] Transposition and symmetry
+4. Matrices: algebraic structure
+   - [ ] Definitions and algebraic properties. Inverse matrix
+   - [ ] Subvectors and submatrices
+   - [ ] Permutation matrices
+   - [ ] Matrix rank
+5. Gaussian elimination and LU decomposition
+   - [ ] Introduction
+   - [ ] Motivation
+   - [ ] Solving linear systems with square, tall and wide matrices
+   - [ ] Gaussian elimination and LU decomposition: a detailed example
+   - [ ] Properties of triangular matrices
+   - [ ] LU decomposition
+
+* Analysis
+1. Convergence of sequences
+   - [ ] Metric spaces
+   - [ ] Completeness
+   - [ ] Compactness
+2. Continuity and Special Functions
+   - [ ] Series
+   - [ ] Continuity
+   - [ ] Trigonometric functions
+3. Differentiability
+   - [ ] Definition and elementary examples
+   - [ ] Differentiation rules
+   - [ ] Local extrema
