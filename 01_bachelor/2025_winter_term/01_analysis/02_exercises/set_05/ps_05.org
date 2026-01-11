@@ -1,0 +1,362 @@
+#+title: Ps 05
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-01-11>
+#+lastmod: <2026-01-11 20:19>
+#+options: num:t
+#+startup: overview
+#+latex: \newpage
+
+* Problem 1 :DONE:
+** Task
+Visualize the function $f:\mathbb{R}\rightarrow\mathbb{R}$, $f(x)=e^{2x}+x$ in Julia. Then prove that $f$ is invertible and determine $(f^{-1})^{\prime}(1)$.
+
+** Notes
+
+** Solution
+*** Code
+#+begin_src julia :results values :export both :tangle julia/p_1.jl
+using Plots
+
+f(x) = exp(2*x) + x
+
+x = -10:0.1:1
+y = f.(x)
+
+plot(x, y,
+     title="f(x) = e^(2x) + x",
+     xlabel="x",
+     ylabel="y",
+     linewidth=2)
+
+savefig("./figs/p_01.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/university/01_bachelor/2025_winter_term/01_analysis/02_exercises/set_05/figs/p_01.png
+
+*** Solution
+
+$\begin{aligned}
+f(x) = e^{2x} + x \\
+f'(x) = 2e^{2x} + 1 \\
+\end{aligned}$
+
+Since $\forall x \in \mathbb{R}, f'(x) > 0$, as $\forall x \in \mathbb{R}, e^{x} > 0$, $f(x)$ is monotonically increasing (injective).
+
+The function $g : \mathbb{R} \rightarrow \mathbb{R}, g(x) = e^{2x}$ is continuous.
+
+The function $k : \mathbb{R} \rightarrow \mathbb{R}, k(x) = x$ is also continuous.
+
+Hence the function $f : \mathbb{R} \rightarrow \mathbb{R}, f(x) = g(x) + k(x) = e^{2x} + x$ is continuous.
+
+Since $\lim_{x \rightarrow -\infty} f(x) = -\infty$, $\lim_{x \rightarrow \infty} f(x) = \infty$ and the fact $f(x)$ is continious, by the intermediate value theorem $f(x)$ is surjective.
+
+Given $f(x)$ is both injective and surjective, it is also bijective, which implies $f(x)$ is invertable.
+
+$\begin{aligned}
+(f^{-1})'(y) = \dfrac{1}{f'(x)} = \dfrac{1}{f'(f^{-1}(y))} \\
+\end{aligned}$
+
+$\begin{aligned}
+1 = e^{2x} + x \\
+x = 0 \\
+(f^{-1})'(1) &= \dfrac{1}{2e^{2 \cdot 0} + 1}\\
+             &= \dfrac{1}{2 \cdot 1 + 1}\\
+             &= \dfrac{1}{3}\\
+\end{aligned}$
+
+* Problem 2 :DONE:
+** Task
+Consider the function $f:[1,e]\rightarrow\mathbb{R}$, $f(x)=\ln(x)$. Determine $\xi$ associated to the mean value theorem. Illustrate your results in Julia.
+
+** Notes
+*Plan:*
+1. Prove $f(x)$ is continuous on $\left[ 1,e \right]$.
+2. Prove $f(x)$ is differentiable on $\left( 1,e \right)$.
+3. Apply /Mean Value Theorem/.
+4. Solve for $/xi$.
+5. Verify $\xi$ lies in the $\left( 1,e \right)$.
+
+** Solution
+*** Code
+#+begin_src julia :results value :export both :tangle julia/p_2.jl
+using Plots
+
+# define the function and parameters
+f(x) = log(x)
+a = 1.0
+b = exp(1) # e
+
+# define the Solution (xi) you found mathematically
+xi = b - 1  # ξ = e - 1
+
+# calculate slopes and line equations
+# slope of the Secant line (Average rate of change)
+m_secant = (f(b) - f(a)) / (b - a)
+
+# define the Secant Line function: y = f(a) + m * (x - a)
+secant_line(x) = f(a) + m_secant * (x - a)
+
+# define the Tangent Line function at xi: y = f(xi) + f'(xi) * (x - xi)
+tangent_line(x) = f(xi) + m_secant * (x - xi)
+
+# generate data for plotting
+x_vals = range(a, b, length=100)
+y_vals = f.(x_vals)
+
+# plotting
+# plot the main function
+plot(x_vals, y_vals,
+     label="f(x) = ln(x)",
+     linewidth=3,
+     legend=:bottomright,
+     title="Mean Value Theorem Illustration",
+     xlabel="x", ylabel="y")
+
+# plot the Secant Line (connecting endpoints)
+plot!(x_vals, secant_line.(x_vals),
+      label="Secant Line",
+      linestyle=:dash,
+      linewidth=2)
+
+# plot the Tangent Line (at xi)
+plot!(x_vals, tangent_line.(x_vals),
+      label="Tangent at ξ",
+      linewidth=2)
+
+# add a marker for the point xi
+scatter!([xi], [f(xi)],
+         label="Point (ξ, f(ξ))",
+         markersize=5)
+
+plot!([xi, xi], [0, f(xi)], label="", linestyle=:dot, color=:grey)
+
+savefig("./figs/p_02.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/university/01_bachelor/2025_winter_term/01_analysis/02_exercises/set_05/figs/p_02.png
+
+*** Solution
+#+begin_quote
+*Mean Value Theorem.* If $f: \left[ a, b \right] \rightarrow \mathbb{R}$ is continuous and differentiable on $\left( a, b \right)$, then there is $\xi \in \left( a,b \right)$ such that
+
+$$\frac{f(b) - f(a)}{b-a} = f'(\xi)$$
+#+end_quote
+
+1. Prove $f(x)$ is continuous on $\left[ 1,e \right]$.
+
+   The natural logarithmic function $f(x) = log(x)$ is defined and continuous $\forall x > 0$. Since $\left[ 1,e \right] \subset \left( 0,\infty \right)$, $f(x)$ is continuous on $\left[ 1,e \right]$.
+
+2. Prove $f(x)$ is differentiable on $\left( 1,e \right)$.
+
+   $f'(x) = \dfrac{1}{x}$ is being defined $\forall x \neq 0$ and $0 \notin \left[ 1, e \right]$, implies $f(x)$ is differentiable on $\left( 1,e \right)$.
+
+3. Apply /Mean Value Theorem/.
+
+   $$\frac{f(b) - f(a)}{b-a} = f'(\xi)$$
+
+   $\begin{aligned}
+   \frac{1}{\xi} &= \dfrac{log(e) - \log(1)}{e - 1} & \text{(substituting values)} \\
+   \frac{1}{\xi} &= \dfrac{1 - 0}{e - 1} & \text{(simplification)} \\
+   \frac{1}{\xi} &= \dfrac{1}{e - 1} \\
+   \end{aligned}$
+
+4. Solve for $\xi$.
+
+   $\begin{aligned}
+   \frac{1}{\xi} &= \dfrac{1}{e - 1} \\
+   \xi &= e - 1 \\
+   \xi &\approx 1.7183... \\
+   \end{aligned}$
+
+5. Verify $\xi$ lies in the $\left( 1,e \right)$.
+
+   $1 < 1.7183\dots < 2.718\dots$
+
+   Hence, $\xi$ is valid.
+
+* Problem 3 :DONE:
+** Task
+Visualize the function $f:\mathbb{R}\rightarrow\mathbb{R}$, $f(x)=x^{3}-3x^{2}+2$ in Julia and guess its local extrema. Prove that your guess is correct.
+
+** Notes
+
+** Solution
+*** Code
+#+begin_src julia :results value :export both :tangle julia/p_3.jl
+using Plots
+
+f(x) = x^3 - 3x^2 + 2
+
+# Plotting range covering the interesting features
+x = -1.5:0.05:3.5
+y = f.(x)
+
+p = plot(x, y,
+     title = "f(x) = x^3 - 3x^2 + 2",
+     xlabel = "x",
+     ylabel = "y",
+     label = "f(x)",
+     linewidth = 2,
+     legend = :topright)
+
+# Mark the guessed extrema for visualization
+scatter!([0, 2], [f(0), f(2)], label="Extrema guesses", color=:red)
+
+savefig("./figs/p_03.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/university/01_bachelor/2025_winter_term/01_analysis/02_exercises/set_05/figs/p_03.png
+
+*** Solution
+Based on the visualization, the local extrema appear to be at $x=0$ (maximum) and $x=2$ (minimum).
+
+1. *Find Critical Points ($f'(x) = 0$)*
+
+   $\begin{aligned}
+   f(x) &= x^{3} - 3x^{2} + 2 \\
+   f'(x) &= 3x^{2} - 6x
+   \end{aligned}$
+
+   Set the derivative to zero:
+
+   $\begin{aligned}
+   0 &= 3x(x - 2) \\
+   \implies x_{1} &= 0, \quad x_{2} = 2
+   \end{aligned}$
+
+2. *Classify Extrema (Second Derivative Test)*
+
+   Calculate $f''(x)$:
+   $$
+   f''(x) = 6x - 6
+   $$
+
+   Evaluate at critical points:
+   - *At $x_1 = 0$:*
+
+     $f''(0) = 6(0) - 6 = -6 < 0$
+
+     Since $f''(0)$ is negative, $f(x)$ has a *local maximum* at $x=0$.
+
+   - *At $x_2 = 2$:*
+
+     $f''(2) = 6(2) - 6 = 6 > 0$
+
+     Since $f''(2)$ is positive, $f(x)$ has a *local minimum* at $x=2$.
+
+   *Conclusion:* The guess was correct. There is a local maximum at $x=0$ and a local minimum at $x=2$.
+
+* Problem 4 :DONE:
+** Task
+Consider the function $f:[-2,2]\rightarrow\mathbb{R}$ $f(x)=x^{4}-2x^{2}+1$. Determine its global extrema. Afterwards, illustrate your results in Julia.
+
+** Notes
+
+** Solution
+** Solution
+*** Code
+#+begin_src julia :results value :export both :tangle julia/p_4.jl
+using Plots
+
+f(x) = x^4 - 2x^2 + 1
+
+# plotting range
+x = -2.2:0.05:2.2
+y = f.(x)
+
+plot(x, y,
+     title = "Global Extrema of f(x) = x^4 - 2x^2 + 1",
+     xlabel = "x",
+     ylabel = "y",
+     label = "f(x)",
+     linewidth = 2,
+     legend = :top)
+
+# highlight Global Maxima
+scatter!([-2, 2], [f(-2), f(2)], label="Global Maxima", color=:red, markersize=5)
+
+# highlight Global Minima
+scatter!([-1, 1], [f(-1), f(1)], label="Global Minima", color=:blue, markersize=5)
+
+plot!([-2,2], seriestype = :vline, label="Domain")
+
+savefig("./figs/p_04.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/university/01_bachelor/2025_winter_term/01_analysis/02_exercises/set_05/figs/p_04.png
+
+*** Solution
+To find the global extrema of a continuous function on a closed interval $[-2, 2]$, we must compare the function values at:
+1.  *Critical points* inside the interval $(-2, 2)$.
+2.  *Endpoints* of the interval.
+
+*1. Find Critical Points*
+Set $f'(x) = 0$:
+
+$\begin{aligned}
+f(x) &= x^{4} - 2x^{2} + 1 \\
+f'(x) &= 4x^{3} - 4x \\
+0 &= 4x(x^2 - 1) \\
+0 &= 4x(x - 1)(x + 1)
+\end{aligned}$
+
+The critical points are $x \in \{0, 1, -1\}$. All lie within $[-2, 2]$.
+
+*2. Evaluate Candidates*
+We calculate $f(x)$ for all critical points and endpoints:
+|-------------+-------+-------------------------------------+--------|
+| Type        | $x$   | Calculation                         | $f(x)$ |
+| :---        | :---: | :---                                | :---:  |
+| Endpoint    | $-2$  | $(-2)^4 - 2(-2)^2 + 1 = 16 - 8 + 1$ | *9*    |
+| Critical Pt | $-1$  | $(-1)^4 - 2(-1)^2 + 1 = 1 - 2 + 1$  | *0*    |
+| Critical Pt | $0$   | $0^4 - 2(0)^2 + 1$                  | $1$    |
+| Critical Pt | $1$   | $1^4 - 2(1)^2 + 1$                  | *0*    |
+| Endpoint    | $2$   | $2^4 - 2(2)^2 + 1$                  | *9*    |
+|-------------+-------+-------------------------------------+--------|
+*3. Conclusion*
+Comparing the values:
+- The *Global Maximum* is *9*, occurring at $x = -2$ and $x = 2$.
+- The *Global Minimum* is *0*, occurring at $x = -1$ and $x = 1$.
+
+* Problem 5 :DONE:
+** Task
+Suppose a rectangle with side length $x$ and $y$ has the perimeter $20$.
+(a) Express the area $A$ as a function of $x$.
+(b) Determine the maximal possible area.
+
+** Notes
+
+** Solution
+*** (a) Express Area $A(x)$
+The perimeter is given by $2x + 2y = 20$. Dividing by 2, we get the constraint:
+$$ x + y = 10 \implies y = 10 - x $$
+
+The area $A$ is the product of the sides ($xy$). Substituting $y$:
+$$ A(x) = x(10 - x) = 10x - x^2 $$
+
+Since side lengths must be non-negative ($x \ge 0$ and $y = 10-x \ge 0$), the domain is $x \in [0, 10]$.
+
+$$ A : [0, 10] \rightarrow \mathbb{R}, \quad A(x) = -x^2 + 10x $$
+
+*** (b) Determine Maximal Area
+To find the maximum, we look for critical points where the derivative is zero.
+
+$\begin{aligned}
+A(x) &= -x^2 + 10x \\
+A'(x) &= -2x + 10 \\
+0 &= -2x + 10 \\
+2x &= 10 \\
+x &= 5
+\end{aligned}$
+
+We verify this against the endpoints of the domain $[0, 10]$:
+- $A(0) = 0$ (Minimum)
+- $A(10) = 0$ (Minimum)
+- $A(5) = 5(10 - 5) = 25$ (Maximum)
+
+*Conclusion:* The maximal possible area is *25* (occurring when the rectangle is a square with $x=5$).
