@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-08>
-#+lastmod: <2026-01-09 19:44>
+#+lastmod: <2026-01-11 12:33>
 #+options: num:t
 #+startup: overview
 
@@ -33,6 +33,9 @@ C. Distributive Law
 #+end_quote
 
 ** Solution
+:LOGBOOK:
+CLOCK: [2026-01-10 Sat 17:07]
+:END:
 *Goal*: Show $\mathbb{F}_2$ is a field by definition.
 
 *Definition*:
@@ -122,9 +125,9 @@ Show the following properties of a field $\mathbb{F}$ with operations of additio
 (c) For any $\alpha, \beta, \gamma\in\mathbb{F}$, $\alpha \boxplus \gamma = \beta \boxplus \gamma$ implies $\alpha=\beta$.
 (d) The implication $(\gamma \boxplus \alpha = \gamma \boxplus \beta) \Rightarrow (\alpha = \beta)$ holds for any $\alpha, \beta, \gamma\in\mathbb{F}$.
 (e) The statements $\alpha \boxtimes \gamma = \beta \boxtimes \gamma$ and $\alpha=\beta$ are equivalent for any $\alpha,\beta\in\mathbb{F}$ and $\gamma\in\mathbb{F}\backslash\{0\}$.
-(f) Consider $\alpha,\beta,\gamma\in\mathbb{F}$ such that $\gamma\ne0$ and $\gamma\otimes\alpha=\gamma\otimes\beta$. Then $\alpha=\beta$.
-(g) Every $\alpha\in\mathbb{F}$ fulfills $)\mathbb{\times}\alpha=0$. Hint: this statement expresses a non-symmetric relation between the two field operations, so the proof clearly has to use one or several of the field axioms that introduce dissimilarities of the operations.
-(h) Let $-1$ denote the additive inverse of $1$ in $\mathbb{F}$. Then every $\alpha\in\mathbb{F}$ and the additive inverse $a$ of $\alpha$ satisfies $-\alpha=(-1)\otimes \alpha$. Does your solution prove the uniqueness of the additive inverses? Does your solution rely on the uniqueness of the additive inverses?
+(f) Consider $\alpha,\beta,\gamma\in\mathbb{F}$ such that $\gamma\ne0$ and $\gamma \boxtimes \alpha = \gamma \boxtimes \beta$. Then $\alpha=\beta$.
+(g) Every $\alpha\in\mathbb{F}$ fulfills $0 \boxtimes \alpha = 0$. Hint: this statement expresses a non-symmetric relation between the two field operations, so the proof clearly has to use one or several of the field axioms that introduce dissimilarities of the operations.
+(h) Let $-1$ denote the additive inverse of $1$ in $\mathbb{F}$. Then every $\alpha \in \mathbb{F}$ and the additive inverse $(-\alpha)$ of $\alpha$ satisfies $-\alpha=(-1) \boxtimes \alpha$. Does your solution prove the uniqueness of the additive inverses? Does your solution rely on the uniqueness of the additive inverses?
 (i) Additive inversion is an involution: if $\gamma$ is an additive inverse of $\alpha\in\mathbb{F}$ and $y$ is an additive inverse of $\gamma$, then $\alpha=\gamma$. Hint: consider the expression $\alpha\oplus\beta\oplus\gamma$.
 
 ** Notes
@@ -169,7 +172,7 @@ b &= b \boxtimes 1 & \text{(multiplicative identity)} \\
 
 *** (c) For any $\alpha, \beta, \gamma\in\mathbb{F}$, $\alpha \boxplus \gamma = \beta \boxplus \gamma$ implies $\alpha=\beta$.
 
-For $\alpha, \beta, \gamma \in \mathbb{F}$, assume $\alpha \boxplus \gamma = \beta \boxplus \gamma$. By the existence of an additive inverse, $\exists (-y) \in \mathbb{F}$.
+For $\alpha, \beta, \gamma \in \mathbb{F}$, assume $\alpha \boxplus \gamma = \beta \boxplus \gamma$. By the existence of an additive inverse, $\exists (-\gamma) \in \mathbb{F}$.
 
 $\begin{aligned}
 \alpha \boxplus \gamma &= \beta \boxplus \gamma & \text{(assumption)} \\
@@ -220,9 +223,61 @@ Hence, $(\gamma \boxplus \alpha = \gamma \boxplus \beta) \Rightarrow (\alpha = \
 
 *Conclusion*: Since both expressions imply each other, they are equivalent.
 
-*** (f) Consider $\alpha,\beta,\gamma\in\mathbb{F}$ such that $\gamma\ne0$ and $\gamma\otimes\alpha=\gamma\otimes\beta$. Then $\alpha=\beta$.
-*** (g) Every $\alpha\in\mathbb{F}$ fulfills $)\mathbb{\times}\alpha=0$. Hint: this statement expresses a non-symmetric relation between the two field operations, so the proof clearly has to use one or several of the field axioms that introduce dissimilarities of the operations.
-*** (h) Let $-1$ denote the additive inverse of $1$ in $\mathbb{F}$. Then every $\alpha\in\mathbb{F}$ and the additive inverse $a$ of $\alpha$ satisfies $-\alpha=(-1)\otimes \alpha$. Does your solution prove the uniqueness of the additive inverses? Does your solution rely on the uniqueness of the additive inverses?
+*** (f) Consider $\alpha,\beta,\gamma\in\mathbb{F}$ such that $\gamma\ne0$ and $\gamma \boxtimes \alpha = \gamma \boxtimes \beta$. Then $\alpha=\beta$.
+
+Assume $\gamma \boxtimes \alpha = \gamma \boxtimes \beta$. Since $\gamma \in \mathbb{F} \textbackslash \left\{ 0 \right\}, \quad \exists \gamma^{-1}$.
+
+$\begin{aligned}
+\gamma \boxtimes \alpha &= \gamma \boxtimes \beta & \text{(assumption)} \\
+\alpha \boxtimes \gamma &= \gamma \boxtimes \beta & \text{(multiplicative commutativity LHS)} \\
+\alpha \boxtimes \gamma &= \beta \boxtimes \gamma & \text{(multiplicative commutativity RHS)} \\
+(\alpha \boxtimes \gamma) \boxtimes \gamma^{-1} &= (\beta \boxtimes \gamma) \boxtimes \gamma^{-1} & \text{(well-defined operation)} \\
+\alpha \boxtimes (\gamma \boxtimes \gamma^{-1}) &= \beta \boxtimes (\gamma \boxtimes \gamma^{-1}) & \text{(multiplicative associativity)} \\
+\alpha \boxtimes 1 &= \beta \boxtimes 1 & \text{(multiplicative inverse)} \\
+\alpha &= \beta & \text{(multiplicative identity)} \\
+\end{aligned}$
+
+*Conclusion*: $\forall \alpha, \beta, \gamma \in \mathbb{F} : \gamma \neq 0 \quad (\gamma \boxtimes \alpha = \gamma \boxtimes \beta) \implies \alpha = \beta$.
+
+*** (g) Every $\alpha\in\mathbb{F}$ fulfills $0 \boxtimes \alpha = 0$. Hint: this statement expresses a non-symmetric relation between the two field operations, so the proof clearly has to use one or several of the field axioms that introduce dissimilarities of the operations.
+
+Let $\alpha \in \mathbb{F}$. Let $x = 0 \boxtimes \alpha$. By the existence of additive inverses $\exists (-x) \in \mathbb{F}$.
+
+$\begin{aligned}
+x &= 0 \boxtimes \alpha & \text{(assumption)} \\
+x &= (0 \boxplus 0) \boxtimes \alpha & \text{(additive identity substitution)} \\
+x &= (0 \boxtimes \alpha) \boxplus (0 \boxtimes \alpha) & \text{(distributive law)} \\
+x &= x \boxplus x & \text{(substitute x)} \\
+x \boxplus (-x) &= (x \boxplus x) \boxplus (-x) & \text{(well-defined operation)} \\
+0 &= (x \boxplus x) \boxplus (-x) & \text{(additive inverse on LHS)} \\
+0 &= x \boxplus (x \boxplus (-x)) & \text{(additive associativity on RHS)} \\
+0 &= x \boxplus 0 & \text{(additive inverse on RHS)} \\
+0 &= x & \text{(additive identity on RHS)} \\
+0 &= 0 \boxtimes \alpha & \text{(substitution on RHS)} \\
+\end{aligned}$
+
+*** (h) Let $-1$ denote the additive inverse of $1$ in $\mathbb{F}$. Then every $\alpha \in \mathbb{F}$ and the additive inverse $(-\alpha)$ of $\alpha$ satisfies $-\alpha=(-1) \boxtimes \alpha$. Does your solution prove the uniqueness of the additive inverses? Does your solution rely on the uniqueness of the additive inverses?
+
+$\begin{aligned}
+0 \boxtimes \alpha &= 0 & \text{(proved in part g)} \\
+(1 \boxplus (-1)) \boxtimes \alpha &= 0 & \text{(additive inverse substitution on LHS)} \\
+(1 \boxtimes \alpha) \boxplus ((-1) \boxtimes \alpha) &= 0 & \text{(distribution law on LHS)} \\
+(\alpha \boxtimes 1) \boxplus ((-1) \boxtimes \alpha) &= 0 & \text{(multiplicative commutativity on LHS)} \\
+(\alpha \boxtimes 1) \boxplus (\alpha \boxtimes (-1)) &= 0 & \text{(multiplicative commutativity on LHS)} \\
+\alpha \boxplus (\alpha \boxtimes (-1)) &= 0 & \text{(multiplicative identity on LHS)} \\
+(\alpha \boxplus (\alpha \boxtimes (-1))) \boxplus (-\alpha) &= 0 \boxplus (-\alpha) & \text{(well-defined operation)} \\
+(\alpha \boxplus (\alpha \boxtimes (-1))) \boxplus (-\alpha) &= (-\alpha) \boxplus 0 & \text{(additive commutativity on RHS)} \\
+(\alpha \boxplus (\alpha \boxtimes (-1))) \boxplus (-\alpha) &= (-\alpha) & \text{(additive identity on RHS)} \\
+((\alpha \boxtimes (-1)) \boxplus \alpha) \boxplus (-\alpha) &= (-\alpha) & \text{(additive commutativity on LHS)} \\
+(\alpha \boxtimes (-1)) \boxplus (\alpha \boxplus (-\alpha)) &= (-\alpha) & \text{(additive associativity on LHS)} \\
+(\alpha \boxtimes (-1)) \boxplus 0 &= (-\alpha) & \text{(additive inverse on LHS)} \\
+\alpha \boxtimes (-1) &= (-\alpha) & \text{(additive identity on LHS)} \\
+(-1) \boxtimes \alpha &= (-\alpha) & \text{(multiplicative commutativity on LHS)} \\
+\end{aligned}$
+
+1. No, it was proved in part a.
+2. Yes, it can be seen in the derivation.
+
 *** (i) Additive inversion is an involution: if $\gamma$ is an additive inverse of $\alpha\in\mathbb{F}$ and $y$ is an additive inverse of $\gamma$, then $\alpha=\gamma$. Hint: consider the expression $\alpha\oplus\beta\oplus\gamma$.
 
 
