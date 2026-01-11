@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-08>
-#+lastmod: <2026-01-11 12:33>
+#+lastmod: <2026-01-11 12:52>
 #+options: num:t
 #+startup: overview
 
@@ -112,7 +112,7 @@ $0 \boxtimes 0 = 1 \boxtimes 0 = 0 \boxtimes 1 = 0, \quad 1 \boxtimes 1 = 1$
 
 *Conclusion*: All axioms holds. $(\{0,1\}, \boxplus, \boxtimes)$ is a field.
 
-* Problem 2
+* Problem 2 :DONE:
 ** Task
 Properties of fields
 
@@ -128,7 +128,7 @@ Show the following properties of a field $\mathbb{F}$ with operations of additio
 (f) Consider $\alpha,\beta,\gamma\in\mathbb{F}$ such that $\gamma\ne0$ and $\gamma \boxtimes \alpha = \gamma \boxtimes \beta$. Then $\alpha=\beta$.
 (g) Every $\alpha\in\mathbb{F}$ fulfills $0 \boxtimes \alpha = 0$. Hint: this statement expresses a non-symmetric relation between the two field operations, so the proof clearly has to use one or several of the field axioms that introduce dissimilarities of the operations.
 (h) Let $-1$ denote the additive inverse of $1$ in $\mathbb{F}$. Then every $\alpha \in \mathbb{F}$ and the additive inverse $(-\alpha)$ of $\alpha$ satisfies $-\alpha=(-1) \boxtimes \alpha$. Does your solution prove the uniqueness of the additive inverses? Does your solution rely on the uniqueness of the additive inverses?
-(i) Additive inversion is an involution: if $\gamma$ is an additive inverse of $\alpha\in\mathbb{F}$ and $y$ is an additive inverse of $\gamma$, then $\alpha=\gamma$. Hint: consider the expression $\alpha\oplus\beta\oplus\gamma$.
+(i) Additive inversion is an /involution/: if $\beta$ is an additive inverse of $\alpha\in\mathbb{F}$ and $\gamma$ is an additive inverse of $\beta$, then $\alpha=\gamma$. Hint: consider the expression $\alpha \boxplus \beta \boxplus \gamma$.
 
 ** Notes
 
@@ -278,9 +278,23 @@ $\begin{aligned}
 1. No, it was proved in part a.
 2. Yes, it can be seen in the derivation.
 
-*** (i) Additive inversion is an involution: if $\gamma$ is an additive inverse of $\alpha\in\mathbb{F}$ and $y$ is an additive inverse of $\gamma$, then $\alpha=\gamma$. Hint: consider the expression $\alpha\oplus\beta\oplus\gamma$.
+*** (i) Additive inversion is an /involution/: if $\beta$ is an additive inverse of $\alpha\in\mathbb{F}$ and $\gamma$ is an additive inverse of $\beta$, then $\alpha=\gamma$. Hint: consider the expression $\alpha \boxplus \beta \boxplus \gamma$.
 
+$\begin{aligned}
+\alpha \boxplus \beta \boxplus \gamma &= \alpha \boxplus (\beta \boxplus \gamma) & \text{(base)} \\
+&= \alpha \boxplus (\beta \boxplus (-\beta)) & \text{(substitution of } \gamma = (-\beta) \text{ assumption)} \\
+&= \alpha \boxplus 0 & \text{(additive inverse)} \\
+&= \alpha & \text{(additive identity)} \\
+\end{aligned}$
 
+$\begin{aligned}
+\alpha \boxplus \beta \boxplus \gamma &= (\alpha \boxplus \beta) \boxplus \gamma & \text{(base)} \\
+&= (\alpha \boxplus (-\alpha)) \boxplus \gamma & \text{(substitution of } \beta = (-\alpha) \text{ assumption)} \\
+&= 0 \boxplus \gamma & \text{(additive inverse)} \\
+&= \gamma & \text{(additive identity)} \\
+\end{aligned}$
+
+By the *addition associativity*, $(\alpha \boxplus \beta) \boxplus \gamma = \alpha \boxplus (\beta \boxplus \gamma)$. Hence, $\alpha = \gamma \implies$ involution nature of the inverse of the inverse.
 
 * Problem 3
 ** Task
