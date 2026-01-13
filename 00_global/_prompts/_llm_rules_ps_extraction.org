@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-30>
-#+lastmod: <2025-12-15 09:19>
+#+lastmod: <2026-01-13 13:06>
 #+options: num:t
 #+startup: overview
 
@@ -21,17 +21,19 @@ Output must be strictly in **Emacs Org-mode** format.
 **CRITICAL**: The final output must be wrapped in a single Markdown code block (using ```org) to facilitate copy-pasting.
 
 ** Structural Hierarchy (MANDATORY)
-For EVERY problem identified in the source text, you must generate exactly one top-level heading and three specific sub-headings as follows:
+For EVERY problem identified in the source text, you must generate exactly one top-level heading and three specific sub-headings.
 
 1.  **Top Level**: ~* Problem [Identifier]~
-2.  **Sub Level 1**: ~** Task~ (Contains the extracted text)
-3.  **Sub Level 2**: ~** Notes~ (Leave the body of this section completely blank)
-4.  **Sub Level 3**: ~** Solution~ (Leave the body of this section completely blank)
+2.  **Sub Level 1**: ~** Task~
+    - **CONSTRAINT**: The extracted problem text MUST be enclosed inside a ~#+begin_quote~ and ~#+end_quote~ block.
+3.  **Sub Level 2**: ~** Notes~
+    - Leave the body of this section completely blank.
+4.  **Sub Level 3**: ~** Solution~
+    - Leave the body of this section blank, UNLESS Rule 6 (Julia Scaffolding) applies.
 
 ** Whitespace & Layout
-- Insert exactly one blank line between the end of the ~** Task~ content and the ~** Notes~ heading.
+- Insert exactly one blank line between the ~#+end_quote~ block and the ~** Notes~ heading.
 - Insert exactly one blank line between the ~** Notes~ heading and the ~** Solution~ heading.
-- Do not write "[empty]" or any other placeholder text in the blank sections.
 
 ** Mathematical Notation
 - All mathematical expressions MUST be converted to LaTeX.
@@ -41,7 +43,7 @@ For EVERY problem identified in the source text, you must generate exactly one t
 * EXTRACTION RULES (STRICT)
 
 ** 1. Verbatim Text Preservation
-You must preserve the exact wording of the problem statement inside the ~** Task~ block.
+You must preserve the exact wording of the problem statement inside the Quote Block.
 - **Source**: "Calculate the velocity v."
 - **Bad Output**: "Find v."
 - **Good Output**: "Calculate the velocity $v$."
@@ -49,7 +51,7 @@ You must preserve the exact wording of the problem statement inside the ~** Task
 ** 2. Handling Visuals and Geometry
 If a problem relies on an accompanying diagram or graph in the PDF:
 - Do not ignore it.
-- Insert a placeholder tag in square brackets describing the visual.
+- Insert a placeholder tag in square brackets describing the visual inside the Quote Block.
 - Format: ~[GRAPHIC: Description of the triangle ABC with angle alpha]~
 
 ** 3. Typos and Errors
@@ -67,12 +69,11 @@ Do not include any citations in the text.
 
 ** 6. Julia Scaffolding
 If a problem explicitly requires using the Julia language to find a solution:
-- Exception: You may add content to the ** Solution section ONLY for this purpose and leave new line after it.
-- Action: Insert an empty Julia source code block.
-- Format: Use #+begin_src julia with the following header arguments:
-  - :results value
-  - :export both
-  - :tangle julia/p_{ID}.jl (where {ID} is the exact Problem Identifier, e.g., 01, 01_02).
+- Action: Insert an empty Julia source code block inside the ~** Solution~ section.
+- Format:
+  #+begin_src julia :results value :exports both :tangle julia/p_{ID}.jl
+  #+end_src
+  (Where {ID} is the exact Problem Identifier, e.g., 01, 01_02).
 - Constraint: The body of the code block must be empty. DO NOT generate solution code.
 
 * EXAMPLE OUTPUT
