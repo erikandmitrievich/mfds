@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-30>
-#+lastmod: <2026-01-13 13:06>
+#+lastmod: <2026-01-13 13:15>
 #+options: num:t
 #+startup: overview
 
@@ -38,6 +38,9 @@ For EVERY problem identified in the source text, you must generate exactly one t
 ** Mathematical Notation
 - All mathematical expressions MUST be converted to LaTeX.
 - **Inline Math**: Enclose in single dollar signs (e.g., ~$x^2 + y^2 = z^2$~).
+- **Punctuation Constraint**: Do NOT include trailing punctuation (periods, commas, colons) inside the math delimiters. Punctuation must be placed *outside* the closing dollar sign.
+  - **Bad**: ~$A \in \mathbb{R}^{3\times3},$~
+  - **Good**: ~$A \in \mathbb{R}^{3\times3}$,~
 - Do not use Unicode characters for math (e.g., do not use "×", use ~$\times$~).
 
 * EXTRACTION RULES (STRICT)
