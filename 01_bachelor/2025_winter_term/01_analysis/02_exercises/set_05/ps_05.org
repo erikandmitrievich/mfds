@@ -1,15 +1,23 @@
 #+title: Ps 05
 #+author: Erik An
 #+email: obluda2173@gmail.com
-#+date: <2026-01-11>
-#+lastmod: <2026-01-11 20:19>
-#+options: num:t
-#+startup: overview
+#+date: <2026-01-13>
+#+lastmod: <2026-01-13 12:57>
 #+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
 
 * Problem 1 :DONE:
 ** Task
+#+begin_quote
 Visualize the function $f:\mathbb{R}\rightarrow\mathbb{R}$, $f(x)=e^{2x}+x$ in Julia. Then prove that $f$ is invertible and determine $(f^{-1})^{\prime}(1)$.
+#+end_quote
 
 ** Notes
 
@@ -37,12 +45,12 @@ savefig("./figs/p_01.png")
 
 *** Solution
 
-$\begin{aligned}
-f(x) = e^{2x} + x \\
-f'(x) = 2e^{2x} + 1 \\
-\end{aligned}$
+\begin{align*}
+    f(x) &= e^{2x} + x \\
+    f'(x) &= 2e^{2x} + 1
+\end{align*}
 
-Since $\forall x \in \mathbb{R}, f'(x) > 0$, as $\forall x \in \mathbb{R}, e^{x} > 0$, $f(x)$ is monotonically increasing (injective).
+Since $\forall x \in \mathbb{R}, f'(x) > 0$ (as $\forall x \in \mathbb{R}, e^{x} > 0$), $f(x)$ is monotonically increasing (injective). \\
 
 The function $g : \mathbb{R} \rightarrow \mathbb{R}, g(x) = e^{2x}$ is continuous.
 
@@ -50,33 +58,35 @@ The function $k : \mathbb{R} \rightarrow \mathbb{R}, k(x) = x$ is also continuou
 
 Hence the function $f : \mathbb{R} \rightarrow \mathbb{R}, f(x) = g(x) + k(x) = e^{2x} + x$ is continuous.
 
-Since $\lim_{x \rightarrow -\infty} f(x) = -\infty$, $\lim_{x \rightarrow \infty} f(x) = \infty$ and the fact $f(x)$ is continious, by the intermediate value theorem $f(x)$ is surjective.
+Since $\lim_{x \rightarrow -\infty} f(x) = -\infty$ and $\lim_{x \rightarrow \infty} f(x) = \infty$, and using the fact that $f(x)$ is continuous, by the intermediate value theorem $f(x)$ is surjective. \\
 
-Given $f(x)$ is both injective and surjective, it is also bijective, which implies $f(x)$ is invertable.
+Given $f(x)$ is both injective and surjective, it is also bijective, which implies $f(x)$ is invertible.
 
-$\begin{aligned}
-(f^{-1})'(y) = \dfrac{1}{f'(x)} = \dfrac{1}{f'(f^{-1}(y))} \\
-\end{aligned}$
+$$ (f^{-1})'(y) = \dfrac{1}{f'(x)} = \dfrac{1}{f'(f^{-1}(y))} $$
 
-$\begin{aligned}
-1 = e^{2x} + x \\
-x = 0 \\
-(f^{-1})'(1) &= \dfrac{1}{2e^{2 \cdot 0} + 1}\\
-             &= \dfrac{1}{2 \cdot 1 + 1}\\
-             &= \dfrac{1}{3}\\
-\end{aligned}$
+We calculate the specific value:
+
+\begin{align*}
+    1 &= e^{2x} + x \\
+    x &= 0 \\
+    (f^{-1})'(1) &= \dfrac{1}{2e^{2 \cdot 0} + 1}\\
+                 &= \dfrac{1}{2 \cdot 1 + 1}\\
+                 &= \dfrac{1}{3}
+\end{align*}
 
 * Problem 2 :DONE:
 ** Task
+#+begin_quote
 Consider the function $f:[1,e]\rightarrow\mathbb{R}$, $f(x)=\ln(x)$. Determine $\xi$ associated to the mean value theorem. Illustrate your results in Julia.
+#+end_quote
 
 ** Notes
 *Plan:*
-1. Prove $f(x)$ is continuous on $\left[ 1,e \right]$.
-2. Prove $f(x)$ is differentiable on $\left( 1,e \right)$.
+1. Prove $f(x)$ is continuous on $[ 1,e ]$.
+2. Prove $f(x)$ is differentiable on $( 1,e )$.
 3. Apply /Mean Value Theorem/.
-4. Solve for $/xi$.
-5. Verify $\xi$ lies in the $\left( 1,e \right)$.
+4. Solve for $\xi$.
+5. Verify $\xi$ lies in $( 1,e )$.
 
 ** Solution
 *** Code
@@ -140,46 +150,48 @@ savefig("./figs/p_02.png")
 
 *** Solution
 #+begin_quote
-*Mean Value Theorem.* If $f: \left[ a, b \right] \rightarrow \mathbb{R}$ is continuous and differentiable on $\left( a, b \right)$, then there is $\xi \in \left( a,b \right)$ such that
+*Mean Value Theorem.* If $f: [ a, b ] \rightarrow \mathbb{R}$ is continuous and differentiable on $( a, b )$, then there is $\xi \in ( a,b )$ such that
 
 $$\frac{f(b) - f(a)}{b-a} = f'(\xi)$$
 #+end_quote
 
-1. Prove $f(x)$ is continuous on $\left[ 1,e \right]$.
+1. Prove $f(x)$ is continuous on $[ 1,e ]$.
 
-   The natural logarithmic function $f(x) = log(x)$ is defined and continuous $\forall x > 0$. Since $\left[ 1,e \right] \subset \left( 0,\infty \right)$, $f(x)$ is continuous on $\left[ 1,e \right]$.
+   The natural logarithmic function $f(x) = \log(x)$ is defined and continuous $\forall x > 0$. Since $[ 1,e ] \subset ( 0,\infty )$, $f(x)$ is continuous on $[ 1,e ]$.
 
-2. Prove $f(x)$ is differentiable on $\left( 1,e \right)$.
+2. Prove $f(x)$ is differentiable on $( 1,e )$.
 
-   $f'(x) = \dfrac{1}{x}$ is being defined $\forall x \neq 0$ and $0 \notin \left[ 1, e \right]$, implies $f(x)$ is differentiable on $\left( 1,e \right)$.
+   $f'(x) = \dfrac{1}{x}$ is defined $\forall x \neq 0$ and $0 \notin [ 1, e ]$, which implies $f(x)$ is differentiable on $( 1,e )$.
 
 3. Apply /Mean Value Theorem/.
 
-   $$\frac{f(b) - f(a)}{b-a} = f'(\xi)$$
+   $$ \frac{f(b) - f(a)}{b-a} = f'(\xi) $$
 
-   $\begin{aligned}
-   \frac{1}{\xi} &= \dfrac{log(e) - \log(1)}{e - 1} & \text{(substituting values)} \\
-   \frac{1}{\xi} &= \dfrac{1 - 0}{e - 1} & \text{(simplification)} \\
-   \frac{1}{\xi} &= \dfrac{1}{e - 1} \\
-   \end{aligned}$
+   \begin{align*}
+       \frac{1}{\xi} &= \dfrac{\log(e) - \log(1)}{e - 1} && \text{(substituting values)} \\
+       \frac{1}{\xi} &= \dfrac{1 - 0}{e - 1}             && \text{(simplification)} \\
+       \frac{1}{\xi} &= \dfrac{1}{e - 1}
+   \end{align*}
 
 4. Solve for $\xi$.
 
-   $\begin{aligned}
-   \frac{1}{\xi} &= \dfrac{1}{e - 1} \\
-   \xi &= e - 1 \\
-   \xi &\approx 1.7183... \\
-   \end{aligned}$
+   \begin{align*}
+       \frac{1}{\xi} &= \dfrac{1}{e - 1} \\
+       \xi &= e - 1 \\
+       \xi &\approx 1.7183...
+   \end{align*}
 
-5. Verify $\xi$ lies in the $\left( 1,e \right)$.
+5. Verify $\xi$ lies in $( 1,e )$.
 
-   $1 < 1.7183\dots < 2.718\dots$
+   $$ 1 < 1.7183\dots < 2.718\dots $$
 
    Hence, $\xi$ is valid.
 
 * Problem 3 :DONE:
 ** Task
+#+begin_quote
 Visualize the function $f:\mathbb{R}\rightarrow\mathbb{R}$, $f(x)=x^{3}-3x^{2}+2$ in Julia and guess its local extrema. Prove that your guess is correct.
+#+end_quote
 
 ** Notes
 
@@ -216,47 +228,42 @@ Based on the visualization, the local extrema appear to be at $x=0$ (maximum) an
 
 1. *Find Critical Points ($f'(x) = 0$)*
 
-   $\begin{aligned}
-   f(x) &= x^{3} - 3x^{2} + 2 \\
-   f'(x) &= 3x^{2} - 6x
-   \end{aligned}$
+   \begin{align*}
+       f(x) &= x^{3} - 3x^{2} + 2 \\
+       f'(x) &= 3x^{2} - 6x
+   \end{align*}
 
    Set the derivative to zero:
 
-   $\begin{aligned}
-   0 &= 3x(x - 2) \\
-   \implies x_{1} &= 0, \quad x_{2} = 2
-   \end{aligned}$
+   \begin{align*}
+       0 &= 3x(x - 2) \\
+       \implies x_{1} &= 0, \quad x_{2} = 2
+   \end{align*}
 
 2. *Classify Extrema (Second Derivative Test)*
 
    Calculate $f''(x)$:
-   $$
-   f''(x) = 6x - 6
-   $$
+   $$ f''(x) = 6x - 6 $$
 
    Evaluate at critical points:
    - *At $x_1 = 0$:*
-
-     $f''(0) = 6(0) - 6 = -6 < 0$
-
+     $$ f''(0) = 6(0) - 6 = -6 < 0 $$
      Since $f''(0)$ is negative, $f(x)$ has a *local maximum* at $x=0$.
 
    - *At $x_2 = 2$:*
-
-     $f''(2) = 6(2) - 6 = 6 > 0$
-
+     $$ f''(2) = 6(2) - 6 = 6 > 0 $$
      Since $f''(2)$ is positive, $f(x)$ has a *local minimum* at $x=2$.
 
    *Conclusion:* The guess was correct. There is a local maximum at $x=0$ and a local minimum at $x=2$.
 
 * Problem 4 :DONE:
 ** Task
+#+begin_quote
 Consider the function $f:[-2,2]\rightarrow\mathbb{R}$ $f(x)=x^{4}-2x^{2}+1$. Determine its global extrema. Afterwards, illustrate your results in Julia.
+#+end_quote
 
 ** Notes
 
-** Solution
 ** Solution
 *** Code
 #+begin_src julia :results value :export both :tangle julia/p_4.jl
@@ -288,7 +295,7 @@ savefig("./figs/p_04.png")
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/university/01_bachelor/2025_winter_term/01_analysis/02_exercises/set_05/figs/p_04.png
+: ./figs/p_04.png
 
 *** Solution
 To find the global extrema of a continuous function on a closed interval $[-2, 2]$, we must compare the function values at:
@@ -298,12 +305,12 @@ To find the global extrema of a continuous function on a closed interval $[-2, 2
 *1. Find Critical Points*
 Set $f'(x) = 0$:
 
-$\begin{aligned}
-f(x) &= x^{4} - 2x^{2} + 1 \\
-f'(x) &= 4x^{3} - 4x \\
-0 &= 4x(x^2 - 1) \\
-0 &= 4x(x - 1)(x + 1)
-\end{aligned}$
+\begin{align*}
+    f(x) &= x^{4} - 2x^{2} + 1 \\
+    f'(x) &= 4x^{3} - 4x \\
+    0 &= 4x(x^2 - 1) \\
+    0 &= 4x(x - 1)(x + 1)
+\end{align*}
 
 The critical points are $x \in \{0, 1, -1\}$. All lie within $[-2, 2]$.
 
@@ -312,12 +319,13 @@ We calculate $f(x)$ for all critical points and endpoints:
 |-------------+-------+-------------------------------------+--------|
 | Type        | $x$   | Calculation                         | $f(x)$ |
 | :---        | :---: | :---                                | :---:  |
-| Endpoint    | $-2$  | $(-2)^4 - 2(-2)^2 + 1 = 16 - 8 + 1$ | *9*    |
-| Critical Pt | $-1$  | $(-1)^4 - 2(-1)^2 + 1 = 1 - 2 + 1$  | *0*    |
+| Endpoint    | $-2$  | $(-2)^4 - 2(-2)^2 + 1 = 16 - 8 + 1$ | *9* |
+| Critical Pt | $-1$  | $(-1)^4 - 2(-1)^2 + 1 = 1 - 2 + 1$  | *0* |
 | Critical Pt | $0$   | $0^4 - 2(0)^2 + 1$                  | $1$    |
-| Critical Pt | $1$   | $1^4 - 2(1)^2 + 1$                  | *0*    |
-| Endpoint    | $2$   | $2^4 - 2(2)^2 + 1$                  | *9*    |
+| Critical Pt | $1$   | $1^4 - 2(1)^2 + 1$                  | *0* |
+| Endpoint    | $2$   | $2^4 - 2(2)^2 + 1$                  | *9* |
 |-------------+-------+-------------------------------------+--------|
+
 *3. Conclusion*
 Comparing the values:
 - The *Global Maximum* is *9*, occurring at $x = -2$ and $x = 2$.
@@ -325,9 +333,11 @@ Comparing the values:
 
 * Problem 5 :DONE:
 ** Task
+#+begin_quote
 Suppose a rectangle with side length $x$ and $y$ has the perimeter $20$.
 (a) Express the area $A$ as a function of $x$.
 (b) Determine the maximal possible area.
+#+end_quote
 
 ** Notes
 
@@ -346,13 +356,13 @@ $$ A : [0, 10] \rightarrow \mathbb{R}, \quad A(x) = -x^2 + 10x $$
 *** (b) Determine Maximal Area
 To find the maximum, we look for critical points where the derivative is zero.
 
-$\begin{aligned}
-A(x) &= -x^2 + 10x \\
-A'(x) &= -2x + 10 \\
-0 &= -2x + 10 \\
-2x &= 10 \\
-x &= 5
-\end{aligned}$
+\begin{align*}
+    A(x) &= -x^2 + 10x \\
+    A'(x) &= -2x + 10 \\
+    0 &= -2x + 10 \\
+    2x &= 10 \\
+    x &= 5
+\end{align*}
 
 We verify this against the endpoints of the domain $[0, 10]$:
 - $A(0) = 0$ (Minimum)
