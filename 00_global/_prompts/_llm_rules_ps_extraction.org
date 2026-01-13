@@ -86,9 +86,11 @@ Below is an example of how a specific input should be transformed.
 ```org
 * Problem 3
 ** Task
+#+begin_quote
 Given a function $f(x) = x^2 + 2x$, find the derivative.
 
 [GRAPHIC: Plot of a parabola opening upwards]
+#+end_quote
 
 ** Notes
 
