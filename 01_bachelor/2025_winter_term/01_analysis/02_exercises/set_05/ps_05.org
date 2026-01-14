@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-13>
-#+lastmod: <2026-01-13 12:57>
+#+lastmod: <2026-01-14 17:36>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -50,7 +50,7 @@ savefig("./figs/p_01.png")
     f'(x) &= 2e^{2x} + 1
 \end{align*}
 
-Since $\forall x \in \mathbb{R}, f'(x) > 0$ (as $\forall x \in \mathbb{R}, e^{x} > 0$), $f(x)$ is monotonically increasing (injective). \\
+Since $\forall x \in \mathbb{R}, f'(x) > 0$ (as $\forall x \in \mathbb{R}, e^{x} > 0$), $f(x)$ is monotonically increasing (injective).
 
 The function $g : \mathbb{R} \rightarrow \mathbb{R}, g(x) = e^{2x}$ is continuous.
 
@@ -58,7 +58,7 @@ The function $k : \mathbb{R} \rightarrow \mathbb{R}, k(x) = x$ is also continuou
 
 Hence the function $f : \mathbb{R} \rightarrow \mathbb{R}, f(x) = g(x) + k(x) = e^{2x} + x$ is continuous.
 
-Since $\lim_{x \rightarrow -\infty} f(x) = -\infty$ and $\lim_{x \rightarrow \infty} f(x) = \infty$, and using the fact that $f(x)$ is continuous, by the intermediate value theorem $f(x)$ is surjective. \\
+Since $\lim_{x \rightarrow -\infty} f(x) = -\infty$ and $\lim_{x \rightarrow \infty} f(x) = \infty$, and using the fact that $f(x)$ is continuous, by the intermediate value theorem $f(x)$ is surjective.
 
 Given $f(x)$ is both injective and surjective, it is also bijective, which implies $f(x)$ is invertible.
 
