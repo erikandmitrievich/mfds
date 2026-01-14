@@ -1,0 +1,445 @@
+#+title: Problem Set 11
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2025-11-07>
+#+lastmod: <2025-11-10 20:02>
+#+options: num:t
+#+startup: overview
+
+* Problem 1 [DONE]
+** Task
+Find a quadratic polynomial with integer coefficients that has one root equal to 3 - 7^1/2.
+
+** Notes
+x = (-b±(root(b^2 - 4*ac)))/(2a)
+
+x1 = 3 - 7^1/2
+
+Since polynomial has integer coefficients, the conjugate root will also be root:
+
+x2 = 3 + 7^1/2
+
+(x-x1)(x-x2) = 0
+
+(x - (3 - 7^1/2))(x - (3 + 7^1/2)) = 0
+
+x^2 - x(3 + 7^1/2) - x(3 - 7^1/2) + (3 - 7^1/2)(3 + 7^1/2) = 0
+
+x^2 + x(-3 - 7^1/2 - 3 + 7^1/2) + (3^2 - 7) = 0
+
+x^2 - 6x + 2 = 0
+
+** Solution
+* Problem 2 [DONE]
+** Task
+Find the remainder when P(x) = x^4 - 4x^3 + 6x^2 - 3x + 1 is divided by x^2 - x + 1.
+
+** Notes
+ (x^4 - 4x^3 + 6x^2 - 3x + 1) | (x^2 - x + 1) | x^2 - 3x
+-(x^4 -  x^3 +  x^2)
+
+      (-3x^3 + 5x^2 - 3x + 1)
+     -(-3x^3 + 3x^2 - 3x)
+
+                          (1)
+
+** Solution
+* Problem 3 [DONE]
+** Task
+Find the remainder when P(x) = x^5 - 17x + 1 is divided by x + 2 (can you do all the calculation in your head?)
+
+** Notes
+** Solution
+Yes, I can. 3.
+
+* Problem 4 [DONE]
+** Task
+The cubic polynomial p(x) = x^3 - 2x^2 + x + 1 has roots x1,x2,x3. Find a cubic polynomial f(y) that has roots y1 = x2x3, y2 = x1x3, y3 = x1x2.
+
+** Notes
+#+begin_quote
+P(t) = (t - x)(t - y)(t - z) = t^3 - s1*t^2 + s2*t - s3
+
+s1 = x + y + z          = 2
+s2 = xy + xz + yz       = 1
+s3 = xyz                = -1
+
+s4 = yz + xz + xy
+s5 = xyz^2 + xzy^2 + yzx^2
+s6 = (xyz)^2
+
+Since p(x) = x^3 - 2x^2 + x + 1, f(y)'s:
+s4 = s2
+s5 = s1*s2
+s6 = s3^2
+
+f(y) = y^3 - s4*y^2 + s5*y - s6
+f(y) = y^3 - s2*y^2 + s1*s2*y - s3^2
+f(y) = y^3 - y^2 + 2*y - 1
+#+end_quote
+
+Something here is not correct, so I will start from 0 in Solution
+
+** Solution
+#+begin_quote
+p(x) = x^3 - 2x^2 + x + 1
+
+p(x)'s coefficients:
+c1 = x + y + z          = 2
+c2 = xy + xz + yz       = 1
+c3 = xyz                = -1
+
+Since f(y) has the following roots:
+y1 = x2x3
+y2 = x1x3
+y3 = x1x2
+
+f(y)'s coefficients woud be:
+c4 = x2x3 + x1x3 + x1x2                         = c2            = 1
+c5 = x2x3(x1)^2 + x1x3(x2)^2 + x1x2(x3)^2       = c1c3          = -2
+c6 = (xyz)^2                                    = c3^2          = 1
+
+Thus,
+f(y) = y^3 - y^2 - 2y - 1
+#+end_quote
+
+* Problem 5 [DONE]
+** Task
+Numbers x,y,z ∈ ℝ satisfy two conditions
+
+        x + y + z = a
+        1/x + 1/y + 1/z = 1/a
+
+for some a ∈ ℝ. Prove that at leas one of the numbers x,y,z is equal to a.
+
+** Notes
+a = x + y + z
+
+then,
+
+1/x + 1/y + 1/z = 1/(x + y + z)
+
+yz/xyz + xz/xyz + xy/xyz = 1/(x + y + z)
+
+(yz + xz + xy)/(xyz) = 1/(x + y + z)
+
+(yz + xz + xy)(x + y + z) = xyz
+
+(xyz + zy^2 + yz^2) + (zx^2 + xyz + xz^2) + (yx^2 + xy^2 + xyz) = xyz
+
+(zy^2 + yz^2) + (zx^2 + xz^2) + (yx^2 + xy^2)
+
+yz(y + z) + xz(x + z) + xy(x + y)
+
+x(xz + xy) + y(yx + yz) + z(zx + zy)
+
+x(xz + xy) + y(yx + yz) + z(zx + zy) = -2xyz
+
+
+#+begin_quote
+x^3 + ax^2 + bx + c = 0
+
+Since,
+r1 + r2 + r3 = -a
+r1r2 + r1r3 + r2r3 = b
+r1r2r3 = -c
+
+Thus,
+(r1r2 + r1r3 + r2r3)/(r1r2r3) = -b/c
+1/r1 + 1/r2 + 1/r3 = -b/c
+
+Back to problem. Thus,
+a = r1 + r2 + r3
+-b/c = (r1r2 + r1r3 + r2r3)/(r1r2r3)
+#+end_quote
+
+#+begin_quote
+Got:
+x + y + z = a
+1/x + 1/y + 1/z = 1/a
+
+
+P(t) = (t - x)(t - y)(t - z) = t^3 - s1*t^2 + s2*t - s3
+
+Thus,
+s1 = x + y + z = a
+s2 = xy + xz + yz
+s3 = xyz
+
+Hence,
+s2/s3 = (xy + xz + yz)/(xyz) = 1/x + 1/y + 1/z = 1/a
+s2/s3 = 1/a
+as2 = s3
+
+Therefore,
+P(a) = a^3 - s1*a^2 + s2*a + s3 = a^3 - s1*a^2 = a^3 - a^3 = 0
+P(a) = 0.
+
+Thus, one of the roots (e.g. x,y,z) must be equal to a.
+#+end_quote
+
+** Solution
+#+begin_quote
+*Proposition.* If numbers x,y,z ∈ ℝ satisfy two conditions
+
+        x + y + z = a
+        1/x + 1/y + 1/z = 1/a
+
+And a ∈ ℝ. Than at least one of the numbers x,y,z is equal to a.
+
+*Proof.*
+P(t) = (t - x)(t - y)(t - z) = t^3 - s1*t^2 + s2*t - s3
+
+s1 = x + y + z
+s2 = xy + xz + yz
+s3 = xyz
+
+thus,
+s1 = a
+s2/s3 = (xy + xz + yz)/(xyz) = 1/x + 1/y + 1/z = 1/a
+
+hence,
+a*s2 = s3
+
+therefore,
+P(a) = a^3 - s1*a^2 + s2*a - s3         (s1 = a)
+     = a^3 - a^3 + s2*a - s3
+     = s2*a - s3                        (s2*a = s3)
+     = 0
+
+Since, P(a) = 0, that means a is one of the roots of P(t), and thus equals to at least one of the x,y,z.
+#+end_quote
+
+* Problem 6 [DONE]
+** Task
+Express the following numbers in a basic algebraic form (that is as a + bi):
+1. (2 - i)^2
+2. i^5 * (3 + 4i)^2
+3. (1 + i)^5 / (1 - i)^5
+4. (1 - i)^15
+
+** Notes
+1. (2 - i)^2
+
+   (2 - i)^2 = 2^2 - 2*2i + i^2
+             = 4 - 4i - 1
+             = 3 - 4i
+
+2. i^5 * (3 + 4i)^2
+
+   i^5 * (3 + 4i)^2 = i^5 * (3^2 + 24i + i^2)
+                    = i^5 * (3^2 + 24i + 16i^2)
+                    = i^5 * (9 + 24i - 16)
+                    = i^5 * (-7 + 24i)
+                    = i * (-7 + 24i)
+                    = -7i + 24i^2
+                    = -24 - 7i
+
+
+3. (1 + i)^5 / (1 - i)^5
+
+   1
+   11
+   121
+   1331
+   14641
+   15101051
+
+   (1 + i)^5 / (1 - i)^5 = (1 + 5i + 10i^2 + 10i^3 + 5i^4 + i^5)/(1 - 5i + 10i^2 - 10i^3 + 5i^4 - i^5)
+                         = (1 + 5i - 10 - 10i + 5 + i)/(1 - 5i - 10 + 10i + 5 - i)
+                         = (-4 - 4i)/(-4 + 4i)
+                         = (1 + i)/(1 - i)
+                         = (1 + i)^2 / (1^2 - i^2)
+                         = (1 + i)^2 / (2)
+                         = (1 + 2i + i^2)/2
+                         = i
+
+4. (1 - i)^15
+
+   e^iθ = cos(θ) + isin(θ)
+
+   Thus,
+   m = (1^2 + (-1)^2)^1/2 = 2^1/2
+
+   θ = tan^-1(-1/1) = -Pi/4
+
+   v = cos(-Pi/4) + isin(-Pi/4)
+
+   Thus,
+   1 - i = 2^1/2 * (cos(-Pi/4) + isin(-Pi/4))
+
+   1 - i = 2^1/2 * e^-i*Pi/4
+
+** Solution
+Same as in notes.
+
+* Problem 7 [DONE]
+** Task
+Solve the following quadratic equations:
+1. x^2 + 3x + 4 = 0
+2. z^2 + 5^1/2 * z + 3i = 0
+
+** Notes
+** Solution
+x = (-b ± (b^2 - 4ac)^1/2)/(2a)
+
+1. x^2 + 3x + 4 = 0
+
+   Thus,
+
+   x12 = (-3 ± (9 - 4 * 4)^1/2)/(2)
+       = (-3 ± (-7)^1/2)/(2)
+       = (-3 ± 7^1/2 * i)/(2)
+
+2. z^2 + 5^1/2 * z + 3i = 0
+
+   Thus,
+   z12 = (-(5^1/2) ± (5 - 12i)^1/2)/(2)
+
+   Lets simplify (5 - 12i)^1/2:
+   (5 - 12i)^1/2 = ((a + ib)^2)^1/2
+   5 - 12i = (a + ib)^2
+   5 - 12i = a^2 + 2abi - b^2
+
+   Thus,
+   5 = a^2 - b^2
+   -12 = 2ab
+   (a^2 + b^2)^2 = (a^2 - b^2)^2 + (2ab)^2 = 5^2 + 12^2 = 25 + 144 = 169
+
+   Hence,
+   a^2 + b^2 = 13
+
+   Thus,
+   a^2 = ((a^2 + b^2) + (a^2 - b^2))/(2) = (13 + 5)/2 = 9
+   b^2 = 4
+   a = ±3; b = ±2.
+
+   Since 2ab = -12, roots are 3 - 2i and -3 + 2i
+
+
+   Back to original equation:
+   z12 = (-(5^1/2) ± (5 - 12i)^1/2)/(2)
+
+   z1 = (-(5^1/2) + 3 - 2i)/(2)
+   z2 = (-(5^1/2) - 3 + 2i)/(2)
+
+* Problem 8 [SKIP]
+** Task
+Solve the following equations:
+1. z^2 = -8i
+2. z^2 + 2z = -1
+3. z^4 + 3z^2 + 2 = 0
+
+** Notes
+** Solution
+e^i
+
+e^iθ = cos(θ) + isin(θ)
+
+1. z^2 = -8i
+
+   -8i = 8(cos(-Pi/2) + i*sin(-Pi/2))
+
+   -8i = e^-i*Pi/2
+
+   z = (-8i)^1/2 = (e^-i*Pi/2)^1/2
+
+     = (-8i)^1/2 = e^-i*Pi/4
+
+2. z^2 + 2z = -1
+3. z^4 + 3z^2 + 2 = 0
+
+* Problem 9 [DONE]
+** Task
+Calculate:
+1. (1 + i * 3^1/2)^n
+2. (1 + cos(s) + i*sin(s))^n
+3. (1 - (3^1/2 - i)/(2))^20
+
+** Notes
+** Solution
+1. (1 + i * 3^1/2)^n
+
+   modulus: |1 + i * 3^1/2| = (1^2 + 3)^1/2 = 2
+   argument: arg(1 + i * 3^1/2) = tan^-1(3^1/2) = Pi/3
+
+   So,
+   1 + i * 3^1/2 = 2e^i*Pi/3
+
+   Hence,
+   (1 + i * 3^1/2)^n = 2^n * e^n*i*Pi/3 = 2^n*(cos(n*Pi/3) + i*sin(n*Pi/3))
+
+2. (1 + cos(s) + i*sin(s))^n
+
+   Rewriting using half angle identities:
+
+   1 + cos(s) = 2cos^2(s/2)
+
+   sin(s) = 2sin(s/2)cos(s/2)
+
+   Thus,
+
+   1 + cos(s) + i*sin(s) = 2cos^2(s/2) + 2i*sin(s/2)cos(s/2)
+                         = 2cos(s/2)(cos(s/2) + i*sin(s/2))
+                         = 2cos(s/2) * e^is/2
+
+   Therefore,
+   (1 + cos(s) + i*sin(s))^n = 2cos(s/2))^n * e^nis/2
+                             = 2^n * cos^2(s/2) * (cos(ns/2) + i * sin(ns/2))
+
+3. (1 - (3^1/2 - i)/(2))^20
+
+   Simplify base:
+   1 - (3^1/2 - i)/(2) = (2 - 3^1/2 + i)/(2)
+
+   modulus: |(2 - 3^1/2 + i)/(2)| = (((2 - 3^1/2)^2 + 1)^1/2)/2 = (2 - 3^1/2)^1/2
+   argument: tan^-1(1/(2 - 3^1/2)) = 5*Pi/12
+
+   So, the base raising to the 20th power:
+   ((2 - 3^1/2)^1/2 * e^i*5*Pi/12)^20 = (2 - 3^1/2)^10 * e^i*25*Pi/3
+
+   Reducing angle:
+   25*Pi/3 = 8*Pi + Pi/3, hence e^i*25*Pi/3 = e^i*Pi/3
+
+   e^i*Pi/3 = cos(Pi/3) + i*sin(Pi/3)
+            = 1/2 + i * (3^1/2)/2
+
+   Hence,
+   (1 - (3^1/2 - i)/(2))^20 = (2 - 3^1/2)^10 * (1/2 + i * (3^1/2)/2)
+
+* Problem 10 [DONE] [NOT CHECKED]
+** Task
+Depict on the complex plane sets determined by the conditions
+1. |z| = z
+2. |iz + 1| = 3
+3. |(z-1)/(z+1)| < 1
+
+** Notes
+** Solution
+1. |z| = z:
+
+   For z = x + iy, |z| = sqrt(x^2 + y^2) which is always nonnegative. Therefore, if |z| = z, then y = 0. Thus z lies on the real axis and only for z >= 0.
+
+2. |iz + 1| = 3:
+
+   Start with z = x + iy:
+
+   Substitute z into |iz + 1|:
+
+   |iz + 1| = sqrt{(ix - y +1)^2} = sqrt{(x^2 + (1-y)^2} = 3
+
+   Rearrange to get:
+
+   (x^2 + (1 - y)^2) = 9
+
+   This is the equation of a circle centered at (0, 1) with radius 3 in the (x, y) plane. Since x, y represent the real and imaginary parts of z, respectively, this circle lies in the complex plane.
+
+3. |(z-1)/(z+1)| < 1:
+
+   Start with z = x + iy:
+
+   Substitute z into |(z-1)/(z+1)|:
+
+   |[(x - 1) + iy]/[(x + 1) + iy]| < 1
+
+   This inequality means that the distance from the point z to 1 is less than the distance from z to -1. In terms of the coordinates (x, y), solving the inequality above results in x > 0. Hence, all the points for which this inequality holds lie in the right half of the complex plane (x > 0).

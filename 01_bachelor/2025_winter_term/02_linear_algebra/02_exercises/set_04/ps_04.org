@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-13>
-#+lastmod: <2026-01-13 13:18>
+#+lastmod: <2026-01-13 17:51>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -25,6 +25,8 @@ Perform Gaussian elimination on the system $Ax=b$ without row exchanges. Show ex
 ** Notes
 
 ** Solution
+
+
 
 * Problem 10 (b)
 ** Task
