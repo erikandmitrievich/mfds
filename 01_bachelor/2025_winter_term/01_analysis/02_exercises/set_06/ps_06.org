@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-16>
-#+lastmod: <2026-01-18 15:19>
+#+lastmod: <2026-01-18 16:11>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -173,33 +173,6 @@ In addition, approximate each integral in Julia by choosing the appropriate equi
           area += h * w
       end
       return area
-  end
-
-  function integral(f, a, b, tol = 1e-5)
-      n = 100
-      P_n = range(a, b, length=n+1)
-      max_n = 1_000_000
-
-      curr_L = L(f, P_n)
-      curr_U = U(f, P_n)
-      diff = curr_U - curr_L
-
-      while (diff > tol)
-          if (n > max_n)
-              error("Warning: Reached max n ($n) without satisfying tolerance.")
-          end
-
-          println("n = $n, Error = $diff")
-
-          n *= 2
-          P_n = range(a, b, length=n+1)
-
-          curr_L = L(f, P_n)
-          curr_U = U(f, P_n)
-          diff = curr_U - curr_L
-      end
-
-      return U(f, P_n)
   end
 
   function exercise()
