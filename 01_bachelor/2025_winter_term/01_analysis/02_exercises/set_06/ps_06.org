@@ -1,0 +1,545 @@
+#+title: Ps 06
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-01-16>
+#+lastmod: <2026-01-18 15:19>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* Problem 1 :DONE:
+** Task
+#+begin_quote
+Consider the function $f:[0,1]\rightarrow\mathbb{R}$ defined by
+$$f(x)=3x+2$$
+and the equidistant partitions $\mathcal{P}_{n}=\{\frac{k}{n}:k=0,...,n\}$, for $n\in\mathbb{N}$.
+
+(a) Determine $L(f,\mathcal{P}_{n})$ and $U(f,\mathcal{P}_{n})$.
+(b) Determine the limits $\lim_{n\rightarrow\infty}L(f,\mathcal{P}_{n})$ and $\lim_{n\rightarrow\infty}U(f,\mathcal{P}_{n})$.
+(c) Compute $\int_{0}^{1}f(x)dx$ by the FTC.
+#+end_quote
+
+** Solution
+
+- Part (a)
+
+  - Setup
+    Let $\mathcal{P}_n = \{ x_0, x_1, \dots, x_n \}$ be the equidistant partition with $x_k = \frac{k}{n}$ and $\Delta x = \frac{1}{n}$.
+    Since $f(x) = 3x+2$ is strictly increasing on $[0,1]$, the infimum and supremum on each sub-interval $[x_{k-1}, x_k]$ are achieved at the endpoints:
+
+    \begin{align*}
+      m_k &= \inf_{x \in [x_{k-1}, x_k]} f(x) = f(x_{k-1}) = 3\left(\frac{k-1}{n}\right) + 2 \\
+      M_k &= \sup_{x \in [x_{k-1}, x_k]} f(x) = f(x_k) = 3\left(\frac{k}{n}\right) + 2
+    \end{align*}
+
+  - Lower Sum Calculation
+    \begin{align*}
+      L(f, \mathcal{P}_{n}) &= \sum_{k=1}^{n} m_k \Delta x \\
+                            &= \sum_{k=1}^{n} \left[ 3\left(\frac{k-1}{n}\right) + 2 \right] \frac{1}{n} \\
+                            &= \frac{1}{n} \left[ \frac{3}{n}\sum_{k=1}^{n} (k-1) + \sum_{k=1}^{n} 2 \right] \\
+                            &= \frac{1}{n} \left[ \frac{3}{n} \cdot \frac{(n-1)n}{2} + 2n \right] \quad \text{(using } \sum_{i=0}^{n-1} i = \frac{(n-1)n}{2} \text{)} \\
+                            &= \frac{3(n-1)}{2n} + 2 \\
+                            &= \frac{3}{2} - \frac{3}{2n} + \frac{4}{2} \\
+                            &= \frac{7}{2} - \frac{3}{2n}
+    \end{align*}
+
+  - Upper Sum Calculation
+    \begin{align*}
+      U(f, \mathcal{P}_{n}) &= \sum_{k=1}^{n} M_k \Delta x \\
+                            &= \sum_{k=1}^{n} \left[ 3\left(\frac{k}{n}\right) + 2 \right] \frac{1}{n} \\
+                            &= \frac{1}{n} \left[ \frac{3}{n} \sum_{k=1}^{n} k + \sum_{k=1}^{n} 2 \right] \\
+                            &= \frac{1}{n} \left[ \frac{3}{n} \cdot \frac{n(n+1)}{2} + 2n \right] \\
+                            &= \frac{3(n+1)}{2n} + 2 \\
+                            &= \frac{3}{2} + \frac{3}{2n} + \frac{4}{2} \\
+                            &= \frac{7}{2} + \frac{3}{2n}
+    \end{align*}
+
+- Part (b)
+
+  Determine the limits $\lim_{n\rightarrow\infty}L(f,\mathcal{P}_{n})$ and $\lim_{n\rightarrow\infty}U(f,\mathcal{P}_{n})$.
+
+  Using the expressions derived in Part (a):
+
+  - *Limit of Lower Sum*
+
+    \begin{aligned}
+        \lim_{n\rightarrow\infty} L(f,\mathcal{P}_{n}) &= \lim_{n\rightarrow\infty} (\frac{7}{2} - \frac{3}{2n}) \\
+        &= \frac{7}{2} - 0 \\
+        &= \frac{7}{2} \\
+    \end{aligned}
+
+  - *Limit of Upper Sum*
+
+    \begin{aligned}
+        \lim_{n\rightarrow\infty} U(f,\mathcal{P}_{n}) &= \lim_{n\rightarrow\infty} (\frac{7}{2} + \frac{3}{2n}) \\
+        &= \frac{7}{2} + 0 \\
+        &= \frac{7}{2} \\
+    \end{aligned}
+
+  Since $\lim_{n\rightarrow\infty} L(f,\mathcal{P}_{n}) = \lim_{n\rightarrow\infty} U(f,\mathcal{P}_{n}) = \frac{7}{2}$, the function is Riemann integrable on $[0,1]$ and the value of the integral is $\frac{7}{2}$.
+
+- Part (c)
+
+  Compute $\int_{0}^{1}f(x)dx$ by the FTC.
+
+  $$ \int_{a}^{b} f(x) \, dx = F(b) - F(a) \quad \text{where} \quad F'(x) = f(x) $$
+
+  \begin{align*}
+    \int_0^1 (3x + 2) \, dx &= \left[ \frac{3}{2}x^2 + 2x \right]_{0}^{1} \\
+    &= \left(\frac{3}{2}(1)^{2} + 2(1)\right) - \left(\frac{3}{2}(0)^{2} + 2(0)\right) \\
+    &= \frac{7}{2} - 0 \\
+    &= \frac{7}{2}
+  \end{align*}
+
+* Problem 2 :DONE:
+** Task
+#+begin_quote
+Determine the following integrals:
+(a) $\int_{1}^{3}x^{2}dx$
+(b) $\int_{0}^{\log 2}e^{x}dx$
+(c) $\int_{0}^{\pi}\sin x dx$
+(d) $\int_{1}^{e}\frac{1}{x}dx$
+
+In addition, approximate each integral in Julia by choosing the appropriate equidistant partition of the respective intervals and implementing $L(f,\mathcal{P}_{n})$ and $U(f,\mathcal{P}_{n})$.
+#+end_quote
+
+** Solution
+
+- Part (a)
+
+  \begin{align*}
+  \int_{1}^{3} x^{2} \, dx &= \left[ \frac{1}{3} x^{3} \right]_{1}^{3} \\
+                           &= (\frac{1}{3} (3)^{3}) - (\frac{1}{3} (1)^{3}) \\
+                           &= 9 - \frac{1}{3} \\
+                           &= \frac{26}{3} \\
+  \end{align*}
+
+- Part (b)
+
+  \begin{align*}
+  \int_{0}^{\log(2)} e^{x} \, dx &= \left[ e^{x} \right]_{0}^{\log(2)} \\
+                                 &= (e^{\log(2)}) - (e^{0}) \\
+                                 &= 2 - 1 \\
+                                 &= 1 \\
+  \end{align*}
+
+- Part (c)
+
+  \begin{align*}
+  \int_{0}^{\pi} \sin(x) \, dx &= \left[ -\cos(x) \right]_{0}^{\pi} \\
+                               &= -\cos(\pi) + \cos(0) \\
+                               &= 1 + 1 \\
+                               &= 2 \\
+  \end{align*}
+
+- Part (d)
+
+  \begin{align*}
+  \int_{1}^{e} \dfrac{1}{x} \, dx &= \left[ \log(x) \right]_{1}^{e} \\
+                                  &= \log(e) - \log(1) \\
+                                  &= 1 - 0 \\
+                                  &= 1 \\
+  \end{align*}
+
+- Code
+
+  #+begin_src julia :results output :exports both :tangle julia/p_2.jl
+
+  function L(f, P)
+      area = 0.0
+      for i in 1:length(P)-1
+          h = min(f(P[i]), f(P[i+1]))
+
+          w = P[i+1] - P[i]
+
+          area += h * w
+      end
+      return area
+  end
+
+  function U(f, P)
+      area = 0.0
+      for i in 1:length(P)-1
+          h = max(f(P[i]), f(P[i+1]))
+
+          w = P[i+1] - P[i]
+
+          area += h * w
+      end
+      return area
+  end
+
+  function integral(f, a, b, tol = 1e-5)
+      n = 100
+      P_n = range(a, b, length=n+1)
+      max_n = 1_000_000
+
+      curr_L = L(f, P_n)
+      curr_U = U(f, P_n)
+      diff = curr_U - curr_L
+
+      while (diff > tol)
+          if (n > max_n)
+              error("Warning: Reached max n ($n) without satisfying tolerance.")
+          end
+
+          println("n = $n, Error = $diff")
+
+          n *= 2
+          P_n = range(a, b, length=n+1)
+
+          curr_L = L(f, P_n)
+          curr_U = U(f, P_n)
+          diff = curr_U - curr_L
+      end
+
+      return U(f, P_n)
+  end
+
+  function exercise()
+      n = 1000
+
+      # each item has: label, function, start(a), end(b), and exact answer
+      data = [
+          (label="(a) x^2",     f = x -> x^2,     a = 1,  b = 3,       exact = 26/3),
+          (label="(b) e^x",     f = x -> exp(x),  a = 0,  b = log(2),  exact = 1   ),
+          (label="(c) sin(x)",  f = x -> sin(x),  a = 0,  b = pi,      exact = 2   ),
+          (label="(d) 1/x",     f = x -> 1/x,     a = 1,  b = exp(1),  exact = 1   )
+      ]
+
+      println("Approximating integrals with n = $n partitions:\n")
+      println(rpad("Problem", 15), rpad("Lower Sum (L)", 18), rpad("Upper Sum (U)", 18), "Exact")
+      println("-"^65)
+
+      for i in data
+          P_n = range(i.a, i.b, length=n+1)
+
+          val_L = L(i.f, P_n)
+          val_U = U(i.f, P_n)
+
+          print(rpad(i.label, 15))
+          print(rpad(round(val_L, digits=5), 18))
+          print(rpad(round(val_U, digits=5), 18))
+          println(round(i.exact, digits=5))
+      end
+
+  end
+
+  exercise()
+  #+end_src
+
+  #+RESULTS:
+  #+begin_example
+  L (generic function with 1 method)
+  U (generic function with 1 method)
+  integral (generic function with 2 methods)
+  exercise (generic function with 1 method)
+  Approximating integrals with n = 1000 partitions:
+
+  Problem        Lower Sum (L)     Upper Sum (U)     Exact
+  -----------------------------------------------------------------
+  (a) x^2        8.65867           8.67467           8.66667
+  (b) e^x        0.99965           1.00035           1.0
+  (c) sin(x)     1.99686           2.00314           2.0
+  (d) 1/x        0.99946           1.00054           1.0
+  #+end_example
+
+* Problem 3 :DONE:
+** Task
+#+begin_quote
+Determine the following integrals using integration by parts.
+(a) $\int_{0}^{1}xe^{x}dx$
+(b) $\int_{0}^{\pi}x \sin x dx$
+(c) $\int_{1}^{e}\log x dx$
+(d) $\int_{0}^{1}x \log x dx$
+(e) $\int_{0}^{1}x^{2}e^{x}dx$
+
+In addition, implement the trapezoidal rule in Julia for equidistant partitions and compare the approximation with the exact value.
+#+end_quote
+
+** Solution
+
+$$\frac{d}{dx}\Big[f(x)g(x)\Big] = f'(x)g(x) + f(x)g'(x)$$
+
+$$\int_{a}^{b} f(x)g'(x) \, dx = \Big[ f(x)g(x) \Big]_{a}^{b} - \int_{a}^{b} f'(x)g(x) \, dx$$
+
+- Part (a)
+
+  \begin{align*}
+  \text{Let } f(x) &= x \\
+  \text{and } g'(x) &= e^{x} \\
+  \int_0^1 xe^{x} \, dx &= \int_0^1 f(x)g'(x) \, dx \\
+                        &= \Big[ f(x)g(x) \Big]_{0}^{1} - \int_{0}^{1} f'(x)g(x) \, dx \\
+                        &= \Big[ xe^{x} \Big]_{0}^{1} - \int_{0}^{1} 1 \cdot e^{x} \, dx \\
+                        &= \Big[ xe^{x} \Big]_{0}^{1} - \Big[ e^{x} \Big]_{0}^{1} \\
+                        &= \Big[ xe^{x} - e^{x} \Big]_{0}^{1} \\
+                        &= (1 \cdot e^{1} - e^{1}) - (0 \cdot e^{0} - e^{0}) \\
+                        &= e - e + 1 \\
+                        &= 1 \\
+  \end{align*}
+
+- Part (b)
+
+  \begin{align*}
+  \text{Let } f(x) &= x \\
+  \text{and } g'(x) &= \sin(x) \\
+  \int_0^\pi x\sin(x) \, dx &= \int_0^\pi f(x)g'(x) \, dx \\
+                            &= \Big[ f(x)g(x) \Big]_0^\pi - \int_0^\pi f'(x)g(x) \, dx \\
+                            &= \Big[ -x\cos(x) \Big]_0^\pi - \int_0^\pi 1 \cdot (- \cos(x)) \, dx \\
+                            &= \Big[ -x\cos(x) \Big]_0^\pi + \int_0^\pi \cos(x) \, dx \\
+                            &= \Big[ -x\cos(x) \Big]_0^\pi + \Big[ \sin(x) \Big]_0^\pi \\
+                            &= \Big[ -x\cos(x) + \sin(x) \Big]_0^\pi \\
+                            &= (-\pi\cos(\pi) + \sin(\pi)) - (0 \cdot \cos(0) + \sin(0)) \\
+                            &= \pi \\
+  \end{align*}
+
+- Part (c)
+
+  \begin{align*}
+  \text{Let } f(x) &= \log(x) \\
+  \text{and } g'(x) &= 1 \\
+  \int_1^e \log(x) \cdot 1 \, dx &= \int_1^e f(x)g'(x) \, dx \\
+                                 &= \Big[ f(x)g(x) \Big]_1^e - \int_1^e f'(x)g(x) \, dx \\
+                                 &= \Big[ x\log(x) \Big]_1^e - \int_1^e \frac{1}{x} \cdot x \, dx \\
+                                 &= \Big[ x\log(x) \Big]_1^e - \int_1^e 1 \, dx \\
+                                 &= \Big[ x\log(x) - x \Big]_1^e \\
+                                 &= (e\log(e) - e) - (\log(1) - 1) \\
+                                 &= 1 \\
+  \end{align*}
+
+- Part (d)
+
+  \begin{align*}
+  \text{Let } f(x) &= \log(x) \\
+  \text{and } g'(x) &= x \\
+  \int_0^1 \log(x) \cdot x \, dx &= \int_0^1 f(x)g'(x) \, dx \\
+                                 &= \Big[ f(x)g(x) \Big]_0^1 - \int_0^1 f'(x)g(x) \, dx \\
+                                 &= \Big[ \frac{1}{2}x^{2}\log(x) \Big]_0^1 - \int_0^1 \frac{1}{x} \cdot \frac{1}{2}x^{2} \, dx \\
+                                 &= \Big[ \frac{1}{2}x^{2}\log(x) \Big]_0^1 - \int_0^1 \frac{1}{2} x \, dx \\
+                                 &= \Big[ \frac{1}{2}x^{2}\log(x) \Big]_0^1 - \Big[ \frac{1}{4} x^{2} \Big]_0^1 \\
+                                 &= \Big[ \frac{1}{2}x^{2}\log(x) - \frac{1}{4} x^{2} \Big]_0^1 \\
+                                 &= (\frac{1}{2}1^{2}\log(1) - \frac{1}{4} 1^{2}) - (\frac{1}{2}0^{2}\log(0) - \frac{1}{4} 0^{2}) \\
+                                 &= - \frac{1}{4} \\
+  \end{align*}
+
+- Part (e)
+
+  \begin{align*}
+  \text{Let } f(x) &= x^{2} \\
+  \text{and } g'(x) &= e^{x} \\
+  \int_0^1 x^{2}e^{x} \, dx &= \int_0^1 f(x)g'(x) \, dx \\
+                        &= \Big[ f(x)g(x) \Big]_{0}^{1} - \int_{0}^{1} f'(x)g(x) \, dx \\
+                        &= \Big[ x^{2}e^{x} \Big]_{0}^{1} - \int_{0}^{1} 2x \cdot e^{x} \, dx \\
+                        &= \Big[ x^{2}e^{x} \Big]_{0}^{1} - 2\int_{0}^{1} x e^{x} \, dx \\
+                        &= \Big[ x^{2}e^{x} \Big]_{0}^{1} - 2 \cdot 1 \qquad \text{(substitution from part (a))} \\
+                        &= (1^{2}e^{1}) - (0^{2}e^{0}) - 2 \\
+                        &= e - 2 \\
+  \end{align*}
+
+- Code
+  #+begin_src julia :results output :exports both :tangle julia/p_3.jl
+  using Printf
+
+  function T(f, P)
+      area = 0.0
+      for i in 1:length(P)-1
+          h = (f(P[i]) + f(P[i+1])) / 2
+          w = P[i+1] - P[i]
+          area += h * w
+      end
+      return area
+  end
+
+  function exercise()
+      n = 1000
+
+      safe_xlogx(x) = (x == 0) ? 0.0 : x * log(x)
+
+      data = [
+          (label="(a) x e^x",     f = x -> x * exp(x),    a = 0.0, b = 1.0,     exact = 1.0     ),
+          (label="(b) x sin(x)",  f = x -> x * sin(x),    a = 0.0, b = pi,      exact = pi      ),
+          (label="(c) log(x)",    f = x -> log(x),        a = 1.0, b = exp(1),  exact = 1.0     ),
+          (label="(d) x log(x)",  f = safe_xlogx,         a = 0.0, b = 1.0,     exact = -0.25   ),
+          (label="(e) x^2 e^x",   f = x -> x^2 * exp(x),  a = 0.0, b = 1.0,     exact = exp(1)-2)
+      ]
+
+      println("Approximating integrals using Trapezoidal Rule (n = $n):\n")
+      println(rpad("Problem", 16), rpad("Approx (T)", 18), rpad("Exact", 18), "Diff")
+      println("-"^65)
+
+      for i in data
+          P_n = range(i.a, i.b, length=n+1)
+
+          val_T = T(i.f, P_n)
+          diff = abs(val_T - i.exact)
+
+          print(rpad(i.label, 16))
+          print(rpad(round(val_T, digits=6), 18))
+          print(rpad(round(i.exact, digits=6), 18))
+          @printf "%.2e\n" diff
+      end
+  end
+
+  exercise()
+  #+end_src
+
+  #+RESULTS:
+  #+begin_example
+  T (generic function with 1 method)
+  exercise (generic function with 1 method)
+  Approximating integrals using Trapezoidal Rule (n = 1000):
+
+  Problem         Approx (T)        Exact             Diff
+  -----------------------------------------------------------------
+  (a) x e^x       1.0               1.0               3.70e-07
+  (b) x sin(x)    3.14159           3.141593          2.58e-06
+  (c) log(x)      1.0               1.0               1.56e-07
+  (d) x log(x)    -0.249999         -0.25             8.24e-07
+  (e) x^2 e^x     0.718283          0.718282          6.80e-07
+  #+end_example
+
+* Problem 4 :DONE:
+** Task
+#+begin_quote
+Determine the following integrals using an appropriate substitution:
+(a) $\int_{0}^{1}2x e^{x^{2}}dx$
+(b) $\int_{0}^{\pi/2}\sin(x)\cos(x)dx$
+(c) $\int_{1}^{2}\frac{2x}{1+x^{2}}dx$
+(d) $\int_{0}^{\log 2}e^{2x}dx$
+(e) $\int_{0}^{1}\frac{1}{\sqrt{1-x^{2}}}dx$
+
+In addition, implement the mid-point rule in Julia for equidistant partitions and compare the approximation with the exact value.
+#+end_quote
+
+** Solution
+
+$$\frac{d}{dx} \Big[ f(g(x)) \Big] = f'(g(x)) \cdot g'(x)$$
+
+$$\int_{a}^{b} f'(g(x)) \cdot g'(x) \, dx = \Big[ f(g(x)) \Big]_{a}^{b}$$
+
+- Part (a)
+
+  \begin{align*}
+  \text{Let } f(x) &= e^{x} \quad (\text{so } f'(x) = e^{x}) \\
+  \text{and } g(x) &= x^{2} \quad (\text{so } g'(x) = 2x) \\
+  \int_0^1 2x e^{x^{2}} \, dx &= \int_0^1 \underbrace{e^{x^{2}}}_{f'(g(x))} \cdot \underbrace{2x}_{g'(x)} \, dx \\
+                              &= \Big[ f(g(x)) \Big]_{0}^{1} \\
+                              &= \Big[ e^{x^{2}} \Big]_{0}^{1} \\
+                              &= e^{1^{2}} - e^{0^{2}} \\
+                              &= e - 1 \\
+  \end{align*}
+
+- Part (b)
+
+  \begin{align*}
+  \text{Let } f(x) &= \frac{1}{2}x^2 \quad (\text{so } f'(x) = x) \\
+  \text{and } g(x) &= \sin(x) \quad (\text{so } g'(x) = \cos(x)) \\
+  \int_0^{\pi/2} \sin(x)\cos(x) \, dx &= \int_0^{\pi/2} \underbrace{\sin(x)}_{f'(g(x))} \cdot \underbrace{\cos(x)}_{g'(x)} \, dx \\
+                                      &= \Big[ f(g(x)) \Big]_{0}^{\pi/2} \\
+                                      &= \Big[ \frac{1}{2}(\sin(x))^2 \Big]_{0}^{\pi/2} \\
+                                      &= \frac{1}{2}(1)^2 - \frac{1}{2}(0)^2 \\
+                                      &= \frac{1}{2} \\
+  \end{align*}
+
+- Part (c)
+
+  \begin{align*}
+  \text{Let } f(x) &= \log(x) \quad (\text{so } f'(x) = \frac{1}{x}) \\
+  \text{and } g(x) &= 1 + x^{2} \quad (\text{so } g'(x) = 2x) \\
+  \int_1^2 \frac{2x}{1+x^{2}} \, dx &= \int_1^2 \underbrace{\frac{1}{1+x^{2}}}_{f'(g(x))} \cdot \underbrace{2x}_{g'(x)} \, dx \\
+                                   &= \Big[ f(g(x)) \Big]_{1}^{2} \\
+                                   &= \Big[ \log(1+x^{2}) \Big]_{1}^{2} \\
+                                   &= \log(5) - \log(2) \\
+  \end{align*}
+
+- Part (d)
+
+  \begin{align*}
+  \text{Let } f(x) &= e^{x} \quad (\text{so } f'(x) = e^{x}) \\
+  \text{and } g(x) &= 2x \quad (\text{so } g'(x) = 2) \\
+  \int_0^{\log 2} e^{2x} \, dx &= \int_0^{\log 2} e^{2x} \cdot 1 \, dx \\
+                               &= \frac{1}{2} \int_0^{\log 2} \underbrace{e^{2x}}_{f'(g(x))} \cdot \underbrace{2}_{g'(x)} \, dx \\
+                               &= \frac{1}{2} \Big[ f(g(x)) \Big]_{0}^{\log 2} \\
+                               &= \frac{1}{2} \Big[ e^{2x} \Big]_{0}^{\log 2} \\
+                               &= \frac{1}{2} (e^{2\log 2} - e^{0}) \\
+                               &= \frac{3}{2} \\
+  \end{align*}
+
+- Part (e)
+
+  \begin{align*}
+  \text{Let } f(x) &= \arcsin(x) \quad (\text{so } f'(x) = \frac{1}{\sqrt{1-x^{2}}}) \\
+  \int_0^1 \frac{1}{\sqrt{1-x^{2}}} \, dx &= \int_0^1 f'(x) \, dx \\
+                                         &= \Big[ f(x) \Big]_{0}^{1} \\
+                                         &= \Big[ \arcsin(x) \Big]_{0}^{1} \\
+                                         &= \arcsin(1) - \arcsin(0) \\
+                                         &= \frac{\pi}{2} \\
+  \end{align*}
+
+- Code
+
+  #+begin_src julia :results output :exports both :tangle julia/p_4.jl
+  using Printf
+
+  function M(f, P)
+      area = 0.0
+      for i in 1:length(P)-1
+          mid = (P[i+1] + P[i]) / 2
+          h = f(mid)
+          w = P[i+1] - P[i]
+          area += h * w
+      end
+      return area
+  end
+
+  function exercise()
+      n = 1000
+
+      data = [
+          (label="(a) 2x e^(x^2)",   f = x -> 2x * exp(x^2),     a = 0.0, b = 1.0,    exact = exp(1)-1),
+          (label="(b) sin(x)cos(x)", f = x -> sin(x)*cos(x),     a = 0.0, b = pi/2,   exact = 0.5),
+          (label="(c) 2x/(1+x^2)",   f = x -> (2x)/(1+x^2),      a = 1.0, b = 2.0,    exact = log(5) - log(2)),
+          (label="(d) e^(2x)",       f = x -> exp(2x),           a = 0.0, b = log(2), exact = 1.5),
+          (label="(e) 1/sqrt(1-x^2)",f = x -> 1/sqrt(1-x^2),     a = 0.0, b = 1.0,    exact = pi/2)
+      ]
+
+      println("Approximating integrals using Midpoint Rule (n = $n):\n")
+      println(rpad("Problem", 18), rpad("Approx (M)", 18), rpad("Exact", 18), "Diff")
+      println("-"^65)
+
+      for i in data
+          P_n = range(i.a, i.b, length=n+1)
+
+          val_M = M(i.f, P_n)
+          diff = abs(val_M - i.exact)
+
+          print(rpad(i.label, 18))
+          print(rpad(round(val_M, digits=6), 18))
+          print(rpad(round(i.exact, digits=6), 18))
+          @printf "%.2e\n" diff
+      end
+  end
+
+  exercise()
+  #+end_src
+
+  #+RESULTS:
+  #+begin_example
+  M (generic function with 1 method)
+  exercise (generic function with 1 method)
+  Approximating integrals using Midpoint Rule (n = 1000):
+
+  Problem           Approx (M)        Exact             Diff
+  -----------------------------------------------------------------
+  (a) 2x e^(x^2)    1.718281          1.718282          5.96e-07
+  (b) sin(x)cos(x)  0.5               0.5               2.06e-07
+  (c) 2x/(1+x^2)    0.916291          0.916291          1.00e-08
+  (d) e^(2x)        1.5               1.5               1.20e-07
+  (e) 1/sqrt(1-x^2) 1.557271          1.570796          1.35e-02
+  #+end_example
