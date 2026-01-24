@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-08>
-#+lastmod: <2026-01-08 11:59>
+#+lastmod: <2026-01-20 10:18>
 #+options: num:t
 #+startup: overview
 
@@ -43,3 +43,13 @@
    - [ ] Definition and elementary examples
    - [ ] Differentiation rules
    - [ ] Local extrema
+
+Problem Sets:
+- [ ] ps_00 - Sequences, limits, quadratic equations
+- [ ] ps_01 - Metric spaces, convergence in R^n, series
+- [ ] ps_02 - Continuity, intermediate value theorem, bisection method
+- [ ] ps_03 - Epsilon-delta continuity, linear approximation, series expansions
+- [X] ps_04 - Trigonometric identities, differentiability, Newton's method
+- [X] ps_05 - Inverse functions, Mean Value Theorem (MVT), extrema and optimization
+- [X] ps_06 - Riemann integration, Fundamental Theorem of Calculus (FTC), integration methods
+- [ ] ps_07 - Taylor polynomials, improper integrals, convergence of series
