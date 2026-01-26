@@ -1,0 +1,245 @@
+#+title: Compiled Problems
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-01-26>
+#+lastmod: <2026-01-26 18:20>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* ps_00
+** Problem 1
+The p-q-formula of quadratic equations leads to
+$x^{2}-2px+q=0$, $x_{1/2}=p\pm\sqrt{p^{2}-q}$.
+Write a function $(p,q)\mapsto myPQnaive(p,q)$ that returns the zeros $x_{1}$ and $x_{2}$.
+** Problem 2
+Visualize the following sequences
+(a) $a_{n}:=(1+\frac{1}{n})^{n}$ for $n=1,2,\ldots$
+(b) Plot in the same graph: $\frac{1}{2^{n}}$ and $\frac{1}{n^{2}}$ , for $n=1,2,\ldots$
+(c) For $n\in\mathbb{N}$ put
+
+$$b_n = \begin{cases}
+1 \qquad \text{if n is a square} \\
+\dfrac{1}{n+1} \qquad \text{otherwise}
+\end{cases}$$
+
+(d) Find and illustrate the largest element in the sequence $(x_{n})_{n\in\mathbb{N}}$, given by
+$x_{n}=\frac{n^{2}}{2^{n}}, \qquad n\in\mathbb{N}$
+** Problem 3
+Show that
+(a) $lim_{n\rightarrow\infty}\frac{(-1)^{n}}{n}=0$ ,
+(b) $lim_{n\rightarrow\infty}\frac{4n^{2}-2n+1}{n^{2}-n+6}=4$
+In addition, visualize this behavior in Julia.
+** Problem 4
+Show that the sequence $(a_{n})_{n\in\mathbb{N}}$, given by
+$$a_{n}=n+n(-1)^{n}, \qquad n\in\mathbb{N}$$
+is divergent. Check also in Julia.
+** Problem 5
+Does the sequence $(x_{n})_{n\in\mathbb{N}}$ given by
+$$x_{n}=\sqrt{n+4}-\sqrt{n}, \qquad n\in\mathbb{N}$$
+converge? Prove your answer and illustrate in Julia.
+* ps_01
+** Problem 1
+Let $\Omega$ be any nonempty set. Define the function $d_{\Omega}:\Omega\times\Omega\rightarrow\mathbb{R}$ by
+$$d_{\Omega}(x,y)=\begin{cases}0,& \text{if } x=y,\\ 1,& \text{if } x\ne y.\end{cases}$$
+(1) Show that $d_{\Omega}$ is a metric on $\Omega$.
+(2) Let $(x_{n})_{n\in\mathbb{N}}$ be a sequence in $\Omega$. Show that $(x_{n})_{n\in\mathbb{N}}$ converges in $(\Omega,d_{\Omega})$ if and only if it is eventually constant.
+(... properly define what we mean by "eventually constant"...)
+** Problem 2
+Consider $\mathbb{R}^{2}$ with the metric
+$$d(x,y)=|x_{1}-y_{1}|+|x_{2}-y_{2}|, \quad x=(x_{1},x_{2})^{T}, y=(y_{1},y_{2})^{T}\in\mathbb{R}^{2}.$$
+Consider the sequences $(a_{n})_{n\in\mathbb{N}},(b_{n})_{n\in\mathbb{N}}\subseteq\mathbb{R}^{2}$
+$$a_{n}=\begin{pmatrix}\frac{1}{n+1}\\ 2+\frac{n}{n^{2}+1}\end{pmatrix}$$
+$$b_{n}=\begin{pmatrix}\sqrt{4+n}-\sqrt{n}\\ (-1)^{n}\end{pmatrix}$$
+and determine their behavior in regards to convergence in $(\mathbb{R}^{2},d)?$ In addition, investigate/illustrate also in Julia.
+** Problem 3
+Consider the series
+$$\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}.$$
+(1) Show that it converges towards a limit $a\in\mathbb{R}$ Does it converge absolutely?
+(2) Use Julia to guess the limit of $\sum_{k=0}^{\infty}\frac{a^{k}}{k!}$
+** Problem 4
+We want to show that the sequence $(a_{n})_{n\in\mathbb{N}}=((1+\frac{1}{n+1})^{n+1})_{n\in\mathbb{N}}$ contains a convergent subsequence by verifying the following steps:
+(1) Show that $(a_{n})_{n\in\mathbb{N}}$ is bounded. Hint for the upper bound: use the binomial theorem to verify
+$$(1+\frac{1}{n})^{n}\le\sum_{k=0}^{n}\frac{1}{k!}, \quad n=1,2,....$$
+(2) Argue now that $(a_{n})_{n\in\mathbb{N}}$ has a convergent subsequence. Make additionally numerical checks in Julia to collect some evidence that $(a_{n})_{n\in\mathbb{N}}$ is monoton and hence convergent.
+* ps_02
+** Problem 1
+Show that the function $f:\mathbb{Q}\rightarrow\mathbb{R}$ given by
+$f(x)=\begin{cases}0,&x^{2}<2,\\ 1,&x^{2}>2,\end{cases}$
+is continuous.
+** Problem 2
+Prove that the following functions are continuous:
+(a) $f:\mathbb{R}\rightarrow\mathbb{R}$, $f(x)=\frac{1}{x^{2}+1}$
+(b) $g:\mathbb{R}\rightarrow\mathbb{R}$, $g(x)=\exp(|x|)$.
+** Problem 3
+Prove or disprove that the function $f:\mathbb{R}\rightarrow\mathbb{R}$ is continuous, where f is given by
+$f(x)=\begin{cases}\exp(-\frac{1}{x}),&x\in\mathbb{R}\backslash\{0\},\\ 0,&x=0.\end{cases}$
+** Problem 4
+Write a Julia function interpol(X, Y) with inputs $X=(x_{1},...,x_{n})^{1}$, $Y=(y_{1},...,y_{n})^{\top}\in\mathbb{R}^{n}$
+ and the output is a function f such that
+(a) $f(x_{i})=y_{i}$, for $i=1,...,n$ and f is continuous (find a simple function that satisfies those criteria).
+(b) $f(x_{i})=y_{i}$, for $i=1,...,n$ and f is a step-function.
+** Problem 5
+Scientists study how global mean sea-level rise $S(t)$ (in centimeters) depends on the global temperature anomaly t, which measures how many degrees Celsius the current global average temperature differs from a chosen historical baseline.
+A simplified physical model predicts
+
+$$S(t)=\frac{3}{2}+\frac{1}{2}t+2(\exp(\frac{2}{5}t)-1)$$
+
+where the constant $\frac{3}{2}$ cm accounts for committed sea-level rise from past emissions, the linear
+ term $\frac{1}{2}t$ represents thermal expansion of seawater, and the exponential term $2(\exp(\frac{2}{5}t)-1)$ models
+ nonlinear ice-sheet melt feedbacks.
+The Paris International Climate Treaty defines a critical threshold of 8 cm sea-level rise that triggers
+ coastal emergency measures.
+(a) Implement a bisection method in Julia or familiarize yourself with the code provided.
+(b) Use the implementation to determine the critical global temperature anomaly, that is, determine $t$ such that $S(t)=8$.
+* ps_03
+** Problem 1
+The ReLU function is a standard activation function in neural networks. It is simply given by $f:\mathbb{R}\rightarrow\mathbb{R}$
+$f(x)=\begin{cases}0,&x\le0,\\ x,&x>0.\end{cases}$
+Use the ( , $\delta$)-definition of continuity to determine, where $f$ is continuous and where not. Plot $f$ in Julia.
+** Problem 2
+Define another activation function $g:\mathbb{R}\rightarrow\mathbb{R}$,
+$g(x)=\log(1+e^{x})$.
+(a) Why is $g$ continuous on $\mathbb{R}$?
+(b) Plot $f$ and $g$ in Julia. Which activation function looks "smoother", $f$ or $g$?
+** Problem 3
+A data set contains the locations $X=(1,2,3,4,5,6,7,8,9)^{\top}$ with corresponding observations $Y=(3,5,7,7,11,15,19,?,27)^{\top}$ The observation at $x=8$ is missing.
+(a) Provide an educated guess for the observation at $x=8$.
+(b) Write new or modify existing Julia code to fill in missing observations.
+** Problem 4
+We want to estimate the value of $\exp(1.3)$ by the following procedure:
+1. Use Julia to implement a finite sum to determine $e=\exp(1)$ up to an error smaller than $10^{-6}$ according to Proposition 1.3.12.
+2. Express $\exp(1.3)$ by using $\exp(1)$ and $\exp(0.3)$.
+3. Replace the "unknown" value of $\exp(0.3)$ by a linear approximation from $\exp(0)$ to $\exp(1)$.
+4. How big is the error?
+** Problem 5
+Consider the two functions $f,g:(0,\infty)\rightarrow\mathbb{R}$ given by
+
+$$f(x)=\log(x), \quad g(x)=2x^{2}-2$$
+
+Plot both functions in Julia and provide mathematical reasons for the number of intersection points that you may observe.
+** Problem 6
+Write Julia functions approxSin and approxCos that approximate $\sin$ and $\cos$ by using their truncated series expansions. Plot both functions using your approximations.
+* ps_04
+** Problem 1
+Verify the following trigonometric identities and check them in Julia.
+$\cos(-x)=\cos(x)$
+$\sin(-x)=-\sin(x)$
+$\cos(x)=\sin(x+\frac{\pi}{2})$
+$\sin(x)=\cos(x-\frac{\pi}{2})$
+$\sin(x+\pi)=-\sin(x)$
+$\cos(x+\pi)=-\cos(x)$,
+** Problem 2
+Determine the derivative of arccos and check in Julia.
+** Problem 3
+Suppose that $f,g:U\rightarrow\mathbb{R}$ are continuous in $x_{0}\in U$ Prove that if $f$ is also differentiable in $x_{0}$ and $f(x_{0})=0$ then the product $f g$ is differentiable in $x_{0}$.
+Illustrate this claim in Julia for the functions $f(x)=x$ and $g(x)=|x|$.
+** Problem 4
+The aim is to prove $(1+\frac{1}{n})^{n}\rightarrow e$
+(a) Determine the values of $\log(1)$ $\log^{\prime}(1)$ and verify the identity
+$\log^{\prime}(1)=\lim_{n\rightarrow\infty}n~\log(1+\frac{1}{n})$
+(b) Use the definition of the general exponential to prove $(1+\frac{1}{n})^{n}\rightarrow \exp(1)$.
+(This determines the limit of the sequence in Problem 4 of Problem Set 1)
+** Problem 5
+Prove by induction (and using the product rule) that, for $1\le n\in\mathbb{N}$ the derivative of $f:\mathbb{R}\rightarrow\mathbb{R}$, $f(x)=x^{n}$ is given by $f^{\prime}(x)=nx^{n-1}$.
+** Problem 6
+Compute the derivative of the following functions:
+1. $f(x)=\sin(x^{2})$
+2. $g(x)=e^{3x+1}$
+3. $f(x)=\ln(5x^{2}-x+4)$
+4. $g(x)=(2x^{3}-x)^{5}$
+5. $f(x)=\sqrt{1+e^{2x}}$
+6. $g(x)=\cos(\ln~x)$, $x>0$
+Visualize all functions and their derivatives in Julia.
+** Problem 7
+Prove the inequality of arithmetic and geometric means,
+$\frac{1}{2}(x+y)\ge\sqrt{xy},$
+$\forall x,y\in[0,\infty)$.
+(Can be useful for the next exercise!)
+** Problem 8
+Let $(x_{n})_{n\ge0}$ be defined by $x_{0}=1$, $x_{n+1}=\frac{1}{2}(x_{n}+\frac{2}{x_{n}})$ $n\in\mathbb{N}$
+1. Determine $x_{1}$, $x_{2}$, and $x_{3}$.
+2. Compute $x_{n}$ for large $n$ in Julia, guess the limit, and visualize the convergence.
+3. Prove that $x_{n}\ge\sqrt{2}$ for all $n\ge1.$
+4. Prove that $(x_{n})_{n\ge1}$ is decreasing.
+5. Conclude that $(x_{n})_{n\in\mathbb{N}}$ converges and determine its limit.
+** Problem 9
+Consider $f:\mathbb{R}\rightarrow\mathbb{R}$ $f(x)=\cos(x)$ and the sequence
+$x_{0}=2$, $x_{n+1}=x_{n}-\frac{f(x_{n})}{f^{\prime}(x_{n})}$
+$n\in\mathbb{N}$
+Implement the sequence in Julia and compare with the bisection method in the interval [0, 2].
+* ps_05
+** Problem 1
+Visualize the function $f:\mathbb{R}\rightarrow\mathbb{R}$, $f(x)=e^{2x}+x$ in Julia. Then prove that $f$ is invertible and determine $(f^{-1})^{\prime}(1)$.
+** Problem 2
+Consider the function $f:[1,e]\rightarrow\mathbb{R}$, $f(x)=\ln(x)$. Determine $\xi$ associated to the mean value theorem. Illustrate your results in Julia.
+** Problem 3
+Visualize the function $f:\mathbb{R}\rightarrow\mathbb{R}$, $f(x)=x^{3}-3x^{2}+2$ in Julia and guess its local extrema. Prove that your guess is correct.
+** Problem 4
+Consider the function $f:[-2,2]\rightarrow\mathbb{R}$ $f(x)=x^{4}-2x^{2}+1$. Determine its global extrema. Afterwards, illustrate your results in Julia.
+** Problem 5
+Suppose a rectangle with side length $x$ and $y$ has the perimeter $20$.
+(a) Express the area $A$ as a function of $x$.
+(b) Determine the maximal possible area.
+* ps_06
+** Problem 1
+Consider the function $f:[0,1]\rightarrow\mathbb{R}$ defined by
+$$f(x)=3x+2$$
+and the equidistant partitions $\mathcal{P}_{n}=\{\frac{k}{n}:k=0,...,n\}$, for $n\in\mathbb{N}$.
+
+(a) Determine $L(f,\mathcal{P}_{n})$ and $U(f,\mathcal{P}_{n})$.
+(b) Determine the limits $\lim_{n\rightarrow\infty}L(f,\mathcal{P}_{n})$ and $\lim_{n\rightarrow\infty}U(f,\mathcal{P}_{n})$.
+(c) Compute $\int_{0}^{1}f(x)dx$ by the FTC.
+** Problem 2
+Determine the following integrals:
+(a) $\int_{1}^{3}x^{2}dx$
+(b) $\int_{0}^{\log 2}e^{x}dx$
+(c) $\int_{0}^{\pi}\sin x dx$
+(d) $\int_{1}^{e}\frac{1}{x}dx$
+
+In addition, approximate each integral in Julia by choosing the appropriate equidistant partition of the respective intervals and implementing $L(f,\mathcal{P}_{n})$ and $U(f,\mathcal{P}_{n})$.
+** Problem 3
+Determine the following integrals using integration by parts.
+(a) $\int_{0}^{1}xe^{x}dx$
+(b) $\int_{0}^{\pi}x \sin x dx$
+(c) $\int_{1}^{e}\log x dx$
+(d) $\int_{0}^{1}x \log x dx$
+(e) $\int_{0}^{1}x^{2}e^{x}dx$
+
+In addition, implement the trapezoidal rule in Julia for equidistant partitions and compare the approximation with the exact value.
+** Problem 4
+Determine the following integrals using an appropriate substitution:
+(a) $\int_{0}^{1}2x e^{x^{2}}dx$
+(b) $\int_{0}^{\pi/2}\sin(x)\cos(x)dx$
+(c) $\int_{1}^{2}\frac{2x}{1+x^{2}}dx$
+(d) $\int_{0}^{\log 2}e^{2x}dx$
+(e) $\int_{0}^{1}\frac{1}{\sqrt{1-x^{2}}}dx$
+
+In addition, implement the mid-point rule in Julia for equidistant partitions and compare the approximation with the exact value.
+* ps_07
+** Problem 1
+Let $f:\mathbb{R}\rightarrow\mathbb{R}$ be a polynomial of degree $m\in\mathbb{N}$. Prove the following:
+(a) The Taylor polynomial of order $n\ge m$ located in $x_{0}=0$ coincides with $f$.
+(b) The Taylor polynomial of order $n\ge m$ located in $x_{0}\in\mathbb{R}$ coincides with $f$.
+** Problem 2
+Compute the Taylor polynomial of order $n\in\mathbb{N}$ at $x_{0}=0$ of
+1. $f(x)=e^{x}$,
+2. $f(x)=\sin(x)$,
+3. $f(x)=\cos(x)$.
+In addition, write Julia code that takes $f$ and $x_{0}$ as input and returns the Taylor polynomial of order 2.
+Visualize that your above computations are correct when $n=2$.
+** Problem 3
+Determine those $s\in\mathbb{R}$, for which the integral
+$$\int_{0}^{1}x^{s} \, dx$$
+is well-defined. In addition, illustrate your theoretical results by approximating the integral via the mid-point rule for a few distinct $s$ in Julia.
+** Problem 4
+Let $p\in\mathbb{R}$ and consider the series
+$$\sum_{n=2}^{\infty}\frac{1}{n(\log(n))^{p}}$$
+Decide for which values of $p$ the series converges.
+#+end_src

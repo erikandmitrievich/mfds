@@ -1,0 +1,88 @@
+#+title:  Llm Prompt Exam Prep
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-01-26>
+#+lastmod: <2026-01-26 19:13>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+#+title: Analysis Exam Preparation Prompt (7-Day Plan)
+#+date: <2026-01-26>
+
+* Context
+I am preparing for an Analysis exam. I have two specific documents that act as my primary resources:
+1. =prediction.org=: Contains lecture notes, specific theorem checklists, and a "relevance assessment" of problem sets based on hints given by the professor (e.g., "High Relevance", "For sure", "Ignore").
+2. =ps_total.org=: Contains the full text of all Problem Sets (0 through 7) covering sequences, series, continuity, differentiation, and integration.
+
+* Your Role
+Act as an expert Mathematics Tutor and Exam Strategist. Your goal is to synthesize these two documents into a highly optimized, prioritized **Exam Preparation Plan**.
+
+* Task Guidelines
+Please analyze the provided files and generate a response using the following structure:
+
+** 1. The "Red Alert" List (Highest Priority)
+Extract the items marked as "Certain", "High Relevance", "Essential", or "Most Important" in =prediction.org=.
+- For each item, map it to the specific exercise in =ps_total.org=.
+- *Crucial:* Explicitly highlight the "Professor's Hints" found in =prediction.org= (e.g., specific solution strategies like "Use [1, e] for MVT" or "L'Hopital with derivatives only").
+- *Theorems:* List the specific Theorems (e.g., 2.2.22) and Lemmas (e.g., 2.3.3) that are flagged as mandatory.
+
+** 2. Strategic Concept Grouping
+Group the relevant problems from =ps_total.org= by mathematical topic rather than by problem set number.
+- *Topic A: Sequences & Convergence* (Include Recursion from PS4 Prob 8, Cauchy sequences, etc.)
+- *Topic B: Continuity & Topology* (Include $\epsilon-\delta$, open/closed sets, metric spaces).
+- *Topic C: Differentiation & Expansion* (Taylor series, Mean Value Theorem, specific derivatives).
+- *Topic D: Integration* (Riemann sums, Fundamental Theorem).
+
+** 3. The "Ignore" List
+Explicitly list topics or problems that =prediction.org= suggests skipping (e.g., Compactness, Cauchy product). This helps me save time.
+
+** 4. The Action Plan (7-Day Intensive Schedule)
+Create a detailed, step-by-step study schedule based on the priorities above. Use the following breakdown:
+
+*** Day 1: Foundations & Metric Spaces
+- Focus: Metric definitions, Euclidean distance, and basic convergence.
+- *Key Problems:* PS1 Prob 1 & 2 (High Relevance).
+- *Theory:* Definition of limits and distance $d(x,y)=0 \iff x=y$.
+
+*** Day 2: Sequences, Recursion & Series
+- Focus: Convergence criteria and recursive sequences.
+- *Key Problems:* PS1 Prob 3 (Series criteria), PS4 Prob 8 (Recursion - "Certain").
+- *Strategy:* Master the strategy for proving recursion limits (show bounded, show monotonic).
+
+*** Day 3: Continuity & Topology
+- Focus: $\epsilon-\delta$ definitions, Composition, and Continuity proofs.
+- *Key Problems:* PS2 Prob 1, 2 ("He likes it"), & 3 (Case $x=0$).
+- *Theory:* Bolzano-Weierstrass (Thm 1.2.12).
+
+*** Day 4: Exponentials, Logarithms & Interpolation
+- Focus: Construction of Exp/Log and Linear Interpolation.
+- *Key Problems:* PS3 Prob 2 (Interpolation/$\epsilon$), PS3 Prob 6 (Truncated series - "Must know by heart").
+- *Theory:* Definition of $e$ and $\pi$.
+
+*** Day 5: Differentiation & Mean Value Theorem (MVT)
+- Focus: Derivatives, Chain Rule, and MVT applications.
+- *Key Problems:* PS5 Prob 1 (Diff quotient), PS5 Prob 2 (MVT on $[1,e]$ - "Most Important").
+- *Theory:* Differentiability implies Continuity.
+
+*** Day 6: Integration & Rules
+- Focus: Riemann Sums, FTC, and Integration by Parts/Substitution.
+- *Key Problems:* PS6 Prob 3 & 4 (Trapezoidal/Midpoint rules), PS6 Prob 1 (Riemann limits).
+- *Theory:* Fundamental Theorem of Calculus.
+
+*** Day 7: Taylor Series, Improper Integrals & Final Review
+- Focus: Taylor Polynomials and "Red Alert" review.
+- *Key Problems:* PS7 Prob 1 & 2 (Taylor), PS7 Prob 4 (Improper Integral).
+- *Activity:* Simulate a mock exam using the "Problem Types" hints (e.g., differentials question).
+
+** 5. Mock Exam Simulation
+Based on the "Problem Types" section in =prediction.org= (e.g., "one question where differentials work differently"), construct a hypothetical structure for the final exam.
+
+* Output Format
+Please provide the response in valid **Org-mode** format so I can paste it directly into my notes. Use checkboxes =[ ]= for the action plan items.

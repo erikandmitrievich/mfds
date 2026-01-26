@@ -1,0 +1,87 @@
+#+title: Ps 02
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-01-26>
+#+lastmod: <2026-01-26 13:18>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* Problem 1
+** Task
+#+begin_quote
+Show that the function $f:\mathbb{Q}\rightarrow\mathbb{R}$ given by
+$f(x)=\begin{cases}0,&x^{2}<2,\\ 1,&x^{2}>2,\end{cases}$
+is continuous.
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 2
+** Task
+#+begin_quote
+Prove that the following functions are continuous:
+(a) $f:\mathbb{R}\rightarrow\mathbb{R}$, $f(x)=\frac{1}{x^{2}+1}$
+(b) $g:\mathbb{R}\rightarrow\mathbb{R}$, $g(x)=\exp(|x|)$.
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 3
+** Task
+#+begin_quote
+Prove or disprove that the function $f:\mathbb{R}\rightarrow\mathbb{R}$ is continuous, where f is given by
+$f(x)=\begin{cases}\exp(-\frac{1}{x}),&x\in\mathbb{R}\backslash\{0\},\\ 0,&x=0.\end{cases}$
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 4
+** Task
+#+begin_quote
+Write a Julia function interpol(X, Y) with inputs $X=(x_{1},...,x_{n})^{1}$, $Y=(y_{1},...,y_{n})^{\top}\in\mathbb{R}^{n}$
+ and the output is a function f such that
+(a) $f(x_{i})=y_{i}$, for $i=1,...,n$ and f is continuous (find a simple function that satisfies those criteria).
+(b) $f(x_{i})=y_{i}$, for $i=1,...,n$ and f is a step-function.
+#+end_quote
+
+** Notes
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_4.jl
+#+end_src
+
+* Problem 5
+** Task
+#+begin_quote
+Scientists study how global mean sea-level rise $S(t)$ (in centimeters) depends on the global temperature anomaly t, which measures how many degrees Celsius the current global average temperature differs from a chosen historical baseline.
+A simplified physical model predicts
+
+$$S(t)=\frac{3}{2}+\frac{1}{2}t+2(\exp(\frac{2}{5}t)-1)$$
+
+where the constant $\frac{3}{2}$ cm accounts for committed sea-level rise from past emissions, the linear
+ term $\frac{1}{2}t$ represents thermal expansion of seawater, and the exponential term $2(\exp(\frac{2}{5}t)-1)$ models
+ nonlinear ice-sheet melt feedbacks.
+The Paris International Climate Treaty defines a critical threshold of 8 cm sea-level rise that triggers
+ coastal emergency measures.
+(a) Implement a bisection method in Julia or familiarize yourself with the code provided.
+(b) Use the implementation to determine the critical global temperature anomaly, that is, determine $t$ such that $S(t)=8$.
+#+end_quote
+
+** Notes
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_5.jl
+#+end_src

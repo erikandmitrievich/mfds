@@ -1,0 +1,145 @@
+#+title: Plan
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-01-26>
+#+lastmod: <2026-01-26 19:30>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* 1. The "Red Alert" List (Highest Priority)
+These items are explicitly marked as "Certain," "Essential," or "High Relevance." You must master these to pass.
+
+** Sequences & Recursion
+- *Recursion Limits (Certain):* PS4, Problem 8.
+  - /Hint:/ If $x_n$ is convergent, assume limit $x$ exists. Set $x_{n+1} \to x$ and $x_n \to x$ in the recursion formula (e.g., $x = \frac{1}{2}(x + \frac{2}{x})$) to solve for $x$.
+- *Series Convergence Criteria (Certain):* PS1, Problem 3.
+  - /Task:/ Be able to prove convergence for specific series (e.g., alternating series).
+- *Limits Evaluating to 0:* PS0, Problem 3.
+
+** Continuity
+- *Composition of Functions (Classic/For Sure):* PS2, Problem 2.
+  - /Hint:/ "Just write it's a composition," but be prepared to prove it using definitions if asked.
+- *Euclidean Metric (Very High Relevance):* PS1, Problem 2.
+  - /Hint:/ "He likes it, he said it's wonderful." Focus on the metric $d(x,y)=|x_1-y_1| + |x_2-y_2|$.
+- *Continuity by Cases (High Relevance):* PS2, Problem 3.
+  - /Hint:/ Pay specific attention to the case $x=0$.
+
+** Functions & Differentiation
+- *Mean Value Theorem (Most Important):* PS5, Problem 2.
+  - /Hint:/ Apply MVT on the interval $[1, e]$. Use the specific strategy: $\frac{\log(e)-\log(1)}{e-1} = \log'(\xi)$.
+- *Truncated Series (Essential):* PS3, Problem 6.
+  - /Hint:/ You "must know by heart" the truncated series expansions for $\exp$, $\sin$, and $\cos$.
+- *Trigonometric Identities:* PS4, Problem 1.
+  - /Hint:/ Use series arguments to prove these, avoid geometric drawings.
+
+** Integration
+- *Improper Integrals:* PS7, Problem 4.
+  - /Hint:/ "Just integrate." Check example 4(e) in lecture notes.
+- *Integration Rules:* PS6, Problems 3 & 4.
+  - /Hint:/ Know the Midpoint and Trapezoidal rules and how to write them.
+
+** Mandatory Theorems & Definitions
+- *Theorem 2.2.22:* General Exponents (Will definitely show up).
+- *Lemma 2.3.3:* Memorize for multiple choice.
+- *Definition of $\pi$ and $e$*.
+- *Theorem 1.2.12:* Bolzano-Weierstrass (Named theorem, important for proofs).
+- *Theorem 2.1.23 & 2.1.4:* Geometric Series.
+
+* 2. Strategic Concept Grouping
+Problems grouped by mathematical structure for efficient batch-studying.
+
+** Topic A: Sequences & Convergence
+- /Metric Definition:/ PS1, Prob 1 ($d(x,y)=0 \iff x=y$).
+- /Limits:/ PS0, Prob 3 & 5.
+- /Series:/ PS1, Prob 3 (Alternating series).
+- /Recursion:/ PS4, Prob 8 (The "For Sure" problem).
+
+** Topic B: Continuity
+- /Metric Spaces:/ PS1, Prob 2 (Euclidean distance).
+- /Continuity Proofs:/ PS2, Prob 1 (Piecewise), Prob 2 (Composition), Prob 3 ($x=0$ singularity).
+- /Linear Interpolation:/ PS3, Prob 2 (High relevance).
+
+** Topic C: Differentiation & Expansion
+- /Definitions:/ PS3, Prob 4 (Exp/Log construction).
+- /Series Expansions:/ PS3, Prob 6 (Approx sin/cos).
+- /Derivatives:/ PS4, Prob 6 (Chain/Product rules).
+- /MVT:/ PS5, Prob 2 (Logarithm on $[1,e]$).
+
+** Topic D: Integration
+- /Riemann Sums:/ PS6, Prob 1 (Limits of sums).
+- /Techniques:/ PS6, Prob 3 (By parts) & Prob 4 (Substitution).
+- /Improper:/ PS7, Prob 4 (Convergence of series/integrals).
+
+* 3. The "Ignore" List
+Skip the following to save time, as indicated by prediction.org:
+- *Compactness:* Not discussed in class.
+- *Cauchy Product:* Theorem 2.1.22.
+- *Theorem 2.2.18:* Explicitly excluded.
+- *Early Section 2.2:* "Ignore material until Proposition 2.2.19".
+
+* 4. The Action Plan (7-Day Intensive Schedule)
+/Goal: Master the "Red Alert" items first, then fill in the gaps./
+
+** Day 1: Foundations & Metric Spaces
+- [ ] *Focus:* Metric axioms and Euclidean distance.
+- [ ] *Problem:* PS1, Prob 1 (Show $d$ is a metric).
+- [ ] *Problem:* PS1, Prob 2 ("He likes it" - Euclidean metric convergence).
+- [ ] *Theory:* Definition of Metric (1.1.1) and Limits (1.2.1).
+
+** Day 2: Sequences, Recursion & Series
+- [ ] *Focus:* The "Certain" recursion problem and series criteria.
+- [ ] *Problem:* PS4, Prob 8 (Recursion $x_{n+1} = \frac{1}{2}(x_n + 2/x_n)$).
+  - /Drill:/ Practice the "Show bounded $\to$ Show monotonic $\to$ Solve limit equation" workflow.
+- [ ] *Problem:* PS1, Prob 3 (Alternating Harmonic Series).
+- [ ] *Problem:* PS0, Prob 3 (Limits to 0).
+
+** Day 3: Continuity
+- [ ] *Focus:* $\epsilon-\delta$, Composition, and Piecewise continuity.
+- [ ] *Problem:* PS2, Prob 2 (Composition - "For sure").
+- [ ] *Problem:* PS2, Prob 3 (Continuity at $x=0$).
+- [ ] *Problem:* PS2, Prob 1 (Piecewise function).
+- [ ] *Theory:* Bolzano-Weierstrass (Thm 1.2.12) - Know the statement.
+
+** Day 4: Exponentials, Logarithms & Interpolation
+- [ ] *Focus:* Series expansions and constructing $e$.
+- [ ] *Problem:* PS3, Prob 6 (Truncated series - Memorize $\exp, \sin, \cos$ expansions).
+- [ ] *Problem:* PS3, Prob 2 (Linear Interpolation/$\epsilon$).
+- [ ] *Problem:* PS3, Prob 4 (Estimating $e$).
+- [ ] *Theory:* Definition of $e$ and $\pi$, Theorem 2.2.22 (General Exponents).
+
+** Day 5: Differentiation & Mean Value Theorem
+- [ ] *Focus:* The "Most Important" MVT problem.
+- [ ] *Problem:* PS5, Prob 2 (MVT on $[1,e]$).
+- [ ] *Problem:* PS5, Prob 1 (Invertibility & Derivative).
+- [ ] *Problem:* PS4, Prob 1 (Trig identities via series).
+- [ ] *Theory:* Differentiability $\implies$ Continuity.
+
+** Day 6: Integration & Rules
+- [ ] *Focus:* Riemann Sums and Numerical Integration Rules.
+- [ ] *Problem:* PS6, Prob 3 (Trapezoidal Rule & Integration by Parts).
+- [ ] *Problem:* PS6, Prob 4 (Midpoint Rule & Substitution).
+- [ ] *Problem:* PS6, Prob 1 (Riemann Sum limits).
+- [ ] *Theory:* Fundamental Theorem of Calculus (FTC).
+
+** Day 7: Improper Integrals & Final Review
+- [ ] *Focus:* Taylor Series and Mock Exam.
+- [ ] *Problem:* PS7, Prob 4 (Improper Integral convergence).
+- [ ] *Problem:* PS7, Prob 1 (Taylor Polynomial proofs).
+- [ ] *Review:* Re-do PS4 Prob 8 (Recursion) and PS5 Prob 2 (MVT) to ensure retention.
+
+* 5. Mock Exam Simulation
+Based on "Problem Types" hints, a likely exam structure is:
+
+1.  *Multiple Choice (Theory):* Identify correct statements about Lemma 2.3.3 or Geometric Series.
+2.  *Calculation (Differentials):* A derivative question where "differentials work differently" (Review Chain Rule carefully).
+3.  *Proof (Continuity):* Prove a piecewise function (like PS2 Prob 3) is continuous at $x=0$.
+4.  *Application (Recursion):* Given a recursive sequence (like PS4 Prob 8), prove convergence and find the limit.
+5.  *Application (MVT):* Use MVT on $[1,e]$ to prove an inequality or find $\xi$.
+6.  *Integration:* Solve an improper integral or apply the Trapezoidal rule.

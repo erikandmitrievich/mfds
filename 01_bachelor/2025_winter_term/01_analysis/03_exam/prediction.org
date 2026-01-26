@@ -1,0 +1,114 @@
+#+title: Prediction
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-01-26>
+#+lastmod: <2026-01-26 19:12>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* General Exam Guidelines
+** Format & Logistics
+- **Multiple Choice:** There is only one correct answer.
+- **Problem Types:**
+  - Expect at least one question where differentials work differently than in high school.
+  - "Linear map" is a key concept.
+  - "L'Hopital limit with derivatives only".
+
+** Theorem Requirements
+- **Statements:** You must know the statement of *every* theorem.
+- **Proofs:** Being able to prove every theorem is *not* necessary, but if a theorem has a specific name (e.g., Bolzano-Weierstrass), it is important.
+- **Specific Theorems to Note:**
+  - **Theorem 2.2.22:** Will definitely show up.
+  - **Lemma 2.3.3:** Remember this for multiple choice.
+  - **Definitions:** Know the Definition of $\pi$.
+
+** Exclusions (What to Ignore)**
+- **Topic:** Compactness (not discussed in class).
+- **Topic:** Cauchy product (Theorem 2.1.22).
+- **Theorem:** 2.2.18.
+
+* Lecture Notes & Theory Checklist
+** Sections 1.1 & 1.2
+- **Definitions:** 1.1.1, 1.1.2, 1.2.1, 1.2.5, 1.2.11.
+- **Theorems:** 1.1.6, 1.1.7, 1.2.12 (Bolzano-Weierstrass), 1.2.14.
+- **Lemmas:** 1.2.3, 1.2.6.
+- **Key Concepts:** $\mathbb{C}$ and $\mathbb{R}$ are complete; $\mathbb{Q}$ is not.
+
+** Section 2.1 (Series)
+- **Theorems:** 2.1.4 (Geometric series), 2.1.23.
+- **Lemmas:** 2.1.1, 2.1.7, 2.1.8.
+- **Definitions:** 2.1.6, 2.1.19 (Important).
+- **Propositions:** 2.1.20 (Know it, but not exact remainder).
+
+** Section 2.2 (Continuity & Exponents)
+- **Theorems:** 2.2.7, 2.2.13 ($\epsilon-\delta$ continuity - only basics), 2.2.21.
+- **Lemmas:** 2.2.2, 2.2.9.
+- **Definitions:** 2.2.1, 2.2.22 (General exponents).
+- **Strategy:** Ignore material until Proposition 2.2.19.
+
+** Section 2.3
+- **Definitions:** 2.3.1, 2.3.7.
+- **Theorems:** 2.3.2, 2.3.4.
+- **Lemma:** 2.3.3.
+
+* Problem Set Analysis
+** Problem Set 0
+- **Problem 1 & 2:** Low relevance, though Part (d) of Prob 2 was specifically noted.
+- **Problem 3:** [High Relevance] Contains derivations showing limits evaluating to 0.
+- **Problem 4:** Medium relevance (50/50), considered trivial.
+- **Problem 5:** [High Relevance] Circled.
+
+** Problem Set 1
+- **Problem 1:** Part (1) Circled. Know $d(x,y)=0 \Leftrightarrow x=y$.
+- **Problem 2:** [Very High Relevance] "He likes it, he said it's wonderful." Focus on Euclidean distance.
+- **Problem 3:** [Certain/For Sure] Criteria of convergence of series.
+- **Problem 4:** "He gives a statement and we have to prove it".
+
+** Problem Set 2
+- **Problem 1:** [High Relevance] "Something like this will show up".
+- **Problem 2:** [Certain/Classic] "For sure." It is a composition. Strategy: "Just write it's a composition," though it might ask to prove using definitions. Focus on proving a function is continuous.
+- **Problem 3:** [High Relevance] Pay attention to the $x=0$ case ("check what happens here"). Involves proving or disproving continuity with cases.
+- **Problem 4 & 5:** Low relevance.
+
+** Problem Set 3
+- **Problem 1:** Possible, likely basic/easy.
+- **Problem 2:** [High Relevance] Linear interpolation. Question: "If you connect with straight lines what is the value of $\epsilon$??".
+- **Problem 3:** Low relevance/Unclear.
+- **Problem 4:** [High Relevance] Must know exponential function definitions.
+- **Problem 5:** [Likely] Possible with easier functions (no Julia) and arguments on why there can't be more.
+- **Problem 6:** [Essential] "We must know" truncated series expansions by heart (exp, sin, cos).
+
+** Problem Set 4
+- **Problem 1:** [High Relevance] "Really nice one." Strategy: Use series arguments, no drawings. Should be able to solve.
+- **Problem 2:** Good relevance. Includes arcsin.
+- **Problem 3:** Good relevance.
+- **Problem 4:** [High Relevance] We should know every Theorem.
+- **Problem 5:** [Likely] "One induction Prob. seems likely".
+- **Problem 6:** Good relevance. Know and be able to use chain and product rules.
+- **Problem 8 (Sequence Convergence):** [Certain] "For sure at least one recursion." Strategy: If $x_n$ is convergent, use $x_{n+1} \to x$ and $x_n \to x$ to solve (e.g., $x = \frac{1}{2}(x + \frac{2}{x})$).
+- **Problem 9:** Newton method (not too complicated).
+
+** Problem Set 5
+- **Problem 1:** Use difference quotient / Mean Value Theorem.
+- **Problem 2:** [Most Important] "Too inexplicit wording, but most important." Strategy: Use $[1,e]$, example: $\frac{\log(e)-\log(1)}{e-1} = \log'(\xi)$.
+- **Problem 3 & 4:** High relevance ("Yes").
+- **Problem 5:** High/Possible ("Yes"/"might show up").
+
+** Problem Set 6
+- **Problem 1:** High relevance. Should be able to do for some functions.
+- **Problem 2:** High relevance. Use tools for each rule.
+- **Problem 3 & 4:** Likely/High. Know the rules (Midpoint, Trapezoidal) and how to write the mid-point rule. Includes Improper Integral.
+
+** Problem Set 7
+- **Problem 1:** Be familiar with Taylor expansion at a certain point.
+- **Problem 2:** Relevance varies.
+- **Problem 3:** Know how to define S / May appear.
+- **Problem 4:** [High Relevance] "Just integrate." Check 4(e) in lecture notes.
+- **General Note:** Learn derivative and tangent to the curve.
