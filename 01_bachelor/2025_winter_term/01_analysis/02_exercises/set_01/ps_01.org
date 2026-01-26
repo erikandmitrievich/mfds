@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-26>
-#+lastmod: <2026-01-26 13:12>
+#+lastmod: <2026-01-26 22:33>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,7 +13,7 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
-* Problem 1
+* Problem 1 :WIP:
 ** Task
 #+begin_quote
 Let $\Omega$ be any nonempty set. Define the function $d_{\Omega}:\Omega\times\Omega\rightarrow\mathbb{R}$ by
@@ -26,6 +26,107 @@ $$d_{\Omega}(x,y)=\begin{cases}0,& \text{if } x=y,\\ 1,& \text{if } x\ne y.\end{
 ** Notes
 
 ** Solution
+
+#+begin_quote
+Definition (metric space). Given a set $\Omega \neq \emptyset$, we say that a mapping $d_{\Omega} : \Omega \times \Omega \rightarrow \mathbb{R}$ is a metric if the following three properties are satisfied:
+
+- (M1) Symmetry: $\forall \, x, y \in \Omega$,
+
+  $$d_{\Omega}(x,y) = d_{\Omega}(y,x)$$
+
+- (M2) Triangle Inequality: $\forall \, x, y, z \in \Omega$,
+
+  $$d_{\Omega}(x,z) \leq d_{\Omega}(x,y) + d_{\Omega}(y,z)$$
+
+- (M3) Definiteness: $\forall \, x, y \in \Omega$,
+
+  $$d_{\Omega}(x,y) = 0 \iff x = y$$
+
+If $d_{\Omega}$ is a metric on $\Omega$, then $(\Omega, d_{\Omega})$ is called a metric space.
+#+end_quote
+
+- Part (1)
+
+  For $d_{\Omega}$ to be a metric on set $\Omega$, it must satisfy three requirements of metric space.
+
+  By the outlined definition of a metric space, I validate $(\Omega, d_{\Omega})$ to be a metric space.
+
+  - (M1) Symmetry: $\forall \, x, y \in \Omega$
+
+    Let $x, y \in \Omega$. Hence,
+
+    - Case $x=y$
+
+      $$d_{\Omega}(x, y) = 0 \, \wedge \, d_{\Omega}(y, x) = 0 \implies d_{\Omega}(x, y) = d_{\Omega}(y, x)$$
+
+      Case holds.
+
+    - Case $x \neq y$
+
+      $$d_{\Omega}(x, y) = 1 \, \wedge \, d_{\Omega}(y, x) = 1 \implies d_{\Omega}(x, y) = d_{\Omega}(y, x)$$
+
+      Case holds.
+
+    Hence. requirement holds.
+
+  - (M2) Triangle Inequality: $\forall \, x, y, z \in \Omega$
+
+    Let $x, y, z \in \Omega$. Hence,
+
+    - Case $x = z$
+
+      $$d_{\Omega}(x,z) \leq d_{\Omega}(x,y) + d_{\Omega}(y,z)$$
+
+      LHS: $x = z \implies d_{\Omega}(x,z) = 0$ by definition.
+
+      RHS: Since metric is non-negative ($d_{\Omega}$ is either $0$ or $1$), $\text{RHS} \ge 0$.
+
+      $$0 \leq d_{\Omega}(x,y) + d_{\Omega}(y,z)$$
+
+    - Case $x \neq z$
+
+      $$d_{\Omega}(x,z) \leq d_{\Omega}(x,y) + d_{\Omega}(y,z)$$
+
+      LHS: $x \neq z \implies d_{\Omega}(x,z) = 1$ by definition.
+
+      RHS: Since $x \neq z$ this leads to 2 cases:
+
+      - $y$ equal to either $x$ or $z$:
+
+        RHS: $d_{\Omega}(x,y) + d_{\Omega}(y,z) = 1$
+
+        Hence,
+
+        \begin{align*}
+        d_{\Omega}(x,z) &\leq d_{\Omega}(x,y) + d_{\Omega}(y,z) \\
+        1 &\leq 1
+        \end{align*}
+
+      - $y$ equal to neither $x$ and $z$:
+
+        RHS: $d_{\Omega}(x,y) + d_{\Omega}(y,z) = 2$
+
+        Hence,
+
+        \begin{align*}
+        d_{\Omega}(x,z) &\leq d_{\Omega}(x,y) + d_{\Omega}(y,z) \\
+        1 &\leq 1 + 1 \\
+        1 &\leq 2 \\
+        \end{align*}
+
+    Hence. requirement holds.
+
+  - (M3) Definiteness: $\forall \, x, y \in \Omega$
+
+    - $d_{\Omega}(x,y) = 0 \implies x = y$ by definition of a function $d_{\Omega}$.
+
+    - $x = y \implies d_{\Omega}(x,y) = 0$ by definition of a function $d_{\Omega}$.
+
+    Hence. requirement holds.
+
+  Since the mapping $d_{\Omega} : \Omega \times \Omega \rightarrow \mathbb{R}$ satisfies all three constraints, $d_{\Omega}$ is a metric of set $\Omega$.
+
+- Part (2)
 
 * Problem 2
 ** Task

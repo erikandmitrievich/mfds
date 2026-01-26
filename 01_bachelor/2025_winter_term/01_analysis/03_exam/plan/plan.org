@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-26>
-#+lastmod: <2026-01-26 20:17>
+#+lastmod: <2026-01-26 22:30>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -89,7 +89,7 @@ Skip the following to save time, as indicated by prediction.org:
 
 ** Day 1: Foundations & Metric Spaces
 - [ ] *Focus:* Metric axioms and Euclidean distance.
-- [ ] *Problem:* PS1, Prob 1 (Show $d$ is a metric).
+- [X] *Problem:* PS1, Prob 1 (Show $d$ is a metric).
 - [ ] *Problem:* PS1, Prob 2 ("He likes it" - Euclidean metric convergence).
 - [ ] *Theory:* Definition of Metric (1.1.1) and Limits (1.2.1).
 
