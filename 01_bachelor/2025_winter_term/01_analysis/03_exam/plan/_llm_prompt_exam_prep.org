@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-26>
-#+lastmod: <2026-01-26 19:13>
+#+lastmod: <2026-01-26 19:53>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -12,9 +12,6 @@
 #+latex_header: \usepackage[margin=1in]{geometry}
 #+options: num:t
 #+startup: overview latexpreview inlineimages
-
-#+title: Analysis Exam Preparation Prompt (7-Day Plan)
-#+date: <2026-01-26>
 
 * Context
 I am preparing for an Analysis exam. I have two specific documents that act as my primary resources:
