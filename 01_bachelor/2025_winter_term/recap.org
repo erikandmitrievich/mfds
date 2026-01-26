@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-08>
-#+lastmod: <2026-01-20 10:18>
+#+lastmod: <2026-01-25 17:40>
 #+options: num:t
 #+startup: overview
 
@@ -52,4 +52,4 @@ Problem Sets:
 - [X] ps_04 - Trigonometric identities, differentiability, Newton's method
 - [X] ps_05 - Inverse functions, Mean Value Theorem (MVT), extrema and optimization
 - [X] ps_06 - Riemann integration, Fundamental Theorem of Calculus (FTC), integration methods
-- [ ] ps_07 - Taylor polynomials, improper integrals, convergence of series
+- [X] ps_07 - Taylor polynomials, improper integrals, convergence of series

@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-24>
-#+lastmod: <2026-01-24 13:29>
+#+lastmod: <2026-01-25 21:28>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,58 +13,305 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
-* Problem 1
+* Problem 1 :DONE:
 ** Task
 #+begin_quote
-Let $f:\mathbb{R}\rightarrow\mathbb{R}$ be a polynomial of degree $m\in\mathbb{N}.$ Prove the following:
+Let $f:\mathbb{R}\rightarrow\mathbb{R}$ be a polynomial of degree $m\in\mathbb{N}$. Prove the following:
 (a) The Taylor polynomial of order $n\ge m$ located in $x_{0}=0$ coincides with $f$.
 (b) The Taylor polynomial of order $n\ge m$ located in $x_{0}\in\mathbb{R}$ coincides with $f$.
 #+end_quote
 
-** Notes
-
 ** Solution
 
-* Problem 2
+- Part (a)
+
+  Let the polynomial $f(x)$ be defined by its coefficients $a_k$:
+  $$ f(x) = \sum_{k=0}^{m} a_k x^k $$
+
+  The definition of the Taylor polynomial of order $n$ at $x_0 = 0$ is:
+  $$ T_n(x) = \sum_{k=0}^{n} \frac{f^{(k)}(0)}{k!} x^k $$
+
+  We evaluate the derivatives of $f$ at $0$:
+  1. For $0 \le k \le m$: The $k$ -th derivative of the term $a_k x^k$ is $a_k \cdot k!$. All other terms differentiate to 0 or vanish upon evaluation at $x=0$. Thus, $f^{(k)}(0) = a_k \cdot k!$.
+  2. For $k > m$: Since $f$ has degree $m$, derivatives of order higher than $m$ are identically zero. Thus, $f^{(k)}(0) = 0$.
+
+  Substituting these into the summation (splitting at $m$):
+  \begin{align*}
+      T_n(x) &= \sum_{k=0}^{m} \frac{f^{(k)}(0)}{k!} x^k + \sum_{k=m+1}^{n} \frac{f^{(k)}(0)}{k!} x^k \\
+      &= \sum_{k=0}^{m} \frac{a_k \cdot k!}{k!} x^k + \sum_{k=m+1}^{n} \frac{0}{k!} x^k \\
+      &= \sum_{k=0}^{m} a_k x^k \\
+      &= f(x)
+  \end{align*}
+
+- Part (b)
+
+  We apply Taylor's Theorem with the Lagrange form of the remainder. For any $x \in \mathbb{R}$ and center $x_0 \in \mathbb{R}$:
+  $$ f(x) = T_n(x) + R_n(x) $$
+
+  The remainder term is given by:
+  $$ R_n(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}(x - x_0)^{n+1} $$
+  where $\xi$ is some real number between $x_0$ and $x$.
+
+  Since $f$ is a polynomial of degree $m$ and we assumed $n \ge m$, it follows that $n+1 > m$.
+  The $(n+1)$ -th derivative of a polynomial of degree $m$ is the zero function:
+  $$ f^{(n+1)}(t) = 0 \quad \text{for all } t \in \mathbb{R} $$
+
+  Therefore, $f^{(n+1)}(\xi) = 0$, which implies $R_n(x) = 0$.
+  $$ \implies f(x) = T_n(x) $$
+
+* Problem 2 :DONE:
 ** Task
 #+begin_quote
 Compute the Taylor polynomial of order $n\in\mathbb{N}$ at $x_{0}=0$ of
 1. $f(x)=e^{x}$,
-2. $f(x)=\sin~x$,
-3. $f(x)=\cos~x$.
+2. $f(x)=\sin(x)$,
+3. $f(x)=\cos(x)$.
 In addition, write Julia code that takes $f$ and $x_{0}$ as input and returns the Taylor polynomial of order 2.
- Visualize that your above computations are correct when $n=2$.
+Visualize that your above computations are correct when $n=2$.
 #+end_quote
 
-** Notes
-
 ** Solution
-#+begin_src julia :results value :exports both :tangle julia/p_2.jl
-#+end_src
 
-* Problem 3
+$$f(x) = \sum_{k=0}^{n} \frac{f^{(k)}(x_{0})}{k!} (x-x_{0})^{k} + R_{n+1}(x)$$
+
+1. $f(x)=e^{x}$
+
+   \begin{align*}
+        T_n(x) &= \sum_{k=0}^{n} \frac{f^{(k)}(0)}{k!}x^{k} \qquad \text{(given } x_0 = 0) \\
+        f(0) &= e^{0} = 1 \\
+        f^{(1)}(0) &= e^{0} = 1 \\
+        f^{(n)}(0) &= e^{0} = 1 \\
+        \text{Hence,} \\
+        T_n(x) &= \sum_{k=0}^{n} \dfrac{1}{k!}x^k = 1 + x + \frac{1}{2!}x^2 + \frac{1}{3!}x^3 + ... + \frac{1}{n!}x^n \\
+   \end{align*}
+
+2. $f(x)=\sin(x)$
+
+   \begin{align*}
+        t_n(x) &= \sum_{k=0}^{n} \frac{f^{(k)}(0)}{k!}x^{k} \qquad \text{(given } x_0 = 0) \\
+        f(0)       &= sin(0) = 0 \\
+        f^{(1)}(0) &= cos(0) = 1 \\
+        f^{(2)}(0) &= -sin(0) = 0 \\
+        f^{(3)}(0) &= -cos(0) = -1 \\
+        \text{hence,} \\
+        T_{2n+1}(x) &= \sum_{k=0}^{n} \dfrac{(-1)^{k}}{(2k+1)!} (x)^{2k+1} = x - \frac{1}{3!}x^3 + \frac{1}{5!}x^5 + ... \\
+   \end{align*}
+
+3. $f(x)=\cos(x)$
+
+   \begin{align*}
+        t_n(x) &= \sum_{k=0}^{n} \frac{f^{(k)}(0)}{k!}x^{k} \qquad \text{(given } x_0 = 0) \\
+        f(0)       &= cos(0)  = 1 \\
+        f^{(1)}(0) &= -sin(0) = 0 \\
+        f^{(2)}(0) &= -cos(0) = -1 \\
+        f^{(3)}(0) &= sin(0)  = 0 \\
+        \text{hence,} \\
+        T_{2n}(x) &= \sum_{k=0}^{n} \dfrac{(-1)^{k}}{(2k)!} (x)^{2k} = 1 - \dfrac{1}{2!}x^2 + \dfrac{1}{4!}x^4 - ... \\
+   \end{align*}
+
+- Code
+
+  #+begin_src julia :results value :exports both :tangle julia/p_2.jl
+  using ForwardDiff
+  using Polynomials
+  using Plots
+
+  function get_taylor_polynomial(f, x_0 = 0.0, order = 2)
+      coeff = zeros(Float64, order + 1)
+      coeff[1] = f(x_0)
+
+      if (order >= 1)
+          coeff[2] = ForwardDiff.derivative(f, x_0)
+      end
+
+      if (order >= 2)
+          f_prime = x -> ForwardDiff.derivative(f, x)
+          second_deriv = ForwardDiff.derivative(f_prime, x_0)
+          coeff[3] = second_deriv / factorial(2)
+      end
+
+      return Polynomial(coeff)
+  end
+
+  data = [
+      (f = exp, label="exp(x)"),
+      (f = sin, label="sin(x)"),
+      (f = cos, label="cos(x)")
+  ]
+
+  x_range = range(-2, 2, length=100)
+  p = plot(layout=(3,1), size=(600, 800), legend=:topleft)
+
+  for (i, item) in enumerate(data)
+      poly_data = get_taylor_polynomial(item.f)
+      plot!(p[i], x_range, item.f.(x_range), label="True $(item.label)", lw=3)
+      plot!(p[i], x_range, poly_data.(x_range), label="Taylor Approx (n=2)", ls=:dash, lw=3)
+  end
+
+  savefig("./figs/p_2.png")
+  #+end_src
+
+  #+RESULTS:
+  : /Users/ziro2173/personal/university/01_bachelor/2025_winter_term/01_analysis/02_exercises/set_07/figs/p_2.png
+
+* Problem 3 :DONE:
 ** Task
 #+begin_quote
 Determine those $s\in\mathbb{R}$, for which the integral
-$\int_{0}^{1}x^{s}dx$
-is well-defined. In addition, illustrate your theoretical results by approximating the integral via the
- mid-point rule for a few distinct $s$ in Julia.
+$$\int_{0}^{1}x^{s} \, dx$$
+is well-defined. In addition, illustrate your theoretical results by approximating the integral via the mid-point rule for a few distinct $s$ in Julia.
 #+end_quote
 
-** Notes
-
 ** Solution
-#+begin_src julia :results value :exports both :tangle julia/p_3.jl
-#+end_src
 
-* Problem 4
+Since the integrand $x^s$ may have a singularity at $x=0$, we treat this as an improper integral defined by the limit:
+$$ \int_{0}^{1} x^s \, dx = \lim_{z \to 0^+} \int_{z}^{1} x^s \, dx $$
+
+We distinguish two main scenarios for the antiderivative: $s \neq -1$ and $s = -1$.
+
+- Scenario A: $s \neq -1$
+  The antiderivative is power-based:
+  \begin{align*}
+  \int_{z}^{1} x^s \, dx &= \left[ \frac{x^{s+1}}{s+1} \right]_{z}^{1} \\
+  &= \frac{1}{s+1} - \frac{z^{s+1}}{s+1}
+  \end{align*}
+
+  We analyze the limit of the term $\frac{z^{s+1}}{s+1}$ as $z \to 0^+$:
+
+  - Case 1: $s > -1 \implies s+1 > 0$
+    The exponent is positive.
+    $$ \lim_{z \to 0^+} z^{s+1} = 0 $$
+    $$ \implies \int_{0}^{1} x^s \, dx = \frac{1}{s+1} - 0 = \frac{1}{s+1} \quad (\text{Converges}) $$
+
+  - Case 2: $s < -1 \implies s+1 < 0$
+    The exponent is negative. Let $p = -(s+1) > 0$.
+    $$ \lim_{z \to 0^+} z^{s+1} = \lim_{z \to 0^+} \frac{1}{z^p} = \infty $$
+    $$ \implies \int_{0}^{1} x^s \, dx = \infty \quad (\text{Diverges}) $$
+
+- Scenario B: $s = -1$
+  The power rule does not apply; the antiderivative is logarithmic.
+  \begin{align*}
+  \int_{z}^{1} x^{-1} \, dx &= \left[ \ln(x) \right]_{z}^{1} \\
+  &= \ln(1) - \ln(z) \\
+  &= -\ln(z)
+  \end{align*}
+
+  Taking the limit:
+  $$ \lim_{z \to 0^+} (-\ln(z)) = -(-\infty) = \infty \quad (\text{Diverges}) $$
+
+- Conclusion
+  The integral is well-defined (convergent) if and only if:
+  $$ s > -1 $$
+
+- Code
+
+  #+begin_src julia :results output :exports both :tangle julia/p_3.jl
+  using Printf
+
+  function M(f, P)
+      area = 0.0
+      for i in 1:length(P)-1
+          mid = (P[i+1] + P[i]) / 2
+          h = f(mid)
+          w = P[i+1] - P[i]
+          area += h * w
+      end
+      return area
+  end
+
+  n_intervals = 10_000
+  s_values = [0.5, 0.0, -0.5, -0.9, -1.0, -1.5]
+
+  println("Approximating integral of x^s from 0 to 1 with $n_intervals intervals:\n")
+  @printf("%-10s | %-15s | %-15s | %-15s\n", "s", "Approx", "Exact", "Error")
+  println("-"^62)
+
+  for s in s_values
+
+      f(x) = x^s
+
+      P = range(0, 1, n_intervals)
+      approx = M(f, P)
+
+      if s > -1
+          exact = 1 / (s + 1)
+          error = abs(approx - exact)
+          @printf("%-10.2f | %-15.5f | %-15.5f | %-15.5e\n", s, approx, exact, error)
+      else
+          exact_str = "Diverges"
+          @printf("%-10.2f | %-15.5f | %-15s | %-15s\n", s, approx, exact_str, "N/A")
+      end
+  end
+
+  #+end_src
+
+  #+RESULTS:
+  #+begin_example
+  M (generic function with 1 method)
+  10000
+  6-element Vector{Float64}:
+    0.5
+    0.0
+   -0.5
+   -0.9
+   -1.0
+   -1.5
+  Approximating integral of x^s from 0 to 1 with 10000 intervals:
+
+  s          | Approx          | Exact           | Error
+  --------------------------------------------------------------
+  0.50       | 0.66667         | 0.66667         | 6.06892e-08
+  0.00       | 1.00000         | 1.00000         | 0.00000e+00
+  -0.50      | 1.99395         | 2.00000         | 6.04929e-03
+  -0.90      | 6.74859         | 10.00000        | 3.25141e+00
+  -1.00      | 11.17375        | Diverges        | N/A
+  -1.50      | 475.62991       | Diverges        | N/A
+  #+end_example
+
+* Problem 4 :DONE:
 ** Task
 #+begin_quote
 Let $p\in\mathbb{R}$ and consider the series
-$\sum_{n=2}^{\infty}\frac{1}{n(\log~n)^{p}}.$
+$$\sum_{n=2}^{\infty}\frac{1}{n(\log(n))^{p}}$$
 Decide for which values of $p$ the series converges.
 #+end_quote
 
-** Notes
-
 ** Solution
+
+We use the Integral Test. Let
+
+$$f(x) = \frac{1}{x(\log(x))^p}$$
+
+This function is positive and decreasing for $x \ge 2$.
+
+We evaluate the improper integral:
+
+$$ \int_{2}^{\infty}\frac{1}{x(\log(x))^{p}} \, dx $$
+
+Perform the substitution $u = \log(x)$, so $du = \frac{1}{x} dx$.
+The limits change: $x=2 \implies u=\log(2)$ and $x \to \infty \implies u \to \infty$.
+
+$$ \int_{2}^{\infty}\frac{1}{x(\log(x))^{p}} \, dx = \int_{\log(2)}^{\infty} u^{-p} \, du $$
+
+- Scenario A: $p \neq 1$
+  The antiderivative is $\frac{u^{1-p}}{1-p}$.
+
+  $$ \int_{\log(2)}^{\infty} u^{-p} \, du = \left[ \frac{u^{1-p}}{1-p} \right]_{\log(2)}^{\infty} = \frac{1}{1-p} \left( \lim_{u \to \infty} u^{1-p} - (\log(2))^{1-p} \right) $$
+
+  - Case 1: $p < 1 \implies 1-p > 0$
+    The exponent is positive, so $\lim_{u \to \infty} u^{1-p} = \infty$.
+    The integral *diverges*.
+
+  - Case 2: $p > 1 \implies 1-p < 0$
+    The exponent is negative, so $\lim_{u \to \infty} u^{1-p} = 0$.
+    The integral *converges*.
+
+- Scenario B: $p = 1$
+  The integral becomes:
+
+  $$ \int_{\log(2)}^{\infty} \frac{1}{u} \, du = \left[ \ln(u) \right]_{\log(2)}^{\infty} = \infty $$
+
+  The integral *diverges*.
+
+- Conclusion
+  The series converges if and only if $p > 1$.
