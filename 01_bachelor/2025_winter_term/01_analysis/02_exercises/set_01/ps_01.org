@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-26>
-#+lastmod: <2026-01-26 22:33>
+#+lastmod: <2026-01-27 11:01>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,7 +13,7 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
-* Problem 1 :WIP:
+* Problem 1 :DONE:
 ** Task
 #+begin_quote
 Let $\Omega$ be any nonempty set. Define the function $d_{\Omega}:\Omega\times\Omega\rightarrow\mathbb{R}$ by
@@ -22,8 +22,6 @@ $$d_{\Omega}(x,y)=\begin{cases}0,& \text{if } x=y,\\ 1,& \text{if } x\ne y.\end{
 (2) Let $(x_{n})_{n\in\mathbb{N}}$ be a sequence in $\Omega$. Show that $(x_{n})_{n\in\mathbb{N}}$ converges in $(\Omega,d_{\Omega})$ if and only if it is eventually constant.
 (... properly define what we mean by "eventually constant"...)
 #+end_quote
-
-** Notes
 
 ** Solution
 
@@ -128,22 +126,138 @@ If $d_{\Omega}$ is a metric on $\Omega$, then $(\Omega, d_{\Omega})$ is called a
 
 - Part (2)
 
-* Problem 2
+  - $\Rightarrow$ Convergence implies eventually constant
+
+    - *Assumption*: Assume $(x_{n})_{n\in\mathbb{N}}$ converges to $x$.
+
+      - This means, $\forall \epsilon > 0, \exists N \in \mathbb{N} \, : \, \forall n > N, d(x_{n}, x) < \epsilon$.
+
+    - *Goal*: Show that this implies $x_{n} = x$.
+
+    - *Proof*:
+
+      - Let $\epsilon = 0.5$.
+
+      - Convergence implies $d_{\Omega}(x_{n}, x) < \epsilon$.
+
+      - Since discrete distance $d_{\Omega}$ is binary (either 0 or 1), $d_{\Omega}(x_{n}, x) = 0$.
+
+      - As $d_{\Omega}(x,y) = 0 \Leftarrow x = y$, hence $x_{n} = x \, \forall n > N$.
+
+    - *Conclusion*: By definition, $(x_{n})_{n\in\mathbb{N}}$ becomes eventually constant.
+
+  - $\Leftarrow$ Eventually constant implies convergence
+
+    - *Assumption*: Assume a sequence $(x_{n})_{n\in\mathbb{N}}$ becomes eventually constant at some value $x$.
+
+      - This means, $\exists N \in \mathbb{N} \, : \, \forall n > N, d_{\Omega}(x_{n}, x) = 0$
+
+    - *Goal*: Show that this satisfies the definition of convergence $\forall \epsilon > 0$.
+
+    - *Proof*:
+
+      - Let $\epsilon > 0$.
+
+      - $\forall n > N$ we know $x_n = x$.
+
+      - Hence, $d_{\Omega}(x_{n}, x) = 0$.
+
+      - Thus $d_{\Omega}(x_{n}, x) < \epsilon \, \forall n > N$.
+
+    - *Conclusion*: By definition, $(x_{n})$ converges in $x$.
+
+* Problem 2 :DONE:
 ** Task
 #+begin_quote
 Consider $\mathbb{R}^{2}$ with the metric
 $$d(x,y)=|x_{1}-y_{1}|+|x_{2}-y_{2}|, \quad x=(x_{1},x_{2})^{T}, y=(y_{1},y_{2})^{T}\in\mathbb{R}^{2}.$$
 Consider the sequences $(a_{n})_{n\in\mathbb{N}},(b_{n})_{n\in\mathbb{N}}\subseteq\mathbb{R}^{2}$
-$$a_{n}=\begin{pmatrix}\frac{1}{n+1}\\ 2+\frac{n}{n^{2}+1}\end{pmatrix}$$
-$$b_{n}=\begin{pmatrix}\sqrt{4+n}-\sqrt{n}\\ (-1)^{n}\end{pmatrix}$$
+
+$$a_{n}=\begin{pmatrix}\frac{1}{n+1}\\ 2+\frac{n}{n^{2}+1}\end{pmatrix} \qquad b_{n}=\begin{pmatrix}\sqrt{4+n}-\sqrt{n}\\ (-1)^{n}\end{pmatrix}$$
+
 and determine their behavior in regards to convergence in $(\mathbb{R}^{2},d)?$ In addition, investigate/illustrate also in Julia.
 #+end_quote
 
-** Notes
-
 ** Solution
-#+begin_src julia :results value :exports both :tangle julia/p_2.jl
-#+end_src
+
+- Part $(a_{n})_{n\in\mathbb{N}$
+
+  \begin{align*}
+        \text{As } \lim_{n\rightarrow\infty} a_n^{(1)} &= \lim_{n\rightarrow\infty} \frac{1}{n+1} = 0 \\
+        \text{As } \lim_{n\rightarrow\infty} a_n^{(2)} &= \lim_{n\rightarrow\infty} 2 + \frac{n}{n^2+1} = \lim_{n\rightarrow\infty} 2 + \frac{1}{n+\frac{1}{n}} = 2 \\
+  \end{align*}
+
+  Hence a candidate limit for a sequence $(a_{n})_{n\in\mathbb{N}}$ is $x_l = (0, 2)^{T}$.
+
+  Goal: Demonstrate that $\lim_{n\rightarrow\infty} d(x_{n}, x_{l}) = 0$.
+
+  Thus,
+
+  \begin{align*}
+        \lim_{n\rightarrow\infty} d(x_{n}, x_{l}) &= \lim_{n\rightarrow\infty} \Big|\frac{1}{n+1} - 0\Big| + \Big|2 + \frac{n}{n^2 + 1} - 2\Big| \\
+        &= \lim_{n\rightarrow\infty} \Big|\frac{1}{n+1}\Big| + \Big|\frac{n}{n^2 + 1}\Big| \\
+        &= \lim_{n\rightarrow\infty} \Big|\frac{1}{n+1}\Big| + \lim_{n\rightarrow\infty} \Big|\frac{n}{n^2 + 1}\Big| \\
+        &= 0 + \lim_{n\rightarrow\infty} \Big|\frac{n}{n^2 + 1}\Big| \\
+        &= 0 + \lim_{n\rightarrow\infty} \Big|\frac{1}{n + \frac{1}{n}}\Big| \\
+        &= 0 + 0 \\
+        &= 0 \\
+  \end{align*}
+
+  Hence, $x_l = (0, 2)^{T}$ is indeed a limit of a sequence $(a_n)_{n\in\mathbb{N}}$.
+
+- Part $(b_{n})_{n\in\mathbb{N}$
+
+  \begin{align*}
+        \text{As } \lim_{n\rightarrow\infty} b_n^{(1)} &= \lim_{n\rightarrow\infty} \sqrt{4+n}-\sqrt{n} \\
+        &= \lim_{n\rightarrow\infty} \frac{(\sqrt{4+n}-\sqrt{n})(\sqrt{4+n}+\sqrt{n})}{(\sqrt{4+n}+\sqrt{n})} \\
+        &= \lim_{n\rightarrow\infty} \frac{(4+n)-(n)}{\sqrt{4+n}+\sqrt{n}} \\
+        &= \lim_{n\rightarrow\infty} \frac{4}{\sqrt{4+n}+\sqrt{n}} \\
+        &= 0 \\
+        \text{As } \lim_{n\rightarrow\infty} b_n^{(2)} &= (-1)^n \\
+  \end{align*}
+
+  $b_{n}^{(2)}$ would alternate between the values of $-1$ and $1$, since $n\in\mathbb{N}$ is either even or odd.
+
+  Since the second component diverges, the sequence $(b_{n})_{n\in\mathbb{N}}$ can not converge in $(\mathbb{R}^{2}, d)$.
+
+- Code
+  #+begin_src julia :results value :exports both :tangle julia/p_2.jl
+  using Plots
+
+  a_n1(n) = 1 / (n + 1)
+  a_n2(n) = 2 + (n / (n^2 + 1))
+  b_n1(n) = sqrt(4+n) - sqrt(n)
+  b_n2(n) = (-1)^n
+
+  d(x,y) = abs(x[1] - y[1]) + abs(x[2] - y[2])
+
+  n = 1:100
+
+  a_x = a_n1.(n)
+  a_y = a_n2.(n)
+
+  b_x = b_n1.(n)
+  b_y = b_n2.(n)
+
+  p1 = scatter(a_x, a_y,
+               title="sequence a_n",
+               label="a_n points",
+               xlabel="x1", ylabel="x2",
+               legend=:bottomright)
+
+  p2 = scatter(b_x, b_y,
+               title="sequence b_n",
+               label="b_n points",
+               xlabel="x1", ylabel="x2",
+               legend=:bottomright)
+
+  plot(p1, p2, layout=(2,1), size=(1200, 1200))
+
+  savefig("./figs/p_02.png")
+  #+end_src
+
+  #+RESULTS:
+  : /Users/ziro2173/personal/university/01_bachelor/2025_winter_term/01_analysis/02_exercises/set_01/figs/p_02.png
 
 * Problem 3
 ** Task
