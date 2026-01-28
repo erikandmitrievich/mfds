@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-26>
-#+lastmod: <2026-01-26 13:09>
+#+lastmod: <2026-01-27 16:49>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -50,20 +50,72 @@ $x_{n}=\frac{n^{2}}{2^{n}}, \qquad n\in\mathbb{N}$
 #+begin_src julia :results value :exports both :tangle julia/p_2.jl
 #+end_src
 
-* Problem 3
+* Problem 3 :DONE:
 ** Task
 #+begin_quote
 Show that
-(a) $lim_{n\rightarrow\infty}\frac{(-1)^{n}}{n}=0$ ,
-(b) $lim_{n\rightarrow\infty}\frac{4n^{2}-2n+1}{n^{2}-n+6}=4$
+(a) $\lim_{n\rightarrow\infty}\frac{(-1)^{n}}{n}=0$ ,
+(b) $\lim_{n\rightarrow\infty}\frac{4n^{2}-2n+1}{n^{2}-n+6}=4$
 In addition, visualize this behavior in Julia.
 #+end_quote
 
-** Notes
-
 ** Solution
-#+begin_src julia :results value :exports both :tangle julia/p_3.jl
-#+end_src
+
+- Part (a)
+
+  We know that for all $n \ge 1$:
+
+  $$-1 \leq (-1)^{n} \leq 1$$
+
+  Hence,
+
+  $$-\frac{1}{n} \leq \frac{(-1)^{n}}{n} \leq \frac{1}{n}$$
+
+  Since, both $\lim_{n\rightarrow\infty} -\frac{1}{n} = 0$ and $\lim_{n\rightarrow\infty} \frac{1}{n} = 0$, $\lim_{n\rightarrow\infty} \frac{(-1)^{n}}{n} = 0$.
+
+- Part (b)
+
+  $\lim_{n\rightarrow\infty}\frac{4n^{2}-2n+1}{n^{2}-n+6}=4$
+
+  \begin{align*}
+        \lim_{n\rightarrow\infty}\frac{4n^{2}-2n+1}{n^{2}-n+6} &=
+        \lim_{n\rightarrow\infty} \frac{4 - \frac{2}{n} + \frac{1}{n^{2}}}{1-\frac{1}{n}+\frac{6}{n^{2}}} \quad \text{(divided by } n^2) \\
+        &= \frac{4 - 0 + 0}{1 - 0 + 0} \\
+        &= \frac{4}{1} \\
+        &= 4 \\
+  \end{align*}
+
+- Code
+
+  #+begin_src julia :results value :exports both :tangle julia/p_3.jl
+  using Plots
+
+  lim_1_term(n) = ((-1)^n)/(n)
+  lim_2_term(n) = (4n^2 - 2n + 1)/(n^2 - n + 6)
+
+  n = 1:100
+  lim_1 = lim_1_term.(n)
+  lim_2 = lim_2_term.(n)
+
+  p1 = scatter(n, lim_1,
+               title="Limits",
+               label="lim_1",
+               xlabel="n", ylabel="term",
+               legend=:bottomright)
+
+  p2 = scatter(n, lim_2,
+               title="Limits",
+               label="lim_2",
+               xlabel="n", ylabel="term",
+               legend=:bottomright)
+
+  plot(p1, p2, layout=(2,1), size=(1200, 1200))
+
+  savefig("./figs/p_03.png")
+  #+end_src
+
+  #+RESULTS:
+  : /Users/ziro2173/personal/university/01_bachelor/2025_winter_term/01_analysis/02_exercises/set_00/figs/p_03.png
 
 * Problem 4
 ** Task

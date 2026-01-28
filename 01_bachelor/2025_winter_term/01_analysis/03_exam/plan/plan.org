@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-26>
-#+lastmod: <2026-01-26 22:30>
+#+lastmod: <2026-01-27 21:03>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -88,17 +88,17 @@ Skip the following to save time, as indicated by prediction.org:
 /Goal: Master the "Red Alert" items first, then fill in the gaps./
 
 ** Day 1: Foundations & Metric Spaces
-- [ ] *Focus:* Metric axioms and Euclidean distance.
+- [X] *Focus:* Metric axioms and Euclidean distance.
 - [X] *Problem:* PS1, Prob 1 (Show $d$ is a metric).
-- [ ] *Problem:* PS1, Prob 2 ("He likes it" - Euclidean metric convergence).
-- [ ] *Theory:* Definition of Metric (1.1.1) and Limits (1.2.1).
+- [X] *Problem:* PS1, Prob 2 ("He likes it" - Euclidean metric convergence).
+- [X] *Theory:* Definition of Metric (1.1.1) and Limits (1.2.1).
 
 ** Day 2: Sequences, Recursion & Series
-- [ ] *Focus:* The "Certain" recursion problem and series criteria.
-- [ ] *Problem:* PS4, Prob 8 (Recursion $x_{n+1} = \frac{1}{2}(x_n + 2/x_n)$).
+- [X] *Focus:* The "Certain" recursion problem and series criteria.
+- [X] *Problem:* PS4, Prob 8 (Recursion $x_{n+1} = \frac{1}{2}(x_n + 2/x_n)$).
   - /Drill:/ Practice the "Show bounded $\to$ Show monotonic $\to$ Solve limit equation" workflow.
-- [ ] *Problem:* PS1, Prob 3 (Alternating Harmonic Series).
-- [ ] *Problem:* PS0, Prob 3 (Limits to 0).
+- [X] *Problem:* PS1, Prob 3 (Alternating Harmonic Series).
+- [X] *Problem:* PS0, Prob 3 (Limits to 0).
 
 ** Day 3: Continuity
 - [ ] *Focus:* $\epsilon-\delta$, Composition, and Piecewise continuity.

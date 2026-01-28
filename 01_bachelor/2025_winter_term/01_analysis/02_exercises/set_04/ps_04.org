@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-04>
-#+lastmod: <2026-01-12 09:14>
+#+lastmod: <2026-01-27 20:40>
 #+options: num:t
 #+startup: overview
 #+latex: \newpage
@@ -452,20 +452,108 @@ $\forall x,y\in[0,\infty)$.
 
 ** Solution
 
-* Problem 8
+* Problem 8 :DONE:
 ** Task
 Let $(x_{n})_{n\ge0}$ be defined by $x_{0}=1$, $x_{n+1}=\frac{1}{2}(x_{n}+\frac{2}{x_{n}})$ $n\in\mathbb{N}$
 1. Determine $x_{1}$, $x_{2}$, and $x_{3}$.
 2. Compute $x_{n}$ for large $n$ in Julia, guess the limit, and visualize the convergence.
-3. Prove that $x_{n}\ge\sqrt{2}$ for all $n\ge1.$
+3. Prove that $x_{n}\ge\sqrt{2}$ for all $n\ge1$.
 4. Prove that $(x_{n})_{n\ge1}$ is decreasing.
 5. Conclude that $(x_{n})_{n\in\mathbb{N}}$ converges and determine its limit.
 
-** Notes
-
 ** Solution
-#+begin_src julia :results value :export both :tangle julia/p_8.jl
-#+end_src
+
+- Part (1)
+
+  \begin{align*}
+        x_0 &= 1 \\
+        x_1 &= \frac{1}{2}(1+\frac{2}{1}) = \frac{3}{2} \\
+        x_2 &= \frac{1}{2}(\frac{3}{2}+\frac{2}{\frac{3}{2}}) = \frac{17}{12} \\
+        x_3 &= \frac{1}{2}(\frac{17}{12}+\frac{2}{\frac{17}{12}}) = \frac{577}{408} \\
+  \end{align*}
+
+- Part (2)
+
+  #+begin_src julia :results value :export both :tangle julia/p_8.jl
+  using Plots
+
+  term(x_n) = 1/2 * (x_n + (2/x_n))
+
+  function main()
+      arr = [1.0]
+
+      for i in 1:10-1
+          push!(arr, term(last(arr)))
+      end
+
+
+      plot(1:10, arr,
+           title="sqrt(2) approxiamtion",
+           label="x_{n+1} = 1/2 * (x_n + (2/x_n))",
+           xlabel="x", ylabel="x_n")
+
+      savefig("./figs/p_08.png")
+  end
+
+  main()
+  #+end_src
+
+  #+RESULTS:
+  : /Users/ziro2173/personal/university/01_bachelor/2025_winter_term/01_analysis/02_exercises/set_04/figs/p_08.png
+
+- Part (3)
+
+  \begin{align*}
+        x_{n+1} - \sqrt{2} &= \frac{1}{2} (x_{n} + \frac{2}{x_{n}}) - \sqrt{2} \\
+        &= \frac{x_{n}}{2} + \frac{1}{x_{n}} - \sqrt{2} \\
+        &= \frac{x_{n}^2}{2x_{n}} + \frac{2}{2x_{n}} - \frac{2x_{n}\sqrt{2}}{2x_{n}} \\
+        &= \frac{x_{n}^2 + 2 - 2x_{n}\sqrt{2}}{2x_{n}} \\
+        &= \frac{x_{n}^2 - 2\sqrt{2}x_{n} + 2}{2x_{n}} \\
+        &= \frac{(x_{n} - \sqrt{2})^{2}}{2x_{n}} \\
+  \end{align*}
+
+  Since $(x_{n} - \sqrt{2})^{2} \geq 0$ and $2x_{n} > 0$ (as $x_n > 0$), $\frac{(x_{n} - \sqrt{2})^{2}}{2x_{n}} \ge 0$.
+
+- Part (4)
+
+  \begin{align*}
+        \frac{x_{n+1}}{x_{n}} &= \frac{\frac{1}{2}(x_{n}+\frac{2}{x_{n}})}{x_{n}} \\
+        &= \frac{x_{n}+\frac{2}{x_{n}}}{2x_{n}} \\
+        &= \frac{x_{n}^{2}+2}{2x_{n}^{2}} \\
+  \end{align*}
+
+  Since $x_{n} \ge \sqrt{2}$ (as proved in part (3)):
+
+  - Case 1: $x_{n} = \sqrt{2}$
+
+    \begin{align*}
+        \frac{(\sqrt{2})^{2}+2}{2(\sqrt{2})^{2}} &= \frac{2 + 2}{2 \cdot 2} \\
+        &= \frac{4}{4} \\
+        &= 1 \\
+    \end{align*}
+
+  - Case 2: $x_{n} > \sqrt{2}$
+
+    As for $x_{n} > \sqrt{2}$, $x_{n}^{2} + 2 < x_{n}^{2} + x_{n}^{2}$. Thus,
+
+    $$ \frac{x_{n}^{2}+2}{2x_{n}^{2}} < 1 $$
+
+    Hence, $(x_{n})_{n\ge 1}$ is decreasing.
+
+- Part (5)
+
+  Since $(x_{n})_{n \ge 1}$ is monotone decreasing and bounded from below $(x_{n} \ge \sqrt{2})$, by the Monotone Convergence Theorem, thesequence $(x_{n})_{n \ge 1}$ is convergent and has a limit $L \ge \sqrt{2}$.
+
+  I find the limit by taking a limit of both sides:
+
+  \begin{align*}
+        \lim_{x_{n+1} \rightarrow L} x_{n+1} &= \lim_{x_{n} \rightarrow L} \frac{1}{2}(x_{n}+\frac{2}{x_{n}}) \\
+        L &= \frac{1}{2}(L+\frac{2}{L}) \\
+        2L &= L+\frac{2}{L} \\
+        L &= \frac{2}{L} \\
+        L^{2} &= 2 \\
+        L &= \sqrt{2} \\
+  \end{align*}
 
 * Problem 9 :DONE:
 ** Task

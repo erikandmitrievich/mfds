@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-26>
-#+lastmod: <2026-01-27 11:01>
+#+lastmod: <2026-01-27 21:57>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -256,10 +256,7 @@ and determine their behavior in regards to convergence in $(\mathbb{R}^{2},d)?$ 
   savefig("./figs/p_02.png")
   #+end_src
 
-  #+RESULTS:
-  : /Users/ziro2173/personal/university/01_bachelor/2025_winter_term/01_analysis/02_exercises/set_01/figs/p_02.png
-
-* Problem 3
+* Problem 3 :DONE:
 ** Task
 #+begin_quote
 Consider the series
@@ -268,11 +265,59 @@ $$\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}.$$
 (2) Use Julia to guess the limit of $\sum_{k=0}^{\infty}\frac{a^{k}}{k!}$
 #+end_quote
 
-** Notes
-
 ** Solution
-#+begin_src julia :results value :exports both :tangle julia/p_3.jl
-#+end_src
+
+- Part (1)
+
+  Observe the product $(-1)^{n+1} \cdot \frac{1}{n}$. As $n\rightarrow\infty$, $(-1)^{n+1}$ would alternate between the values of $-1$ and $1$. Hence the series is alternating.
+
+  First, I will evaluate whether the alternating series converge by using the Alternating Series Test.
+
+  - First condition of AST is a series' sequence being equal to $0$ at $n\rightarrow\infty$.
+
+    $$\lim_{n\rightarrow\infty} \frac{1}{n} = 0$$
+
+    Condition met.
+
+  - Second condition of AST is series' sequence next term being less than preceding one $a_{n+1} < a_n$.
+
+    $$\frac{1}{n+1} < \frac{1}{n}$$
+
+    Condition met.
+
+  Since both conditions are met, by the Alternating Series Test, the series converges to some limit $a \in \mathbb{R}$.
+
+  Secondly, I have to validate whether the series converges absolutely.
+
+  \begin{align*}
+  \sum_{n=1}^{\infty} \Big| \frac{(-1)^{n+1}}{n} \Big| &= \sum_{n=1}^{\infty} \frac{|(-1)^{n+1}|}{|n|} \\
+  &= \sum_{n=1}^{\infty} \frac{|(-1)^{n+1}|}{n} \quad \text{(since } n \in \mathbb{N}) \\
+  &= \sum_{n=1}^{\infty} \frac{1}{n} \\
+  &=  \frac{1}{1} + \frac{1}{2} +\frac{1}{3} + \frac{1}{4} + ... \\
+  \end{align*}
+
+  This is a harmonic series that is known to be divergent. Hence, series do not converge absolutely.
+
+- Part (2)
+
+  #+begin_src julia :results output :exports both :tangle julia/p_3.jl
+
+  s_conv() = sum((-1)^(n+1)/n for n in 1:100_000)
+  a = s_conv()
+
+  n_conv() = sum((a^k)/factorial(k) for k in 0:20)
+
+  println("Value of a: ", a)
+  println("Value of Sum: ", n_conv())
+
+  #+end_src
+
+  #+RESULTS:
+  : s_conv (generic function with 1 method)
+  : 0.6931421805849816
+  : n_conv (generic function with 1 method)
+  : Value of a: 0.6931421805849816
+  : Value of Sum: 1.999990000075072
 
 * Problem 4
 ** Task
