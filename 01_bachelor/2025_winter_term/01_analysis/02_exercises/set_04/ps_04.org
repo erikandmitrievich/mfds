@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-04>
-#+lastmod: <2026-01-27 20:40>
+#+lastmod: <2026-01-28 22:31>
 #+options: num:t
 #+startup: overview
 #+latex: \newpage
@@ -542,7 +542,7 @@ Let $(x_{n})_{n\ge0}$ be defined by $x_{0}=1$, $x_{n+1}=\frac{1}{2}(x_{n}+\frac{
 
 - Part (5)
 
-  Since $(x_{n})_{n \ge 1}$ is monotone decreasing and bounded from below $(x_{n} \ge \sqrt{2})$, by the Monotone Convergence Theorem, thesequence $(x_{n})_{n \ge 1}$ is convergent and has a limit $L \ge \sqrt{2}$.
+  Since $(x_{n})_{n \ge 1}$ is monotone decreasing and bounded from below $(x_{n} \ge \sqrt{2})$, by the Monotone Convergence Theorem, the sequence $(x_{n})_{n \ge 1}$ is convergent and has a limit $L \ge \sqrt{2}$.
 
   I find the limit by taking a limit of both sides:
 

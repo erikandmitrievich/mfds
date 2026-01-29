@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-26>
-#+lastmod: <2026-01-26 13:18>
+#+lastmod: <2026-01-29 21:16>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,7 +13,7 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
-* Problem 1
+* Problem 1 :DONE:
 ** Task
 #+begin_quote
 Show that the function $f:\mathbb{Q}\rightarrow\mathbb{R}$ given by
@@ -21,11 +21,33 @@ $f(x)=\begin{cases}0,&x^{2}<2,\\ 1,&x^{2}>2,\end{cases}$
 is continuous.
 #+end_quote
 
-** Notes
-
 ** Solution
 
-* Problem 2
+Let $c \in \mathbb{Q}$. We know that $c^{2} \neq 2$ as $\sqrt{2} \notin \mathbb{Q}$. Hence, we have 2 cases:
+
+- Case 1: $c^{2} < 2$
+
+  Choose $\delta < \sqrt{2} - |c|$.
+
+  Hence, $\forall x \in \left( c - \delta, c + \delta \right), |x| < \sqrt{2}$.
+
+  Thus, $\lim_{x \rightarrow c} f(x) = 0 = f(c)$.
+
+  Hence, $f$ is continuous $\forall x : x^{2} < 2$.
+
+- Case 2: $c^{2} > 2$
+
+  Choose $\delta < |c| - \sqrt{2}$.
+
+  Hence, $\forall x \in \left( c - \delta, c + \delta \right), |x| > \sqrt{2}$.
+
+  Thus, $\lim_{x \rightarrow c} f(x) = 1 = f(c)$.
+
+  Hence, $f$ is continuous $\forall x : x^{2} > 2$.
+
+Thus, $f: \mathbb{Q} \rightarrow \mathbb{R}$ is continious.
+
+* Problem 2 :DONE:
 ** Task
 #+begin_quote
 Prove that the following functions are continuous:
@@ -33,20 +55,50 @@ Prove that the following functions are continuous:
 (b) $g:\mathbb{R}\rightarrow\mathbb{R}$, $g(x)=\exp(|x|)$.
 #+end_quote
 
-** Notes
-
 ** Solution
 
-* Problem 3
+- Part (a)
+
+  A function $p(x) = x$ is known to be continuous on $x \in \mathbb{R}$.
+
+  - $x^{2}$ is a product of two continuous functions $p$.
+
+  - $1$ is a continuous function.
+
+  - $x^{2} + 1$ is a sum of two continuous functions.
+
+  - Since $x^{2}+1 \ge 1 \, \forall x \in \mathbb{R}$, $\frac{1}{x^{2} + 1}$ is well defined $\forall x \in \mathbb{R}$.
+
+  Thus, a function $f(x) = \frac{1}{x^{2} + 1}$ is continuous on $\mathbb{R}$.
+
+- Part (b)
+
+  - The absolute value function $h(x) = |x|$ is known to be continuous on $x\in\mathbb{R}$.
+
+  - The exponential function $r(x) = e^{x}$ is also known to be continuous on $x\in\mathbb{R}$.
+
+  The function $g(x) = e^{|x|}$ is a composite function $g = r \circ h$, and hence continuous in $\mathbb{R}$.
+
+* Problem 3 :DONE:
 ** Task
 #+begin_quote
-Prove or disprove that the function $f:\mathbb{R}\rightarrow\mathbb{R}$ is continuous, where f is given by
+Prove or disprove that the function $f:\mathbb{R}\rightarrow\mathbb{R}$ is continuous, where $f$ is given by
 $f(x)=\begin{cases}\exp(-\frac{1}{x}),&x\in\mathbb{R}\backslash\{0\},\\ 0,&x=0.\end{cases}$
 #+end_quote
 
-** Notes
-
 ** Solution
+
+To determine continuity at $x=0$, I examine the left and right-hand limits of $f(x)$:
+
+- Left-Hand Limit ($x\rightarrow0^{-}$) Let $t = -\frac{1}{x}$. As $x\rightarrow 0^{-}$, I know that $\frac{1}{x} \rightarrow -\infty$, hence, $t\rightarrow\infty$.
+
+  $$\lim_{x\rightarrow0^{-}} f(x) = \lim_{x\rightarrow0^{-}} e^{t} = \infty$$
+
+- Right-Hand Limit ($x\rightarrow0^{+}$) Let $t = -\frac{1}{x}$. As $x\rightarrow 0^{ +}$, I know that $\frac{1}{x} \rightarrow \infty$, hence, $t\rightarrow-\infty$.
+
+  $$\lim_{x\rightarrow0^{+}} f(x) = \lim_{x\rightarrow0^{ +}} e^{t} = 0$$
+
+Conclusion: Since $\lim_{x\rightarrow0^{-}} e^{t} = \infty$ the limit $\lim_{x\rightarrow0} f(x)$ does not exist. Therefore, $f(x)$ is discontinuous at $x=0$. Because limit is infinite, this is classified as infinite discontinuity.
 
 * Problem 4
 ** Task
@@ -63,7 +115,7 @@ Write a Julia function interpol(X, Y) with inputs $X=(x_{1},...,x_{n})^{1}$, $Y=
 #+begin_src julia :results value :exports both :tangle julia/p_4.jl
 #+end_src
 
-* Problem 5
+* Problem 5 :DONE:
 ** Task
 #+begin_quote
 Scientists study how global mean sea-level rise $S(t)$ (in centimeters) depends on the global temperature anomaly t, which measures how many degrees Celsius the current global average temperature differs from a chosen historical baseline.
@@ -71,17 +123,89 @@ A simplified physical model predicts
 
 $$S(t)=\frac{3}{2}+\frac{1}{2}t+2(\exp(\frac{2}{5}t)-1)$$
 
-where the constant $\frac{3}{2}$ cm accounts for committed sea-level rise from past emissions, the linear
- term $\frac{1}{2}t$ represents thermal expansion of seawater, and the exponential term $2(\exp(\frac{2}{5}t)-1)$ models
- nonlinear ice-sheet melt feedbacks.
-The Paris International Climate Treaty defines a critical threshold of 8 cm sea-level rise that triggers
- coastal emergency measures.
+where the constant $\frac{3}{2}$ cm accounts for committed sea-level rise from past emissions, the linear term $\frac{1}{2}t$ represents thermal expansion of seawater, and the exponential term $2(\exp(\frac{2}{5}t)-1)$ models nonlinear ice-sheet melt feedbacks.
+
+The Paris International Climate Treaty defines a critical threshold of 8 cm sea-level rise that triggers coastal emergency measures.
+
 (a) Implement a bisection method in Julia or familiarize yourself with the code provided.
 (b) Use the implementation to determine the critical global temperature anomaly, that is, determine $t$ such that $S(t)=8$.
 #+end_quote
 
-** Notes
-
 ** Solution
-#+begin_src julia :results value :exports both :tangle julia/p_5.jl
+- Part (a)
+
+  #+begin_quote
+  *Note: While not explicitly required, I will first verify that the method is applicable.*
+  #+end_quote
+
+  To apply the /Bisection Method/ for finding a root, I must first prove that the function is continuous $\forall t \in \mathbb{R}$. If the function were discontinuous, the Bisection Method (and the Intermediate Value Theorem it relies on) might fail.
+
+  Let's look at the given function:
+
+  $$S(t)=\frac{3}{2}+\frac{1}{2}t+2(e^{\frac{2}{5}t}-1)$$
+
+  Expanding the terms:
+
+  \begin{align*}
+        S(t) &= \frac{3}{2} + \frac{1}{2}t + 2e^{\frac{2}{5}t} - 2 \\
+             &= 2e^{\frac{2}{5}t} + \frac{1}{2}t - \frac{1}{2} \\
+  \end{align*}
+
+  We can view $S(t)$ as the sum of two elementary functions, $r(t)$ and $h(t)$:
+
+  \begin{align*}
+        r(t) &= 2e^{\frac{2}{5}t} \quad \text{(Exponential)} \\
+        h(t) &= \frac{1}{2}t - \frac{1}{2} \quad \text{(Linear Polynomial)} \\
+  \end{align*}
+
+  Both functions and polynomials are known to be continuous for all real numbers. Since the sum of continuous functions is also continuous, $S(t)$ is continuous $\forall t \in \mathbb{R}$.
+
+  Therefore, the Intermediate Value Theorem (IVT) applies:
+
+  /If $f$ is continuous on $\left[ a,b \right]$ and $f(a) < 0$ and $f(b) > 0$, then $\exists \xi \in \left( a,b \right) : f(\xi) = 0$./
+
+  Since continuity is established, the Bisection Method is a valid choice.
+
+  #+begin_src julia :results value :exports both :tangle julia/p_5.jl
+  function bisection_method(f, a, b, tol=1e-6)
+      m = 0.0
+      while (abs(a-b) > tol)
+          m = (a+b)/2
+          (f(a) * f(m) < 0) ? b = m : a = m
+      end
+      return m
+  end
+
+  S(t) = 3/2 + t/2 + 2*(exp((2t)/(5))-1)
+
+  bisection_method(S, -10, 10)
+  #+end_src
+
+  #+RESULTS:
+  : -1.3401728868484497
+
+- Part (b)
+
+#+begin_src julia :results output :exports both :tangle julia/p_5.jl
+function bisection_method(f, a, b, tol=1e-6)
+    m = 0.0
+    while (abs(a-b) > tol)
+        m = (a+b)/2
+        (f(a) * f(m) < 0) ? b = m : a = m
+    end
+    return m
+end
+
+S(t) = 3/2 + t/2 + 2*(exp((2t)/(5))-1)
+
+root = bisection_method(t -> S(t) - 8, -10, 10)
+
+println("Critical Temperature Anomaly: $root")
 #+end_src
+
+#+RESULTS:
+: bisection_method (generic function with 2 methods)
+: S (generic function with 1 method)
+: 3.111853003501892
+: Critical Temperature Anomaly: 3.111853003501892
+
