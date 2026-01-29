@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-26>
-#+lastmod: <2026-01-26 19:12>
+#+lastmod: <2026-01-29 21:24>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -20,7 +20,7 @@
   - Expect at least one question where differentials work differently than in high school.
   - "Linear map" is a key concept.
   - "L'Hopital limit with derivatives only".
-
+  - **Uniform Convergence:** Topic mentioned with emphasis/frustration ("Uniform convergence blyat").
 ** Theorem Requirements
 - **Statements:** You must know the statement of *every* theorem.
 - **Proofs:** Being able to prove every theorem is *not* necessary, but if a theorem has a specific name (e.g., Bolzano-Weierstrass), it is important.
@@ -28,8 +28,7 @@
   - **Theorem 2.2.22:** Will definitely show up.
   - **Lemma 2.3.3:** Remember this for multiple choice.
   - **Definitions:** Know the Definition of $\pi$.
-
-** Exclusions (What to Ignore)**
+** Exclusions (What to Ignore)
 - **Topic:** Compactness (not discussed in class).
 - **Topic:** Cauchy product (Theorem 2.1.22).
 - **Theorem:** 2.2.18.
@@ -57,6 +56,29 @@
 - **Definitions:** 2.3.1, 2.3.7.
 - **Theorems:** 2.3.2, 2.3.4.
 - **Lemma:** 2.3.3.
+
+** Section 3.1 (Differentiation Definitions)
+- **Problem 1:** 1 question with quotient difference definition. Strategy: "Check diff. with definition".
+- **Problem 5 [Critical]:** "If you don't know exp'(x) = exp(x) I don't care, you will fail".
+- **Problem 6:** "Need to know".
+- **Problem 8 [Crucial]:** Special case of Taylor expansion.
+- **Problem 10:** Important.
+
+** Section 3.2 (Derivatives & Rules)
+- **Problem 2, 3:** "Need to know".
+- **Problem 10:** Important theorem.
+- **Problem 11, 13, 14:** Know the derivatives, especially log.
+- **Problem 15:** Promised there will be something similar. Strategy: Where we need to use exp(log).
+- **General Note:** Don't really need quotient rule.
+
+** Section 3.3 (Mean Value Theorem & Convexity)
+- **Problem 10:** "A big deal". Topic: MVT of differentiation.
+- **Convex Function:** Could be relevant ("Hopefully not :(").
+
+** Integration Focus
+- **Exercise Type 1:** Calculate lower and upper sums with sup.
+- **Exercise Type 2:** Apply midpoint rule. Questions: "Does it converge? What is the integral?"
+- **General Strategy:** Comparing series to integrals could be very useful.
 
 * Problem Set Analysis
 ** Problem Set 0
