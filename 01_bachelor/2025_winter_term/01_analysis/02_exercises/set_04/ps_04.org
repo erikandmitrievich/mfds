@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-04>
-#+lastmod: <2026-01-28 22:31>
+#+lastmod: <2026-01-30 17:27>
 #+options: num:t
 #+startup: overview
 #+latex: \newpage
@@ -220,20 +220,70 @@ Derivative: -(1 / sqrt(1 - (x^2)))
 ✅ Verification Successful.
 #+end_example
 
-* Problem 3
+* Problem 3 :DONE:
 ** Task
-Suppose that $f,g:U\rightarrow\mathbb{R}$ are continuous in $x_{0}\in U$ Prove that if $f$ is also differentiable in $x_{0}$ and $f(x_{0})=0$ then the product $f g$ is differentiable in $x_{0}$.
+Suppose that $f,g:U\rightarrow\mathbb{R}$ are continuous in $x_{0}\in U$. Prove that if $f$ is also differentiable in $x_{0}$ and $f(x_{0})=0$ then the product $f g$ is differentiable in $x_{0}$.
 Illustrate this claim in Julia for the functions $f(x)=x$ and $g(x)=|x|$.
 
-** Notes
-
 ** Solution
-*** Derivation
 
+#+begin_quote
+Let $U \subseteq \mathbb{R}$ be an open interval and $f : U \rightarrow \mathbb{R}$. We say that $f$ is differentiable at $x \in U$ if the limit
 
-*** Code
+$$\lim_{y \rightarrow x} \dfrac{f(y) - f(x)}{y - x}$$
+
+exists. The value of this limit is denoted by $f'(x)$ and is called a derivative of $f$.
+#+end_quote
+
+To prove the product $fg$ is differentiable in $x_{0}$, I have to examine the limit of the difference quotient for the product function $(fg)(x)$ at $x_0$.
+
+$$\lim_{x \rightarrow x_{0}} \dfrac{(fg)(x) - (fg)(x_{0})}{x - x_{0}}$$
+
+Given the hypothesis that $f(x_0) = 0$, limit can be simplified.
+
+\begin{align*}
+\lim_{x \rightarrow x_{0}} \dfrac{(fg)(x) - (fg)(x_{0})}{x - x_{0}} &= \lim_{x \rightarrow x_{0}} \dfrac{(fg)(x)}{x - x_{0}} \\
+&= \lim_{x \rightarrow x_{0}} \dfrac{f(x) - f(x_{0})}{x - x_{0}} g(x) \\
+&= \lim_{x \rightarrow x_{0}} \dfrac{f(x) - f(x_{0})}{x - x_{0}} \cdot \lim_{x \rightarrow x_{0}} g(x) \\
+&= f'(x_{0}) g(x_{0}) \\
+\end{align*}
+
+Since the limit exists, the function product is differentiable at $x_{0}$.
+
 #+begin_src julia :results value :export both :tangle julia/p_3.jl
+using Plots
+
+f(x) = x
+g(x) = abs(x)
+fg(x) = f(x) * g(x)
+
+x = -2:0.1:2
+f_x = f.(x)
+g_x = g.(x)
+fg_x = fg.(x)
+
+
+plot(x, fg_x,
+     title="fg product",
+     label="fg(x)",
+     xlabel="x", ylabel="fg(x)",
+     lw=2)
+
+plot!(x, f_x,
+      label="f(x)",
+      xlabel="x", ylabel="f(x)",
+      lw=2)
+
+plot!(x, g_x,
+      label="g(x)",
+      xlabel="x", ylabel="g(x)",
+      lw=2)
+
+savefig("./figs/p_03.png")
 #+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/university/01_bachelor/2025_winter_term/01_analysis/02_exercises/set_04/figs/p_03.png
 
 * Problem 4 :DONE:
 ** Task
@@ -357,42 +407,29 @@ $$\dfrac{d}{dx} log_a \left[ f(x) \right] = \dfrac{1}{f(x) ln(a)} \cdot f'(x)$$
 #+end_quote
 
 ** Solution
-*** $f(x)=\sin(x^{2})$
+1. $f(x)=\sin(x^{2})$
 
-Using the chain rule:
-$f'(x) = \cos(x^2) \cdot \frac{d}{dx}(x^2)$
-$f'(x) = 2x \cos(x^2)$
+   $f'(x) &= 2x\cos(x^{2}) \quad \text{(Chain Rule)}$
 
-*** $g(x)=e^{3x+1}$
+2. $g(x)=e^{3x+1}$
 
-Using the chain rule:
-$g'(x) = e^{3x+1} \cdot \frac{d}{dx}(3x+1)$
-$g'(x) = 3e^{3x+1}$
+   $g'(x) = 3e^{3x+1} \quad \text{(Chain Rule)}$
 
-*** $f(x)=\ln(5x^{2}-x+4)$
+3. $f(x)=\ln(5x^{2}-x+4)$
 
-Using the chain rule ($\frac{u'}{u}$):
-$f'(x) = \frac{\frac{d}{dx}(5x^2 - x + 4)}{5x^2 - x + 4}$
-$f'(x) = \frac{10x - 1}{5x^2 - x + 4}$
+   $f'(x) = \dfrac{10x - 1}{5x^{2} - x + 4} \quad \text{(Chain Rule)}$
 
-*** $g(x)=(2x^{3}-x)^{5}$
+4. $g(x)=(2x^{3}-x)^{5}$
 
-Using the general power rule:
-$g'(x) = 5(2x^3 - x)^4 \cdot \frac{d}{dx}(2x^3 - x)$
-$g'(x) = 5(2x^3 - x)^4 (6x^2 - 1)$
+   $g'(x) = 5(2x^3 - x)^4(6x^2 - 1) \quad \text{(Chain Rule)}$
 
-*** $f(x)=\sqrt{1+e^{2x}}$
+5. $f(x)=\sqrt{1+e^{2x}}$
 
-Rewrite as $f(x) = (1+e^{2x})^{\frac{1}{2}}$.
-$f'(x) = \frac{1}{2} (1 + e^{2x})^{-\frac{1}{2}} \cdot \frac{d}{dx}(1+e^{2x})$
-$f'(x) = \frac{1}{2\sqrt{1 + e^{2x}}} \cdot 2e^{2x}$
-$f'(x) = \frac{e^{2x}}{\sqrt{1 + e^{2x}}}$
+   $f'(x) = e^{2x}(1 + e^{2x})^{-\frac{1}{2}} \quad \text{(Chain Rule)}$
 
-*** $g(x)=\cos(\ln x)$, $x>0$
+6. $g(x)=\cos(\ln(x))$, $x>0$
 
-Using the chain rule:
-$g'(x) = -\sin(\ln x) \cdot \frac{d}{dx}(\ln x)$
-$g'(x) = -\frac{\sin(\ln x)}{x}$
+   $g'(x) = \frac{-\sin(ln(x))}{x} \quad \text{(Chain Rule)}$
 
 *** Code
 #+begin_src julia :results output :export both :tangle julia/p_6.jl

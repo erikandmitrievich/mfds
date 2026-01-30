@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-26>
-#+lastmod: <2026-01-29 21:16>
+#+lastmod: <2026-01-29 21:34>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -103,8 +103,8 @@ Conclusion: Since $\lim_{x\rightarrow0^{-}} e^{t} = \infty$ the limit $\lim_{x\r
 * Problem 4
 ** Task
 #+begin_quote
-Write a Julia function interpol(X, Y) with inputs $X=(x_{1},...,x_{n})^{1}$, $Y=(y_{1},...,y_{n})^{\top}\in\mathbb{R}^{n}$
- and the output is a function f such that
+Write a Julia function interpol(X, Y) with inputs $X=(x_{1},...,x_{n})^{T}, Y=(y_{1},...,y_{n})^{\top}\in\mathbb{R}^{n}$ and the output is a function $f$ such that
+
 (a) $f(x_{i})=y_{i}$, for $i=1,...,n$ and f is continuous (find a simple function that satisfies those criteria).
 (b) $f(x_{i})=y_{i}$, for $i=1,...,n$ and f is a step-function.
 #+end_quote

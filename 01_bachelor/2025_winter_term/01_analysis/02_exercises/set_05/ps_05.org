@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-13>
-#+lastmod: <2026-01-14 17:36>
+#+lastmod: <2026-01-30 17:42>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -339,8 +339,6 @@ Suppose a rectangle with side length $x$ and $y$ has the perimeter $20$.
 (b) Determine the maximal possible area.
 #+end_quote
 
-** Notes
-
 ** Solution
 *** (a) Express Area $A(x)$
 The perimeter is given by $2x + 2y = 20$. Dividing by 2, we get the constraint:
@@ -370,3 +368,4 @@ We verify this against the endpoints of the domain $[0, 10]$:
 - $A(5) = 5(10 - 5) = 25$ (Maximum)
 
 *Conclusion:* The maximal possible area is *25* (occurring when the rectangle is a square with $x=5$).
+

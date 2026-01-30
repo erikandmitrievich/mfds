@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-26>
-#+lastmod: <2026-01-29 21:15>
+#+lastmod: <2026-01-30 17:43>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -97,13 +97,13 @@
 
 ** Day 5: Differentiation & Mean Value Theorem
 *Theme: "Slopes and Inequalities"*
-- [ ] **ps_05, Problem 2 (MVT)**:
+- [X] **ps_05, Problem 2 (MVT)**:
   - *Task:* Apply MVT to $f(x)=\ln(x)$ on $[1,e]$. Find the exact $\xi$.
-- [ ] **ps_04, Problem 6 (Drill)**:
+- [X] **ps_04, Problem 6 (Drill)**:
   - *Task:* Differentiate items 1-6. Pay attention to chain rules in $\cos(\ln x)$ and $\sqrt{1+e^{2x}}$.
-- [ ] **ps_04, Problem 3**: Differentiability Proof.
+- [X] **ps_04, Problem 3**: Differentiability Proof.
   - *Task:* Prove $fg$ is differentiable at $x_0$ if $f(x_0)=0$ and $f$ is diff.
-- [ ] **ps_05, Problem 5**: Optimization.
+- [X] **ps_05, Problem 5**: Optimization.
   - *Task:* Maximize area of rectangle with fixed perimeter (Standard derivative application).
 
 ** Day 6: Integration & Rules

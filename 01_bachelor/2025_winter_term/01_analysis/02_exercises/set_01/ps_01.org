@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-26>
-#+lastmod: <2026-01-28 22:25>
+#+lastmod: <2026-01-30 12:53>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -323,11 +323,24 @@ $$\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}.$$
 ** Task
 #+begin_quote
 We want to show that the sequence $(a_{n})_{n\in\mathbb{N}}=((1+\frac{1}{n+1})^{n+1})_{n\in\mathbb{N}}$ contains a convergent subsequence by verifying the following steps:
+
 (1) Show that $(a_{n})_{n\in\mathbb{N}}$ is bounded. Hint for the upper bound: use the binomial theorem to verify
+
 $$(1+\frac{1}{n})^{n}\le\sum_{k=0}^{n}\frac{1}{k!}, \quad n=1,2,....$$
+
 (2) Argue now that $(a_{n})_{n\in\mathbb{N}}$ has a convergent subsequence. Make additionally numerical checks in Julia to collect some evidence that $(a_{n})_{n\in\mathbb{N}}$ is monoton and hence convergent.
 #+end_quote
 
 ** Solution
+
+- Part (1)
+
+  $$(a + b)^{n} = \sum_{k = 0}^{n} \frac{n!}{k!(n-k)!} \cdot a^{n-k} b^{k}$$
+
+
+- Part (2)
+
+
+
 #+begin_src julia :results value :exports both :tangle julia/p_4.jl
 #+end_src
