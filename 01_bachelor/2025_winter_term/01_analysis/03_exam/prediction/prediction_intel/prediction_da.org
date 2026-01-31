@@ -1,0 +1,63 @@
+#+title: Prediction Da
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-01-28>
+#+lastmod: <2026-01-28 11:49>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* General / Header
+- Topic: "Uniform convergence"
+- Note: "Uniform convergence blyat" (suggests frustration or emphasis)
+
+* Section 3.1 (Differentiation Definitions)
+** Problem 1
+- Task: "1 question with quotient difference def."
+- Strategy: "Check diff. with definition"
+** Problem 5
+- Relevance: Critical
+- Note: "If you don't know exp'(x) = exp(x) I don't care, you will fail"
+** Problem 6
+- Relevance: "Need to know"
+** Problem 8
+- Relevance: "Crucial"
+- Note: "Special case of Taylor expansion"
+** Problem 10
+- Relevance: "Important"
+
+* Section 3.2 (Derivatives & Rules)
+** Problem 2, 3
+- Relevance: "Need to know"
+** Problem 10
+- Relevance: "Important thm"
+** Problem 11, 13, 14
+- Note: "Know the deriv., especially log"
+** Problem 15
+- Relevance: "Promised there will be smth similar"
+- Strategy: "Where we need to use exp(log)"
+** General Note
+- "Don't really need quotient rule"
+
+* Section 3.3 (Mean Value Theorem & Convexity)
+** Problem 10
+- Relevance: "A big deal"
+- Topic: "MVT of diff" (Mean Value Theorem of differentiation)
+** Convex Function
+- Relevance: Possible ("Could be")
+- Note: "Hopefully not :("
+
+* Integration
+** Exercise Type 1
+- Task: "Calculate lower and upper sums with sup"
+** Exercise Type 2
+- Task: "Apply midpoint rule"
+- Questions: "Does it converge? What is the integral?"
+** General Strategy
+- Note: "Comparing series to integrals could be very useful"

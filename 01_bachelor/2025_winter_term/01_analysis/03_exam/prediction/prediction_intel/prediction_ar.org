@@ -1,0 +1,142 @@
+#+title: Prediction
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-01-26>
+#+lastmod: <2026-01-31 21:19>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* General Exam Guidelines
+- "We need to know the statement of every Thm." (Source: PS 4 Header)
+- "L'Hopital limit with derivatives only." (Source: PS 0 Header)
+- "Multiple choice - 1 answer is right." (Source: Summary Page Bottom)
+- Ignore topic compactness (since it was not discussed in class)
+- Ignore Cauchy product
+- Ignore Theorem 2.2.18
+- Theorem 2.2.22 will show up definitely
+- Remember Lemma 2.3.3 for multiple choice
+- Know the Definition of Pi
+
+* Problem Set 0
+** Problem 1
+- Relevance: Low (Marked with "X" and "Hard")
+** Problem 2
+- Relevance: Low (Marked with "X" and "Hard")
+- Part (d): Circled (Indicates specific interest despite the "X")
+** Problem 3
+- Relevance: High (Circled)
+- Notes: Contains derivations in green ink showing limits evaluating to 0.
+** Problem 4
+- Relevance: Medium ("50/50")
+- Note: "Is trivial"
+** Problem 5
+- Relevance: High (Circled)
+
+* Problem Set 1
+** Problem 1
+- Part (1): Circled.
+- Note: $d(x,y)=0 \Leftrightarrow x=y$
+** Problem 2
+- Relevance: Very High
+- Note: "He likes it, he said it's wonderful"
+- Context: "Someone said Euclidean distance."
+** Problem 3
+- Relevance: Certain ("FOR SURE")
+- Note: "To check the criteria of convergence of series"
+** Problem 4
+- Note: "He gives a statement and we have to prove it"
+
+* Problem Set 2
+** Problem 1
+- Relevance: High
+- Note: "Smth like ts [this] will show up."
+** Problem 2
+- Relevance: Certain ("For sure")
+- Part (b): "He said it's a classic."
+- Strategy: "Just write its a composition. It could say 'prove using definitions'."
+** Problem 3
+- Relevance: High (Circled)
+- Specific Focus: Arrow pointing to the $x=0$ case: "we need to check what happens here."
+** Problem 4
+- Relevance: Low (Marked with "X")
+** Problem 5
+- Relevance: Low (Marked with "X")
+
+* Problem Set 3
+** Problem 1
+- Relevance: Possible
+- Note: "Might be but very easy"
+** Problem 2
+- Relevance: High (Circled)
+- Note: "He said it might be... If you connect with straight lines what is the value of $\epsilon$??"
+** Problem 3
+- Relevance: Low (Marked with "X")
+- Note: "linear interpolation"
+** Problem 4
+- Relevance: High (Circled)
+- Note: "We need to know exp function"
+** Problem 5
+- Relevance: Likely (Checkmark)
+- Note: "May be with easier f-ns [functions] & also arguments why there can't be more."
+** Problem 6
+- Relevance: Essential
+- Note on 'truncated series expansions': "we must know" / "We know them by heart"
+
+* Problem Set 4
+** Problem 1
+- Relevance: High (Circled)
+- Note: "Really nice one could be"
+- Strategy: "He said to use series arguments, no drawings!"
+** Problem 2
+- Relevance: Good (Checkmark)
+** Problem 3
+- Relevance: Good (Checkmark)
+** Problem 4
+- Relevance: High (Circled)
+** Problem 5
+- Relevance: Possible ("could be")
+** Problem 6
+- Relevance: Good (Checkmark)
+
+* Problem Set 5
+** Problem 1
+- Note: "Not well formulated. use diff quotient"
+** Problem 2
+- Note: "If it will be it will be well defined."
+** Problem 3
+- Relevance: High ("Yes")
+** Problem 4
+- Relevance: High ("Yes")
+** Problem 5
+- Relevance: High ("Yes")
+
+* Problem Set 6
+** Problem 1
+- Relevance: High ("Yes")
+** Problem 2
+- Relevance: High ("Yes")
+- Note: "We have to use tools... for each rule"
+** Problem 3
+- Relevance: Likely (Checkmark)
+** Problem 4
+- Note: "To be able to write the mid-point rule"
+
+* Problem Set 7
+** Problem 1
+- Note: "Be familiar with Taylor expansion at a certain point"
+** Problem 2
+- Relevance: Unknown ("IDK")
+** Problem 3
+- Note: "To know how to define S"
+** Problem 4
+- Relevance: High ("Yes")
+- Note: "Just integrate" / "4(e) <-- is in the lecture notes, to check."
+** General Note
+- Note: "To learn derivative and tangent to the curve."

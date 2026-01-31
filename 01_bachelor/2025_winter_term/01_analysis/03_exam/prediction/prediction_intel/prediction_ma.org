@@ -1,0 +1,117 @@
+#+title: Prediction
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-01-26>
+#+lastmod: <2026-01-26 18:47>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* General Exam Guidelines
+- "We should know every [theorem]. To be able to prove every thm is not necessary."
+- "If a thm has a name, it's important" (e.g., Bolzano-Weierstrass)
+- Multiple Choice part: "Only 1 correct"
+- Message: "At least one question where differential works different than highschool"
+- "Linear map!"
+- Ignore topic Compactness for exam
+- Ignore Cauchy product (2.1.22)
+
+* Problem Set 2
+** Problem 2
+- Note: "Proving a function is continuous"
+** Problem 3
+- Note: "Proving or disproving continuity of a function with cases."
+
+* Problem Set 3
+** Problem 1
+- Relevance: Possible but likely basic
+** Problem 2 & 3
+- Relevance: "Not clear enough for exam."
+** Problem 4
+- Note: "Need to know exp definitions"
+** Problem 5
+- Relevance: "Possible without julia and easier functions"
+** Problem 6
+- Note: "Need to know series expansions of exp and sin, cos"
+
+* Problem Set 4
+** Problem 1
+- Relevance: "Should be able to solve"
+** Problem 2
+- Note: "Also arcsin"
+** Problem 4
+- Note: "We should know every Thm"
+** Problem 5
+- Relevance: Likely
+- Note: "One induction Prob. seems likely"
+** Problem 6
+- Note: "Know and be able to use chain, product rule etc."
+** Problem 8 (Sequence Convergence)
+- Relevance: Certain ("For sure at least one recursion")
+- Note: "If $x_n$ is known to be convergent... we can use that $x_{n+1} \to x$ and $x_n \to x$ and solve."
+- Example: $x = \frac{1}{2}(x + \frac{2}{x})$
+** Problem 9 (Newton Method)
+- Note: "Newton method (not too complicated)"
+
+* Problem Set 5
+** Problem 1
+- Note: "Mean value Thm"
+** Problem 2
+- Relevance: Most Important
+- Note: "Too inexplicit wording, but most important"
+- Strategy: Use $[1,e]$, example: $\frac{\log(e)-\log(1)}{e-1} = \log'(\xi)$
+** Problem 5
+- Relevance: Possible ("might show up")
+
+* Problem Set 6
+** Problem 1
+- Relevance: "Should be able to do (for some functions)"
+** Problem 2, 3, 4
+- Note: "Know the rules and how to use them"
+- Topics: Midpoint, trapezoidal
+- General: "Improper Integral"
+
+* Problem Set 7
+** Problem 1
+- Note: "Be familiar with Taylor expansion"
+** Problem 2
+- Note: "Also explicitly"
+** Problem 3 & 5
+- Relevance: "Also may appear"
+
+* Lecture Notes
+** Section 1.1 & 1.2
+- Important: Def 1.1.1 and 1.1.2
+- Thm 1.1.6, 1.1.7
+- Def 1.2.1, Lemma 1.2.3
+- Note: $\mathbb{C}, \mathbb{R}$ are complete, $\mathbb{Q}$ is not
+- Def 1.2.5, Lemma 1.2.6
+- Def 1.2.11
+- Thm 1.2.12 (Bolzano-Weierstrass)
+- Thm 1.2.14
+** Section 2.1 (Series)
+- Lemma 2.1.1
+- Thm 2.1.4 (Geometric series)
+- Def 2.1.6, Lemma 2.1.7 and 2.1.8
+- Def 2.1.19 (Important)
+- Prop 2.1.20 ("but not exact remainder")
+- Thm 2.1.23
+** Section 2.2 (Continuity & Exponents)
+- Def 2.2.1, Lemma 2.2.2
+- Thm 2.2.7, Lemma 2.2.9
+- Thm 2.2.13 ($\epsilon-\delta$ continuity): "only basics in exam"
+- Ignore until Proposition 2.2.19
+- Thm 2.2.21
+- Def 2.2.22 (General exponents)
+** Section 2.3
+- Def 2.3.1
+- Thm 2.3.2
+- Lemma 2.3.3
+- Thm 2.3.4
+- Def 2.3.7

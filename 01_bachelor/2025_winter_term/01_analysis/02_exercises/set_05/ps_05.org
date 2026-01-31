@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-13>
-#+lastmod: <2026-01-30 17:42>
+#+lastmod: <2026-01-31 21:24>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -18,8 +18,6 @@
 #+begin_quote
 Visualize the function $f:\mathbb{R}\rightarrow\mathbb{R}$, $f(x)=e^{2x}+x$ in Julia. Then prove that $f$ is invertible and determine $(f^{-1})^{\prime}(1)$.
 #+end_quote
-
-** Notes
 
 ** Solution
 *** Code
@@ -193,8 +191,6 @@ $$\frac{f(b) - f(a)}{b-a} = f'(\xi)$$
 Visualize the function $f:\mathbb{R}\rightarrow\mathbb{R}$, $f(x)=x^{3}-3x^{2}+2$ in Julia and guess its local extrema. Prove that your guess is correct.
 #+end_quote
 
-** Notes
-
 ** Solution
 *** Code
 #+begin_src julia :results value :export both :tangle julia/p_3.jl
@@ -261,8 +257,6 @@ Based on the visualization, the local extrema appear to be at $x=0$ (maximum) an
 #+begin_quote
 Consider the function $f:[-2,2]\rightarrow\mathbb{R}$ $f(x)=x^{4}-2x^{2}+1$. Determine its global extrema. Afterwards, illustrate your results in Julia.
 #+end_quote
-
-** Notes
 
 ** Solution
 *** Code
