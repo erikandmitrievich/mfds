@@ -1,0 +1,154 @@
+#+title: Theorems
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-01-31>
+#+lastmod: <2026-01-31 22:22>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* Chapter 1: Convergence of Sequences
+
+** 1.1 Metric Spaces
+- Definition 1.1.1: Metric
+  A mapping $d_{\Omega}:\Omega\times\Omega\rightarrow[0,\infty)$ is a metric if it satisfies:
+  - (M1) Symmetry: $d_{\Omega}(x,y)=d_{\Omega}(y,x)$
+  - (M2) Triangle Inequality: $d_{\Omega}(x,z)\le d_{\Omega}(x,y)+d_{\Omega}(y,z)$
+  - (M3) Definiteness: $d_{\Omega}(x,y)=0 \iff x=y$
+
+- Definition 1.1.2: Convergence
+  A sequence $(a_{n})$ converges to $a$ if $\forall\epsilon>0, \exists N\in\mathbb{N}$ such that $\forall n\ge N, d_{\Omega}(a_{n},a)\le\epsilon$.
+
+- Example 1.1.4: Basic Metric Spaces
+  - Real line: $d(x,y)=|x-y|$.
+  - Plane with taxicab distance: $d_{1}(x,y)=|x_{1}-y_{1}|+|x_{2}-y_{2}|$.
+  - Plane with maximum distance: $d_{max}(x,y)=max\{|x_{1}-y_{1}|,|x_{2}-y_{2}|\}$.
+  - Discrete metric: $d(x,y)=0$ if $x=y$, else $1$.
+
+- Theorem 1.1.6: Uniqueness of Limit
+  If $a_{n}\rightarrow a$ and $a_{n}\rightarrow a^{\prime}$, then $a=a^{\prime}$.
+
+- Theorem 1.1.7: Non-negativity
+  If $(a_{n})\subseteq\mathbb{R}$ and $a_{n}\rightarrow a$, then $\forall n: a_{n}\ge0 \Rightarrow a\ge0$.
+
+** 1.2 Completeness
+- Definition 1.2.1: Cauchy Sequence
+  A sequence is Cauchy if $\forall\epsilon>0, \exists N\in\mathbb{N}$ such that $\forall n,m\ge N, d_{\Omega}(a_{n},a_{m})\le\epsilon$.
+
+- Lemma 1.2.3: Convergence implies Cauchy
+  Every convergent sequence is a Cauchy sequence.
+
+- Theorem 1.2.12: Bolzano-Weierstraß
+  Every bounded sequence in $\mathbb{R}$ contains a convergent subsequence.
+
+- Theorem 1.2.14: Monotone Convergence
+  If $(a_{n})\subseteq\mathbb{R}$ is monotonically increasing and bounded from above, it is convergent.
+
+- Theorem 1.2.16: Completeness of C
+  The space of complex numbers $\mathbb{C}$ is complete.
+
+** 1.3 Compactness
+- Definition 1.3.2: Compactness
+  A set $K$ is compact if every sequence in $K$ has a convergent subsequence whose limit lies in $K$.
+
+- Theorem 1.3.7: Heine-Borel (in R)
+  A set $K\subseteq\mathbb{R}$ is compact if and only if it is closed and bounded.
+
+* Chapter 2: Continuity and Special Functions
+
+** 2.1 Series and the Exponential Function
+- Theorem 2.1.4: Geometric Series
+  If $|x|<1$, then $\sum_{k=0}^{\infty}x^{k}=\frac{1}{1-x}$.
+
+- Theorem 2.1.12: Convergence Criteria
+  - Comparison test: If $|a_{n}|\le|b_{n}|$ and $\sum|b_{n}|$ converges, then $\sum|a_{n}|$ converges.
+  - Ratio test: If $|\frac{a_{n+1}}{a_{n}}|\le\theta < 1$ for $n \ge N$, then $\sum|a_{n}|$ converges.
+  - Leibniz criterion: If $a_{n}$ is non-negative, monotonically decreasing, and $a_{n} \rightarrow 0$, then the alternating series $\sum(-1)^{n}a_{n}$ converges.
+
+- Theorem 2.1.23: Functional Equation of Exp
+  $exp(x+y)=exp(x)exp(y)$ for all $x,y\in\mathbb{C}$.
+
+** 2.2 Continuity
+- Definition 2.2.1: Continuity
+  $f$ is continuous in $x$ if for every sequence $x_n \rightarrow x$, we have $f(x_n) \rightarrow f(x)$.
+
+- Theorem 2.2.7: Extreme Value Theorem
+  A continuous function $f$ on a compact set $K$ attains its maximum and minimum.
+
+- Theorem 2.2.9: Intermediate Value Theorem
+  If $f:[a,b]\rightarrow\mathbb{R}$ is continuous and $f(a)<0<f(b)$, there exists $\xi\in(a,b)$ such that $f(\xi)=0$.
+
+- Theorem 2.2.21: Logarithm
+  The inverse of $exp:\mathbb{R}\rightarrow(0,\infty)$ is the continuous, strictly increasing function $log:(0,\infty)\rightarrow\mathbb{R}$.
+
+** 2.3 Trigonometric Functions
+- Theorem 2.3.2: Series expansion
+  $cos(x)=\sum_{k=0}^{\infty}(-1)^{k}\frac{x^{2k}}{(2k)!}$ and $sin(x)=\sum_{k=0}^{\infty}(-1)^{k}\frac{x^{2k+1}}{(2k+1)!}$.
+
+- Theorem 2.3.9: Periodicity
+  $e^{i(x+2\pi k)}=e^{ix}$, $cos(x+2\pi k)=cos(x)$, and $sin(x+2\pi k)=sin(x)$ for $k\in\mathbb{Z}$.
+
+* Chapter 3: Differentiability
+
+** 3.1 Definition and Examples
+- Theorem 3.1.8: Linear Approximability
+  $f$ is differentiable at $x_0$ iff $f(x)=f(x_0)+c(x-x_0)+\varphi(x)$ where $lim_{x\rightarrow x_0}\frac{\varphi(x)}{x-x_0}=0$.
+
+** 3.2 Differentiation Rules
+- Summary of Rules
+  - Linearity: $(\alpha f + \beta g)' = \alpha f' + \beta g'$.
+  - Product Rule: $(fg)' = f'g + fg'$.
+  - Chain Rule: $(g\circ f)'(x) = g'(f(x))f'(x)$.
+  - Inverse Function: $(f^{-1})'(y_0) = \frac{1}{f'(f^{-1}(y_0))}$.
+
+** 3.3 Local Extrema
+- Theorem 3.3.2: Necessary Condition
+  If $f$ has a local extremum at $x_0$, then $f'(x_0)=0$.
+
+- Theorem 3.3.10: Mean Value Theorem
+  If $f$ is continuous on $[a,b]$ and differentiable on $(a,b)$, then there exists $\xi\in(a,b)$ such that $\frac{f(b)-f(a)}{b-a}=f'(\xi)$.
+
+- Theorem 3.3.14: Second Derivative Test
+  If $f'(x_0)=0$ and $f''(x_0)>0$, $f$ has a strict local minimum. If $f''(x_0)<0$, $f$ has a strict local maximum.
+
+** 3.4 Convex Functions
+- Theorem 3.4.3: Second Derivative Test for Convexity
+  $f$ is convex iff $f''(t)\ge0$ for all $t$.
+
+- Theorem 3.4.4: Global Minimizer
+  For convex, twice continuously differentiable functions, $x^*$ is a global minimizer iff $f'(x^*) = 0$.
+
+* Chapter 4: Integration
+
+** 4.1 Partitions and Darboux Sums
+- Definition 4.1.8: Integrability
+  $f$ is integrable if its lower integral equals its upper integral.
+
+- Theorem 4.1.12: Continuity implies Integrability
+  Every continuous function on $[a,b]$ is integrable.
+
+** 4.2 Fundamental Theorem of Calculus
+- Theorem 4.2.3: FTC
+  If $F$ is differentiable with continuous derivative $F'$, then $\int_{a}^{b}F'(x)dx=F(b)-F(a)$.
+
+- Integration Methods
+  - Integration by Parts: $\int f'g = fg - \int fg'$.
+  - Substitution Rule: $\int_{a}^{b}f(u(x))u'(x)dx=\int_{u(a)}^{u(b)}f(y)dy$.
+
+** 4.3 Taylor Expansion
+- Theorem 4.3.1: Taylor Expansion
+  $f(x)=\sum_{k=0}^{n}\frac{f^{(k)}(x_{0})}{k!}(x-x_{0})^{k}+R_{n+1}(x)$ with $R_{n+1}(x)=\frac{1}{n!}\int_{x_{0}}^{x}(x-t)^{n}f^{(n+1)}(t)dt$.
+
+** 4.4 Improper Integrals
+- Theorem 4.4.4: Integral Test
+  For non-negative, monotonically decreasing $f$, the series $\sum f(n)$ converges if $\int_{0}^{\infty} f(x)dx$ exists.
+
+** 4.5 Uniform Convergence
+- Theorem 4.5.1: Uniform Convergence
+  If a sequence of continuous functions $f_n$ converges uniformly to $f$, then $f$ is continuous.
