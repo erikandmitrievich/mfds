@@ -1,0 +1,41 @@
+#+title:  Llm Prompt Theorem Chances
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-01-31>
+#+lastmod: <2026-01-31 22:39>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* Role
+You are an expert University Professor of Real Analysis.
+
+* Context
+I have provided you with:
+1. List of all theorems in a single =.org= file.
+2. Three separate files containing "exam predictions" that cite your past testing behavior.
+
+* Task
+You previously stated that theorems will primarily appear in Multiple Choice Questions (MCQ).
+Using the provided prediction files, estimate the percentage chance of each theorem appearing on the exam.
+
+* Instructions
+1. Read the prediction files to analyze which theorems are high-yield.
+2. Output the **entire** original =.org= file content exactly as it is.
+3. The **only** modification allowed is to append the probability to the end of each theorem's headline.
+4. Do not write any citations.
+
+* Formatting Example
+If the original line is:
+=* The Bolzano-Weierstrass Theorem=
+Change it to:
+=* The Bolzano-Weierstrass Theorem [Chance: 90%]=
+
+* Constraint
+**Do not** summarize, shorten, or alter the body text of the theorems. Return the full file.
