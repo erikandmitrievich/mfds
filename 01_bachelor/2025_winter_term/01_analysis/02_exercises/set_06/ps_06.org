@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-16>
-#+lastmod: <2026-01-19 08:58>
+#+lastmod: <2026-01-31 19:49>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -238,81 +238,71 @@ In addition, implement the trapezoidal rule in Julia for equidistant partitions 
 
 ** Solution
 
-$$\frac{d}{dx}\Big[f(x)g(x)\Big] = f'(x)g(x) + f(x)g'(x)$$
+- Rules
 
-$$\int_{a}^{b} f(x)g'(x) \, dx = \Big[ f(x)g(x) \Big]_{a}^{b} - \int_{a}^{b} f'(x)g(x) \, dx$$
+  - Integration by Parts
 
-- Part (a)
+    $$\int u \, dv = uv - \int v \, du$$
+
+  - Integration by Substitution
+
+    $$\int f(g(x))g'(x) \, dx = \int f(u) \, du$$
+
+- (a) $\int_{0}^{1}xe^{x} \, dx$
 
   \begin{align*}
-  \text{Let } f(x) &= x \\
-  \text{and } g'(x) &= e^{x} \\
-  \int_0^1 xe^{x} \, dx &= \int_0^1 f(x)g'(x) \, dx \\
-                        &= \Big[ f(x)g(x) \Big]_{0}^{1} - \int_{0}^{1} f'(x)g(x) \, dx \\
-                        &= \Big[ xe^{x} \Big]_{0}^{1} - \int_{0}^{1} 1 \cdot e^{x} \, dx \\
-                        &= \Big[ xe^{x} \Big]_{0}^{1} - \Big[ e^{x} \Big]_{0}^{1} \\
-                        &= \Big[ xe^{x} - e^{x} \Big]_{0}^{1} \\
-                        &= (1 \cdot e^{1} - e^{1}) - (0 \cdot e^{0} - e^{0}) \\
-                        &= e - e + 1 \\
-                        &= 1 \\
+        u &= x \implies du = 1 \\
+        dv &= e^x \implies v = e^x \\
+        \int_0^1 xe^x \, dx &= \Big[ xe^x \Big]_0^1 - \int_0^1 e^x \, dx \\
+        &= e - \int_0^1 e^x \, dx \\
+        &= e - \Big[ e^x \Big]_0^1 \\
+        &= e - (e - 1) \\
+        &= 1 \\
   \end{align*}
 
-- Part (b)
+- (b) $\int_{0}^{\pi} x \sin(x) \, dx$
 
   \begin{align*}
-  \text{Let } f(x) &= x \\
-  \text{and } g'(x) &= \sin(x) \\
-  \int_0^\pi x\sin(x) \, dx &= \int_0^\pi f(x)g'(x) \, dx \\
-                            &= \Big[ f(x)g(x) \Big]_0^\pi - \int_0^\pi f'(x)g(x) \, dx \\
-                            &= \Big[ -x\cos(x) \Big]_0^\pi - \int_0^\pi 1 \cdot (- \cos(x)) \, dx \\
-                            &= \Big[ -x\cos(x) \Big]_0^\pi + \int_0^\pi \cos(x) \, dx \\
-                            &= \Big[ -x\cos(x) \Big]_0^\pi + \Big[ \sin(x) \Big]_0^\pi \\
-                            &= \Big[ -x\cos(x) + \sin(x) \Big]_0^\pi \\
-                            &= (-\pi\cos(\pi) + \sin(\pi)) - (0 \cdot \cos(0) + \sin(0)) \\
-                            &= \pi \\
+        u &= x \implies du = 1 \\
+        dv &= \sin(x) \implies v = -\cos(x) \\
+        \int_{0}^{\pi} x \sin(x) \, dx &= \Big[ -x\cos(x) \Big]_{0}^{\pi} - \int_{0}^{\pi} -\cos(x) \, dx \\
+        &= \pi + \int_{0}^{\pi} \cos(x) \, dx \\
+        &= \pi + \Big[ \sin(x) \Big]_{0}^{\pi} \\
+        &= \pi \\
   \end{align*}
 
-- Part (c)
+- (c) $\int_{1}^{e}\log(x) \, dx$
 
   \begin{align*}
-  \text{Let } f(x) &= \log(x) \\
-  \text{and } g'(x) &= 1 \\
-  \int_1^e \log(x) \cdot 1 \, dx &= \int_1^e f(x)g'(x) \, dx \\
-                                 &= \Big[ f(x)g(x) \Big]_1^e - \int_1^e f'(x)g(x) \, dx \\
-                                 &= \Big[ x\log(x) \Big]_1^e - \int_1^e \frac{1}{x} \cdot x \, dx \\
-                                 &= \Big[ x\log(x) \Big]_1^e - \int_1^e 1 \, dx \\
-                                 &= \Big[ x\log(x) - x \Big]_1^e \\
-                                 &= (e\log(e) - e) - (\log(1) - 1) \\
-                                 &= 1 \\
+        u &= \log(x) \implies du = \frac{1}{x} \\
+        dv &= 1 \implies v = x \\
+        \int_{1}^{e} \log(x) \, dx &= \Big[ x\log(x) \Big]_{1}^{e} - \int_{1}^{e} 1 \, dx \\
+        &= e - \int_{1}^{e} 1 \, dx \\
+        &= e - \Big[ x \Big]_{1}^{e} \\
+        &= e - (e - 1) \\
+        &= 1 \\
   \end{align*}
 
-- Part (d)
+- (d) $\int_{0}^{1} x \log(x) \, dx$
 
   \begin{align*}
-  \text{Let } f(x) &= \log(x) \\
-  \text{and } g'(x) &= x \\
-  \int_0^1 \log(x) \cdot x \, dx &= \int_0^1 f(x)g'(x) \, dx \\
-                                 &= \Big[ f(x)g(x) \Big]_0^1 - \int_0^1 f'(x)g(x) \, dx \\
-                                 &= \Big[ \frac{1}{2}x^{2}\log(x) \Big]_0^1 - \int_0^1 \frac{1}{x} \cdot \frac{1}{2}x^{2} \, dx \\
-                                 &= \Big[ \frac{1}{2}x^{2}\log(x) \Big]_0^1 - \int_0^1 \frac{1}{2} x \, dx \\
-                                 &= \Big[ \frac{1}{2}x^{2}\log(x) \Big]_0^1 - \Big[ \frac{1}{4} x^{2} \Big]_0^1 \\
-                                 &= \Big[ \frac{1}{2}x^{2}\log(x) - \frac{1}{4} x^{2} \Big]_0^1 \\
-                                 &= (\frac{1}{2}1^{2}\log(1) - \frac{1}{4} 1^{2}) - (\frac{1}{2}0^{2}\log(0) - \frac{1}{4} 0^{2}) \\
-                                 &= - \frac{1}{4} \\
+        u &= \log(x) \implies du = \frac{1}{x} \\
+        dv &= x \implies v = \frac{1}{2}x^{2} \\
+        \int_{0}^{1} x \log(x) \, dx &= \Big[ \frac{1}{2}x^{2}\log(x) \Big]_{0}^{1} - \int_{0}^{1} \frac{1}{2}x \, dx \\
+        &= \Big[ \frac{1}{2}x^{2}\log(x) \Big]_{0}^{1} - \Big[ \frac{1}{4}x^{2} \Big]_{0}^{1} \\
+        &= \Big[ \frac{1}{2}x^{2}\log(x) - \frac{1}{4}x^{2} \Big]_{0}^{1} \\
+        &= -\frac{1}{4} \\
   \end{align*}
 
-- Part (e)
+- (e) $\int_{0}^{1}x^{2}e^{x} \, dx$
 
   \begin{align*}
-  \text{Let } f(x) &= x^{2} \\
-  \text{and } g'(x) &= e^{x} \\
-  \int_0^1 x^{2}e^{x} \, dx &= \int_0^1 f(x)g'(x) \, dx \\
-                        &= \Big[ f(x)g(x) \Big]_{0}^{1} - \int_{0}^{1} f'(x)g(x) \, dx \\
-                        &= \Big[ x^{2}e^{x} \Big]_{0}^{1} - \int_{0}^{1} 2x \cdot e^{x} \, dx \\
-                        &= \Big[ x^{2}e^{x} \Big]_{0}^{1} - 2\int_{0}^{1} x e^{x} \, dx \\
-                        &= \Big[ x^{2}e^{x} \Big]_{0}^{1} - 2 \cdot 1 \qquad \text{(substitution from part (a))} \\
-                        &= (1^{2}e^{1}) - (0^{2}e^{0}) - 2 \\
-                        &= e - 2 \\
+        u &= x^2 \implies du = 2x \\
+        dv &= e^x \implies v = e^x \\
+        \int_{0}^{1}x^{2}e^{x} \, dx &= \Big[ x^2e^x \Big]_0^1 - \int_{0}^{1} 2xe^{x} \, dx \\
+        &= e - \int_{0}^{1} 2xe^{x} \, dx \\
+        &= e - 2 \int_{0}^{1} xe^{x} \, dx \\
+        &= e - 2 \qquad \text{(part (a))} \\
   \end{align*}
 
 - Code
@@ -392,68 +382,75 @@ In addition, implement the mid-point rule in Julia for equidistant partitions an
 
 ** Solution
 
-$$\frac{d}{dx} \Big[ f(g(x)) \Big] = f'(g(x)) \cdot g'(x)$$
+- Rules
 
-$$\int_{a}^{b} f'(g(x)) \cdot g'(x) \, dx = \Big[ f(g(x)) \Big]_{a}^{b}$$
+  - Integration by Parts
 
-- Part (a)
+    $$\int u \, dv = uv - \int v \, du$$
 
-  \begin{align*}
-  \text{Let } f(x) &= e^{x} \quad (\text{so } f'(x) = e^{x}) \\
-  \text{and } g(x) &= x^{2} \quad (\text{so } g'(x) = 2x) \\
-  \int_0^1 2x e^{x^{2}} \, dx &= \int_0^1 \underbrace{e^{x^{2}}}_{f'(g(x))} \cdot \underbrace{2x}_{g'(x)} \, dx \\
-                              &= \Big[ f(g(x)) \Big]_{0}^{1} \\
-                              &= \Big[ e^{x^{2}} \Big]_{0}^{1} \\
-                              &= e^{1^{2}} - e^{0^{2}} \\
-                              &= e - 1 \\
-  \end{align*}
+  - Integration by Substitution
 
-- Part (b)
+    $$\int f(g(x))g'(x) \, dx = \int f(u) \, du$$
+
+- (a) $\int_{0}^{1}2x e^{x^{2}} \, dx$
 
   \begin{align*}
-  \text{Let } f(x) &= \frac{1}{2}x^2 \quad (\text{so } f'(x) = x) \\
-  \text{and } g(x) &= \sin(x) \quad (\text{so } g'(x) = \cos(x)) \\
-  \int_0^{\pi/2} \sin(x)\cos(x) \, dx &= \int_0^{\pi/2} \underbrace{\sin(x)}_{f'(g(x))} \cdot \underbrace{\cos(x)}_{g'(x)} \, dx \\
-                                      &= \Big[ f(g(x)) \Big]_{0}^{\pi/2} \\
-                                      &= \Big[ \frac{1}{2}(\sin(x))^2 \Big]_{0}^{\pi/2} \\
-                                      &= \frac{1}{2}(1)^2 - \frac{1}{2}(0)^2 \\
-                                      &= \frac{1}{2} \\
+        f(x) &= e^x \implies f'(x) = e^x \\
+        g(x) &= x^{2} \implies g'(x) = 2x \\
+        \int_{0}^{1}2x e^{x^{2}} \, dx &= \Big[ e^{x^{2}} \Big]_{0}^{1}  \\
+        &= e^{1} - e^{0} \\
+        &= e - 1 \\
   \end{align*}
 
-- Part (c)
+- (b) $\int_{0}^{\pi/2}\sin(x)\cos(x) \, dx$
 
   \begin{align*}
-  \text{Let } f(x) &= \log(x) \quad (\text{so } f'(x) = \frac{1}{x}) \\
-  \text{and } g(x) &= 1 + x^{2} \quad (\text{so } g'(x) = 2x) \\
-  \int_1^2 \frac{2x}{1+x^{2}} \, dx &= \int_1^2 \underbrace{\frac{1}{1+x^{2}}}_{f'(g(x))} \cdot \underbrace{2x}_{g'(x)} \, dx \\
-                                   &= \Big[ f(g(x)) \Big]_{1}^{2} \\
-                                   &= \Big[ \log(1+x^{2}) \Big]_{1}^{2} \\
-                                   &= \log(5) - \log(2) \\
+        f(x) &= \frac{1}{2}x^{2} \implies f'(x) = x \\
+        g(x) &= \sin(x) \implies g'(x) = \cos(x) \\
+        \int_{0}^{\pi/2} \sin(x)\cos(x) \, dx &= \Big[ \frac{1}{2}(\sin(x))^{2} \Big]_{0}^{\pi/2} \\
+        &= \Big[ \frac{1}{2}(\sin(x))^{2} \Big]_{0}^{\pi/2} \\
+        &= \frac{1}{2} \\
   \end{align*}
 
-- Part (d)
+- (c) $\int_{1}^{2} \dfrac{2x}{1+x^{2}} \, dx$
 
   \begin{align*}
-  \text{Let } f(x) &= e^{x} \quad (\text{so } f'(x) = e^{x}) \\
-  \text{and } g(x) &= 2x \quad (\text{so } g'(x) = 2) \\
-  \int_0^{\log 2} e^{2x} \, dx &= \int_0^{\log 2} e^{2x} \cdot 1 \, dx \\
-                               &= \frac{1}{2} \int_0^{\log 2} \underbrace{e^{2x}}_{f'(g(x))} \cdot \underbrace{2}_{g'(x)} \, dx \\
-                               &= \frac{1}{2} \Big[ f(g(x)) \Big]_{0}^{\log 2} \\
-                               &= \frac{1}{2} \Big[ e^{2x} \Big]_{0}^{\log 2} \\
-                               &= \frac{1}{2} (e^{2\log 2} - e^{0}) \\
-                               &= \frac{3}{2} \\
+        f(x) &= \log(x) \implies f'(x) = \frac{1}{x} \\
+        g(x) &= 1 + x^{2} \implies g'(x) = 2x \\
+        \int_{1}^{2} \dfrac{2x}{1+x^{2}} \, dx &= \Big[ \log(1 + x^{2}) \Big]_{1}^{2} \\
+        &= \log(5) - log(2) \\
   \end{align*}
 
-- Part (e)
+- (d) $\int_{0}^{\log 2}e^{2x} \, dx$
 
   \begin{align*}
-  \text{Let } f(x) &= \arcsin(x) \quad (\text{so } f'(x) = \frac{1}{\sqrt{1-x^{2}}}) \\
-  \int_0^1 \frac{1}{\sqrt{1-x^{2}}} \, dx &= \int_0^1 f'(x) \, dx \\
-                                         &= \Big[ f(x) \Big]_{0}^{1} \\
-                                         &= \Big[ \arcsin(x) \Big]_{0}^{1} \\
-                                         &= \arcsin(1) - \arcsin(0) \\
-                                         &= \frac{\pi}{2} \\
+        f(x) &= e^{x} \implies f'(x) = e^{x} \\
+        g(x) &= 2x \implies g'(x) = 2 \\
+        \int_{0}^{\log 2}e^{2x} \, dx &= \frac{1}{2}\Big[ e^{2x} \Big]_{0}^{\log 2} \\
+        &= \frac{1}{2} (e^{2\log(2)} - e^{0}) \\
+        &= \frac{1}{2} (4 - 1) \\
+        &= \frac{3}{2} \\
   \end{align*}
+
+- (e) $\int_{0}^{1}\dfrac{1}{\sqrt{1-x^{2}}} \, dx$
+
+  \begin{align*}
+        f(x) &= \sin(x) \implies f'(x) = \frac{1}{\sqrt{1 - x^2}} \\
+        \int_{0}^{1}\dfrac{1}{\sqrt{1-x^{2}}} \, dx &= \Big[ \sin^{-1}(x) \Big]_{0}^{1} \\
+        &= \frac{\pi}{2} \\
+  \end{align*}
+
+  - Notes
+
+    \begin{align*}
+          f(x) &= \cos^{-1}(x) \\
+          \cos(f(x)) &= x \\
+          \frac{d}{dx}\cos(f(x)) &= \frac{d}{dx} x \\
+          -\sin(f(x)) \, \frac{dx}{dy} &= 1 \\
+          -\sqrt{1 - \cos(f(x))^{2}} \, \frac{dx}{dy} &= 1 \qquad (-\sin(x) = -\sqrt{1 - \cos(x)^{2}}) \\
+          -\sqrt{1 - x^{2}} \, \frac{dx}{dy} &= 1 \\
+          \frac{dx}{dy} &= -\frac{1}{\sqrt{1 - x^{2}}} \\
+    \end{align*}
 
 - Code
 

@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-26>
-#+lastmod: <2026-01-30 17:43>
+#+lastmod: <2026-01-31 19:50>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -108,11 +108,11 @@
 
 ** Day 6: Integration & Rules
 *Theme: "Summing it Up"*
-- [ ] **ps_06, Problem 1**: Riemann Sums.
+- [X] **ps_06, Problem 1**: Riemann Sums.
   - *Task:* Explicitly compute Upper/Lower sums for $f(x)=3x+2$. This is "Exercise Type 1" from the plan.
-- [ ] **ps_06, Problem 3**: Integration by Parts.
+- [X] **ps_06, Problem 3**: Integration by Parts.
   - *Task:* Solve $\int x e^x dx$ and $\int x \log x dx$. Compare with Trapezoidal Rule.
-- [ ] **ps_06, Problem 4**: Substitution Rule.
+- [X] **ps_06, Problem 4**: Substitution Rule.
   - *Task:* Solve $\int 2x e^{x^2} dx$. Compare with Midpoint Rule.
 
 ** Day 7: Improper Integrals, Taylor & Final Review
