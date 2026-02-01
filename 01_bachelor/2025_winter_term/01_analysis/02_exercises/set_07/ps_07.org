@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-24>
-#+lastmod: <2026-01-26 11:44>
+#+lastmod: <2026-02-01 18:43>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -158,7 +158,9 @@ $$f(x) = \sum_{k=0}^{n} \frac{f^{(k)}(x_{0})}{k!} (x-x_{0})^{k} + R_{n+1}(x)$$
 ** Task
 #+begin_quote
 Determine those $s\in\mathbb{R}$, for which the integral
+
 $$\int_{0}^{1}x^{s} \, dx$$
+
 is well-defined. In addition, illustrate your theoretical results by approximating the integral via the mid-point rule for a few distinct $s$ in Julia.
 #+end_quote
 
@@ -272,7 +274,9 @@ We distinguish two main scenarios for the antiderivative: $s \neq -1$ and $s = -
 ** Task
 #+begin_quote
 Let $p\in\mathbb{R}$ and consider the series
+
 $$\sum_{n=2}^{\infty}\frac{1}{n(\log(n))^{p}}$$
+
 Decide for which values of $p$ the series converges.
 #+end_quote
 
@@ -315,3 +319,5 @@ $$ \int_{2}^{\infty}\frac{1}{x(\log(x))^{p}} \, dx = \int_{\log(2)}^{\infty} u^{
 
 - Conclusion
   The series converges if and only if $p > 1$.
+
+

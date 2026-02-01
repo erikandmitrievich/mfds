@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-31>
-#+lastmod: <2026-01-31 22:04>
+#+lastmod: <2026-02-01 18:50>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -65,7 +65,7 @@
 
 ** Day 1: Foundations & Metric Spaces
 *Theme: "Mastering the Definition of Distance"*
-- [ ] **Theory Drill**: Definition of Metric, Triangle Inequality.
+- [X] **Theory Drill**: Definition of Metric, Triangle Inequality.
 - [X] **ps_01, Problem 1**: Discrete metric proofs.
 - [X] **ps_01, Problem 2**: Convergence in $\mathbb{R}^2$ (Euclidean vs. Taxi-cab).
 - [X] **ps_00, Problem 3**: Basic limits ($\epsilon-N$).
@@ -118,8 +118,8 @@
 ** Day 7: Improper Integrals, Taylor & Final Review
 *Theme: "The End Game"*
 - [ ] **Theory Drill**: Definition of $\pi$, Taylor's Theorem.
-- [ ] **ps_07, Problem 3**: Improper Integrals (Convergence of $x^s$).
+- [X] **ps_07, Problem 3**: Improper Integrals (Convergence of $x^s$).
 - [ ] **ps_07, Problem 4**: Series Convergence (Integral Test logic).
   - *Context:* Touches on the "Uniform Convergence" / Series topic flagged in predictions.
-- [ ] **ps_07, Problem 2**: Taylor Polynomials ($n=2$).
+- [X] **ps_07, Problem 2**: Taylor Polynomials ($n=2$).
 - [ ] **Mock Exam**: Pick one random problem from Days 2, 3, and 5 to solve without notes.

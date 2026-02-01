@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-31>
-#+lastmod: <2026-01-31 22:47>
+#+lastmod: <2026-02-01 19:22>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -85,9 +85,9 @@
 
   - Comparison test: If $|a_{n}|\le|b_{n}|$ and $\sum|b_{n}|$ converges, then $\sum|a_{n}|$ converges.
 
-- Ratio test: If $|\frac{a_{n+1}}{a_{n}}|\le\theta < 1$ for $n \ge N$, then $\sum|a_{n}|$ converges.
+  - Ratio test: If $|\frac{a_{n+1}}{a_{n}}|\le\theta < 1$ for $n \ge N$, then $\sum|a_{n}|$ converges.
 
-- Leibniz criterion: If $a_{n}$ is non-negative, monotonically decreasing, and $a_{n} \rightarrow 0$, then the alternating series $\sum(-1)^{n}a_{n}$ converges.
+  - Leibniz criterion: If $a_{n}$ is non-negative, monotonically decreasing, and $a_{n} \rightarrow 0$, then the alternating series $\sum(-1)^{n}a_{n}$ converges.
 
 - Theorem 2.1.23: Functional Equation of Exp [Chance: 75%]
 
@@ -131,11 +131,11 @@
 
   - Linearity: $(\alpha f + \beta g)' = \alpha f' + \beta g'$.
 
-- Product Rule: $(fg)' = f'g + fg'$.
+  - Product Rule: $(fg)' = f'g + fg'$.
 
   - Chain Rule: $(g\circ f)'(x) = g'(f(x))f'(x)$.
 
-- Inverse Function: $(f^{-1})'(y_0) = \frac{1}{f'(f^{-1}(y_0))}$.
+  - Inverse Function: $(f^{-1})'(y_0) = \frac{1}{f'(f^{-1}(y_0))}$.
 
 ** 3.3 Local Extrema
 - Theorem 3.3.2: Necessary Condition [Chance: 70%]
@@ -159,6 +159,7 @@
 - Theorem 3.4.4: Global Minimizer [Chance: 40%]
 
   For convex, twice continuously differentiable functions, $x^*$ is a global minimizer iff $f'(x^*) = 0$.
+
 * Chapter 4: Integration
 
 ** 4.1 Partitions and Darboux Sums
@@ -192,6 +193,7 @@
   For non-negative, monotonically decreasing $f$, the series $\sum f(n)$ converges if $\int_{0}^{\infty} f(x)dx$ exists.
 
 ** 4.5 Uniform Convergence
+
 - Theorem 4.5.1: Uniform Convergence [Chance: 90%]
 
   If a sequence of continuous functions $f_n$ converges uniformly to $f$, then $f$ is continuous.
