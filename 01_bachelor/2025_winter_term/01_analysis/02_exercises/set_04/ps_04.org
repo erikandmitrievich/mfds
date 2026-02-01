@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-04>
-#+lastmod: <2026-01-30 17:27>
+#+lastmod: <2026-02-01 21:08>
 #+options: num:t
 #+startup: overview
 #+latex: \newpage
@@ -16,8 +16,6 @@ $\cos(x)=\sin(x+\frac{\pi}{2})$
 $\sin(x)=\cos(x-\frac{\pi}{2})$
 $\sin(x+\pi)=-\sin(x)$
 $\cos(x+\pi)=-\cos(x)$,
-
-** Notes
 
 ** Solution
 *** $\cos(-x)=\cos(x)$
@@ -151,8 +149,6 @@ cos(x + π) = -cos(x)           ✅ Q.E.D.
 * Problem 2 :DONE:
 ** Task
 Determine the derivative of arccos and check in Julia.
-
-** Notes
 
 ** Solution
 *** Derivation
@@ -292,8 +288,6 @@ The aim is to prove $(1+\frac{1}{n})^{n}\rightarrow e$
 $\log^{\prime}(1)=\lim_{n\rightarrow\infty}n~\log(1+\frac{1}{n})$
 (b) Use the definition of the general exponential to prove $(1+\frac{1}{n})^{n}\rightarrow \exp(1)$.
 (This determines the limit of the sequence in Problem 4 of Problem Set 1)
-
-** Notes
 
 ** Solution
 *** a
@@ -485,8 +479,6 @@ $\frac{1}{2}(x+y)\ge\sqrt{xy},$
 $\forall x,y\in[0,\infty)$.
 (Can be useful for the next exercise!)
 
-** Notes
-
 ** Solution
 
 * Problem 8 :DONE:
@@ -598,8 +590,6 @@ Consider $f:\mathbb{R}\rightarrow\mathbb{R}$ $f(x)=\cos(x)$ and the sequence
 $x_{0}=2$, $x_{n+1}=x_{n}-\frac{f(x_{n})}{f^{\prime}(x_{n})}$
 $n\in\mathbb{N}$
 Implement the sequence in Julia and compare with the bisection method in the interval [0, 2].
-
-** Notes
 
 ** Solution
 #+begin_src julia :results output :export both :tangle julia/p_9.jl

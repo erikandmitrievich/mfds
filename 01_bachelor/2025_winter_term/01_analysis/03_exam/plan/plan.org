@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-31>
-#+lastmod: <2026-02-01 19:25>
+#+lastmod: <2026-02-01 21:07>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -123,3 +123,4 @@
   - *Context:* Touches on the "Uniform Convergence" / Series topic flagged in predictions.
 - [X] **ps_07, Problem 2**: Taylor Polynomials ($n=2$).
 - [ ] **Mock Exam**: Pick one random problem from Days 2, 3, and 5 to solve without notes.
+
