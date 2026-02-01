@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-31>
-#+lastmod: <2026-02-01 18:50>
+#+lastmod: <2026-02-01 19:25>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -72,7 +72,7 @@
 
 ** Day 2: Sequences, Recursion & Induction
 *Theme: "The Algorithm of Convergence"*
-- [ ] **Theory Drill**: Bolzano-Weierstrass, Monotone Convergence Thm.
+- [X] **Theory Drill**: Bolzano-Weierstrass, Monotone Convergence Thm.
 - [X] **ps_04, Problem 8 (THE BIG ONE)**: Recursive sequence convergence.
 - [ ] **ps_01, Problem 4**: Euler number sequence $(1 + \frac{1}{n+1})^{n+1}$.
 - [ ] **ps_04, Problem 5 (Induction)**: [NEW]
@@ -83,7 +83,7 @@
 
 ** Day 3: Continuity
 *Theme: "Breaking and Connecting Functions"*
-- [ ] **Theory Drill**: Def of Continuity, Intermediate Value Theorem.
+- [X] **Theory Drill**: Def of Continuity, Intermediate Value Theorem.
 - [X] **ps_02, Problem 2**: Continuity of Composition ($1/(x^2+1)$).
 - [X] **ps_02, Problem 3**: Continuity by Cases (The $e^{-1/x}$ problem).
   - *Tip:* Check Left Limit vs Right Limit at $x=0$.
@@ -92,7 +92,7 @@
 
 ** Day 4: Exponentials, Logarithms & Interpolation
 *Theme: "Constructing and Approximating"*
-- [ ] **Theory Drill**: Definition of $\exp(x)$ (Series vs Limit).
+- [X] **Theory Drill**: Definition of $\exp(x)$ (Series vs Limit).
 - [X] **ps_03, Problem 6**: Truncated Series ($\sin, \cos$).
 - [X] **ps_03, Problem 4**: Linear Approximation of $e^{1.3}$.
 - [X] **ps_03, Problem 2**: Softplus activation $g(x)=\log(1+e^x)$.
@@ -100,7 +100,7 @@
 
 ** Day 5: Differentiation & Mean Value Theorem
 *Theme: "Slopes and Inequalities"*
-- [ ] **Theory Drill**: Mean Value Theorem, Rolle's Theorem.
+- [X] **Theory Drill**: Mean Value Theorem, Rolle's Theorem.
 - [X] **ps_05, Problem 2 (MVT)**: Find $\xi$ for $\ln(x)$ on $[1,e]$.
 - [ ] **ps_04, Problem 9 (Newton)**: [NEW]
   - *Task:* Apply the formula $x_{new} = x_{old} - f(x)/f'(x)$.
@@ -110,14 +110,14 @@
 
 ** Day 6: Integration & Rules
 *Theme: "Summing it Up"*
-- [ ] **Theory Drill**: Fundamental Theorem of Calculus.
+- [X] **Theory Drill**: Fundamental Theorem of Calculus.
 - [X] **ps_06, Problem 1**: Calculate Upper/Lower Sums explicitly.
 - [X] **ps_06, Problem 3**: Integration by Parts.
 - [X] **ps_06, Problem 4**: Substitution Rule.
 
 ** Day 7: Improper Integrals, Taylor & Final Review
 *Theme: "The End Game"*
-- [ ] **Theory Drill**: Definition of $\pi$, Taylor's Theorem.
+- [X] **Theory Drill**: Definition of $\pi$, Taylor's Theorem.
 - [X] **ps_07, Problem 3**: Improper Integrals (Convergence of $x^s$).
 - [ ] **ps_07, Problem 4**: Series Convergence (Integral Test logic).
   - *Context:* Touches on the "Uniform Convergence" / Series topic flagged in predictions.
