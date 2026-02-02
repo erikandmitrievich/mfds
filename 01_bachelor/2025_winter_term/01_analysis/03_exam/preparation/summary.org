@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-02-02>
-#+lastmod: <2026-02-02 15:23>
+#+lastmod: <2026-02-02 15:28>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -31,7 +31,7 @@
 - **Euler:** $(1 + \frac{1}{n})^n \to e$.
 
 ** 3. CONTINUITY & METRIC SPACES
-- **Metric:** $d(x,y) \ge 0$, symm, $d(x,y)=0 \iff x=y$, $\Delta$-ineq ($d(xz) \le d(xy)+d(yz)$).
+- **Metric:** $d(x,y) \ge 0$, symm, $d(x,y)=0 \iff x=y$, $\Delta$ -ineq ($d(xz) \le d(xy)+d(yz)$).
 - **$\mathbb{R}^2$:** Convergence in Taxi ($d_1$) $\iff$ Euclidean ($d_2$).
 - **Piecewise:** Check $\lim_{x \to 0^+} f(x) = \lim_{x \to 0^-} f(x) = f(0)$ (e.g., $e^{-1/x}$).
 - **Comp:** $f, g$ cont $\implies f \circ g$ cont.
