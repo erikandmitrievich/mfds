@@ -1,0 +1,50 @@
+#+title: Summary
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-02-02>
+#+lastmod: <2026-02-02 15:23>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* CHEAT SHEET: Real Analysis & Calc
+** 1. DAILY THEOREMS
+- **BW:** Bounded seq in $\mathbb{R}^n$ has convergent subseq.
+- **IVT:** $f$ cont on $[a,b]$, $y$ betw $f(a), f(b) \implies \exists c, f(c)=y$.
+- **MVT:** Cont $[a,b]$, diff $(a,b) \implies \exists c, f'(c) = \frac{f(b)-f(a)}{b-a}$.
+- **Continuity ($\epsilon-\delta$):** $\forall \epsilon>0, \exists \delta>0 : |x-c|<\delta \implies |f(x)-f(c)|<\epsilon$.
+- **$\pi$:** Review precise definition.
+
+** 2. SEQUENCES & SERIES
+- **Recursive Limits:**
+  1. Prove Bounded (Induction).
+  2. Prove Monotonic ($x_{n+1} \le x_n$).
+  3. Solve fixed point $L = f(L)$ (e.g., $L = \frac{1}{2}(L + 2/L)$).
+- **Convergence:** Alt. Harmonic Series converges.
+- **Zero Limits:** Prove $\lim \frac{(-1)^n}{n} = 0$.
+- **Euler:** $(1 + \frac{1}{n})^n \to e$.
+
+** 3. CONTINUITY & METRIC SPACES
+- **Metric:** $d(x,y) \ge 0$, symm, $d(x,y)=0 \iff x=y$, $\Delta$-ineq ($d(xz) \le d(xy)+d(yz)$).
+- **$\mathbb{R}^2$:** Convergence in Taxi ($d_1$) $\iff$ Euclidean ($d_2$).
+- **Piecewise:** Check $\lim_{x \to 0^+} f(x) = \lim_{x \to 0^-} f(x) = f(0)$ (e.g., $e^{-1/x}$).
+- **Comp:** $f, g$ cont $\implies f \circ g$ cont.
+
+** 4. DERIVATIVES & APPROX
+- **The Trick:** $\frac{d}{dx} f(x)^{g(x)} \implies \frac{d}{dx} \exp(g(x) \ln f(x))$.
+- **Must Know:** $e^{3x+1}, \ln(5x^2), \sqrt{1+e^{2x}}$.
+- **Def:** $f'(x_0) = \lim_{x\to x_0} \frac{f(x)-f(x_0)}{x-x_0}$ (Use for prod rule at 0).
+- **Newton's:** $x_{new} = x_{old} - \frac{f(x_{old})}{f'(x_{old})}$.
+- **Taylor:** $P_n(x) = \sum_{k=0}^n \frac{f^{(k)}(a)}{k!} (x-a)^k$.
+
+** 5. INTEGRATION
+- **Sums:** $L(f, P) = \sum m_i \Delta x_i \le \int \le U(f, P) = \sum M_i \Delta x_i$.
+- **Improper:** $\int_0^1 x^s dx$ conv $\iff s > -1$.
+- **Parts:** $\int u dv = uv - \int v du$ (for $xe^x$).
+- **Subst:** $\int f(g(x))g'(x) dx = \int f(u) du$ (for $2xe^{x^2}$).

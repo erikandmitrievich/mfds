@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-04>
-#+lastmod: <2026-02-01 21:08>
+#+lastmod: <2026-02-02 10:43>
 #+options: num:t
 #+startup: overview
 #+latex: \newpage

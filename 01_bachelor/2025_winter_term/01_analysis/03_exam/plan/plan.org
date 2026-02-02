@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-31>
-#+lastmod: <2026-02-01 21:07>
+#+lastmod: <2026-02-02 10:43>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -75,9 +75,7 @@
 - [X] **Theory Drill**: Bolzano-Weierstrass, Monotone Convergence Thm.
 - [X] **ps_04, Problem 8 (THE BIG ONE)**: Recursive sequence convergence.
 - [ ] **ps_01, Problem 4**: Euler number sequence $(1 + \frac{1}{n+1})^{n+1}$.
-- [ ] **ps_04, Problem 5 (Induction)**: [NEW]
-  - Prove $\frac{d}{dx}x^n = nx^{n-1}$.
-  - *Why:* High probability "easy points" question.
+- [X] **ps_04, Problem 5 (Induction)**: [NEW]
 - [X] **ps_01, Problem 3**: Alternating Harmonic Series.
 - [X] **ps_00, Problem 3**: Limits at 0.
 

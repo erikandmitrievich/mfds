@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-26>
-#+lastmod: <2026-01-29 21:34>
+#+lastmod: <2026-02-02 11:02>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -108,8 +108,6 @@ Write a Julia function interpol(X, Y) with inputs $X=(x_{1},...,x_{n})^{T}, Y=(y
 (a) $f(x_{i})=y_{i}$, for $i=1,...,n$ and f is continuous (find a simple function that satisfies those criteria).
 (b) $f(x_{i})=y_{i}$, for $i=1,...,n$ and f is a step-function.
 #+end_quote
-
-** Notes
 
 ** Solution
 #+begin_src julia :results value :exports both :tangle julia/p_4.jl
