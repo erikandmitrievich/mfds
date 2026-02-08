@@ -16,7 +16,7 @@
 *.tex
 
 # removing source files
-*source*
+*source.*
 *source.pdf
 *source.org
 # *02_exercise/
