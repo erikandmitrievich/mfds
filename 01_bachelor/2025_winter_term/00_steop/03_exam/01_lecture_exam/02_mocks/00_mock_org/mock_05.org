@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-02-11>
-#+lastmod: <2026-02-11 22:08>
+#+lastmod: <2026-02-11 22:21>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -188,14 +188,23 @@ $$ \begin{cases} x \equiv 1 \pmod 3 \\ x \equiv 2 \pmod 5 \\ x \equiv 3 \pmod 7 
 
 ** Section B (Short Open)
 **B1**: `function sum_odds(n); return sum(1:2:n); end` (or loop). *[1.5 pts]*
+
 **B2**: $\neg P \land \neg(\neg P \land Q) \equiv \neg P \land (P \lor \neg Q) \equiv (\neg P \land P) \lor (\neg P \land \neg Q) \equiv \neg P \land \neg Q$. *[1.5 pts]*
+
 **B3**: $|3+4i|/|1-i| = 5/\sqrt{2} = 2.5\sqrt{2}$. *[1.5 pts]*
+
 **B4**: $A \cup B = [0, 4)$, $A \cap B = (1, 3]$. Diff = $[0, 1] \cup (3, 4)$. *[1.5 pts]*
+
 **B5**: $\frac{4!}{2!2!} = \frac{24}{4} = 6$. *[1.5 pts]*
+
 **B6**: Inverse of 4 mod 9 is 7. $x \equiv 5(7) \equiv 35 \equiv 8 \pmod 9$. *[1.5 pts]*
+
 **B7**: $P(1) = 1^{100} + 2(1)^2 + 1 = 4$. *[1.5 pts]*
+
 **B8**: $y = x/(x+2) \Rightarrow xy + 2y = x \Rightarrow x(y-1) = -2y \Rightarrow x = 2y/(1-y)$. *[1.5 pts]*
+
 **B9**: $\text{proj}_{\mathbf{b}}\mathbf{a} = \frac{\mathbf{a}\cdot\mathbf{b}}{|\mathbf{b}|^2}\mathbf{b} = \frac{8}{16}(4,0) = (2,0)$. *[1.5 pts]*
+
 **B10**: Multiply conjugate: $\frac{2n}{\sqrt{n^2+2n}+n} \to \frac{2n}{2n} = 1$. *[1.5 pts]*
 
 ** Section C (Complex Open)
