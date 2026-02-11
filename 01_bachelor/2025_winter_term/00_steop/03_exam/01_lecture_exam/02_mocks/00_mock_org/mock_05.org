@@ -1,0 +1,253 @@
+#+title: Mock 05
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-02-11>
+#+lastmod: <2026-02-11 22:08>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* INSTRUCTIONS
+- **Time Allowed:** 120 Minutes.
+- **Total Marks:** 41 (Scaled to 100).
+- **Format:**
+  - **Section A:** 10 Multiple Choice Questions (1 point each).
+  - **Section B:** 10 Short Open Problems (1.5 points each).
+  - **Section C:** 8 Complex Open Problems (2 points each).
+- **Constraint:** No calculators allowed. Show all rigorous steps in Sections B and C.
+
+#+LATEX: \newpage
+
+* Section A: Multiple Choice (10 Points)
+/Select the single best answer./
+
+** Problem A1
+Which of the following statements is the **contrapositive** of: "If a sequence is convergent, then it is bounded"?
+
+(a) If a sequence is bounded, then it is convergent.
+
+(b) If a sequence is not bounded, then it is not convergent.
+
+(c) If a sequence is not convergent, then it is not bounded.
+
+(d) A sequence is convergent if and only if it is bounded.
+
+** Problem A2
+Let $S = \{a, b, c\}$. What is the cardinality of the power set $\mathcal{P}(S)$?
+
+(a) 3 \qquad (b) 6 \qquad (c) 8 \qquad (d) 9
+
+** Problem A3
+Compute the value of $i^{2026}$.
+
+(a) $1$ \qquad (b) $-1$ \qquad (c) $i$ \qquad (d) $-i$
+
+** Problem A4
+Consider the following Julia code. What is the output?
+
+#+begin_src julia
+A = [1, 2, 3, 4]
+B = [x^2 for x in A if x % 2 == 0]
+println(sum(B))
+#+end_src
+
+(a) 10 \qquad (b) 20 \qquad (c) 30 \qquad (d) 4
+
+** Problem A5
+Which of the following congruences has **no** integer solution?
+
+(a) $x^2 \equiv 1 \pmod 5$
+(b) $2x \equiv 3 \pmod 7$
+(c) $x^2 \equiv 3 \pmod 7$
+(d) $3x \equiv 6 \pmod 9$
+
+** Problem A6
+Evaluate the limit: $\lim_{n \to \infty} \frac{4n^2 + \sin(n)}{2n^2 - 3}$.
+
+(a) $0$ \qquad (b) $2$ \qquad (c) $\infty$ \qquad (d) $4$
+
+** Problem A7
+Let $R$ be a relation on $\mathbb{Z}$ defined by $xRy \iff x \le y$. Which property does $R$ **fail**?
+
+(a) Reflexive
+(b) Anti-symmetric
+(c) Transitive
+(d) Symmetric
+
+** Problem A8
+What is the coefficient of $x^2 y^2$ in the expansion of $(x + 2y)^4$?
+
+(a) 4 \qquad (b) 6 \qquad (c) 12 \qquad (d) 24
+
+** Problem A9
+A function $f: A \to B$ is **surjective** if:
+
+(a) $|A| < |B|$
+(b) $f(A) = B$
+(c) $f(x) = f(y) \implies x = y$
+(d) $f(A) \subseteq B$
+
+** Problem A10
+If vectors $\mathbf{u}$ and $\mathbf{v}$ satisfy $|\mathbf{u}| = 2, |\mathbf{v}| = 3$, and the angle between them is $\pi/3$, what is $\mathbf{u} \cdot \mathbf{v}$?
+
+(a) 3 \qquad (b) 6 \qquad (c) $3\sqrt{3}$ \qquad (d) 0
+
+#+LATEX: \newpage
+
+* Section B: Short Open Problems (15 Points)
+/Provide a concise solution and final answer./
+
+** Problem B1
+Write a Julia function `sum_odds(n)` that returns the sum of all odd integers from 1 to $n$ (inclusive).
+
+** Problem B2
+Simplify the logical expression $\neg(P \lor (\neg P \land Q))$.
+
+** Problem B3
+Calculate the modulus of the complex number $z = \frac{3 + 4i}{1 - i}$.
+
+** Problem B4
+Let $A = [0, 3]$ and $B = (1, 4)$ be subsets of $\mathbb{R}$. Find the symmetric difference $A \triangle B$.
+
+** Problem B5
+How many distinct permutations can be made from the letters of the word "MAMA"?
+
+** Problem B6
+Find the smallest positive integer $x$ such that $4x \equiv 5 \pmod{9}$.
+
+** Problem B7
+Find the remainder when the polynomial $P(x) = x^{100} + 2x^2 + 1$ is divided by $x - 1$.
+
+** Problem B8
+Find the inverse function $f^{-1}(x)$ for $f(x) = \frac{x}{x + 2}$, where domain is $\mathbb{R} \setminus \{-2\}$.
+
+** Problem B9
+Calculate the projection of vector $\mathbf{a} = (2, 3)$ onto vector $\mathbf{b} = (4, 0)$.
+
+** Problem B10
+Evaluate the limit: $\lim_{n \to \infty} (\sqrt{n^2 + 2n} - n)$.
+
+#+LATEX: \newpage
+
+* Section C: Complex Open Problems (16 Points)
+/Provide rigorous proofs. State all lemmas or theorems used./
+
+** Problem C1 (Induction)
+Prove by Mathematical Induction that for all integers $n \ge 1$:
+$$ \sum_{k=1}^n k^2 = \frac{n(n+1)(2n+1)}{6} $$
+
+** Problem C2 (Relations)
+Let $\sim$ be a relation on $\mathbb{Z}$ defined by $x \sim y \iff x + y$ is even.
+1. Prove that $\sim$ is an equivalence relation.
+2. Describe the distinct equivalence classes.
+
+** Problem C3 (Analysis)
+Using the formal $\epsilon-N$ definition of the limit, prove that:
+$$ \lim_{n \to \infty} \frac{2n}{n + 1} = 2 $$
+
+** Problem C4 (Set Theory)
+Prove or disprove: For any sets $A, B, C$,
+$$ A \setminus (B \cap C) = (A \setminus B) \cup (A \setminus C) $$
+
+** Problem C5 (Combinatorics)
+Five points are placed inside an equilateral triangle of side length 2. Prove that there exist at least two points whose distance is less than or equal to 1. (Hint: Pigeonhole Principle).
+
+** Problem C6 (Complex Analysis)
+Find all complex roots of the equation $z^3 = 8i$. Express the roots in the form $a + bi$.
+
+** Problem C7 (Cardinality)
+Prove that the set of all integers $\mathbb{Z}$ is countable by constructing an explicit bijection $f: \mathbb{N} \to \mathbb{Z}$.
+
+** Problem C8 (Number Theory)
+Solve the following system of congruences:
+$$ \begin{cases} x \equiv 1 \pmod 3 \\ x \equiv 2 \pmod 5 \\ x \equiv 3 \pmod 7 \end{cases} $$
+
+#+LATEX: \newpage
+
+* Section D: Answer Key & Grading Rubric
+
+** Section A (MCQ)
+|  Q | Ans | Topic                                                                                                       |
+|----+-----+-------------------------------------------------------------------------------------------------------------|
+|  1 | B   | Logic (Contrapositive)                                                                                      |
+|  2 | C   | Sets ($2^3=8$)                                                                                              |
+|  3 | B   | Complex ($2026 \equiv 2 \pmod 4$)                                                                           |
+|  4 | B   | Julia ($2^2 + 4^2 = 4 + 16 = 20$)                                                                           |
+|  5 | C   | Quadratic Residues (3 is not a QR mod 7)                                                                    |
+|  6 | B   | Limits (Ratio of leading coeffs)                                                                            |
+|  7 | D   | Relations (Order is not symmetric)                                                                          |
+|  8 | D   | Binomial Thm ($\binom{4}{2} \cdot 1^2 \cdot 2^2 = 6 \cdot 4 = 24$)                                          |
+|  9 | B   | Functions (Definition of Surjective)                                                                        |
+| 10 | A   | Vectors ($\lvert \mathbf{u} \rvert \lvert \mathbf{v} \rvert \cos \theta = 2 \cdot 3 \cdot \frac{1}{2} = 3$) |
+
+** Section B (Short Open)
+**B1**: `function sum_odds(n); return sum(1:2:n); end` (or loop). *[1.5 pts]*
+**B2**: $\neg P \land \neg(\neg P \land Q) \equiv \neg P \land (P \lor \neg Q) \equiv (\neg P \land P) \lor (\neg P \land \neg Q) \equiv \neg P \land \neg Q$. *[1.5 pts]*
+**B3**: $|3+4i|/|1-i| = 5/\sqrt{2} = 2.5\sqrt{2}$. *[1.5 pts]*
+**B4**: $A \cup B = [0, 4)$, $A \cap B = (1, 3]$. Diff = $[0, 1] \cup (3, 4)$. *[1.5 pts]*
+**B5**: $\frac{4!}{2!2!} = \frac{24}{4} = 6$. *[1.5 pts]*
+**B6**: Inverse of 4 mod 9 is 7. $x \equiv 5(7) \equiv 35 \equiv 8 \pmod 9$. *[1.5 pts]*
+**B7**: $P(1) = 1^{100} + 2(1)^2 + 1 = 4$. *[1.5 pts]*
+**B8**: $y = x/(x+2) \Rightarrow xy + 2y = x \Rightarrow x(y-1) = -2y \Rightarrow x = 2y/(1-y)$. *[1.5 pts]*
+**B9**: $\text{proj}_{\mathbf{b}}\mathbf{a} = \frac{\mathbf{a}\cdot\mathbf{b}}{|\mathbf{b}|^2}\mathbf{b} = \frac{8}{16}(4,0) = (2,0)$. *[1.5 pts]*
+**B10**: Multiply conjugate: $\frac{2n}{\sqrt{n^2+2n}+n} \to \frac{2n}{2n} = 1$. *[1.5 pts]*
+
+** Section C (Complex Open)
+
+**C1 (Induction)**
+- **Base:** $n=1 \Rightarrow 1 = \frac{1(2)(3)}{6} = 1$.
+- **Hypothesis:** Assume $\sum_{1}^k = \frac{k(k+1)(2k+1)}{6}$.
+- **Step:** Add $(k+1)^2$. Factor $\frac{k+1}{6}(k(2k+1) + 6(k+1)) = \frac{k+1}{6}(2k^2 + 7k + 6)$.
+- Factor quadratic: $(2k+3)(k+2)$. Result matches $n=k+1$. *[2 pts]*
+
+**C2 (Relations)**
+- **Reflexive:** $x+x=2x$ (even).
+- **Symmetric:** $x+y$ even $\implies y+x$ even.
+- **Transitive:** $x+y=2k, y+z=2j$. Sum: $x+2y+z = 2(k+j) \implies x+z = 2(k+j-y)$ (even).
+- **Classes:** Evens $[0]$ and Odds $[1]$. *[2 pts]*
+
+**C3 (Limit Proof)**
+- $|\frac{2n}{n+1} - 2| = |\frac{2n - 2n - 2}{n+1}| = \frac{2}{n+1}$.
+- We need $\frac{2}{n+1} < \epsilon$.
+- Choose $N > \frac{2}{\epsilon} - 1$.
+- For all $n > N$, inequality holds. *[2 pts]*
+
+**C4 (Sets)**
+- **True.** De Morgan's Laws for sets.
+- $x \in A \setminus (B \cap C) \iff x \in A \land x \notin (B \cap C)$.
+- $\iff x \in A \land (x \notin B \lor x \notin C)$.
+- $\iff (x \in A \land x \notin B) \lor (x \in A \land x \notin C)$.
+- $\iff x \in (A \setminus B) \cup (A \setminus C)$. *[2 pts]*
+
+**C5 (Combinatorics)**
+- Divide triangle into 4 smaller equilateral triangles of side length 1 (connect midpoints).
+- We have 5 points and 4 regions.
+- By PHP, at least one region contains 2 points.
+- Max distance in equilateral triangle of side 1 is 1. *[2 pts]*
+
+**C6 (Complex)**
+- $z^3 = 8e^{i(\pi/2 + 2\pi k)}$.
+- Roots: $2e^{i(\pi/6 + 2\pi k/3)}$.
+- $k=0: 2(\cos 30^\circ + i \sin 30^\circ) = \sqrt{3} + i$.
+- $k=1: 2(\cos 150^\circ + i \sin 150^\circ) = -\sqrt{3} + i$.
+- $k=2: 2(\cos 270^\circ + i \sin 270^\circ) = -2i$. *[2 pts]*
+
+**C7 (Cardinality)**
+- Map $f(n)$ as follows:
+- Even $n=2k \to k$ (Positive).
+- Odd $n=2k+1 \to -k$ (Negative).
+- $f(0)=0, f(1)=-1, f(2)=1, f(3)=-2 \dots$ (Zig-zag mapping).
+- This is a bijection. *[2 pts]*
+
+**C8 (Number Theory)**
+- $x \equiv 1 \pmod 3 \land x \equiv 2 \pmod 5 \implies x = 3k+1 \implies 3k+1 \equiv 2 (5) \implies 3k \equiv 1 \equiv 6 (5) \implies k \equiv 2 (5)$.
+- $x = 3(5j+2) + 1 = 15j + 7$.
+- $15j + 7 \equiv 3 \pmod 7 \implies 1j + 0 \equiv 3 (7) \implies j \equiv 3 (7)$.
+- $x = 15(7m+3) + 7 = 105m + 45 + 7 = 105m + 52$.
+- Solution: $52$. *[2 pts]*

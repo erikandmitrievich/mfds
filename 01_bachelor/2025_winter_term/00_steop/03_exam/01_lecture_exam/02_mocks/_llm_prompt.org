@@ -2,14 +2,14 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-26>
-#+lastmod: <2026-01-14 11:30>
+#+lastmod: <2026-02-11 21:48>
 #+options: num:t
 #+startup: overview
 
 #+begin_quote
-*Suggestions for students:*
+*Suggestions for students (should be ignored by LLM):*
 - Read the whole prompt for better understanding of what actually is going on.
-- Provide the LLM .org files of lectures, not the pdf's. LLM analyses .org files much easier and faster.
+- Provide the LLM .org files of lectures/mocks, not the pdf's. LLM analyses .org files much easier and faster.
 - Most of the ps_XX.org have questions inside, however some lacks questions, e.g. ps_13, ps_14, hence, provide pdfs.
 #+end_quote
 
@@ -20,7 +20,7 @@
   We will proceed in three distinct phases. Do not move to the next phase until instructed.
 
 ** PHASE 1: Data Ingestion (Current Phase)
-   - I will provide you with "Seminar Exercises", "Lecture Notes", and a **"Past Paper Exam"** in chunks.
+   - I will provide you with "Seminar Exercises", "Mock Papers", and a **"Past Paper Exam"** in chunks.
    - *CRITICAL PROTOCOL:* When I upload files or paste text, you must strictly only:
      1. Read and index the content.
      2. Reply with the specific phrase: "Received. Standing by for more."
@@ -46,6 +46,8 @@
       - *Part A:* Basic conceptual understanding and quick calculations.
       - *Part B:* Standard seminar difficulty but with immediate/short solutions.
       - *Part C:* Hardest difficulty, requiring complex synthesis and deep analysis.
+   5. *Mock Problems*
+      - Try not to produce any similar problems that appear in mock papers, unless the question is too *iconic*/*classical*.
 
 ** PHASE 3: Exam Generation
    After the analysis, generate the exam paper with the following structure:
