@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-02-12>
-#+lastmod: <2026-02-12 20:04>
+#+lastmod: <2026-02-12 20:06>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -19,34 +19,34 @@ This repository contains five mock examinations and two past papers for the cour
 * Difficulty Comparison
 The mock exams are designed to be more rigorous than the actual examinations to ensure comprehensive preparation.
 
-| Paper       | Difficulty  | Description                                                                                              |
-|-------------+-------------+----------------------------------------------------------------------------------------------------------|
-| **Exam 00** | Medium-High | Conceptually dense multiple-choice questions (cardinality, GCD of powers); requires precision.           |
-| **Exam 01** | Moderate    | Heavily weighted toward multiple-choice and computational questions.                                     |
-| **Mock 01** | Moderate    | Introductory level; focuses on basic induction, modular arithmetic, and standard logic.                  |
-| **Mock 02** | Very High   | Focuses on rigorous synthesis, including the Cantor-Schröder-Bernstein theorem and strong induction.     |
-| **Mock 03** | High        | Introduces abstract algebra (Boolean Rings) and complex counting problems; requires code interpretation. |
-| **Mock 04** | High        | Heavy emphasis on combinatorics (derangements, inclusion-exclusion) and geometric Pigeonhole Principle.  |
-| **Mock 05** | Medium      | Balanced difficulty; standard epsilon-delta proofs and induction.                                        |
+| Paper     | Difficulty  | Description                                                                                              |
+|-----------+-------------+----------------------------------------------------------------------------------------------------------|
+| *Exam 00* | Medium-High | Conceptually dense multiple-choice questions (cardinality, GCD of powers); requires precision.           |
+| *Exam 01* | Moderate    | Heavily weighted toward multiple-choice and computational questions.                                     |
+| *Mock 01* | Moderate    | Introductory level; focuses on basic induction, modular arithmetic, and standard logic.                  |
+| *Mock 02* | Very High   | Focuses on rigorous synthesis, including the Cantor-Schröder-Bernstein theorem and strong induction.     |
+| *Mock 03* | High        | Introduces abstract algebra (Boolean Rings) and complex counting problems; requires code interpretation. |
+| *Mock 04* | High        | Heavy emphasis on combinatorics (derangements, inclusion-exclusion) and geometric Pigeonhole Principle.  |
+| *Mock 05* | Medium      | Balanced difficulty; standard epsilon-delta proofs and induction.                                        |
 
 * Paper Summaries
 
 ** Mock Papers
-- **Mock 01:** Establishes baseline competency in truth tables, modular arithmetic, and basic induction.
-- **Mock 02:** Emphasizes formal argumentation. Key problems include set theory proofs involving inverse functions and limits of recursive sequences.
-- **Mock 03:** Tests abstract concepts such as ring theory and the countability of geometric sets. Includes Julia code analysis involving sets.
-- **Mock 04:** Focuses on advanced counting principles and number theory applications.
-- **Mock 05:** Represents a standard difficulty level with typical textbook problems.
+- *Mock 01:* Establishes baseline competency in truth tables, modular arithmetic, and basic induction.
+- *Mock 02:* Emphasizes formal argumentation. Key problems include set theory proofs involving inverse functions and limits of recursive sequences.
+- *Mock 03:* Tests abstract concepts such as ring theory and the countability of geometric sets. Includes Julia code analysis involving sets.
+- *Mock 04:* Focuses on advanced counting principles and number theory applications.
+- *Mock 05:* Represents a standard difficulty level with typical textbook problems.
 
 ** Exam Papers
-- **Exam 00:** Contains "trap" questions regarding cardinality and real subsets. Open problems focus on hyperplanes and set images.
-- **Exam 01:** Introduces a "Multiple Selection" format in Part B, where all correct options must be selected. The content is less proof-intensive.
+- *Exam 00:* Contains "trap" questions regarding cardinality and real subsets. Open problems focus on hyperplanes and set images.
+- *Exam 01:* Introduces a "Multiple Selection" format in Part B, where all correct options must be selected. The content is less proof-intensive.
 
 * Key Recurring Topics
 Success in these papers requires mastery of the following areas:
 
-1. **Julia Code Interpretation:** Tracing loops, understanding `Set` behavior (uniqueness), and modulo operations.
-2. **Epsilon-N Limit Proofs:** Formal definition proofs for rational functions are frequent in Section B/C.
-3. **Complex Geometry:** Identifying loci defined by modulus equations (e.g., circles, perpendicular bisectors).
-4. **Cardinality:** Distinguishing between finite, countable ($\aleph_0$), and continuum ($\mathfrak{c}$) sets.
-5. **Functions:** Proving injectivity and surjectivity, and calculating the number of such functions between finite sets.
+1. *Julia Code Interpretation:* Tracing loops, understanding `Set` behavior (uniqueness), and modulo operations.
+2. *Epsilon-N Limit Proofs:* Formal definition proofs for rational functions are frequent in Section B/C.
+3. *Complex Geometry:* Identifying loci defined by modulus equations (e.g., circles, perpendicular bisectors).
+4. *Cardinality:* Distinguishing between finite, countable ($\aleph_0$), and continuum ($\mathfrak{c}$) sets.
+5. *Functions:* Proving injectivity and surjectivity, and calculating the number of such functions between finite sets.
