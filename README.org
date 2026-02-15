@@ -2,29 +2,31 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-13>
-#+lastmod: <2025-12-04 20:28>
+#+lastmod: <2026-02-15 15:53>
 #+options: num:t
 #+startup: overview
 
 * About This Repository
-Welcome to the unofficial open-source study hub for the *Bachelor of Mathematical Foundations of Data Science* (First Cohort).
+This is an unofficial open-source study hub for the *Bachelor of Mathematical Foundations of Data Science* (First Cohort).
 
-This repository is a centralized workspace containing notes, code solutions, exercises, and study guides. It transforms scattered lecture knowledge into a structured, searchable, and reproducible archive.
+This repository is a personal centralized workspace containing my notes, code solutions, exercises, summaries, study guides, and other incredibly useful stuff. I am basically transforming scattered lecture knowledge into a structured, searchable, and reproducible archive.
 
-*Goal:* To create a "Single Source" for our studies, helping us handle the coursework and succeed in the exams.
+*My Goal:* To implement a new method of education, utilizing my software engineering skills to maximize the utility of the entire Bachelor's work.
 
-/Disclaimer: This is a student-run project. It is not officially affiliated with the University of Vienna. No copyrighted university materials are hosted here—only original notes, code, and links to official resources./
+/Disclaimer: This is a personal project. It is not officially affiliated with the University of Vienna. No copyrighted university materials are hosted here—only original notes, code, and links to official resources./
 
 * What Will Interest You
+This repository is a personal workspace. However, due to my exceptional work on structuring the material, you will (hopefully) find it quite intuitive, and potentially make great use of it (since it is great work indeed).
+
 What I believe would interest you the most are:
-- *Lecture Notes*: Clean, LaTeX-rendered PDFs of all STEOP lectures.
-- *Exam Prep*: Relevant mock exam papers and study guides.
+- *Lecture Notes*: Clean, LaTeX-rendered PDFs of all lectures.
+- *Exam Prep*: Relevant self-made mock exam papers, study guides, summaries, and LLM prompts.
 - *Resources*: Centralized access to required textbooks and references.
 
-*But* if you are familiar with *Git*, *Emacs*, and *Org-Mode*, you can clone this repo to interact with the code, run the math and code blocks locally, and utilize the full reproducibility of the notes.
+*But* if you are familiar with *Git*, *Emacs*, and *Org-Mode*, you can clone this repo to interact with the code, run the math and code blocks locally, and utilize the full reproducibility of the notes. P.S. If you really can work with that, please reach out to me; it would be pretty interesting.
 
-* The Workflow (Why Org-Mode?)
-This repository is built using *Doom Emacs* + *Org-Mode*. While you don't need Emacs to read the notes (GitHub renders them), this stack was chosen for specific strategic reasons:
+* The Workflow (Why Org-Mode? And why is this genius?)
+This repository is built using *Doom Emacs* + *Org-Mode*. While you don't need Emacs to read the notes (GitHub renders them, plus I also provide rendered PDFs), this stack was chosen for specific strategic reasons:
 
 1.  *Organization at Scale:* Centralized, structured notes + git = traceability. No more lost files.
 2.  *Reproducibility:* Code (Python, C++, Julia) is embedded directly in the notes. We can run and verify math immediately.
@@ -32,8 +34,7 @@ This repository is built using *Doom Emacs* + *Org-Mode*. While you don't need E
 4.  *LLM-Ready:* Plain text files are the perfect input for LLMs. We use AI to automate the monotonous work, leaving the complex thinking to us.
 5.  *Exam Alignment:* The structure mirrors our problem sets, creating a near-optimal architecture for exam prep.
 
-* Structure
-Have a look on [[file:./index.org][index.org]] file.
+You can also read the file:./why_this_is_genius.org to delve deeper.
 
 * Tools & Conventions
 - *Primary Format:* =.org= (Org Mode) and =.pdf= (rendered Org files with LaTeX expressions).
@@ -41,22 +42,23 @@ Have a look on [[file:./index.org][index.org]] file.
 - *Math:* Rendered using standard LaTeX syntax within Org files.
 
 * How to Contribute
-This is a living document. Contributions are highly encouraged!
+This is a living project. Contributions are highly encouraged.
 
-If you are thinking "man, this project is an excellent idea", then *absolutely* don't hesitate to contribute in any way. Any additional notes, papers, solutions are highly welcomed and would help all the students.
+If you are thinking "man, this project is genius", then (you are obviously right and) *absolutely* don't hesitate to contribute in any way. Any additional notes, papers, or solutions are highly welcome, and would help all the students—plus, we might try to collaborate.
 
-** Level 1: Quick Fixes (No Code Required) See a typo or a mistake?
+** Level 1: Quick Fixes (No Code Required)
+See a typo or a mistake?
 1. Click the file name.
 2. Click the ✏️ (Pencil Icon) in the top right.
 3. Make your change and click *Commit changes*.
 
 ** Level 2: Git Users
-
 1. Fork the repo.
 2. Add your notes or solutions.
 3. Submit a Pull Request.
 
-** Level 3: Non-Git Users You can still help! Send your summaries or code snippets to me, and I will integrate them.
+** Level 3: Non-Git Users
+You can still help! Send your summaries or code snippets to me, and I will integrate them.
 
 - *Telegram*: @johannes_de_silentio
 - *Email*: obluda2173@gmail.com
