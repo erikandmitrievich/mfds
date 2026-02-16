@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-13>
-#+lastmod: <2026-02-15 15:53>
+#+lastmod: <2026-02-16 20:00>
 #+options: num:t
 #+startup: overview
 
@@ -34,7 +34,7 @@ This repository is built using *Doom Emacs* + *Org-Mode*. While you don't need E
 4.  *LLM-Ready:* Plain text files are the perfect input for LLMs. We use AI to automate the monotonous work, leaving the complex thinking to us.
 5.  *Exam Alignment:* The structure mirrors our problem sets, creating a near-optimal architecture for exam prep.
 
-You can also read the file:./why_this_is_genius.org to delve deeper.
+You can also read the [[file:./why_this_is_genius.org][why_this_is_genius.org]] to delve deeper.
 
 * Tools & Conventions
 - *Primary Format:* =.org= (Org Mode) and =.pdf= (rendered Org files with LaTeX expressions).
