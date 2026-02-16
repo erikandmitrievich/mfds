@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-02-16>
-#+lastmod: <2026-02-16 10:39>
+#+lastmod: <2026-02-16 20:07>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -19,7 +19,7 @@ You are an expert Academic Strategist and Exam Preparation Coach specializing in
 * SITUATION ANALYSIS
 ** The Problem
 - **Subject:** Linear Algebra.
-- **Timeline:** Approx. 14 days until the exam.
+- **Timeline:** 14 days until the exam.
 - **Context:** The course was split between two professors.
   - *Prof A (Old):* Poor explanations, unreadable notes, caused confusion.
   - *Prof B (New):* Better teacher, but the transition was abrupt.
