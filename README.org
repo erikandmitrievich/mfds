@@ -2,67 +2,94 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-13>
-#+lastmod: <2026-02-16 20:00>
+#+lastmod: <2026-02-17 19:34>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
 #+options: num:t
-#+startup: overview
+#+startup: overview latexpreview inlineimages
 
 * About This Repository
-This is an unofficial open-source study hub for the *Bachelor of Mathematical Foundations of Data Science* (First Cohort).
 
-This repository is a personal centralized workspace containing my notes, code solutions, exercises, summaries, study guides, and other incredibly useful stuff. I am basically transforming scattered lecture knowledge into a structured, searchable, and reproducible archive.
+This is my personal study workspace for the *Bachelor of Mathematical Foundations of Data Science* (First Cohort).
 
-*My Goal:* To implement a new method of education, utilizing my software engineering skills to maximize the utility of the entire Bachelor's work.
+This repository is a centralised workspace containing:
+
+- Lecture Notes
+- Scripts and Code
+- LLM Prompts/Rules
+- Mock Papers
+- Exam Preparation Plan
+- Summaries
+- Study Guides
+
+It was not intentionally designed to be any kind of public resource. Though, it contains some tutorials on [[file:./00_global/julia/README.org][basics of programming]], covering basics of programming (Git/Github, Julia packages, LaTeX, etc.).
+
+*My Goal:* To implement a new method of education, by making the learning process accumulative.
 
 /Disclaimer: This is a personal project. It is not officially affiliated with the University of Vienna. No copyrighted university materials are hosted here—only original notes, code, and links to official resources./
 
+* Primary Motivation
+
+Whenever someone writes math on paper, they are essentially "drawing." It is a painting; written symbols lack semantic structure and are not reproducible. Most critically, paper notes suffer from knowledge decay—once the exam is over, the notebook is closed, and the knowledge becomes static and unsearchable.
+
+This repository represents a fundamental shift from that traditional model. My goal is to treat my education not as a series of isolated semesters, but as a continuous software project.
+
+- I want my work to be "real"—executable, queryable, and reusable. By digitizing the logic of mathematics and the syntax of programming:
+
+- I stop "drawing" and start "encoding": Equations become standard LaTeX, capable of being parsed by both humans and machines (LLMs).
+
+- I stop "reviewing" and start "running": Theorems are not just memorized; they are verified through embedded Julia/Python code.
+
+- I stop "losing" and start "compounding": A script written for Linear Algebra in Semester 1 becomes a utility function for Machine Learning in Semester 4.
+
+* Project Metrics
+
+As of 17/02/2026 (End of First Semester).
+
+To treat this degree as a software project, I track the volume and structure of knowledge accumulation.
+
+Current snapshot of the repository (excluding PDFs/assets):
+
+| Metric           | Volume          | Context                             |
+|------------------+-----------------+-------------------------------------|
+| *Knowledge Base* | ~207,141 words  | Equivalent to approx. 3-4 textbooks |
+| *Math Density*   | 5,618 equations | LaTeX expressions (Theorems/Proofs) |
+| *Logic Layer*    | 2,379 lines     | Executable Julia/Python code        |
+| *Efficiency*     | 1.28 MB         | Pure text-based knowledge storage   |
+
+** *Insight:*
+A key feature of this workspace is **Literate Programming**. As the data shows, over **80% of the code** (specifically 1,879 lines of Julia) resides /embedded within the notes/ (.org files) rather than external scripts. This confirms that the math is being verified in real-time, side-by-side with the theory.
+
 * What Will Interest You
-This repository is a personal workspace. However, due to my exceptional work on structuring the material, you will (hopefully) find it quite intuitive, and potentially make great use of it (since it is great work indeed).
+
+As mentioned above, this is a personal project/workspace. However, due to my exceptional work on structuring the material, you will (hopefully) find the structure intuitive. This would allow you to access all of the useful material mentioned above.
 
 What I believe would interest you the most are:
-- *Lecture Notes*: Clean, LaTeX-rendered PDFs of all lectures.
-- *Exam Prep*: Relevant self-made mock exam papers, study guides, summaries, and LLM prompts.
-- *Resources*: Centralized access to required textbooks and references.
 
-*But* if you are familiar with *Git*, *Emacs*, and *Org-Mode*, you can clone this repo to interact with the code, run the math and code blocks locally, and utilize the full reproducibility of the notes. P.S. If you really can work with that, please reach out to me; it would be pretty interesting.
+- *Lecture Notes*: Clean, LaTeX-rendered PDFs of all STEOP lectures.
+- *Exam Preparation:* Relevant self-made mock papers, study guides, summaries.
+- *Resources*: Centralized access to almost all the necessary material.
 
-* The Workflow (Why Org-Mode? And why is this genius?)
-This repository is built using *Doom Emacs* + *Org-Mode*. While you don't need Emacs to read the notes (GitHub renders them, plus I also provide rendered PDFs), this stack was chosen for specific strategic reasons:
+*No need to say that* if you are familiar with *Git*, *Emacs*, *Org-Mode*, *LaTeX*, *LLM prompting*, you can clone this repository to interact with the code, run math code blocks locally, and adjust exam preparation plan to yourself.
+
+* The Workflow
+
+This repository is built using *Doom Emacs* + *Org-Mode* + *LaTeX*. While you don't need Emacs to read the notes (GitHub renders them, plus I also provide rendered PDFs), this stack was chosen for specific strategic reasons:
 
 1.  *Organization at Scale:* Centralized, structured notes + git = traceability. No more lost files.
-2.  *Reproducibility:* Code (Python, C++, Julia) is embedded directly in the notes. We can run and verify math immediately.
-3.  *Searchability:* `grep` your entire degree. Finding a specific theorem or code snippet takes milliseconds.
-4.  *LLM-Ready:* Plain text files are the perfect input for LLMs. We use AI to automate the monotonous work, leaving the complex thinking to us.
+2.  *Reproducibility:* Code (Python, C++, Julia) is embedded directly in the notes. I can run and verify math immediately.
+3.  *Searchability:* `grep` my entire degree. Finding a specific theorem or code snippet takes milliseconds.
+4.  *LLM-Ready:* Plain text files are the perfect input for LLMs. I use LLM to automate the monotonous work, leaving the complex thinking to us.
 5.  *Exam Alignment:* The structure mirrors our problem sets, creating a near-optimal architecture for exam prep.
 
-You can also read the [[file:./why_this_is_genius.org][why_this_is_genius.org]] to delve deeper.
+You can also read the [[file:./why_this_is_genius.org][why_this_is_genius.org]] to delve deeper into the education method.
 
 * Tools & Conventions
 - *Primary Format:* =.org= (Org Mode) and =.pdf= (rendered Org files with LaTeX expressions).
 - *Languages:* =Python=, =C++=, =Julia=, =LaTeX=.
 - *Math:* Rendered using standard LaTeX syntax within Org files.
-
-* How to Contribute
-This is a living project. Contributions are highly encouraged.
-
-If you are thinking "man, this project is genius", then (you are obviously right and) *absolutely* don't hesitate to contribute in any way. Any additional notes, papers, or solutions are highly welcome, and would help all the students—plus, we might try to collaborate.
-
-** Level 1: Quick Fixes (No Code Required)
-See a typo or a mistake?
-1. Click the file name.
-2. Click the ✏️ (Pencil Icon) in the top right.
-3. Make your change and click *Commit changes*.
-
-** Level 2: Git Users
-1. Fork the repo.
-2. Add your notes or solutions.
-3. Submit a Pull Request.
-
-** Level 3: Non-Git Users
-You can still help! Send your summaries or code snippets to me, and I will integrate them.
-
-- *Telegram*: @johannes_de_silentio
-- *Email*: obluda2173@gmail.com
-
-* License
-This project is open for our cohort.
-- *Code:* MIT License (Free to use and modify).
