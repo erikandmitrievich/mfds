@@ -1,7 +1,22 @@
-Copyright (c) 2025 Erik An
+Copyright (c) 2026 Erik An
+
+### PART 1: SOFTWARE (SCRIPTS & TOOLS)
+The code and scripts (e.g., .py, .jl files) in this repository are licensed under the MIT License.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+---
+
+### PART 2: EDUCATIONAL CONTENT (NOTES & SOLUTIONS)
+The original lecture notes, summaries, and solution logic (e.g., .org, .pdf files) created by the author are licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0).
+
+To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/
+
+### DISCLAIMER & THIRD-PARTY RIGHTS
+This repository contains references to exercises and problems assigned by the University of Vienna.
+The original text of these problem statements and any excerpted course materials remain the intellectual property of their respective authors (Professors/University).
+This license DOES NOT cover those original problem statements. They are reproduced here solely for personal archival and educational purposes under fair use.
