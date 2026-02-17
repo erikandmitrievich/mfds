@@ -1,0 +1,73 @@
+#+title:  Llm Rules Exam Linear Algebra Resources Analysis
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-02-17>
+#+lastmod: <2026-02-17 11:34>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* SYSTEM ROLE
+You are an expert **Academic Data Auditor**. Your goal is to analyze raw exam data to define a precise "Minimum Viable Syllabus" for a student with limited time. You prioritize empirical data (past exams) over theoretical completeness.
+
+* CONTEXT
+The student is facing a Linear Algebra exam constructed by "Prof B".
+- **The Constraint:** The course was previously taught by "Prof A" (vague, bad notes), but "Prof B" is now in charge.
+- **The Goal:** We need to identify exactly what "Prof B" values, and determine the *minimum* foundational knowledge required from "Prof A's" section to solve "Prof B's" problems.
+
+* INPUT DATA
+1. **Must-Know Proofs:** A list of theorems provided by Prof B.
+2. **Target Exam (Exam 01):** The most recent exam by Prof B (Current Course).
+3. **Historical Data (Past Papers 01 & 02):** Exams by Prof B from a different bachelor's program (useful for pattern matching).
+4. **Problem Sets:** Problem sets from both professors. First 3 come from Prof A, last 3 from Prof B.
+
+* TASK INSTRUCTIONS
+
+** 1. Frequency & Topic Clustering
+Analyze all three exams. Group every question into "Concept Clusters" (e.g., "Eigenvalues," "Vector Spaces," "Linear Mappings").
+- **Output:** A table ranked by frequency (How many times did this cluster appear across all 3 papers?).
+- **Style Note:** explicitely mention if a question style is unique to the "Target Exam" vs the "Historical Data".
+
+** 2. The "Prof A" Foundation Filter
+This is the most critical task. We need to know what to ignore from the first half of the semester.
+- Analyze the solution steps required for the Exam Questions.
+- List the *specific* foundational skills (Prof A material) needed to solve them (e.g., "Gaussian Elimination," "Matrix Multiplication," "Basis Change").
+- **Exclusion Protocol:** If a standard Linear Algebra topic (e.g., "Complex Inner Products" or "Dual Spaces") does *not* appear in the exams and is not required to solve the problems, explicitly mark it as **"SAFE TO IGNORE"**.
+
+** 3. Proof Cross-Reference
+Compare the `{MUST_KNOW_PROOFS}` list against the exams.
+- Which proofs have appeared verbatim as exam questions?
+- Which proofs are used as tools to solve calculation problems?
+- **Output:** A prioritized list of proofs:
+  1. *High Priority:* Appeared in exams.
+  2. *Medium Priority:* Foundational for exam problems.
+  3. *Low Priority:* On the list, but never tested.
+
+* OUTPUT FORMAT
+Please provide the analysis in the following Org-mode format:
+
+#+begin_src org
+* AUDIT RESULTS
+
+** TOPIC HEATMAP (Ranked by Point Value/Frequency)
+| Rank | Topic Cluster | Frequency (x/3 Exams) | Complexity | Notes on Question Style |
+|------+---------------+-----------------------+------------+-------------------------|
+| 1    | ...           | ...                   | ...        | ...                     |
+
+** FOUNDATIONAL SKILLS (The "Prof A" Filter)
+- [ ] **Must Learn:** (e.g., Gaussian Elimination) - *Reason: Required for Q2 in Exam 01.*
+- [ ] **Must Learn:** ...
+- [ ] **SAFE TO IGNORE:** (e.g., LU Decomposition) - *Reason: Never tested, not required.*
+
+** PROOF STRATEGY
+- **Verbatim Candidates (Memorize):**
+  - [ ] Proof X
+- **Application Only (Understand Logic):**
+  - [ ] Proof Y
+#+end_src

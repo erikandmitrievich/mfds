@@ -1,0 +1,144 @@
+#+title: Ps 02
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-02-17>
+#+lastmod: <2026-02-17 11:45>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* Problem 4
+** Task
+#+begin_quote
+Prove the distributivity of matrix multiplication over matrix addition in the case of the multiplication of a sum of two matrices by a third matrix on the left (item(i) of part (c) of Proposition II.4.10 in the lecture notes): $P(A+B)=P A+P B$ for all $A, B \in \mathbb{F}^{m \times n}$ and $P \in \mathbb{F}^{p \times m}$ with any $m, n, p \in \mathbb{N}$. Present your proof as a sequence of elementary steps, each justified with a precise verbal ${ }^{1}$ reference to a single definition, definition part or proven property from the lecture notes.
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 5
+** Task
+#+begin_quote
+Consider the following matrices over the field $\mathbb{R}$ of real numbers:
+
+$$
+u=\left[\begin{array}{r}
+2 \\
+1 \\
+-1 \\
+3
+\end{array}\right], \quad A=\left[\begin{array}{rr}
+-2 & 4 \\
+1 & 0 \\
+3 & 1 \\
+2 & 3
+\end{array}\right] \quad B=\left[\begin{array}{rr}
+4 & 0 \\
+1 & -2 \\
+-2 & 0 \\
+1 & -2 \\
+2 & 3
+\end{array}\right], \quad \text { and } \quad v=\left[\begin{array}{r}
+-1 \\
+2 \\
+1 \\
+4 \\
+-1
+\end{array}\right]
+$$
+
+In some of the problem parts below, you are asked to count the additions and multiplications of scalars (all of which happen to be integers in this fortunate example) involved in the respective calculations. In each case, the actual evaluations are meant, and each is to be counted once (for example, how many times you write any single operation or batch of operations on paper is irrelevant for those counts).
+
+(a) (1) Write $u^{\top}$ and $B^{\top}$ explicitly in the "table" notation (as the original matrices are given above).
+
+(b) (3) Evaluate the product $C=A B^{\top}$ column-wise (using rule (a) of Remark II.4.5 of the lecture notes). In your solution, show the assembly of all the linear combinations involved (what is combined and with what coefficients, as that is done for the third column of $A$ in Example II.4.6 in the lecture notes).
+Find the numbers $N_{+}$ and $N_{\times}$ of additions and multiplications involved in the evaluation of $C$ in this part.
+
+(c) (3) Evaluate the product $C=A B^{\top}$ row-wise (using rule (b) of Remark II.4.5 of the lecture notes). In your solution, show the assembly of all the linear combinations involved (what is combined and with what coefficients, as that is done for the third row of $A$ in Example II.4.6 in the lecture notes). The result should agree with that of part (b).
+Find the numbers $N_{+}$ and $N_{\times}$ of additions and multiplications involved in the evaluation of $C$ in this part.
+
+(d) (2) Using the matrix $C$ obtained in parts (b) and (c), evaluate the product $u^{\top} C v$ (strictly speaking, a matrix of size $1 \times 1$).
+Find the numbers $N_{+}$ and $N_{\times}$ of additions and multiplications involved in the evaluation of $u^{\top} C v$ in this part.
+
+(e) (2) Evaluate the product $\xi=u^{\top} A$. Find the numbers $N_{+}$ and $N_{\times}$ of additions and multiplications involved in the evaluation of $\xi$ in this part.
+
+(f) (2) Evaluate the product $\eta=B^{\top} v$. Find the numbers $N_{+}$ and $N_{\times}$ of additions and multiplications involved in the evaluation of $\eta$ in this part.
+
+(g) (2) Evaluate the product $\xi \eta$. Must or must not the result agree with that of part (d)? Why?
+Find the numbers $N_{+}$ and $N_{\times}$ of additions and multiplications involved in the evaluation of $\xi \eta$ in this part.
+
+(h) (1) Which of the above ways of calculating $u^{\top} A B^{\top} v$ is more efficient? Why?
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 6
+** Task
+#+begin_quote
+We continue the treatment of the discrete cosine and Fourier transforms. For a data dimension $n \in \mathbb{N}$, some of the DCTs and the DFT involve the following matrices $B, C \in \mathbb{R}^{n \times n}$ and $F \in \mathbb{C}^{n \times n}$:
+
+\begin{gathered}
+B_{i j}=\cos \left[\frac{\pi}{n}\left(i-\frac{1}{2}\right)\left(j-\frac{1}{2}\right)\right], \quad C_{i j}=\cos \left[\frac{\pi}{n}\left(i-\frac{1}{2}\right)(j-1)\right] \\
+F_{i j}=\exp \left[\mathrm{i} \frac{2 \pi}{n}(i-1)(j-1)\right]
+\end{gathered}
+
+(a) (5) Using trigonometric identities, calculate $G=B^{\top} B$. Find a matrix $X \in \mathbb{R}^{n \times n}$ such that $G=X^{2}$.
+
+Hint: for those lost in the world of trigonometric identities, it may be helpful to consider the following two as basic ones (at least, for this problem):
+
+$$
+\cos (\alpha+\beta)=\cos \alpha \cos \beta-\sin \alpha \sin \beta \quad \text { and } \quad \cos \left(\alpha+\frac{\pi}{2}\right)=-\sin \alpha
+$$
+
+for all $\alpha, \beta \in \mathbb{R}$. In fact, the second identity is a particular case of the first. We add to the above two identities also the parity of the cosine and sine functions:
+
+$$
+\cos (-\alpha)=\cos \alpha \quad \text { and } \quad \sin (-\alpha)=-\sin \alpha
+$$
+
+for all $\alpha \in \mathbb{R}$. The above four identities imply the following three, similar to the very first one:
+
+\begin{aligned}
+& \cos (\alpha-\beta)=\cos \alpha \cos \beta+\sin \alpha \sin \beta, \\
+& \sin (\alpha+\beta)=\sin \alpha \cos \beta+\cos \alpha \sin \beta, \\
+& \sin (\alpha-\beta)=\sin \alpha \cos \beta-\cos \alpha \sin \beta
+\end{aligned}
+
+for all $\alpha, \beta \in \mathbb{R}$. To exercise, you can verify the last three identities using only the first four. Producing such proofs may feel technical and challenging, but that would mean only that you personally need to exercise a bit - in this case, by proving the last three identities using the first four.
+In solving this problem, you will encounter products of the form $\cos \alpha \cos \beta$ with $\alpha, \beta \in \mathbb{R}$. Try to simplify them using some of the above equalities: a sum of trigonometric functions is usually easier to work with than a product. Finally, sums of the form
+
+$$
+\sum_{k=1}^{n} \cos (\phi+\omega k)
+$$
+
+with $\phi, \omega \in \mathbb{R}$ and $n \in \mathbb{N}$ are ubiquitous in the context of trigonometric and Fourier series. They are remarkable in that the arguments form an arithmetic progression, which allows to turn such a sum into a telescoping sum. To see what that means, instead of searching online, just try applying some of the above identities after multiplying the above sum of cosines by $\sin \frac{\omega}{2}$!
+Note: there is nothing particularly complicated in the above identities or in how they can be used in this problem. The idea of every single step can come entirely by expediency, not by miracle. Each time, look carefully at where you are and at the limited range of options for what you could potentially undertake (just a few identities available), choose your strategy and execute it.
+
+(b) (3) Verify the equality $B^{\top} B=X^{2}$ in Julia for $n=100$ and for $n=101$.
+
+(c) (2) Using trigonometric identities, calculate $H=C^{\top} C$. Find a matrix $Y \in \mathbb{R}^{n \times n}$ such that $H=Y^{2}$.
+
+(d) (3) Verify the equality $C^{\top} C=Y^{2}$ in Julia for $n=100$ and for $n=101$.
+
+(e) (5) Give an explicit expression for the entries of the matrix $F^{*}=\left[\overline{F_{j i}}\right]_{i=1, j=1}^{n} \in \mathbb{C}^{n \times n}$, where overline denotes complex conjugation (see§ I.2.4). The matrix $F^{*}$ is called the Hermitian conjugate of $F$.
+Using properties of the complex exponential function, calculate $H=F^{*} F$. Find $Z \in \mathbb{C}^{n \times n}$ such that $H=Z^{2}$.
+
+Hint: using induction, check that the formula for the sum of a geometric progression holds for complex numbers (for a complex denominator, in particular).
+
+(f) (3) Verify the equality $F^{*} F=Z^{2}$ in Julia for $n=100$ and for $n=101$.
+#+end_quote
+
+** Notes
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_6.jl
+#+end_src
