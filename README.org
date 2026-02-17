@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-13>
-#+lastmod: <2026-02-17 19:47>
+#+lastmod: <2026-02-17 19:55>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -75,7 +75,7 @@ What I believe would interest you the most are:
 - *Exam Preparation:* Relevant self-made mock papers, study guides, summaries.
 - *Resources*: Centralized access to almost all the necessary material.
 
-*No need to say that* if you are familiar with *Git*, *Emacs*, *Org-Mode*, *LaTeX*, *LLM prompting*, you can clone this repository to interact with the code, run math code blocks locally, and adjust exam preparation plan to yourself.
+Advanced users familiar with *Git*, *Emacs*, and *LaTeX* can clone this repository to interact with the code, run math blocks locally, and customize the exam preparation plan.
 
 * The Workflow
 
