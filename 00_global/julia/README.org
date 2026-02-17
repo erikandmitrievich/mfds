@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-12-14>
-#+lastmod: <2025-12-23 20:18>
+#+lastmod: <2026-02-17 19:48>
 #+options: num:t
 #+startup: overview
 
@@ -110,7 +110,7 @@ Here is how to navigate this guide:
 * Acknowledgments
 The initial inspiration for this project came from [[https://github.com/mitmath/julia-mit][MIT's legendary Julia repository]], which shares the noble goal of making numerical computing accessible to undergraduates.
 
-While inspired by their spirit, this guide has evolved to serve a specific purpose for the **University of Vienna MFDS** curriculum:
+While inspired by their spirit, this guide has evolved to serve a specific purpose for the *University of Vienna MFDS* curriculum:
 - *Broader Scope:* We don't just teach the language; we teach the *ecosystem* (Git, VS Code, Linux basics, LaTeX) that is often skipped in standard math courses.
 - *Curriculum-Aligned:* The examples and cookbooks are designed to match the specific problems you will face in your bachelor's degree.
 - *Beginner-First:* This guide assumes zero prior experience with command-line tools, bridging the gap between high school math and computational science.

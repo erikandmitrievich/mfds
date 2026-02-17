@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-13>
-#+lastmod: <2026-02-17 19:34>
+#+lastmod: <2026-02-17 19:47>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -63,7 +63,7 @@ Current snapshot of the repository (excluding PDFs/assets):
 | *Efficiency*     | 1.28 MB         | Pure text-based knowledge storage   |
 
 ** *Insight:*
-A key feature of this workspace is **Literate Programming**. As the data shows, over **80% of the code** (specifically 1,879 lines of Julia) resides /embedded within the notes/ (.org files) rather than external scripts. This confirms that the math is being verified in real-time, side-by-side with the theory.
+A key feature of this workspace is *Literate Programming*. As the data shows, over *80% of the code* (specifically 1,879 lines of Julia) resides /embedded within the notes/ (.org files) rather than external scripts. This confirms that the math is being verified in real-time, side-by-side with the theory.
 
 * What Will Interest You
 
