@@ -1,0 +1,336 @@
+#+title: Ps 01
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-01-08>
+#+lastmod: <2026-01-11 12:52>
+#+options: num:t
+#+startup: overview
+
+* Problem 1 :DONE:
+** Task
+Verifying the definition of a field
+
+Show that $\mathbb{F}_{2}$ is indeed a field (see example II.1.5 in the lecture notes).
+
+** Notes
+#+begin_quote
+*Definition. (Field)* Field is a set $F$, equipped with two binary operations called *addition* ($\boxplus$) and *multiplication* ($\boxtimes$), such that the following axioms hold for all elements $a, b, c \in F$:
+
+A. Axioms of Addition:
+   1. *Associativity*: $(a \boxplus b) \boxplus c = a \boxplus (b \boxplus c)$.
+   2. *Commutativity*: $a \boxplus b = b \boxplus a$.
+   3. *Additive Identity*: $\forall a \in F, \exists 0 \in F : a \boxplus 0 = a$.
+   4. *Additive Inverse*: $\forall a \in F, \exists (-a) \in F : a \boxplus (-a) = 0$.
+
+B. Axioms of Multiplication
+   5. *Associativity*: $(a \boxtimes b) \boxtimes c = a \boxtimes (b \boxtimes c)$.
+   6. *Commutativity*: $a \boxtimes b = b \boxtimes a$.
+   7. *Multiplicative Identity*: $\forall a \in F, \exists 1 \in F : 1 \neq 0 : a \boxtimes 1 = a$.
+   8. *Multiplicative Inverse*: $\forall a \in F : a \neq 0, \exists a^{-1} \in F : a \boxtimes a^{-1} = 1$.
+
+C. Distributive Law
+   9. *Distributivity*: $a \boxtimes (b \boxplus c) = (a \boxtimes b) \boxplus (a \boxtimes c)$.
+#+end_quote
+
+** Solution
+:LOGBOOK:
+CLOCK: [2026-01-10 Sat 17:07]
+:END:
+*Goal*: Show $\mathbb{F}_2$ is a field by definition.
+
+*Definition*:
+
+$\mathbb{F}_2 = (\{0, 1\}, \boxplus, \boxtimes) \quad : \quad \boxplus, \boxtimes: \mathbb{F}_2 \times \mathbb{F}_2 \rightarrow \mathbb{F}_2$
+
+$0 \boxplus 0 = 1 \boxplus 1 = 0, \quad 1 \boxplus 0 = 0 \boxplus 1 = 1$
+
+$0 \boxtimes 0 = 1 \boxtimes 0 = 0 \boxtimes 1 = 0, \quad 1 \boxtimes 1 = 1$
+
+*Proof.*
+
+- Axioms of Addition:
+  1. *Associativity*:
+
+     |---+---+---+-----------------------------+-----------------------------|
+     | a | b | c | $(a \boxplus b) \boxplus c$ | $a \boxplus (b \boxplus c)$ |
+     |---+---+---+-----------------------------+-----------------------------|
+     | 0 | 0 | 0 |                           0 |                           0 |
+     |---+---+---+-----------------------------+-----------------------------|
+     | 0 | 0 | 1 |                           1 |                           1 |
+     |---+---+---+-----------------------------+-----------------------------|
+     | 0 | 1 | 0 |                           1 |                           1 |
+     |---+---+---+-----------------------------+-----------------------------|
+     | 0 | 1 | 1 |                           0 |                           0 |
+     |---+---+---+-----------------------------+-----------------------------|
+     | 1 | 0 | 0 |                           1 |                           1 |
+     |---+---+---+-----------------------------+-----------------------------|
+     | 1 | 0 | 1 |                           0 |                           0 |
+     |---+---+---+-----------------------------+-----------------------------|
+     | 1 | 1 | 0 |                           0 |                           0 |
+     |---+---+---+-----------------------------+-----------------------------|
+     | 1 | 1 | 1 |                           1 |                           1 |
+     |---+---+---+-----------------------------+-----------------------------|
+     Holds.
+
+  2. *Commutativity*: $(1 \boxplus 0 = 0 \boxplus 1) \wedge (1 \boxplus 1 = 1 \boxplus 1) \wedge (0 \boxplus 0 = 0 \boxplus 0)$ by definition. Holds.
+  3. *Additive Identity*: $1 \boxplus 0 = 1, \quad 0 \boxplus 0 = 0$ by definition. Holds.
+  4. *Additive Inverse*: $0 \boxplus 0 = 1 \boxplus 1 = 0 \implies 0 = -0 \wedge 1 = -1$ by definition. Holds.
+
+- Axioms of Multiplication:
+  1. *Associativity*:
+
+     |---+---+---+-------------------------------+-------------------------------|
+     | a | b | c | $(a \boxtimes b) \boxtimes c$ | $a \boxtimes (b \boxtimes c)$ |
+     |---+---+---+-------------------------------+-------------------------------|
+     | 0 | 0 | 0 |                             0 |                             0 |
+     |---+---+---+-------------------------------+-------------------------------|
+     | 0 | 0 | 1 |                             0 |                             0 |
+     |---+---+---+-------------------------------+-------------------------------|
+     | 0 | 1 | 0 |                             0 |                             0 |
+     |---+---+---+-------------------------------+-------------------------------|
+     | 0 | 1 | 1 |                             0 |                             0 |
+     |---+---+---+-------------------------------+-------------------------------|
+     | 1 | 0 | 0 |                             0 |                             0 |
+     |---+---+---+-------------------------------+-------------------------------|
+     | 1 | 0 | 1 |                             0 |                             0 |
+     |---+---+---+-------------------------------+-------------------------------|
+     | 1 | 1 | 0 |                             0 |                             0 |
+     |---+---+---+-------------------------------+-------------------------------|
+     | 1 | 1 | 1 |                             1 |                             1 |
+     |---+---+---+-------------------------------+-------------------------------|
+     Holds.
+
+  2. *Commutativity*: $(1 \boxtimes 0 = 0 \boxtimes 1) \wedge (1 \boxtimes 1 = 1 \boxtimes 1) \wedge (0 \boxtimes 0 = 0 \boxtimes 0)$ by definition. Holds.
+  3. *Multiplicative Identity*: $1 \boxtimes 1 = 1 \quad 0 \boxtimes 1 = 0$ by definition. Holds.
+  4. *Multiplicative Inverse*: $1 \boxtimes 1 = 1$ by definition. Holds.
+
+- Distributive Law
+  - Case 1 $(a = 0)$: $0 \boxtimes (b \boxplus c) = 0$ and $0 \boxplus 0 = 0$
+  - Case 2 $(a = 1)$: $1 \boxtimes(b \boxplus c) = b \boxplus c$ and $(1 \boxtimes b) \boxplus (1 \boxtimes c) = b \boxplus c$
+
+  Holds.
+
+*Conclusion*: All axioms holds. $(\{0,1\}, \boxplus, \boxtimes)$ is a field.
+
+* Problem 2 :DONE:
+** Task
+Properties of fields
+
+In the remainder of the course, we will use field arithmetic operations rather casually, tacitly relying on the respective axioms and their consequences instead of explicitly citing them to justify every elementary arithmetic transformation. Even for completely new specific or even abstract sets and operations, that will be very similar to how you have been using arithmetic operations over natural, integer, rational and real numbers in your mathematical journey so far. This problem, however, is different: we will practice the explicit use of the definition of a field, presenting arguments in elementary steps, each relying on and explicitly justified by a single stipulation of the definition (an axiom or another detail of the definition). Examples of such steps are logical implications and arithmetic transformations, and each single one should be elementary in the above sense. Section II.1(ii) of the lecture notes presents examples of arguments structured into such elementary steps. An exception: in each problem part, a step relying on a single statement claimed to be true in a preceding problem part is considered elementary, i.e., statements from preceding problem parts may be used (with a proper reference).
+
+Show the following properties of a field $\mathbb{F}$ with operations of addition and multiplication and with additive and multiplicative identity elements $0$ and $1$.
+
+(a) Every element has a unique additive inverse.
+(b) Every element distinct from $0$ has a unique multiplicative inverse.
+(c) For any $\alpha, \beta, \gamma\in\mathbb{F}$, $\alpha \boxplus \gamma = \beta \boxplus \gamma$ implies $\alpha=\beta$.
+(d) The implication $(\gamma \boxplus \alpha = \gamma \boxplus \beta) \Rightarrow (\alpha = \beta)$ holds for any $\alpha, \beta, \gamma\in\mathbb{F}$.
+(e) The statements $\alpha \boxtimes \gamma = \beta \boxtimes \gamma$ and $\alpha=\beta$ are equivalent for any $\alpha,\beta\in\mathbb{F}$ and $\gamma\in\mathbb{F}\backslash\{0\}$.
+(f) Consider $\alpha,\beta,\gamma\in\mathbb{F}$ such that $\gamma\ne0$ and $\gamma \boxtimes \alpha = \gamma \boxtimes \beta$. Then $\alpha=\beta$.
+(g) Every $\alpha\in\mathbb{F}$ fulfills $0 \boxtimes \alpha = 0$. Hint: this statement expresses a non-symmetric relation between the two field operations, so the proof clearly has to use one or several of the field axioms that introduce dissimilarities of the operations.
+(h) Let $-1$ denote the additive inverse of $1$ in $\mathbb{F}$. Then every $\alpha \in \mathbb{F}$ and the additive inverse $(-\alpha)$ of $\alpha$ satisfies $-\alpha=(-1) \boxtimes \alpha$. Does your solution prove the uniqueness of the additive inverses? Does your solution rely on the uniqueness of the additive inverses?
+(i) Additive inversion is an /involution/: if $\beta$ is an additive inverse of $\alpha\in\mathbb{F}$ and $\gamma$ is an additive inverse of $\beta$, then $\alpha=\gamma$. Hint: consider the expression $\alpha \boxplus \beta \boxplus \gamma$.
+
+** Notes
+
+** Solution
+*** (a) Every element has a unique additive inverse.
+
+By definition:
+
+$\forall a \in \mathbb{F} \quad \exists (-a) : a \boxplus (-a) = 0$
+
+AFSOC, $a \in \mathbb{F}, \quad \exists b,c \in \mathbb{F} : \left( a \boxplus b = 0\right) \wedge \left( a \boxplus c = 0 \right) \wedge (b \neq c)$.
+
+$\begin{aligned}
+b &= 0 \boxplus b & \text{(additive identity)} \\
+  &= \left( a \boxplus c \right) \boxplus b & \text{(substitution of hypothesis } a \boxplus c = 0 \text{)} \\
+  &= a \boxplus \left( c \boxplus b \right) & \text{(additive associative)} \\
+  &= a \boxplus \left( b \boxplus c \right) & \text{(additive commutative)} \\
+  &= \left( a \boxplus b \right) \boxplus c & \text{(additive associative)} \\
+  &= 0 \boxplus c & \text{(additive inverse)} \\
+  &= c & \text{(additive identity)} \\
+\end{aligned}$
+
+*Conclusion*: Since $b = c$ contradicts the assumption $b \neq c$, the assumption of non-uniqueness is false.
+
+*** (b) Every element distinct from $0$ has a unique multiplicative inverse.
+
+$\forall a \in \mathbb{F} : a \neq 0 \quad \exists b,c \in \mathbb{F} : (a \boxtimes b = 1) \wedge (a \boxtimes c = 1) \wedge (b = c)$
+
+AFSOC $a \in \mathbb{F} \textbackslash \left\{ 0 \right\} \quad \exists b,c \in \mathbb{F} : (a \boxtimes b = 1) \wedge (a \boxtimes c = 1) \wedge (b \neq c)$
+
+$\begin{aligned}
+b &= b \boxtimes 1 & \text{(multiplicative identity)} \\
+  &= b \boxtimes (a \boxtimes c) & \text{(substitution of hypothesis } 1 = a \boxtimes c \text{)} \\
+  &= (b \boxtimes a) \boxtimes c & \text{(multiplicative associativity)} \\
+  &= (a \boxtimes b) \boxtimes c & \text{(multiplicative commutativity)} \\
+  &= 1 \boxtimes c & \text{(substitution of hypothesis } a \boxtimes b = 1 \text{)} \\
+  &= c & \text{(multiplicative identity)} \\
+\end{aligned}$
+
+*Conclusion*: Since $b = c$ contradicts the assumption $b \neq c$, the assumption of non-uniqueness is false.
+
+*** (c) For any $\alpha, \beta, \gamma\in\mathbb{F}$, $\alpha \boxplus \gamma = \beta \boxplus \gamma$ implies $\alpha=\beta$.
+
+For $\alpha, \beta, \gamma \in \mathbb{F}$, assume $\alpha \boxplus \gamma = \beta \boxplus \gamma$. By the existence of an additive inverse, $\exists (-\gamma) \in \mathbb{F}$.
+
+$\begin{aligned}
+\alpha \boxplus \gamma &= \beta \boxplus \gamma & \text{(assumption)} \\
+(\alpha \boxplus \gamma) \boxplus (-\gamma) &= (\beta \boxplus \gamma) \boxplus (-\gamma) & \text{(well-definedness)} \\
+\alpha \boxplus (\gamma \boxplus (-\gamma)) &= \beta \boxplus (\gamma \boxplus (-\gamma)) & \text{(additive associativity)} \\
+\alpha \boxplus 0 &= \beta \boxplus 0 & \text{(additive inverse)} \\
+\alpha &= \beta & \text{(additive identity)} \\
+\end{aligned}$
+
+*Conclusion*:  $\alpha, \beta, \gamma\in\mathbb{F}, \alpha \boxplus \gamma = \beta \boxplus \gamma \implies \alpha=\beta$.
+
+*** (d) The implication $(\gamma \boxplus \alpha = \gamma \boxplus \beta) \Rightarrow (\alpha = \beta)$ holds for any $\alpha, \beta, \gamma\in\mathbb{F}$.
+
+Let $\alpha, \beta, \gamma \in \mathbb{F}$. Assume $\gamma \boxplus \alpha = \gamma \boxplus \beta$. Due to axiom of additive inverse, $\exists (-\gamma) \in \mathbb{F}$.
+
+$\begin{aligned}
+\gamma \boxplus \alpha &= \gamma \boxplus \beta & \text{(assumption)} \\
+\alpha \boxplus \gamma &= \gamma \boxplus \beta & \text{(additive commutativity on LHS)} \\
+\alpha \boxplus \gamma &= \beta \boxplus \gamma & \text{(additive commutativity on RHS)} \\
+(\alpha \boxplus \gamma) \boxplus (-\gamma) &= (\beta \boxplus \gamma) \boxplus (-\gamma) & \text{(well-defined operation)} \\
+\alpha \boxplus (\gamma \boxplus (-\gamma)) &= \beta \boxplus (\gamma \boxplus (-\gamma)) & \text{(additive associativity)} \\
+\alpha \boxplus 0 &= \beta \boxplus 0 & \text{(additive inverse)} \\
+\alpha &= \beta & \text{(additive identity)} \\
+\end{aligned}$
+
+Hence, $(\gamma \boxplus \alpha = \gamma \boxplus \beta) \Rightarrow (\alpha = \beta)$ holds for any $\alpha, \beta, \gamma\in\mathbb{F}$
+
+*** (e) The statements $\alpha \boxtimes \gamma = \beta \boxtimes \gamma$ and $\alpha=\beta$ are equivalent for any $\alpha,\beta\in\mathbb{F}$ and $\gamma\in\mathbb{F}\backslash\{0\}$.
+
+- $(\alpha \boxtimes \gamma = \beta \boxtimes \gamma) \Rightarrow (\alpha = \beta)$
+
+  Assume $\alpha \boxtimes \gamma = \beta \boxtimes \gamma$. Since $\gamma \in \mathbb{F} \textbackslash \left\{ 0 \right\}, \quad \exists \gamma^{-1} \in \mathbb{F}$.
+
+  $\begin{aligned}
+  \alpha \boxtimes \gamma &= \beta \boxtimes \gamma & \text{(assumption)} \\
+  (\alpha \boxtimes \gamma) \boxtimes (\gamma^{-1}) &= (\beta \boxtimes \gamma) \boxtimes (\gamma^{-1}) & \text{(well-defined operation)} \\
+  \alpha \boxtimes (\gamma \boxtimes (\gamma^{-1})) &= \beta \boxtimes (\gamma \boxtimes (\gamma^{-1})) & \text{(multiplicative associativity)} \\
+  \alpha \boxtimes 1 &= \beta \boxtimes 1 & \text{(multiplicative inverse)} \\
+  \alpha &= \beta & \text{(multiplicative identity)} \\
+  \end{aligned}$
+
+- $(\alpha = \beta) \Rightarrow (\alpha \boxtimes \gamma = \beta \boxtimes \gamma)$
+
+  $\begin{aligned}
+  \alpha &= \beta & \text{(assumption)} \\
+  \alpha \boxtimes \gamma &= \beta \boxtimes \gamma & \text{(well-defined operation)} \\
+  \end{aligned}$
+
+*Conclusion*: Since both expressions imply each other, they are equivalent.
+
+*** (f) Consider $\alpha,\beta,\gamma\in\mathbb{F}$ such that $\gamma\ne0$ and $\gamma \boxtimes \alpha = \gamma \boxtimes \beta$. Then $\alpha=\beta$.
+
+Assume $\gamma \boxtimes \alpha = \gamma \boxtimes \beta$. Since $\gamma \in \mathbb{F} \textbackslash \left\{ 0 \right\}, \quad \exists \gamma^{-1}$.
+
+$\begin{aligned}
+\gamma \boxtimes \alpha &= \gamma \boxtimes \beta & \text{(assumption)} \\
+\alpha \boxtimes \gamma &= \gamma \boxtimes \beta & \text{(multiplicative commutativity LHS)} \\
+\alpha \boxtimes \gamma &= \beta \boxtimes \gamma & \text{(multiplicative commutativity RHS)} \\
+(\alpha \boxtimes \gamma) \boxtimes \gamma^{-1} &= (\beta \boxtimes \gamma) \boxtimes \gamma^{-1} & \text{(well-defined operation)} \\
+\alpha \boxtimes (\gamma \boxtimes \gamma^{-1}) &= \beta \boxtimes (\gamma \boxtimes \gamma^{-1}) & \text{(multiplicative associativity)} \\
+\alpha \boxtimes 1 &= \beta \boxtimes 1 & \text{(multiplicative inverse)} \\
+\alpha &= \beta & \text{(multiplicative identity)} \\
+\end{aligned}$
+
+*Conclusion*: $\forall \alpha, \beta, \gamma \in \mathbb{F} : \gamma \neq 0 \quad (\gamma \boxtimes \alpha = \gamma \boxtimes \beta) \implies \alpha = \beta$.
+
+*** (g) Every $\alpha\in\mathbb{F}$ fulfills $0 \boxtimes \alpha = 0$. Hint: this statement expresses a non-symmetric relation between the two field operations, so the proof clearly has to use one or several of the field axioms that introduce dissimilarities of the operations.
+
+Let $\alpha \in \mathbb{F}$. Let $x = 0 \boxtimes \alpha$. By the existence of additive inverses $\exists (-x) \in \mathbb{F}$.
+
+$\begin{aligned}
+x &= 0 \boxtimes \alpha & \text{(assumption)} \\
+x &= (0 \boxplus 0) \boxtimes \alpha & \text{(additive identity substitution)} \\
+x &= (0 \boxtimes \alpha) \boxplus (0 \boxtimes \alpha) & \text{(distributive law)} \\
+x &= x \boxplus x & \text{(substitute x)} \\
+x \boxplus (-x) &= (x \boxplus x) \boxplus (-x) & \text{(well-defined operation)} \\
+0 &= (x \boxplus x) \boxplus (-x) & \text{(additive inverse on LHS)} \\
+0 &= x \boxplus (x \boxplus (-x)) & \text{(additive associativity on RHS)} \\
+0 &= x \boxplus 0 & \text{(additive inverse on RHS)} \\
+0 &= x & \text{(additive identity on RHS)} \\
+0 &= 0 \boxtimes \alpha & \text{(substitution on RHS)} \\
+\end{aligned}$
+
+*** (h) Let $-1$ denote the additive inverse of $1$ in $\mathbb{F}$. Then every $\alpha \in \mathbb{F}$ and the additive inverse $(-\alpha)$ of $\alpha$ satisfies $-\alpha=(-1) \boxtimes \alpha$. Does your solution prove the uniqueness of the additive inverses? Does your solution rely on the uniqueness of the additive inverses?
+
+$\begin{aligned}
+0 \boxtimes \alpha &= 0 & \text{(proved in part g)} \\
+(1 \boxplus (-1)) \boxtimes \alpha &= 0 & \text{(additive inverse substitution on LHS)} \\
+(1 \boxtimes \alpha) \boxplus ((-1) \boxtimes \alpha) &= 0 & \text{(distribution law on LHS)} \\
+(\alpha \boxtimes 1) \boxplus ((-1) \boxtimes \alpha) &= 0 & \text{(multiplicative commutativity on LHS)} \\
+(\alpha \boxtimes 1) \boxplus (\alpha \boxtimes (-1)) &= 0 & \text{(multiplicative commutativity on LHS)} \\
+\alpha \boxplus (\alpha \boxtimes (-1)) &= 0 & \text{(multiplicative identity on LHS)} \\
+(\alpha \boxplus (\alpha \boxtimes (-1))) \boxplus (-\alpha) &= 0 \boxplus (-\alpha) & \text{(well-defined operation)} \\
+(\alpha \boxplus (\alpha \boxtimes (-1))) \boxplus (-\alpha) &= (-\alpha) \boxplus 0 & \text{(additive commutativity on RHS)} \\
+(\alpha \boxplus (\alpha \boxtimes (-1))) \boxplus (-\alpha) &= (-\alpha) & \text{(additive identity on RHS)} \\
+((\alpha \boxtimes (-1)) \boxplus \alpha) \boxplus (-\alpha) &= (-\alpha) & \text{(additive commutativity on LHS)} \\
+(\alpha \boxtimes (-1)) \boxplus (\alpha \boxplus (-\alpha)) &= (-\alpha) & \text{(additive associativity on LHS)} \\
+(\alpha \boxtimes (-1)) \boxplus 0 &= (-\alpha) & \text{(additive inverse on LHS)} \\
+\alpha \boxtimes (-1) &= (-\alpha) & \text{(additive identity on LHS)} \\
+(-1) \boxtimes \alpha &= (-\alpha) & \text{(multiplicative commutativity on LHS)} \\
+\end{aligned}$
+
+1. No, it was proved in part a.
+2. Yes, it can be seen in the derivation.
+
+*** (i) Additive inversion is an /involution/: if $\beta$ is an additive inverse of $\alpha\in\mathbb{F}$ and $\gamma$ is an additive inverse of $\beta$, then $\alpha=\gamma$. Hint: consider the expression $\alpha \boxplus \beta \boxplus \gamma$.
+
+$\begin{aligned}
+\alpha \boxplus \beta \boxplus \gamma &= \alpha \boxplus (\beta \boxplus \gamma) & \text{(base)} \\
+&= \alpha \boxplus (\beta \boxplus (-\beta)) & \text{(substitution of } \gamma = (-\beta) \text{ assumption)} \\
+&= \alpha \boxplus 0 & \text{(additive inverse)} \\
+&= \alpha & \text{(additive identity)} \\
+\end{aligned}$
+
+$\begin{aligned}
+\alpha \boxplus \beta \boxplus \gamma &= (\alpha \boxplus \beta) \boxplus \gamma & \text{(base)} \\
+&= (\alpha \boxplus (-\alpha)) \boxplus \gamma & \text{(substitution of } \beta = (-\alpha) \text{ assumption)} \\
+&= 0 \boxplus \gamma & \text{(additive inverse)} \\
+&= \gamma & \text{(additive identity)} \\
+\end{aligned}$
+
+By the *addition associativity*, $(\alpha \boxplus \beta) \boxplus \gamma = \alpha \boxplus (\beta \boxplus \gamma)$. Hence, $\alpha = \gamma \implies$ involution nature of the inverse of the inverse.
+
+* Problem 3
+** Task
+Discrete cosine and Fourier transforms
+
+Introduction. In several exercise sheets, we will be exploring the discrete cosine and Fourier transforms (DCTs and DFT). Apart from being intimately connected with and serving as approximations to the (real) trigonometric and (complex) Fourier series, which you will study in the Analysis course, such transforms are instrumental for interpolation with trigonometric and algebraic polynomials (we will come to that later in the course). That makes them an important topic in numerical mathematics and numerous applications, including signal and image processing. In fact, you must have been unwittingly using DCT-II daily for a long time now: the transform underlies the JPEG standard for image compression and the MPEG and H.26x standards for video compression.
+
+In this assignment, we start with the DFT and investigate the similarity in how the DFT maps the two halves of the input column vector into the two halves of the output column vector. This will later lead us a fast DFT algorithm, known as the fast Fourier transform (FFT). The somewhat more modern term quantum Fourier transform (QFT) refers to a realization of the same FFT algorithm on a quantum computer. Apart from the challenges associated with quantum hardware and from the unfortunate notations favored by physicists due to historical reasons, the QFT algorithm itself has nothing quantum in it and perfectly falls into the scope of our course.
+
+To the point. For a data dimension $n\in\mathbb{N}$, the DFT involves the matrix $F\in\mathbb{C}^{n\times n}$ defined entrywise as follows:
+$$F_{ij}=\exp[i\frac{2\pi}{n}(i-1)(j-1)] \text{ for all } i,j\in\{1,...,n\}, \quad (1)$$
+where $i$ is the imaginary unit (see § 1.2 in the lecture notes).
+
+For $m\in\mathbb{N}$ and $n=2m,$ we consider the matrix $F\in\mathbb{C}^{n\times n}$ given by (1). Our goal is to relate this matrix to the smaller matrix $\hat{F}\in\mathbb{C}^{m\times m}$ given by (1) with $m$ in place of $n$. To this end, we select four submatrices of size $m\times m$ in $F$ as follows. For all $\alpha,\beta\in\{1,2\}$ the submatrices $F_{\alpha\beta}$ are formed by the $m$ odd (for $\alpha=1$) or by the $m$ even (for $\alpha=2$) rows and by the first $m$ (for $\beta=1)$ or by the last $m(\beta=2)$ columns of $F$. In each case, the rows and columns are selected in the original order, as they follow in $F$. Formalizing this definition is part of this exercise.
+
+For every $k\in\{1,...,m\}$, we set
+$$e_{k}=\exp\frac{i\pi(k-1)}{m} \quad (2)$$
+
+(a) Verify the following equalities for all $k,j\in\{1,...,m\}$
+$$(F_{11})_{kj}=\hat{F_{kj}} \quad (3a)$$
+$$(F_{21})_{kj}=e_{j}\cdot\hat{F_{kj}} \quad (3b)$$
+$$(F_{12})_{kj}=(F_{11})_{kj}, \quad (3c)$$
+$$(F_{22})_{kj}=-(F_{21})_{kj}. \quad (3d)$$
+Hint: rewrite (3a)-(3d) for arbitrary $k,j\in\{1,...,m\}$ in an equivalent explicit form not using the matrices introduced above. Prove the resulting equalities for arbitrary $k, j\in\{1,...,m\}$ using properties of the complex exponential function (see § 1.2(vii) in the lecture notes).
+
+(b) Rewrite equalities of (3a)-(3d) with $k,j\in\{1,...,m\}$ as four matrix equalities (involving matrix multiplication and auxiliary matrices where necessary but not involving individual entries) expressing $F_{11}$, $F_{21}$, $F_{12}$ and $F_{22}$ in terms of $\hat{F}$.
+
+(c) Implement a Julia function dft matrix that, for any (reasonable) $l\in\mathbb{N}$ produces the DFT matrix $F=$ dft matrix(l) of order $n=2^{l}$ as defined by (1).
+
+(d) For $l=3$, $n=2^{l}$ and $m=2^{l-1}$, use dft matrix to form the DFT matrices $F$ and $\hat{F}$ of orders $n$ and $m$, extract the submatrices $F_{11},$ $F_{21}$, $F_{12}$ and $F_{22}$ of $F$ and verify (3a)-(3d). Hint: to verify that two matrices are equal, you can evaluate their difference and use the function norm from the package LinearAlgebra.
+
+(e) Repeat part (d) for $l=8$
+
+** Notes
+
+** Solution
+#+begin_src julia :results value :export both :tangle julia/p_3.jl
+
+#+end_src

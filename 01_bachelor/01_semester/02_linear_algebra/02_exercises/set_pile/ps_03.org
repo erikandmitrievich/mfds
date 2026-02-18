@@ -1,0 +1,139 @@
+#+title: Ps 03
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-02-17>
+#+lastmod: <2026-02-17 12:09>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* Problem 7
+** Task
+#+begin_quote
+(33) Discrete cosine transforms: multilevel structure
+
+We continue the treatment of discrete cosine transforms. In this problem, you will practice:
+matrix notations (§ II.3.i) and some patterned matrices (Definition II.3.8) in parts (b), (e);
+permutation matrices in parts (b) and (f);
+linear operations on matrices and their properties (Definition II.3.4 and II.3.5, Proposition II.3.7) in part (j);
+matrix multiplication (Definition II.4.3 and Remark II.4.5) in parts (b), (d), (e), (h), (j);
+matrix transposition (Definition II.3.12) in parts (h) and (j);
+matrix inversion (Definition II.4.14) in parts (c) and (g);
+implementation in Julia in parts (k) and (l);
+trigonometry!
+
+Pay attention to notational differences from Problem 3.
+Some DCTs of order $n\in\mathbb{N}$ involve the matrices $B, C\in\mathbb{R}^{n\times n}$ given by
+$B_{ij}=\cos[\frac{\pi}{n}(i-\frac{1}{2})(j-\frac{1}{2})]$ and $C_{ij}=\cos[\frac{\pi}{n}(i-\frac{1}{2})(j-1)]$ (1)
+for all $i,j\in\{1,...,n\}$ .
+
+For $n\in\mathbb{N}$ we consider the matrices $B, C\in\mathbb{R}^{n\times n}$ given by (1) and the matrices $\hat{B}$, $\hat{C}\in\mathbb{R}^{2n\times2n}$ defined analogously, with $2n$ in place of $n$ in (1).
+Our goal is to relate the larger matrices $\hat{B}$ and $\hat{C}$ to the smaller matrices $B$ and $C$. To this end, we select four submatrices of size $n\times n$ in each of $\hat{B}$ and $\hat{C}$ as follows. For all $\alpha,\beta\in\{1,2\}$, the submatrices $\tilde{B}_{\alpha\beta}$ and $\tilde{C}_{\alpha\beta}$ (note Remark II.3.3 in the lecture notes) are formed by the first $n$ (for $\alpha=1$) or by the last $n$ ($\alpha=2$) rows and by the $n$ odd (for $\beta=1$) or by the $n$ even (for $\beta=2$) columns of $\hat{B}$ and $\hat{C}$, respectively.
+In each case, the rows and columns are selected in the original order, as they follow in $\hat{B}$ and $\hat{C}$ .
+
+We will use several auxiliary matrices, the first of which is the matrix $A\in\mathbb{R}^{n\times n}$ given by
+$A_{ij}=-\sin[\frac{\pi}{n}(i-\frac{1}{2})j]$ for all $i,j\in\{1,...,n\}$. (2)
+
+Note: binary (yes-no) questions require justified answers (proofs) unless the contrary is explicitly stated.
+
+(a) This problem is in part concerned with the verification of trigonometric equalities, and that work will be split among the students.
+Use the following table to identify your team on the basis of your name (as it is known to u:space).
+
+The following table:
+| | last name starts with A-K | last name starts with L-Z |
+|---|---|---|
+| first name starts with A-K | Team 11 | Team 12 |
+| first name starts with L-Z | Team 21 | Team 22 |
+
+Do not get carried away by the idea of teamwork: your solutions should be your own, and teamwork should take place at the exercise-group meeting .
+
+(b) Let $J\in\mathbb{R}^{n\times n}$ be the permutation matrix associated with the permutation $(n,n-1,...,2,1)$ of $\{1,...,n\}$ see Example II.4.40 and Definition II.4.42 in the lecture notes. Express the matrix $J$ entrywise (with ellipses) in the square-bracket notation (see the display equation in Remark II.4.8 for an example).
+
+(c) Is the matrix $J$ invertible? If yes, find its inverse.
+
+(d) Give explicit expressions for the entries of the matrices $J\tilde{B}_{21}$ and $J\tilde{B}_{22}$.
+Give explicit expressions for the entries of the matrices $J\tilde{C}_{21}$ and $J\tilde{C}_{22}$ .
+
+(e) Let $S\in\mathbb{R}^{n\times n}$ be a matrix of downward one-position shift:
+$S\begin{bmatrix}x_{1}\\ x_{2}\\ \vdots\\ x_{n-1}\\ x_{n}\end{bmatrix}=\begin{bmatrix}0\\ x_{1}\\ \vdots\\ x_{n-2}\\ x_{n-1}\end{bmatrix}$ for each $x=[x_{j}]_{j=1}^{n}\in\mathbb{R}^{n}$.
+Is such a matrix $S$ unique or not?
+Find one such a matrix $S$ and express it entrywise (with ellipses) in the square-bracket notation (see the display equation in Remark II.4.8 for an example) .
+
+(f) Is the matrix $S$ you found in part (e) a permutation matrix? If yes, give the associated permutation.
+
+(g) Is the matrix $S$ you found in part (e) invertible? If yes, find its inverse.
+
+(h) Give explicit expressions for the entries of the matrices $CS$ and $AS^{\top}$.
+
+(i) Of the following equalities, prove the one assigned to your team.
+(Team 11) $\tilde{C}_{11}=C$
+(Team 21) $J\tilde{C}_{21}=C$
+(Team 12) $\tilde{C}_{12}=B$
+(Team 22) $J\tilde{C}_{22}=-B$
+
+(j) Of the following equalities, prove the one assigned to your team, with suitable diagonal matrices $X, Y\in\mathbb{R}^{n\times n}$.
+(Team 21) $\tilde{B}_{11}=XC+YAS^{\top}$
+(Team 11) $J\tilde{B}_{21}=YC-XAS^{\top}$
+(Team 22) $\tilde{B}_{12}=XCS-YA$
+(Team 12) $J\tilde{B}_{22}=YCS+XA$
+
+Hint. Let us look at the right-hand side matrices of the above equalities.
+Note that, due to (1) and (2), for every $j\in\{1,...,n\}$, the entries in the $j$th columns of $C$ and $A$ are cosines and sines of multiples of $j-1$ and $j$, respectively (by the way, think what similar statement you can make regarding $AS^{\top}$ and $CS$).
+So you may want to use trigonometric identities (see Problem 6 for a sufficient set of such identities) to express the entries in the $j$th columns of the left-hand side matrices from the above equalities as trigonometric functions of $(*)+(**)$, where $(*)$ denotes multiples of $j-1$ (for $\tilde{B}_{11}$ and $J\tilde{B}_{21}$) or of $j$ (for $\tilde{B}_{12}$ and $J\tilde{B}_{22}$) and $(**)$ denotes quantities independent of $j$, and then apply suitable identities to split $(*)$ and $(**) $.
+
+(k) Verify all the four equalities of part (i) in Julia for $n=100$ and for $n=101$.
+
+(l) Using the matrices $X$ and $Y$ that you found in (your assigned equality of) part (j), verify all the four equalities of part (j) in Julia for $n=100$ and for $n=101$.
+
+Side remark: high-school mathematics establishes a bad reputation for trigonometry, but see what a symmetry in $\hat{B}$ it reveals here!
+#+end_quote
+
+** Notes
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_7.jl
+#+end_src
+* Problem 8
+** Task
+#+begin_quote
+Permutation matrices
+
+(a) Let $n\in\mathbb{N}$ and $\Pi\in\mathbb{F}^{n\times n}$ be a permutation matrix. In terms of matrix multiplication, prove that there exist unique indices $\pi_{k}\in\{k,...,n\}$ with $k\in\{1,...,n\}$ such that $\Pi=\Pi_{n}\cdot\cdot\cdot \Pi_{1}$ where each $\Pi_{k}$ with $k\in\{1,...,n\}$ is the $(k,\pi_{k})$ -exchange matrix of order $n$ (see Definition II.4.44).
+
+(b) Count the number of permutation matrices of order $n\in\mathbb{N}$.
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 9
+** Task
+#+begin_quote
+Small data and big data
+
+Let $n\in\mathbb{N}$ be such that $n\ge2025$. For each of the following matrices, find a rank-$r$ factorization with the least possible $r\in\mathbb{N}$ and prove $r$ to be the least possible.
+Hint: to show the minimality of a factorization rank $r\in\mathbb{N}$, assume that a factorization of rank $r-1$ exists and arrive at a contradiction.
+
+(a) $A=\begin{bmatrix}1&0\\ 0&0\end{bmatrix}\in\mathbb{R}^{2\times2}$
+
+(b) $A=\begin{bmatrix}-1&1\\ 0&1\end{bmatrix}\in\mathbb{R}^{2\times2}$
+
+(c) $A\in\mathbb{R}^{n\times n}$ given by $A_{ij}=i$ for all $i,j\in\{1,...,n\}$.
+
+(d) $A\in\mathbb{R}^{n\times n}$ given by $A_{ij}=i-j$ for all $i,j\in\{1,...,n\}.$
+
+(e) $A\in\mathbb{R}^{n\times n}$ given by
+$A_{ij}=i^{2}+\cos\frac{\pi j}{n}-\cos\frac{\pi i}{n}$
+for all $i, j\in\{1,...,n\}$
+#+end_quote
+
+** Notes
+
+** Solution

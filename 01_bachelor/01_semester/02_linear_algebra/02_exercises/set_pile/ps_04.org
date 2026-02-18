@@ -1,0 +1,757 @@
+#+title: Ps 04
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-01-13>
+#+lastmod: <2026-01-15 22:43>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* Problem 10 (a) :DONE:
+** Task
+#+begin_quote
+In this exercise, we work over the field $\mathbb{R}$. Consider
+$A=\begin{bmatrix}2&1&-1\\ 4&5&-3\\ -2&5&-2\end{bmatrix}\in\mathbb{R}^{3\times3}$,
+$b=\begin{bmatrix}1\\ 7\\ 3\end{bmatrix}\in\mathbb{R}^{3}$.
+Perform Gaussian elimination on the system $Ax=b$ without row exchanges. Show explicitly how you eliminate the entries below the diagonal in the first and second columns, and write down the resulting upper-triangular matrix $U$.
+#+end_quote
+
+** Solution
+
+\begin{align*}
+        \begin{bmatrix}
+                2&1&-1\\
+                4&5&-3\\
+                -2&5&-2
+        \end{bmatrix}
+        \times
+        \begin{bmatrix}
+                x_{1}\\
+                x_{2}\\
+                x_{3}
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+                1\\
+                7\\
+                3
+        \end{bmatrix}
+\end{align*}
+
+$$[A \mid b] =
+\left[\begin{array}{ccc|c}
+2 & 1 & -1 & 1 \\
+4 & 5 & -3 & 7 \\
+-2 & 5 & -2 & 3
+\end{array}\right]$$
+
+- *Step 1: Eliminate Column 1*
+  *Pivot*: $a_{11} = 2$.
+
+  - *Row 2 Operation*: $R_{2} \leftarrow R_{2} - (2) \times R_{1}$
+
+    $$\begin{aligned}
+        \text{Row 2: } & \left[ 4, 5, -3 \mid 7 \right] \\
+        -(2) \times \text{Row 1: } & \left[ -4, -2, 2 \mid -2 \right] \\
+        \hline
+        \text{New Row 2: } & [0, 3, -1 \mid 5] \\
+    \end{aligned}$$
+
+  - *Row 3 Operation*: $R_{3} \leftarrow R_{3} - (-1) \times R_{1}$
+
+    $$\begin{aligned}
+        \text{Row 3: } & \left[ -2, 5, -2 \mid 3 \right] \\
+        -(-1)\text{Row 1: } & \left[ 2, 1, -1 \mid 1 \right] \\
+        \hline
+        \text{New Row 3: } & [0, 6, -3 \mid 4] \\
+    \end{aligned}$$
+
+*Current Augmented Matrix*:
+
+$$\begin{align*}
+        \left[\begin{array}{ccc|c}
+        2 & 1 & -1 & 1 \\
+        0 & 3 & -1 & 5 \\
+        0 & 6 & -3 &4
+        \end{array}\right]
+\end{align*}$$
+
+
+- *Step 2: Eliminate Column 2*
+  *Pivot*: $a_{22} = 3$.
+
+  - *Row 3 Operation*: $R_{3} \leftarrow R_{3} - (2) \times R_{2}$
+
+    $$\begin{aligned}
+        \text{Row 3: } & \left[ 0, 6, -3 \mid 4 \right] \\
+        -(2) \times \text{Row 2: } & \left[ 0, -6, 2 \mid -10 \right] \\
+        \hline
+        \text{New Row 3: } & [0, 0, -1 \mid -6] \\
+    \end{aligned}$$
+
+*Final Upper Triangular Form*:
+
+$$\begin{align*}
+        \left[\begin{array}{ccc|c}
+        2 & 1 & -1 & 1 \\
+        0 & 3 & -1 & 5 \\
+        0 & 0 & -1 & -6
+        \end{array}\right]
+\end{align*}$$
+
+*Upper Triangular Matrix U*:
+
+$$U = \begin{bmatrix}
+        2 & 1 & -1 \\
+        0 & 3 & -1 \\
+        0 & 0 & -1
+      \end{bmatrix}$$
+
+* Problem 10 (b) :DONE:
+** Task
+#+begin_quote
+Let $m_{21}$, $m_{31}$ be the multipliers used to eliminate the entries in the first column, and let $m_{32}$ be the multiplier used to eliminate the (3, 2)-entry after the first elimination step.
+Form the unit lower-triangular matrix
+$L=\begin{bmatrix}1&0&0\\ m_{21}&1&0\\ m_{31}&m_{32}&1\end{bmatrix}$
+Verify that your matrices satisfy $A=LU$.
+#+end_quote
+
+** Solution
+
+From the row operations in Part (a), we identify the multipliers:
+$$ m_{21} = 2, \quad m_{31} = -1, \quad m_{32} = 2 $$
+
+Constructing $L$:
+$$
+L = \begin{bmatrix}
+1 & 0 & 0 \\
+m_{21} & 1 & 0 \\
+m_{31} & m_{32} & 1
+\end{bmatrix}
+= \begin{bmatrix}
+1 & 0 & 0 \\
+2 & 1 & 0 \\
+-1 & 2 & 1
+\end{bmatrix}
+$$
+
+We verify the decomposition by computing the product $LU$:
+
+
+\begin{aligned}
+LU &= \begin{bmatrix}
+1 & 0 & 0 \\
+2 & 1 & 0 \\
+-1 & 2 & 1
+\end{bmatrix}
+\begin{bmatrix}
+2 & 1 & -1 \\
+0 & 3 & -1 \\
+0 & 0 & -1
+\end{bmatrix} \\
+&= \begin{bmatrix}
+(1)(2) & (1)(1) & (1)(-1) \\
+(2)(2) & (2)(1) + (1)(3) & (2)(-1) + (1)(-1) \\
+(-1)(2) & (-1)(1) + (2)(3) & (-1)(-1) + (2)(-1) + (1)(-1)
+\end{bmatrix} \\
+&= \begin{bmatrix}
+2 & 1 & -1 \\
+4 & 5 & -3 \\
+-2 & 5 & -2
+\end{bmatrix} \\
+&= A \quad \checkmark
+\end{aligned}
+
+* Problem 10 (c) :DONE:
+** Task
+#+begin_quote
+Solve $Ax=b$ using the factorization $A=LU$ by (i) solving $Ly=b$ for $y$ (forward substitution) and then (ii) solving $Ux=y$ for $x$ (backward substitution). Present your intermediate vector $y$ and the final solution $x$.
+#+end_quote
+
+** Solution
+
+We solve $Ax=b$ by using the decomposition $A=LU$. This allows us to solve two triangular systems:
+\begin{align*}
+Ly &= b \quad \text{(where }y = Ux \text{)} \\
+Ux &= y
+\end{align*}
+
+- *(i) Forward Substitution* ($Ly=b$)
+
+  We set up the system:
+
+  \begin{align*}
+        \begin{bmatrix}
+                1  & 0 & 0 \\
+                2  & 1 & 0 \\
+                -1 & 2 & 1
+        \end{bmatrix}
+        \begin{bmatrix}
+                y_1 \\
+                y_2 \\
+                y_3
+        \end{bmatrix}
+        &=
+        \begin{bmatrix}
+                1 \\
+                7 \\
+                3
+        \end{bmatrix} \\
+  \end{align*}
+
+  From the first row:
+  $$ y_1 = 1 $$
+
+  From the second row:
+  $$ 2y_1 + y_2 = 7 \implies 2(1) + y_2 = 7 \implies y_2 = 5 $$
+
+  From the third row:
+  $$ -1y_1 + 2y_2 + y_3 = 3 \implies -1(1) + 2(5) + y_3 = 3 \implies 9 + y_3 = 3 \implies y_3 = -6 $$
+
+  The intermediate vector is:
+  $$ y = \begin{bmatrix} 1 \\ 5 \\ -6 \end{bmatrix} $$
+
+- *(ii) Backward Substitution* ($Ux=y$)
+  We now solve for $x$:
+
+  \begin{align*}
+        \begin{bmatrix}
+                2 & 1 & -1 \\
+                0 & 3 & -1 \\
+                0 & 0 & -1
+        \end{bmatrix}
+        \begin{bmatrix} x_{1} \\ x_{2} \\ x_{3} \end{bmatrix}
+        &=
+        \begin{bmatrix} 1 \\ 5 \\ -6 \end{bmatrix} \
+  \end{align*}
+
+  From the third row:
+  $$ -1x_3 = -6 \implies x_3 = 6 $$
+
+  From the second row:
+  $$ 3x_2 - x_3 = 5 \implies 3x_2 - 6 = 5 \implies 3x_2 = 11 \implies x_2 = \frac{11}{3} $$
+
+  From the first row:
+  $$ 2x_1 + x_2 - x_3 = 1 \implies 2x_1 + \frac{11}{3} - 6 = 1 $$
+  $$ 2x_1 - \frac{7}{3} = 1 \implies 2x_1 = \frac{10}{3} \implies x_1 = \frac{5}{3} $$
+
+  *Final Solution*
+  $$
+  x = \begin{bmatrix} 5/3 \\ 11/3 \\ 6 \end{bmatrix}
+  $$
+
+* Problem 10 (d) :DONE:
+** Task
+#+begin_quote
+(Programming, Julia) Implement two Julia functions =forward_substitution(L,b)= and =backward_substitution(U,y)= that solve $Ly=b$ band $Ux=y$ for triangular matrices of compatible sizes. Use your code to solve the system from this exercise and verify that your result agrees with Julia's A b.
+#+end_quote
+
+** Solution
+#+begin_src julia :results output :exports both :tangle julia/p_10_d.jl
+is_compatible(m_1, m_2) = size(m_1, 2) == size(m_2, 1)
+
+multiply(row, column) = row' * column
+
+function forward_substitution(L, b)
+    if !is_compatible(L, b)
+        error("Matrix Dimensions Mismatch.")
+    end
+
+    n = size(L, 1)
+
+    x = zeros(Float64, n)
+
+    for i in 1:n
+        sum_val = b[i]
+        for j in 1:(i-1)
+            sum_val -= L[i, j] * x[j]
+        end
+        x[i] = sum_val / L[i, i]
+    end
+    return x
+end
+
+function backward_substitution(U, y)
+    if !is_compatible(U, y)
+        error("Matrix Dimensions Mismatch.")
+    end
+
+    n = size(U, 1)
+
+    x = zeros(Float64, n)
+
+    for i in n:-1:1
+        sum_val = y[i]
+        for j in (i+1):n
+            sum_val -= U[i, j] * x[j]
+        end
+        x[i] = sum_val / U[i, i]
+    end
+    return x
+end
+
+L = [ 1  0  0;
+      2  1  0;
+     -1  2  1]
+
+U = [ 2  1 -1;
+      0  3 -1;
+      0  0 -1]
+
+b = [ 1;
+      7;
+      3]
+
+y = forward_substitution(L, b)
+x = backward_substitution(U, y)
+
+println("Intermediate vector y: ", y)
+println("Final solution x: ", x)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+is_compatible (generic function with 1 method)
+multiply (generic function with 1 method)
+forward_substitution (generic function with 1 method)
+backward_substitution (generic function with 1 method)
+3×3 Matrix{Int64}:
+  1  0  0
+  2  1  0
+ -1  2  1
+3×3 Matrix{Int64}:
+ 2  1  -1
+ 0  3  -1
+ 0  0  -1
+3-element Vector{Int64}:
+ 1
+ 7
+ 3
+3-element Vector{Float64}:
+  1.0
+  5.0
+ -6.0
+3-element Vector{Float64}:
+ 1.6666666666666667
+ 3.6666666666666665
+ 6.0
+Intermediate vector y: [1.0, 5.0, -6.0]
+Final solution x: [1.6666666666666667, 3.6666666666666665, 6.0]
+#+end_example
+
+* Problem 11 (a) :DONE:
+** Task
+#+begin_quote
+Tall system. Consider
+$U=\begin{bmatrix}1&2&-1\\ 0&1&3\\ 0&0&2\\ 0&1&1\end{bmatrix}\in\mathbb{R}^{4\times3}$ $y=\begin{bmatrix}y_{1}\\ y_{2}\\ y_{3}\\ y_{4}\end{bmatrix}\in\mathbb{R}^{4}$
+Write
+$U=\begin{bmatrix}U_{1}\\ U_{2}\end{bmatrix}$
+with $U_{1}\in\mathbb{R}^{3\times3}$ and $U_{2}\in\mathbb{R}^{1\times3}$. Derive a necessary and sufficient condition on $y$ for the system
+$$Uz=y$$
+to have a solution $z\in\mathbb{R}^{3}$, and express the (necessarily unique) solution $z$ in terms of $y_{1}$, $y_{2}$, $y_{3}$ Then check your condition for the concrete right-hand side
+$$y=\begin{bmatrix}2\\ 1\\ 3\\ -2\end{bmatrix}$$
+#+end_quote
+
+** Solution
+
+- *Step 1: Foundation.*
+
+  Given:
+
+  $$U=\begin{bmatrix}1&2&-1\\ 0&1&3\\ 0&0&2\\ 0&1&1\end{bmatrix}\in\mathbb{R}^{4\times3} \qquad y=\begin{bmatrix}y_{1}\\ y_{2}\\ y_{3}\\ y_{4}\end{bmatrix}\in\mathbb{R}^{4}$$
+
+  \begin{align*}
+  U = \begin{bmatrix} U_{1} \\ U_{2} \end{bmatrix} \\
+  \implies U_{1} &= \begin{bmatrix} 1&2&-1\\ 0&1&3\\ 0&0&2 \end{bmatrix} \\
+           U_{2} &= \begin{bmatrix} 0&1&1 \end{bmatrix} \\
+  \end{align*}
+
+  Since $U_{1}$ is an Upper Triangle Matrix and has non-zero entries on diagonal, it is invertable. Which implies $\exists z : U_{1}z = \left[ y_1, y_2, y_3 \right]^{\top}$ has a unique solution.
+
+- *Step 2: Find Unique $z$ Candidate (Back Substitution).*
+
+  Given:
+
+  $$\begin{bmatrix} 1&2&-1\\ 0&1&3\\ 0&0&2 \end{bmatrix} \begin{bmatrix} z_{1}\\ z_{2}\\ z_{3} \end{bmatrix} = \begin{bmatrix} y_{1}\\ y_{2}\\ y_{3} \end{bmatrix}$$
+
+  - *Sub-Step 1: Solve for the 3rd Row.*
+
+    \begin{aligned}
+        2z_3 = y_3 \implies z_3 = \frac{1}{2} y_3 \\
+    \end{aligned}
+
+  - *Sub-Step 2: Solve for the 2nd Row.*
+
+    \begin{aligned}
+        z_2 + 3z_3 = y_2 &\implies z_2 + 3\left(\frac{1}{2}y_3\right) = y_2 \\
+                         &\implies z_2 + \frac{3}{2}y_3 = y_2 \\
+                         &\implies z_2 = y_2 - \frac{3}{2}y_3 \\
+    \end{aligned}
+
+  - *Sub-Step 3: Solve for the 1st Row.*
+
+    \begin{aligned}
+        z_1 + 2z_2 - z_3 = y_1 &\implies z_1 + 2\left(y_2 - \frac{3}{2}y_3\right) - \left(\frac{1}{2} y_3\right) = y_1 \\
+                               &\implies z_1 + 2y_2 - 3y_3 - \frac{1}{2} y_3 = y_1 \\
+                               &\implies z_1 + 2y_2 - \frac{7}{2}y_3 = y_1 \\
+                               &\implies z_1 = y_1 - 2y_2 + \frac{7}{2}y_3 \\
+    \end{aligned}
+
+  Hence, the final candidate solution:
+
+  $$z = \begin{bmatrix} y_1 - 2y_2 + \frac{7}{2}y_3 \\ y_2 - \frac{3}{2}y_3 \\ \frac{1}{2} y_3 \end{bmatrix}$$
+
+- *Step 3: Derive the Condition ($U_2z = y_4$).*
+
+  For a system to have a solution, the candidate $z$ must satisfy:
+
+  $$\begin{bmatrix} 0 & 1 & 1 \end{bmatrix} \begin{bmatrix} z_{1} \\ z_{2} \\ z_{3} \end{bmatrix} = y_4$$
+
+  Which simplifies to:
+
+  $$z_{2} + z_{3} = y_{4}$$
+
+  $$y_2 - \frac{3}{2}y_3 + \frac{1}{2} y_3 = y_{4} \quad \text{(} z_{2}, z_{3} \text{ substitution)}$$
+
+  $$\implies y_2 - y_3 = y_{4}$$
+
+  *The Necessary and Sufficient Condition*:
+
+  $$y_2 - y_3 - y_4 = 0$$
+
+- *Step 4: Validate with the Vector $y$.*
+
+  Given:
+
+  $$y=\begin{bmatrix}2\\ 1\\ 3\\ -2\end{bmatrix}$$
+
+  Indexing:
+
+  \begin{align*}
+        y_{1} &= 2 \\
+        y_{2} &= 1 \\
+        y_{3} &= 3 \\
+        y_{4} &= -2 \\
+  \end{align*}
+
+  - *Validate the Condition*:
+
+    $$y_2 - y_3 - y_4 = 1 - 3 - (-2) = 0$$
+
+    The condition holds.
+
+  - *Calculate Solution*:
+
+    \begin{align*}
+        z_3 &= \frac{1}{2} y_3 = \frac{1}{2} \cdot 3 = \frac{3}{2} \\
+        z_2 &= y_2 - \frac{3}{2}y_3 = 1 - \frac{3}{2} \cdot 3 = 1 - \frac{9}{2} = -\frac{7}{2} \\
+        z_1 &= y_1 - 2y_2 + \frac{7}{2}y_3 = 2 - 2 \cdot 1 + \frac{7}{2} \cdot 3 = \frac{21}{2} \\
+    \end{align*}
+
+  - *Final Solution*:
+
+    $$z = \begin{bmatrix} \frac{21}{2} \\ -\frac{7}{2} \\ \frac{3}{2} \end{bmatrix}$$
+
+* Problem 11 (b) :DONE:
+** Task
+#+begin_quote
+Discuss why the solution to the system $Uz=y$ is necessarily unique.
+#+end_quote
+
+** Solution
+
+- 1. *Uniqueness of a Sub-system.*
+
+  Since the sub-matrix $U_{1}$ is upper-triangular with non-zero entries on diagonal, the columns of $U_{1}$ are linearly independent. Thus, the system $U_{1}z = \left[ y_1, y_2, y_3 \right]^{\top}$ holds for exactly one unique solution, which I will further call $z^{*}$.
+
+- 2. *The Constraint Argument.*
+
+  The solution set for a whole system $Uz = y$ must be a subset of the solution set for the first three rows.
+
+  - The first three rows force the solution $z$ to be exaclty $z^{*}$.
+
+  - The fourth row ($U_{4}$) acts as a contraint.
+
+  - Thus, the whole system has either *exactly one* solution (if $z^{*}$ satisfies the fourth row) or *no* solution (if it does not).
+
+  - It is impossible for it to have infinite solutions or a second solution, because any solution must be $z^*$.
+
+*Summary*: Because the columns of the top block $U_1$ are linearly independent, the columns of the entire matrix $U$ are also linearly independent. A matrix with linearly independent columns always yields a necessarily unique solution (if one exists).
+
+* Problem 11 (c) :DONE:
+** Task
+#+begin_quote
+Wide system. Consider
+$W=\begin{bmatrix}1&2&1&0\\ 0&1&-1&3\end{bmatrix}\in\mathbb{R}^{2\times4};$
+$z=\begin{bmatrix}z_{1}\\ z_{2}\end{bmatrix}\in\mathbb{R}^{2}$.
+Partition $W=\begin{bmatrix}W_{1}&W_{2}\end{bmatrix}$ with $W_{1}\in\mathbb{R}^{2\times2}$ and $W_{2}\in\mathbb{R}^{2\times2}$ and similarly split $x=$
+$\begin{bmatrix}x^{(1)}\\ x^{(2)}\end{bmatrix}$
+with $x^{(1)}\in\mathbb{R}^{2}$ and $x^{(2)}\in\mathbb{R}^{2}$. Express the full solution set
+$\{x\in\mathbb{R}^{4}:Wx=z\}$
+in terms of the free variables $x^{(2)}$. For the concrete right-hand side $z=\begin{bmatrix}5\\ 1\end{bmatrix}$ provide two distinct solutions.
+#+end_quote
+
+** Solution
+
+- *Step 1: Foundation.*
+
+  Given:
+
+  \begin{align*}
+        W &= \begin{bmatrix} 1 & 2 & 1 & 0 \\ 0 & 1 & -1 & 3 \end{bmatrix}, \quad z = \begin{bmatrix} z_{1} \\ z_{2} \end{bmatrix} \\
+        W &= \left[ W_1, W_2 \right] \\
+        \implies W_{1} &= \begin{bmatrix} 1 & 2 \\ 0 & 1 \end{bmatrix} \\
+                 W_{2} &= \begin{bmatrix} 1 & 0 \\ -1 & 3 \end{bmatrix} \\
+  \end{align*}
+
+  \begin{align*}
+        x &= \begin{bmatrix} x_{1} \\ x_{2} \\ x_{3} \\ x_{4} \end{bmatrix} \\
+        x &= \begin{bmatrix} x^{(1)} \\ x^{(2)} \end{bmatrix} \\
+        \implies x^{(1)} &= \begin{bmatrix} x_{1} \\ x_{2} \end{bmatrix} \\
+                 x^{(2)} &= \begin{bmatrix} x_{3} \\ x_{4} \end{bmatrix} \\
+  \end{align*}
+
+  Equation given:
+
+  \begin{align*}
+        Wx &= z \\
+        \begin{bmatrix} W_1 & W_2 \end{bmatrix} \begin{bmatrix} x^{(1)} \\ x^{(2)} \end{bmatrix} &= z \quad \text{(substituting partitions)} \\
+        W_1 x^{(1)} + W_2 x^{(2)} &= z \\
+        W_1 x^{(1)} &= z - W_2 x^{(2)} \quad \text{(as } z \in \mathbb{R}^{2} \wedge W_2 x^{(2)} \in \mathbb{R}^{2} \text{)} \\
+  \end{align*}
+
+  By the problem definition, I consider $x^{(2)}$ as a /free variables/. Thus, let $x^{(2)} = \begin{bmatrix} x_3 \\ x_4 \end{bmatrix}$.
+
+  Since $W_{1}$ is an Upper Triangular Matrix and has non-zero entries on diagonal, it is invertable. It implies that for any fixed $x^{(2)}$, there exists a unique corresponding $x^{(1)}$. The "uniqueness" is relative to the choice of the free variables.
+
+- *Step 2: Derivation of the General Solution in Terms of Free Variables.*
+
+  \begin{align*}
+       W_1 x^{(1)} &= z - W_2 x^{(2)} \\
+                   &= \begin{bmatrix} z_{1} \\ z_{2} \end{bmatrix} - \begin{bmatrix} 1 & 0 \\ -1 & 3 \end{bmatrix} \begin{bmatrix} x_3 \\ x_4 \end{bmatrix} \\
+                   &= \begin{bmatrix} z_{1} \\ z_{2} \end{bmatrix} - \begin{bmatrix} x_3 \\ -x_3 + 3x_4 \end{bmatrix} \\
+                   &= \begin{bmatrix} z_1 - x_3 \\ z_2 + x_3 - 3x_4 \end{bmatrix} \\
+  \end{align*}
+
+  Substituting $W_1$ and $x^{(1)}$:
+
+  $$\begin{bmatrix} 1 & 2 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} z_1 - x_3 \\ z_2 + x_3 - 3x_4 \end{bmatrix}$$
+
+  - *Sub-Step 1: Solve for the 2nd Row.*
+
+    \begin{align*}
+        x_2 = z_2 + x_3 - 3x_4
+    \end{align*}
+
+  - *Sub-Step 2: Solve for the 1st Row.*
+
+    \begin{align*}
+        x_1 + 2x_2 = z_1 - x_3 &\implies x_1 + 2(z_2 + x_3 - 3x_4) = z_1 - x_3 \\
+                               &\implies x_1 = z_1 - x_3 - 2(z_2 + x_3 - 3x_4) \\
+                               &\implies x_1 = z_1 - x_3 - 2z_2 - 2x_3 + 6x_4 \\
+                               &\implies x_1 = z_1 - 2z_2 - 3x_3 + 6x_4 \\
+    \end{align*}
+
+  Hence, the final candidate solution:
+
+  $$x^{(1)} = \begin{bmatrix} z_1 - 2z_2 - 3x_3 + 6x_4 \\ z_2 + x_3 - 3x_4 \end{bmatrix}$$
+
+- *Step 3: Calculation of Distinct Particular Solutions.*
+
+  Full solution vector:
+
+  $$x = \begin{bmatrix} x_1 \\ x_2 \\ x_3 \\ x_4 \end{bmatrix} = \begin{bmatrix} z_1 - 2z_2 - 3x_3 + 6x_4 \\ z_2 + x_3 - 3x_4 \\ x_3 \\ x_4 \end{bmatrix}$$
+
+  Given:
+
+  \begin{aligned}
+        z &= \begin{bmatrix} 5 \\ 1 \end{bmatrix} \\
+        \implies z_{1} &= 5 \\
+                 z_{2} &= 1 \\
+  \end{aligned}
+
+  - Case $x^{(2)}_A = [6, 7]^{\top}$ (arbitrary chosen):
+
+    \begin{align*}
+    x^{(1)} &= \begin{bmatrix} z_1 - 2z_2 - 3x_3 + 6x_4 \\ z_2 + x_3 - 3x_4 \end{bmatrix} \\
+            &= \begin{bmatrix} 5 - 2(1) - 3(6) + 6(7) \\ 1 + 6 - 3(7) \end{bmatrix} \\
+            &= \begin{bmatrix} 5 - 2 - 18 + 42 \\ 1 + 6 - 21 \end{bmatrix} \\
+            &= \begin{bmatrix} 27 \\ -14 \end{bmatrix} \\
+    \end{align*}
+
+  - Case $x^{(2)}_B = [6, 9]^{\top}$ (arbitrary chosen):
+
+    \begin{align*}
+    x^{(1)} &= \begin{bmatrix} z_1 - 2z_2 - 3x_3 + 6x_4 \\ z_2 + x_3 - 3x_4 \end{bmatrix} \\
+            &= \begin{bmatrix} 5 - 2(1) - 3(6) + 6(9) \\ 1 + 6 - 3(9) \end{bmatrix} \\
+            &= \begin{bmatrix} 5 - 2 - 18 + 54 \\ 1 + 6 - 27 \end{bmatrix} \\
+            &= \begin{bmatrix} 39 \\ -20 \end{bmatrix} \\
+    \end{align*}
+
+  Hence, full distinct solutions for both cases:
+
+  $$x_A = \begin{bmatrix} 27 \\ -14 \\ 6 \\ 7 \end{bmatrix}, \quad x_B = \begin{bmatrix} 39 \\ -20 \\ 6 \\ 9 \end{bmatrix}$$
+
+* Problem 12 (a) :DONE:
+** Task
+#+begin_quote
+We work over $\mathbb{R}$. Consider
+$A=\begin{bmatrix}0&2&1\\ 1&1&0\\ 2&3&4\end{bmatrix}$
+$b=\begin{bmatrix}3\\ 1\\ 8\end{bmatrix}$
+Let $\Pi$ be the permutation matrix that exchanges the first and second rows. Write $\Pi$ explicitly and verify (by a direct calculation) that $\Pi^{-1}=\Pi^{T}$.
+#+end_quote
+
+** Solution
+
+- *Step 1: Foundation and Dimensions.*
+
+  The permutation matrix $\Pi$ operates on $A \in \mathbb{R}^{3\times3}$ and $b \in \mathbb{R}^{3}$. Therefore, to satisfy matrix multiplication dimensions, $\Pi$ must be in $\mathbb{R}^{3\times3}$.
+
+  We construct $\Pi$ by taking the Identity matrix $I_3$ and swapping the first and second rows:
+
+  \begin{align*}
+  I &= \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} \\
+  \implies \Pi &= \begin{bmatrix} 0 & 1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1 \end{bmatrix}
+  \end{align*}
+
+  We obtain the transpose $\Pi^{\top}$ by swapping rows and columns (which leaves $\Pi$ unchanged in this specific case):
+
+  $$\Pi^{\top} = \begin{bmatrix} 0 & 1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1 \end{bmatrix}$$
+
+- *Step 2: Verification by Direct Calculation.*
+
+  To verify that $\Pi^{-1} = \Pi^{\top}$, we must show that $\Pi \Pi^{\top} = I$.
+
+  $$\Pi \Pi^{\top} = \begin{bmatrix} 0 & 1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} 0 & 1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1 \end{bmatrix}$$
+
+  Calculating the diagonal entries as dot products of rows and columns:
+  - Row 1 $\cdot$ Col 1: $(0)(0) + (1)(1) + (0)(0) = 1$
+  - Row 2 $\cdot$ Col 2: $(1)(1) + (0)(0) + (0)(0) = 1$
+  - Row 3 $\cdot$ Col 3: $(0)(0) + (0)(0) + (1)(1) = 1$
+
+  The off-diagonal entries are clearly 0 (orthogonal vectors). Thus:
+
+  $$\Pi \Pi^{\top} = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} = I$$
+
+- *Step 3: Conclusion.*
+
+  Since $\Pi \Pi^{\top} = I$, by the definition of the matrix inverse, it follows that $\Pi^{-1} = \Pi^{\top}$.
+
+* Problem 12 (b) :DONE:
+** Task
+#+begin_quote
+Prove that the linear systems $Ax=b$ and $(\Pi A)x=\Pi b$ have exactly the same solution set.
+#+end_quote
+
+** Solution
+
+To prove the solution sets are identical, we must show that $Ax=b \iff (\Pi A)x = \Pi b$. We do this by proving implication in both directions.
+
+- *Part 1: Forward Direction ($\implies$)*
+
+  Assume $x$ satisfies $Ax = b$.
+
+  Multiplying both sides by $\Pi$ on the left:
+
+  \begin{align*}
+        \Pi(Ax) &= \Pi b \\
+        (\Pi A)x &= \Pi b \quad \text{(multiplicative associativity)} \\
+  \end{align*}
+
+  Thus, any solution $x$ to the first system is also a solution to the second system.
+
+- *Part 2: Reverse Direction ($\impliedby$)*
+
+  Assume $x$ satisfies $(\Pi A)x = \Pi b$.
+
+  Since $\Pi$ is a permutation matrix, it is invertible (as verified previously, $\Pi^{-1} = \Pi^T$ exists). We multiply both sides by $\Pi^{-1}$ on the left:
+
+  \begin{align*}
+        \Pi^{-1} (\Pi A) x &= \Pi^{-1} \Pi b \\
+        (I A) x &= I b \quad \text{(associativity and identity property } (\Pi^{-1}\Pi = I) \text{)} \\
+        Ax = b \\
+  \end{align*}
+
+  Thus, any solution $x$ to the second system is necessarily a solution to the first system.
+
+- *Conclusion*
+
+  Since solutions to the first system imply the second, and solutions to the second imply the first, the solution sets are identical.
+
+* Problem 12 (c) :DONE:
+** Task
+#+begin_quote
+Compute an LU factorization of $\Pi A$ without further row exchanges, and use it to solve $Ax=b$ (by solving $(\Pi A)x=\Pi b$ via forward/back substitution).
+#+end_quote
+
+** Solution
+
+- *Step 1: Apply Permutation $\Pi$.*
+
+  We apply the permutation $\Pi$ (swapping Row 1 and Row 2) to both $A$ and $b$:
+
+  \begin{align*}
+  \Pi A &= \begin{bmatrix} 1 & 1 & 0 \\ 0 & 2 & 1 \\ 2 & 3 & 4 \end{bmatrix} \\
+  \Pi b &= \begin{bmatrix} 1 \\ 3 \\ 8 \end{bmatrix}
+  \end{align*}
+
+- *Step 2: LU Factorization of $\Pi A$.*
+
+  We reduce $\Pi A$ to Upper Triangular form ($U$) to find the multipliers for $L$.
+
+  1. *Column 1 Elimination*:
+     - Pivot is at $(1,1)$ with value $1$.
+     - Entry at $(2,1)$ is $0$. Multiplier $l_{21} = 0$.
+     - Entry at $(3,1)$ is $2$. Multiplier $l_{31} = \frac{2}{1} = 2$.
+     - Operation: $R_3 \leftarrow R_3 - 2R_1$.
+       $$R_3 = [2, 3, 4] - [2, 2, 0] = [0, 1, 4]$$
+
+     Current State:
+     $$\begin{bmatrix} 1 & 1 & 0 \\ 0 & 2 & 1 \\ 0 & 1 & 4 \end{bmatrix}$$
+
+  2. *Column 2 Elimination*:
+     - Pivot is at $(2,2)$ with value $2$.
+     - Entry at $(3,2)$ is $1$. Multiplier $l_{32} = \frac{1}{2}$.
+     - Operation: $R_3 \leftarrow R_3 - \frac{1}{2}R_2$.
+       $$R_3 = [0, 1, 4] - [0, 1, \frac{1}{2}] = [0, 0, \frac{7}{2}]$$
+
+  3. *Resulting Matrices*:
+     $$U = \begin{bmatrix} 1 & 1 & 0 \\ 0 & 2 & 1 \\ 0 & 0 & \frac{7}{2} \end{bmatrix}, \quad L = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 2 & \frac{1}{2} & 1 \end{bmatrix}$$
+
+- *Step 3: Solve for $c$ (Forward Substitution: $Lc = \Pi b$).*
+
+  $$\begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 2 & \frac{1}{2} & 1 \end{bmatrix} \begin{bmatrix} c_1 \\ c_2 \\ c_3 \end{bmatrix} = \begin{bmatrix} 1 \\ 3 \\ 8 \end{bmatrix}$$
+
+  \begin{align*}
+  c_1 &= 1 \\
+  c_2 &= 3 \\
+  2c_1 + \frac{1}{2}c_2 + c_3 &= 8 \\
+  2(1) + \frac{3}{2} + c_3 &= 8 \\
+  \frac{7}{2} + c_3 &= \frac{16}{2} \implies c_3 = \frac{9}{2}
+  \end{align*}
+
+  $$c = \begin{bmatrix} 1 \\ 3 \\ \frac{9}{2} \end{bmatrix}$$
+
+- *Step 4: Solve for $x$ (Back Substitution: $Ux = c$).*
+
+  $$\begin{bmatrix} 1 & 1 & 0 \\ 0 & 2 & 1 \\ 0 & 0 & \frac{7}{2} \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \\ x_3 \end{bmatrix} = \begin{bmatrix} 1 \\ 3 \\ \frac{9}{2} \end{bmatrix}$$
+
+  - *Row 3*:
+    $$\frac{7}{2} x_3 = \frac{9}{2} \implies x_3 = \frac{9}{7}$$
+
+  - *Row 2*:
+    $$2x_2 + x_3 = 3 \implies 2x_2 + \frac{9}{7} = 3$$
+    $$2x_2 = \frac{21}{7} - \frac{9}{7} = \frac{12}{7} \implies x_2 = \frac{6}{7}$$
+
+  - *Row 1*:
+    $$x_1 + x_2 = 1 \implies x_1 + \frac{6}{7} = 1 \implies x_1 = \frac{1}{7}$$
+
+- *Final Solution*
+
+  $$x = \begin{bmatrix} \frac{1}{7} \\ \frac{6}{7} \\ \frac{9}{7} \end{bmatrix}$$

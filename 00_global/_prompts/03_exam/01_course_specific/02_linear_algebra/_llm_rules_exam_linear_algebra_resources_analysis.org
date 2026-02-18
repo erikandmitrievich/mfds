@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-02-17>
-#+lastmod: <2026-02-17 11:34>
+#+lastmod: <2026-02-18 12:55>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -25,7 +25,7 @@ The student is facing a Linear Algebra exam constructed by "Prof B".
 1. **Must-Know Proofs:** A list of theorems provided by Prof B.
 2. **Target Exam (Exam 01):** The most recent exam by Prof B (Current Course).
 3. **Historical Data (Past Papers 01 & 02):** Exams by Prof B from a different bachelor's program (useful for pattern matching).
-4. **Problem Sets:** Problem sets from both professors. First 3 come from Prof A, last 3 from Prof B.
+4. **Problem Sets:** Problem sets from both professors (ignore student solutions). First 3 come from Prof A, last 3 from Prof B.
 
 * TASK INSTRUCTIONS
 
@@ -50,24 +50,36 @@ Compare the `{MUST_KNOW_PROOFS}` list against the exams.
   3. *Low Priority:* On the list, but never tested.
 
 * OUTPUT FORMAT
-Please provide the analysis in the following Org-mode format:
+**CRITICAL INSTRUCTION**:
+Enclose your entire response in a single code block.
 
-#+begin_src org
-* AUDIT RESULTS
+**CRITICAL FORMATTING RULES:**
+1. **Strict Syntax:** You MUST start every checkbox line with a hyphen and a space: `- [ ]`. Do not omit the hyphen.
+2. **Concise Tables:** The "Style Tags" column must be strictly limited to **max 3-5 words**. Move all detailed explanations to the "Detailed Style Notes" section below the table.
+3. **Do not write any citations** Do not write any kind of [cite_start]...[cite: 530, 658]
 
-** TOPIC HEATMAP (Ranked by Point Value/Frequency)
-| Rank | Topic Cluster | Frequency (x/3 Exams) | Complexity | Notes on Question Style |
-|------+---------------+-----------------------+------------+-------------------------|
-| 1    | ...           | ...                   | ...        | ...                     |
+**TEMPLATE (Follow Exactly):**
 
-** FOUNDATIONAL SKILLS (The "Prof A" Filter)
-- [ ] **Must Learn:** (e.g., Gaussian Elimination) - *Reason: Required for Q2 in Exam 01.*
-- [ ] **Must Learn:** ...
-- [ ] **SAFE TO IGNORE:** (e.g., LU Decomposition) - *Reason: Never tested, not required.*
+#+begin_src
 
-** PROOF STRATEGY
-- **Verbatim Candidates (Memorize):**
-  - [ ] Proof X
-- **Application Only (Understand Logic):**
-  - [ ] Proof Y
+* TOPIC HEATMAP (Ranked by Point Value/Frequency)
+| Rank | Topic Cluster | Freq | Complexity | Style Tags (Max 5 words) |
+|------+---------------+------+------------+--------------------------|
+| 1    | Linear Maps   | 3/3  | High       | Proofs, Definitions      |
+| ...  | ...           | ...  | ...        | ...                      |
+
+* DETAILED STYLE NOTES
+- **Linear Maps:** (Insert the long explanation about Steinitz vs Rank-Nullity here...)
+- **Cluster 2:** ...
+
+* FOUNDATIONAL SKILLS (The "Prof A" Filter)
+- [ ] **Must Learn:** (Skill Name) :: *Reason: Required for Q2...*
+- [ ] **Must Learn:** (Skill Name) :: *Reason: ...*
+- [ ] **SAFE TO IGNORE:** (Topic Name) :: *Reason: ...*
+
+* PROOF STRATEGY
+** Verbatim Candidates (Memorize)
+- [ ] (Proof Name) :: *Reason: ...*
+** Application Only (Understand Logic)
+- [ ] (Proof Name) :: *Reason: ...*
 #+end_src

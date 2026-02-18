@@ -1,0 +1,521 @@
+#+title: Ps 06
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-01-26>
+#+lastmod: <2026-01-29 11:14>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* Problem 19 :DONE:
+** Task
+#+begin_quote
+19. (18) Linear systems of equations, Reduced row echelon form
+
+(a) (12) Solve the following linear system of equations using Gaussian elimination, i.e., an LU-decomposition (possibly with partial pivoting)
+
+$(2+i)  z_1 + (-1+3i) z_2 + (4-i)  z_3 + (1+2i) z_4 = 5+24i$,
+$(3-2i) z_1 + (2+i)   z_2 + (-1+i) z_3 + 5      z_4  = 24 - 7i$,
+$(-2+i) z_1 + (1-4i)  z_2 + (3+2i) z_3 + (-1+i) z_4 = -14 - 2i$,
+$(1+3i) z_1 - 2       z_2 + (2-i)  z_3 + (4+i)  z_4 = 7 + 10i$.
+
+
+(b) (6) Transform the following real $4\times5$ matrix into reduced row echelon form:
+
+$$A=\begin{pmatrix}12&6&4&-7&-3\\ -6&-3&12&7&1\\ 6&3&-8&-6&4\\ 18&9&4&-11&2\end{pmatrix}$$
+#+end_quote
+
+** Solution
+
+- Part (a)
+
+  - Step 0: Given
+
+    $$A = \begin{bmatrix} 2+i & -1+3i & 4-i & 1+2i \\ 3-2i & 2+i & -1+i & 5 \\ -2+i & 1-4i & 3+2i & -1+i \\ 1+3i & -2 & 2-i & 4+i \end{bmatrix}, \quad b = \begin{bmatrix} 5+24i \\ 24-7i \\ -14-2i \\ 7+10i \end{bmatrix}$$
+
+  - Step 1: Pivot
+
+    We examine the first column to find the pivot element with the largest absolute value.
+
+    \begin{align*}
+    |a_{11}| &= |2+i| = \sqrt{5} \\
+    |a_{21}| &= |3-2i| = \sqrt{13} \\
+    |a_{31}| &= |-2+i| = \sqrt{5} \\
+    |a_{41}| &= |1+3i| = \sqrt{10}
+    \end{align*}
+
+    The maximum absolute value is in the second row ($\sqrt{13}$). We swap row 1 and row 2 ($R_1 \leftrightarrow R_2$).
+
+    \begin{align*}
+    P_1 A &= \begin{bmatrix} 0&1&0&0 \\ 1&0&0&0 \\ 0&0&1&0 \\ 0&0&0&1 \end{bmatrix} A \\
+          &= \begin{bmatrix} 3-2i & 2+i & -1+i & 5 \\ 2+i & -1+3i & 4-i & 1+2i \\ -2+i & 1-4i & 3+2i & -1+i \\ 1+3i & -2 & 2-i & 4+i \end{bmatrix}
+    \end{align*}
+
+  - Step 2: Eliminate column 1
+
+    We compute the multipliers for the first column ($l_{i1} = a_{i1}/a_{11}$). For example:
+    $$l_{21} = \frac{2+i}{3-2i} = \frac{(2+i)(3+2i)}{13} = \frac{4+7i}{13}$$
+
+    We perform the row operations $R_i \leftarrow R_i - l_{i1}R_1$ for $i=2,3,4$. This leaves zeros in the first column below the diagonal.
+
+  - Step 3: Iterate
+
+    We repeat the pivoting and elimination process for the submatrices (Columns 2 and 3).
+    1. Find $\max |a_{i2}^{(2)}|$ for $i \ge 2$, swap rows if necessary.
+    2. Eliminate column 2.
+    3. Find $\max |a_{i3}^{(3)}|$ for $i \ge 3$, swap rows if necessary.
+    4. Eliminate column 3.
+
+    This yields the factorization $PA = LU$.
+
+  - Step 4: Solve
+
+    We solve the system in two stages using the computed factors:
+    1. *Forward Substitution:* Solve $Ly = Pb$ for $y$.
+    2. *Backward Substitution:* Solve $Ux = y$ for $x$.
+
+    Performing these substitutions yields the solution vector $x \in \mathbb{C}^4$.
+
+- Part (b)
+
+  - Step 0: Given
+
+    $$A = \begin{bmatrix} 12&6&4&-7&-3 \\ -6&-3&12&7&1 \\ 6&3&-8&-6&4 \\ 18&9&4&-11&2 \end{bmatrix}$$
+
+  - Step 1: Pivot Col 1
+
+    Swap $R_1$ with $R_4$ (Pivot $18 > 12$).
+
+    \begin{align*}
+        A &\xrightarrow{R_1 \leftrightarrow R_4}
+        \begin{bmatrix} 18&9&4&-11&2 \\ -6&-3&12&7&1 \\ 6&3&-8&-6&4 \\ 12&6&4&-7&-3 \end{bmatrix}
+    \end{align*}
+
+  - Step 2: Eliminate Col 1
+
+    \begin{align*}
+        &\xrightarrow{\substack{R_2 \leftarrow R_2 + \frac{1}{3}R_1 \\ R_3 \leftarrow R_3 - \frac{1}{3}R_1 \\ R_4 \leftarrow R_4 - \frac{2}{3}R_1}}
+        \begin{bmatrix} 18&9&4&-11&2 \\ 0&0&\frac{40}{3}&\frac{10}{3}&\frac{5}{3} \\ 0&0&-\frac{28}{3}&-\frac{7}{3}&\frac{10}{3} \\ 0&0&\frac{4}{3}&\frac{1}{3}&-\frac{13}{3} \end{bmatrix}
+    \end{align*}
+
+    Scale rows to simplify (integers preferred for inspection):
+    $R_2 \leftarrow \frac{3}{5} R_2 \implies [0, 0, 8, 2, 1]$
+    $R_3 \leftarrow 3 R_3 \implies [0, 0, -28, -7, 10]$
+    $R_4 \leftarrow 3 R_4 \implies [0, 0, 4, 1, -13]$
+
+  - Step 3: Pivot Col 3
+
+    The second column contains only zeros below the pivot, so we advance to Column 3.
+    Pivot candidates: $8, -28, 4$. The maximum absolute value is $|-28|$.
+    Swap $R_2$ and $R_3$.
+
+    \begin{align*}
+        &\xrightarrow{R_2 \leftrightarrow R_3}
+        \begin{bmatrix} 18&9&4&-11&2 \\ 0&0&-28&-7&10 \\ 0&0&8&2&1 \\ 0&0&4&1&-13 \end{bmatrix}
+    \end{align*}
+
+  - Step 4: Eliminate Col 3
+
+    Note that in $R_3$: $8 = -\frac{2}{7}(-28)$.
+    Note that in $R_4$: $4 = -\frac{1}{7}(-28)$.
+
+    \begin{align*}
+        &\xrightarrow{\substack{R_3 \leftarrow R_3 + \frac{2}{7}R_2 \\ R_4 \leftarrow R_4 + \frac{1}{7}R_2}}
+        \begin{bmatrix} 18&9&4&-11&2 \\ 0&0&-28&-7&10 \\ 0&0&0&0&\frac{27}{7} \\ 0&0&0&0&-\frac{81}{7} \end{bmatrix}
+    \end{align*}
+
+  - Step 5: Pivot Col 5
+
+    We inspect the next available column (Col 5) for the remaining rows.
+    We eliminate $R_4$ using $R_3$. Note that $-\frac{81}{7} = -3 \left( \frac{27}{7} \right)$.
+
+    \begin{align*}
+        &\xrightarrow{R_4 \leftarrow R_4 + 3R_3}
+        \begin{bmatrix} 18&9&4&-11&2 \\ 0&0&-28&-7&10 \\ 0&0&0&0&\frac{27}{7} \\ 0&0&0&0&0 \end{bmatrix}
+    \end{align*}
+
+  - Step 6: Normalize to RREF
+
+    1. *Scale pivots to 1:*
+       $R_3 \leftarrow \frac{7}{27}R_3 \implies [0, 0, 0, 0, 1]$
+       $R_2 \leftarrow -\frac{1}{28}R_2 \implies [0, 0, 1, \frac{1}{4}, -\frac{5}{14}]$
+       $R_1 \leftarrow \frac{1}{18}R_1 \implies [1, \frac{1}{2}, \frac{2}{9}, -\frac{11}{18}, \frac{1}{9}]$
+
+    2. *Backward Elimination (Eliminate entries above pivots):*
+       - Use $R_3$ (Col 5) to eliminate entries in $R_1, R_2$.
+         $R_2 \leftarrow R_2 + \frac{5}{14}R_3 \implies [0, 0, 1, \frac{1}{4}, 0]$
+         $R_1 \leftarrow R_1 - \frac{1}{9}R_3 \implies [1, \frac{1}{2}, \frac{2}{9}, -\frac{11}{18}, 0]$
+       - Use $R_2$ (Col 3) to eliminate entry in $R_1$.
+         $R_1 \leftarrow R_1 - \frac{2}{9}R_2$
+         Entry (1,4): $-\frac{11}{18} - \frac{2}{9}(\frac{1}{4}) = -\frac{11}{18} - \frac{1}{18} = -\frac{12}{18} = -\frac{2}{3}$.
+
+    *Final Result*
+
+    $$\text{RREF}(A) = \begin{bmatrix} 1 & \frac{1}{2} & 0 & -\frac{2}{3} & 0 \\ 0 & 0 & 1 & \frac{1}{4} & 0 \\ 0 & 0 & 0 & 0 & 1 \\ 0 & 0 & 0 & 0 & 0 \end{bmatrix}$$
+
+* Problem 20 :DONE:
+** Task
+#+begin_quote
+20. (15) Vector space
+
+(a) (9) Let $V$ be an $\mathbb{F}$ -vector space and X an arbitrary set. Consider the set $\mathcal{F}(X,V)$ of all functions $f:X\rightarrow V$ with pointwise operations as defined in the lecture course. Show that $\mathcal{F}(X,V)$ is a $\mathbb{F}$ -vector space.
+
+(b) (6) Let $V$ and $W$ be $\mathbb{F}$ -vector spaces. Consider on the cartesian product $V\times W$ the following operations: For all $v,v^{\prime}\in V,w,w^{\prime}\in W$ and $\lambda\in\mathbb{F}$ let
+
+\begin{align*}
+(v,w)+(v^{\prime},w*) &:= (v+v^{\prime},w+w^{\prime}) \\
+\lambda(v,w) &:= (\lambda v,\lambda w) \\
+\end{align*}
+
+Show that these two operations make $V\times W$ a vector space over $\mathbb{F}$.
+#+end_quote
+
+** Solution
+
+- Part (a)
+
+  - Step 0: Definitions
+
+    Let $\mathcal{F}(X,V) = \{f \mid f: X \to V\}$.
+    The operations are defined pointwise for all $x \in X$:
+    1. Addition: $(f+g)(x) := f(x) +_V g(x)$
+    2. Scalar Multiplication: $(\lambda f)(x) := \lambda \cdot_V f(x)$
+
+    To prove $\mathcal{F}(X,V)$ is a vector space, I must verify the 8 vector space axioms. Since $V$ is a vector space, its operations $+_V$ and $\cdot_V$ satisfy these axioms.
+
+  - Step 1: Abelian Group Properties (Addition)
+
+    - *(i) Associativity:*
+      For all $f, g, h \in \mathcal{F}(X,V)$ and $x \in X$:
+      \begin{align*}
+      ((f+g)+h)(x) &= (f+g)(x) +_V h(x) \\
+                   &= (f(x) +_V g(x)) +_V h(x) \\
+                   &= f(x) +_V (g(x) +_V h(x)) \qquad (\text{Associativity in } V) \\
+                   &= f(x) +_V (g+h)(x) \\
+                   &= (f+(g+h))(x)
+      \end{align*}
+      Thus, $(f+g)+h = f+(g+h)$.
+
+    - *(ii) Commutativity:*
+      \begin{align*}
+      (f+g)(x) &= f(x) +_V g(x) \\
+               &= g(x) +_V f(x) \qquad (\text{Commutativity in } V) \\
+               &= (g+f)(x)
+      \end{align*}
+
+    - *(iii) Identity Element:*
+      Let $\mathbf{0} \in \mathcal{F}(X,V)$ be the zero function defined by $\mathbf{0}(x) = 0_V$ for all $x \in X$.
+      \begin{align*}
+      (f+\mathbf{0})(x) &= f(x) +_V \mathbf{0}(x) \\
+                        &= f(x) +_V 0_V \\
+                        &= f(x) \qquad (\text{Identity in } V)
+      \end{align*}
+      Thus, $\mathbf{0}$ is the additive identity.
+
+    - *(iv) Inverse Element:*
+      For any $f$, define $(-f)$ by $(-f)(x) = -f(x)$ (the additive inverse in $V$).
+      \begin{align*}
+      (f + (-f))(x) &= f(x) +_V (-f)(x) \\
+                    &= 0_V \qquad (\text{Inverse in } V) \\
+                    &= \mathbf{0}(x)
+      \end{align*}
+
+  - Step 2: Scalar Multiplication Properties
+
+    Let $\lambda, \mu \in \mathbb{F}$ and $f, g \in \mathcal{F}(X,V)$.
+
+    - *(v) Distributivity (Scalar sum):*
+      \begin{align*}
+      ((\lambda + \mu)f)(x) &= (\lambda + \mu) \cdot_V f(x) \\
+                            &= \lambda \cdot_V f(x) +_V \mu \cdot_V f(x) \qquad (\text{Distributivity in } V) \\
+                            &= (\lambda f)(x) +_V (\mu f)(x) \\
+                            &= (\lambda f + \mu f)(x)
+      \end{align*}
+
+    - *(vi) Distributivity (Vector sum):*
+      \begin{align*}
+      (\lambda(f+g))(x) &= \lambda \cdot_V (f(x) +_V g(x)) \\
+                        &= \lambda \cdot_V f(x) +_V \lambda \cdot_V g(x) \qquad (\text{Distributivity in } V) \\
+                        &= (\lambda f + \lambda g)(x)
+      \end{align*}
+
+    - *(vii) Associativity of scalar multiplication:*
+      \begin{align*}
+      ((\lambda \mu)f)(x) &= (\lambda \mu) \cdot_V f(x) \\
+                          &= \lambda \cdot_V (\mu \cdot_V f(x)) \qquad (\text{Associativity in } V) \\
+                          &= \lambda \cdot_V (\mu f)(x) \\
+                          &= (\lambda(\mu f))(x)
+      \end{align*}
+
+    - *(viii) Unitary Element:*
+      \begin{align*}
+      (1 \cdot f)(x) &= 1 \cdot_V f(x) \\
+                     &= f(x) \qquad (\text{Identity in } V)
+      \end{align*}
+
+  - Step 3: Conclusion
+
+    Since all 8 axioms hold pointwise due to the vector space structure of $V$, $\mathcal{F}(X,V)$ is a vector space over $\mathbb{F}$.
+
+- Part (b)
+
+  - Step 0: Given
+
+    We check the axioms for $U = V \times W$ with elements $u = (v, w)$.
+    Addition: $(v, w) + (v', w') = (v+v', w+w')$
+    Scalar Mult: $\lambda(v, w) = (\lambda v, \lambda w)$
+
+  - Step 1: Additive Properties
+
+    - *(i) Associativity & (ii) Commutativity:*
+      These follow immediately from the component-wise associativity and commutativity in $V$ and $W$.
+      Example (Commutativity):
+      $$(v,w) + (v',w') = (v+v', w+w') = (v'+v, w'+w) = (v',w') + (v,w)$$
+
+    - *(iii) Identity:*
+      Let $0_U = (0_V, 0_W)$.
+      $$(v,w) + (0_V, 0_W) = (v+0_V, w+0_W) = (v, w)$$
+
+    - *(iv) Inverse:*
+      Let $-u = (-v, -w)$.
+      $$(v,w) + (-v, -w) = (v+(-v), w+(-w)) = (0_V, 0_W) = 0_U$$
+
+  - Step 2: Scalar Properties
+
+    - *(v) Distributivity over scalar sum:*
+      \begin{align*}
+      (\lambda+\mu)(v,w) &= ((\lambda+\mu)v, (\lambda+\mu)w) \\
+                         &= (\lambda v + \mu v, \lambda w + \mu w) \qquad (\text{Distributivity in } V, W) \\
+                         &= (\lambda v, \lambda w) + (\mu v, \mu w) \\
+                         &= \lambda(v,w) + \mu(v,w)
+      \end{align*}
+
+    - *(vi) Distributivity over vector sum:*
+      \begin{align*}
+      \lambda((v,w)+(v',w')) &= \lambda(v+v', w+w') \\
+                             &= (\lambda(v+v'), \lambda(w+w')) \\
+                             &= (\lambda v + \lambda v', \lambda w + \lambda w') \\
+                             &= (\lambda v, \lambda w) + (\lambda v', \lambda w') \\
+                             &= \lambda(v,w) + \lambda(v',w')
+      \end{align*}
+
+    - *(vii) Scalar associativity:*
+      \begin{align*}
+      (\lambda\mu)(v,w) &= ((\lambda\mu)v, (\lambda\mu)w) \\
+                        &= (\lambda(\mu v), \lambda(\mu w)) \\
+                        &= \lambda(\mu v, \mu w) \\
+                        &= \lambda(\mu(v,w))
+      \end{align*}
+
+    - *(viii) Unitary:*
+      $$1(v,w) = (1v, 1w) = (v,w)$$
+
+  - Step 3: Conclusion
+
+    The set $V \times W$ equipped with component-wise operations satisfies all axioms and is therefore a vector space over $\mathbb{F}$.
+
+* Problem 21 :DONE:
+** Task
+#+begin_quote
+21. (12) Subspace
+
+We consider the vector space $\mathbb{F}^{n}$ for the specified field and some $4\le n\in\mathbb{N}$. Check, whether the following subsets are subspaces.
+
+(a) (2) $W_{1}:=\{x\in\mathbb{R}^{n}|x_{1}+x_{2}=0\}$,
+
+(b) (2) $W_{2}:=\{x\in\mathbb{R}^{n}|\sum_{j=1}^{n}jx_{j}=0\}$,
+
+(c) (2) $W_{3}:=\{x\in\mathbb{R}^{n}|x_{1}-x_{3}=x_{4}+1\}$,
+
+(d) (2) $W_{4}:=\{x\in\mathbb{R}^{n}|\sum_{i=1}^{n}x_{i}^{2}=0\}$,
+
+(e) (2) R$W_{5}:=\{x\in\mathbb{F}_{2}^{3}|x_{1}^{2}+x_{2}+x_{3}^{3}=0\}$,
+
+(f) (2) $W_{6}:=\{x\in\mathbb{C}^{2}|x_{1}\ne0\wedge\frac{x_{2}}{x_{1}}=1\}$.
+#+end_quote
+
+** Solution
+
+To prove a subset $W$ is a subspace, I must check three conditions:
+1. $0 \in W$.
+2. Closure under addition ($u, v \in W \implies u+v \in W$).
+3. Closure under scalar multiplication ($\lambda \in \mathbb{F}, u \in W \implies \lambda u \in W$).
+
+- Part (a)
+
+  $W_{1}=\{x\in\mathbb{R}^{n} \mid x_{1}+x_{2}=0\}$
+
+  - *Step 1: Check Zero Vector*
+    For $x = 0$, $x_1 + x_2 = 0 + 0 = 0$. Thus, $0 \in W_1$.
+
+  - *Step 2: Closure properties*
+    This is the solution set to a homogeneous linear equation ($Ax = 0$ where row 1 is $[1, 1, 0, \dots]$).
+    Let $x, y \in W_1$ and $\lambda \in \mathbb{R}$.
+    $$(x_1+y_1) + (x_2+y_2) = (x_1+x_2) + (y_1+y_2) = 0 + 0 = 0 \implies x+y \in W_1$$
+    $$(\lambda x_1) + (\lambda x_2) = \lambda(x_1+x_2) = \lambda(0) = 0 \implies \lambda x \in W_1$$
+
+  - *Conclusion*
+    $W_1$ *is a subspace*.
+
+- Part (b)
+
+  $W_{2}=\{x\in\mathbb{R}^{n} \mid \sum_{j=1}^{n}jx_{j}=0\}$
+
+  - *Step 1: Check Zero Vector*
+    $\sum j(0) = 0$. Thus $0 \in W_2$.
+
+  - *Step 2: Linearity*
+    This condition defines the kernel of the linear functional $f(x) = \sum j x_j$. The kernel of a linear map is always a subspace.
+    Alternatively:
+    $$ \sum j(x_j + y_j) = \sum jx_j + \sum jy_j = 0 + 0 = 0 $$
+    $$ \sum j(\lambda x_j) = \lambda \sum jx_j = 0 $$
+
+  - *Conclusion*
+    $W_2$ *is a subspace*.
+
+- Part (c)
+
+  $W_{3}=\{x\in\mathbb{R}^{n} \mid x_{1}-x_{3}=x_{4}+1\}$
+
+  - *Step 1: Check Zero Vector*
+    For the zero vector $x=0$, plug in components:
+    $$0 - 0 = 0 \quad \text{vs} \quad 0 + 1 = 1$$
+    $$0 \neq 1$$
+    The zero vector is not in $W_3$.
+
+  - *Conclusion*
+    $W_3$ *is NOT a subspace*.
+
+- Part (d)
+
+  $W_{4}=\{x\in\mathbb{R}^{n} \mid \sum_{i=1}^{n}x_{i}^{2}=0\}$
+
+  - *Step 1: Analysis of constraint in $\mathbb{R}$*
+    Since $x_i \in \mathbb{R}$, $x_i^2 \ge 0$.
+    The sum of non-negative terms is zero if and only if every term is zero.
+    $$ \sum_{i=1}^n x_i^2 = 0 \iff x_i = 0 \quad \forall i $$
+    Therefore, $W_4 = \{0\}$ (the set containing only the zero vector).
+
+  - *Step 2: Trivial Subspace*
+    The set $\{0\}$ is the trivial subspace. It satisfies all axioms ($0+0=0, \lambda 0 = 0$).
+
+  - *Conclusion*
+    $W_4$ *is a subspace*.
+
+- Part (e)
+
+  $W_{5}=\{x\in\mathbb{F}_{2}^{3} \mid x_{1}^{2}+x_{2}+x_{3}^{3}=0\}$
+
+  - *Step 1: Field Properties of $\mathbb{F}_2$*
+    In the field $\mathbb{F}_2 = \{0, 1\}$, we have the property that $a^k = a$ for all $a \in \mathbb{F}_2, k \ge 1$.
+    $$0^2 = 0, 1^2 = 1 \implies x_1^2 = x_1$$
+    $$0^3 = 0, 1^3 = 1 \implies x_3^3 = x_3$$
+
+    The condition simplifies to:
+    $$x_1 + x_2 + x_3 = 0$$
+
+  - *Step 2: Linearity*
+    This is a linear homogeneous equation over $\mathbb{F}_2$. As seen in parts (a) and (b), solution sets to linear homogeneous equations are subspaces.
+
+  - *Conclusion*
+    $W_5$ *is a subspace*.
+
+- Part (f)
+
+  $W_{6}=\{x\in\mathbb{C}^{2} \mid x_{1}\ne0 \wedge \frac{x_{2}}{x_{1}}=1\}$
+
+  - *Step 1: Check Zero Vector*
+    The definition explicitly requires $x_1 \neq 0$.
+    The zero vector $0 = (0,0)$ has first component 0.
+    Thus, $0 \notin W_6$.
+
+  - *Conclusion*
+    $W_6$ *is NOT a subspace*.
+
+* Problem 22 :DONE:
+** Task
+#+begin_quote
+22. (12) Spanning sets, Linear Independence
+
+(a) (2) Show that $\mathbb{C}$ is a vector space over $\mathbb{R}$ and find a small spanning set for $\mathbb{C}$.
+
+(b) (4) We consider the vector space $\mathbb{F}^{4}$ for some field $\mathbb{F}$. Show that the vectors $(1,0,0,0)^{T}$, $(1,1,0,0)^{T}$, $(1,1,1,0)^{T}$ and $(1,1,1,1)^{T}$ are linearly independent.
+
+(c) (6) Show that the three vectors $(i, 1, 2+i)$, $(1,3i+1,2)$ and $(-1,5i, 5)$ are a spanning set of $\mathbb{C}^{3}$. Are they linearly independent?
+#+end_quote
+
+** Solution
+
+- Part (a)
+
+  - Step 1: Vector Space Axioms
+    We view $\mathbb{C}$ as the set of numbers $z = x + iy$.
+    Since $\mathbb{C}$ is a field itself containing $\mathbb{R}$, the addition of complex numbers is associative, commutative, has an identity ($0$), and inverses.
+    Scalar multiplication by $\lambda \in \mathbb{R}$ distributes over addition:
+    $\lambda(z_1 + z_2) = \lambda z_1 + \lambda z_2$ and $(\lambda + \mu)z = \lambda z + \mu z$.
+    Thus, $\mathbb{C}$ satisfies all axioms of a vector space over $\mathbb{R}$.
+
+  - Step 2: Spanning Set
+    Any element $z \in \mathbb{C}$ can be written uniquely as:
+    $$z = a \cdot 1 + b \cdot i \quad \text{where } a,b \in \mathbb{R}$$
+    Therefore, the set $\{1, i\}$ spans $\mathbb{C}$ over $\mathbb{R}$.
+
+- Part (b)
+
+  Let the given vectors be columns of a matrix $A$.
+  $$v_1 = \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix}, v_2 = \begin{bmatrix} 1 \\ 1 \\ 0 \\ 0 \end{bmatrix}, v_3 = \begin{bmatrix} 1 \\ 1 \\ 1 \\ 0 \end{bmatrix}, v_4 = \begin{bmatrix} 1 \\ 1 \\ 1 \\ 1 \end{bmatrix}$$
+
+  To show linear independence, we consider the equation:
+  $$c_1 v_1 + c_2 v_2 + c_3 v_3 + c_4 v_4 = \mathbf{0}$$
+
+  Writing this as a linear system $Ac=0$:
+  $$ \begin{bmatrix} 1&1&1&1 \\ 0&1&1&1 \\ 0&0&1&1 \\ 0&0&0&1 \end{bmatrix} \begin{bmatrix} c_1 \\ c_2 \\ c_3 \\ c_4 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 0 \\ 0 \end{bmatrix} $$
+
+  This is an upper triangular matrix with non-zero entries on the diagonal (all 1s).
+  - From Row 4: $1 \cdot c_4 = 0 \implies c_4 = 0$.
+  - From Row 3: $1 \cdot c_3 + 1 \cdot c_4 = 0 \implies c_3 = 0$.
+  - From Row 2: $1 \cdot c_2 + c_3 + c_4 = 0 \implies c_2 = 0$.
+  - From Row 1: $1 \cdot c_1 + c_2 + c_3 + c_4 = 0 \implies c_1 = 0$.
+
+  Since the only solution is the trivial solution $c=0$, the vectors are *linearly independent*.
+
+- Part (c)
+
+  Let $v_1, v_2, v_3$ be the columns of the matrix $A$.
+  $$A = \begin{bmatrix} i & 1 & -1 \\ 1 & 3i+1 & 5i \\ 2+i & 2 & 5 \end{bmatrix}$$
+
+  - Step 1: Gaussian Elimination to determine Rank
+    We want to determine if the matrix has full rank (Rank = 3).
+
+    Swap $R_1 \leftrightarrow R_2$ to get a pivot of 1:
+    $$ \begin{bmatrix} 1 & 3i+1 & 5i \\ i & 1 & -1 \\ 2+i & 2 & 5 \end{bmatrix} $$
+
+    Eliminate Column 1:
+    $R_2 \leftarrow R_2 - iR_1$:
+    $(2,2): 1 - i(3i+1) = 1 - (-3+i) = 4-i$
+    $(2,3): -1 - i(5i) = -1 + 5 = 4$
+
+    $R_3 \leftarrow R_3 - (2+i)R_1$:
+    $(3,2): 2 - (2+i)(3i+1) = 2 - (6i+2+3i^2+i) = 2 - (-1+7i) = 3-7i$
+    $(3,3): 5 - (2+i)(5i) = 5 - (10i-5) = 10-10i$
+
+    $$ A' = \begin{bmatrix} 1 & 3i+1 & 5i \\ 0 & 4-i & 4 \\ 0 & 3-7i & 10-10i \end{bmatrix} $$
+
+    Check for linear dependence between $R_2$ and $R_3$:
+    If they were dependent, $(4-i)(10-10i) = 4(3-7i)$.
+    LHS: $40 - 40i - 10i + 10i^2 = 30 - 50i$
+    RHS: $12 - 28i$
+    Since $30-50i \neq 12-28i$, the rows are linearly independent.
+
+  - Step 2: Conclusion
+    The matrix $A$ has 3 pivots, so $\text{Rank}(A) = 3$.
+    Since the dimension of $\mathbb{C}^3$ is 3 and we have 3 linearly independent vectors, they form a *basis*.
+
+    1. Since they form a basis, they span $\mathbb{C}^3$.
+    2. Yes, they are linearly independent.
