@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-13>
-#+lastmod: <2026-02-17 19:55>
+#+lastmod: <2026-02-20 15:56>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -31,15 +31,15 @@ It was not intentionally designed to be any kind of public resource. Though, it 
 
 *My Goal:* To implement a new method of education, by making the learning process accumulative.
 
-/Disclaimer: This is a personal project. It is not officially affiliated with the University of Vienna. No copyrighted university materials are hosted here—only original notes, code, and links to official resources./
+/Disclaimer: This is a personal project. It is not officially affiliated with the University of Vienna. No copyrighted university materials are hosted here-only original notes, code, and links to official resources./
 
 * Primary Motivation
 
-Whenever someone writes math on paper, they are essentially "drawing." It is a painting; written symbols lack semantic structure and are not reproducible. Most critically, paper notes suffer from knowledge decay—once the exam is over, the notebook is closed, and the knowledge becomes static and unsearchable.
+Whenever someone writes math on paper, they are essentially "drawing." It is a painting; written symbols lack semantic structure and are not reproducible. Most critically, paper notes suffer from knowledge decay-once the exam is over, the notebook is closed, and the knowledge becomes static and unsearchable.
 
 This repository represents a fundamental shift from that traditional model. My goal is to treat my education not as a series of isolated semesters, but as a continuous software project.
 
-- I want my work to be "real"—executable, queryable, and reusable. By digitizing the logic of mathematics and the syntax of programming:
+- I want my work to be "real"-executable, queryable, and reusable. By digitizing the logic of mathematics and the syntax of programming:
 
 - I stop "drawing" and start "encoding": Equations become standard LaTeX, capable of being parsed by both humans and machines (LLMs).
 
@@ -86,8 +86,6 @@ This repository is built using *Doom Emacs* + *Org-Mode* + *LaTeX*. While you do
 3.  *Searchability:* `grep` my entire degree. Finding a specific theorem or code snippet takes milliseconds.
 4.  *LLM-Ready:* Plain text files are the perfect input for LLMs. I use LLM to automate the monotonous work, leaving the complex thinking to us.
 5.  *Exam Alignment:* The structure mirrors our problem sets, creating a near-optimal architecture for exam prep.
-
-You can also read the [[file:./why_this_is_genius.org][why_this_is_genius.org]] to delve deeper into the education method.
 
 * Tools & Conventions
 - *Primary Format:* =.org= (Org Mode) and =.pdf= (rendered Org files with LaTeX expressions).
