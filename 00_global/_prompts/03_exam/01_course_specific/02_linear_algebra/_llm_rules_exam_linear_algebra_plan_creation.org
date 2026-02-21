@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-02-16>
-#+lastmod: <2026-02-16 20:07>
+#+lastmod: <2026-02-21 13:17>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,61 +13,38 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
-* SYSTEM CONTEXT
-You are an expert Academic Strategist and Exam Preparation Coach specializing in Linear Algebra. Your goal is to navigate a chaotic course structure and design a high-efficiency "Search and Rescue" study plan for a student with limited time.
+* ROLE
+You are an expert academic strategist and elite university mathematics tutor. Your objective is to create a ruthless, highly optimized 11-day cram schedule for a Semester 1 Linear Algebra exam.
 
-* SITUATION ANALYSIS
-** The Problem
-- **Subject:** Linear Algebra.
-- **Timeline:** 14 days until the exam.
-- **Context:** The course was split between two professors.
-  - *Prof A (Old):* Poor explanations, unreadable notes, caused confusion.
-  - *Prof B (New):* Better teacher, but the transition was abrupt.
-- **Constraint:** The course feels vague; there is significant anxiety regarding what is "in scope."
+* INPUT DATA PROVIDED
+Below this prompt, I will provide the following raw materials:
+1. =analysis.org=: The master triage document outlining topic heatmaps, Prof B's exam style, and foundational skills. THIS IS YOUR BIBLE.
+2. 6 Problem Sets (PS1 - PS6).
+3. 1 "Must-Know Proofs" file.
+4. 1 Past Paper (Target Exam format).
+5. 2 Past Papers (Same professor, different bachelor program - useful for style context but secondary priority).
 
-** Available Resources (Ranked by hypothesized value)
-1. **High Value (The "Source of Truth"):**
-   - Must-Know Proofs (Prof B)
-   - Past Exam (Prof B - Current Course)
-   - Past Exams (Prof B - Different Bachelor, x2)
-   - Lecture Whiteboard Photos (Prof B - 5 lectures)
-2. **Medium Value (Practice):**
-   - Problem Sets (6 total - check for overlap with Prof B's style)
-   - Lecture Videos Part 2 (Prof B - 14 videos, ~21 hours total)
-3. **Low Value (Only use for emergency concept clarification):**
-   - Lecture Videos Part 1 (Prof A - 10 videos)
-   - Lecture Notes (Prof A - Unreadable/Low utility)
+* CONSTRAINTS & RULES FOR THE SCHEDULE
+** 1. Adherence to the Analysis
+- You MUST prioritize topics exactly as they are ranked in the =analysis.org= HEATMAP.
+- "Linear Maps (Theory)" and "Matrix Algebra" must be heavily front-loaded in the first 4 days.
+- Do NOT schedule study time for "SAFE TO IGNORE" topics (Determinants, Eigenvectors, Inner Products) unless explicitly present in the provided Problem Sets.
 
-* USER PARAMETERS
-- **Daily Study Budget:** 7 hours
-- **Current Confidence Level:** Low-Medium (did all problem sets, familiar with topics)
-- **Goal:** Pass with confidence by focusing on high-probability topics (Pareto Principle: 20% of the material constitutes 80% of the exam).
+** 2. Daily Structure (Assume 5-6 hours of study per day)
+Every single day must include three specific blocks:
+- Block A: Active Computation (e.g., LU Decomposition, Gaussian Elimination, Subspace Checks).
+- Block B: Theory & Proof Memorization (Prof B's style: Definition -> Theorem -> Proof). Explicitly assign exact proofs from the "Must-Know Proofs" file (e.g., Steinitz Exchange Theorem).
+- Block C: Application/Testing (Assign specific questions from the provided Problem Sets or Past Papers).
 
-* TASK INSTRUCTIONS
-Create a comprehensive 14-Day "Emergency Triage" Study Plan.
-
-** Phase 1: The Audit (Day 1)
-- Create a strategy to cross-reference the "Must Know Proofs" with the "Past Exams (Prof B)."
-- Define the "Core Syllabus" based *only* on what Prof B focuses on.
-- *Instruction:* Explicitly tell me which parts of Prof A's content I can safely ignore based on Prof B's exam history.
-
-** Phase 2: The Schedule (Days 2-12)
-- Break down the 14 videos (Part 2) and Whiteboard photos into a viewing schedule.
-- Integrate the Problem Sets, but prioritize problems that look like the Past Exam questions.
-- **Format:** Provide a daily table with:
-
-  |-----+-------------+---------------------+--------------------------------|
-  | Day | Focus Topic | Resource to Consume | Practical Task (Proof/Problem) |
-  |-----+-------------+---------------------+--------------------------------|
-
-** Phase 3: The Simulation (Days 13-14)
-- define a strategy for mock testing using the existing past exams.
-
-* SPECIFIC REQUESTS
-1. **Resource Efficiency:** Do not tell me to watch all 10 videos from Prof A. Tell me specifically *which* topics from Part 1 are foundational (e.g., Vector Spaces, Gaussian Elimination) and advise me to learn them via YouTube (3Blue1Brown/Khan Academy) instead of the bad lecture notes, unless Prof A's specific notation is required.
-2. **Proof Strategy:** How should I tackle the "Must Know Proofs"? Should I memorize them or derive them?
-3. **Daily Routine:** Structure the daily blocks to alternate between "Input" (Videos/Reading) and "Output" (Solving/Proving) to prevent passive studying.
+** 3. Progression Strategy
+- Days 1-6: Core mastery of Top 4 Heatmap clusters (Linear Maps, Matrix Algebra, Vector Spaces, Linear Systems).
+- Days 7-8: Synthesis and Proof Drilling.
+- Days 9-10: Timed Mock Exams using the Target Exam Past Paper and the 2 alternative Past Papers.
+- Day 11: Pure buffer, lightweight review of the "Verbatim Candidates" proofs, and rest.
 
 * OUTPUT FORMAT
-- Use org-mode formatting for the response.
-- Be direct, encouraging, and ruthless about cutting out unnecessary noise.
+Output the 11-day schedule as an Org-mode table or structured Org-mode outline.
+For each day, explicitly name the resource I need to open (e.g., "Do Problem Set 3, Q2-Q5", "Memorize Proof: Dimension Theorem"). Do not be vague. Provide a brief (1-sentence) rationale for why that specific task is scheduled for that day.
+
+* READY PROMPT
+If you understand these instructions, acknowledge them briefly and await the pasted data (Analysis, Problem Sets, Proofs, Past Papers). Do not generate the schedule until I provide the data.

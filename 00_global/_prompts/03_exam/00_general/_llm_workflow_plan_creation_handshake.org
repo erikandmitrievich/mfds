@@ -1,0 +1,26 @@
+#+title:  Llm Workflow Plan Creation Handshake
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-02-21>
+#+lastmod: <2026-02-21 13:43>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* Step 1: Rule Ingestion (The Hard Wait)
+
+Copy the text below and paste it ALONG WITH the specific course's `_llm_rules_exam_[course]_plan_creation.org` file.
+
+Attached are your system instructions. Read them, but do not generate the schedule yet. Acknowledge that you understand the rules, constraints, and output format with a single sentence. Wait for me to provide the data files.
+
+* Step 2: Data Ingestion (The Trigger)
+
+Copy the text below and paste it ALONG WITH all relevant data files (analysis, problem sets, past papers) AFTER the LLM has acknowledged Step 1.
+
+Here are the data files. Execute the plan creation strictly following the rules from the first prompt.
