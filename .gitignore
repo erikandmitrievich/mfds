@@ -16,6 +16,7 @@
 *.tex
 
 # removing source files
+*book.*
 *source.*
 *source.pdf
 *source.org
