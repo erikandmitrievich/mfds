@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-01-26>
-#+lastmod: <2026-01-29 11:14>
+#+lastmod: <2026-02-28 11:33>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -335,7 +335,7 @@ We consider the vector space $\mathbb{F}^{n}$ for the specified field and some $
 
 (d) (2) $W_{4}:=\{x\in\mathbb{R}^{n}|\sum_{i=1}^{n}x_{i}^{2}=0\}$,
 
-(e) (2) R$W_{5}:=\{x\in\mathbb{F}_{2}^{3}|x_{1}^{2}+x_{2}+x_{3}^{3}=0\}$,
+(e) (2) $W_{5}:=\{x\in\mathbb{F}_{2}^{3}|x_{1}^{2}+x_{2}+x_{3}^{3}=0\}$,
 
 (f) (2) $W_{6}:=\{x\in\mathbb{C}^{2}|x_{1}\ne0\wedge\frac{x_{2}}{x_{1}}=1\}$.
 #+end_quote
@@ -373,7 +373,7 @@ To prove a subset $W$ is a subspace, I must check three conditions:
   - *Step 2: Linearity*
     This condition defines the kernel of the linear functional $f(x) = \sum j x_j$. The kernel of a linear map is always a subspace.
     Alternatively:
-    $$ \sum j(x_j + y_j) = \sum jx_j + \sum jy_j = 0 + 0 = 0 $$
+    $\sum j(x_j + y_j) = \sum jx_j + \sum jy_j = 0 + 0 = 0$
     $$ \sum j(\lambda x_j) = \lambda \sum jx_j = 0 $$
 
   - *Conclusion*
