@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-13>
-#+lastmod: <2026-02-20 15:56>
+#+lastmod: <2026-03-02 19:11>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -49,7 +49,7 @@ This repository represents a fundamental shift from that traditional model. My g
 
 * Project Metrics
 
-As of 17/02/2026 (End of First Semester).
+As of 02/03/2026 (End of First Semester).
 
 To treat this degree as a software project, I track the volume and structure of knowledge accumulation.
 
@@ -57,10 +57,10 @@ Current snapshot of the repository (excluding PDFs/assets):
 
 | Metric           | Volume          | Context                             |
 |------------------+-----------------+-------------------------------------|
-| *Knowledge Base* | ~207,141 words  | Equivalent to approx. 3-4 textbooks |
-| *Math Density*   | 5,618 equations | LaTeX expressions (Theorems/Proofs) |
-| *Logic Layer*    | 2,379 lines     | Executable Julia/Python code        |
-| *Efficiency*     | 1.28 MB         | Pure text-based knowledge storage   |
+| *Knowledge Base* | 239,598 words   | Equivalent to approx. 3-4 textbooks |
+| *Math Density*   | 7,130 equations | LaTeX expressions (Theorems/Proofs) |
+| *Logic Layer*    | 3,482 lines     | Executable Julia/Python code        |
+| *Efficiency*     | 1.52 MB         | Pure text-based knowledge storage   |
 
 ** *Insight:*
 A key feature of this workspace is *Literate Programming*. As the data shows, over *80% of the code* (specifically 1,879 lines of Julia) resides /embedded within the notes/ (.org files) rather than external scripts. This confirms that the math is being verified in real-time, side-by-side with the theory.
