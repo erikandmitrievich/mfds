@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-03-05 12:13>
+#+lastmod: <2026-03-05 12:59>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,7 +13,7 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
-* Definition 1.1 Binary operation $+$ on a set $E$
+* Definition 1.1: Binary operation $+$ on a set $E$
 
 A binary operation on set $E$ is a mapping
 
@@ -24,7 +24,7 @@ A binary operation on set $E$ is a mapping
 
 which produces an element $E$ out of two elements from $E$.
 
-* Definition 1.3 Commutative Group
+* Definition 1.3: Commutative Group
 
 We say that $(E, +)$ is a group when $E$ is a set, and $+$ is a binary operation on $E$ satisfying:
 
@@ -32,3 +32,22 @@ We say that $(E, +)$ is a group when $E$ is a set, and $+$ is a binary operation
 2. Identity element: $\exists 0_{E} : x + 0_{E} = x$
 3. Inverse element: $\forall x \in E, \exists \tilde{x} \in E : x + \tilde{X} = 0_{E}$
 4. Commutativity: $x + y = y + x$
+
+* Definition 1.5: Scalar multiplication
+
+Scalar multiplication on $E$ over the field $\mathbb{K}$ is a map
+
+\begin{align*}
+\times : \mathbb{K} \times E &\rightarrow E \\
+(\lambda, x) &\mapsto \lambda \times x \\
+\end{align*}
+
+which produces an element in $E$ out of scalar $\lambda$ and an input element $x \in E$.
+
+* Definition 1.6: Compatability between $\times$ and $+$
+
+We say that $\times$ is compatible with $+$ iff $\forall x, y \in E$ and $\forall \lambda, \mu \in \mathbb{K}$:
+
+1. Identity element of the scalar multiplication: $1_{\mathbb{K}} \times x = x$ ($1_{\mathbb{K}}$ being the multiplicative identity of $\mathbb{K}$)
+2. Compatability of scalar multiplication with field multiplication: $(\lambda \times \mu) \times x = \lambda \times (\mu \times x)$
+3. Distributivity of scalar multiplication
