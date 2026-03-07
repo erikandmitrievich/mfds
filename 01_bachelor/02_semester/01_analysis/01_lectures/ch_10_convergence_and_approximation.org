@@ -1,0 +1,63 @@
+#+title: Lec 01
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-03-05>
+#+lastmod: <2026-03-07 13:37>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* Definition 10.1.1: Metric space
+
+Given a set $X \neq \emptyset$, we say that a mapping $d_X : X \times X \rightarrow \left[ 0, \infty \right)$ is a metric if the following three properties are satisfied:
+
+1. symmetry: for all $x, y \in X$,
+
+   $$d_{X}(x, y) = d_X(y, x)$$
+
+2. triangle inequality: for all $x, y, z \in X$,
+
+   $d_X(x,z) \le d_X(x,y) + d_X(y,z)$
+
+3. definiteness: for all $x, y \in X$.
+
+   $$d_X(x, y) = 0 \iff x = y$$
+
+If $d_X$ is a metric on $X$, then $(X, d_{X})$ is called a metric space.
+
+* Definition 10.2.1: Cauchy sequence
+
+Let $(X, d_X)$ be a metric space. A sequence $(a_n)_{n\in\mathbb{N}} \subseteq X$ is called Cauchy sequence if
+
+$$\forall \epsilon>0, \exists N \in \mathbb{N} : \forall n, m \ge N, d_X(a_n, a_m) \le \epsilon$$
+
+* Definition 10.3.1: Compactness
+
+A metric space $X$ is called compact if every sequence $(x_n)_{n\in\mathbb{N}} \in X$ has a convergent subsequence $(x_{n_j})_{j \in \mathbb{N}}$ (with limit in $X$).
+
+* Lemma 10.3.2: Every compact metric space is complete
+
+Let $(x_n)_{n\in\mathbb{N}} \in X$ be a Cauchy sequence. Since $X$ is compact, it has a convergent subsequence $x_j \rightarrow x \in X$ for $j \rightarrow \infty$. given $\epsilon > 0$, there are $N_1, N_2 \in \mathbb{N}$ such that
+
+\begin{align*}
+d_X(x_n, x_m) &\le \frac{\epsilon}{2}, & \forall n, m &\ge N_1 \\
+d_X(x_{n_j}, x) &\le \frac{\epsilon}{2}, & \forall j &\ge N_2 \\
+\end{align*}
+
+Let $N := max(N_1, N_2)$. Then for all $n \ge N$ we have $n_N \ge N_1$ and
+
+$$d_X(x_n,x) \le d_X(x_n, x_{n_N}) + d_X(x_{n_N}, x) \le \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$$
+
+Thus, $x_n \rightarrow x$.
+
+* Definition: Open and closed subsets
+
+Let $X$ be a metric space and $x \in X$.
+
+1. We define a ball $B_{\epsilon}(x)$ of radius $\epsilon \ge 0$  is
