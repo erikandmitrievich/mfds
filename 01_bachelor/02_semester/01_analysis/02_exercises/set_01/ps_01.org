@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-06 20:31>
+#+lastmod: <2026-03-07 16:37>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,3 +13,87 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
+* Problem 1
+** Task
+#+begin_quote
+For $p \in [1, \infty)$, define $d_p : \mathbb{R}^n \times \mathbb{R}^n \to [0, \infty)$ by
+$d_p(x, y) = \left( \sum_{k=1}^{n} |x_k - y_k|^p \right)^{1/p}$.
+
+Each $d_p$ defines a metric on $\mathbb{R}^n$.
+
+1. Implement the function $d_p(x, y)$ in Julia.
+
+2. Let $n = 2$. To illustrate the unit ball
+
+   $$B_1(0) = \{ x \in \mathbb{R}^2 : d_p(x, 0) \le 1 \}$$
+
+   for $p = 1$, $p = 2$, and $p = 10$, create a grid of points in a square containing the ball and produce a scatter plot that includes only those grid points satisfying $d_p(x, 0) \le 1$.
+
+   Describe how the shape of the ball changes as $p$ increases.
+
+3. Show that
+
+   $$d_\infty(x, y) = \max_{k=1,\ldots,n} |x_k - y_k|$$
+
+   defines a metric on $\mathbb{R}^n$.
+#+end_quote
+
+** Notes
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_01_01.jl
+#+end_src
+
+#+begin_src julia :results value :exports both :tangle julia/p_01_02.jl
+#+end_src
+
+* Problem 2
+** Task
+#+begin_quote
+Show that for every $p \in [1, \infty)$ and for every fixed $x, y \in \mathbb{R}^n$,
+
+$$d_\infty(x, y) \le d_p(x, y) \le n^{1/p} \, d_\infty(x, y)$$,
+
+and deduce that $d_p(x, y) \to d_\infty(x, y)$ as $p \to \infty$.
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 3
+** Task
+#+begin_quote
+Let $(X, d_X)$ and $(Y, d_Y)$ be metric spaces and let $f : X \to Y$ be a function. Show that $f$ is continuous if and only if $f^{-1}(U)$ is open for all open sets $U \subseteq Y$.
+
+(Hint: write the $\varepsilon$-$\delta$ definition of continuity in terms of balls)
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 4
+** Task
+#+begin_quote
+Let $(X, d_X)$ be a metric space and fix some $y_0 \in X$. Consider the mapping $f : X \to \mathbb{R}$,
+
+$$f(x) = d_X(x, y_0)$$
+
+and the balls for $\varepsilon > 0$ and $x \in X$,
+
+\begin{align*}
+B_\varepsilon(x) = \{ y \in X : d_X(x, y) \le \varepsilon \}, \\
+\mathring{B}_\varepsilon(x) = \{ y \in X : d_X(x, y) < \varepsilon \}.
+\end{align*}
+
+1. Prove that $f$ is continuous.
+
+2. Prove that $B_\varepsilon(x)$ is closed.
+
+3. Prove that $\mathring{B}_\varepsilon(x)$ is open.
+#+end_quote
+
+** Notes
+
+** Solution

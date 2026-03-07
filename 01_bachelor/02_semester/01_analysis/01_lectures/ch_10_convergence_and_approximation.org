@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-03-07 13:37>
+#+lastmod: <2026-03-07 16:28>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -37,11 +37,15 @@ Let $(X, d_X)$ be a metric space. A sequence $(a_n)_{n\in\mathbb{N}} \subseteq X
 
 $$\forall \epsilon>0, \exists N \in \mathbb{N} : \forall n, m \ge N, d_X(a_n, a_m) \le \epsilon$$
 
+* Definition 10.2.5: Completeness
+
+A metric space $X$ is called complete if every Cauchy sequence in $X$ is convergent in $X$.
+
 * Definition 10.3.1: Compactness
 
 A metric space $X$ is called compact if every sequence $(x_n)_{n\in\mathbb{N}} \in X$ has a convergent subsequence $(x_{n_j})_{j \in \mathbb{N}}$ (with limit in $X$).
 
-* Lemma 10.3.2: Every compact metric space is complete
+* Lemma      10.3.2: Every compact metric space is complete
 
 Let $(x_n)_{n\in\mathbb{N}} \in X$ be a Cauchy sequence. Since $X$ is compact, it has a convergent subsequence $x_j \rightarrow x \in X$ for $j \rightarrow \infty$. given $\epsilon > 0$, there are $N_1, N_2 \in \mathbb{N}$ such that
 
@@ -56,8 +60,21 @@ $$d_X(x_n,x) \le d_X(x_n, x_{n_N}) + d_X(x_{n_N}, x) \le \frac{\epsilon}{2} + \f
 
 Thus, $x_n \rightarrow x$.
 
-* Definition: Open and closed subsets
+* Definition 10.3.3: Open and closed subsets
 
 Let $X$ be a metric space and $x \in X$.
 
-1. We define a ball $B_{\epsilon}(x)$ of radius $\epsilon \ge 0$  is
+1. We define a ball $B_{\epsilon}(x)$ of radius $\epsilon \ge 0$ and its interior $\mathring{B}(x)$ by
+
+   \begin{align*}
+   B_e(x) := \left\{ y \in X : d_X(x, y) \le \epsilon \right\} \\
+   \mathring{B}_e(x) := \left\{ y \in X : d_X(x, y) < \epsilon \right\} \\
+   \end{align*}
+
+2. We say a set $S \subseteq X$ is open if
+
+   $$\forall x \in S \quad \exists \epsilon > 0 : B_e(x) \subseteq S$$
+
+3. We say that $S \subseteq X$ is closed if its complement $X \setminus S$ is open
+
+4. We call $S \subseteq X$ a neighborhood of $x$ is there is $\epsilon > 0$ such that $B_{\epsilon}(x) \subseteq S$
