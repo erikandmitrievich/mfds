@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-03-07 16:28>
+#+lastmod: <2026-03-07 19:38>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -45,9 +45,11 @@ A metric space $X$ is called complete if every Cauchy sequence in $X$ is converg
 
 A metric space $X$ is called compact if every sequence $(x_n)_{n\in\mathbb{N}} \in X$ has a convergent subsequence $(x_{n_j})_{j \in \mathbb{N}}$ (with limit in $X$).
 
+/Metric space $X$ is compact iff no matter how you pick an infinite sequence of points in $X$, you can always extract subsequence that converges to some point still inside $X$./
+
 * Lemma      10.3.2: Every compact metric space is complete
 
-Let $(x_n)_{n\in\mathbb{N}} \in X$ be a Cauchy sequence. Since $X$ is compact, it has a convergent subsequence $x_j \rightarrow x \in X$ for $j \rightarrow \infty$. given $\epsilon > 0$, there are $N_1, N_2 \in \mathbb{N}$ such that
+Let $(x_n)_{n\in\mathbb{N}} \in X$ be a Cauchy sequence. Since $X$ is compact, it has a convergent subsequence $x_j \rightarrow x \in X$ for $j \rightarrow \infty$. Given $\epsilon > 0$, there are $N_1, N_2 \in \mathbb{N}$ such that
 
 \begin{align*}
 d_X(x_n, x_m) &\le \frac{\epsilon}{2}, & \forall n, m &\ge N_1 \\
@@ -67,14 +69,14 @@ Let $X$ be a metric space and $x \in X$.
 1. We define a ball $B_{\epsilon}(x)$ of radius $\epsilon \ge 0$ and its interior $\mathring{B}(x)$ by
 
    \begin{align*}
-   B_e(x) := \left\{ y \in X : d_X(x, y) \le \epsilon \right\} \\
-   \mathring{B}_e(x) := \left\{ y \in X : d_X(x, y) < \epsilon \right\} \\
+   B_{\epsilon}(x) := \left\{ y \in X : d_X(x, y) \le \epsilon \right\} \\
+   \mathring{B}_{\epsilon}(x) := \left\{ y \in X : d_X(x, y) < \epsilon \right\} \\
    \end{align*}
 
 2. We say a set $S \subseteq X$ is open if
 
-   $$\forall x \in S \quad \exists \epsilon > 0 : B_e(x) \subseteq S$$
+   $$\forall x \in S \quad \exists \epsilon > 0 : B_{\epsilon}(x) \subseteq S$$
 
 3. We say that $S \subseteq X$ is closed if its complement $X \setminus S$ is open
 
-4. We call $S \subseteq X$ a neighborhood of $x$ is there is $\epsilon > 0$ such that $B_{\epsilon}(x) \subseteq S$
+4. We call $S \subseteq X$ a neighborhood of $x$ if there is $\epsilon > 0$ such that $B_{\epsilon}(x) \subseteq S$

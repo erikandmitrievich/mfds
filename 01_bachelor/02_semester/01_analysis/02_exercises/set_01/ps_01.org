@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-07 16:37>
+#+lastmod: <2026-03-07 20:31>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -17,7 +17,8 @@
 ** Task
 #+begin_quote
 For $p \in [1, \infty)$, define $d_p : \mathbb{R}^n \times \mathbb{R}^n \to [0, \infty)$ by
-$d_p(x, y) = \left( \sum_{k=1}^{n} |x_k - y_k|^p \right)^{1/p}$.
+
+$$d_p(x, y) = \left( \sum_{k=1}^{n} |x_k - y_k|^p \right)^{1/p}$$
 
 Each $d_p$ defines a metric on $\mathbb{R}^n$.
 
@@ -40,12 +41,39 @@ Each $d_p$ defines a metric on $\mathbb{R}^n$.
 
 ** Notes
 
+
+
 ** Solution
-#+begin_src julia :results value :exports both :tangle julia/p_01_01.jl
+*** (1) + (2)
+#+begin_src julia :results output :exports both :tangle julia/p_01_01.jl
+using Plots
+
+d_p(p, x, y) = sum(abs.(x .- y) .^ p) ^ (1/p)
+
+function unit_ball_scatter(p, grid_range=-1.5:0.02:1.5)
+    pts = [(x,y) for x in grid_range, y in grid_range if d_p(p, [x, y], [0.0, 0.0]) <= 1]
+    scatter(first.(pts), last.(pts),
+            markersize=1, aspect_ratio=:equal,
+            label="p=$p", title="Unit ball p=$p",
+            xlabel="x_1", ylabel="x_2")
+end
+
+function main()
+    plots = [unit_ball_scatter(p) for p in [1, 2, 10]]
+    plot(plots..., layout=(2, 2), size=(2000, 2000))
+    savefig("./assets/p_01_02.png")
+end
+
+main()
 #+end_src
 
-#+begin_src julia :results value :exports both :tangle julia/p_01_02.jl
-#+end_src
+#+RESULTS:
+: d_p (generic function with 1 method)
+: unit_ball_scatter (generic function with 2 methods)
+: main (generic function with 1 method)
+: "/Users/ziro2173/personal/university/01_bachelor/02_semester/01_analysis/02_exercises/set_01/assets/p_01_02.png"
+
+
 
 * Problem 2
 ** Task
