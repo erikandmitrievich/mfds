@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-03-07 19:38>
+#+lastmod: <2026-03-08 13:45>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -80,3 +80,11 @@ Let $X$ be a metric space and $x \in X$.
 3. We say that $S \subseteq X$ is closed if its complement $X \setminus S$ is open
 
 4. We call $S \subseteq X$ a neighborhood of $x$ if there is $\epsilon > 0$ such that $B_{\epsilon}(x) \subseteq S$
+
+* Lemma      10.3.6: Sequential closure
+
+Let $X$ be a metric space and $S \subseteq X$ a nonempty subset. Then $S$ is closed if and only if all sequences $(x_n)_{n\in\mathbb{N}} \subseteq S$ with $x_n \rightarrow x \in X$ satisfy $x \in S$.
+
+/In other words, $S$ is closed if and only if it contains all limits of its converging sequences./
+
+*Proof.* Let $S$ be closed. Proof by contradiction, so assume that $(x_n)_{n\in\mathbb{N}} \subseteq S$ and $x_n \rightarrow x \in X \setminus S$. Since $X \setminus S$ is open, there is $\epsilon > 0$ such that $B_{\epsilon}(x) \subseteq X \setminus S$.

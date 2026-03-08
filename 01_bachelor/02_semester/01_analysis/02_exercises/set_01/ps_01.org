@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-07 20:31>
+#+lastmod: <2026-03-08 13:57>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -72,6 +72,17 @@ main()
 : unit_ball_scatter (generic function with 2 methods)
 : main (generic function with 1 method)
 : "/Users/ziro2173/personal/university/01_bachelor/02_semester/01_analysis/02_exercises/set_01/assets/p_01_02.png"
+
+
+How the shape changes as $p$ increases:
+
+- $p = 1$: The unit ball is a diamond. The constraint $|x_1| + |x_2| \le 1$ creates straight edges connecting the points $(\pm 1, 0), (0, \pm1)$.
+
+- $p = 2$: The unit ball is a circle. The Euclidian norm gives the round disk.
+
+- $p = 10$: The unit ball is nearly square. Square with rounded corners.
+
+*** (3)
 
 
 
