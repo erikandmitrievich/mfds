@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-08 21:41>
+#+lastmod: <2026-03-08 22:10>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -106,7 +106,7 @@ d_{\infty}(x, z) &\le d_{\infty}(x, y) + d_{\infty}(y, z) \\
                         &\iff x = y \\
    \end{align*}
 
-* Problem 2
+* Problem 2 :DONE:
 ** Task
 #+begin_quote
 Show that for every $p \in [1, \infty)$ and for every fixed $x, y \in \mathbb{R}^n$,
@@ -163,7 +163,7 @@ and deduce that $d_p(x, y) \to d_\infty(x, y)$ as $p \to \infty$.
 
   $$\lim_{p \to \infty} d_p(x,y) = d_\infty(x,y). \quad \blacksquare$$
 
-* Problem 3
+* Problem 3 :DONE:
 ** Task
 #+begin_quote
 Let $(X, d_X)$ and $(Y, d_Y)$ be metric spaces and let $f : X \to Y$ be a function. Show that $f$ is continuous if and only if $f^{-1}(U)$ is open for all open sets $U \subseteq Y$.
@@ -171,11 +171,71 @@ Let $(X, d_X)$ and $(Y, d_Y)$ be metric spaces and let $f : X \to Y$ be a functi
 (Hint: write the $\varepsilon\delta$ definition of continuity in terms of balls)
 #+end_quote
 
-** Notes
-
 ** Solution
 
+- Setup
 
+  Let $(X, d_X)$ and $(Y, d_Y)$ be metric spaces and $f : X \to Y$ a function.
+  Recall that $f$ is *continuous at* $x_0 \in X$ if
+
+  $$\forall \varepsilon > 0 \; \exists \delta > 0 : d_X(x, x_0) < \delta \implies d_Y(f(x), f(x_0)) < \varepsilon,$$
+
+  or equivalently, in terms of open balls,
+
+  $$\forall \varepsilon > 0 \; \exists \delta > 0 : f(B_\delta(x_0)) \subseteq B_\varepsilon(f(x_0)),$$
+
+  where $B_r(z)$ denotes the open ball of radius $r$ centred at $z$ in the
+  appropriate metric space. We say $f$ is *continuous* if it is continuous at
+  every $x_0 \in X$.
+
+  *Claim.* $f$ is continuous if and only if $f^{-1}(U)$ is open in $X$ for every
+  open set $U \subseteq Y$.
+
+- Forward direction ($\Rightarrow$)
+
+  *Proof.* Assume $f$ is continuous. Let $U \subseteq Y$ be open and let
+  $x_0 \in f^{-1}(U)$; we must find an open ball around $x_0$ contained in
+  $f^{-1}(U)$.
+
+  Since $x_0 \in f^{-1}(U)$, we have $f(x_0) \in U$. Because $U$ is open in $Y$,
+  there exists $\varepsilon > 0$ such that
+
+  $$B_\varepsilon(f(x_0)) \subseteq U.$$
+
+  Since $f$ is continuous at $x_0$, for this $\varepsilon$ there exists $\delta > 0$
+  such that
+
+  $$f(B_\delta(x_0)) \subseteq B_\varepsilon(f(x_0)).$$
+
+  Combining both inclusions,
+
+  $$f(B_\delta(x_0)) \subseteq B_\varepsilon(f(x_0)) \subseteq U,$$
+
+  which means $B_\delta(x_0) \subseteq f^{-1}(U)$. Since every point
+  $x_0 \in f^{-1}(U)$ has such a ball, $f^{-1}(U)$ is open. $\blacksquare$
+
+- Backward direction ($\Leftarrow$)
+
+  *Proof.* Assume that $f^{-1}(U)$ is open in $X$ for every open set $U \subseteq Y$.
+  Let $x_0 \in X$ and $\varepsilon > 0$. We must find $\delta > 0$ such that
+  $f(B_\delta(x_0)) \subseteq B_\varepsilon(f(x_0))$.
+
+  The open ball $B_\varepsilon(f(x_0))$ is an open set in $Y$, so by hypothesis
+
+  $$f^{-1}(B_\varepsilon(f(x_0)))$$
+
+  is open in $X$. Since $f(x_0) \in B_\varepsilon(f(x_0))$, we have
+  $x_0 \in f^{-1}(B_\varepsilon(f(x_0)))$. Because this preimage is open, there
+  exists $\delta > 0$ such that
+
+  $$B_\delta(x_0) \subseteq f^{-1}(B_\varepsilon(f(x_0))).$$
+
+  Applying $f$ to both sides,
+
+  $$f(B_\delta(x_0)) \subseteq B_\varepsilon(f(x_0)).$$
+
+  This is exactly the $\varepsilon\delta$ condition at $x_0$. Since $x_0$ was
+  arbitrary, $f$ is continuous. $\blacksquare$
 
 * Problem 4
 ** Task
