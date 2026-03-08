@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-03-08 13:45>
+#+lastmod: <2026-03-08 15:21>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -81,10 +81,18 @@ Let $X$ be a metric space and $x \in X$.
 
 4. We call $S \subseteq X$ a neighborhood of $x$ if there is $\epsilon > 0$ such that $B_{\epsilon}(x) \subseteq S$
 
-* Lemma      10.3.6: Sequential closure
+* Lemma 10.3.6: Sequential closure
 
-Let $X$ be a metric space and $S \subseteq X$ a nonempty subset. Then $S$ is closed if and only if all sequences $(x_n)_{n\in\mathbb{N}} \subseteq S$ with $x_n \rightarrow x \in X$ satisfy $x \in S$.
+Let $X$ be a metric space and $S \subseteq X$ a nonempty subset. Then $S$ is closed iff all sequences $(x_n)_{n\in\mathbb{N}} \subseteq S$ with $x_n \rightarrow x \in X$ satisfy $x \in S$.
 
-/In other words, $S$ is closed if and only if it contains all limits of its converging sequences./
+/In other words, $S$ is closed iff it contains all limits of its converging sequences./
 
-*Proof.* Let $S$ be closed. Proof by contradiction, so assume that $(x_n)_{n\in\mathbb{N}} \subseteq S$ and $x_n \rightarrow x \in X \setminus S$. Since $X \setminus S$ is open, there is $\epsilon > 0$ such that $B_{\epsilon}(x) \subseteq X \setminus S$.
+*Proof.*
+
+- ($\Rightarrow$) Let $S$ be closed. Proof by contradiction, so assume that $(x_n)_{n\in\mathbb{N}} \subseteq S$ and $x_n \rightarrow x \in X \setminus S$. Since $X \setminus S$ is open, there is $\epsilon > 0$ such that $B_{\epsilon}(x) \subseteq X \setminus S$. By convergence, there is $N \in \mathbb{N}$ such that
+
+  $$d_{X}(x_n, x) < \epsilon \quad \forall n \ge N$$
+
+  In particular, $x_N \in B_{\epsilon}(x) \subseteq X \setminus S$, which contradicts $(x_n)_{n \in \mathbb{N}} \subseteq S$.
+
+- ($\Leftarrow$) We prove the contrapositive. Suppose $S$ is not closed. Then $X \setminus S$ is not open, so there exists $x \in X \setminus S$ such that for all $\epsilon > 0$, the ball $B_{\epsilon}(x)$ is not contained in $X \setminus S$. That is, for every $\epsilon > 0$, there exists a point in $B_{\epsilon}(x) \cap S$. Choosing $\epsilon = \frac{1}{n}$ for each $n \ge 1$ yields a point $y_n \in B_{1/n}(x) \cap S$. By construction, $d_{X}(y_n, x) < \frac{1}{n}$ for all $n \ge 1$, so $y_n \rightarrow x$. Since each $y_n \in S$ but $x \in X \setminus S$, we have found a sequence in $S$ converging to a limit outside $S$.

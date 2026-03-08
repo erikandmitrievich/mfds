@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-08 14:29>
+#+lastmod: <2026-03-08 21:41>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,7 +13,7 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
-* Problem 1
+* Problem 1 :DONE:
 ** Task
 #+begin_quote
 For $p \in [1, \infty)$, define $d_p : \mathbb{R}^n \times \mathbb{R}^n \to [0, \infty)$ by
@@ -38,10 +38,6 @@ Each $d_p$ defines a metric on $\mathbb{R}^n$.
 
    defines a metric on $\mathbb{R}^n$.
 #+end_quote
-
-** Notes
-
-
 
 ** Solution
 *** (1) + (2)
@@ -120,21 +116,66 @@ $$d_\infty(x, y) \le d_p(x, y) \le n^{1/p} \, d_\infty(x, y)$$,
 and deduce that $d_p(x, y) \to d_\infty(x, y)$ as $p \to \infty$.
 #+end_quote
 
-** Notes
-
 ** Solution
+
+- Setup
+
+  Let $x, y \in \mathbb{R}^n$ be fixed. Write $a_i = |x_i - y_i|$ for each $i$, and set
+  $M = \max_{1 \le i \le n} a_i = d_\infty(x, y)$. Then
+
+  $$d_p(x, y) = \left( \sum_{i=1}^{n} a_i^p \right)^{1/p}.$$
+
+  *Claim.* For every $p \in [1, \infty)$,
+
+  $$d_\infty(x, y) \le d_p(x, y) \le n^{1/p} \, d_\infty(x, y),$$
+
+  and consequently $d_p(x, y) \to d_\infty(x, y)$ as $p \to \infty$.
+
+- Left inequality: $d_\infty(x,y) \le d_p(x,y)$
+
+  *Proof.* Since $M = a_k$ for some index $k$, we have
+
+  $$d_p(x,y) = \left( \sum_{i=1}^{n} a_i^p \right)^{1/p} \ge \left( a_k^p \right)^{1/p} = a_k = M = d_\infty(x,y),$$
+
+  where the inequality follows from dropping non-negative terms from the sum. $\blacksquare$
+
+- Right inequality: $d_p(x,y) \le n^{1/p} \, d_\infty(x,y)$
+
+  *Proof.* Since $a_i \le M$ for every $i$, we have $a_i^p \le M^p$, and therefore
+
+  $$\sum_{i=1}^{n} a_i^p \le \sum_{i=1}^{n} M^p = n \, M^p.$$
+
+  Taking $p$ -th roots on both sides gives
+
+  $$d_p(x,y) = \left( \sum_{i=1}^{n} a_i^p \right)^{1/p} \le \left( n \, M^p \right)^{1/p} = n^{1/p} \, M = n^{1/p} \, d_\infty(x,y). \quad \blacksquare$$
+
+- Deduction: $d_p(x,y) \to d_\infty(x,y)$ as $p \to \infty$
+
+  *Proof.* Combining both inequalities, for every $p \in [1, \infty)$ we have
+
+  $$d_\infty(x,y) \le d_p(x,y) \le n^{1/p} \, d_\infty(x,y).$$
+
+  Since $n$ is a fixed positive integer,
+
+  $$n^{1/p} = e^{(\ln n)/p} \longrightarrow e^0 = 1 \quad \text{as } p \to \infty.$$
+
+  Hence the upper bound converges to $d_\infty(x,y)$, and the Squeeze Theorem yields
+
+  $$\lim_{p \to \infty} d_p(x,y) = d_\infty(x,y). \quad \blacksquare$$
 
 * Problem 3
 ** Task
 #+begin_quote
 Let $(X, d_X)$ and $(Y, d_Y)$ be metric spaces and let $f : X \to Y$ be a function. Show that $f$ is continuous if and only if $f^{-1}(U)$ is open for all open sets $U \subseteq Y$.
 
-(Hint: write the $\varepsilon$-$\delta$ definition of continuity in terms of balls)
+(Hint: write the $\varepsilon\delta$ definition of continuity in terms of balls)
 #+end_quote
 
 ** Notes
 
 ** Solution
+
+
 
 * Problem 4
 ** Task
