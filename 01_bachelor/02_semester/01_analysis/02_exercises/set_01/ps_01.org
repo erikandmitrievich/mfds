@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-08 13:57>
+#+lastmod: <2026-03-08 14:29>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -84,7 +84,31 @@ How the shape changes as $p$ increases:
 
 *** (3)
 
+For $d_{\infty}$ to be a metric space of $\mathbb{R}^n$ it must satisfy the following properties of metric space:
 
+1. symmetry: $\forall x, y \in \mathbb{R}^{n}$
+
+   \begin{align*}
+   max_{(k=1, \cdots, n)} |x_k - y_k| &= max_{(k=1, \cdots, n)} |y_k - x_k| \\
+   d_{\infty}(x, y) &= d_{\infty}(y, x) \\
+   \end{align*}
+
+2. triangle inequality: $\forall x, y, z \in \mathbb{R}^{n}$
+
+\begin{align*}
+max_{(k=1, \cdots, n)} |x_k - z_k| &= max_{(k=1, \cdots, n)} |x_k - z_k| \\
+max_{(k=1, \cdots, n)} |x_k - z_k| &= max_{(k=1, \cdots, n)} |x_k - y_k + y_k - z_k| \\
+max_{(k=1, \cdots, n)} |x_k - z_k| &\le max_{(k=1, \cdots, n)} |x_k - y_k| + |y_k - z_k| \\
+max_{(k=1, \cdots, n)} |x_k - z_k| &\le max_{(k=1, \cdots, n)} |x_k - y_k| + max_{(k=1, \cdots, n)} |y_k - z_k| \\
+d_{\infty}(x, z) &\le d_{\infty}(x, y) + d_{\infty}(y, z) \\
+\end{align*}
+
+3. definiteness: $\forall x, y \in \mathbb{R}^n$
+
+   \begin{align*}
+   d_{\infty}(x, y) = 0 &\iff max_{(k=1, \cdots, n)} |x_k - y_k| = 0 \\
+                        &\iff x = y \\
+   \end{align*}
 
 * Problem 2
 ** Task
