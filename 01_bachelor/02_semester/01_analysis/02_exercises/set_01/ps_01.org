@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-08 22:10>
+#+lastmod: <2026-03-09 07:17>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -237,7 +237,7 @@ Let $(X, d_X)$ and $(Y, d_Y)$ be metric spaces and let $f : X \to Y$ be a functi
   This is exactly the $\varepsilon\delta$ condition at $x_0$. Since $x_0$ was
   arbitrary, $f$ is continuous. $\blacksquare$
 
-* Problem 4
+* Problem 4 :DONE:
 ** Task
 #+begin_quote
 Let $(X, d_X)$ be a metric space and fix some $y_0 \in X$. Consider the mapping $f : X \to \mathbb{R}$,
@@ -258,6 +258,77 @@ B_\varepsilon(x) = \{ y \in X : d_X(x, y) \le \varepsilon \}, \\
 3. Prove that $\mathring{B}_\varepsilon(x)$ is open.
 #+end_quote
 
-** Notes
-
 ** Solution
+
+- Setup
+
+  Let $(X, d_X)$ be a metric space, fix $y_0 \in X$, and define $f : X \to \mathbb{R}$
+  by $f(x) = d_X(x, y_0)$. We equip $\mathbb{R}$ with the standard metric
+  $d(a, b) = |a - b|$. For $\varepsilon > 0$ and $x \in X$ define
+
+  \begin{align*}
+  B_\varepsilon(x) &= \{ y \in X : d_X(x, y) \le \varepsilon \}, \\
+  \mathring{B}_\varepsilon(x) &= \{ y \in X : d_X(x, y) < \varepsilon \}.
+  \end{align*}
+
+- Part 1: $f$ is continuous
+
+  *Proof.* Let $x_0 \in X$ and $\varepsilon > 0$. We must find $\delta > 0$ such that
+
+  $$d_X(x, x_0) < \delta \implies |f(x) - f(x_0)| < \varepsilon.$$
+
+  By the triangle inequality applied twice we obtain the *reverse triangle inequality*:
+
+  $$|d_X(x, y_0) - d_X(x_0, y_0)| \le d_X(x, x_0).$$
+
+  (Indeed, $d_X(x, y_0) \le d_X(x, x_0) + d_X(x_0, y_0)$ gives one direction,
+  and swapping the roles of $x$ and $x_0$ gives the other.)
+
+  Therefore $|f(x) - f(x_0)| \le d_X(x, x_0)$. Choosing $\delta = \varepsilon$,
+
+  $$d_X(x, x_0) < \delta = \varepsilon \implies |f(x) - f(x_0)| \le d_X(x, x_0) < \varepsilon.$$
+
+  Since $x_0$ was arbitrary, $f$ is continuous (in fact Lipschitz with constant $1$). $\blacksquare$
+
+- Part 2: $B_\varepsilon(x)$ is closed
+
+  *Proof.* We show that the complement $B_\varepsilon(x)^c = \{ y \in X : d_X(x, y) > \varepsilon \}$
+  is open.
+
+  Let $y_0 \in B_\varepsilon(x)^c$, so $d_X(x, y_0) > \varepsilon$. Set
+  $r = d_X(x, y_0) - \varepsilon > 0$. We claim $\mathring{B}_r(y_0) \subseteq B_\varepsilon(x)^c$.
+
+  Let $z \in \mathring{B}_r(y_0)$, i.e.\ $d_X(z, y_0) < r$. By the triangle inequality,
+
+  $$d_X(x, y_0) \le d_X(x, z) + d_X(z, y_0),$$
+
+  hence
+
+  $$d_X(x, z) \ge d_X(x, y_0) - d_X(z, y_0) > d_X(x, y_0) - r = \varepsilon.$$
+
+  Therefore $z \in B_\varepsilon(x)^c$. Since every point of $B_\varepsilon(x)^c$ has an
+  open ball around it contained in $B_\varepsilon(x)^c$, the complement is open, so
+  $B_\varepsilon(x)$ is closed. $\blacksquare$
+
+  *Alternative proof using Part 1.* Define $g : X \to \mathbb{R}$ by $g(y) = d_X(x, y)$.
+  By Part 1 (with $x$ playing the role of $y_0$), $g$ is continuous. Then
+
+  $$B_\varepsilon(x) = g^{-1}((-\infty, \varepsilon]) = g^{-1}(\mathbb{R} \setminus (\varepsilon, \infty)).$$
+
+  Since $(\varepsilon, \infty)$ is open in $\mathbb{R}$, its complement $(-\infty, \varepsilon]$
+  is closed, and the preimage of a closed set under a continuous function is closed.
+  Hence $B_\varepsilon(x)$ is closed. $\blacksquare$
+
+- Part 3: $\mathring{B}_\varepsilon(x)$ is open
+
+  *Proof.* Let $y_0 \in \mathring{B}_\varepsilon(x)$, so $d_X(x, y_0) < \varepsilon$.
+  Set $r = \varepsilon - d_X(x, y_0) > 0$. We claim
+  $\mathring{B}_r(y_0) \subseteq \mathring{B}_\varepsilon(x)$.
+
+  Let $z \in \mathring{B}_r(y_0)$, i.e.\ $d_X(z, y_0) < r$. By the triangle inequality,
+
+  $$d_X(x, z) \le d_X(x, y_0) + d_X(y_0, z) < d_X(x, y_0) + r = \varepsilon.$$
+
+  Therefore $z \in \mathring{B}_\varepsilon(x)$. Since every point of
+  $\mathring{B}_\varepsilon(x)$ has an open ball around it contained in
+  $\mathring{B}_\varepsilon(x)$, the set is open. $\blacksquare$
