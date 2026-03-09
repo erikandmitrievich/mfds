@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-09 09:14>
+#+lastmod: <2026-03-09 12:33>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,7 +13,7 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
-* Problem 1.22
+* Problem 1.22 :DONE:
 ** Task
 #+begin_quote
 (Change of basis) Let $h, k \in \mathbb{R} \setminus \{0\}$, and bases $\mathcal{U}$ and $\mathcal{V}$ of $\mathbb{R}^3$ given by
@@ -23,9 +23,41 @@ $\mathcal{U} = \left\{ \begin{pmatrix} 1 \\ h \\ k \end{pmatrix}, \begin{pmatrix
 Determine the set $\mathbb{F}$ of all the vectors in $\mathbb{R}^3$ that has the same coordinates in both $\mathcal{U}$ and $\mathcal{V}$. Is $\mathbb{F}$ a vector subspace of $\mathbb{R}^3$? (*Indication:* try and define a linear mapping such that its kernel is the set of vectors that we are looking for.)
 #+end_quote
 
-** Notes
-
 ** Solution
+
+Let $\alpha = (\alpha_1, \alpha_2, \alpha_3)$ be the shared coordinate vector. The condition "same coordinates in $\mathcal{U}$ and $\mathcal{V}$" means:
+
+\begin{align*}
+\alpha_1 u_1 + \alpha_2 u_2 + \alpha_3 u_3 &= \alpha_1 v_1 + \alpha_2 v_2 + \alpha_3 v_3 \\
+\alpha_1 (u_1 - v_1) + \alpha_2 (u_2 - v_2) + \alpha_3 (u_3 - v_3) &= 0
+\end{align*}
+
+Define $T : \mathbb{R}^3 \to \mathbb{R}^3$ by $T(\alpha) = M\alpha$, where $M$ has columns $(u_i - v_i)$. Then $\mathbb{F} = \ker(T)$.
+
+\begin{align*}
+M &=
+\begin{bmatrix}
+0 & -h & -k \\
+h & 0  & 0  \\
+k & 0  & 0  \\
+\end{bmatrix} \\
+\xrightarrow{R_3 \leftarrow R_3 - \frac{k}{h} R_2}
+&\begin{bmatrix}
+0 & -h & -k \\
+h & 0  & 0  \\
+0 & 0  & 0  \\
+\end{bmatrix}
+\end{align*}
+
+From row 2: $h \alpha_1 = 0 \implies \alpha_1 = 0$ (since $h \neq 0$).
+
+From row 1: $-h \alpha_2 - k \alpha_3 = 0 \implies \alpha_2 = -\frac{k}{h} \alpha_3$.
+
+Let $\alpha_3 = t$, hence:
+
+$$\mathbb{F} = \left\{ t \begin{pmatrix} 0 \\ -\frac{k}{h} \\ 1 \end{pmatrix} : t \in \mathbb{R} \right\}$$
+
+$\mathbb{F}$ is a vector subspace of $\mathbb{R}^3$, as it is the kernel of the linear map $T(\alpha) = M\alpha$ (kernels of linear maps are subspaces by Proposition III.2.11).
 
 * Problem 1.31
 ** Task
