@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-06 20:29>
+#+lastmod: <2026-03-09 09:14>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,6 +13,98 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
-* To solve:
+* Problem 1.22
+** Task
+#+begin_quote
+(Change of basis) Let $h, k \in \mathbb{R} \setminus \{0\}$, and bases $\mathcal{U}$ and $\mathcal{V}$ of $\mathbb{R}^3$ given by
 
-Ex. 1.22, 1.31, 1.40, 1.42, 1.43
+$\mathcal{U} = \left\{ \begin{pmatrix} 1 \\ h \\ k \end{pmatrix}, \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix}, \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix} \right\}$, and $\mathcal{V} = \left\{ \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}, \begin{pmatrix} h \\ 1 \\ 0 \end{pmatrix}, \begin{pmatrix} k \\ 0 \\ 1 \end{pmatrix} \right\}$.
+
+Determine the set $\mathbb{F}$ of all the vectors in $\mathbb{R}^3$ that has the same coordinates in both $\mathcal{U}$ and $\mathcal{V}$. Is $\mathbb{F}$ a vector subspace of $\mathbb{R}^3$? (*Indication:* try and define a linear mapping such that its kernel is the set of vectors that we are looking for.)
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 1.31
+** Task
+#+begin_quote
+(Sequences as a vector space) Let $\mathbb{E} = \mathcal{F}(\mathbb{N}, \mathbb{R}) = \{(x_n)_{n=1}^{\infty} : x_n \in \mathbb{R}, \; \forall \, n \in \mathbb{N}\}$ be the set of all real sequences $(x_n)_{n=1}^{\infty}$ (as defined in Example 1.11).
+
+(i) Prove that $\mathbb{E}$, when equipped with the following operations:
+
+$(x_n)_{n=1}^{\infty} + (y_n)_{n=1}^{\infty} := (x_n + y_n)_{n=1}^{\infty}$, $\lambda(x_n)_{n=1}^{\infty} := (\lambda x_n)_{n=1}^{\infty}$,
+
+is a vector space and that $\dim \mathbb{E} = \infty$ (*Indication:* for the last part, it suffices to give a countable infinite set of linearly independent real sequences).
+
+(ii) Prove that the set of all convergent sequences $\mathbb{F} = \mathcal{F}_c(\mathbb{N}, \mathbb{R}) := \{(x_n)_{n=1}^{\infty} \in \mathbb{E} : \lim_{n \to \infty} x_n \in \mathbb{R}\}$ is a subspace of $\mathbb{E}$. Does $\dim \mathbb{F} = \infty$?
+
+(iii) Prove that the application
+
+$\mathcal{L} : \mathbb{F} \to \mathbb{R}$
+
+$(x_n)_n^{\infty} \mapsto \lim_{n \to \infty} x_n$
+
+which maps convergent sequences to their limit, is a linear aplication from $\mathbb{E}$ to $\mathbb{R}$. Obtain as a corollary that the set $\mathbb{G} = \mathcal{F}_0(\mathbb{N}, \mathbb{R}) := \{(x_n)_{n=1}^{\infty} \in \mathbb{F} : \lim_{n \to \infty} x_n = 0\}$ of real sequences that converges to zero is a vector subspace of $\mathbb{F}$. Does $\dim \mathbb{G} = \infty$?
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 1.40
+** Task
+#+begin_quote
+(Matrix representation of linear applications and vector elements) Let $\mathbb{E} := \mathbb{R}^n$, and $\mathcal{E} = \{e_i\}_{i=1}^n \subset \mathbb{E}$ be the standard basis of $\mathbb{E}$.
+
+(i) Let $\mathbb{F} := \mathbb{R}_{n-1}[x]$ be the vector space of real polynomials $p$ of degree $\deg p \leq n - 1$, construct a representation of $\mathbb{F}$ in $\mathbb{E}$. (*Indication:* assume that we have proven that $\{1, x, x^2, x^3, ..., x^{n-1}\} \subset \mathbb{F}$ forms a basis).
+
+(ii) Let $D : \mathbb{F} \to \mathbb{F}$ be the /derivative mapping/: $D(p) = p'$ (where $p'$ stands for the polynomial derivative of $p$). Prove that $D$ is an endomorphism on $\mathbb{F}$ (i.e. $D \in \mathcal{L}(\mathbb{F})$) and give the corresponding matrix representation $[D]_{\mathcal{E}}^{\mathcal{E}}$. What is $\ker D$?
+
+(iii) We now define the following application:
+
+$L : \mathbb{F} \to \mathbb{F}$
+
+$p \mapsto p' + \alpha p$
+
+where $\alpha \in \mathbb{R} \setminus \{0\}$. Prove that $L \in \mathcal{L}(\mathbb{E})$, give $[L]_{\mathcal{E}}^{\mathcal{E}}$.
+
+(iv) Let $q(x) = 5x^3 + 4x^2 + 5$, find $p(x) \in \mathbb{R}_3$ such that $p'(x) + 6p(x) = q(x)$.
+
+(v) Can we conclude from (iii) the following: given $\alpha \in \mathbb{R} \setminus \{0\}$, for each $q \in \mathbb{R}_{n-1}[x]$ there exists an unique $p \in \mathbb{R}_{n-1}[x]$ such that $p' + \alpha p = q$?
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 1.42
+** Task
+#+begin_quote
+(Dual space and dual basis in $\mathbb{R}^n$) In $\mathbb{E} = \mathbb{R}^n$ we are given the basis $\mathcal{V} = \{v_1, v_2, ..., v_3\}$, where $v_j = \sum_{k=1}^{j} k e_k$. Express the dual basis $\mathcal{V}^*$ in terms of the vectors $e_j^*$ in the dual space $\mathbb{E}^*$.
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 1.43
+** Task
+#+begin_quote
+(Dual space and dual basis in $\mathbb{R}_n[X]$)
+
+Let $\mathbb{E} := \mathbb{R}_1[X]$ be the space of real polynomials $p(X)$ with $\deg p \leq 1$ (Suppose that we have already proven that the standard basis on $\mathbb{E}$, i.e. $\{1, X\}$, is indeed a basis). Consider functions $f, g, h : \mathbb{E} \to \mathbb{K}$ defined by
+
+$f(p(X)) = p(0)$, $g(p(X)) = p(1)$, and $h(p(X)) = \int_0^1 p(X) \, dX$, $p(X) \in \mathbb{R}_1[X]$.
+
+(i) Prove that $f, g, h \in \mathbb{E}^*$, and that $f$ and $g$ form a basis on $\mathbb{E}^*$.
+
+(ii) Express $h$ as a linear combination of $f$ and $g$, is the linear combination unique?
+
+(iii) Give the dual basis $\{e_1^*, e_2^*\}$ of the standard basis $\{1, X\}$ (*Indication:* try and obtain these vectors as a linear combination of the basis vectors $\{f, g\}$).
+#+end_quote
+
+** Notes
+
+** Solution
