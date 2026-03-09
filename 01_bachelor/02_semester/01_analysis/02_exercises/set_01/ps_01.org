@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-09 07:17>
+#+lastmod: <2026-03-09 07:56>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -309,15 +309,6 @@ B_\varepsilon(x) = \{ y \in X : d_X(x, y) \le \varepsilon \}, \\
   Therefore $z \in B_\varepsilon(x)^c$. Since every point of $B_\varepsilon(x)^c$ has an
   open ball around it contained in $B_\varepsilon(x)^c$, the complement is open, so
   $B_\varepsilon(x)$ is closed. $\blacksquare$
-
-  *Alternative proof using Part 1.* Define $g : X \to \mathbb{R}$ by $g(y) = d_X(x, y)$.
-  By Part 1 (with $x$ playing the role of $y_0$), $g$ is continuous. Then
-
-  $$B_\varepsilon(x) = g^{-1}((-\infty, \varepsilon]) = g^{-1}(\mathbb{R} \setminus (\varepsilon, \infty)).$$
-
-  Since $(\varepsilon, \infty)$ is open in $\mathbb{R}$, its complement $(-\infty, \varepsilon]$
-  is closed, and the preimage of a closed set under a continuous function is closed.
-  Hence $B_\varepsilon(x)$ is closed. $\blacksquare$
 
 - Part 3: $\mathring{B}_\varepsilon(x)$ is open
 
