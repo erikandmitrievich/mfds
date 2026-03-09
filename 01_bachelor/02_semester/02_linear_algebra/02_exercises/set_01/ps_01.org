@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-09 12:33>
+#+lastmod: <2026-03-09 15:39>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -59,7 +59,7 @@ $$\mathbb{F} = \left\{ t \begin{pmatrix} 0 \\ -\frac{k}{h} \\ 1 \end{pmatrix} : 
 
 $\mathbb{F}$ is a vector subspace of $\mathbb{R}^3$, as it is the kernel of the linear map $T(\alpha) = M\alpha$ (kernels of linear maps are subspaces by Proposition III.2.11).
 
-* Problem 1.31
+* Problem 1.31 :DONE:
 ** Task
 #+begin_quote
 (Sequences as a vector space) Let $\mathbb{E} = \mathcal{F}(\mathbb{N}, \mathbb{R}) = \{(x_n)_{n=1}^{\infty} : x_n \in \mathbb{R}, \; \forall \, n \in \mathbb{N}\}$ be the set of all real sequences $(x_n)_{n=1}^{\infty}$ (as defined in Example 1.11).
@@ -81,11 +81,136 @@ $(x_n)_n^{\infty} \mapsto \lim_{n \to \infty} x_n$
 which maps convergent sequences to their limit, is a linear aplication from $\mathbb{E}$ to $\mathbb{R}$. Obtain as a corollary that the set $\mathbb{G} = \mathcal{F}_0(\mathbb{N}, \mathbb{R}) := \{(x_n)_{n=1}^{\infty} \in \mathbb{F} : \lim_{n \to \infty} x_n = 0\}$ of real sequences that converges to zero is a vector subspace of $\mathbb{F}$. Does $\dim \mathbb{G} = \infty$?
 #+end_quote
 
-** Notes
-
 ** Solution
 
-* Problem 1.40
+*** (i)
+
+We verify the vector space axioms for $\mathbb{E} = \mathcal{F}(\mathbb{N}, \mathbb{R})$ over $\mathbb{R}$ with componentwise addition and scalar multiplication.
+
+Let $(x_n), (y_n), (z_n) \in \mathbb{E}$ and $\lambda, \mu \in \mathbb{R}$.
+
+1. Associativity of addition
+
+   $((x_n) + (y_n)) + (z_n) = (x_n + y_n) + (z_n) = ((x_n + y_n) + z_n) = (x_n + (y_n + z_n)) = (x_n) + ((y_n) + (z_n))$
+
+   Holds by associativity of addition in $\mathbb{R}$.
+
+2. Commutativity of addition
+
+   $(x_n) + (y_n) = (x_n + y_n) = (y_n + x_n) = (y_n) + (x_n)$
+
+   Holds by commutativity of addition in $\mathbb{R}$.
+
+3. Additive identity
+
+   Let $0_{\mathbb{E}} = (0, 0, 0, \ldots)$ be the zero sequence. Then,
+
+   $(x_n) + 0_{\mathbb{E}} = (x_n + 0) = (x_n)$
+
+4. Additive inverse
+
+   For each $(x_n) \in \mathbb{E}$, define $(-x_n) \in \mathbb{E}$. Then,
+
+   $(x_n) + (-x_n) = (x_n + (-x_n)) = (0) = 0_{\mathbb{E}}$
+
+5. Distributivity over scalar addition
+
+   $(\lambda + \mu)(x_n) = ((\lambda + \mu) x_n) = (\lambda x_n + \mu x_n) = \lambda(x_n) + \mu(x_n)$
+
+   Holds by distributivity in $\mathbb{R}$.
+
+6. Distributivity over vector addition
+
+   $\lambda((x_n) + (y_n)) = \lambda(x_n + y_n) = (\lambda x_n + \lambda y_n) = \lambda(x_n) + \lambda(y_n)$
+
+   Holds by distributivity in $\mathbb{R}$.
+
+7. Compatibility of scalar multiplication
+
+   $\lambda(\mu(x_n)) = \lambda(\mu x_n) = (\lambda \mu x_n) = (\lambda \mu)(x_n)$
+
+   Holds by associativity of multiplication in $\mathbb{R}$.
+
+8. Scalar multiplicative identity
+
+   $1 \cdot (x_n) = (1 \cdot x_n) = (x_n)$
+
+All axioms are satisfied. Hence, $\mathbb{E}$ is a vector space over $\mathbb{R}$.
+
+
+For $\dim \mathbb{E} = \infty$, we construct a countably infinite set of linearly independent sequences. For each $k \in \mathbb{N}$, define
+
+$$e^{(k)} = (0, 0, \ldots, 0, \underbrace{1}_{k\text{-th position}}, 0, \ldots)$$
+
+That is, the sequence whose $n$ -th term is $e^{(k)}_n = \delta_{nk}$ (Kronecker delta).
+
+Claim: for any finite $m \in \mathbb{N}$, the set $\{e^{(1)}, e^{(2)}, \ldots, e^{(m)}\}$ is linearly independent.
+
+Suppose $\sum_{k=1}^{m} \alpha_k e^{(k)} = 0$ (the zero sequence). Evaluating at position $j$ for any $1 \leq j \leq m$:
+
+$$\sum_{k=1}^{m} \alpha_k e^{(k)}_j = \alpha_j = 0$$
+
+Hence $\alpha_j = 0$ for all $1 \leq j \leq m$, so the set is linearly independent.
+
+Since for every $m \in \mathbb{N}$ we can find $m$ linearly independent vectors in $\mathbb{E}$, the dimension of $\mathbb{E}$ cannot be any finite number. Therefore, $\dim \mathbb{E} = \infty$.
+
+*** (ii)
+
+We verify the subspace criterion for $\mathbb{F} = \mathcal{F}_c(\mathbb{N}, \mathbb{R})$.
+
+*Zero vector.* The zero sequence $(0, 0, 0, \ldots)$ satisfies $\lim_{n \to \infty} 0 = 0 \in \mathbb{R}$, hence $0 \in \mathbb{F}$.
+
+*Closure under addition.* Let $(x_n)_{n=1}^{\infty}, (y_n)_{n=1}^{\infty} \in \mathbb{F}$. Then $\lim_{n \to \infty} x_n = a \in \mathbb{R}$ and $\lim_{n \to \infty} y_n = b \in \mathbb{R}$. By the sum rule for limits:
+
+$$\lim_{n \to \infty} (x_n + y_n) = \lim_{n \to \infty} x_n + \lim_{n \to \infty} y_n = a + b \in \mathbb{R}$$
+
+Hence $(x_n + y_n)_{n=1}^{\infty} \in \mathbb{F}$.
+
+*Closure under scalar multiplication.* Let $(x_n)_{n=1}^{\infty} \in \mathbb{F}$ and $\lambda \in \mathbb{R}$. Then $\lim_{n \to \infty} x_n = a \in \mathbb{R}$. By the scalar rule for limits:
+
+$$\lim_{n \to \infty} \lambda x_n = \lambda \lim_{n \to \infty} x_n = \lambda a \in \mathbb{R}$$
+
+Hence $(\lambda x_n)_{n=1}^{\infty} \in \mathbb{F}$.
+
+Therefore $\mathbb{F}$ is a subspace of $\mathbb{E}$.
+
+*Dimension.* Consider the sequences $e^{(k)} = (0, \ldots, 0, 1, 0, \ldots)$ with $1$ in position $k$, for each $k \in \mathbb{N}$. Each $e^{(k)}$ converges to $0$, hence $e^{(k)} \in \mathbb{F}$. Suppose $\sum_{k=1}^{m} c_k e^{(k)} = 0$ for some finite collection. Then $c_k = 0$ for all $k$ (as the $k$ -th component of the sum equals $c_k$). Hence $\{e^{(k)}\}_{k \in \mathbb{N}}$ is an infinite linearly independent subset of $\mathbb{F}$, and therefore $\dim \mathbb{F} = \infty$.
+
+*** (iii)
+
+*Claim:* $\mathcal{L} : \mathbb{F} \to \mathbb{R}$ defined by $\mathcal{L}((x_n)_{n=1}^{\infty}) = \lim_{n \to \infty} x_n$ is a linear map.
+
+*Proof.*
+
+Let $(x_n), (y_n) \in \mathbb{F}$ and $\lambda \in \mathbb{R}$.
+
+\begin{align*}
+\mathcal{L}(\lambda (x_n) + (y_n))
+&= \mathcal{L}((\lambda x_n + y_n)) \\
+&= \lim_{n \to \infty} (\lambda x_n + y_n) \\
+&= \lambda \lim_{n \to \infty} x_n + \lim_{n \to \infty} y_n \\
+&= \lambda \mathcal{L}((x_n)) + \mathcal{L}((y_n))
+\end{align*}
+
+where the third equality uses the standard limit laws (linearity of the limit for convergent sequences). Hence $\mathcal{L}$ is linear.
+
+*Corollary:* $\mathbb{G} = \mathcal{F}_0(\mathbb{N}, \mathbb{R})$ is a vector subspace of $\mathbb{F}$.
+
+Observe that
+
+$$\mathbb{G} = \left\{ (x_n)_{n=1}^{\infty} \in \mathbb{F} : \lim_{n \to \infty} x_n = 0 \right\} = \left\{ (x_n) \in \mathbb{F} : \mathcal{L}((x_n)) = 0 \right\} = \ker(\mathcal{L})$$
+
+Since $\mathcal{L}$ is a linear map, $\ker(\mathcal{L})$ is a subspace of $\mathbb{F}$ (Proposition III.2.11(b)). Hence $\mathbb{G}$ is a vector subspace of $\mathbb{F}$.
+
+*Dimension:* $\dim \mathbb{G} = \infty$.
+
+Consider the sequences $e^{(k)} = (\delta_{n,k})_{n=1}^{\infty}$ for $k \in \mathbb{N}$, where $\delta_{n,k} = 1$ if $n = k$ and $0$ otherwise. Each $e^{(k)}$ converges to $0$, so $e^{(k)} \in \mathbb{G}$. For any finite subset $\{e^{(1)}, \ldots, e^{(m)}\}$, suppose
+
+$$c_1 e^{(1)} + \cdots + c_m e^{(m)} = 0$$
+
+Evaluating at position $k$ gives $c_k = 0$ for each $k = 1, \ldots, m$. Hence any finite subset is linearly independent. Since $\mathbb{G}$ contains arbitrarily large finite linearly independent sets, $\dim \mathbb{G} = \infty$.
+
+* Problem 1.40 :DONE:
 ** Task
 #+begin_quote
 (Matrix representation of linear applications and vector elements) Let $\mathbb{E} := \mathbb{R}^n$, and $\mathcal{E} = \{e_i\}_{i=1}^n \subset \mathbb{E}$ be the standard basis of $\mathbb{E}$.
@@ -107,21 +232,154 @@ where $\alpha \in \mathbb{R} \setminus \{0\}$. Prove that $L \in \mathcal{L}(\ma
 (v) Can we conclude from (iii) the following: given $\alpha \in \mathbb{R} \setminus \{0\}$, for each $q \in \mathbb{R}_{n-1}[x]$ there exists an unique $p \in \mathbb{R}_{n-1}[x]$ such that $p' + \alpha p = q$?
 #+end_quote
 
-** Notes
-
 ** Solution
 
-* Problem 1.42
+*** Part (i)
+
+The space $\mathbb{F} = \mathbb{R}_{n-1}[x]$ has basis $\{1, x, x^2, \ldots, x^{n-1}\}$, which has $n$ elements. Hence $\dim \mathbb{F} = n = \dim \mathbb{R}^n$.
+
+We construct a coordinate isomorphism $\varphi : \mathbb{F} \to \mathbb{E}$ by mapping each polynomial to its coefficient vector:
+
+$$\varphi(a_0 + a_1 x + a_2 x^2 + \cdots + a_{n-1} x^{n-1}) = \begin{pmatrix} a_0 \\ a_1 \\ a_2 \\ \vdots \\ a_{n-1} \end{pmatrix}$$
+
+This identifies each basis element $x^k$ with the standard basis vector $e_{k+1}$:
+
+$$\varphi(1) = e_1, \quad \varphi(x) = e_2, \quad \ldots, \quad \varphi(x^{n-1}) = e_n$$
+
+*** Part (ii)
+
+*Claim:* $D : \mathbb{F} \to \mathbb{F}$ defined by $D(p) = p'$ is an endomorphism on $\mathbb{F}$.
+
+*Proof of linearity.* Let $p, q \in \mathbb{F}$ and $\lambda \in \mathbb{R}$.
+
+\begin{align*}
+D(\lambda p + q) = (\lambda p + q)' = \lambda p' + q' = \lambda D(p) + D(q)
+\end{align*}
+
+Hence $D$ is linear.
+
+*Proof that $D$ maps $\mathbb{F}$ to $\mathbb{F}$.* If $\deg p \leq n - 1$, then $\deg p' \leq n - 2 \leq n - 1$, so $p' \in \mathbb{F}$. Hence $D \in \mathcal{L}(\mathbb{F})$.
+
+*Matrix representation.* We compute $D$ on each basis element:
+
+\begin{align*}
+D(1) &= 0 \\
+D(x) &= 1 \\
+D(x^2) &= 2x \\
+D(x^3) &= 3x^2 \\
+&\vdots \\
+D(x^{n-1}) &= (n-1)x^{n-2}
+\end{align*}
+
+Passing through the coordinate isomorphism $\varphi$, the $k$ -th column of $[D]_{\mathcal{E}}^{\mathcal{E}}$ is the coordinate vector of $D(x^{k-1})$. Hence:
+
+$$[D]_{\mathcal{E}}^{\mathcal{E}} = \begin{bmatrix} 0 & 1 & 0 & 0 & \cdots & 0 \\ 0 & 0 & 2 & 0 & \cdots & 0 \\ 0 & 0 & 0 & 3 & \cdots & 0 \\ \vdots & & & & \ddots & \vdots \\ 0 & 0 & 0 & 0 & \cdots & n-1 \\ 0 & 0 & 0 & 0 & \cdots & 0 \end{bmatrix}$$
+
+*Kernel.* $D(p) = 0$ means $p' = 0$, which holds if and only if $p$ is a constant polynomial. Hence:
+
+$$\ker D = \{ a \cdot 1 : a \in \mathbb{R} \} = \operatorname{span}\{1\}$$
+
+*** Part (iii)
+
+*Claim:* $L : \mathbb{F} \to \mathbb{F}$ defined by $L(p) = p' + \alpha p$ is linear.
+
+*Proof.* Let $p, q \in \mathbb{F}$ and $\lambda \in \mathbb{R}$.
+
+\begin{align*}
+L(\lambda p + q)
+&= (\lambda p + q)' + \alpha(\lambda p + q) \\
+&= \lambda p' + q' + \alpha \lambda p + \alpha q \\
+&= \lambda(p' + \alpha p) + (q' + \alpha q) \\
+&= \lambda L(p) + L(q)
+\end{align*}
+
+If $\deg p \leq n-1$, then $\deg(p' + \alpha p) \leq n - 1$, so $L$ maps $\mathbb{F}$ to $\mathbb{F}$. Hence $L \in \mathcal{L}(\mathbb{F})$.
+
+*Matrix representation.* Since $L = D + \alpha \, \mathrm{Id}$, we have $[L]_{\mathcal{E}}^{\mathcal{E}} = [D]_{\mathcal{E}}^{\mathcal{E}} + \alpha I_n$:
+
+$$[L]_{\mathcal{E}}^{\mathcal{E}} = \begin{bmatrix} \alpha & 1 & 0 & 0 & \cdots & 0 \\ 0 & \alpha & 2 & 0 & \cdots & 0 \\ 0 & 0 & \alpha & 3 & \cdots & 0 \\ \vdots & & & & \ddots & \vdots \\ 0 & 0 & 0 & 0 & \cdots & \alpha \end{bmatrix}$$
+
+*** Part (iv)
+
+We need $p(x) \in \mathbb{R}_3$ such that $p'(x) + 6p(x) = q(x) = 5x^3 + 4x^2 + 5$.
+
+Here $n = 4$, $\alpha = 6$. Using the matrix from (iii), the problem becomes $[L]_{\mathcal{E}}^{\mathcal{E}} \cdot c = b$, where $b = \varphi(q) = (5, 0, 4, 5)^T$ and $c = (c_0, c_1, c_2, c_3)^T$ is the coordinate vector of $p$.
+
+$$\begin{bmatrix} 6 & 1 & 0 & 0 \\ 0 & 6 & 2 & 0 \\ 0 & 0 & 6 & 3 \\ 0 & 0 & 0 & 6 \end{bmatrix} \begin{bmatrix} c_0 \\ c_1 \\ c_2 \\ c_3 \end{bmatrix} = \begin{bmatrix} 5 \\ 0 \\ 4 \\ 5 \end{bmatrix}$$
+
+Solving by back substitution:
+
+\begin{align*}
+6 c_3 &= 5 &\implies c_3 &= \frac{5}{6} \\
+6 c_2 + 3 c_3 &= 4 &\implies c_2 &= \frac{4 - \frac{5}{2}}{6} = \frac{1}{4} \\
+6 c_1 + 2 c_2 &= 0 &\implies c_1 &= \frac{-\frac{1}{2}}{6} = -\frac{1}{12} \\
+6 c_0 + c_1 &= 5 &\implies c_0 &= \frac{5 + \frac{1}{12}}{6} = \frac{61}{72}
+\end{align*}
+
+Therefore:
+
+$$p(x) = \frac{61}{72} - \frac{1}{12}x + \frac{1}{4}x^2 + \frac{5}{6}x^3$$
+
+*** Part (v)
+
+Yes. The matrix $[L]_{\mathcal{E}}^{\mathcal{E}}$ is upper triangular with every diagonal entry equal to $\alpha \neq 0$. Therefore $\det([L]_{\mathcal{E}}^{\mathcal{E}}) = \alpha^n \neq 0$, so the matrix is invertible.
+
+This means $L$ is bijective: for every $q \in \mathbb{R}_{n-1}[x]$, the system $[L]_{\mathcal{E}}^{\mathcal{E}} \cdot c = \varphi(q)$ has a unique solution $c$, giving a unique $p = \varphi^{-1}(c) \in \mathbb{R}_{n-1}[x]$ with $p' + \alpha p = q$.
+
+Equivalently, $\ker(L) = \{0\}$ (since the matrix is invertible), so $L$ is injective. By the rank-nullity theorem, $\dim(\operatorname{im}(L)) = \dim(\mathbb{F}) - \dim(\ker(L)) = n - 0 = n$, hence $L$ is surjective. Therefore $L$ is bijective and the solution is unique.
+
+* Problem 1.42 :DONE:
 ** Task
 #+begin_quote
-(Dual space and dual basis in $\mathbb{R}^n$) In $\mathbb{E} = \mathbb{R}^n$ we are given the basis $\mathcal{V} = \{v_1, v_2, ..., v_3\}$, where $v_j = \sum_{k=1}^{j} k e_k$. Express the dual basis $\mathcal{V}^*$ in terms of the vectors $e_j^*$ in the dual space $\mathbb{E}^*$.
+(Dual space and dual basis in $\mathbb{R}^n$) In $\mathbb{E} = \mathbb{R}^n$ we are given the basis $\mathcal{V} = \{v_1, v_2, ..., v_n\}$, where $v_j = \sum_{k=1}^{j} k e_k$. Express the dual basis $\mathcal{V}^*$ in terms of the vectors $e_j^*$ in the dual space $\mathbb{E}^*$.
 #+end_quote
-
-** Notes
 
 ** Solution
 
-* Problem 1.43
+The basis vectors are $v_j = \sum_{k=1}^j k \, e_k$, giving the coordinate matrix:
+
+$$A = \begin{bmatrix} 1 & 1 & 1 & \cdots & 1 \\ 0 & 2 & 2 & \cdots & 2 \\ 0 & 0 & 3 & \cdots & 3 \\ \vdots & & & \ddots & \vdots \\ 0 & 0 & 0 & \cdots & n \end{bmatrix}$$
+
+where $A_{kj} = k$ if $k \leq j$ and $0$ otherwise.
+
+We seek $v_i^* = \sum_{j=1}^n c_{ij} e_j^*$ such that $v_i^*(v_j) = \delta_{ij}$. This gives $CA = I$, hence $C = A^{-1}$.
+
+Since $A$ is upper triangular with diagonal entries $1, 2, \ldots, n$, we find $A^{-1}$ by back substitution. Denote $C = (c_{ij})$. From $CA = I$, the $i$-th row of $C$ satisfies:
+
+$$\sum_{k} c_{ik} A_{kj} = \delta_{ij}$$
+
+For diagonal entries: $c_{ii} \cdot i = 1$, so $c_{ii} = \frac{1}{i}$.
+
+For $j > i$: $c_{ij} \cdot j + c_{i,j-1} \cdot (j-1) + \cdots = 0$ (only terms with $k \leq j$ contribute, and $c_{ik} = 0$ for $k < i$).
+
+Working this out, for $j = i + 1$:
+
+$$c_{i,i+1} \cdot (i+1) + c_{ii} \cdot i = 0 \implies c_{i,i+1} = -\frac{c_{ii} \cdot i}{i+1} = -\frac{1}{i+1}$$
+
+For $j = i + 2$:
+
+$$c_{i,i+2} \cdot (i+2) + c_{i,i+1} \cdot (i+1) + c_{ii} \cdot i = 0 \implies c_{i,i+2} \cdot (i+2) + (-1) + 1 = 0 \implies c_{i,i+2} = 0$$
+
+Continuing, all further entries vanish: $c_{ij} = 0$ for $j \geq i + 2$.
+
+Therefore:
+
+$$C = A^{-1} = \begin{bmatrix} 1 & -\frac{1}{2} & 0 & 0 & \cdots & 0 \\ 0 & \frac{1}{2} & -\frac{1}{3} & 0 & \cdots & 0 \\ 0 & 0 & \frac{1}{3} & -\frac{1}{4} & \cdots & 0 \\ \vdots & & & \ddots & \ddots & \vdots \\ 0 & 0 & 0 & \cdots & \frac{1}{n-1} & -\frac{1}{n} \\ 0 & 0 & 0 & \cdots & 0 & \frac{1}{n} \end{bmatrix}$$
+
+Reading off the rows, the dual basis vectors are:
+
+\begin{align*}
+v_1^* &= e_1^* - \frac{1}{2} e_2^* \\
+v_2^* &= \frac{1}{2} e_2^* - \frac{1}{3} e_3^* \\
+v_3^* &= \frac{1}{3} e_3^* - \frac{1}{4} e_4^* \\
+&\vdots \\
+v_{n-1}^* &= \frac{1}{n-1} e_{n-1}^* - \frac{1}{n} e_n^* \\
+v_n^* &= \frac{1}{n} e_n^*
+\end{align*}
+
+In general: $v_i^* = \frac{1}{i} e_i^* - \frac{1}{i+1} e_{i+1}^*$ for $i = 1, \ldots, n-1$, and $v_n^* = \frac{1}{n} e_n^*$.
+
+* Problem 1.43 :DONE:
 ** Task
 #+begin_quote
 (Dual space and dual basis in $\mathbb{R}_n[X]$)
@@ -137,6 +395,119 @@ $f(p(X)) = p(0)$, $g(p(X)) = p(1)$, and $h(p(X)) = \int_0^1 p(X) \, dX$, $p(X) \
 (iii) Give the dual basis $\{e_1^*, e_2^*\}$ of the standard basis $\{1, X\}$ (*Indication:* try and obtain these vectors as a linear combination of the basis vectors $\{f, g\}$).
 #+end_quote
 
-** Notes
-
 ** Solution
+
+*** Part (i)
+
+*Claim:* $f, g, h \in \mathbb{E}^*$.
+
+We must show each map is linear, i.e. for $p, q \in \mathbb{E}$ and $\lambda \in \mathbb{R}$:
+
+*Linearity of $f$:*
+
+\begin{align*}
+f(\lambda p + q) = (\lambda p + q)(0) = \lambda p(0) + q(0) = \lambda f(p) + f(q)
+\end{align*}
+
+*Linearity of $g$:*
+
+\begin{align*}
+g(\lambda p + q) = (\lambda p + q)(1) = \lambda p(1) + q(1) = \lambda g(p) + g(q)
+\end{align*}
+
+*Linearity of $h$:*
+
+\begin{align*}
+h(\lambda p + q) = \int_0^1 (\lambda p(X) + q(X)) \, dX = \lambda \int_0^1 p(X) \, dX + \int_0^1 q(X) \, dX = \lambda h(p) + h(q)
+\end{align*}
+
+Hence $f, g, h \in \mathbb{E}^*$.
+
+*Claim:* $f$ and $g$ form a basis of $\mathbb{E}^*$.
+
+Since $\dim \mathbb{E}^* = \dim \mathbb{E} = 2$, it suffices to show $f$ and $g$ are linearly independent. Suppose $\alpha f + \beta g = 0$ (the zero functional). Then for all $p \in \mathbb{E}$:
+
+$$\alpha f(p) + \beta g(p) = 0$$
+
+Evaluating at $p = 1$ (the constant polynomial):
+
+$$\alpha \cdot 1 + \beta \cdot 1 = 0 \implies \alpha + \beta = 0$$
+
+Evaluating at $p = X$:
+
+$$\alpha \cdot 0 + \beta \cdot 1 = 0 \implies \beta = 0$$
+
+Hence $\alpha = 0$ and $\beta = 0$. Therefore $\{f, g\}$ is linearly independent, and since $|\{f, g\}| = \dim \mathbb{E}^*$, it is a basis of $\mathbb{E}^*$.
+
+*** Part (ii)
+
+We seek $\alpha, \beta \in \mathbb{R}$ such that $h = \alpha f + \beta g$, meaning for all $p(X) = a + bX \in \mathbb{E}$:
+
+$$h(p) = \alpha f(p) + \beta g(p)$$
+
+Compute $h$, $f$, $g$ on a general polynomial $p(X) = a + bX$:
+
+\begin{align*}
+f(p) &= p(0) = a \\
+g(p) &= p(1) = a + b \\
+h(p) &= \int_0^1 (a + bX) \, dX = a + \frac{b}{2}
+\end{align*}
+
+So we need:
+
+$$a + \frac{b}{2} = \alpha a + \beta(a + b)$$
+
+for all $a, b \in \mathbb{R}$. Comparing coefficients:
+
+\begin{align*}
+a: \quad \alpha + \beta &= 1 \\
+b: \quad \beta &= \frac{1}{2}
+\end{align*}
+
+Hence $\beta = \frac{1}{2}$ and $\alpha = \frac{1}{2}$.
+
+$$h = \frac{1}{2} f + \frac{1}{2} g$$
+
+The linear combination is unique because $\{f, g\}$ is a basis of $\mathbb{E}^*$ (every vector has a unique representation in terms of a basis).
+
+*** Part (iii)
+
+The dual basis $\{e_1^*, e_2^*\}$ of the standard basis $\{1, X\}$ is defined by:
+
+\begin{align*}
+e_1^*(1) = 1, \quad &e_1^*(X) = 0 \\
+e_2^*(1) = 0, \quad &e_2^*(X) = 1
+\end{align*}
+
+In other words, $e_1^*$ picks out the constant coefficient and $e_2^*$ picks out the coefficient of $X$.
+
+We express $e_1^* = \alpha f + \beta g$ and $e_2^* = \gamma f + \delta g$.
+
+*Finding $e_1^*$:*
+
+\begin{align*}
+e_1^*(1) &= \alpha f(1) + \beta g(1) = \alpha + \beta = 1 \\
+e_1^*(X) &= \alpha f(X) + \beta g(X) = \alpha \cdot 0 + \beta \cdot 1 = \beta = 0
+\end{align*}
+
+Hence $\beta = 0$ and $\alpha = 1$:
+
+$$e_1^* = f$$
+
+*Finding $e_2^*$:*
+
+\begin{align*}
+e_2^*(1) &= \gamma f(1) + \delta g(1) = \gamma + \delta = 0 \\
+e_2^*(X) &= \gamma f(X) + \delta g(X) = \gamma \cdot 0 + \delta \cdot 1 = \delta = 1
+\end{align*}
+
+Hence $\delta = 1$ and $\gamma = -1$:
+
+$$e_2^* = -f + g$$
+
+*Verification:* For $p(X) = a + bX$:
+
+\begin{align*}
+e_1^*(p) &= f(p) = p(0) = a \quad \checkmark \\
+e_2^*(p) &= -f(p) + g(p) = -a + (a + b) = b \quad \checkmark
+\end{align*}
