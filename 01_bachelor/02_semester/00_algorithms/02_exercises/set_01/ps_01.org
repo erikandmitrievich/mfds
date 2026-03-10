@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-06 20:33>
+#+lastmod: <2026-03-10 20:45>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,3 +13,142 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
+* Problem 1
+** Task
+#+begin_quote
+Assume that your computer can execute $10^9$ operations per second. For each of the following numbers of operations $f(n)$ and the given time limits calculate the (approximal) maximal size $n$ of your problem that can be solved.
+
+| $f(n)$      | $1\;\mu s$ | $1\;ms$ | $1\;s$ | $1\;min$ | $1\;hour$ | $1\;day$ | $1\;week$ | $30\;days$ | $1\;year$ | $1000\;years$ |
+|-------------+------------+---------+--------+----------+-----------+----------+-----------+------------+-----------+---------------|
+| $\lg \lg n$ |            |         |        |          |           |          |           |            |           |               |
+| $\lg n$     |            |         |        |          |           |          |           |            |           |               |
+| $\sqrt{n}$  |            |         |        |          |           |          |           |            |           |               |
+| $n$         |            |         |        |          |           |          |           |            |           |               |
+| $n \lg n$   |            |         |        |          |           |          |           |            |           |               |
+| $n^2$       |            |         |        |          |           |          |           |            |           |               |
+| $n^3$       |            |         |        |          |           |          |           |            |           |               |
+| $n^4$       |            |         |        |          |           |          |           |            |           |               |
+| $2^n$       |            |         |        |          |           |          |           |            |           |               |
+| $n!$        |            |         |        |          |           |          |           |            |           |               |
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 2
+** Task
+#+begin_quote
+Consider the algorithm SUM ARRAY from page 25 of the lecture book:
+
+1: procedure SUM ARRAY
+2:   sum = 0
+3:   for i = 1 to n do
+4:     sum = sum + A[i]
+5:   end for
+6: end procedure
+
+It should solve the problem to sum the elements of the array $A$. Prove that the algorithm is correct by using a loop invariant.
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 3
+** Task
+#+begin_quote
+We define the searching problem as follows: Input: A sorted sequence of $n$ numbers $(a_1, a_2, \ldots, a_n)$ with $a_i < a_{i+1}$ for alle $i < n$ provided in array $A$, a value $x$. Output: An index $i$ such that $x = A[i]$ and if $x$ does not appear in $A$, return the largest index $i$ such that $A[i] < x$. If no such index exists, return $0$. Write pseudocode for linear search that scans the array from the beginning to the end to determine $i$. Implement the procedure in Julia.
+#+end_quote
+
+** Notes
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_03.jl
+#+end_src
+
+* Problem 4
+** Task
+#+begin_quote
+Using a loop invariant, prove that your algorithm from Exercise 3 is correct. Make sure that your loop invariant fulfills the three necessary properties. Give an asymptotic running time using the Landau symbols for the worst-case.
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 5
+** Task
+#+begin_quote
+Let an array $A[1 : n]$ of numbers be given. Consider the following algorithm for solving the sorting problem: Find the smallest element of $A[1 : n]$ and then exchange it with the first element. Afterwards, find the smallest element in $A[2 : n]$ and exchange it with the second element, and so on. This algorithm is called selection sort. Write pseudocode for this algorithm and implement it in Julia.
+#+end_quote
+
+** Notes
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_05.jl
+#+end_src
+
+* Problem 6
+** Task
+#+begin_quote
+Take the algorithm selection sort from Exercise 5 and find a loop invariant for that algorithm. Prove your assumption.
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 7
+** Task
+#+begin_quote
+Analyse your algorithm from Exercise 5 and determine its best- and worst-case running times. Provide asymptotic running times using the Landau symbols ($O$, $\Omega$, or $\Theta$), whichever fit best.
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 8
+** Task
+#+begin_quote
+Use mathematical induction to show that when $n = 2^k$ for $k \geq 1$, the solution of the recurrence
+
+$T(n) = \begin{cases} 2 & n = 2 \\ 2T\left(\frac{n}{2}\right) + n & n > 2 \end{cases}$
+
+is $T(n) = n \lg n$.
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 9
+** Task
+#+begin_quote
+(a) Express $123n^2 + 345n - 148$ as $\Theta$ of a simple expression.
+
+(b) Is $2^{n+1} = O(2^n)$?
+
+(c) Is $2^{2n} = O(2^n)$?
+
+(d) Is $2^n = O(2^{2n})$?
+
+(e) Is $2^{n+1} = o(2^n)$?
+
+(f) Is $2^n = o(2^{2n})$?
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 10
+** Task
+#+begin_quote
+Consider sequences $f(n)$, $g(n)$ and $h(n)$. Assume that $f(n) = \Theta(g(n))$ and that $g(n) = \Theta(h(n))$. Show that then $f(n) = \Theta(h(n))$.
+#+end_quote
+
+** Notes
+
+** Solution
