@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-12 16:23>
+#+lastmod: <2026-03-12 16:45>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -239,7 +239,7 @@ It should solve the problem to sum the elements of the array $A$. Prove that the
 
 *Initialization (i = 1):* $sum = 0$, which equals the empty sum $A[1] + \cdots + A[0]$ (a sum of zero terms). This holds.
 
-*Maintenance:* Assume at the start of iteration i we have $sum = A[1] + \cdots + A[i − 1]$. The loop body executes $sum = sum + A[i]$, so after the body, $sum = A[1] + \cdots + A[i]$. When $i$ increments to $i+1$, we're at the start of the next iteration and $sum = A[1] + \cdots + A[i + 1 - 1 ]$. The invariant holds for the next iteration.
+*Maintenance:* Assume at the start of iteration $i$ we have $sum = A[1] + \cdots + A \left[ i - 1 \right]$. The loop body executes $sum = sum + A[i]$, so after the body, $sum = A[1] + \cdots + A[i]$. When $i$ increments to $i+1$, we're at the start of the next iteration and $sum = A[1] + \cdots + A[i + 1 - 1 ]$. The invariant holds for the next iteration.
 
 *Termination:* The loop ends when $i = n + 1$. Substituting into the invariant: $sum = A[1] + \cdots + A[n]$, which is exactly what we wanted to prove.
 
@@ -279,15 +279,23 @@ main()
 : 0
 : 8
 
-* Problem 4
+* Problem 4 :DONE:
 ** Task
 #+begin_quote
 Using a loop invariant, prove that your algorithm from Exercise 3 is correct. Make sure that your loop invariant fulfills the three necessary properties. Give an asymptotic running time using the Landau symbols for the worst-case.
 #+end_quote
 
-** Notes
-
 ** Solution
+
+*Loop invariant:* $\forall j : 1 \le j < i, A \left[ j \right] \le x$
+
+*Initialization (i = 1):* The range $j = 1, \cdots, 0$ is empty, so the statement "for all $j < 1$, $A[j] \le x$" holds vacuously.
+
+*Maintenance:* Assume the invariant holds at the start of iteration $i$, meaning $A[1], \ldots, A[i-1]$ are all $\le x$. The loop condition checks that $i \le n$ and $A[i] \le x$. Since we enter the body, we know $A[i] \le x$. After incrementing $i$ to $i+1$, we now know $A[1], \ldots, A[(i+1)-1]$ are all $\le x$. The invariant holds for the next iteration.
+
+*Termination:* The loop exits when either $i > n$ or $A[i] > x$. In both cases the invariant tells us $A[1], \ldots, A[i-1]$ are all $\le x$. Since the array is sorted, $i-1$ is the largest index with $A[i-1] \le x$. If $A[i-1] = x$, then $i-1$ is the index of $x$. If $A[i-1] < x$ (or $i = 1$), then $x$ is not in the array and $i-1$ is the largest index with $A[i-1] < x$ (or $0$ if no such index exists). This matches the required output.
+
+*Worst-case running time:* The loop executes at most $n$ iterations (when all elements are $\le x$), and each iteration does constant work, so the worst-case running time is $\mathcal{O}(n)$.
 
 * Problem 5
 ** Task
