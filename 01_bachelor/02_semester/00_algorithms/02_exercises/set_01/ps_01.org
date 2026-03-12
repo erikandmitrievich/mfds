@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-12 15:58>
+#+lastmod: <2026-03-12 16:23>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -243,17 +243,41 @@ It should solve the problem to sum the elements of the array $A$. Prove that the
 
 *Termination:* The loop ends when $i = n + 1$. Substituting into the invariant: $sum = A[1] + \cdots + A[n]$, which is exactly what we wanted to prove.
 
-* Problem 3
+* Problem 3 :DONE:
 ** Task
 #+begin_quote
-We define the searching problem as follows: Input: A sorted sequence of $n$ numbers $(a_1, a_2, \ldots, a_n)$ with $a_i < a_{i+1}$ for alle $i < n$ provided in array $A$, a value $x$. Output: An index $i$ such that $x = A[i]$ and if $x$ does not appear in $A$, return the largest index $i$ such that $A[i] < x$. If no such index exists, return $0$. Write pseudocode for linear search that scans the array from the beginning to the end to determine $i$. Implement the procedure in Julia.
+We define the searching problem as follows: Input: A sorted sequence of $n$ numbers $(a_1, a_2, \ldots, a_n)$ with $a_i < a_{i+1}$ for all $i < n$ provided in array $A$, a value $x$. Output: An index $i$ such that $x = A[i]$ and if $x$ does not appear in $A$, return the largest index $i$ such that $A[i] < x$. If no such index exists, return $0$. Write pseudocode for linear search that scans the array from the beginning to the end to determine $i$. Implement the procedure in Julia.
 #+end_quote
 
-** Notes
-
 ** Solution
-#+begin_src julia :results value :exports both :tangle julia/p_03.jl
+#+begin_src julia :results output :exports both :tangle julia/p_03.jl
+function linear_search(array, x)
+    n = length(array)
+    i = 1
+    while (i <= n) && (array[i] <= x)
+        i += 1
+    end
+    return i - 1
+end
+
+function main()
+    A = [1, 2, 3, 4, 6, 7, 8, 9]
+    println(linear_search(A, 4))
+    println(linear_search(A, 5))
+    println(linear_search(A, 0))
+    println(linear_search(A, 10))
+end
+
+main()
 #+end_src
+
+#+RESULTS:
+: linear_search (generic function with 1 method)
+: main (generic function with 1 method)
+: 4
+: 4
+: 0
+: 8
 
 * Problem 4
 ** Task
