@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-12 17:01>
+#+lastmod: <2026-03-12 17:14>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -330,15 +330,20 @@ main()
 : main (generic function with 1 method)
 : [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-* Problem 6
+* Problem 6 :DONE:
 ** Task
 #+begin_quote
 Take the algorithm selection sort from Exercise 5 and find a loop invariant for that algorithm. Prove your assumption.
 #+end_quote
 
-** Notes
-
 ** Solution
+*Loop invariant:* At the start of each iteration with index $i$, the subarray $A[1], \ldots, A[i-1]$ is sorted and contains the $i-1$ smallest elements of the original array.
+
+*Initialization (i = 1):* The subarray $A[1], \cdots, A[0]$ is empty. An empty subarray is trivially sorted and trivially contains the $0$ smallest elements.
+
+*Maintenance:* Assume at the start of iteration $i$, $A[1], \cdots, A[i-1]$ is sorted and contains the $i-1$ smallest elements. The algorithm finds the minimum of $A[i], \cdots, A[n]$ and swaps it into position $i$. Since $A[1], \cdots, A[i-1]$ already contains the $i-1$ smallest elements, the minimum of the remaining subarray is the $i$-th smallest element overall. After the swap, $A[i]$ holds this value, so $A[1], \cdots, A[i]$ is sorted and contains the $i$ smallest elements. When $i$ increments, the invariant holds for the next iteration.
+
+*Termination:* The loop ends when $i = n + 1$. The invariant gives us that $A[1], \cdots, A[n]$ is sorted and contains the $n$ smallest elements, which means the entire array is sorted.
 
 * Problem 7
 ** Task
