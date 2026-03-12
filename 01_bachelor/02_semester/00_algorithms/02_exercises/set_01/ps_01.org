@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-10 20:45>
+#+lastmod: <2026-03-12 15:58>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,7 +13,7 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
-* Problem 1
+* Problem 1 :DONE:
 ** Task
 #+begin_quote
 Assume that your computer can execute $10^9$ operations per second. For each of the following numbers of operations $f(n)$ and the given time limits calculate the (approximal) maximal size $n$ of your problem that can be solved.
@@ -32,11 +32,193 @@ Assume that your computer can execute $10^9$ operations per second. For each of 
 | $n!$        |            |         |        |          |           |          |           |            |           |               |
 #+end_quote
 
-** Notes
-
 ** Solution
 
-* Problem 2
+#+begin_src julia :results output raw :exports both :tangle julia/p_03.jl
+import Printf: @sprintf
+using Printf
+
+const OPS_PER_SEC = 1e9
+
+time_labels  = ["1 μs", "1 ms", "1 s", "1 min", "1 hour", "1 day", "1 week", "30 days", "1 year", "1000 years"]
+time_seconds = [1e-6, 1e-3, 1.0, 60.0, 3600.0, 86400.0, 604800.0, 2.592e6, 3.1536e7, 3.1536e10]
+
+# ── Inverse functions ──────────────────────────────────────────────
+
+# lg lg n = ops  →  n = 2^(2^ops)
+function inv_lglg(ops)
+    return "2^2^$(@sprintf("%.3g", ops))"
+end
+
+# lg n = ops  →  n = 2^ops = 10^(ops * log10(2))
+function inv_lg(ops)
+    log10_val = ops * log10(2)
+    return "10^$(@sprintf("%.3g", log10_val))"
+end
+
+# √n = ops  →  n = ops²
+inv_sqrt(ops) = @sprintf("%.3g", ops^2)
+
+# n = ops
+inv_n(ops) = @sprintf("%.3g", ops)
+
+# n lg n = ops  →  binary search
+function inv_nlgn(ops)
+    ops < 1 && return "0"
+    lo, hi = 1.0, ops
+    # 100 iterations is plenty for Float64 precision convergence
+    for _ in 1:100
+        mid = (lo + hi) / 2
+        mid < 2 && (lo = mid; continue)
+        val = mid * log2(mid)
+        val < ops ? (lo = mid) : (hi = mid)
+    end
+    return @sprintf("%.3g", lo)
+end
+
+# n² = ops  →  n = √ops
+inv_n2(ops) = @sprintf("%.3g", sqrt(ops))
+
+# n³ = ops  →  n = ops^(1/3)
+inv_n3(ops) = @sprintf("%.3g", ops^(1/3))
+
+# n⁴ = ops  →  n = ops^(1/4)
+inv_n4(ops) = @sprintf("%.3g", ops^(1/4))
+
+# 2ⁿ = ops  →  n = floor(log₂(ops))
+function inv_2n(ops)
+    ops < 1 && return "0"
+    return @sprintf("%.3g", floor(log2(ops)))
+end
+
+# n! = ops  →  largest n where n! ≤ ops
+function inv_nfact(ops)
+    ops < 1 && return "0"
+    n = BigInt(1)
+    fact = BigInt(1)
+    ops_big = BigInt(floor(ops))
+
+    while true
+        next_fact = fact * (n + 1)
+        if next_fact > ops_big
+            break
+        end
+        n += 1
+        fact = next_fact
+    end
+    return string(n)
+end
+
+# ── Build table ────────────────────────────────────────────────────
+
+func_labels = ["lg lg n", "lg n", "√n", "n", "n lg n", "n²", "n³", "n⁴", "2ⁿ", "n!"]
+inv_funcs   = [inv_lglg, inv_lg, inv_sqrt, inv_n, inv_nlgn, inv_n2, inv_n3, inv_n4, inv_2n, inv_nfact]
+
+results = Matrix{String}(undef, length(func_labels), length(time_labels))
+
+for (j, t) in enumerate(time_seconds)
+    ops = t * OPS_PER_SEC
+    for (i, f) in enumerate(inv_funcs)
+        results[i, j] = f(ops)
+    end
+end
+
+# ── Pretty print (Org/Markdown Format) ─────────────────────────────
+
+header = "| \$f(n)\$ | " * join(time_labels, " | ") * " |"
+separator = "|---|$(join(fill("---", length(time_labels)), "|"))|"
+
+println(header)
+println(separator)
+for i in 1:length(func_labels)
+    row = "| \$$(func_labels[i])\$ | " * join(results[i, :], " | ") * " |"
+    println(row)
+end
+#+end_src
+
+#+RESULTS:
+1.0e9
+10-element Vector{String}:
+ "1 μs"
+ "1 ms"
+ "1 s"
+ "1 min"
+ "1 hour"
+ "1 day"
+ "1 week"
+ "30 days"
+ "1 year"
+ "1000 years"
+10-element Vector{Float64}:
+      1.0e-6
+      0.001
+      1.0
+     60.0
+   3600.0
+  86400.0
+ 604800.0
+      2.592e6
+      3.1536e7
+      3.1536e10
+inv_lglg (generic function with 1 method)
+inv_lg (generic function with 1 method)
+inv_sqrt (generic function with 1 method)
+inv_n (generic function with 1 method)
+inv_nlgn (generic function with 1 method)
+inv_n2 (generic function with 1 method)
+inv_n3 (generic function with 1 method)
+inv_n4 (generic function with 1 method)
+inv_2n (generic function with 1 method)
+inv_nfact (generic function with 1 method)
+10-element Vector{String}:
+ "lg lg n"
+ "lg n"
+ "√n"
+ "n"
+ "n lg n"
+ "n²"
+ "n³"
+ "n⁴"
+ "2ⁿ"
+ "n!"
+10-element Vector{Function}:
+ inv_lglg (generic function with 1 method)
+ inv_lg (generic function with 1 method)
+ inv_sqrt (generic function with 1 method)
+ inv_n (generic function with 1 method)
+ inv_nlgn (generic function with 1 method)
+ inv_n2 (generic function with 1 method)
+ inv_n3 (generic function with 1 method)
+ inv_n4 (generic function with 1 method)
+ inv_2n (generic function with 1 method)
+ inv_nfact (generic function with 1 method)
+10×10 Matrix{String}:
+ #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef
+ #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef
+ #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef
+ #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef
+ #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef
+ #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef
+ #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef
+ #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef
+ #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef
+ #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef
+"| \$f(n)\$ | 1 μs | 1 ms | 1 s | 1 min | 1 hour | 1 day | 1 week | 30 days | 1 year | 1000 years |"
+"|---|---|---|---|---|---|---|---|---|---|---|"
+| $f(n)$    |      1 μs |        1 ms |         1 s |       1 min |      1 hour |        1 day |       1 week |      30 days |       1 year |   1000 years |
+|-----------+-----------+-------------+-------------+-------------+-------------+--------------+--------------+--------------+--------------+--------------|
+| $lg lg n$ | 2^2^1e+03 |   2^2^1e+06 |   2^2^1e+09 |   2^2^6e+10 | 2^2^3.6e+12 | 2^2^8.64e+13 | 2^2^6.05e+14 | 2^2^2.59e+15 | 2^2^3.15e+16 | 2^2^3.15e+19 |
+| $lg n$    |    10^301 | 10^3.01e+05 | 10^3.01e+08 | 10^1.81e+10 | 10^1.08e+12 |   10^2.6e+13 |  10^1.82e+14 |   10^7.8e+14 |  10^9.49e+15 |  10^9.49e+18 |
+| $√n$      |     1e+06 |       1e+12 |       1e+18 |     3.6e+21 |     1.3e+25 |     7.46e+27 |     3.66e+29 |     6.72e+30 |     9.95e+32 |     9.95e+38 |
+| $n$       |     1e+03 |       1e+06 |       1e+09 |       6e+10 |     3.6e+12 |     8.64e+13 |     6.05e+14 |     2.59e+15 |     3.15e+16 |     3.15e+19 |
+| $n lg n$  |       140 |    6.27e+04 |    3.96e+07 |    1.94e+09 |    9.86e+10 |     2.11e+12 |     1.39e+13 |     5.67e+13 |     6.41e+14 |     5.35e+17 |
+| $n²$      |      31.6 |       1e+03 |    3.16e+04 |    2.45e+05 |     1.9e+06 |      9.3e+06 |     2.46e+07 |     5.09e+07 |     1.78e+08 |     5.62e+09 |
+| $n³$      |        10 |         100 |       1e+03 |    3.91e+03 |    1.53e+04 |     4.42e+04 |     8.46e+04 |     1.37e+05 |     3.16e+05 |     3.16e+06 |
+| $n⁴$      |      5.62 |        31.6 |         178 |         495 |    1.38e+03 |     3.05e+03 |     4.96e+03 |     7.14e+03 |     1.33e+04 |     7.49e+04 |
+| $2ⁿ$      |         9 |          19 |          29 |          35 |          41 |           46 |           49 |           51 |           54 |           64 |
+| $n!$      |         6 |           9 |          12 |          13 |          15 |           16 |           17 |           17 |           18 |           20 |
+
+* Problem 2 :DONE:
 ** Task
 #+begin_quote
 Consider the algorithm SUM ARRAY from page 25 of the lecture book:
@@ -51,9 +233,15 @@ Consider the algorithm SUM ARRAY from page 25 of the lecture book:
 It should solve the problem to sum the elements of the array $A$. Prove that the algorithm is correct by using a loop invariant.
 #+end_quote
 
-** Notes
-
 ** Solution
+
+*Loop invariant:* At the start of each iteration with index $i$, $sum = A[1] + A[2] + \cdots + A[i - 1]$.
+
+*Initialization (i = 1):* $sum = 0$, which equals the empty sum $A[1] + \cdots + A[0]$ (a sum of zero terms). This holds.
+
+*Maintenance:* Assume at the start of iteration i we have $sum = A[1] + \cdots + A[i − 1]$. The loop body executes $sum = sum + A[i]$, so after the body, $sum = A[1] + \cdots + A[i]$. When $i$ increments to $i+1$, we're at the start of the next iteration and $sum = A[1] + \cdots + A[i + 1 - 1 ]$. The invariant holds for the next iteration.
+
+*Termination:* The loop ends when $i = n + 1$. Substituting into the invariant: $sum = A[1] + \cdots + A[n]$, which is exactly what we wanted to prove.
 
 * Problem 3
 ** Task
