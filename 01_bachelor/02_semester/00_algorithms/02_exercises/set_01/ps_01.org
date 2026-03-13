@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-13 12:17>
+#+lastmod: <2026-03-13 13:56>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -369,7 +369,7 @@ Since $f(n) = O(n^2)$ and $f(n) = \Omega(n^2)$, we conclude $f(n) = \Theta(n^2)$
 Since selection sort always performs the same number of comparisons regardless
 of the input, the best-case and worst-case running times are both $\Theta(n^2)$.
 
-* Problem 8
+* Problem 8 :DONE:
 ** Task
 #+begin_quote
 Use mathematical induction to show that when $n = 2^k$ for $k \geq 1$, the solution of the recurrence
@@ -380,6 +380,28 @@ is $T(n) = n \lg n$.
 #+end_quote
 
 ** Solution
+
+- Base case
+
+  $k = 1$, so $n = 2$. Hence $T(2) = 2 \cdot \lg(2) = 2 \cdot 1 = 2$. Base holds.
+
+- Inductive step
+
+  Assume $T(2^k) = 2^k \cdot k$ (since $\lg(2^k) = k$).
+
+  Now show that $T(2^{k+1}) = 2^{k+1} \cdot (k+1)$.
+
+  Hence,
+
+  \begin{align*}
+  T(2^{k+1}) &= 2 \cdot T(\frac{2^{k+1}}{2}) + 2^{k+1} \\
+             &= 2 \cdot T(2^{k}) + 2^{k+1} \\
+             &= 2 \cdot (2^k \cdot k) + 2^{k+1} \\
+             &= 2^{k+1} \cdot k + 2^{k+1} \\
+             &= 2^{k+1}(k + 1) \\
+  \end{align*}
+
+Hence, $T(n) = n \lg(n)$
 
 * Problem 9 :DONE:
 ** Task
