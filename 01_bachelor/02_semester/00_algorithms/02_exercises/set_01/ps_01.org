@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-12 17:14>
+#+lastmod: <2026-03-13 10:12>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -316,9 +316,7 @@ function selection_sort(array)
 end
 
 function main()
-
     array = [9, 8, 7, 6, 5, 4, 3, 2, 1]
-
     println(selection_sort(array))
 end
 
@@ -345,15 +343,31 @@ Take the algorithm selection sort from Exercise 5 and find a loop invariant for 
 
 *Termination:* The loop ends when $i = n + 1$. The invariant gives us that $A[1], \cdots, A[n]$ is sorted and contains the $n$ smallest elements, which means the entire array is sorted.
 
-* Problem 7
+* Problem 7 :DONE:
 ** Task
 #+begin_quote
 Analyse your algorithm from Exercise 5 and determine its best- and worst-case running times. Provide asymptotic running times using the Landau symbols ($O$, $\Omega$, or $\Theta$), whichever fit best.
 #+end_quote
 
-** Notes
-
 ** Solution
+The outer loop runs from $i = 1$ to $n$. In each iteration, finding the minimum
+of $A[i \ldots n]$ requires $n - i$ comparisons, and the swap is constant time.
+This work is the same regardless of the input.
+
+Total comparisons:
+$$\sum_{i=1}^{n}(n - i) = \frac{n(n-1)}{2} = \frac{n^2}{2} - \frac{n}{2}$$
+
+*Upper bound ($O$):* For $n \geq 1$, we have $\frac{n^2}{2} - \frac{n}{2} \leq \frac{n^2}{2} \leq n^2$.
+Choose $c = 1, \, n_0 = 1$. So $f(n) = O(n^2)$.
+
+*Lower bound ($\Omega$):* For $n \geq 2$, we have $\frac{n}{2} \leq \frac{n^2}{4}$,
+so $\frac{n^2}{2} - \frac{n}{2} \geq \frac{n^2}{2} - \frac{n^2}{4} = \frac{n^2}{4}$.
+Choose $c = \frac{1}{4}, \, n_0 = 2$. So $f(n) = \Omega(n^2)$.
+
+Since $f(n) = O(n^2)$ and $f(n) = \Omega(n^2)$, we conclude $f(n) = \Theta(n^2)$.
+
+Since selection sort always performs the same number of comparisons regardless
+of the input, the best-case and worst-case running times are both $\Theta(n^2)$.
 
 * Problem 8
 ** Task
