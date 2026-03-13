@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-13 10:12>
+#+lastmod: <2026-03-13 11:53>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -379,11 +379,9 @@ $T(n) = \begin{cases} 2 & n = 2 \\ 2T\left(\frac{n}{2}\right) + n & n > 2 \end{c
 is $T(n) = n \lg n$.
 #+end_quote
 
-** Notes
-
 ** Solution
 
-* Problem 9
+* Problem 9 :DONE:
 ** Task
 #+begin_quote
 (a) Express $123n^2 + 345n - 148$ as $\Theta$ of a simple expression.
@@ -399,9 +397,87 @@ is $T(n) = n \lg n$.
 (f) Is $2^n = o(2^{2n})$?
 #+end_quote
 
-** Notes
-
 ** Solution
+
+*** (a)
+
+- Upper bound
+
+  $$123n^2 + 345n - 148 \le 123n^2 + 345n^2 = 468n^2$$
+
+  Choose $c = 468, n_0 = 1$. So, $f(n) = O(n^2)$
+
+- Lower bound
+
+  $$123n^2 + 345n - 148 \ge 123n^2 + 345 - 148 \ge 123n^2$$
+
+  Choose $c = 123, n_0 = 1$. So $f(n) = \Omega(n^2)$
+ 
+Since $f(n) = O(n^2)$ and $f(n) = \Omega(n^2)$, we conclude $f(n) = \Theta(n^2)$.
+
+*** (b)
+
+$$2^{n+1} = 2 \cdot 2^n$$
+
+Choose $c = 2, n \ge 1$. $f(n) = O(2^n)$
+
+*** (c)
+
+Assume $2^{2n} = O(2^n)$. Hence,
+
+\begin{align*}
+2^{2n} &\le c \cdot 2^n \\
+2^n \cdot 2^n &\le c \cdot 2^n \\
+2^n &\le c \\
+\end{align*}
+
+But $2^n$ grows without a bound, hence, no constant $c$ can satisfy this for all sufficiently large $n$.
+
+Thus,
+
+$$2^{2n} \neq O(2^n)$$
+
+*** (d)
+
+Assume $2^n = O(2^{2n})$. Let $c = 1$, hence,
+
+\begin{align*}
+2^n &\le 1 \cdot 2^n \cdot 2^n \\
+1 &\le 2^n \\
+\end{align*}
+
+Which is true $\forall n \ge 1$.
+
+*** (e)
+
+$2^{n+1} = o(2^n)$ iff:
+
+\begin{align*}
+\lim_{n\rightarrow\infty} \dfrac{2^{n+1}}{2^n} &= 0 \\
+\lim_{n\rightarrow\infty} \dfrac{2 \cdot 2^n}{2^n} &= 0 \\
+2 \cdot \lim_{n\rightarrow\infty} \dfrac{2^n}{2^n} &= 0 \\
+2 \cdot 1 &= 0 \\
+2 &\neq 0 \\
+\end{align*}
+
+Hence,
+
+$$2^{n+1} \neq o(2^n)$$
+
+*** (f)
+
+$2^n = o(2^{2n})$ iff:
+
+\begin{align*}
+\lim_{n\rightarrow\infty} \dfrac{2^n}{2^{2n}} &= 0 \\
+\lim_{n\rightarrow\infty} \dfrac{2^n}{2^n \cdot 2^n} &= 0 \\
+\lim_{n\rightarrow\infty} \dfrac{1}{2^n} &= 0 \\
+0 &= 0 \\
+\end{align*}
+
+Hence,
+
+$$2^n = o(2^{2n})$$
 
 * Problem 10
 ** Task
