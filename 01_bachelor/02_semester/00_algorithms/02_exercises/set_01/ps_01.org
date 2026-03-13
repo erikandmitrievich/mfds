@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-13 14:56>
+#+lastmod: <2026-03-13 15:13>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -34,7 +34,7 @@ Assume that your computer can execute $10^9$ operations per second. For each of 
 
 ** Solution
 
-#+begin_src julia :results output raw :exports both :tangle julia/p_01.jl
+#+begin_src julia :results output raw :tangle julia/p_01.jl
 import Printf: @sprintf
 using Printf
 
@@ -134,75 +134,6 @@ for i in 1:length(func_labels)
 end
 #+end_src
 
-#+RESULTS:
-1.0e9
-10-element Vector{String}:
- "1 μs"
- "1 ms"
- "1 s"
- "1 min"
- "1 hour"
- "1 day"
- "1 week"
- "30 days"
- "1 year"
- "1000 years"
-10-element Vector{Float64}:
-      1.0e-6
-      0.001
-      1.0
-     60.0
-   3600.0
-  86400.0
- 604800.0
-      2.592e6
-      3.1536e7
-      3.1536e10
-inv_lglg (generic function with 1 method)
-inv_lg (generic function with 1 method)
-inv_sqrt (generic function with 1 method)
-inv_n (generic function with 1 method)
-inv_nlgn (generic function with 1 method)
-inv_n2 (generic function with 1 method)
-inv_n3 (generic function with 1 method)
-inv_n4 (generic function with 1 method)
-inv_2n (generic function with 1 method)
-inv_nfact (generic function with 1 method)
-10-element Vector{String}:
- "lg lg n"
- "lg n"
- "√n"
- "n"
- "n lg n"
- "n²"
- "n³"
- "n⁴"
- "2ⁿ"
- "n!"
-10-element Vector{Function}:
- inv_lglg (generic function with 1 method)
- inv_lg (generic function with 1 method)
- inv_sqrt (generic function with 1 method)
- inv_n (generic function with 1 method)
- inv_nlgn (generic function with 1 method)
- inv_n2 (generic function with 1 method)
- inv_n3 (generic function with 1 method)
- inv_n4 (generic function with 1 method)
- inv_2n (generic function with 1 method)
- inv_nfact (generic function with 1 method)
-10×10 Matrix{String}:
- #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef
- #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef
- #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef
- #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef
- #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef
- #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef
- #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef
- #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef
- #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef
- #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef  #undef
-"| \$f(n)\$ | 1 μs | 1 ms | 1 s | 1 min | 1 hour | 1 day | 1 week | 30 days | 1 year | 1000 years |"
-"|---|---|---|---|---|---|---|---|---|---|---|"
 | $f(n)$    |      1 μs |        1 ms |         1 s |       1 min |      1 hour |        1 day |       1 week |      30 days |       1 year |   1000 years |
 |-----------+-----------+-------------+-------------+-------------+-------------+--------------+--------------+--------------+--------------+--------------|
 | $lg lg n$ | 2^2^1e+03 |   2^2^1e+06 |   2^2^1e+09 |   2^2^6e+10 | 2^2^3.6e+12 | 2^2^8.64e+13 | 2^2^6.05e+14 | 2^2^2.59e+15 | 2^2^3.15e+16 | 2^2^3.15e+19 |
