@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-13 11:53>
+#+lastmod: <2026-03-13 12:17>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -479,12 +479,29 @@ Hence,
 
 $$2^n = o(2^{2n})$$
 
-* Problem 10
+* Problem 10 :DONE:
 ** Task
 #+begin_quote
 Consider sequences $f(n)$, $g(n)$ and $h(n)$. Assume that $f(n) = \Theta(g(n))$ and that $g(n) = \Theta(h(n))$. Show that then $f(n) = \Theta(h(n))$.
 #+end_quote
 
-** Notes
-
 ** Solution
+Assume $f(n) = \Theta(g(n)), g(n) = \Theta(h(n))$. Show $f(n) = \Theta(h(n))$.
+
+From $f(n) = \Theta(g(n))$: $\exists c_1, c_2 > 0, \, n_1 : c_1 \cdot g(n) \le f(n) \le c_2 \cdot g(n), \forall n \ge n_1$.
+
+From $g(n) = \Theta(h(n))$: $\exists c_3, c_4 > 0, \, n_2 : c_3 \cdot h(n) \le g(n) \le c_4 \cdot h(n), \forall n \ge n_2$.
+
+Let $n_0 = \max(n_1, n_2)$. Then for all $n \ge n_0$:
+
+\begin{align*}
+c_1 \cdot g(n) \le &f(n) \le c_2 \cdot g(n) \\
+c_3 \cdot h(n) \le &g(n) \le c_4 \cdot h(n) \\
+c_1 \cdot c_3 \cdot h(n) \le c_1 \cdot g(n) \le &f(n) \le c_2 \cdot g(n) \le c_2 \cdot c_4 \cdot h(n) \\
+\end{align*}
+
+Let $c_5 = c_1 \cdot c_3, \, c_6 = c_2 \cdot c_4$. Then:
+
+$$c_5 \cdot h(n) \le f(n) \le c_6 \cdot h(n), \quad \forall n \ge n_0$$
+
+Thus, $f(n) = \Theta(h(n))$. $\blacksquare$
