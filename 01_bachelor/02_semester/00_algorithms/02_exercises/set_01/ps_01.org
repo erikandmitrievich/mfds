@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-13 13:56>
+#+lastmod: <2026-03-13 14:56>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -34,7 +34,7 @@ Assume that your computer can execute $10^9$ operations per second. For each of 
 
 ** Solution
 
-#+begin_src julia :results output raw :exports both :tangle julia/p_03.jl
+#+begin_src julia :results output raw :exports both :tangle julia/p_01.jl
 import Printf: @sprintf
 using Printf
 
@@ -66,10 +66,8 @@ inv_n(ops) = @sprintf("%.3g", ops)
 function inv_nlgn(ops)
     ops < 1 && return "0"
     lo, hi = 1.0, ops
-    # 100 iterations is plenty for Float64 precision convergence
     for _ in 1:100
         mid = (lo + hi) / 2
-        mid < 2 && (lo = mid; continue)
         val = mid * log2(mid)
         val < ops ? (lo = mid) : (hi = mid)
     end
