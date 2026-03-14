@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-03-14 16:44>
+#+lastmod: <2026-03-14 17:08>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -71,7 +71,11 @@ A metric space $X$ is called compact if every sequence $(x_n)_{n\in\mathbb{N}} \
 
   The only interesting case compactness handles is when the full sequence does not converge at all. Imagine a sequence that oscilates from $0$ to $1$, its subsequence, consisting only of $1$'s is convergent.
 
-* Lemma      10.3.2: Every compact metric space is complete
+* Lemma      10.3.2: Compactness implies completeness
+
+Every compact metric space is complete.
+
+*Proof.*
 
 Let $(x_n)_{n\in\mathbb{N}} \in X$ be a Cauchy sequence. Since $X$ is compact, it has a convergent subsequence $x_j \rightarrow x \in X$ for $j \rightarrow \infty$. Given $\epsilon > 0$, there are $N_1, N_2 \in \mathbb{N}$ such that
 
@@ -146,3 +150,28 @@ Let $X$ be a metric space and $S \subseteq X$ a nonempty subset. Then $S$ is clo
 
   Closedness says "limits that exist stay inside," while compactness says "convergent subsequences are guaranteed to exist and their limits stay inside." Closedness is the weaker condition — it doesn't prevent sequences from diverging to infinity, it only controls where limits land when convergence does occur. Compactness implies closedness, but not the other way around; you additionally need boundedness (in $\mathbb{R}^{n}$) to upgrade closedness to compactness.
 
+* Lemma      10.3.7: Compactness implies boundedness and closure
+
+Let $X$ be a metric space. If $S \subseteq X$ is compact, then $S$ is bounded and closed.
+
+*Proof.*
+
+Assume that $S$ is unbounded. Fix $x_0 \in X$. Then for every $n \in \mathbb{N}$ there exists $x_n \in S$ such that
+
+$$d(x_n, x_0) \ge n.$$
+
+Thus we obtain a sequence $(x_n)_{n\in\mathbb{N}} \subseteq S$.
+
+Due to compactness, there exists a subsequence $(x_{n_k})_{k\in\mathbb{N}}$ that converges to some $x \in S$.
+
+Every convergent sequence in a metric space is bounded by /Lemma 10.1.11/, hence there exists $M > 0$ such that
+
+$$d(x_{n_k}, x_0) \le M \quad \forall k \in \mathbb{N}.$$
+
+On the other hand, by construction,
+
+$$d(x_{n_k}, x_0) \ge n_k \ge k,$$
+
+which is unbounded as $k \rightarrow \infty$. This is a contradiction. Therefore, $S$ must be bounded.
+
+To verify that $S$ is closed, let $(x_n)_{n\in\mathbb{N}} \subseteq S$ satisfy $x_n \rightarrow x \in X$. We aim to show that $x$ is contained in $S$, so that /Lemma 10.3.6/ then yields that $S$ is closed. Since $S$ is compact, there is a subsequence $(x_{n_j})_{j\in\mathbb{N}}$ that converges to some $y \in S$. Since $(x_{n_j})_{j\in\mathbb{N}}$ is a subsequence of a sequence converging to $x$, it must also converge to $x$. By uniqueness of limits, $x = y \in S$.
