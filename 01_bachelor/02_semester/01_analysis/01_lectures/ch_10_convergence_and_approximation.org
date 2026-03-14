@@ -1,8 +1,8 @@
-#+title: Lec 01
+#+title: Ch 10
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-03-08 15:21>
+#+lastmod: <2026-03-14 15:10>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -47,6 +47,30 @@ A metric space $X$ is called compact if every sequence $(x_n)_{n\in\mathbb{N}} \
 
 /Metric space $X$ is compact iff no matter how you pick an infinite sequence of points in $X$, you can always extract subsequence that converges to some point still inside $X$./
 
+** Q&A
+
+- Q_01
+
+  About Sequence and Subsequence. Take for example the interval $(0,1)$, do we consider it as a sequence and then argue that its subsequence $\frac{1}{n}$ approaches $0$, which is outside the interval, making it not compact? Or it is just an interval and a subsequence that I gave, is actually a sequence that still proves its non compactness? Or maybe there is a third option of a sequence being its own subsequence?
+
+- A_01
+
+  The interval $(0, 1)$ is a set (the space), not a sequence. The sequence $\frac{1}{n}$ is a sequence in that set, and to disprove compactness you show that this sequence has no subsequence converging to a limit inside $(0, 1)$ — which is true because the whole sequence converges to $0$, forcing every subsequence to converge to $0$ as well, and $0 \notin (0, 1)$. Your second interpretation was essentially right: you exhibit a sequence in the space and show it defeats the compactness condition.
+
+- Q_02
+
+  Can a sequence in a compact space "escape" to a limit outside the space, while compactness only guarantees some subsequence stays inside?
+
+- A_02
+
+  No. Compactness actually prevents this entirely, for two reasons working together.
+
+  First, a compact metric space is always closed, meaning if a sequence of points in $X$ converges at all, the limi tmust already belong to $X$ - there is nowhere to escape to.
+
+  Second, if the full sequence converges to some limit $L$, then every subsequence converges to that same $L$, so there is no way for the sequence and a subsequence to "disagree" on where they end up.
+
+  The only interesting case compactness handles is when the full sequence does not converge at all. Imagine a sequence that oscilates from $0$ to $1$, its subsequence, consisting only of $1$'s is convergent.
+
 * Lemma      10.3.2: Every compact metric space is complete
 
 Let $(x_n)_{n\in\mathbb{N}} \in X$ be a Cauchy sequence. Since $X$ is compact, it has a convergent subsequence $x_j \rightarrow x \in X$ for $j \rightarrow \infty$. Given $\epsilon > 0$, there are $N_1, N_2 \in \mathbb{N}$ such that
@@ -81,7 +105,7 @@ Let $X$ be a metric space and $x \in X$.
 
 4. We call $S \subseteq X$ a neighborhood of $x$ if there is $\epsilon > 0$ such that $B_{\epsilon}(x) \subseteq S$
 
-* Lemma 10.3.6: Sequential closure
+* Lemma      10.3.6: Sequential closure
 
 Let $X$ be a metric space and $S \subseteq X$ a nonempty subset. Then $S$ is closed iff all sequences $(x_n)_{n\in\mathbb{N}} \subseteq S$ with $x_n \rightarrow x \in X$ satisfy $x \in S$.
 
