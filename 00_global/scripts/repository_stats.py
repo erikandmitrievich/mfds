@@ -336,7 +336,7 @@ class RepoStats:
 
 
 def main():
-    root_dir = "."
+    root_dir = "../../"
     analyzer = RepoStats(root_dir)
 
     for root, dirs, files in os.walk(root_dir):
