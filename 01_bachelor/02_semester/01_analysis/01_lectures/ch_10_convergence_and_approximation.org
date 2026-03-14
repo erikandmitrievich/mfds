@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-03-14 15:10>
+#+lastmod: <2026-03-14 16:44>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -105,6 +105,16 @@ Let $X$ be a metric space and $x \in X$.
 
 4. We call $S \subseteq X$ a neighborhood of $x$ if there is $\epsilon > 0$ such that $B_{\epsilon}(x) \subseteq S$
 
+** Q&A
+
+- Q_01
+
+  But why does the open set definition uses closed ball and not an open ball?
+
+- A_01
+
+  The two formulations define exactly the same concept of openness because fitting a closed ball of radius $\epsilon$ inside a set implies you can fit an open ball of the same radius (it's smaller), and fitting an open ball of radius $\epsilon$ implies you can fit a closed ball of radius $\frac{\epsilon}{2}$ inside it. Your lecturer chose the closed ball version, but it's purely a matter of convention — the resulting notion of "open set" is identical either way.
+
 * Lemma      10.3.6: Sequential closure
 
 Let $X$ be a metric space and $S \subseteq X$ a nonempty subset. Then $S$ is closed iff all sequences $(x_n)_{n\in\mathbb{N}} \subseteq S$ with $x_n \rightarrow x \in X$ satisfy $x \in S$.
@@ -119,4 +129,20 @@ Let $X$ be a metric space and $S \subseteq X$ a nonempty subset. Then $S$ is clo
 
   In particular, $x_N \in B_{\epsilon}(x) \subseteq X \setminus S$, which contradicts $(x_n)_{n \in \mathbb{N}} \subseteq S$.
 
+  /so basically, we are using convergence to find a $x_N \in B_{\epsilon}(x) \subseteq X \setminus S$, which will contradict the assumption that $(x_n)_{n\in\mathbb{N}} \subseteq S$/
+
 - ($\Leftarrow$) We prove the contrapositive. Suppose $S$ is not closed. Then $X \setminus S$ is not open, so there exists $x \in X \setminus S$ such that for all $\epsilon > 0$, the ball $B_{\epsilon}(x)$ is not contained in $X \setminus S$. That is, for every $\epsilon > 0$, there exists a point in $B_{\epsilon}(x) \cap S$. Choosing $\epsilon = \frac{1}{n}$ for each $n \ge 1$ yields a point $y_n \in B_{1/n}(x) \cap S$. By construction, $d_{X}(y_n, x) < \frac{1}{n}$ for all $n \ge 1$, so $y_n \rightarrow x$. Since each $y_n \in S$ but $x \in X \setminus S$, we have found a sequence in $S$ converging to a limit outside $S$.
+
+  /here we are proving by contrapositive, choosing some point $x \in X \setminus S : \forall \epsilon > 0, B_{\epsilon}(x) \not\subseteq X \setminus S$ (equivalently, $B_{\epsilon}(x) \cap S \neq \emptyset$), then taking balls of radius $1/n$ gives a sequence that is inside of $S$ that converges to $x \in X \setminus S$, hence it is not sequentially closed./
+
+
+** Q&A
+
+- Q_01
+
+  But isn't it the same as compactness?
+
+- A_01
+
+  Closedness says "limits that exist stay inside," while compactness says "convergent subsequences are guaranteed to exist and their limits stay inside." Closedness is the weaker condition — it doesn't prevent sequences from diverging to infinity, it only controls where limits land when convergence does occur. Compactness implies closedness, but not the other way around; you additionally need boundedness (in $\mathbb{R}^{n}$) to upgrade closedness to compactness.
+
