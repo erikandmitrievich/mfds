@@ -1,0 +1,89 @@
+#+title: Ps 02
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-03-14>
+#+lastmod: <2026-03-14 11:09>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* Problem 1
+** Task
+#+begin_quote
+Let $X$ be a metric space and $f : [0, 1] \to X$ continuous. Show that $f([0, 1]) \subseteq X$ is path-connected.
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 2
+** Task
+#+begin_quote
+Let $f : [0, 1] \to \mathbb{R}^2$ and $f_1, f_2 : [0, 1] \to \mathbb{R}$, so that
+\[
+f(t) = \begin{pmatrix} f_1(t) \\ f_2(t) \end{pmatrix}.
+\]
+We equip $\mathbb{R}^2$ with the standard metric
+\[
+d(x, y) = \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2}.
+\]
+
+(a) Prove that the coordinate map $\chi_i : \mathbb{R}^2 \to \mathbb{R}$ defined by $\chi_i(x_1, x_2) = x_i$ is continuous, for $i = 1, 2$.
+
+(b) Prove that $f$ is continuous if and only if both $f_1$ and $f_2$ are continuous.
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 3
+** Task
+#+begin_quote
+Let $S = \mathbb{R}^2 \setminus \{(0, 0)\}$ and $x = (1, 0)$ and $y = (-1, 0)$.
+
+(a) Define a continuous path from $x$ to $y$.
+
+(b) Plot this path in Julia.
+
+(c) Visualize the sets
+\[
+A = \{(x, y) \in \mathbb{R}^2 : x^2 + y^2 < 1\}, \quad B = \{(-1, y) : -1 \leq y \leq 1\} \cup \{(1, y) : -1 \leq y \leq 1\}
+\]
+in Julia by sample/grid points. Determine which of the two sets is path-connected.
+#+end_quote
+
+** Notes
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_03_02.jl
+#+end_src
+
+#+begin_src julia :results value :exports both :tangle julia/p_03_03.jl
+#+end_src
+
+* Problem 4
+** Task
+#+begin_quote
+Let $f : [0, 1] \to \mathbb{R}$ be given by
+\[
+f(x) = \frac{1}{4}(x^2 + 1).
+\]
+
+(a) Show that $f$ maps $[0, 1]$ into itself and is a contraction on $[0, 1]$.
+
+(b) Deduce that $f$ has a unique fixed point and implement the fixed point iteration in Julia.
+#+end_quote
+
+** Notes
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_04_02.jl
+#+end_src
