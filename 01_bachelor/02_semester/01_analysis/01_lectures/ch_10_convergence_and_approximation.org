@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-03-15 13:37>
+#+lastmod: <2026-03-15 14:15>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -175,6 +175,18 @@ $$d(x_{n_k}, x_0) \ge n_k \ge k,$$
 which is unbounded as $k \rightarrow \infty$. This is a contradiction. Therefore, $S$ must be bounded.
 
 To verify that $S$ is closed, let $(x_n)_{n\in\mathbb{N}} \subseteq S$ satisfy $x_n \rightarrow x \in X$. We aim to show that $x$ is contained in $S$, so that /Lemma 10.3.6/ then yields that $S$ is closed. Since $S$ is compact, there is a subsequence $(x_{n_j})_{j\in\mathbb{N}}$ that converges to some $y \in S$. Since $(x_{n_j})_{j\in\mathbb{N}}$ is a subsequence of a sequence converging to $x$, it must also converge to $x$. By uniqueness of limits, $x = y \in S$.
+
+* Theorem    10.3.11: Heine-Borel theorem in $\mathbb{R}$
+
+Suppose that $\mathbb{R}$ is equipped with the standard metric. A set $K \subseteq \mathbb{R}$ is compact if and only if it is closed and bounded.
+
+*Proof.*
+
+- ($\Rightarrow$) Suppose that $K \subseteq \mathbb{R}$ is compact but unbounded. Thus, there is a sequence $(x_n)_{n\in\mathbb{N}} \subseteq K$ such that $|x_n| > n$, for $n \in \mathbb{N}$. This sequence must have a monotone subsequence in $K$ that is also unbounded. However, every subsequence of this subsequence must also be unbounded, hence, cannot converge. This violates compactness since every sequence must have a convergent subsequence. Hence, $K$ must be bounded.
+
+  Now suppose that $K \subseteq \mathbb{R}$ is compact but not closed. Thus, the complement is not open and there must be some $x \in \mathbb{R} \setminus K$ such that $B_\epsilon(x) \not\subseteq \mathbb{R} \setminus K$ for all $\epsilon > 0$. In particular, for all $\epsilon = \frac{1}{n+1}$ for $n \in \mathbb{N}$. Therefore, there is $x_n \in B_{\frac{1}{n+1}}(x) \cap K$. This sequence $(x_n)_{n\in\mathbb{N}} \subseteq K$ converges towards $x \notin K$. Hence, none of its subsequences can converge in $K$. Hence, $K$ must be closed.
+
+- ($\Leftarrow$) Conversely, if $K$ is closed and bounded, then every sequence in $K$ is bounded and hence admits a convergent subsequence by Bolzano-Weierstraß. Closedness ensures that the limit lies in $K$, so $K$ is compact.
 
 * Definition 11.1.11: Path-connectedness
 
