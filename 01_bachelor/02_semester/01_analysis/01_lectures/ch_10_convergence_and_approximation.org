@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-03-14 17:08>
+#+lastmod: <2026-03-15 13:37>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,7 +13,7 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
-* Definition 10.1.1: Metric space
+* Definition 10.1.1:  Metric space
 
 Given a set $X \neq \emptyset$, we say that a mapping $d_X : X \times X \rightarrow \left[ 0, \infty \right)$ is a metric if the following three properties are satisfied:
 
@@ -31,17 +31,17 @@ Given a set $X \neq \emptyset$, we say that a mapping $d_X : X \times X \rightar
 
 If $d_X$ is a metric on $X$, then $(X, d_{X})$ is called a metric space.
 
-* Definition 10.2.1: Cauchy sequence
+* Definition 10.2.1:  Cauchy sequence
 
 Let $(X, d_X)$ be a metric space. A sequence $(a_n)_{n\in\mathbb{N}} \subseteq X$ is called Cauchy sequence if
 
 $$\forall \epsilon>0, \exists N \in \mathbb{N} : \forall n, m \ge N, d_X(a_n, a_m) \le \epsilon$$
 
-* Definition 10.2.5: Completeness
+* Definition 10.2.5:  Completeness
 
 A metric space $X$ is called complete if every Cauchy sequence in $X$ is convergent in $X$.
 
-* Definition 10.3.1: Compactness
+* Definition 10.3.1:  Compactness
 
 A metric space $X$ is called compact if every sequence $(x_n)_{n\in\mathbb{N}} \in X$ has a convergent subsequence $(x_{n_j})_{j \in \mathbb{N}}$ (with limit in $X$).
 
@@ -71,7 +71,7 @@ A metric space $X$ is called compact if every sequence $(x_n)_{n\in\mathbb{N}} \
 
   The only interesting case compactness handles is when the full sequence does not converge at all. Imagine a sequence that oscilates from $0$ to $1$, its subsequence, consisting only of $1$'s is convergent.
 
-* Lemma      10.3.2: Compactness implies completeness
+* Lemma      10.3.2:  Compactness implies completeness
 
 Every compact metric space is complete.
 
@@ -90,7 +90,7 @@ $$d_X(x_n,x) \le d_X(x_n, x_{n_N}) + d_X(x_{n_N}, x) \le \frac{\epsilon}{2} + \f
 
 Thus, $x_n \rightarrow x$.
 
-* Definition 10.3.3: Open and closed subsets
+* Definition 10.3.3:  Open and closed subsets
 
 Let $X$ be a metric space and $x \in X$.
 
@@ -119,7 +119,7 @@ Let $X$ be a metric space and $x \in X$.
 
   The two formulations define exactly the same concept of openness because fitting a closed ball of radius $\epsilon$ inside a set implies you can fit an open ball of the same radius (it's smaller), and fitting an open ball of radius $\epsilon$ implies you can fit a closed ball of radius $\frac{\epsilon}{2}$ inside it. Your lecturer chose the closed ball version, but it's purely a matter of convention — the resulting notion of "open set" is identical either way.
 
-* Lemma      10.3.6: Sequential closure
+* Lemma      10.3.6:  Sequential closure
 
 Let $X$ be a metric space and $S \subseteq X$ a nonempty subset. Then $S$ is closed iff all sequences $(x_n)_{n\in\mathbb{N}} \subseteq S$ with $x_n \rightarrow x \in X$ satisfy $x \in S$.
 
@@ -150,7 +150,7 @@ Let $X$ be a metric space and $S \subseteq X$ a nonempty subset. Then $S$ is clo
 
   Closedness says "limits that exist stay inside," while compactness says "convergent subsequences are guaranteed to exist and their limits stay inside." Closedness is the weaker condition — it doesn't prevent sequences from diverging to infinity, it only controls where limits land when convergence does occur. Compactness implies closedness, but not the other way around; you additionally need boundedness (in $\mathbb{R}^{n}$) to upgrade closedness to compactness.
 
-* Lemma      10.3.7: Compactness implies boundedness and closure
+* Lemma      10.3.7:  Compactness implies boundedness and closure
 
 Let $X$ be a metric space. If $S \subseteq X$ is compact, then $S$ is bounded and closed.
 
@@ -175,3 +175,47 @@ $$d(x_{n_k}, x_0) \ge n_k \ge k,$$
 which is unbounded as $k \rightarrow \infty$. This is a contradiction. Therefore, $S$ must be bounded.
 
 To verify that $S$ is closed, let $(x_n)_{n\in\mathbb{N}} \subseteq S$ satisfy $x_n \rightarrow x \in X$. We aim to show that $x$ is contained in $S$, so that /Lemma 10.3.6/ then yields that $S$ is closed. Since $S$ is compact, there is a subsequence $(x_{n_j})_{j\in\mathbb{N}}$ that converges to some $y \in S$. Since $(x_{n_j})_{j\in\mathbb{N}}$ is a subsequence of a sequence converging to $x$, it must also converge to $x$. By uniqueness of limits, $x = y \in S$.
+
+* Definition 11.1.11: Path-connectedness
+
+A metric space $X$ is called path-connected if for all $x_1, x_2 \in X$ there is a continuous function $\gamma : \left[ 0,1 \right] \rightarrow X$ such that $\gamma(0) = x_1$ and $\gamma(1) = x_2$. The function $\gamma$ is called a continuous path from $x_1$ to $x_2$.
+
+* Lemma      11.1.12: Path-connectedness is preserved under continuous maps
+
+Let $X$ and $Y$ be metric spaces. If $X$ is path-connected and $f : X \rightarrow Y$ is continuous, then $f(X)$ is path connected.
+
+*Proof.*
+
+Let $a_1, a_2 \in f(X)$ be arbitrary. Then there are $x_1, x_2 \in X$ such that $f(x_1) = a_1$ and $f(x_2) = a_2$. Since $X$ is connected, there is a continuous function $\gamma : \left[ 0,1 \right] \rightarrow X$ such that $\gamma(0) = x_1$ and $\gamma(1) = x_2$. The function $f \circ \gamma : \left[ 0,1 \right] \rightarrow f(X)$ is also continuous, because $f$ is assumed to be continuous. It satisfies $f \circ \gamma(0) = f(x_1) = a_1$ and $f \circ \gamma(1) = f(x_2) = a_2$.
+
+** Q&A
+
+- Q_01
+
+  Why does the definition state that $f(X)$ is path connected and not $Y$ itself?
+
+- A_01
+
+  The lemma states that $f(X)$ is path-connected rather than $Y$ because $f$ need not be surjective, there may be points in $Y$ that no element of $X$ maps to, so we can't say anything about connecting arbitrary points of $Y$ with paths. What the lemma captures is that continuous maps preserve path-connectedness of the image: any two points in $f(X)$ come from points in $X$, which can be joined by a path in $X$ (since $X$ is path-connected), and applying $f$ to that path gives a path in $f(X)$ joining their images.
+
+* Theorem    11.1.13: Path-connectedness in $\mathbb{R}$ is equivalent to being an interval
+
+Let $K \subseteq \mathbb{R}$. Then $K$ is path-connected iff it is an interval.
+
+*Proof.*
+
+- ($\Rightarrow$) Let $K$ be an interval. For every pair $x_1, x_2 \in K$, we may define $\gamma : \left[ 0,1 \right] \rightarrow K$ by $\gamma(t) = (1-t)x_1 + tx_2$. It is obviously continuous with $\gamma(0) = x_1$ and $\gamma(1) = x_2$, and its other values lie between $x_1$ and $x_2$, so that it does map into the interval $K$. This shows that $K$ is path-connected.
+
+  /common sense, as we basically use the definition of the Path-connectedness to show $K$ is path-connected/
+
+- ($\Leftarrow$) Now, suppose that $K$ is path-connected. Choose two arbitrary points $x_1, x_2 \in K$ such that $x_1 < x_2$. Let $y \in \mathbb{R}$ be an arbitrary point satisfying $x_1 < y < x_2$. We aim to show that $y$ is also in $K$.
+
+  Since $K$ is path-connected, there is a continuous function $\gamma : \left[ 0,1 \right] \rightarrow K$ such that $\gamma(0) = x_1$ and $\gamma(1) = x_2$. We define
+
+  $$Q = \left\{ t \in \left[ 0,1 \right] : \gamma(t) \le y \right\} \subseteq \mathbb{R}$$
+
+  Then $Q$ is obviously bounded, hence by the order completeness of $\mathbb{R}$, the supremum exists $t_0 = sup Q$. By /Lemma 10.1.15/ there is a sequence $(q_n)_{n\in\mathbb{N}} \subseteq Q$ such that $q_n \rightarrow t_0$.
+
+  Since $\gamma(q_n) \le y$, we also have $\gamma(t_0) \le y$. If $\gamma(t_0) < y$ were true, then we may define $\epsilon := |\gamma(t_0) - y| > 0$ and there is $\delta > 0$ such that $|\gamma(t) - \gamma(t_0)| \le \frac{\epsilon}{2}$ for all $|t - t_0| \le \delta$. This implies that $\gamma(t_0 + \delta) \le y$, which contradicts that $t_0$ is an upper bound. Hence, $\gamma(t_0) = y$.
+
+  Since $\gamma(\left[ 0,1 \right]) \subseteq K$, we must have $y \in K$. This shows that $K$ is an interval.
