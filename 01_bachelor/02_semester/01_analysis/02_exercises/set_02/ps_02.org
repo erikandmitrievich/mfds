@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-14>
-#+lastmod: <2026-03-15 18:01>
+#+lastmod: <2026-03-15 18:57>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -71,7 +71,7 @@ Hence, $\chi_i : \mathbb{R}^2 \rightarrow \mathbb{R}$ is continuous.
 
   $$d(f(s), f(t)) = \sqrt{\left( f_1(s) - f_1(t) \right)^2 + \left( f_2(s) - f_2(t) \right)^2} < \sqrt{\frac{\epsilon^2}{2} + \frac{\epsilon^2}{2}} = \epsilon$$
 
-* Problem 3
+* Problem 3 :DONE:
 ** Task
 #+begin_quote
 Let $S = \mathbb{R}^2 \setminus \{(0, 0)\}$ and $x = (1, 0)$ and $y = (-1, 0)$.
@@ -81,20 +81,75 @@ Let $S = \mathbb{R}^2 \setminus \{(0, 0)\}$ and $x = (1, 0)$ and $y = (-1, 0)$.
 (b) Plot this path in Julia.
 
 (c) Visualize the sets
-\[
-A = \{(x, y) \in \mathbb{R}^2 : x^2 + y^2 < 1\}, \quad B = \{(-1, y) : -1 \leq y \leq 1\} \cup \{(1, y) : -1 \leq y \leq 1\}
-\]
+
+\begin{align*}
+A &= \{(x, y) \in \mathbb{R}^2 : x^2 + y^2 < 1\} \\
+B &= \{(-1, y) : -1 \leq y \leq 1\} \cup \{(1, y) : -1 \leq y \leq 1\} \\
+\end{align*}
+
 in Julia by sample/grid points. Determine which of the two sets is path-connected.
 #+end_quote
 
 ** Notes
 
 ** Solution
+
+*** (a)
+
+$\gamma : \left[ 0,1 \right] \rightarrow S \quad \gamma(t) = \left( \cos(\pi t), \sin(\pi t) \right)$
+
+*** (b)
+
 #+begin_src julia :results value :exports both :tangle julia/p_03_02.jl
+using Plots
+
+gamma(t) = (cos(π * t), sin(π * t))
+
+ts = 0:0.01:1
+xs = first.(gamma.(ts))
+ys = last.(gamma.(ts))
+
+plot(xs, ys,
+     title="Continuous path",
+     label="γ",
+     xlabel="x", ylabel="y",
+     aspect_ratio=:equal)
+savefig("./assets/p_03_02.png")
 #+end_src
 
+#+RESULTS:
+: /Users/ziro2173/personal/university/01_bachelor/02_semester/01_analysis/02_exercises/set_02/assets/p_03_02.png
+
+*** (c)
+
 #+begin_src julia :results value :exports both :tangle julia/p_03_03.jl
+using Plots
+
+ys_range = -1:0.01:1
+
+A_xs = [x for x in ys_range for y in ys_range if x^2 + y^2 < 1]
+A_ys = [y for x in ys_range for y in ys_range if x^2 + y^2 < 1]
+
+B_xs = [fill(-1, length(ys_range)); fill(1, length(ys_range))]
+B_ys = [collect(ys_range); collect(ys_range)]
+
+opts = (xlabel="x", ylabel="y", markersize=1, aspect_ratio=:equal, legend=false)
+
+p_1 = scatter(A_xs, A_ys; title="Set A", opts...)
+p_2 = scatter(B_xs, B_ys; title="Set B", opts...)
+
+plot(p_1, p_2)
+savefig("./assets/p_03_03_01.png")
 #+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/university/01_bachelor/02_semester/01_analysis/02_exercises/set_02/assets/p_03_03_01.png
+
+Hence,
+
+$A$ is path-connected (straight line between any two points stays inside).
+
+$B$ is not path-connected (the two segments are disjoint).
 
 * Problem 4
 ** Task
