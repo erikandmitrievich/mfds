@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-03-15 14:15>
+#+lastmod: <2026-03-15 14:17>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -231,3 +231,25 @@ Let $K \subseteq \mathbb{R}$. Then $K$ is path-connected iff it is an interval.
   Since $\gamma(q_n) \le y$, we also have $\gamma(t_0) \le y$. If $\gamma(t_0) < y$ were true, then we may define $\epsilon := |\gamma(t_0) - y| > 0$ and there is $\delta > 0$ such that $|\gamma(t) - \gamma(t_0)| \le \frac{\epsilon}{2}$ for all $|t - t_0| \le \delta$. This implies that $\gamma(t_0 + \delta) \le y$, which contradicts that $t_0$ is an upper bound. Hence, $\gamma(t_0) = y$.
 
   Since $\gamma(\left[ 0,1 \right]) \subseteq K$, we must have $y \in K$. This shows that $K$ is an interval.
+
+* Corollary  11.1.14: Compact and path-connected subsets of $\mathbb{R}$
+
+Let $K \subseteq \mathbb{R}$. Then $K$ is compact and path-connected if and only if it is a closed, bounded interval.
+
+*Proof.*
+
+This is a consequence of the /Heine-Borel Theorem 10.3.11/ and /Theorem 11.1.13/.
+
+* Theorem    11.1.15: Intermediate value theorem
+
+If $f : \left[ a, b \right] \rightarrow \mathbb{R}$ is continuous, then $f(\left[ a, b \right])$ is a closed, bounded interval. In particular, if $f(a) < 0$ and $f(b) > 0$, then there exists $\xi \in (a, b)$ such that
+
+$$f(\xi) = 0.$$
+
+*Proof.*
+
+The interval $\left[ a, b \right]$ is compact by the /Heine-Borel Theorem 10.3.11/. /Theorem 11.1.8/ implies the image under $f$ is compact. The range $f(\left[ a, b \right])$ is path-connected by /Theorem 11.1.13/. Hence, $f(\left[ a, b \right])$ is a closed interval and we have
+
+$$0 \in \left[ f(a), f(b) \right] \subseteq f(\left[ a, b \right]).$$
+
+This means there is $\xi \in \left[ a, b \right]$ such that $f(\xi) = 0$.
