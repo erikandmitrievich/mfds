@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-14>
-#+lastmod: <2026-03-15 18:57>
+#+lastmod: <2026-03-15 20:41>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -90,8 +90,6 @@ B &= \{(-1, y) : -1 \leq y \leq 1\} \cup \{(1, y) : -1 \leq y \leq 1\} \\
 in Julia by sample/grid points. Determine which of the two sets is path-connected.
 #+end_quote
 
-** Notes
-
 ** Solution
 
 *** (a)
@@ -116,9 +114,6 @@ plot(xs, ys,
      aspect_ratio=:equal)
 savefig("./assets/p_03_02.png")
 #+end_src
-
-#+RESULTS:
-: /Users/ziro2173/personal/university/01_bachelor/02_semester/01_analysis/02_exercises/set_02/assets/p_03_02.png
 
 *** (c)
 
@@ -151,21 +146,70 @@ $A$ is path-connected (straight line between any two points stays inside).
 
 $B$ is not path-connected (the two segments are disjoint).
 
-* Problem 4
+* Problem 4 :DONE:
 ** Task
 #+begin_quote
 Let $f : [0, 1] \to \mathbb{R}$ be given by
-\[
-f(x) = \frac{1}{4}(x^2 + 1).
-\]
+
+$$f(x) = \frac{1}{4}(x^2 + 1)$$
 
 (a) Show that $f$ maps $[0, 1]$ into itself and is a contraction on $[0, 1]$.
 
 (b) Deduce that $f$ has a unique fixed point and implement the fixed point iteration in Julia.
 #+end_quote
 
-** Notes
-
 ** Solution
-#+begin_src julia :results value :exports both :tangle julia/p_04_02.jl
+
+*** (a)
+
+- $f$ maps $[0,1]$ into itself.
+  \begin{align*}
+  x \in \left[ 0,1 \right] &\implies x^2 \in \left[ 0,1 \right] \\
+  &\implies x^2 + 1 \in \left[ 1,2 \right] \\
+  &\implies \frac{1}{4}(x^2 + 1) \in \left[ \frac{1}{4},\frac{1}{2} \right] \\
+  \end{align*}
+
+  As $\left[ \frac{1}{4},\frac{1}{2} \right] \subseteq \left[ 0,1 \right]$, $f$ maps $\left[ 0,1 \right]$ into itself.
+
+- $f$ is a contraction on $[0,1]$. For all $x, y \in \left[ 0,1 \right]$,
+
+  \begin{align*}
+  \left| f(x) - f(y) \right| &= \frac{1}{4} \left| x^2 - y^2 \right| \\
+  &= \frac{1}{4} \left| x + y \right| \left| x - y \right| \\
+  &\le \frac{1}{4} \cdot 2 \cdot \left| x - y \right| \\
+  &\le \frac{1}{2} \left| x - y \right|.
+  \end{align*}
+
+  Hence $f$ is a contraction with $q = \frac{1}{2}$.
+
+*** (b)
+
+#+begin_src julia :results output :exports both :tangle julia/p_04_02.jl
+f(x) = 1/4 * (x^2 + 1)
+
+function fixed_point_iteration(f, x_0, tol=1e-10, max_iter=100)
+    x = x_0
+    for n in 1:max_iter
+        x_new = f(x)
+        if abs(x_new - x) < tol
+            println("Converged after $n iterations")
+            return x_new
+        end
+        x = x_new
+    end
+    @warn "Did not converge within $max_iter iterations"
+    return x
+end
+
+x_star = fixed_point_iteration(f, 0.0)
+println("Fixed point: $x_star")
+println("Exact value: $(2 - sqrt(3))")
 #+end_src
+
+#+RESULTS:
+: f (generic function with 1 method)
+: fixed_point_iteration (generic function with 3 methods)
+: Converged after 12 iterations
+: 0.26794919242681425
+: Fixed point: 0.26794919242681425
+: Exact value: 0.2679491924311228
