@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-03-15 14:17>
+#+lastmod: <2026-03-15 19:27>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -253,3 +253,74 @@ The interval $\left[ a, b \right]$ is compact by the /Heine-Borel Theorem 10.3.1
 $$0 \in \left[ f(a), f(b) \right] \subseteq f(\left[ a, b \right]).$$
 
 This means there is $\xi \in \left[ a, b \right]$ such that $f(\xi) = 0$.
+
+* Theorem    11.1.19: Banach fixed point theorem
+
+Let $(X, d)$ be a complete metric space and let $f : X \rightarrow X$ be a contraction, i.e. there exists a constant $q \in \left[ 0, 1 \right)$ such that
+
+$$d(f(x), f(y)) \le q \, d(x, y) \quad \forall x, y \in X.$$
+
+Then:
+
+1. $f$ admits a unique fixed point $x \in X$, i.e. $f(x) = x$.
+
+2. For every $x_0 \in X$, the iterates $x_{n+1} := f(x_n)$ converge linearly to the fixed point $x$.
+
+3. One has the approximation estimates, for all $n \ge 0$,
+
+   $$d(x_n, x) \le \frac{q^n}{1 - q} \, d(x_1, x_0).$$
+
+*Proof.*
+
+Fix an arbitrary $x_0 \in X$ and define the Picard iteration $x_{n+1} := f(x_n)$ for $n \ge 0$. By the contraction property,
+
+$$d(x_{n+1}, x_n) = d(f(x_n), f(x_{n-1})) \le q \, d(x_n, x_{n-1}).$$
+
+Iterating this inequality yields, for all $n \ge 0$,
+
+$$d(x_{n+1}, x_n) \le q^n \, d(x_1, x_0).$$
+
+To verify that $(x_n)_{n\in\mathbb{N}}$ is Cauchy, we consider $m > n$ and deduce
+
+\begin{align*}
+d(x_m, x_n) &\le \sum_{k=n}^{m-1} d(x_{k+1}, x_k) \\
+&\le \sum_{k=n}^{m-1} q^k \, d(x_1, x_0) \\
+&\le d(x_1, x_0) \sum_{k=n}^{\infty} q^k \\
+&= d(x_1, x_0) \, \frac{q^n}{1 - q}.
+\end{align*}
+
+Since $q \in \left[ 0, 1 \right)$, the right-hand side tends to $0$ as $n \rightarrow \infty$, hence $(x_n)_{n\in\mathbb{N}}$ is a Cauchy sequence in $X$.
+
+Because $X$ is complete, there exists $x \in X$ such that $x_n \rightarrow x$. To verify $f(x) = x$, we use the triangle inequality and the contraction property,
+
+$$d(f(x), x) \le d(f(x), f(x_n)) + d(f(x_n), x) \le q \, d(x, x_n) + d(x_{n+1}, x).$$
+
+Letting $n \rightarrow \infty$ gives $d(f(x), x) = 0$, hence $f(x) = x$.
+
+If $y$ is another fixed point, then
+
+$$d(x, y) = d(f(x), f(y)) \le q \, d(x, y).$$
+
+Since $q < 1$, this implies $d(x, y) = 0$ and hence $x = y$.
+
+The convergence is linear because
+
+$$d(x_{n+1}, x) = d(f(x_n), f(x)) \le q \, d(x_n, x)$$
+
+and $q \in (0, 1)$.
+
+To derive the bound on the approximation error, we send $m \rightarrow \infty$ in our Cauchy estimates and obtain, for all $n \ge 0$,
+
+$$d(x_n, x) \le \frac{q^n}{1 - q} \, d(x_1, x_0),$$
+
+which in particular implies $x_n \rightarrow x$. $\square$
+
+** Q&A
+
+- Q_01
+
+  Are there any good resources?
+
+- A_01
+
+  - [[https://www.youtube.com/watch?v=qHnXE_h5c2M][Banach Fixed Point Theorem - Intuition]]
