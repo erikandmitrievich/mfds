@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-14>
-#+lastmod: <2026-03-14 11:09>
+#+lastmod: <2026-03-15 14:42>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,15 +13,25 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
-* Problem 1
+* Problem 1 :DONE:
 ** Task
 #+begin_quote
 Let $X$ be a metric space and $f : [0, 1] \to X$ continuous. Show that $f([0, 1]) \subseteq X$ is path-connected.
 #+end_quote
 
-** Notes
-
 ** Solution
+
+#+begin_quote
+*Lemma 11.1.12:* Path-connectedness is preserved under continuous maps
+
+Let $X$ and $Y$ be metric spaces. If $X$ is path-connected and $f : X \rightarrow Y$ is continuous, then $f(X)$ is path connected.
+
+*Proof.*
+
+Let $a_1, a_2 \in f(X)$ be arbitrary. Then there are $x_1, x_2 \in X$ such that $f(x_1) = a_1$ and $f(x_2) = a_2$. Since $X$ is connected, there is a continuous function $\gamma : \left[ 0,1 \right] \rightarrow X$ such that $\gamma(0) = x_1$ and $\gamma(1) = x_2$. The function $f \circ \gamma : \left[ 0,1 \right] \rightarrow f(X)$ is also continuous, because $f$ is assumed to be continuous. It satisfies $f \circ \gamma(0) = f(x_1) = a_1$ and $f \circ \gamma(1) = f(x_2) = a_2$.
+#+end_quote
+
+The interval $\left[ 0,1 \right]$ is path-connected, since for any $s, t \in \left[ 0,1 \right]$ the map $\gamma(u) = s + u(t - s)$ is a continuous path from $s$ to $t$. Since $f$ is continuous, $f(\left[ 0,1 \right])$ is path-connected by /Lemma 11.1.12/.
 
 * Problem 2
 ** Task
