@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-14>
-#+lastmod: <2026-03-15 14:42>
+#+lastmod: <2026-03-15 18:01>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -33,7 +33,7 @@ Let $a_1, a_2 \in f(X)$ be arbitrary. Then there are $x_1, x_2 \in X$ such that 
 
 The interval $\left[ 0,1 \right]$ is path-connected, since for any $s, t \in \left[ 0,1 \right]$ the map $\gamma(u) = s + u(t - s)$ is a continuous path from $s$ to $t$. Since $f$ is continuous, $f(\left[ 0,1 \right])$ is path-connected by /Lemma 11.1.12/.
 
-* Problem 2
+* Problem 2 :DONE:
 ** Task
 #+begin_quote
 Let $f : [0, 1] \to \mathbb{R}^2$ and $f_1, f_2 : [0, 1] \to \mathbb{R}$, so that
@@ -41,18 +41,35 @@ Let $f : [0, 1] \to \mathbb{R}^2$ and $f_1, f_2 : [0, 1] \to \mathbb{R}$, so tha
 f(t) = \begin{pmatrix} f_1(t) \\ f_2(t) \end{pmatrix}.
 \]
 We equip $\mathbb{R}^2$ with the standard metric
-\[
-d(x, y) = \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2}.
-\]
+
+
+$$d(x, y) = \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2}$$
+
 
 (a) Prove that the coordinate map $\chi_i : \mathbb{R}^2 \to \mathbb{R}$ defined by $\chi_i(x_1, x_2) = x_i$ is continuous, for $i = 1, 2$.
 
 (b) Prove that $f$ is continuous if and only if both $f_1$ and $f_2$ are continuous.
 #+end_quote
 
-** Notes
-
 ** Solution
+
+*** (a)
+
+Let $\epsilon > 0$. Choose $\delta = \epsilon$. Then if $d(x,y) < \delta$,
+
+$$|\chi_i(x) - \chi_i(y)| = |x_i - y_i| \le \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2} = d(x,y) < \delta = \epsilon$$
+
+Hence, $\chi_i : \mathbb{R}^2 \rightarrow \mathbb{R}$ is continuous.
+
+*** (b)
+
+- ($\Rightarrow$) If $f$ is continuous, then $f_i = \chi_i \circ f$ is continuous as a composition of continuous maps.
+
+- ($\Leftarrow$) Let $\epsilon > 0$. $f_1$ is continuous, so $\forall \epsilon > 0 \exists \delta_1 : |s - t| < \delta_1 \implies |f_1(s) - f_1(t)| < \frac{\epsilon}{\sqrt{2}}$. Similarly, for $f_2$, $\forall \epsilon > 0 \exists \delta_2 : |s - t| < \delta_2 \implies |f_2(s) - f_2(t)| < \frac{\epsilon}{\sqrt{2}}$.
+
+  Define $\delta = \min(\delta_1, \delta_2)$. Thus,
+
+  $$d(f(s), f(t)) = \sqrt{\left( f_1(s) - f_1(t) \right)^2 + \left( f_2(s) - f_2(t) \right)^2} < \sqrt{\frac{\epsilon^2}{2} + \frac{\epsilon^2}{2}} = \epsilon$$
 
 * Problem 3
 ** Task
