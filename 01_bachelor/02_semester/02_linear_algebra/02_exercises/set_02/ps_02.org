@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-16>
-#+lastmod: <2026-03-16 12:28>
+#+lastmod: <2026-03-16 15:16>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -89,15 +89,53 @@ Which vector space axioms does $(\mathbb{R}^2, \oplus, \odot)$ satisfy? Is it a 
 
 Axioms 1-7 hold, but axiom 8 fails: scalar multiplication by $1$ zeroes out the second component.
 
-* Problem 1.33
+* Problem 1.33 :DONE:
 ** Task
 #+begin_quote
-(Bases and regular matrices) Let $\mathcal{U} = \{u_1, \ldots, u_n\}$ be a basis of a vector space $\mathbb{E}$. Let $A \in \mathbb{K}^{n \times n}$ and vectors $v_j = \sum_{i=1}^{n} A_{ij} u_j$. Prove that $\mathcal{V} = \{v_1, \ldots, v_n\}$ is also a basis if and only if $A$ is invertible.
+(Bases and regular matrices) Let $\mathcal{U} = \{u_1, \ldots, u_n\}$ be a basis of a vector space $\mathbb{E}$. Let $A \in \mathbb{K}^{n \times n}$ and vectors $v_j = \sum_{i=1}^{n} A_{ij} u_i$. Prove that $\mathcal{V} = \{v_1, \ldots, v_n\}$ is also a basis if and only if $A$ is invertible.
 #+end_quote
 
-** Notes
-
 ** Solution
+
+- ($\Rightarrow$)
+
+  If $\mathcal{V}$ is basis, every $u_i$ can be expressed as a linear combination of $v_j$:
+
+  $$u_i = \sum_{j=1}^n B_{ji} v_j$$
+
+  for some matrix $B \in \mathbb{K}^{n \times n}$, where $B_{ji}$ is the coefficient of $v_j$ in the expansion of $u_i$.
+
+  Now substitute $v_j = \sum_{k=1}^n A_{kj}u_k$:
+
+  $$u_i = \sum_{j=1}^n B_{ji} \sum_{k=1}^n A_{kj}u_k = \sum_{k=1}^n \left( \sum_{j=1}^n A_{kj} B_{ji} \right) u_k$$
+
+  The inner sum is exactly the $(k,i)$ entry product $AB$.
+
+  $$u_i = \sum_{k=1}^n \left( AB \right)_{ki} u_k$$
+
+  Since $\mathcal{U}$ is a basis, the representation of $u_i$ in terms of $u_1, \cdots, u_n$ is unique, and it is simply $u_i = 0 \cdot u_1 + \cdots + 1 \cdot u_i + \cdots + 0 \cdot u_n$. Therefore,
+
+  $$(AB)_{ki} = \delta_{ki} = \begin{cases} 1 & k = i \\ 0 & k \neq i \end{cases}$$
+
+  This gives $AB = I$. Since $A$ is a square matrix with a right inverse, it is invertible.
+
+- ($\Leftarrow$)
+
+  If $A$ is invertible, we need to show $\mathcal{V}$ is a basis. Since $|\mathcal{V}| = n = \dim \mathbb{E}$, it suffices to show $\mathcal{V}$ is linearly independent.
+
+  Suppose $\sum_{j=1}^n x_j v_j = 0$ for some scalars $x_1, \dots, x_n$.
+
+  Substitute $v_j = \sum_{i=1}^n A_{ij} u_i$:
+
+  $$\sum_{j=1}^n x_j \sum_{i=1}^n A_{ij} u_i = \sum_{i=1}^n \left( \sum_{j=1}^n A_{ij} x_j \right) u_i = \sum_{i=1}^n (Ax)_i\, u_i = 0$$
+
+  Since $\mathcal{U}$ is a basis, the $u_i$ are linearly independent, so every coefficient must vanish:
+
+  $$(Ax)_i = 0 \quad \text{for all } i = 1, \dots, n$$
+
+  This means $Ax = 0$. Since $A$ is invertible, $x = A^{-1} \cdot 0 = 0$, i.e. $x_1 = \cdots = x_n = 0$.
+
+  Therefore $\mathcal{V}$ is linearly independent, and since it has $n$ vectors in an $n$ dimensional space, $\mathcal{V}$ is a basis.
 
 * Problem 1.37
 ** Task
