@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-16>
-#+lastmod: <2026-03-16 08:28>
+#+lastmod: <2026-03-16 12:11>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,7 +13,7 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
-* Problem 1.24
+* Problem 1.24 :DONE:
 ** Task
 #+begin_quote
 (Reverse Triangle Inequality). From the triangle inequality, derive the /reverse triangle inequality/, namely
@@ -23,9 +23,32 @@ $| \|x\| - \|y\| | \leq \|x - y\|$, $\forall (x, y) \in \mathbb{K}$
 where $\mathbb{K} = \mathbb{R}^n$ or $\mathbb{C}^n$ and $\|\cdot\|$ is any norm in $\mathbb{R}^n$.
 #+end_quote
 
-** Notes
-
 ** Solution
+First, rewrite $x = (x - y) + y$ and apply the triangle inequality:
+
+\begin{align*}
+\|x\| &= \|(x-y) + y\| \\
+       &\le \|x-y\| + \|y\|
+\end{align*}
+
+which gives:
+
+$$\|x\| - \|y\| \le \|x-y\| \tag{1}$$
+
+Similarly, rewrite $y = (y - x) + x$ and apply the triangle inequality:
+
+\begin{align*}
+\|y\| &= \|(y-x) + x\| \\
+       &\le \|y-x\| + \|x\|
+\end{align*}
+
+By homogeneity, $\|y - x\| = \|{-(x-y)}\| = |{-1}| \cdot \|x-y\| = \|x-y\|$, so:
+
+$$\|y\| - \|x\| \le \|x-y\| \tag{2}$$
+
+Combining (1) and (2): since both $\|x\|-\|y\| \le \|x-y\|$ and $-(\|x\|-\|y\|) \le \|x-y\|$, we have:
+
+$$\bigl|\|x\| - \|y\|\bigr| \le \|x-y\|$$
 
 * Problem 1.29
 ** Task
