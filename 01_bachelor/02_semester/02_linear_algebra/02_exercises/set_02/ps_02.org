@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-16>
-#+lastmod: <2026-03-16 15:16>
+#+lastmod: <2026-03-16 16:06>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -137,12 +137,62 @@ Axioms 1-7 hold, but axiom 8 fails: scalar multiplication by $1$ zeroes out the 
 
   Therefore $\mathcal{V}$ is linearly independent, and since it has $n$ vectors in an $n$ dimensional space, $\mathcal{V}$ is a basis.
 
-* Problem 1.37
+* Problem 1.37 :DONE:
 ** Task
 #+begin_quote
 (Direct sum of triangular matrices) Let $\mathbb{E} = \mathbb{K}^{n \times n}$, we define $\mathbb{F}_1, \mathbb{F}_2 \subset \mathbb{E}$ as the subspaces of upper and lower triangular matrices, respectively. Determine whether $\mathbb{E} = \mathbb{F}_1 \oplus \mathbb{F}_2$. Does the result vary if we replace $\mathbb{F}_1$ by $\mathbb{F}_1'$ the subspace of 1-stricly triangular matrices (as defined in ex. 1.28)?
 #+end_quote
 
-** Notes
-
 ** Solution
+*** (1)
+
+*Proof.*
+
+We determine whether $\mathbb{E} = \mathbb{F}_1 \oplus \mathbb{F}_2$ using the Dimension Theorem for Sums of Subspaces:
+
+$$\dim(\mathbb{F}_1 + \mathbb{F}_2) = \dim(\mathbb{F}_1) + \dim(\mathbb{F}_2) - \dim(\mathbb{F}_1 \cap \mathbb{F}_2).$$
+
+A matrix that is simultaneously upper and lower triangular can only have nonzero entries on the diagonal, so
+
+$\mathbb{F}_1 \cap \mathbb{F}_2 = \mathcal{D}_n$ and $\dim(\mathbb{F}_1 \cap \mathbb{F}_2) = n$.
+
+Plugging in,
+
+\begin{align*}
+\dim(\mathbb{F}_1 + \mathbb{F}_2)
+&= \frac{n(n+1)}{2} + \frac{n(n+1)}{2} - n \\
+&= n^2 + n - n \\
+&= n^2 = \dim(\mathbb{E}).
+\end{align*}
+
+So $\mathbb{F}_1 + \mathbb{F}_2 = \mathbb{E}$. However, for the sum to be direct we require $\dim(\mathbb{F}_1 \cap \mathbb{F}_2) = 0$, and we found it equals $n \geq 1$.
+
+Therefore $\mathbb{E} \neq \mathbb{F}_1 \oplus \mathbb{F}_2$.
+
+*** (2)
+
+*Proof.*
+
+We determine whether $\mathbb{E} = \mathbb{F}_1' \oplus \mathbb{F}_2$ by checking the two conditions for a direct sum.
+
+A matrix $A \in \mathbb{F}_1' \cap \mathbb{F}_2$ satisfies
+
+$a_{ij} = 0$ for $i \geq j$ (strictly upper triangular) and
+
+$a_{ij} = 0$ for $i < j$ (lower triangular). Together these force
+
+$a_{ij} = 0$ for all $i, j$, so
+
+$\mathbb{F}_1' \cap \mathbb{F}_2 = \{0\}$.
+
+It remains to verify that $\mathbb{F}_1' + \mathbb{F}_2 = \mathbb{E}$. By the Dimension Theorem for Sums of Subspaces,
+
+\begin{align*}
+\dim(\mathbb{F}_1' + \mathbb{F}_2)
+&= \dim(\mathbb{F}_1') + \dim(\mathbb{F}_2) - \dim(\mathbb{F}_1' \cap \mathbb{F}_2) \\
+&= \frac{n(n-1)}{2} + \frac{n(n+1)}{2} - 0 \\
+&= \frac{n^2 - n + n^2 + n}{2} \\
+&= n^2 = \dim(\mathbb{E}).
+\end{align*}
+
+Both conditions are satisfied, so $\mathbb{E} = \mathbb{F}_1' \oplus \mathbb{F}_2$.
