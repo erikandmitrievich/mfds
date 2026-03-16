@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-16>
-#+lastmod: <2026-03-16 12:11>
+#+lastmod: <2026-03-16 12:28>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -50,7 +50,7 @@ Combining (1) and (2): since both $\|x\|-\|y\| \le \|x-y\|$ and $-(\|x\|-\|y\|) 
 
 $$\bigl|\|x\| - \|y\|\bigr| \le \|x-y\|$$
 
-* Problem 1.29
+* Problem 1.29 :DONE:
 ** Task
 #+begin_quote
 (Vector space) On $\mathbb{R}^2$ we define the following operations
@@ -60,9 +60,34 @@ $(x_1, x_2) \oplus (y_1, y_2) = (x_1 + y_1, x_2 + y_2)$, $\lambda \odot (x_1, x_
 Which vector space axioms does $(\mathbb{R}^2, \oplus, \odot)$ satisfy? Is it a vector space?
 #+end_quote
 
-** Notes
-
 ** Solution
+1. *Associativity of addition*
+   $(x \oplus y) \oplus z = (x_1+y_1+z_1,\, x_2+y_2+z_2) = x \oplus (y \oplus z)$.
+
+2. *Commutativity of addition*
+   $x \oplus y = (x_1+y_1,\, x_2+y_2) = y \oplus x$.
+
+3. *Additive identity*
+   $(x_1, x_2) \oplus (0, 0) = (x_1, x_2)$.
+
+4. *Additive inverse*
+   $(x_1, x_2) \oplus (-x_1, -x_2) = (0, 0)$.
+
+5. *Distributivity over scalar addition*
+   Both sides yield $((\lambda+\mu)x_1,\, 0)$.
+
+6. *Distributivity over vector addition*
+   Both sides yield $(\lambda(x_1+y_1),\, 0)$.
+
+7. *Compatibility of scalar multiplication*
+   Both sides yield $(\lambda\mu\, x_1,\, 0)$.
+
+8. *Scalar multiplicative identity*
+   $1 \odot (x_1, x_2) = (x_1, 0) \neq (x_1, x_2)$ when $x_2 \neq 0$.
+
+*Conclusion:* $(\mathbb{R}^2, \oplus, \odot)$ is not a vector space.
+
+Axioms 1-7 hold, but axiom 8 fails: scalar multiplication by $1$ zeroes out the second component.
 
 * Problem 1.33
 ** Task
