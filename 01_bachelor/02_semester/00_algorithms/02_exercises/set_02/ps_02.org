@@ -1,0 +1,110 @@
+#+title: Ps 02
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-03-17>
+#+lastmod: <2026-03-17 14:14>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* Problem 11
+** Task
+#+begin_quote
+For sequences $f(n)$, $g(n)$, $h(n)$, and $k(n)$ prove that $f(n) = \Omega(h(n))$ and $g(n) = \omega(k(n))$ implies $f(n) + g(n) = \Omega(h(n) + k(n))$.
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 12
+** Task
+#+begin_quote
+Let $f(n) = O(g(n))$ and $g(n) = o(h(n))$. Prove that $f(n) = o(h(n))$.
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 13
+** Task
+#+begin_quote
+Use Stirling's formula
+\[
+n! = \sqrt{2\pi n} \left(\frac{n}{e}\right)^n \left(1 + \Theta\left(\frac{1}{n}\right)\right).
+\]
+to show that
+
+(a) $n! = o(n^n)$,
+
+(b) $n! = \omega(2^n)$,
+
+(c) $\lg(n!) = \Theta(n \lg n)$.
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 14
+** Task
+#+begin_quote
+We define the iterated logarithm function
+\[
+\lg^*(n) := \min\{i \in \mathbb{N} \mid \lg^{(i)}(n) \leq 1\},
+\]
+where $\lg^{(1)}(x) := \lg x$, $\lg^{(k+1)}(x) := \lg(\lg^{(k)}(x))$. This function grows extremely slowly. Order the following functions by asymptotic growth:
+
+$\lg(\lg^*(n))$ \quad $2^{\lg^*(n)}$ \quad $\sqrt{2}^{\lg n}$ \quad $n^2$ \quad $n!$ \quad $(\lceil \lg n \rceil)!$ \quad $\left(\frac{3}{2}\right)^n$ \quad $n^3$ \quad $\lg^2 n$ \quad $\lg(n!)$ \quad $2^{2^n}$ \quad $n^{\frac{1}{\lg n}}$ \quad $\lg \lg n$ \quad $\lg^* n$ \quad $n \cdot 2^n$ \quad $n^{\lg \lg n}$ \quad $\log n$ \quad $\frac{1}{2^{\lg n}}$ \quad $(\lg n)^{\lg n}$ \quad $e^n$ \quad $4^{\lg n}$ \quad $(n+1)!$ \quad $\sqrt{\lg n}$ \quad $\lg^*(\lg n)$ \quad $2^{\sqrt{2 \lg n}}$ \quad $n$ \quad $2^n$ \quad $n \lg n$ \quad $2^{2^{n+1}}$
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 15
+** Task
+#+begin_quote
+Use the substitution method to prove that the recursion
+\[
+T(n) = 4T\left(\frac{n}{2}\right) + n
+\]
+implies $T(n) = \Theta(n^2)$.
+
+Hint: Subtract a lower order term.
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 16
+** Task
+#+begin_quote
+For the recurrence
+\[
+T(n) = 4T\left(\frac{n}{3}\right) + n
+\]
+sketch the recursion tree and derive a guess for an asymptotic upper bound of its solution. Then use induction to prove your guess.
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 17
+** Task
+#+begin_quote
+Consider the recursion describing Strassen's algorithm for matrix multiplication. Using the Master Theorem, prove that its running time $T(n)$ satisfies $T(n) = O(n^{\lg 7})$.
+#+end_quote
+
+** Notes
+
+** Solution
