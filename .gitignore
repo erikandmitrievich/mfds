@@ -17,6 +17,7 @@
 
 # removing source files
 *book.*
+*_source*
 *source.*
 *source.pdf
 *source.org

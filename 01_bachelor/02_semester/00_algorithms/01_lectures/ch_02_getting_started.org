@@ -1,0 +1,23 @@
+#+title: Ch 02 Getting Started
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-03-17>
+#+lastmod: <2026-03-17 10:38>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+Topics to be covered:
+1. Algorithmic Complexity and Growth of Functions
+2. Algorithm Correctness via Loop Invariants
+3. Searching and Sorting Algorithms
+4. Asymptotic Analysis (Landau Notation)
+5. Solving Recurrences via Induction
+
+* 2.1 Insertion sort

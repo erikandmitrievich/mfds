@@ -1,0 +1,60 @@
+#+title:  Llm Rules Lecture Summary
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-03-17>
+#+lastmod: <2026-03-17 11:54>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* Lecture Analysis Prompt
+
+Given the following cleaned lecture transcript, produce a comprehensive analysis in Org-mode format with LaTeX expressions for all mathematical notation. The output must contain exactly the sections described below, in this order.
+
+** Output specification
+
+*** 1. Course & logistics header
+Under a top-level heading =* Lecture N: <topic>=, collect any non-material information that is still relevant to a student:
+- What was covered in the previous lecture (if referenced)
+- What will be covered next lecture (if announced)
+- Any mentions of assignments, deadlines, exam scope, or grading
+- Recommended readings or resources mentioned
+- Any other administrative remarks
+
+Keep this section brief. If nothing was mentioned, write "None."
+
+*** 2. Structured summary
+Under =** Summary=, distill the lecture into its logical progression. Write in prose paragraphs, not bullet points. Preserve the order in which topics were presented and make the argumentative thread explicit: why each topic follows from the previous one, what motivates each definition or proof. End with a short paragraph listing the key takeaways.
+
+*** 3. Concept extraction
+Under =** Definitions & Formal Concepts=, list every definition, theorem, lemma, and named proof technique that appeared in the lecture. For each entry use a sub-heading =*** <Name>= and provide:
+- A precise, self-contained formulation using LaTeX where appropriate,
+  e.g. $f: \mathbb{N} \to \mathbb{N}$, \( O(n \log n) \), etc.
+- A one-sentence statement of intuition in plain language.
+
+Do not add definitions that were not covered in the lecture. If the lecturer only gave an informal sketch, state the concept as precisely as the lecture content allows and note that the formulation was informal.
+
+*** 4. Proof reconstruction
+Under =** Proofs=, reconstruct every proof or proof sketch that appeared in the lecture. For each proof use a sub-heading =*** <Statement>=. Write the proof in clean mathematical prose with LaTeX notation. Structure each proof with clearly marked steps:
+- State the claim.
+- State the proof method (induction, loop invariant, contradiction, etc.).
+- Present the argument step by step.
+- Mark where the lecturer left gaps or hand-waved with
+  =[Lecturer omitted: ...]=.
+
+Stay faithful to the argument as given in the lecture. Do not supply steps the lecturer did not cover unless explicitly marking them as your own addition with =[Note: ...]=.
+
+** General constraints
+- All mathematical expressions must use LaTeX syntax: inline =$...$= or
+  display =\[ ... \]=.
+- Do not invent content beyond what was covered in the lecture.
+- Where the transcript is ambiguous or garbled, flag it with
+  =[Unclear in transcript: ...]=.
+- Keep the language precise but not needlessly formal. Match the register
+  of a good set of lecture notes, not a textbook.
