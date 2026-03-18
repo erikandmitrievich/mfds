@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-17>
-#+lastmod: <2026-03-17 14:14>
+#+lastmod: <2026-03-18 19:19>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,15 +13,29 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
-* Problem 11
+* Problem 11 :DONE:
 ** Task
 #+begin_quote
 For sequences $f(n)$, $g(n)$, $h(n)$, and $k(n)$ prove that $f(n) = \Omega(h(n))$ and $g(n) = \omega(k(n))$ implies $f(n) + g(n) = \Omega(h(n) + k(n))$.
 #+end_quote
 
-** Notes
-
 ** Solution
+
+Assume $f(n) = \Omega(h(n)), \, g(n) = \omega(k(n))$. Show $f(n) + g(n) = \Omega(h(n) + k(n))$.
+
+$$\Omega(h(n)) = \left\{ f(n) : \exists c_1, n_1 > 0 : 0 \le c_1 \cdot h(n) \le f(n), \forall n \ge n_1 \right\}$$
+
+$$\omega(k(n)) = \left\{ g(n) : \forall c_2 > 0, \exists n_2 > 0 : 0 \le c_2 \cdot k(n) < g(n), \forall n \ge n_2 \right\}$$
+
+Let $n_0 = \max(n_1, n_2)$ and $c_2 = c_1$. Then $\forall n \ge n_0$:
+
+\begin{align*}
+0 \le c_1 \cdot h(n) &\le f(n) \\
+0 \le c_1 \cdot k(n) &< g(n) \\
+0 \le c_1 \cdot \left( h(n) + k(n) \right) &\le f(n) + g(n)
+\end{align*}
+
+Hence $f(n) + g(n) = \Omega(h(n) + k(n))$. $\blacksquare$
 
 * Problem 12
 ** Task
