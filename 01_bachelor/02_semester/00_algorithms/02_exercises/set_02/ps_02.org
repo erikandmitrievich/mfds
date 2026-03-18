@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-17>
-#+lastmod: <2026-03-18 20:46>
+#+lastmod: <2026-03-18 21:04>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -120,17 +120,50 @@ Since the limit is a positive constant, $\lg(n!) = \Theta(n \lg n)$. $\blacksqua
 ** Task
 #+begin_quote
 We define the iterated logarithm function
-\[
-\lg^*(n) := \min\{i \in \mathbb{N} \mid \lg^{(i)}(n) \leq 1\},
-\]
+
+$$\lg^*(n) := \min\{i \in \mathbb{N} \mid \lg^{(i)}(n) \leq 1\}$$
+
 where $\lg^{(1)}(x) := \lg x$, $\lg^{(k+1)}(x) := \lg(\lg^{(k)}(x))$. This function grows extremely slowly. Order the following functions by asymptotic growth:
 
-$\lg(\lg^*(n))$ \quad $2^{\lg^*(n)}$ \quad $\sqrt{2}^{\lg n}$ \quad $n^2$ \quad $n!$ \quad $(\lceil \lg n \rceil)!$ \quad $\left(\frac{3}{2}\right)^n$ \quad $n^3$ \quad $\lg^2 n$ \quad $\lg(n!)$ \quad $2^{2^n}$ \quad $n^{\frac{1}{\lg n}}$ \quad $\lg \lg n$ \quad $\lg^* n$ \quad $n \cdot 2^n$ \quad $n^{\lg \lg n}$ \quad $\log n$ \quad $\frac{1}{2^{\lg n}}$ \quad $(\lg n)^{\lg n}$ \quad $e^n$ \quad $4^{\lg n}$ \quad $(n+1)!$ \quad $\sqrt{\lg n}$ \quad $\lg^*(\lg n)$ \quad $2^{\sqrt{2 \lg n}}$ \quad $n$ \quad $2^n$ \quad $n \lg n$ \quad $2^{2^{n+1}}$
+|  # | Function                     |
+|----+------------------------------|
+|  1 | $\lg(\lg^*(n))$              |
+|  2 | $2^{\lg^*(n)}$               |
+|  3 | $\sqrt{2}^{\lg n}$           |
+|  4 | $n^2$                        |
+|  5 | $n!$                         |
+|  6 | $(\lceil \lg n \rceil)!$     |
+|  7 | $\left(\frac{3}{2}\right)^n$ |
+|  8 | $n^3$                        |
+|  9 | $\lg^2 n$                    |
+| 10 | $\lg(n!)$                    |
+| 11 | $2^{2^n}$                    |
+| 12 | $n^{1/\lg n}$                |
+| 13 | $\lg \lg n$                  |
+| 14 | $\lg^* n$                    |
+| 15 | $n \cdot 2^n$                |
+| 16 | $n^{\lg \lg n}$              |
+| 17 | $\lg n$                      |
+| 18 | $1$                          |
+| 19 | $2^{\lg n}$                  |
+| 20 | $(\lg n)^{\lg n}$            |
+| 21 | $e^n$                        |
+| 22 | $4^{\lg n}$                  |
+| 23 | $(n+1)!$                     |
+| 24 | $\sqrt{\lg n}$               |
+| 25 | $\lg^*(\lg n)$               |
+| 26 | $2^{\sqrt{2 \lg n}}$         |
+| 27 | $n$                          |
+| 28 | $2^n$                        |
+| 29 | $n \lg n$                    |
+| 30 | $2^{2^{n+1}}$                |
 #+end_quote
 
-** Notes
-
 ** Solution
+
+#+begin_src julia :results output raw :tangle julia/p_14.jl
+
+#+end_src
 
 * Problem 15
 ** Task
