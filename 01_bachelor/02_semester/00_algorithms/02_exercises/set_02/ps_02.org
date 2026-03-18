@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-17>
-#+lastmod: <2026-03-18 20:11>
+#+lastmod: <2026-03-18 20:46>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -62,13 +62,15 @@ Let $c > 0$ be arbitrary. Choose $c_2 = \frac{c}{c_1}$ and $n_0 = \max(n_1, n_2)
 
 Hence $f(n) = o(h(n))$. $\blacksquare$
 
-* Problem 13
+* Problem 13 :DONE:
 ** Task
 #+begin_quote
 Use Stirling's formula
+
 \[
 n! = \sqrt{2\pi n} \left(\frac{n}{e}\right)^n \left(1 + \Theta\left(\frac{1}{n}\right)\right).
 \]
+
 to show that
 
 (a) $n! = o(n^n)$,
@@ -78,9 +80,41 @@ to show that
 (c) $\lg(n!) = \Theta(n \lg n)$.
 #+end_quote
 
-** Notes
-
 ** Solution
+
+*** (a)
+
+\begin{align*}
+\lim_{n\rightarrow\infty} \dfrac{\sqrt{2\pi n} \left(\frac{n}{e}\right)^n \left(1 + \Theta\left(\frac{1}{n}\right)\right)}{n^n}
+  &= \lim_{n\rightarrow\infty} \sqrt{2\pi n} \cdot \frac{1}{e^n} \cdot \left(1 + \Theta\left(\frac{1}{n}\right)\right) \\
+  &= \lim_{n\rightarrow\infty} \sqrt{2\pi n} \cdot \frac{1}{e^n} \cdot 1 \\
+  &= 0
+\end{align*}
+
+since $\sqrt{2\pi n}$ grows polynomially while $e^n$ grows exponentially.
+
+Hence $n! = o(n^n)$. $\blacksquare$
+
+*** (b)
+
+\begin{align*}
+\lim_{n\rightarrow\infty} \dfrac{\sqrt{2\pi n} \left(\frac{n}{e}\right)^n \left(1 + \Theta\left(\frac{1}{n}\right)\right)}{2^n}
+  &= \lim_{n\rightarrow\infty} \sqrt{2\pi n} \cdot \left(\frac{n}{2e}\right)^n \cdot \left(1 + \Theta\left(\frac{1}{n}\right)\right) \\
+  &= \lim_{n\rightarrow\infty} \sqrt{2\pi n} \cdot \left(\frac{n}{2e}\right)^n \cdot 1 \\
+  &= \infty \\
+\end{align*}
+
+Hence, $n! = \omega(2^n)$. $\blacksquare$
+
+*** (c)
+
+\begin{align*}
+\lg(n!) &= \lg\left(\sqrt{2\pi n}\right) + n \lg n - n \lg e + \lg\left(1 + \Theta\left(\frac{1}{n}\right)\right) \\
+\frac{\lg(n!)}{n \lg n} &= \frac{\frac{1}{2}\lg(2\pi n)}{n \lg n} + 1 - \frac{\lg e}{\lg n} + \frac{\lg\left(1 + \Theta\left(\frac{1}{n}\right)\right)}{n \lg n} \\
+\lim_{n\rightarrow\infty} \frac{\lg(n!)}{n \lg n} &= 0 + 1 - 0 + 0 = 1
+\end{align*}
+
+Since the limit is a positive constant, $\lg(n!) = \Theta(n \lg n)$. $\blacksquare$
 
 * Problem 14
 ** Task
