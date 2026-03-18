@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-17>
-#+lastmod: <2026-03-18 19:19>
+#+lastmod: <2026-03-18 20:11>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -37,15 +37,30 @@ Let $n_0 = \max(n_1, n_2)$ and $c_2 = c_1$. Then $\forall n \ge n_0$:
 
 Hence $f(n) + g(n) = \Omega(h(n) + k(n))$. $\blacksquare$
 
-* Problem 12
+* Problem 12 :DONE:
 ** Task
 #+begin_quote
 Let $f(n) = O(g(n))$ and $g(n) = o(h(n))$. Prove that $f(n) = o(h(n))$.
 #+end_quote
 
-** Notes
-
 ** Solution
+
+Assume $f(n) = O(g(n))$ and $g(n) = o(h(n))$. Show $f(n) = o(h(n))$.
+
+$$O(g(n)) = \left\{ f(n) : \exists c_1, n_1 > 0 : 0 \le f(n) \le c_1 \cdot g(n), \, \forall n \ge n_1 \right\}$$
+
+$$o(h(n)) = \left\{ g(n) : \forall c_2 > 0, \exists n_2 > 0 : 0 \le g(n) < c_2 \cdot h(n), \, \forall n \ge n_2 \right\}$$
+
+Let $c > 0$ be arbitrary. Choose $c_2 = \frac{c}{c_1}$ and $n_0 = \max(n_1, n_2)$. Then $\forall n \ge n_0$:
+
+\begin{align*}
+0 \le f(n) &\le c_1 \cdot g(n) \\
+  &< c_1 \cdot c_2 \cdot h(n) \\
+  &< c_1 \cdot \frac{c}{c_1} \cdot h(n) \\
+  &< c \cdot h(n)
+\end{align*}
+
+Hence $f(n) = o(h(n))$. $\blacksquare$
 
 * Problem 13
 ** Task

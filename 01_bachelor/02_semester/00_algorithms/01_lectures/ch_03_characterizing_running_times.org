@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-18>
-#+lastmod: <2026-03-18 19:02>
+#+lastmod: <2026-03-18 19:24>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -37,7 +37,7 @@ $O$ notation provides an asymptotic upper bound. We use $O$ notation to give an 
 
 *Definition:* For a given function $g(n)$, we denote by $O(g(n))$ the set of functions
 
-$$O(g(n)) = \left\{ f(n) : \exists c, n_0 > 0 : 0 \le f(n) \le c \cdot g(n) \forall n \ge n_0 \right\}$$
+$$O(g(n)) = \left\{ f(n) : \exists c, n_0 > 0 : 0 \le f(n) \le c \cdot g(n), \, \forall n \ge n_0 \right\}$$
 
 ** $\Omega$ notation
 
