@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-17>
-#+lastmod: <2026-03-19 16:52>
+#+lastmod: <2026-03-19 18:06>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -254,12 +254,20 @@ sketch the recursion tree and derive a guess for an asymptotic upper bound of it
 
   Since $cn^{\log_3 4} - dn \leq cn^{\log_3 4}$, this establishes $T(n) = O(n^{\log_3 4})$. $\blacksquare$
 
-* Problem 17
+* Problem 17 :DONE:
 ** Task
 #+begin_quote
 Consider the recursion describing Strassen's algorithm for matrix multiplication. Using the Master Theorem, prove that its running time $T(n)$ satisfies $T(n) = O(n^{\lg 7})$.
 #+end_quote
 
-** Notes
-
 ** Solution
+
+Strassen's algorithm satisfies the recurrence $T(n) = 7\,T(n/2) + \Theta(n^2)$.
+
+Apply the Master Theorem with $a = 7$, $b = 2$, $f(n) = \Theta(n^2)$.
+
+We have $n^{\log_b a} = n^{\log_2 7} = n^{\lg 7}$. Since $\lg 7 \approx 2.81$, the cost $f(n) = n^2$ is polynomially smaller than $n^{\lg 7}$:
+
+$$f(n) = O(n^{\lg 7 - \epsilon}) \quad \text{with } \epsilon \approx 0.81$$
+
+This is Case 1 of the Master Theorem, which gives $T(n) = \Theta(n^{\lg 7})$, and therefore $T(n) = O(n^{\lg 7})$. $\blacksquare$
