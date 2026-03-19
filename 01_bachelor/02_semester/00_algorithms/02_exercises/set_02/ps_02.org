@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-17>
-#+lastmod: <2026-03-19 16:09>
+#+lastmod: <2026-03-19 16:52>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -217,19 +217,42 @@ Hint: Subtract a lower order term.
 
   Since $T(n) = O(n^2)$ and $T(n) = \Omega(n^2)$, we have $T(n) = \Theta(n^2)$. $\blacksquare$
 
-* Problem 16
+* Problem 16 :DONE:
 ** Task
 #+begin_quote
 For the recurrence
-\[
-T(n) = 4T\left(\frac{n}{3}\right) + n
-\]
+
+$$T(n) = 4T\left(\frac{n}{3}\right) + n$$
+
 sketch the recursion tree and derive a guess for an asymptotic upper bound of its solution. Then use induction to prove your guess.
 #+end_quote
 
-** Notes
-
 ** Solution
+
+- Deriving the guess via recursion tree
+
+  The recurrence $T(n) = 4T(n/3) + n$ spawns 4 subproblems of size $n/3$ at each level. At level $k$ there are $4^k$ nodes, each contributing $n/3^k$ work, so the total work at level $k$ is $(4/3)^k \cdot n$. The tree has depth $\log_3 n$. Since the ratio $4/3 > 1$, the geometric series is dominated by its last term:
+
+  $$4^{\log_3 n} = n^{\log_3 4}$$
+
+  This suggests $T(n) = O(n^{\log_3 4})$.
+
+- Proof by substitution
+
+  - Inductive hypothesis: assume $T(k) \leq ck^{\log_3 4} - dk$ for all $k < n$.
+
+  - Substitute:
+
+    \begin{align*}
+    T(n) &\leq 4\left(\frac{n^{\log_3 4}}{4} - d \cdot \frac{n}{3}\right) + n \\
+         &= cn^{\log_3 4} - \frac{4dn}{3} + n \\
+         &= cn^{\log_3 4} - dn - \left(\frac{dn}{3} - n\right) \\
+         &\leq cn^{\log_3 4} - dn
+    \end{align*}
+
+    Last step holds when $\frac{dn}{3} - n \geq 0$, i.e. $d \geq 3$. Pick $d = 3$.
+
+  Since $cn^{\log_3 4} - dn \leq cn^{\log_3 4}$, this establishes $T(n) = O(n^{\log_3 4})$. $\blacksquare$
 
 * Problem 17
 ** Task
