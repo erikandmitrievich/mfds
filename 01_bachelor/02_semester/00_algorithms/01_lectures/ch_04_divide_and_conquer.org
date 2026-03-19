@@ -1,0 +1,219 @@
+#+title: Ch 04 Divide And Conquer
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-03-19>
+#+lastmod: <2026-03-19 14:59>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* 4.1 Multiplying square matrices
+
+** Setup
+
+- $A = (a_{ik})$, $B = (b_{kj})$ square $n \times n$, dense.
+- Product $C = A \cdot B$: each entry $c_{ij} = \sum_{k=1}^{n} a_{ik} \cdot b_{kj}$
+- Computing $C$ means computing $n^2$ entries, each a sum of $n$ products.
+
+** Naive: =MATRIX-MULTIPLY=
+
+- Three nested loops (row $i$, column $j$, summation $k$), each $1$ to $n$.
+- Computes $C = C + A \cdot B$ (accumulates; init $C = 0$ if you want just $A \cdot B$).
+- Initialising $C$: $\Theta(n^2)$, absorbed into the $\Theta(n^3)$ total.
+
+** Divide-and-Conquer: =MATRIX-MULTIPLY-RECURSIVE=
+
+*** Block decomposition
+
+Partition $A, B, C$ into four $n/2 \times n/2$ submatrices each. The block product yields four equations (4.5–4.8), e.g.:
+
+$C_{11} = A_{11} B_{11} + A_{12} B_{21}$
+
+This requires *8 multiplications* and *4 additions* of $n/2 \times n/2$ matrices.
+
+*** Algorithm design
+
+- Base case $n = 1$: scalar multiply-add, $\Theta(1)$.
+- Partition via index arithmetic (not copying) → $\Theta(1)$ divide cost.
+- 8 recursive calls, each on $n/2 \times n/2$ subproblems.
+- No separate combine step: each call accumulates into the right $C_{ij}$ block.
+
+*** Recurrence
+
+\[
+T(n) = 8\,T(n/2) + \Theta(1) \implies T(n) = \Theta(n^3)
+\]
+
+No improvement over the naive version.
+
+** Why No Speedup? (Recursion Tree Intuition)
+
+- Branching factor 8 with $\Theta(1)$ work per node → leaf-dominated.
+- Number of leaves: $8^{\lg n} = n^{\lg 8} = n^3$.
+- Compare merge sort: branching 2, work $\Theta(n)$ per level → balanced across all $\lg n$ levels → $\Theta(n \lg n)$.
+- The "bushier" tree (8 children vs 2) overwhelms the smaller per-node cost.
+
+** Takeaway: Path to Strassen
+
+The bottleneck is the 8 recursive multiplications. Strassen reduces this to 7 (at the cost of more $\Theta(n^2)$ additions), giving:
+
+\[
+T(n) = 7\,T(n/2) + \Theta(n^2) \implies T(n) = \Theta(n^{\lg 7}) \approx \Theta(n^{2.81})
+\]
+
+Core principle: *trading one multiplication for several additions is worth it* because multiplications control the branching factor and thus the asymptotic growth.
+
+* 4.2 Strassen's algorithm for matrix multiplication
+
+** Core Idea
+
+Strassen observed that the block matrix product $C = A \cdot B$ can be computed
+with *7 multiplications* instead of 8, at the cost of more additions and
+subtractions ($\Theta(n^2)$ work). Since additions are cheap relative to the
+recursive branching that multiplications cause, this is a net win.
+
+** The Four Steps
+
+1. *Divide*: partition $A, B, C$ into $n/2 \times n/2$ submatrices (same as 4.1).
+2. *Create* 10 auxiliary matrices $S_1, \dots, S_{10}$, each an addition or
+   subtraction of two submatrices → $\Theta(n^2)$.
+3. *Recursively compute* 7 products $P_1, \dots, P_7$ using the $S_i$ and
+   original submatrices.
+4. *Combine*: express $C_{11}, C_{12}, C_{21}, C_{22}$ as sums/differences
+   of the $P_i$ → $\Theta(n^2)$.
+
+** The 10 Auxiliary Matrices
+
+\begin{align*}
+S_1 &= B_{12} - B_{22}  &  S_6  &= B_{11} + B_{22} \\
+S_2 &= A_{11} + A_{12}  &  S_7  &= A_{12} - A_{22} \\
+S_3 &= A_{21} + A_{22}  &  S_8  &= B_{21} + B_{22} \\
+S_4 &= B_{21} - B_{11}  &  S_9  &= A_{11} - A_{21} \\
+S_5 &= A_{11} + A_{22}  &  S_{10} &= B_{11} + B_{12}
+\end{align*}
+
+Each is one $n/2 \times n/2$ addition/subtraction → 10 total, all $\Theta(n^2)$.
+
+** The 7 Products
+
+\begin{align*}
+P_1 &= A_{11} \cdot S_1       &  P_5 &= S_5 \cdot S_6 \\
+P_2 &= S_2 \cdot B_{22}       &  P_6 &= S_7 \cdot S_8 \\
+P_3 &= S_3 \cdot B_{11}       &  P_7 &= S_9 \cdot S_{10} \\
+P_4 &= A_{22} \cdot S_4
+\end{align*}
+
+Each is a *recursive* $n/2 \times n/2$ multiplication → 7 recursive calls.
+
+** Combining the Results
+
+\begin{align*}
+C_{11} &= P_5 + P_4 - P_2 + P_6 \\
+C_{12} &= P_1 + P_2 \\
+C_{21} &= P_3 + P_4 \\
+C_{22} &= P_5 + P_1 - P_3 - P_7
+\end{align*}
+
+Each is $\Theta(n^2)$ (additions of $n/2 \times n/2$ matrices).
+
+** Recurrence and Analysis
+
+- 7 recursive calls on $n/2 \times n/2$ subproblems.
+- $\Theta(n^2)$ work outside the recursion (creating $S_i$, combining $P_i$).
+
+\[
+T(n) = 7\,T(n/2) + \Theta(n^2) \implies T(n) = \Theta(n^{\lg 7}) \approx \Theta(n^{2.807})
+\]
+
+By the master method: $a = 7$, $b = 2$, $f(n) = \Theta(n^2)$,
+$n^{\log_b a} = n^{\lg 7} \approx n^{2.807} > n^2$, so case 1 applies.
+
+** Why It Works (Intuition)
+
+- The 7 products are carefully chosen so that when combined they reproduce
+  exactly the same 8 terms from equations (4.5)–(4.8).
+- Each $P_i$ "encodes" contributions to multiple $C_{ij}$ blocks simultaneously.
+- We pay more additions ($\Theta(n^2)$), but save one multiplication — reducing
+  the branching factor from 8 to 7 across all recursion levels.
+
+** Practical Notes
+
+- Strassen's has larger constant factors → only faster for large $n$.
+- Common to switch to naive multiplication below a crossover $n_0$.
+- Numerical stability is slightly worse due to more additions/subtractions.
+- Not the asymptotic optimum: current best is $\approx O(n^{2.371})$ (not practical).
+
+* 4.3 The substitution method for solving recurrences
+
+** The Method
+
+Two steps:
+1. *Guess* the form of the solution with symbolic constants (e.g. $T(n) \leq cn \lg n$).
+2. *Prove* by strong induction that the guess holds — substitute the hypothesis into the recurrence and verify the algebra closes.
+
+Called "substitution" because you literally substitute your guessed bound for $T$ on smaller inputs into the recurrence.
+
+Best to prove $O$ and $\Omega$ separately, then combine for $\Theta$.
+
+** Worked Example: $T(n) = 2T(\lfloor n/2 \rfloor) + \Theta(n)$
+
+- Guess $T(n) = O(n \lg n)$, i.e. $T(n) \leq cn \lg n$ for some $c > 0$, $n \geq n_0$.
+- Inductive hypothesis: assume $T(\lfloor n/2 \rfloor) \leq c \lfloor n/2 \rfloor \lg \lfloor n/2 \rfloor$.
+- Substitute:
+
+\begin{align*}
+T(n) &\leq 2(c(n/2)\lg(n/2)) + \Theta(n) \\
+     &= cn\lg n - cn\lg 2 + \Theta(n) \\
+     &= cn\lg n - cn + \Theta(n) \\
+     &\leq cn\lg n
+\end{align*}
+
+  Last step holds when $c$ is large enough that $cn$ dominates the $\Theta(n)$ term.
+
+- Base case: pick $n_0 = 2$, choose $c \geq \max\{T(2), T(3)\}/(2\lg 2)$.
+
+** Making a Good Guess
+
+- *Pattern matching*: if it looks like a known recurrence, guess a similar solution. E.g. $T(n) = 2T(n/2 + 17) + \Theta(n)$ looks like merge sort — the $+17$ is negligible for large $n$, so guess $O(n \lg n)$.
+- *Bracket and tighten*: start with a loose lower bound ($\Omega(n)$) and a loose upper bound ($O(n^2)$), then try to narrow both toward the tight answer.
+- *Recursion trees* (Section 4.4) are the main tool for generating guesses.
+
+** Trick: Subtracting a Lower-Order Term
+
+Sometimes the right guess fails in the algebra by a small leftover. Fix: *strengthen the hypothesis* by subtracting a lower-order term.
+
+Example: $T(n) = 2T(n/2) + \Theta(1)$, guess $T(n) = O(n)$.
+
+- Trying $T(n) \leq cn$ gives $T(n) \leq cn + \Theta(1)$ — doesn't close.
+- Strengthen to $T(n) \leq cn - d$:
+
+\begin{align*}
+T(n) &\leq 2(c(n/2) - d) + \Theta(1) \\
+     &= cn - 2d + \Theta(1) \\
+     &\leq cn - d
+\end{align*}
+
+  as long as $d \geq \Theta(1)$. Now it closes.
+
+*Why subtract, not add?* With $a$ recursive calls, a subtracted term $-d$ gets
+subtracted $a$ times, creating slack. An added term $+d$ gets added $a$ times,
+making things worse.
+
+** Pitfall: Don't Use Asymptotic Notation in the Hypothesis
+
+Using $T(n) = O(n)$ as the inductive hypothesis lets the hidden constant
+change at each level — the "proof" becomes circular.
+
+Wrong:
+\begin{align*}
+T(n) &\leq 2 \cdot O(n/2) + \Theta(n) = O(n) \quad \Leftarrow \textit{fallacy!}
+\end{align*}
+
+Right: always write explicit constants ($T(n) \leq cn$) and prove the
+*exact* inequality $T(n) \leq cn$, not just "$T(n)$ is $O(n)$."
