@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-17>
-#+lastmod: <2026-03-18 21:04>
+#+lastmod: <2026-03-19 16:09>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -116,7 +116,7 @@ Hence, $n! = \omega(2^n)$. $\blacksquare$
 
 Since the limit is a positive constant, $\lg(n!) = \Theta(n \lg n)$. $\blacksquare$
 
-* Problem 14
+* Problem 14 :SKIP:
 ** Task
 #+begin_quote
 We define the iterated logarithm function
@@ -165,7 +165,7 @@ where $\lg^{(1)}(x) := \lg x$, $\lg^{(k+1)}(x) := \lg(\lg^{(k)}(x))$. This funct
 
 #+end_src
 
-* Problem 15
+* Problem 15 :DONE:
 ** Task
 #+begin_quote
 Use the substitution method to prove that the recursion
@@ -177,9 +177,45 @@ implies $T(n) = \Theta(n^2)$.
 Hint: Subtract a lower order term.
 #+end_quote
 
-** Notes
-
 ** Solution
+
+- Upper bound: $T(n) = O(n^2)$
+
+  Trying $T(n) \leq cn^2$ directly gives $cn^2 + n$, which doesn't close
+  because the $+n$ term cannot be absorbed. To fix this, subtract a lower-order
+  term from the hypothesis.
+
+  - Inductive hypothesis: assume $T(k) \leq ck^2 - dk$ for all $k < n$.
+  - Substitute:
+
+    \begin{align*}
+    T(n) &\leq 4\left(c \cdot \frac{n^2}{4} - d \cdot \frac{n}{2}\right) + n \\
+         &= cn^2 - 2dn + n \\
+         &= cn^2 - dn - (dn - n) \\
+         &\leq cn^2 - dn
+    \end{align*}
+
+    Last step holds when $dn - n \geq 0$, i.e. $d \geq 1$. Pick $d = 1$.
+
+  Since $cn^2 - dn \leq cn^2$, this establishes $T(n) = O(n^2)$.
+
+- Lower bound: $T(n) = \Omega(n^2)$
+
+  - Inductive hypothesis: assume $T(k) \geq ck^2$ for all $k < n$.
+
+  - Substitute:
+
+    \begin{align*}
+    T(n) &\geq 4\left(c \cdot \frac{n^2}{4}\right) + n \\
+         &= cn^2 + n \\
+         &\geq cn^2
+    \end{align*}
+
+    Holds trivially since $n > 0$.
+
+- Conclusion
+
+  Since $T(n) = O(n^2)$ and $T(n) = \Omega(n^2)$, we have $T(n) = \Theta(n^2)$. $\blacksquare$
 
 * Problem 16
 ** Task
