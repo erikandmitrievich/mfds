@@ -1,0 +1,45 @@
+#+title: Ch 16 Curves
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-03-20>
+#+lastmod: <2026-03-20 11:24>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+
+* Definition 16.4.1: Length of a curve in a metric space
+
+Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a curve. For a partition
+
+$$\mathcal{P} = \{ 0 = t_0 < t_1 < \cdots < t_n = 1 \}$$
+
+of $\left[ 0, 1 \right]$, define the polygonal length of $\gamma$ along $\mathcal{P}$ by
+
+$$\ell(\gamma, \mathcal{P}) := \sum_{j=1}^{n} d\left( \gamma(t_{j-1}), \gamma(t_j) \right).$$
+
+The length of $\gamma$ is
+
+$$\ell(\gamma) := \sup_{\mathcal{P}} \ell(\gamma, \mathcal{P}),$$
+
+where the supremum is taken over all partitions $\mathcal{P}$ of $\left[ 0, 1 \right]$. The curve $\gamma$ is called rectifiable if $\ell(\gamma) < \infty$.
+
+* Definition 16.4.2: Metric derivative
+
+Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a curve. If the limit exists,
+
+$$|\dot{\gamma}|(t) = \lim_{h \rightarrow 0} \frac{d(\gamma(t + h), \gamma(t))}{|h|},$$
+
+then $|\dot{\gamma}|(t)$ is called the metric derivative of $\gamma$ in $t$.
+
+* Definition 16.4.3: Lipschitz continuous curve
+
+Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a curve. We say that $\gamma$ is Lipschitz continuous if there is a constant $L > 0$ such that
+
+$$d(\gamma(t), \gamma(s)) \le L |t - s|, \qquad t, s \in \left[ 0, 1 \right].$$
