@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-17>
-#+lastmod: <2026-03-19 18:06>
+#+lastmod: <2026-03-20 17:05>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -186,6 +186,9 @@ Hint: Subtract a lower order term.
   term from the hypothesis.
 
   - Inductive hypothesis: assume $T(k) \leq ck^2 - dk$ for all $k < n$.
+
+  - Base case: $T(1) = a$. We need $a \leq c \cdot 1 - d \cdot 1 = c - d$. With $d = 1$, this requires $c \geq a + 1$, which is satisfiable.
+
   - Substitute:
 
     \begin{align*}
@@ -197,11 +200,13 @@ Hint: Subtract a lower order term.
 
     Last step holds when $dn - n \geq 0$, i.e. $d \geq 1$. Pick $d = 1$.
 
-  Since $cn^2 - dn \leq cn^2$, this establishes $T(n) = O(n^2)$.
+    Since $cn^2 - dn \leq cn^2$, this establishes $T(n) = O(n^2)$.
 
 - Lower bound: $T(n) = \Omega(n^2)$
 
   - Inductive hypothesis: assume $T(k) \geq ck^2$ for all $k < n$.
+
+  - Base case: $T(1) = a$. We need $a \geq c \cdot 1 = c$, so choose $c \leq a$.
 
   - Substitute:
 
@@ -240,6 +245,8 @@ sketch the recursion tree and derive a guess for an asymptotic upper bound of it
 - Proof by substitution
 
   - Inductive hypothesis: assume $T(k) \leq ck^{\log_3 4} - dk$ for all $k < n$.
+
+  - Base case: $T(1) = a$. We need $a \leq c \cdot 1 - d \cdot 1 = c - d$. With $d = 3$, this requires $c \geq a + 3$, which is satisfiable.
 
   - Substitute:
 
