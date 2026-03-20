@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-20>
-#+lastmod: <2026-03-20 11:24>
+#+lastmod: <2026-03-20 13:49>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,6 +13,9 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
+* Definition 16.4.0: Curve
+
+Let $X$ be a metric space. A map $f : \left[ 0,1 \right] \rightarrow X$ is also called a curve. If $X = \mathbb{R}^n$, then $f$ is called a space curve.
 
 * Definition 16.4.1: Length of a curve in a metric space
 
@@ -43,3 +46,239 @@ then $|\dot{\gamma}|(t)$ is called the metric derivative of $\gamma$ in $t$.
 Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a curve. We say that $\gamma$ is Lipschitz continuous if there is a constant $L > 0$ such that
 
 $$d(\gamma(t), \gamma(s)) \le L |t - s|, \qquad t, s \in \left[ 0, 1 \right].$$
+
+* Lemma      16.4.4: Differentiability iff metric derivative exists
+
+The curve $\gamma : \left[ 0, 1 \right] \rightarrow \mathbb{R}^n$ is differentiable iff if its metric derivative $|\dot{\gamma}|(t)$ exists for all $t \in \left[ 0, 1 \right]$.
+
+* Lemma      16.4.5: Tagged partitions adapted to local radii
+
+Let $\delta : \left[ 0, 1 \right] \rightarrow (0, \infty)$ be a function. Then there exists a tagged partition
+
+$$0 = t_0 < t_1 < \cdots < t_n = 1, \qquad \tau_j \in \left[ t_{j-1}, t_j \right],$$
+
+such that for every $j = 1, \ldots, n$,
+
+$$\left[ t_{j-1}, t_j \right] \subset (\tau_j - \delta(\tau_j),\, \tau_j + \delta(\tau_j)).$$
+
+*Proof.*
+
+Let $A$ be the set of all $x \in \left[ 0, 1 \right]$ such that there exists a tagged partition
+
+$$0 = s_0 < s_1 < \cdots < s_m = x, \qquad \sigma_i \in \left[ s_{i-1}, s_i \right],$$
+
+with
+
+$$\left[ s_{i-1}, s_i \right] \subset (\sigma_i - \delta(\sigma_i),\, \sigma_i + \delta(\sigma_i)) \qquad (i = 1, \ldots, m).$$
+
+Clearly $0 \in A$, so $A \ne \emptyset$. Set
+
+$$c := \sup A.$$
+
+We claim that $c = 1$. Assume for contradiction that $c < 1$. Since $\delta(c) > 0$, we may choose $\eta > 0$ such that
+
+$$\eta < \frac{\delta(c)}{2} \qquad \text{and} \qquad c + \eta \le 1.$$
+
+By the definition of supremum, there exists $x \in A$ with
+
+$$c - \eta < x \le c.$$
+
+Take a tagged partition of $\left[ 0, x \right]$ as above. We extend it by one more interval, namely
+
+$$\left[ x, c + \eta \right],$$
+
+and choose the tag $\tau := c$. Since $x > c - \eta > c - \delta(c)$ and $c + \eta < c + \delta(c)$, we have
+
+$$\left[ x, c + \eta \right] \subset (c - \delta(c),\, c + \delta(c)).$$
+
+Hence the extended tagged partition is still admissible. Therefore
+
+$$c + \eta \in A.$$
+
+But this contradicts the definition of $c = \sup A$, since $c + \eta > c$. Thus $c = 1$, and so $1 \in A$. This gives the desired tagged partition of $\left[ 0, 1 \right]$. $\square$
+
+* Theorem    16.4.6: Length of a Lipschitz curve via metric derivative
+
+Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a Lipschitz continuous curve. If its metric derivative exists on $\left[ 0, 1 \right]$ and is integrable, then
+
+$$\ell(\gamma) = \int_0^1 |\dot{\gamma}|(t) \, dt.$$
+
+*Proof.*
+
+Set
+
+$$g(t) := |\dot{\gamma}|(t), \qquad t \in \left[ 0, 1 \right].$$
+
+Let $\varepsilon > 0$. Since $g$ is Riemann integrable, there exists a partition
+
+$$Q = \{ 0 = s_0 < s_1 < \cdots < s_m = 1 \}$$
+
+such that
+
+$$U(g, Q) - L(g, Q) < \varepsilon.$$
+
+For each $t \in \left[ 0, 1 \right]$, choose $\eta(t) > 0$ so small that every interval contained in
+
+$$(t - \eta(t),\, t + \eta(t))$$
+
+lies in one subinterval $\left[ s_{k-1}, s_k \right]$ of $Q$. Since the metric derivative exists at every $t$, there exists $\delta_0(t) > 0$ such that
+
+$$0 < |h| < \delta_0(t) \implies \left| d(\gamma(t+h), \gamma(t)) - g(t)|h| \right| < \varepsilon |h|.$$
+
+Equivalently,
+
+$$(g(t) - \varepsilon)|h| \le d(\gamma(t+h), \gamma(t)) \le (g(t) + \varepsilon)|h|.$$
+
+Now set
+
+$$\delta(t) := \min\{ \delta_0(t), \eta(t) \}.$$
+
+By the tagged-partition lemma, there exists a tagged partition
+
+$$0 = t_0 < t_1 < \cdots < t_n = 1, \qquad \tau_j \in \left[ t_{j-1}, t_j \right],$$
+
+such that
+
+$$\left[ t_{j-1}, t_j \right] \subset (\tau_j - \delta(\tau_j),\, \tau_j + \delta(\tau_j)) \qquad (j = 1, \ldots, n).$$
+
+Since $\delta(\tau_j) \le \eta(\tau_j)$, every interval $\left[ t_{j-1}, t_j \right]$ lies in one subinterval of $Q$. Hence
+
+$$L(g, Q) \le \sum_{j=1}^{n} g(\tau_j)(t_j - t_{j-1}) \le U(g, Q).$$
+
+Therefore
+
+$$\left| \sum_{j=1}^{n} g(\tau_j)(t_j - t_{j-1}) - \int_0^1 g(t) \, dt \right| < \varepsilon.$$
+
+We first prove the upper bound. Let
+
+$$P = \{ 0 = u_0 < u_1 < \cdots < u_r = 1 \}$$
+
+be any partition of $\left[ 0, 1 \right]$. For each interval $\left[ u_{i-1}, u_i \right]$, restrict the gauge $\delta$ to $\left[ u_{i-1}, u_i \right]$ and apply the tagged-partition lemma on this interval. Thus we obtain a tagged partition
+
+$$u_{i-1} = x_{i,0} < x_{i,1} < \cdots < x_{i,\ell_i} = u_i, \qquad \sigma_{i,k} \in \left[ x_{i,k-1}, x_{i,k} \right],$$
+
+such that
+
+$$\left[ x_{i,k-1}, x_{i,k} \right] \subset (\sigma_{i,k} - \delta(\sigma_{i,k}),\, \sigma_{i,k} + \delta(\sigma_{i,k})).$$
+
+Hence
+
+$$d(\gamma(x_{i,k}), \gamma(x_{i,k-1})) \le (g(\sigma_{i,k}) + \varepsilon)(x_{i,k} - x_{i,k-1}).$$
+
+Using the triangle inequality,
+
+$$d(\gamma(u_i), \gamma(u_{i-1})) \le \sum_{k=1}^{\ell_i} d(\gamma(x_{i,k}), \gamma(x_{i,k-1})) \le \sum_{k=1}^{\ell_i} (g(\sigma_{i,k}) + \varepsilon)(x_{i,k} - x_{i,k-1}).$$
+
+Summing over $i$ gives
+
+$$L(\gamma, P) \le \sum g(\sigma_{i,k})(x_{i,k} - x_{i,k-1}) + \varepsilon.$$
+
+Since each interval $\left[ x_{i,k-1}, x_{i,k} \right]$ lies in one subinterval of $Q$, the tagged sum is at most $U(g, Q)$. Therefore
+
+$$L(\gamma, P) \le U(g, Q) + \varepsilon < \int_0^1 g(t) \, dt + 2\varepsilon.$$
+
+Since $P$ was arbitrary,
+
+$$\ell(\gamma) \le \int_0^1 g(t) \, dt + 2\varepsilon.$$
+
+Letting $\varepsilon \rightarrow 0$ yields
+
+$$\ell(\gamma) \le \int_0^1 g(t) \, dt.$$
+
+For the reverse inequality, take the tagged partition
+
+$$0 = t_0 < t_1 < \cdots < t_n = 1, \qquad \tau_j \in \left[ t_{j-1}, t_j \right],$$
+
+constructed above, and refine it by inserting all tags:
+
+$$R := \{ 0, t_1, \ldots, t_n, \tau_1, \ldots, \tau_n \}.$$
+
+Then
+
+$$\ell(\gamma) \ge L(\gamma, R) \ge \sum_{j=1}^{n} \left( d(\gamma(\tau_j), \gamma(t_{j-1})) + d(\gamma(t_j), \gamma(\tau_j)) \right).$$
+
+Because
+
+$$|\tau_j - t_{j-1}| < \delta(\tau_j), \qquad |t_j - \tau_j| < \delta(\tau_j),$$
+
+the lower estimate gives
+
+$$d(\gamma(\tau_j), \gamma(t_{j-1})) \ge (g(\tau_j) - \varepsilon)(\tau_j - t_{j-1}),$$
+
+and
+
+$$d(\gamma(t_j), \gamma(\tau_j)) \ge (g(\tau_j) - \varepsilon)(t_j - \tau_j).$$
+
+Hence
+
+$$\ell(\gamma) \ge \sum_{j=1}^{n} (g(\tau_j) - \varepsilon)(t_j - t_{j-1}) = \sum_{j=1}^{n} g(\tau_j)(t_j - t_{j-1}) - \varepsilon.$$
+
+Since the tagged sum is at least $L(g, Q)$,
+
+$$\ell(\gamma) \ge L(g, Q) - \varepsilon > \int_0^1 g(t) \, dt - 2\varepsilon.$$
+
+Letting $\varepsilon \rightarrow 0$ yields
+
+$$\ell(\gamma) \ge \int_0^1 g(t) \, dt.$$
+
+Combining both inequalities, we obtain
+
+$$\ell(\gamma) = \int_0^1 |\dot{\gamma}|(t) \, dt. \qquad \square$$
+
+* Theorem    16.4.7: Length of a continuously differentiable curve in $\mathbb{R}^d$
+
+Let $\gamma : \left[ 0, 1 \right] \rightarrow \mathbb{R}^d$ be continuously differentiable. Then
+
+$$\ell(\gamma) = \int_0^1 \sqrt{|\gamma_1'(t)|^2 + \cdots + |\gamma_n'(t)|^2} \, dt.$$
+
+*Proof.*
+
+Set
+
+$$g(t) := \sqrt{|\gamma_1'(t)|^2 + \cdots + |\gamma_n'(t)|^2}.$$
+
+Then $g$ is continuous on $\left[ 0, 1 \right]$.
+
+/Step 1:/ $L(\gamma) \le \int_0^1 g(t) \, dt$. Let $P = \{ t_0, \ldots, t_m \}$ be a partition. For each $j$ and each component, the mean value theorem gives
+
+$$\gamma_k(t_j) - \gamma_k(t_{j-1}) = \gamma_k'(\xi_{j,k})(t_j - t_{j-1})$$
+
+for some $\xi_{j,k} \in (t_{j-1}, t_j)$. Hence
+
+$$|\gamma_k(t_j) - \gamma_k(t_{j-1})| \le \sup_{t \in \left[ t_{j-1}, t_j \right]} |\gamma_k'(t)| \, (t_j - t_{j-1}).$$
+
+Therefore
+
+$$\sqrt{\sum_{k=1}^{n} |\gamma_k(t_j) - \gamma_k(t_{j-1})|^2} \le \sup_{t \in \left[ t_{j-1}, t_j \right]} g(t) \, (t_j - t_{j-1}).$$
+
+Summing and taking the supremum over all partitions yields
+
+$$\ell(\gamma) \le \int_0^1 g(t) \, dt.$$
+
+/Step 2:/ $\ell(\gamma) \ge \int_0^1 g(t) \, dt$. Since $g$ is continuous, it is uniformly continuous. Let $\varepsilon > 0$ and choose a partition $P$ with mesh sufficiently small so that
+
+$$\sqrt{\sum_{k=1}^{n} |\gamma_k'(s) - \gamma_k'(t)|^2} < \varepsilon \quad \text{whenever } s, t \text{ lie in one subinterval.}$$
+
+For each $j$, pick $\tau_j \in \left[ t_{j-1}, t_j \right]$. Using the mean value theorem componentwise as above, we obtain
+
+$$\left| \frac{\gamma_k(t_j) - \gamma_k(t_{j-1})}{t_j - t_{j-1}} - \gamma_k'(\tau_j) \right| \le \varepsilon \qquad (k = 1, \ldots, n).$$
+
+Hence
+
+$$\sqrt{\sum_{k=1}^{n} \left| \frac{\gamma_k(t_j) - \gamma_k(t_{j-1})}{t_j - t_{j-1}} - \gamma_k'(\tau_j) \right|^2} \le \sqrt{n} \, \varepsilon.$$
+
+Thus
+
+$$\sqrt{\sum_{k=1}^{n} |\gamma_k(t_j) - \gamma_k(t_{j-1})|^2} \ge (g(\tau_j) - \sqrt{n} \, \varepsilon)(t_j - t_{j-1}).$$
+
+Summing gives
+
+$$\ell(\gamma, P) \ge \sum_{j=1}^{m} g(\tau_j)(t_j - t_{j-1}) - \sqrt{n} \, \varepsilon.$$
+
+Passing to the limit (Riemann sums) and using $\ell(\gamma) \ge \ell(\gamma, P)$,
+
+$$\ell(\gamma) \ge \int_0^1 g(t) \, dt.$$
+
+Combining both inequalities proves
+
+$$\ell(\gamma) = \int_0^1 \sqrt{|\gamma_1'(t)|^2 + \cdots + |\gamma_n'(t)|^2} \, dt. \qquad \square$$
