@@ -1,0 +1,86 @@
+#+title: Ps 03
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-03-20>
+#+lastmod: <2026-03-20 10:59>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* Problem 1
+** Task
+#+begin_quote
+Consider the curve $f : [0, 1] \to \mathbb{R}^2$ given by
+
+$f(t) = \begin{pmatrix} t^{2/3} \\ t^{3/2} \end{pmatrix}$
+
+Determine the length of $f$.
+#+end_quote
+
+** Notes
+
+** Solution
+
+* Problem 2
+** Task
+#+begin_quote
+Write Julia code to approximate the length of a curve $f : [0, 1] \to \mathbb{R}^2$ by implementing two approaches:
+
+(a) Given a partition $P$ of $[0, 1]$, determine the polygonal length of $f$ along $P$.
+
+(b) Approximate the length integral by the mid-point rule.
+
+(c) Test and compare your code for several illustrative curves.
+#+end_quote
+
+** Notes
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_02.jl
+#+end_src
+
+* Problem 3
+** Task
+#+begin_quote
+Consider the curve $f : [0, 1] \to \mathbb{R}^2$ given by
+
+$f(t) = \begin{pmatrix} t \cos(6\pi t) \\ t \sin(6\pi t) \end{pmatrix}$
+
+(a) Determine the length of $f$ by your best effort (how many digits are you able to determine accurately?).
+
+(b) Write a Julia function, whose input is a curve $\gamma : [0, 1] \to \mathbb{R}^2$ and a point $t_0 \in [0, 1]$ that returns an (affine) linear function that approximates $\gamma$ in a neighborhood of $t_0$.
+
+(c) Visualize the affine linear approximation for $f$ and for several other different curves.
+#+end_quote
+
+** Notes
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_03.jl
+#+end_src
+
+* Problem 4
+** Task
+#+begin_quote
+Consider the upper semicircle
+
+$f : [0, \pi] \to \mathbb{R}^2$, $f(x) = \begin{pmatrix} \cos x \\ \sin x \end{pmatrix}$
+
+and $\varphi : [0, 1] \to [0, \pi]$ given by $\varphi(t) = \pi t^2$. Let
+
+$\gamma := f \circ \varphi$.
+
+(a) Determine the metric derivative of $\gamma$.
+
+(b) Compute the length of $\gamma$.
+#+end_quote
+
+** Notes
+
+** Solution
