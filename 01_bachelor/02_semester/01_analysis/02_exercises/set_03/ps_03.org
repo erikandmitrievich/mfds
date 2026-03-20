@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-20>
-#+lastmod: <2026-03-20 10:59>
+#+lastmod: <2026-03-20 14:31>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,19 +13,31 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
-* Problem 1
+* Problem 1 :DONE:
 ** Task
 #+begin_quote
 Consider the curve $f : [0, 1] \to \mathbb{R}^2$ given by
 
-$f(t) = \begin{pmatrix} t^{2/3} \\ t^{3/2} \end{pmatrix}$
+$$f(t) = \begin{pmatrix} t \\ \frac{2}{3} t^{3/2} \end{pmatrix}$$
 
 Determine the length of $f$.
 #+end_quote
 
-** Notes
-
 ** Solution
+We have
+
+$$f'(t) = \begin{pmatrix} 1 \\ t^{1/2} \end{pmatrix}$$
+
+Both components are continuous on $[0,1]$, so $f$ is $C^1$.
+
+By Theorem 16.4.7:
+
+\begin{align*}
+\ell(f) &= \int_0^1 \sqrt{|f_1'(t)|^2 + |f_2'(t)|^2} \, dt \\
+        &= \int_0^1 \sqrt{1 + t} \, dt \\
+        &= \left[ \frac{2}{3}(1+t)^{3/2} \right]_0^1 \\
+        &= \frac{2}{3}\bigl(2\sqrt{2} - 1\bigr).
+\end{align*}
 
 * Problem 2
 ** Task
