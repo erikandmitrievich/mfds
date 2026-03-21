@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-20>
-#+lastmod: <2026-03-20 14:31>
+#+lastmod: <2026-03-21 17:59>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -39,7 +39,7 @@ By Theorem 16.4.7:
         &= \frac{2}{3}\bigl(2\sqrt{2} - 1\bigr).
 \end{align*}
 
-* Problem 2
+* Problem 2 :DONE:
 ** Task
 #+begin_quote
 Write Julia code to approximate the length of a curve $f : [0, 1] \to \mathbb{R}^2$ by implementing two approaches:
@@ -51,11 +51,91 @@ Write Julia code to approximate the length of a curve $f : [0, 1] \to \mathbb{R}
 (c) Test and compare your code for several illustrative curves.
 #+end_quote
 
-** Notes
-
 ** Solution
-#+begin_src julia :results value :exports both :tangle julia/p_02.jl
+
+*** (a) + (b) + (c)
+#+begin_src julia :results output :exports both :tangle julia/p_02_a.jl
+
+using Plots
+
+# distance
+d(x, y) = sqrt((x[1] - y[1])^2 + (x[2] - y[2])^2)
+
+# a
+function approach_a(f, P = range(0, 1, length=1000))
+    l = 0.0
+    for i in 1:(length(P) - 1)
+        l += d(f(P[i]), f(P[i+1]))
+    end
+    return l
+end
+
+# b
+function approach_b(f′, n=1000)
+    h = 1.0 / n
+    s = 0.0
+    for i in 0:(n-1)
+        mid = (i + 0.5) * h
+        v = f′(mid)
+        s += sqrt(v[1]^2 + v[2]^2) * h
+    end
+    return s
+end
+
+# curves
+f_1(t) = (cos(2π*t), sin(2π*t))
+f_2(t) = (t*cos(4π*t), t*sin(4π*t))
+f_3(t) = (t^2, t^3)
+
+# derivatives
+f_1′(t) = (-2π*sin(2π*t), 2π*cos(2π*t))
+f_2′(t) = (cos(4π*t) - 4π*t*sin(4π*t), sin(4π*t) + 4π*t*cos(4π*t))
+f_3′(t) = (2t, 3t^2)
+
+function main()
+    curves = [(f_1, f_1′, "Unit circle"),
+              (f_2, f_2′, "Spiral"),
+              (f_3, f_3′, "Cusp curve")]
+
+    # print comparison
+    for (f, f′, name) in curves
+        a = approach_a(f)
+        b = approach_b(f′)
+        println("$name: polygonal = $a, midpoint = $b")
+    end
+
+    # plot each curve
+    ts = range(0, 1, length=500)
+    p = plot(layout=(1, 3), size=(900, 300), legend=false)
+    for (i, (f, _, name)) in enumerate(curves)
+        xs = [f(t)[1] for t in ts]
+        ys = [f(t)[2] for t in ts]
+        plot!(p[i], xs, ys, title=name, aspect_ratio=:equal)
+    end
+    savefig("./assets/p_02.png")
+end
+
+main()
+
 #+end_src
+
+#+RESULTS:
+#+begin_example
+d (generic function with 1 method)
+approach_a (generic function with 2 methods)
+approach_b (generic function with 2 methods)
+f_1 (generic function with 1 method)
+f_2 (generic function with 1 method)
+f_3 (generic function with 1 method)
+f_1′ (generic function with 1 method)
+f_2′ (generic function with 1 method)
+f_3′ (generic function with 1 method)
+main (generic function with 1 method)
+Unit circle: polygonal = 6.283174951057152, midpoint = 6.283185307179473
+Spiral: polygonal = 6.431350516692413, midpoint = 6.43139630404216
+Cusp curve: polygonal = 1.4397098361890286, midpoint = 1.4397097024672785
+"/Users/ziro2173/personal/university/01_bachelor/02_semester/01_analysis/02_exercises/set_03/assets/p_02.png"
+#+end_example
 
 * Problem 3
 ** Task
