@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-03-22 16:48>
+#+lastmod: <2026-03-22 17:02>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -310,6 +310,44 @@ If $E$ is finite-dimensional, then $\dim(E) = \dim(E^*)$.
 Let $E$ be a $\mathbb{K}$ vector space of dimension $n$, and let $W$ be a subspace of $E$. The annihilator $W^{\circ}$ of $W$ is the set of linear functionals that vanish on $W$.
 
 $$W^{\circ} := \{\varphi \in E^* : \varphi(x) = 0, \; \forall x \in W\}$$
+
+* Theorem     1.33: Dimension of annihilator
+
+Let $E$ be a $\mathbb{K}$ vector space of dimension $n$, and let $W$ be a subspace of $E$. Then
+
+$$\dim(E) = \dim(W) + \dim(W^{\circ}).$$
+
+*Proof.*
+
+Suppose that $1 \le \dim(W) = k < n$, and let $(e_1, \ldots, e_k)$ be a basis of $W$. We complete this basis with $n - k$ vectors $(e_{k+1}, \ldots, e_n)$ to obtain a basis of $E$ which we call $\mathcal{B}$. We introduce the dual basis $\mathcal{B}^* = \{e_1^*, \ldots, e_n^*\}$, and observe that $W^{\circ} = \text{span}\{e_{k+1}^*, \ldots, e_n^*\}$. Indeed, we clearly have that $e_{k+1}^*, \ldots, e_n^* \in W^{\circ}$. In addition, any element $\mu \in W^{\circ}$ cannot have components in $e_1^*, \ldots, e_k^*$ since $\mu(e_1^*) = \cdots = \mu(e_k^*) = 0$. Therefore $\dim(W^{\circ}) = n - k$. $\square$
+
+* Lemma       1.34: Matrix representation of a linear map
+
+Let:
+
+1. $E$ and $F$ be two finite-dimensional $\mathbb{K}$ vector spaces (of dimension $p$ and $n$ respectively),
+
+2. $\mathcal{E} = \{e_1, \ldots, e_p\}$ and $\mathcal{F} = \{u_1, \ldots, u_n\}$ be two bases of $E$ and $F$ respectively.
+
+The mapping
+
+$$\text{Mat} : \mathcal{L}(E, F) \rightarrow \mathbb{K}^{p \times n}$$
+
+$$f \mapsto \text{Mat}(f) = [f]_{\mathcal{E}}^{\mathcal{F}} := \left( [f(e_1)]^{\mathcal{F}} \mid \ldots \mid [f(e_p)]^{\mathcal{F}} \right)$$
+
+is an isomorphism. For every $f \in \mathcal{L}(E, F)$, $[f]_{\mathcal{E}}^{\mathcal{F}}$ is called the matrix representation of $f$ in the bases $\mathcal{E}$ and $\mathcal{F}$.
+
+*Proof.*
+
+We next prove that $\text{Mat}$ is both surjective and injective.
+
+*Injectivity:* Let $f, g \in \mathcal{L}(E, F)$ such that $\text{Mat}(f) = \text{Mat}(g)$. Then $[f(e_i)]^{\mathcal{F}} = [g(e_i)]^{\mathcal{F}}$ for all $i = 1, \ldots, n$. Since the coordinate representation is unique, it follows that this equality is also true at the level of the vectors, $f(e_i) = g(e_i)$. Let now $x \in E$ such that $x = \sum_{i=1}^{n} c_i e_i$. Then $f(x) = \sum_{i=1}^{n} c_i f(e_i) = \sum_{i=1}^{n} c_i g(e_i) = g(x)$. Since this holds for all $x \in E$, it follows that $f = g$, and we have proven injectivity.
+
+*Surjectivity:* Let $A \in \mathbb{K}^{p \times n}$. We are going to show that there exists $f_A \in \mathcal{L}(E, F)$ such that $\text{Mat}(f_A) = A$. For this, we define a mapping $f_A : E \rightarrow F$ such that
+
+$$[f_A(x)]^{\mathcal{F}} := A[x]^{\mathcal{E}}, \quad \forall x \in E.$$
+
+The mapping $f_A$ is linear since, by construction, $[f_A(x)]^{\mathcal{F}} = 0_{\mathbb{K}^n}$ and therefore $f_A(0) = 0$. Also, for all $x, y \in E$ and $\mu, \lambda \in \mathbb{K}$, $[f_A(\mu x + \lambda y)]^{\mathcal{F}} = A[\mu x + \lambda y]^{\mathcal{E}} = \lambda A[x]^{\mathcal{E}} + \mu A[x]^{\mathcal{E}} = \lambda f_A(x) + \mu f_A(y)$. This shows surjectivity. $\square$
 
 * Definition  1.52: Norm and normed vector space
 
