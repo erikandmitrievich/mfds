@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-15>
-#+lastmod: <2026-03-22 14:36>
+#+lastmod: <2026-03-22 15:11>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -79,6 +79,7 @@ Write the statement body as plain prose paragraphs directly below the heading, s
 - Use =\forall=, =\exists= separated by a space or comma: =$\forall \epsilon>0, \exists N \in \mathbb{N} : ...$=
 - Subscripts: =x_n= for simple, =x_{n_j}= for nested, =d_X(x, y)= for function-like metrics
 - Sequences: =$(a_n)_{n\in\mathbb{N}}$= — parentheses, subscript range with =\in\mathbb{N}= (no spaces around =\in= inside subscripts)
+- Never place a hyphen directly after a closing =$= delimiter — Org's LaTeX preview breaks on =$...$-something=. Insert a space before the hyphen instead: write =$\mathbb{K}$ vector space=, not =$\mathbb{K}$-vector space=.
 
 ** Display math
 
