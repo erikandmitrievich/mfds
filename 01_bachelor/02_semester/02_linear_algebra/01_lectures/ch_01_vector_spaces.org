@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-03-22 14:46>
+#+lastmod: <2026-03-22 15:07>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -197,6 +197,74 @@ $F \subset E$ is a subspace of $E$ if and only if:
 1. $0 \in F$
 
 2. $\forall\, x, y \in F$, $\forall\, \lambda, \mu \in \mathbb{K}$, $\lambda x + \mu y \in F$.
+
+* Proposition 1.22:  Subspace intersection, union, and sum
+
+Let $F$ and $G$ be two subspaces of a vector space $E$. Then:
+
+1. $F \cap G$ is a subspace of $E$
+
+2. $F \cup G$ is in general not a subspace of $E$
+
+3. $F + G := \{x + y : x \in F, y \in G\}$ is a subspace of $E$, and we have the Grassmann formula
+
+   $$\dim(F + G) = \dim(F) + \dim(G) - \dim(F \cap G)$$
+
+** Q&A
+
+- Q_01
+
+  Why is $F \cap G$ is a subspace of $E$, while $F \cup G$ is "generaly" not?
+
+- A_01
+
+  The intersection $F \cap G$ is a subspace because if two elements both belong to $F$ and to $G$, any linear combination of them remains in $F$ (since $F$ is a subspace) and in $G$ (since $G$ is a subspace), so it stays in $F \cap G$. The union $F \cup G$ generally fails because you can pick $x \in F \setminus G$ and $y \in G \setminus F$, and their sum $x + y$ typically belongs to neither $F$ nor $G$, breaking closure under addition. (It only works when one subspace contains the other, making the union trivially equal to the larger one.)
+
+* Definition  1.23:  Direct sum
+
+The sum of two subspaces $F$, $G$ of a vector space $E$ is said to be direct, and is written $F + G = F \oplus G$, when for any $x \in E$ there exists a unique decomposition
+
+$$x = x_F + x_G$$
+
+such that $x_F \in F$ and $x_G \in G$. This is equivalent to the condition $F \cap G = \{0\}$. The two subspaces are said to be complementary when their sum is direct and $E = F \oplus G$.
+
+* Definition  1.24:  Linear map
+
+Let $E$ and $F$ be two $\mathbb{K}$ vector spaces. The mapping $f : E \rightarrow F$ is linear if and only if
+
+$$f(\lambda x + \mu y) = \lambda f(x) + \mu f(y), \quad \forall x, y \in E, \; \lambda, \mu \in \mathbb{K}$$
+
+We denote by $\mathcal{L}(E, F)$ the set of all linear mappings from $E$ to $F$. When $F = E$, the mapping is called an endomorphism, and the set of endomorphisms is denoted as $\mathcal{L}(E) := \mathcal{L}(E, E)$.
+
+* Proposition 1.25:  Subspace and kernel/image structure of linear maps
+
+Let $E$ and $F$ be two $\mathbb{K}$ vector spaces, and $f \in \mathcal{L}(E, F)$. Then:
+
+1. $\mathcal{L}(E, F)$ is a subspace of $\mathcal{F}(E, F)$ (with addition and scalar multiplication as described Sec 1.2.5), and this implies that $\mathcal{L}(E, F)$ is a vector space.
+
+2. The kernel and image sets
+
+   $$\ker(f) := \{x \in E : f(x) = 0\}$$
+
+   $$\mathrm{im}(f) := \{y \in F : \exists x \in E \; \text{s.t.} \; y = f(x)\}$$
+
+   are subspaces of $E$.
+
+** Q&A
+
+- Q_01
+
+  I understand that $\mathcal{L}(E, F)$ is a subspace of $\mathcal{F}(E, F)$, but how can it be a vector space when it is a set of linear maps?
+
+- A_01
+
+  The key insight is that a vector space is just a set equipped with addition and scalar multiplication satisfying the axioms - the "vectors" don't have to be arrows or tuples. Here, the elements of $\mathcal{L}(E, F)$ are linear maps, and the operations are pointwise: $(f + g)(x) = f(x) + g(x)$ and $(\lambda f)(x) = \lambda f(x)$. These operations satisfy all the vector space axioms (the zero vector is the zero map, additive inverses are $(-f)(x) = -f(x)$, etc.), so $\mathcal{L}(E, F)$ is a perfectly valid vector space whose "vectors" happen to be functions. In fact, this is precisely what being a subspace of $\mathcal{F}(E, F)$ gives you for free: $\mathcal{F}(E, F)$ is already a vector space under pointwise operations, and any subspace of a vector space is itself a vector space, so you only need to verify the subspace criteria rather than re-checking all the axioms from scratch.
+
+* Definition  1.27:  Linear form, dual space
+
+Let $E$ be a $\mathbb{K}$ vector space. The dual space of $E$ is the set $E^* := \mathcal{L}(E, \mathbb{K})$. Every $f \in E^*$ is called a linear functional.
+
+/The underlying intuition is that elements of the dual space are "machines" that take a vector and return a number./
 
 * Definition  1.52: Norm and normed vector space
 
