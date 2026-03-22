@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-03-22 14:31>
+#+lastmod: <2026-03-22 14:46>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -169,6 +169,34 @@ is a isomorphism.
 - A_01
 
   The point is that isomorphism means the two spaces are "structurally identical" as a vector spaces. So once you fix a basis $\mathcal{B}$, your abstract vectors space $E$ becomes indistinguishable from $\mathbb{K}^n$ in terms of linear algebra.
+
+* Proposition 1.18: Linearity of coordinate representation
+
+Let $x, y \in E$. Then
+
+$$[\alpha x + \beta y]^{\mathcal{E}} = \alpha [x]^{\mathcal{E}} + \beta [y]^{\mathcal{E}}, \quad \forall\, \alpha, \beta \in \mathbb{K}.$$
+
+*Proof.*
+
+We simply use the definition of the coordinate representation and the fact that $\mathbb{R}^n$ is a vector space. $\square$
+
+* Definition  1.19: Subspace
+
+Let $(E, +, \cdot)$ be a $\mathbb{K}$ vector space, and let $F \subset E$ be a subset of $E$. We say that $F$ is a subspace of $E$ if and only if $F$ is nonempty and stable by linear combinations:
+
+1. $F \neq \emptyset$
+
+2. $\forall\, x, y \in F$, $x + y \in F$
+
+3. $\forall\, x \in F$, $\lambda \in \mathbb{K}$, $\lambda x \in F$.
+
+* Proposition 1.20: Subspace characterization via closure under linear combinations
+
+$F \subset E$ is a subspace of $E$ if and only if:
+
+1. $0 \in F$
+
+2. $\forall\, x, y \in F$, $\forall\, \lambda, \mu \in \mathbb{K}$, $\lambda x + \mu y \in F$.
 
 * Definition  1.52: Norm and normed vector space
 
