@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-03-22 15:07>
+#+lastmod: <2026-03-22 16:48>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -198,7 +198,7 @@ $F \subset E$ is a subspace of $E$ if and only if:
 
 2. $\forall\, x, y \in F$, $\forall\, \lambda, \mu \in \mathbb{K}$, $\lambda x + \mu y \in F$.
 
-* Proposition 1.22:  Subspace intersection, union, and sum
+* Proposition 1.22: Subspace intersection, union, and sum
 
 Let $F$ and $G$ be two subspaces of a vector space $E$. Then:
 
@@ -220,7 +220,7 @@ Let $F$ and $G$ be two subspaces of a vector space $E$. Then:
 
   The intersection $F \cap G$ is a subspace because if two elements both belong to $F$ and to $G$, any linear combination of them remains in $F$ (since $F$ is a subspace) and in $G$ (since $G$ is a subspace), so it stays in $F \cap G$. The union $F \cup G$ generally fails because you can pick $x \in F \setminus G$ and $y \in G \setminus F$, and their sum $x + y$ typically belongs to neither $F$ nor $G$, breaking closure under addition. (It only works when one subspace contains the other, making the union trivially equal to the larger one.)
 
-* Definition  1.23:  Direct sum
+* Definition  1.23: Direct sum
 
 The sum of two subspaces $F$, $G$ of a vector space $E$ is said to be direct, and is written $F + G = F \oplus G$, when for any $x \in E$ there exists a unique decomposition
 
@@ -228,7 +228,7 @@ $$x = x_F + x_G$$
 
 such that $x_F \in F$ and $x_G \in G$. This is equivalent to the condition $F \cap G = \{0\}$. The two subspaces are said to be complementary when their sum is direct and $E = F \oplus G$.
 
-* Definition  1.24:  Linear map
+* Definition  1.24: Linear map
 
 Let $E$ and $F$ be two $\mathbb{K}$ vector spaces. The mapping $f : E \rightarrow F$ is linear if and only if
 
@@ -236,7 +236,7 @@ $$f(\lambda x + \mu y) = \lambda f(x) + \mu f(y), \quad \forall x, y \in E, \; \
 
 We denote by $\mathcal{L}(E, F)$ the set of all linear mappings from $E$ to $F$. When $F = E$, the mapping is called an endomorphism, and the set of endomorphisms is denoted as $\mathcal{L}(E) := \mathcal{L}(E, E)$.
 
-* Proposition 1.25:  Subspace and kernel/image structure of linear maps
+* Proposition 1.25: Subspace and kernel/image structure of linear maps
 
 Let $E$ and $F$ be two $\mathbb{K}$ vector spaces, and $f \in \mathcal{L}(E, F)$. Then:
 
@@ -260,11 +260,56 @@ Let $E$ and $F$ be two $\mathbb{K}$ vector spaces, and $f \in \mathcal{L}(E, F)$
 
   The key insight is that a vector space is just a set equipped with addition and scalar multiplication satisfying the axioms - the "vectors" don't have to be arrows or tuples. Here, the elements of $\mathcal{L}(E, F)$ are linear maps, and the operations are pointwise: $(f + g)(x) = f(x) + g(x)$ and $(\lambda f)(x) = \lambda f(x)$. These operations satisfy all the vector space axioms (the zero vector is the zero map, additive inverses are $(-f)(x) = -f(x)$, etc.), so $\mathcal{L}(E, F)$ is a perfectly valid vector space whose "vectors" happen to be functions. In fact, this is precisely what being a subspace of $\mathcal{F}(E, F)$ gives you for free: $\mathcal{F}(E, F)$ is already a vector space under pointwise operations, and any subspace of a vector space is itself a vector space, so you only need to verify the subspace criteria rather than re-checking all the axioms from scratch.
 
-* Definition  1.27:  Linear form, dual space
+* Definition  1.27: Linear form, dual space
 
 Let $E$ be a $\mathbb{K}$ vector space. The dual space of $E$ is the set $E^* := \mathcal{L}(E, \mathbb{K})$. Every $f \in E^*$ is called a linear functional.
 
 /The underlying intuition is that elements of the dual space are "machines" that take a vector and return a number./
+
+* Theorem     1.29: Existence of dual basis
+
+Let $E$ be a $\mathbb{K}$ vector space of finite dimension $n \in \mathbb{N}$, and let $\mathcal{E} = \{e_1, \ldots, e_n\}$ be a basis of $E$. For every $1 \le i \le n$, we define
+
+\begin{align*}
+e_i^* : E &\rightarrow \mathbb{K} \\
+x &\mapsto [x]_i^{\mathcal{E}},
+\end{align*}
+
+which is the mapping that returns the $i$ th coordinate component of the elements of $E$ when expressed in the basis $\mathcal{E}$. Then $e_i^* \in E^*$ and
+
+$$\mathcal{B}^* := \{e_1^*, \ldots, e_n^*\}$$
+
+is a basis of $E^*$, which is called the dual basis of $\mathcal{E}$. Furthermore,
+
+$$e_i^*(e_j) = \delta_{i,j}, \quad \forall \; 1 \le i, j \le n$$
+
+*Proof.*
+
+The mapping $e_i^*$ is linear by /Proposition 1.18/, and the fact that component extraction is also a linear application. We next prove that $\mathcal{B}^*$ is a basis of $E^*$ by showing that it is both a linearly independent and generating set.
+
+- Linear Independence: Let $\lambda_1, \ldots, \lambda_n \in \mathbb{K}$ such that $\lambda_1 e_1^* + \cdots + \lambda_n e_n^* = 0$. Then, $(\lambda_1 e_1^* + \cdots + \lambda_n e_n^*)(e_i) = \lambda_i = 0$ for all $1 \le i \le n$, which shows that $\mathcal{B}^*$ is a linearly independent set.
+
+- Generating set: Let $\varphi \in E^*$. For every $x = \sum_{i=1}^{n} [x]_i^{\mathcal{E}} \; e_i \in E$, it holds that
+
+  $$\varphi(x) = \varphi(x_1 e_1 + \cdots + x_n e_n) = [x]_1^{\mathcal{E}} \; \varphi(e_1) + \cdots + [x]_n^{\mathcal{E}} \; \varphi(e_n) = \varphi(e_1) e_1^*(x) + \cdots + \varphi(e_n) e_n^*(x),$$
+
+  where we have used that $[x]_i^{\mathcal{E}} = e_i^*(x)$ by definition of the $e_i^*$. Since the equality holds for every $x \in E$, we obtain the equality of linear functionals
+
+  $$\varphi = \varphi(e_1) e_1^* + \cdots + \varphi(e_n) e_n^*$$
+
+  It expresses $\varphi$ as linear combination of the elements $e_i^* \in E^*$, thus showing that $\varphi \in \mathrm{span}\{\mathcal{B}^*\}_{i=1}^{n}$. Since this holds for every $\varphi \in E^*$, we have shown that $E^* = \mathrm{span}\{\mathcal{B}^*\}$.
+
+$\square$
+
+* Corollary   1.30: Dimension of dual space
+
+If $E$ is finite-dimensional, then $\dim(E) = \dim(E^*)$.
+
+* Definition  1.31: Annihilator
+
+Let $E$ be a $\mathbb{K}$ vector space of dimension $n$, and let $W$ be a subspace of $E$. The annihilator $W^{\circ}$ of $W$ is the set of linear functionals that vanish on $W$.
+
+$$W^{\circ} := \{\varphi \in E^* : \varphi(x) = 0, \; \forall x \in W\}$$
 
 * Definition  1.52: Norm and normed vector space
 
@@ -279,4 +324,3 @@ Let $(E, +, \cdot)$ be a $\mathbb{K}$ vector space. A norm is a mapping $\|\cdot
 4. triangle inequality: for all $(x, y) \in E$, it holds that $\|x + y\|_E \le \|x\|_E + \|y\|_E$.
 
 $(E, \|\cdot\|_E)$ is called a normed vector space.
-
