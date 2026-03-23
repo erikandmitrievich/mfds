@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-19>
-#+lastmod: <2026-03-19 19:46>
+#+lastmod: <2026-03-23 14:41>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,15 +13,27 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
-* Problem 1.23
+* Problem 1.23 :DONE:
 ** Task
 #+begin_quote
 (Norm Equivalences in $\mathbb{R}^n$). Show that $\|\cdot\|_1$, $\|\cdot\|_2$ and $\|\cdot\|_\infty$ are equivalent norms in $\mathbb{R}^n$ (of course, without using Theorem 1.56!).
 #+end_quote
 
-** Notes
-
 ** Solution
+
+Two norms $\|\cdot\|_a, \|\cdot\|_b$ are equivalent if there exist $c, C > 0$ with $c\|x\|_a \leq \|x\|_b \leq C\|x\|_a$ for all $x \in \mathbb{R}^n$. Let $x = (x_1, \ldots, x_n) \in \mathbb{R}^n$.
+
+- $\|\cdot\|_\infty$ and $\|\cdot\|_1$:
+
+  Each $|x_i| \leq \sum_j |x_j|$, so $\|x\|_\infty \leq \|x\|_1$. Conversely, each $|x_i| \leq \|x\|_\infty$, so $\|x\|_1 \leq n\|x\|_\infty$.
+
+- $\|\cdot\|_\infty$ and $\|\cdot\|_2$:
+
+  We have $\|x\|_\infty^2 = \max_i |x_i|^2 \leq \sum_i |x_i|^2 = \|x\|_2^2$, so $\|x\|_\infty \leq \|x\|_2$. Conversely, $\sum_i |x_i|^2 \leq n\|x\|_\infty^2$, so $\|x\|_2 \leq \sqrt{n}\,\|x\|_\infty$.
+
+- $\|\cdot\|_1$ and $\|\cdot\|_2$:
+
+  Since norm equivalence is transitive, $\|\cdot\|_1 \sim \|\cdot\|_\infty \sim \|\cdot\|_2$ implies $\|\cdot\|_1 \sim \|\cdot\|_2$. $\blacksquare$
 
 * Problem 1.38
 ** Task
@@ -64,9 +76,7 @@ defines a distance on $\mathbb{E}$ but is not induced by a norm. (*Indication:* 
 
 Let $\mathbb{E} = \mathbb{C}_2[X]$ be the space of *complex* polynomials $p(X)$ with $\deg p \leq 2$ (suppose that $\{1, X, X^2\}$ is proven to be a basis on $\mathbb{E}$), and let $f, g \in \mathbb{E}^*$ be as defined below:
 
-\[
-f(p(X)) = p(1), \qquad \text{and} \qquad g(p(X)) = p(i),
-\]
+$$f(p(X)) = p(1), \qquad \text{and} \qquad g(p(X)) = p(i)$$
 
 where $i \in \mathbb{C}$ is the imaginary unit element.
 
@@ -76,9 +86,7 @@ where $i \in \mathbb{C}$ is the imaginary unit element.
 
 (iii) Does the system of equations
 
-\[
-\begin{cases} f(p(X)) = i, & \text{and} \\ g(p(X)) = 1 \end{cases}
-\]
+$$\begin{cases} f(p(X)) = i, & \text{and} \\ g(p(X)) = 1 \end{cases}$$
 
 have any solution for $p \in \mathbb{E}$? if there is, give all the polynomials that are solution of the system. Is the solution unique?
 #+end_quote
@@ -94,17 +102,13 @@ have any solution for $p \in \mathbb{E}$? if there is, give all the polynomials 
 
 We define the following set of functions:
 
-\[
-\mathbb{E} = \{f : [0, \pi] \to \mathbb{R} \;:\; f(x) = \alpha \cos x + \beta \sin x, \; \alpha, \beta \in \mathbb{R}\}.
-\]
+$$\mathbb{E} = \{f : [0, \pi] \to \mathbb{R} \;:\; f(x) = \alpha \cos x + \beta \sin x, \; \alpha, \beta \in \mathbb{R}\}$$
 
 (i) Prove that $\mathbb{E}$, when equipped with the usual addition $((f+g)(x) = f(x)+g(x))$ and scalar multiplication of functions $((\lambda \cdot f)(x) = \lambda \cdot f(x))$, is a vector space.
 
 (ii) In the vector space $\mathbb{E}$ we define the following inner product:
 
-\[
-\omega(f, g) = \int_0^{\pi} f(x) g(x) \, \mathrm{d}x.
-\]
+$$\omega(f, g) = \int_0^{\pi} f(x) g(x) \, \mathrm{d}x$$
 
 Is the basis $\mathcal{B} := \{\cos(x), \sin(x)\}$ an orthogonal basis w.r.t. $\omega$? Is it orthonormal? Give an orthogonal/orthonormal basis if $\mathcal{B}$ is not.
 #+end_quote

@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-03-22 17:02>
+#+lastmod: <2026-03-23 14:07>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -362,3 +362,28 @@ Let $(E, +, \cdot)$ be a $\mathbb{K}$ vector space. A norm is a mapping $\|\cdot
 4. triangle inequality: for all $(x, y) \in E$, it holds that $\|x + y\|_E \le \|x\|_E + \|y\|_E$.
 
 $(E, \|\cdot\|_E)$ is called a normed vector space.
+
+* Proposition 1.53: Norm induced metric
+
+Let $(E, \|\cdot\|_E)$ be a normed vector space. Define the function
+
+\begin{align*}
+d_{\|\cdot\|_E} &: E \times E \rightarrow \mathbb{R} \\
+(x, y) &\mapsto d_{\|\cdot\|_E}(x, y) = \|x - y\|_E.
+\end{align*}
+
+Then $d_{\|\cdot\|_E}$ is a distance on $E$, and $(E, d_{\|\cdot\|_E})$ is a metric space.
+
+* Definition  1.55: Norm equivalence
+
+Let $E$ be a $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$, and let $\|\cdot\|_{\alpha}$ and $\|\cdot\|_{\beta}$ be two norms on $E$. We say that $\|\cdot\|_{\alpha}$ and $\|\cdot\|_{\beta}$ are equivalent if there exists two constants $0 < \underline{c} \le \overline{c}$ such that
+
+$$\underline{c} \|x\|_{\alpha} \le \|x\|_{\beta} \le \overline{c} \|x\|_{\alpha}, \quad \forall x \in E.$$
+
+* Theorem     1.56: All norms are equivalent in finite dimension
+
+Let $E$ be a $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$. Then:
+
+1. If $E$ is finite dimensional, then all norms are equivalent,
+
+2. If $E$ is infinite dimensional, then there always exists norms that are not equivalent.
