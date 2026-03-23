@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-19>
-#+lastmod: <2026-03-23 14:41>
+#+lastmod: <2026-03-23 15:03>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -35,7 +35,7 @@ Two norms $\|\cdot\|_a, \|\cdot\|_b$ are equivalent if there exist $c, C > 0$ wi
 
   Since norm equivalence is transitive, $\|\cdot\|_1 \sim \|\cdot\|_\infty \sim \|\cdot\|_2$ implies $\|\cdot\|_1 \sim \|\cdot\|_2$. $\blacksquare$
 
-* Problem 1.38
+* Problem 1.38 :DONE:
 ** Task
 #+begin_quote
 (Distances are not always induced by norms)
@@ -54,9 +54,9 @@ Prove that $(X, \rho)$ is a metric space.
 
 (iii) Similarly to the previous point, prove this generalized result:
 
-Given $\mathbb{E} \neq \{0\}$ a $\mathbb{R}$-vector space and $d(\cdot, \cdot) : \mathbb{E} \times \mathbb{E} \to \mathbb{R}$ a /bounded/ metric (i.e. there exists $K > 0$ such that $d(x, y) \leq K$, $\forall x, y \in \mathbb{E}$). Then $d(\cdot, \cdot)$ cannot be written as $d(x, y) = \|x - y\|$, for any $\|\cdot\| : \mathbb{E} \to \mathbb{R}$.
+Given $\mathbb{E} \neq \{0\}$ a $\mathbb{R}$ vector space and $d(\cdot, \cdot) : \mathbb{E} \times \mathbb{E} \to \mathbb{R}$ a /bounded/ metric (i.e. there exists $K > 0$ such that $d(x, y) \leq K$, $\forall x, y \in \mathbb{E}$). Then $d(\cdot, \cdot)$ cannot be written as $d(x, y) = \|x - y\|$, for any $\|\cdot\| : \mathbb{E} \to \mathbb{R}$.
 
-(iv) Prove that for any norm $\|\cdot\| : \mathbb{E} \to \mathbb{R}$ defined on a $\mathbb{R}$-vector space $\mathbb{E} \neq \{0\}$, the function $d(\cdot, \cdot) : \mathbb{E} \times \mathbb{E} \to \mathbb{R}$ given by
+(iv) Prove that for any norm $\|\cdot\| : \mathbb{E} \to \mathbb{R}$ defined on a $\mathbb{R}$ vector space $\mathbb{E} \neq \{0\}$, the function $d(\cdot, \cdot) : \mathbb{E} \times \mathbb{E} \to \mathbb{R}$ given by
 
 \[
 d(x, y) := \frac{\|x - y\|}{1 + \|x - y\|}
@@ -65,9 +65,51 @@ d(x, y) := \frac{\|x - y\|}{1 + \|x - y\|}
 defines a distance on $\mathbb{E}$ but is not induced by a norm. (*Indication:* to see that $d(x,y)$ as defined above satisfies the triangular inequality, it might be useful to first prove that the function $\phi(t) = t/(1+t)$ is monotone increasing on the positive real numbers and subadditive, i.e. $\phi(a + b) \leq \phi(a) + \phi(b)$, for all $a, b \geq 0$)
 #+end_quote
 
-** Notes
-
 ** Solution
+
+*** (i)
+
+We verify the three metric axioms for $\rho$.
+
+- /Definiteness/: By definition, $\rho(x,y) = 0 \iff x = y$.
+- /Symmetry/: If $x = y$ then $\rho(x,y) = 0 = \rho(y,x)$. If $x \neq y$ then $y \neq x$, so $\rho(x,y) = 1 = \rho(y,x)$.
+- /Triangle inequality/: Let $x, y, z \in X$. If $x = z$, then $\rho(x,z) = 0 \leq \rho(x,y) + \rho(y,z)$. If $x \neq z$, then at least one of $x \neq y$ or $y \neq z$ holds (otherwise $x = y = z$), so $\rho(x,y) + \rho(y,z) \geq 1 = \rho(x,z)$.
+
+Hence $(X, \rho)$ is a metric space. $\blacksquare$
+
+*** (ii)
+
+Suppose for contradiction that $\rho(x,y) = \|x - y\|$ for some norm $\|\cdot\|$ on $\mathbb{R}$. Then $\|1\| = \rho(0,1) = 1$. By absolute homogeneity of the norm, $\|2\| = |2| \cdot \|1\| = 2$. But $\|2\| = \|2 - 0\| = \rho(2, 0) = 1$, since $2 \neq 0$. This gives $2 = 1$, a contradiction. $\blacksquare$
+
+*** (iii)
+
+Suppose for contradiction that $d(x,y) = \|x - y\|$ for some norm $\|\cdot\|$ on $\mathbb{E}$. Since $\mathbb{E} \neq \{0\}$, there exists $v \in \mathbb{E}$ with $v \neq 0$, so $\|v\| > 0$. By absolute homogeneity, for any $n \in \mathbb{N}$:
+
+$$d(nv, 0) = \|nv\| = n\|v\| \to \infty \quad \text{as } n \to \infty.$$
+
+But $d$ is bounded by $K$, so $n\|v\| \leq K$ for all $n$, which is impossible. $\blacksquare$
+
+*** (iv)
+
+Let $\phi(t) = t/(1+t)$ for $t \geq 0$, so that $d(x,y) = \phi(\|x - y\|)$.
+
+/Monotonicity/: For $0 \leq a \leq b$, we have $\phi(b) - \phi(a) = (b - a)/((1+a)(1+b)) \geq 0$, so $\phi$ is increasing.
+
+/Subadditivity/: For $a, b \geq 0$:
+
+$$\phi(a) + \phi(b) - \phi(a+b) = \frac{a}{1+a} + \frac{b}{1+b} - \frac{a+b}{1+a+b}.$$
+
+Bringing to a common denominator and expanding, the numerator becomes $a^2 b + ab^2 + 2ab \geq 0$, so $\phi(a+b) \leq \phi(a) + \phi(b)$.
+
+We now verify the metric axioms for $d$.
+
+- /Identity of indiscernibles/: $d(x,y) = \phi(\|x-y\|) = 0 \iff \|x-y\| = 0 \iff x = y$, since $\phi(t) = 0 \iff t = 0$.
+- /Symmetry/: $d(x,y) = \phi(\|x-y\|) = \phi(\|y-x\|) = d(y,x)$.
+- /Triangle inequality/: Using the triangle inequality for $\|\cdot\|$, monotonicity, and subadditivity of $\phi$:
+
+$$d(x,z) = \phi(\|x-z\|) \leq \phi(\|x-y\| + \|y-z\|) \leq \phi(\|x-y\|) + \phi(\|y-z\|) = d(x,y) + d(y,z).$$
+
+So $d$ is a metric. Since $d(x,y) = \phi(\|x-y\|) < 1$ for all $x, y$, the metric $d$ is bounded (with $K = 1$). By part (iii), $d$ cannot be induced by any norm. $\blacksquare$
 
 * Problem 1.44
 ** Task
