@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-19>
-#+lastmod: <2026-03-23 15:03>
+#+lastmod: <2026-03-23 15:34>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -111,7 +111,7 @@ $$d(x,z) = \phi(\|x-z\|) \leq \phi(\|x-y\| + \|y-z\|) \leq \phi(\|x-y\|) + \phi(
 
 So $d$ is a metric. Since $d(x,y) = \phi(\|x-y\|) < 1$ for all $x, y$, the metric $d$ is bounded (with $K = 1$). By part (iii), $d$ cannot be induced by any norm. $\blacksquare$
 
-* Problem 1.44
+* Problem 1.44 :DONE:
 ** Task
 #+begin_quote
 (Dual space). The following is a similar but perhaps more laborious exercise to the previous one (ex. 1.43).
@@ -133,11 +133,50 @@ $$\begin{cases} f(p(X)) = i, & \text{and} \\ g(p(X)) = 1 \end{cases}$$
 have any solution for $p \in \mathbb{E}$? if there is, give all the polynomials that are solution of the system. Is the solution unique?
 #+end_quote
 
-** Notes
-
 ** Solution
 
-* Problem 2.4
+Write $p(X) = a + bX + cX^2$ with $a, b, c \in \mathbb{C}$ throughout.
+
+*** (i)
+
+Suppose $\alpha f + \beta g = 0$ in $\mathbb{E}^*$, i.e. $\alpha p(1) + \beta p(i) = 0$ for all $p \in \mathbb{E}$. Evaluating on basis elements:
+
+- $p = 1$: $\alpha + \beta = 0$,
+- $p = X$: $\alpha + i\beta = 0$.
+
+From the first equation $\alpha = -\beta$. Substituting into the second: $-\beta + i\beta = \beta(i - 1) = 0$, so $\beta = 0$ and thus $\alpha = 0$. Hence $f$ and $g$ are linearly independent. $\blacksquare$
+
+*** (ii)
+
+Since $\dim \mathbb{E} = 3$, we have $\dim \mathbb{E}^* = 3$, so we need one more functional. Define $h \in \mathbb{E}^*$ by $h(p(X)) = p(0)$ (evaluation at $0$, i.e. $h(a + bX + cX^2) = a$).
+
+We check that $\{f, g, h\}$ is linearly independent. Suppose $\alpha f + \beta g + \gamma h = 0$. Evaluating on basis elements:
+
+- $p = 1$: $\alpha + \beta + \gamma = 0$,
+- $p = X$: $\alpha + i\beta = 0$,
+- $p = X^2$: $\alpha - \beta = 0$.
+
+From the third equation $\alpha = \beta$. Substituting into the second: $\beta + i\beta = \beta(1 + i) = 0$, so $\beta = 0$, hence $\alpha = 0$, and from the first $\gamma = 0$. Since three linearly independent vectors in a 3-dimensional space form a basis, $\{f, g, h\}$ is a basis of $\mathbb{E}^*$. $\blacksquare$
+
+*** (iii)
+
+The system $f(p) = i$, $g(p) = 1$ reads:
+
+$$a + b + c = i, \qquad a + ib - c = 1.$$
+
+Adding the two equations: $2a + (1+i)b = 1 + i$, so $a = \frac{(1+i) - (1+i)b}{2} = \frac{(1+i)(1 - b)}{2}$. Subtracting the first from the second: $(i-1)b - 2c = 1 - i$, so $c = \frac{(i-1)b - (1-i)}{2} = \frac{(i-1)(b-1)}{2}$.
+
+Let $b = t \in \mathbb{C}$ be a free parameter. Then:
+
+$$a = \frac{(1+i)(1-t)}{2}, \qquad b = t, \qquad c = \frac{(i-1)(t-1)}{2},$$
+
+and the general solution is:
+
+$$p(X) = \frac{(1+i)(1-t)}{2} + tX + \frac{(i-1)(t-1)}{2}X^2, \qquad t \in \mathbb{C}.$$
+
+The system has infinitely many solutions (a one-parameter family), so the solution is not unique. This is expected: two linear equations on a 3-dimensional space generically constrain a 1-dimensional affine subspace. $\blacksquare$
+
+* Problem 2.4 :DONE:
 ** Task
 #+begin_quote
 (Inner product of functions)
@@ -155,6 +194,28 @@ $$\omega(f, g) = \int_0^{\pi} f(x) g(x) \, \mathrm{d}x$$
 Is the basis $\mathcal{B} := \{\cos(x), \sin(x)\}$ an orthogonal basis w.r.t. $\omega$? Is it orthonormal? Give an orthogonal/orthonormal basis if $\mathcal{B}$ is not.
 #+end_quote
 
-** Notes
-
 ** Solution
+
+*** (i)
+
+It suffices to show that $\mathbb{E}$ is a subspace of the $\mathbb{R}$ vector space of all functions $[0,\pi] \to \mathbb{R}$ (which is a vector space under pointwise addition and scalar multiplication). We check the three subspace conditions.
+
+- /Non-empty/: The zero function $0 = 0 \cdot \cos x + 0 \cdot \sin x$ belongs to $\mathbb{E}$.
+- /Closure under addition/: If $f = \alpha_1 \cos x + \beta_1 \sin x$ and $g = \alpha_2 \cos x + \beta_2 \sin x$ are in $\mathbb{E}$, then $(f+g)(x) = (\alpha_1 + \alpha_2)\cos x + (\beta_1 + \beta_2)\sin x \in \mathbb{E}$.
+- /Closure under scalar multiplication/: If $f = \alpha \cos x + \beta \sin x \in \mathbb{E}$ and $\lambda \in \mathbb{R}$, then $(\lambda f)(x) = (\lambda\alpha)\cos x + (\lambda\beta)\sin x \in \mathbb{E}$.
+
+Hence $\mathbb{E}$ is a vector space. $\blacksquare$
+
+*** (ii)
+
+We compute the three relevant integrals.
+
+$\omega(\cos, \cos) = \int_0^{\pi} \cos^2 x \, dx = \int_0^{\pi} \frac{1 + \cos 2x}{2} \, dx = \frac{\pi}{2}$
+
+$\omega(\sin, \sin) = \int_0^{\pi} \sin^2 x \, dx = \int_0^{\pi} \frac{1 - \cos 2x}{2} \, dx = \frac{\pi}{2}$
+
+$\omega(\cos, \sin) = \int_0^{\pi} \cos x \sin x \, dx = \int_0^{\pi} \frac{\sin 2x}{2} \, dx = \left[-\frac{\cos 2x}{4}\right]_0^{\pi} = \frac{-1+1}{4} = 0$
+
+Since $\omega(\cos, \sin) = 0$, the basis $\mathcal{B} = \{\cos x, \sin x\}$ is orthogonal. It is not orthonormal, since $\omega(\cos, \cos) = \omega(\sin, \sin) = \pi/2 \neq 1$. Normalizing each basis vector, the orthonormal basis is:
+
+$$\mathcal{B}' = \left\{\sqrt{\frac{2}{\pi}}\cos x, \; \sqrt{\frac{2}{\pi}}\sin x\right\}. \quad \blacksquare$$
