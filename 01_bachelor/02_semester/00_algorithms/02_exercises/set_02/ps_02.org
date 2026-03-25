@@ -1,0 +1,140 @@
+#+title: Ps 02
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-03-25>
+#+lastmod: <2026-03-25 12:19>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* Problem 18
+** Task
+#+begin_quote
+Use the Master Theorem to provide $\Theta$ bounds for the following recursions (assume $n_0 = 1$ for all of them).
+
+(a) $T(n) = 2T\!\left(\dfrac{n}{4}\right) + \Theta(1)$,
+
+(b) $T(n) = 2T\!\left(\dfrac{n}{4}\right) + \Theta(\sqrt{n})$,
+
+(c) $T(n) = 2T\!\left(\dfrac{n}{4}\right) + \Theta(\sqrt{n} \lg^2 n)$,
+
+(d) $T(n) = 2T\!\left(\dfrac{n}{4}\right) + \Theta(n)$,
+
+(e) $T(n) = 2T\!\left(\dfrac{n}{4}\right) + \Theta(n^2)$.
+#+end_quote
+
+** Solution
+
+* Problem 19
+** Task
+#+begin_quote
+Professor Caesar wants to develop a matrix-multiplication algorithm that is asymptotically faster than Strassen's algorithm. His algorithm will use the divide-and-conquer method, dividing each matrix into submatrices of size $\dfrac{n}{4} \times \dfrac{n}{4}$, and the divide and combine steps together will take $\Theta(n^2)$ time. Suppose that the professor's algorithm creates $a$ recursive subproblems of that size. What is the largest integer value of $a$ for which his algorithm could possibly run asymptotically faster than Strassen's? How does $a$ change if the subproblems have size $\dfrac{n}{3} \times \dfrac{n}{3}$ or $\dfrac{n}{5} \times \dfrac{n}{5}$?
+#+end_quote
+
+** Solution
+
+* Problem 20
+** Task
+#+begin_quote
+Consider the function $f(n) = \lg n$. Argue that although $f\!\left(\dfrac{n}{2}\right) < f(n)$, the regularity condition $af\!\left(\dfrac{n}{b}\right) \leq cf(n)$ with $a = 1$ and $b = 2$ does not hold for any constant $c < 1$. Argue further that for any $\varepsilon > 0$, the condition in Case 3 of the Master theorem that $f(n) = \Omega(n^{\log_b a + \varepsilon})$ does not hold.
+#+end_quote
+
+** Solution
+
+* Problem 21
+** Task
+#+begin_quote
+Show that for suitable constants $a > 0$, $b > 1$, $\varepsilon > 0$ the function $f(n) := 2^{\lceil \lg n \rceil}$ satisfies all conditions of Case 3 of the Master theorem except for the regularity condition.
+#+end_quote
+
+** Solution
+
+* Problem 22
+** Task
+#+begin_quote
+Show that $f(n) = n^2$ satisfies the polynomial growth condition but $g(n) = 2^n$ does not.
+#+end_quote
+
+** Solution
+
+* Problem 23
+** Task
+#+begin_quote
+Prove that the polynomial growth condition is equivalent to the following condition on the function $f : \mathbb{R} \to \mathbb{R}$:
+
+For all $0 < \varphi < 1$ there exist constants $N > 0$ and $c_1, c_2 > 0$ with the property that for all $n \geq N$ and all $u \in [\varphi n, n]$
+
+$c_1 f(n) \leq f(u) \leq c_2 f(n)$.
+#+end_quote
+
+** Solution
+
+* Problem 24
+** Task
+#+begin_quote
+Prove that $f(n) = n \lg n$ and $f(n) = n \lg \lg n$ satisfy the polynomial growth condition.
+#+end_quote
+
+** Solution
+
+* Problem 25
+** Task
+#+begin_quote
+Assume that $f$ satisfies the polynomial growth condition, and let $g(n) = \Theta(n)$. Show that $f(g(n)) = \Theta(f(n))$. Usually we write $f(\Theta(n)) = \Theta(f(n))$. Explain why this notation makes sense.
+#+end_quote
+
+** Solution
+
+* Problem 26
+** Task
+#+begin_quote
+Use the Akra-Bazzi-Theorem to compute $\Theta$ expressions for the following recurrences:
+
+(a) $T(n) = T\!\left(\dfrac{n}{2}\right) + T\!\left(\dfrac{n}{3}\right) + T\!\left(\dfrac{n}{6}\right) + \Theta(n \lg n)$,
+
+(b) $T(n) = 3T\!\left(\dfrac{n}{3}\right) + 8T\!\left(\dfrac{n}{4}\right) + \Theta\!\left(\dfrac{n^2}{\lg n}\right)$,
+
+(c) $T(n) = \dfrac{2}{3}\, T\!\left(\dfrac{n}{3}\right) + \dfrac{1}{3}\, T\!\left(\dfrac{2n}{3}\right) + \Theta(\lg n)$,
+
+(d) $T(n) = \dfrac{1}{3}\, T\!\left(\dfrac{n}{3}\right) + \dfrac{1}{n}$,
+
+(e) $T(n) = 3T\!\left(\dfrac{n}{3}\right) + 3T\!\left(\dfrac{2n}{3}\right) + n^2$.
+#+end_quote
+
+** Solution
+
+* Problem 27
+** Task
+#+begin_quote
+Use the Akra-Bazzi-Theorem for finding another proof for the continuous Master Theorem.
+#+end_quote
+
+** Solution
+
+* Problem 28
+** Task
+#+begin_quote
+Solving recurrences using a change of variables. Let us consider the recurrence $T(n) = 2T(\sqrt{n}) + \Theta(\lg n)$. For this recurrence the Master Theorem cannot be used directly. Therefore, define $m = \lg n$ and $S(m) = T(2^m)$. Rewrite the recurrence for $T$ in $n$ into a recurrence for $S$ in $m$. Use the Master Theorem to solve the recurrence for $S$ and rewrite the solution in terms of $T$ and $n$.
+#+end_quote
+
+** Solution
+
+* Problem 29
+** Task
+#+begin_quote
+Use the method of problem 28 to solve the following recurrences:
+
+(a) $T(n) = 2T(\sqrt{n}) + \Theta(1)$,
+
+(b) $T(n) = 3T(\sqrt[3]{n}) + \Theta(n)$,
+
+(c) $T(n) = 3T(\sqrt{n}) + 3T(\sqrt[3]{n}) + \Theta((\lg \lg n)^2)$.
+#+end_quote
+
+** Solution
