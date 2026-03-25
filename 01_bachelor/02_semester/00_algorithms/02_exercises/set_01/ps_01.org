@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-13 15:13>
+#+lastmod: <2026-03-25 11:54>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -456,3 +456,269 @@ Let $c_5 = c_1 \cdot c_3, \, c_6 = c_2 \cdot c_4$. Then:
 $$c_5 \cdot h(n) \le f(n) \le c_6 \cdot h(n), \quad \forall n \ge n_0$$
 
 Thus, $f(n) = \Theta(h(n))$. $\blacksquare$
+
+* Problem 11 :DONE:
+** Task
+#+begin_quote
+For sequences $f(n)$, $g(n)$, $h(n)$, and $k(n)$ prove that $f(n) = \Omega(h(n))$ and $g(n) = \omega(k(n))$ implies $f(n) + g(n) = \Omega(h(n) + k(n))$.
+#+end_quote
+
+** Solution
+
+Assume $f(n) = \Omega(h(n)), \, g(n) = \omega(k(n))$. Show $f(n) + g(n) = \Omega(h(n) + k(n))$.
+
+$$\Omega(h(n)) = \left\{ f(n) : \exists c_1, n_1 > 0 : 0 \le c_1 \cdot h(n) \le f(n), \forall n \ge n_1 \right\}$$
+
+$$\omega(k(n)) = \left\{ g(n) : \forall c_2 > 0, \exists n_2 > 0 : 0 \le c_2 \cdot k(n) < g(n), \forall n \ge n_2 \right\}$$
+
+Let $n_0 = \max(n_1, n_2)$ and $c_2 = c_1$. Then $\forall n \ge n_0$:
+
+\begin{align*}
+0 \le c_1 \cdot h(n) &\le f(n) \\
+0 \le c_1 \cdot k(n) &< g(n) \\
+0 \le c_1 \cdot \left( h(n) + k(n) \right) &\le f(n) + g(n)
+\end{align*}
+
+Hence $f(n) + g(n) = \Omega(h(n) + k(n))$. $\blacksquare$
+
+* Problem 12 :DONE:
+** Task
+#+begin_quote
+Let $f(n) = O(g(n))$ and $g(n) = o(h(n))$. Prove that $f(n) = o(h(n))$.
+#+end_quote
+
+** Solution
+
+Assume $f(n) = O(g(n))$ and $g(n) = o(h(n))$. Show $f(n) = o(h(n))$.
+
+$$O(g(n)) = \left\{ f(n) : \exists c_1, n_1 > 0 : 0 \le f(n) \le c_1 \cdot g(n), \, \forall n \ge n_1 \right\}$$
+
+$$o(h(n)) = \left\{ g(n) : \forall c_2 > 0, \exists n_2 > 0 : 0 \le g(n) < c_2 \cdot h(n), \, \forall n \ge n_2 \right\}$$
+
+Let $c > 0$ be arbitrary. Choose $c_2 = \frac{c}{c_1}$ and $n_0 = \max(n_1, n_2)$. Then $\forall n \ge n_0$:
+
+\begin{align*}
+0 \le f(n) &\le c_1 \cdot g(n) \\
+  &< c_1 \cdot c_2 \cdot h(n) \\
+  &< c_1 \cdot \frac{c}{c_1} \cdot h(n) \\
+  &< c \cdot h(n)
+\end{align*}
+
+Hence $f(n) = o(h(n))$. $\blacksquare$
+
+* Problem 13 :DONE:
+** Task
+#+begin_quote
+Use Stirling's formula
+
+\[
+n! = \sqrt{2\pi n} \left(\frac{n}{e}\right)^n \left(1 + \Theta\left(\frac{1}{n}\right)\right).
+\]
+
+to show that
+
+(a) $n! = o(n^n)$,
+
+(b) $n! = \omega(2^n)$,
+
+(c) $\lg(n!) = \Theta(n \lg n)$.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+\begin{align*}
+\lim_{n\rightarrow\infty} \dfrac{\sqrt{2\pi n} \left(\frac{n}{e}\right)^n \left(1 + \Theta\left(\frac{1}{n}\right)\right)}{n^n}
+  &= \lim_{n\rightarrow\infty} \sqrt{2\pi n} \cdot \frac{1}{e^n} \cdot \left(1 + \Theta\left(\frac{1}{n}\right)\right) \\
+  &= \lim_{n\rightarrow\infty} \sqrt{2\pi n} \cdot \frac{1}{e^n} \cdot 1 \\
+  &= 0
+\end{align*}
+
+since $\sqrt{2\pi n}$ grows polynomially while $e^n$ grows exponentially.
+
+Hence $n! = o(n^n)$. $\blacksquare$
+
+*** (b)
+
+\begin{align*}
+\lim_{n\rightarrow\infty} \dfrac{\sqrt{2\pi n} \left(\frac{n}{e}\right)^n \left(1 + \Theta\left(\frac{1}{n}\right)\right)}{2^n}
+  &= \lim_{n\rightarrow\infty} \sqrt{2\pi n} \cdot \left(\frac{n}{2e}\right)^n \cdot \left(1 + \Theta\left(\frac{1}{n}\right)\right) \\
+  &= \lim_{n\rightarrow\infty} \sqrt{2\pi n} \cdot \left(\frac{n}{2e}\right)^n \cdot 1 \\
+  &= \infty \\
+\end{align*}
+
+Hence, $n! = \omega(2^n)$. $\blacksquare$
+
+*** (c)
+
+\begin{align*}
+\lg(n!) &= \lg\left(\sqrt{2\pi n}\right) + n \lg n - n \lg e + \lg\left(1 + \Theta\left(\frac{1}{n}\right)\right) \\
+\frac{\lg(n!)}{n \lg n} &= \frac{\frac{1}{2}\lg(2\pi n)}{n \lg n} + 1 - \frac{\lg e}{\lg n} + \frac{\lg\left(1 + \Theta\left(\frac{1}{n}\right)\right)}{n \lg n} \\
+\lim_{n\rightarrow\infty} \frac{\lg(n!)}{n \lg n} &= 0 + 1 - 0 + 0 = 1
+\end{align*}
+
+Since the limit is a positive constant, $\lg(n!) = \Theta(n \lg n)$. $\blacksquare$
+
+* Problem 14 :SKIP:
+** Task
+#+begin_quote
+We define the iterated logarithm function
+
+$$\lg^*(n) := \min\{i \in \mathbb{N} \mid \lg^{(i)}(n) \leq 1\}$$
+
+where $\lg^{(1)}(x) := \lg x$, $\lg^{(k+1)}(x) := \lg(\lg^{(k)}(x))$. This function grows extremely slowly. Order the following functions by asymptotic growth:
+
+|  # | Function                     |
+|----+------------------------------|
+|  1 | $\lg(\lg^*(n))$              |
+|  2 | $2^{\lg^*(n)}$               |
+|  3 | $\sqrt{2}^{\lg n}$           |
+|  4 | $n^2$                        |
+|  5 | $n!$                         |
+|  6 | $(\lceil \lg n \rceil)!$     |
+|  7 | $\left(\frac{3}{2}\right)^n$ |
+|  8 | $n^3$                        |
+|  9 | $\lg^2 n$                    |
+| 10 | $\lg(n!)$                    |
+| 11 | $2^{2^n}$                    |
+| 12 | $n^{1/\lg n}$                |
+| 13 | $\lg \lg n$                  |
+| 14 | $\lg^* n$                    |
+| 15 | $n \cdot 2^n$                |
+| 16 | $n^{\lg \lg n}$              |
+| 17 | $\lg n$                      |
+| 18 | $1$                          |
+| 19 | $2^{\lg n}$                  |
+| 20 | $(\lg n)^{\lg n}$            |
+| 21 | $e^n$                        |
+| 22 | $4^{\lg n}$                  |
+| 23 | $(n+1)!$                     |
+| 24 | $\sqrt{\lg n}$               |
+| 25 | $\lg^*(\lg n)$               |
+| 26 | $2^{\sqrt{2 \lg n}}$         |
+| 27 | $n$                          |
+| 28 | $2^n$                        |
+| 29 | $n \lg n$                    |
+| 30 | $2^{2^{n+1}}$                |
+#+end_quote
+
+** Solution
+
+#+begin_src julia :results output raw :tangle julia/p_14.jl
+
+#+end_src
+
+* Problem 15 :DONE:
+** Task
+#+begin_quote
+Use the substitution method to prove that the recursion
+\[
+T(n) = 4T\left(\frac{n}{2}\right) + n
+\]
+implies $T(n) = \Theta(n^2)$.
+
+Hint: Subtract a lower order term.
+#+end_quote
+
+** Solution
+
+- Upper bound: $T(n) = O(n^2)$
+
+  Trying $T(n) \leq cn^2$ directly gives $cn^2 + n$, which doesn't close
+  because the $+n$ term cannot be absorbed. To fix this, subtract a lower-order
+  term from the hypothesis.
+
+  - Inductive hypothesis: assume $T(k) \leq ck^2 - dk$ for all $k < n$.
+
+  - Base case: $T(1) = a$. We need $a \leq c \cdot 1 - d \cdot 1 = c - d$. With $d = 1$, this requires $c \geq a + 1$, which is satisfiable.
+
+  - Substitute:
+
+    \begin{align*}
+    T(n) &\leq 4\left(c \cdot \frac{n^2}{4} - d \cdot \frac{n}{2}\right) + n \\
+         &= cn^2 - 2dn + n \\
+         &= cn^2 - dn - (dn - n) \\
+         &\leq cn^2 - dn
+    \end{align*}
+
+    Last step holds when $dn - n \geq 0$, i.e. $d \geq 1$. Pick $d = 1$.
+
+    Since $cn^2 - dn \leq cn^2$, this establishes $T(n) = O(n^2)$.
+
+- Lower bound: $T(n) = \Omega(n^2)$
+
+  - Inductive hypothesis: assume $T(k) \geq ck^2$ for all $k < n$.
+
+  - Base case: $T(1) = a$. We need $a \geq c \cdot 1 = c$, so choose $c \leq a$.
+
+  - Substitute:
+
+    \begin{align*}
+    T(n) &\geq 4\left(c \cdot \frac{n^2}{4}\right) + n \\
+         &= cn^2 + n \\
+         &\geq cn^2
+    \end{align*}
+
+    Holds trivially since $n > 0$.
+
+- Conclusion
+
+  Since $T(n) = O(n^2)$ and $T(n) = \Omega(n^2)$, we have $T(n) = \Theta(n^2)$. $\blacksquare$
+
+* Problem 16 :DONE:
+** Task
+#+begin_quote
+For the recurrence
+
+$$T(n) = 4T\left(\frac{n}{3}\right) + n$$
+
+sketch the recursion tree and derive a guess for an asymptotic upper bound of its solution. Then use induction to prove your guess.
+#+end_quote
+
+** Solution
+
+- Deriving the guess via recursion tree
+
+  The recurrence $T(n) = 4T(n/3) + n$ spawns 4 subproblems of size $n/3$ at each level. At level $k$ there are $4^k$ nodes, each contributing $n/3^k$ work, so the total work at level $k$ is $(4/3)^k \cdot n$. The tree has depth $\log_3 n$. Since the ratio $4/3 > 1$, the geometric series is dominated by its last term:
+
+  $$4^{\log_3 n} = n^{\log_3 4}$$
+
+  This suggests $T(n) = O(n^{\log_3 4})$.
+
+- Proof by substitution
+
+  - Inductive hypothesis: assume $T(k) \leq ck^{\log_3 4} - dk$ for all $k < n$.
+
+  - Base case: $T(1) = a$. We need $a \leq c \cdot 1 - d \cdot 1 = c - d$. With $d = 3$, this requires $c \geq a + 3$, which is satisfiable.
+
+  - Substitute:
+
+    \begin{align*}
+    T(n) &\leq 4\left(\frac{n^{\log_3 4}}{4} - d \cdot \frac{n}{3}\right) + n \\
+         &= cn^{\log_3 4} - \frac{4dn}{3} + n \\
+         &= cn^{\log_3 4} - dn - \left(\frac{dn}{3} - n\right) \\
+         &\leq cn^{\log_3 4} - dn
+    \end{align*}
+
+    Last step holds when $\frac{dn}{3} - n \geq 0$, i.e. $d \geq 3$. Pick $d = 3$.
+
+  Since $cn^{\log_3 4} - dn \leq cn^{\log_3 4}$, this establishes $T(n) = O(n^{\log_3 4})$. $\blacksquare$
+
+* Problem 17 :DONE:
+** Task
+#+begin_quote
+Consider the recursion describing Strassen's algorithm for matrix multiplication. Using the Master Theorem, prove that its running time $T(n)$ satisfies $T(n) = O(n^{\lg 7})$.
+#+end_quote
+
+** Solution
+
+Strassen's algorithm satisfies the recurrence $T(n) = 7\,T(n/2) + \Theta(n^2)$.
+
+Apply the Master Theorem with $a = 7$, $b = 2$, $f(n) = \Theta(n^2)$.
+
+We have $n^{\log_b a} = n^{\log_2 7} = n^{\lg 7}$. Since $\lg 7 \approx 2.81$, the cost $f(n) = n^2$ is polynomially smaller than $n^{\lg 7}$:
+
+$$f(n) = O(n^{\lg 7 - \epsilon}) \quad \text{with } \epsilon \approx 0.81$$
+
+This is Case 1 of the Master Theorem, which gives $T(n) = \Theta(n^{\lg 7})$, and therefore $T(n) = O(n^{\lg 7})$. $\blacksquare$
