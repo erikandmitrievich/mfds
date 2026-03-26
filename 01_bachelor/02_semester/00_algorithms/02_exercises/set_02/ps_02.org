@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-25>
-#+lastmod: <2026-03-26 17:34>
+#+lastmod: <2026-03-26 18:06>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -119,13 +119,61 @@ It is a Master Theorem Case 3, such that
 
 $$T(n) = \Theta(f(n)) = \Theta(n^2)$$
 
-* Problem 19
+* Problem 19 :DONE:
 ** Task
 #+begin_quote
 Professor Caesar wants to develop a matrix-multiplication algorithm that is asymptotically faster than Strassen's algorithm. His algorithm will use the divide-and-conquer method, dividing each matrix into submatrices of size $\dfrac{n}{4} \times \dfrac{n}{4}$, and the divide and combine steps together will take $\Theta(n^2)$ time. Suppose that the professor's algorithm creates $a$ recursive subproblems of that size. What is the largest integer value of $a$ for which his algorithm could possibly run asymptotically faster than Strassen's? How does $a$ change if the subproblems have size $\dfrac{n}{3} \times \dfrac{n}{3}$ or $\dfrac{n}{5} \times \dfrac{n}{5}$?
 #+end_quote
 
 ** Solution
+
+Strassen algorithm is:
+$$T(n) = 7\,T(n/2) + \Theta(n^2) \implies T(n) = \Theta(n^{\lg 7}) \approx \Theta(n^{2.807})$$
+
+- Subproblem size $n/4 \times n/4$
+
+  Professor Caesar's algorithm is:
+
+  $$T(n) = aT(n/4) + \Theta(n^2) \implies T(n) = \Theta(n^{\log_4 a})$$
+
+  Assume Caesar's algorithm outperforms Strassen's. Hence,
+
+  \begin{align*}
+  n^{\log_4 a} &< n^{\lg 7} \\
+  \implies \log_4 a &< \log_2 7 \\
+  \implies a &< 4^{\log_2 7} \\
+              &< (2^2)^{\log_2 7} \\
+              &< 2^{2\log_2 7} \\
+              &< 7^2 = 49 \\
+  \end{align*}
+
+  Hence, the largest integer value of $a$ is $48$.
+
+- Subproblem size $n/3 \times n/3$
+
+  $$T(n) = aT(n/3) + \Theta(n^2) \implies T(n) = \Theta(n^{\log_3 a})$$
+
+  \begin{align*}
+  \log_3 a &< \log_2 7 \\
+  \implies a &< 3^{\log_2 7} \\
+              &< 3^{2.807\ldots} \\
+              &< 21.85\ldots \\
+  \end{align*}
+
+  Hence, the largest integer value of $a$ is $21$.
+
+- Subproblem size $n/5 \times n/5$
+
+  $$T(n) = aT(n/5) + \Theta(n^2) \implies T(n) = \Theta(n^{\log_5 a})$$
+
+  \begin{align*}
+  \log_5 a &< \log_2 7 \\
+  \implies a &< 5^{\log_2 7} \\
+              &< 5^{2.807\ldots} \\
+              &< 70.18\ldots \\
+  \end{align*}
+
+  Hence, the largest integer value of $a$ is $70$.
 
 * Problem 20
 ** Task
