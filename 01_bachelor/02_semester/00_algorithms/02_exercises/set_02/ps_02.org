@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-25>
-#+lastmod: <2026-03-25 12:19>
+#+lastmod: <2026-03-26 17:34>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,7 +13,7 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
-* Problem 18
+* Problem 18 :DONE:
 ** Task
 #+begin_quote
 Use the Master Theorem to provide $\Theta$ bounds for the following recursions (assume $n_0 = 1$ for all of them).
@@ -30,6 +30,94 @@ Use the Master Theorem to provide $\Theta$ bounds for the following recursions (
 #+end_quote
 
 ** Solution
+
+*** (a)
+
+\begin{align*}
+a &= 2 \quad (\text{number of subproblems}) \\
+b &= 4 \quad (\text{factor by which input shrinks}) \\
+d &= 0 \quad (\text{since the non recursive block is } \Theta(n^0) = \Theta(1)) \\
+\end{align*}
+
+\begin{align*}
+\text{since } d &< \log_ba \\
+              0 &< \log_42 \\
+              0 &< \frac{1}{2} \\
+\end{align*}
+
+It is a Master Theorem Case 1, such that
+
+$$T(n) = \Theta(n^{\log_ba}) = \Theta(n^{\log_42}) = \Theta(\sqrt{n})$$
+
+*** (b)
+
+\begin{align*}
+a &= 2 \quad (\text{number of subproblems}) \\
+b &= 4 \quad (\text{factor by which input shrinks}) \\
+d &= \frac{1}{2} \quad (\text{since the non recursive block is } \Theta(\sqrt{n}) = \Theta(n^{1/2})) \\
+\end{align*}
+
+\begin{align*}
+\text{since } d &= \log_ba \\
+              \frac{1}{2} &= \log_42 \\
+              \frac{1}{2} &= \frac{1}{2} \\
+\end{align*}
+
+It is a Master Theorem Case 2, such that
+
+$$T(n) = \Theta(n^{\log_ba} \lg^{k+1} n) = \Theta(n^{\log_42} \lg n) = \Theta(\sqrt{n} \lg n)$$
+
+*** (c)
+
+\begin{align*}
+a &= 2 \quad (\text{number of subproblems}) \\
+b &= 4 \quad (\text{factor by which input shrinks}) \\
+\end{align*}
+
+Notice that $f(n) = \Theta(\sqrt{n}\lg^2 n) =  \Theta(n^{1/2} \lg^2 n)$. The polynomial part equals $n^{\log_b a}$. The extra $\lg^2 n$ factor matches Case 2 pattern.
+
+\begin{align*}
+f(n) &= \Theta(n^{\log_b a} \lg^k n) \quad \text{ with } k=2 \\
+\text{Hence, } T(n) &= \Theta(n^{\log_b a} \lg^{k+1} n) \\
+                    &= \Theta(n^{1/2} \lg^{2+1} n) \\
+                    &= \Theta(\sqrt{n} \lg^3 n) \\
+\end{align*}
+
+*** (d)
+
+\begin{align*}
+a &= 2 \quad (\text{number of subproblems}) \\
+b &= 4 \quad (\text{factor by which input shrinks}) \\
+d &= 1 \quad (\text{since the non recursive block is } \Theta(n) = \Theta(n^1)) \\
+\end{align*}
+
+\begin{align*}
+\text{since } d &> \log_ba \\
+              1 &> \log_42 \\
+              1 &> \frac{1}{2} \\
+\end{align*}
+
+It is a Master Theorem Case 3, such that
+
+$$T(n) = \Theta(f(n)) = \Theta(n)$$
+
+*** (e)
+
+\begin{align*}
+a &= 2 \quad (\text{number of subproblems}) \\
+b &= 4 \quad (\text{factor by which input shrinks}) \\
+d &= 2 \quad (\text{since the non recursive block is } \Theta(n^2)) \\
+\end{align*}
+
+\begin{align*}
+\text{since } d &> \log_ba \\
+              2 &> \log_42 \\
+              2 &> \frac{1}{2} \\
+\end{align*}
+
+It is a Master Theorem Case 3, such that
+
+$$T(n) = \Theta(f(n)) = \Theta(n^2)$$
 
 * Problem 19
 ** Task

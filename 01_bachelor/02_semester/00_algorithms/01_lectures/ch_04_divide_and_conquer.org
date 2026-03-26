@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-19>
-#+lastmod: <2026-03-19 14:59>
+#+lastmod: <2026-03-26 16:45>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -217,3 +217,19 @@ T(n) &\leq 2 \cdot O(n/2) + \Theta(n) = O(n) \quad \Leftarrow \textit{fallacy!}
 
 Right: always write explicit constants ($T(n) \leq cn$) and prove the
 *exact* inequality $T(n) \leq cn$, not just "$T(n)$ is $O(n)$."
+
+* 4.5 The Master method of solving recurrences
+
+*Theorem 4.1 (Master Theorem)*
+
+Let $a > 0$ and $b > 1$ be constants, and let $f(n)$ be a driving function that is defined and nonnegative on all sufficiently large reals. Define the recurrence $T(n)$ on $n \in \mathbb{N}$ by
+
+$$T(n) = aT(n/b) + f(n)$$
+
+where $aT(n/b)$ actually means $a'T(\lfloor n/b \rfloor) + a''T(\lceil n/b \rceil)$ for some constants $a' \ge 0$ and $a'' \ge 0$ satisfying $a = a' + a''$. Then the asymptotic behavior of $T(n)$ can be characterized as follows:
+
+1. If there exists a constant $\epsilon > 0$ such that $f(n) = O(n^{\log_b a - \epsilon})$, then $T(n) = \Theta(n^{\log_b a})$.
+
+2. If there exists a constant $k \ge 0$ such that $f(n) = \Theta(n^{\log_b a} \lg^k n)$, then $T(n) = \Theta(n^{\log_b a} \lg^{k+1} n)$.
+
+3. If there exists a constant $\epsilon > 0$ such that $f(n) = \Omega(n^{\log_b a + \epsilon})$, and if $f(n)$ additionally satisfies the regularity condition $af(n/b) \le cf(n)$ for some constant $c < 1$ and all sufficiently large $n$, then $T(n) = \Theta(f(n))$.
