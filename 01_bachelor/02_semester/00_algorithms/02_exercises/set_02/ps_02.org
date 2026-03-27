@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-25>
-#+lastmod: <2026-03-27 11:51>
+#+lastmod: <2026-03-27 14:49>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -287,7 +287,7 @@ Choose the constants $a = 1$, $b = 1.5$, and $\varepsilon = 0.5$. These satisfy 
 
   This directly contradicts the requirement that $c < 1$. Therefore, the regularity condition fails for all $c < 1$.
 
-* Problem 22
+* Problem 22 :SKIP:
 ** Task
 #+begin_quote
 Show that $f(n) = n^2$ satisfies the polynomial growth condition but $g(n) = 2^n$ does not.
@@ -295,7 +295,37 @@ Show that $f(n) = n^2$ satisfies the polynomial growth condition but $g(n) = 2^n
 
 ** Solution
 
-* Problem 23
+*Definition:* A function $h(n)$ has polynomial growth if $\exists k > 0$ such that $h(n) = O(n^k)$.
+
+- $f(n) = n^2$:
+
+  Let $k = 2$. By definition of Big-O, we need $c > 0$ and $n_0 > 0$ such that $n^2 \le c \cdot n^k$ for all $n \ge n_0$.
+
+  $$n^2 \le 1 \cdot n^2 \quad \forall n \ge 1$$
+
+  Setting $c = 1$ and $n_0 = 1$ satisfies the condition.
+  $$\implies f(n) = O(n^2)$$
+
+  Therefore, $f(n)$ satisfies the polynomial growth condition.
+
+- $g(n) = 2^n$:
+
+  Assume for contradiction that $\exists k > 0$ such that $2^n = O(n^k)$.
+  This implies that $\limsup_{n \to \infty} \frac{2^n}{n^k} < \infty$.
+
+  Evaluate the limit using L'Hôpital's rule. Let $m = \lceil k \rceil$:
+
+  $$\lim_{n \to \infty} \frac{2^n}{n^k} = \lim_{n \to \infty} \frac{\frac{d^m}{dn^m}(2^n)}{\frac{d^m}{dn^m}(n^k)}$$
+
+  The $m$ th derivative of the numerator is $2^n(\ln 2)^m$. Since $m \ge k$, the $m$ th derivative of the denominator $n^k$ is a constant $C$ (where $C = k!$ if $k \in \mathbb{N}$, or $0$ otherwise).
+
+  $$\lim_{n \to \infty} \frac{2^n(\ln 2)^m}{C} = \infty$$
+
+  $$\implies 2^n = \omega(n^k)$$
+
+  This contradicts $2^n = O(n^k)$. Thus, $2^n \neq O(n^k)$ for any $k > 0$, and $g(n)$ does not satisfy the polynomial growth condition.
+
+* Problem 23 :SKIP:
 ** Task
 #+begin_quote
 Prove that the polynomial growth condition is equivalent to the following condition on the function $f : \mathbb{R} \to \mathbb{R}$:
@@ -307,13 +337,37 @@ $c_1 f(n) \leq f(u) \leq c_2 f(n)$.
 
 ** Solution
 
-* Problem 24
+* Problem 24 :DONE:
 ** Task
 #+begin_quote
 Prove that $f(n) = n \lg n$ and $f(n) = n \lg \lg n$ satisfy the polynomial growth condition.
 #+end_quote
 
 ** Solution
+
+*Definition:* A function $f(n)$ has polynomial growth if $\exists k > 0$ such that $f(n) = O(n^k)$.
+
+- $f(n) = n \lg n$:
+
+  Choose $k = 2$. We know that $\lg n < n$ for all $n \ge 1$.
+
+  $$n \lg n \le n \cdot n = n^2 \quad \forall n \ge 1$$
+
+  By the definition of Big-O, setting $c = 1$ and $n_0 = 1$:
+  $$n \lg n \le 1 \cdot n^2 \implies n \lg n = O(n^2)$$
+
+  Therefore, $n \lg n$ is polynomially bounded and satisfies the condition.
+
+- $f(n) = n \lg \lg n$:
+
+  Choose $k = 2$. For $n \ge 4$, the iterated logarithm is well-defined and strictly bounded by the logarithm, so $\lg \lg n < \lg n < n$.
+
+  $$n \lg \lg n < n \cdot n = n^2 \quad \forall n \ge 4$$
+
+  By the definition of Big-O, setting $c = 1$ and $n_0 = 4$:
+  $$n \lg \lg n \le 1 \cdot n^2 \implies n \lg \lg n = O(n^2)$$
+
+  Therefore, $n \lg \lg n$ is polynomially bounded and satisfies the condition.
 
 * Problem 25
 ** Task
