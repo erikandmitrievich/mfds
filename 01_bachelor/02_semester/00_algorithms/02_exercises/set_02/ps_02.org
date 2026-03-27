@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-25>
-#+lastmod: <2026-03-27 15:21>
+#+lastmod: <2026-03-27 15:32>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -452,7 +452,7 @@ Then, $T(n) = \Theta\left(n^p \left(1 + \int_1^n \frac{g(u)}{u^{p+1}} du\right)\
 
   $T(n) = \Theta\left(n^p (1 + \Theta(1))\right) = \Theta(n^p)$ (where $p$ is the solution to $3^{1-p} + 3(2/3)^p = 1$)
 
-* Problem 27
+* Problem 27 :SKIP:
 ** Task
 #+begin_quote
 Use the Akra-Bazzi-Theorem for finding another proof for the continuous Master Theorem.
@@ -460,13 +460,51 @@ Use the Akra-Bazzi-Theorem for finding another proof for the continuous Master T
 
 ** Solution
 
-* Problem 28
+* Problem 28 :DONE:
 ** Task
 #+begin_quote
 Solving recurrences using a change of variables. Let us consider the recurrence $T(n) = 2T(\sqrt{n}) + \Theta(\lg n)$. For this recurrence the Master Theorem cannot be used directly. Therefore, define $m = \lg n$ and $S(m) = T(2^m)$. Rewrite the recurrence for $T$ in $n$ into a recurrence for $S$ in $m$. Use the Master Theorem to solve the recurrence for $S$ and rewrite the solution in terms of $T$ and $n$.
 #+end_quote
 
 ** Solution
+
+- *Change of variables:* Let $m = \lg n \implies n = 2^m$.
+
+  Substitute $n = 2^m$ into the original recurrence:
+
+  \begin{align*}
+  T(2^m) &= 2T(\sqrt{2^m}) + \Theta(\lg(2^m)) \\
+  T(2^m) &= 2T(2^{m/2}) + \Theta(m) \\
+  \end{align*}
+
+
+- *Define new function:* Let $S(m) = T(2^m)$.
+
+  Substitute $S(m)$ into the equation:
+
+  $$S(m) = 2S(m/2) + \Theta(m)$$
+
+- *Apply Master Theorem to $S(m)$:*
+
+  For $S(m) = a S(m/b) + f(m)$, we have $a = 2$, $b = 2$, and $f(m) = \Theta(m)$.
+
+  Calculate the critical exponent:
+  $$m^{\log_b a} = m^{\log_2 2} = m^1 = m$$
+
+  Compare $f(m)$ to $m^{\log_b a}$:
+  $$f(m) = \Theta(m) = \Theta(m^{\log_2 2})$$
+
+  This matches Case 2 of the Master Theorem. Thus:
+  $$S(m) = \Theta(m \lg m)$$
+
+- *Rewrite in terms of $T$ and $n$:*
+
+  Substitute $m = \lg n$ and $S(m) = T(n)$ back into the solution:
+
+  \begin{align*}
+  T(n) &= \Theta(\lg n \cdot \lg(\lg n)) \\
+  T(n) &= \Theta(\lg n \lg \lg n) \\
+  \end{align*}
 
 * Problem 29
 ** Task
