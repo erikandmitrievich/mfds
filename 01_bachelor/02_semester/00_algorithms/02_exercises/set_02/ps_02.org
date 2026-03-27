@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-25>
-#+lastmod: <2026-03-27 10:57>
+#+lastmod: <2026-03-27 11:51>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -223,13 +223,69 @@ Consider the function $f(n) = \lg n$. Argue that although $f\!\left(\dfrac{n}{2}
 
   for any $\epsilon > 0$.
 
-* Problem 21
+* Problem 21 :DONE:
 ** Task
 #+begin_quote
 Show that for suitable constants $a > 0$, $b > 1$, $\varepsilon > 0$ the function $f(n) := 2^{\lceil \lg n \rceil}$ satisfies all conditions of Case 3 of the Master theorem except for the regularity condition.
 #+end_quote
 
 ** Solution
+
+Master Theorem Case 3 requires two conditions to hold for $f(n)$:
+- Dominance condition: $f(n) = \Omega(n^{\log_b a + \varepsilon})$ for some $\varepsilon > 0$.
+- Regularity condition: $a f(n/b) \le c f(n)$ for some constant $c < 1$ and all sufficiently large $n$.
+
+Choose the constants $a = 1$, $b = 1.5$, and $\varepsilon = 0.5$. These satisfy the problem's requirements since $a > 0$, $b > 1$, and $\varepsilon > 0$.
+
+- Dominance Condition
+
+  Show: $f(n) = \Omega(n^{\log_b a + \varepsilon})$.
+
+  First, note that $\log_{1.5} 1 = 0$. Thus, substituting our constants, we need to show $f(n) = \Omega(n^{0.5})$.
+
+  We bound $f(n) = 2^{\lceil \lg n \rceil}$ to find its asymptotic growth:
+
+  \begin{align*}
+  \lg n \le &\lceil \lg n \rceil \le \lg n + 1 \\
+  2^{\lg n} \le &2^{\lceil \lg n \rceil} \le 2^{\lg n + 1} \\
+  n \le &2^{\lceil \lg n \rceil} \le 2n
+  \end{align*}
+
+  Hence, $f(n) = \Theta(n)$.
+
+  Since $f(n) = \Theta(n)$, it grows strictly faster than $n^{0.5}$, meaning:
+
+  $$f(n) = \Omega(n^{0.5})$$
+
+  The dominance condition holds.
+
+- Regularity Condition
+
+  Show: $a f(n/b) \le c f(n)$ fails for any $c < 1$.
+
+  Substituting our chosen constants and $f(n)$, we check if the following inequality can hold for $c < 1$:
+
+  $$1 \cdot 2^{\lceil \lg(n/1.5) \rceil} \le c \cdot 2^{\lceil \lg n \rceil}$$
+
+  To demonstrate that this fails, we only need to find a subsequence of $n$ where the inequality breaks down. Consider the sequence where $n$ is an exact power of 2, i.e., $n = 2^k$ for integers $k \ge 1$.
+
+  For these values, $\lceil \lg n \rceil = \lceil \lg(2^k) \rceil = k$, so:
+
+  $$f(n) = 2^k$$
+
+  Now evaluate $f(n/1.5)$ for this same subsequence:
+
+  $$f(n/1.5) = 2^{\lceil \lg(2^k / 1.5) \rceil} = 2^{\lceil k - \lg 1.5 \rceil}$$
+
+  Since $\lg 1.5 \approx 0.58$, the fractional part subtracted from $k$ is small enough that the ceiling function rounds it right back up to $k$. Specifically, $\lceil k - 0.58 \rceil = k$. Therefore:
+
+  $$f(n/1.5) = 2^k = f(n)$$
+
+  Substituting this back into the regularity condition yields:
+
+  $$f(n) \le c f(n) \implies 1 \le c$$
+
+  This directly contradicts the requirement that $c < 1$. Therefore, the regularity condition fails for all $c < 1$.
 
 * Problem 22
 ** Task
