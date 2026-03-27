@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-25>
-#+lastmod: <2026-03-26 18:06>
+#+lastmod: <2026-03-27 10:57>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -175,13 +175,53 @@ $$T(n) = 7\,T(n/2) + \Theta(n^2) \implies T(n) = \Theta(n^{\lg 7}) \approx \Thet
 
   Hence, the largest integer value of $a$ is $70$.
 
-* Problem 20
+* Problem 20 :DONE:
 ** Task
 #+begin_quote
 Consider the function $f(n) = \lg n$. Argue that although $f\!\left(\dfrac{n}{2}\right) < f(n)$, the regularity condition $af\!\left(\dfrac{n}{b}\right) \leq cf(n)$ with $a = 1$ and $b = 2$ does not hold for any constant $c < 1$. Argue further that for any $\varepsilon > 0$, the condition in Case 3 of the Master theorem that $f(n) = \Omega(n^{\log_b a + \varepsilon})$ does not hold.
 #+end_quote
 
 ** Solution
+
+- Part 1
+
+  We need to check whether $af(\frac{n}{b}) \le cf(n)$ holds for $a = 1, b = 2$ and $f(n) = \lg n$ for any constant $c < 1$.
+
+  \begin{align*}
+  af(\frac{n}{b}) &\le cf(n) \\
+  1 \cdot f(\frac{n}{2}) &\le cf(n) \\
+  \lg \frac{n}{2} &\le c\lg n \\
+  \lg n - \lg 2 &\le c\lg n \\
+  \lg n - 1 &\le c\lg n \\
+  (1 - c) \lg n &\le 1 \\
+   \lg n &\le \frac{1}{1 - c} \\
+  \end{align*}
+
+  But $\lg n$ grows without bound as $n \rightarrow \infty$. For a fixed $c < 1$, this could not hold for all large $n$.
+
+  Hence, the regularity condition fails $\forall c < 1$.
+
+- Part 2
+
+  Case 3 of Master Theorem requires $\exists \epsilon > 0 : f(n) = \Omega(n^{\log_b a + \epsilon})$.
+
+  With $a = 1, b = 2$, $\log_b a = \log_2 1 = 0$.
+
+  So the Case 3 would require:
+
+  $$f(n) = \Omega(n^{\epsilon})$$
+
+  for some $\epsilon > 0$.
+
+  However, logarithmic function could not grow polynomially, no matter hom small $\epsilon > 0$ is.
+
+  $$\lim_{n\rightarrow\infty} \frac{\lg n}{n^\epsilon} = 0$$
+
+  Thus,
+
+  $$f(n) \neq \Omega(n^{\epsilon})$$
+
+  for any $\epsilon > 0$.
 
 * Problem 21
 ** Task
