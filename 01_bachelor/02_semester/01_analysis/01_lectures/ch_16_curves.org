@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-20>
-#+lastmod: <2026-03-20 13:49>
+#+lastmod: <2026-04-01 15:29>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,11 +13,11 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
-* Definition 16.4.0: Curve
+* Definition  16.4.0: Curve
 
 Let $X$ be a metric space. A map $f : \left[ 0,1 \right] \rightarrow X$ is also called a curve. If $X = \mathbb{R}^n$, then $f$ is called a space curve.
 
-* Definition 16.4.1: Length of a curve in a metric space
+* Definition  16.4.1: Length of a curve in a metric space
 
 Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a curve. For a partition
 
@@ -33,7 +33,7 @@ $$\ell(\gamma) := \sup_{\mathcal{P}} \ell(\gamma, \mathcal{P}),$$
 
 where the supremum is taken over all partitions $\mathcal{P}$ of $\left[ 0, 1 \right]$. The curve $\gamma$ is called rectifiable if $\ell(\gamma) < \infty$.
 
-* Definition 16.4.2: Metric derivative
+* Definition  16.4.2: Metric derivative
 
 Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a curve. If the limit exists,
 
@@ -41,244 +41,204 @@ $$|\dot{\gamma}|(t) = \lim_{h \rightarrow 0} \frac{d(\gamma(t + h), \gamma(t))}{
 
 then $|\dot{\gamma}|(t)$ is called the metric derivative of $\gamma$ in $t$.
 
-* Definition 16.4.3: Lipschitz continuous curve
+* Definition  16.4.3: Lipschitz continuous curve
 
 Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a curve. We say that $\gamma$ is Lipschitz continuous if there is a constant $L > 0$ such that
 
 $$d(\gamma(t), \gamma(s)) \le L |t - s|, \qquad t, s \in \left[ 0, 1 \right].$$
 
-* Lemma      16.4.4: Differentiability iff metric derivative exists
-
-The curve $\gamma : \left[ 0, 1 \right] \rightarrow \mathbb{R}^n$ is differentiable iff if its metric derivative $|\dot{\gamma}|(t)$ exists for all $t \in \left[ 0, 1 \right]$.
-
-* Lemma      16.4.5: Tagged partitions adapted to local radii
-
-Let $\delta : \left[ 0, 1 \right] \rightarrow (0, \infty)$ be a function. Then there exists a tagged partition
-
-$$0 = t_0 < t_1 < \cdots < t_n = 1, \qquad \tau_j \in \left[ t_{j-1}, t_j \right],$$
-
-such that for every $j = 1, \ldots, n$,
-
-$$\left[ t_{j-1}, t_j \right] \subset (\tau_j - \delta(\tau_j),\, \tau_j + \delta(\tau_j)).$$
-
-*Proof.*
-
-Let $A$ be the set of all $x \in \left[ 0, 1 \right]$ such that there exists a tagged partition
-
-$$0 = s_0 < s_1 < \cdots < s_m = x, \qquad \sigma_i \in \left[ s_{i-1}, s_i \right],$$
-
-with
-
-$$\left[ s_{i-1}, s_i \right] \subset (\sigma_i - \delta(\sigma_i),\, \sigma_i + \delta(\sigma_i)) \qquad (i = 1, \ldots, m).$$
-
-Clearly $0 \in A$, so $A \ne \emptyset$. Set
-
-$$c := \sup A.$$
-
-We claim that $c = 1$. Assume for contradiction that $c < 1$. Since $\delta(c) > 0$, we may choose $\eta > 0$ such that
-
-$$\eta < \frac{\delta(c)}{2} \qquad \text{and} \qquad c + \eta \le 1.$$
-
-By the definition of supremum, there exists $x \in A$ with
-
-$$c - \eta < x \le c.$$
-
-Take a tagged partition of $\left[ 0, x \right]$ as above. We extend it by one more interval, namely
-
-$$\left[ x, c + \eta \right],$$
-
-and choose the tag $\tau := c$. Since $x > c - \eta > c - \delta(c)$ and $c + \eta < c + \delta(c)$, we have
-
-$$\left[ x, c + \eta \right] \subset (c - \delta(c),\, c + \delta(c)).$$
-
-Hence the extended tagged partition is still admissible. Therefore
-
-$$c + \eta \in A.$$
-
-But this contradicts the definition of $c = \sup A$, since $c + \eta > c$. Thus $c = 1$, and so $1 \in A$. This gives the desired tagged partition of $\left[ 0, 1 \right]$. $\square$
-
-* Theorem    16.4.6: Length of a Lipschitz curve via metric derivative
+* Theorem     16.4.4:  Arc length via metric derivative
 
 Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a Lipschitz continuous curve. If its metric derivative exists on $\left[ 0, 1 \right]$ and is integrable, then
 
-$$\ell(\gamma) = \int_0^1 |\dot{\gamma}|(t) \, dt.$$
+$$\ell(\gamma) = \int_0^1 |\dot{\gamma}|(t) \, dt$$
+
+* Lemma       16.4.5:  Metric derivative of smooth curves
+
+If the curve $\gamma : \left[ 0, 1 \right] \rightarrow \mathbb{R}^n$ is continuously differentiable, then it is Lipschitz continuous and its metric derivative $|\dot{\gamma}|$ satisfies
+
+$$|\dot{\gamma}|(t) = \|\gamma'(t)\|_2$$
+
+In particular, $|\dot{\gamma}|$ is continuous on $\left[ 0, 1 \right]$.
 
 *Proof.*
 
-Set
+Differentiability leads to
 
-$$g(t) := |\dot{\gamma}|(t), \qquad t \in \left[ 0, 1 \right].$$
+$$\frac{\|\gamma(t + h) - \gamma(t)\|_2}{|h|} = \left( \sum_{i=1}^{n} \frac{|\gamma_i(t + h) - \gamma_i(t)|^2}{|h|^2} \right)^{1/2} = \left( \sum_{i=1}^{n} \left| \frac{\gamma_i(t + h) - \gamma_i(t)}{h} \right|^2 \right)^{1/2} \rightarrow \left( \sum_{i=1}^{n} |\gamma_i'(t)|^2 \right)^{1/2} = \|\gamma'(t)\|_2$$
 
-Let $\varepsilon > 0$. Since $g$ is Riemann integrable, there exists a partition
+where $h \rightarrow 0$. Thus, metric derivative satisfies $|\dot{\gamma}|(t) = \|\gamma'(t)\|_2$.
 
-$$Q = \{ 0 = s_0 < s_1 < \cdots < s_m = 1 \}$$
+To verify Lipschitz continuity, we first recall that $\left[ 0, 1 \right]$ is compact, hence $\gamma_i'(\left[ 0, 1 \right]) \subseteq \mathbb{R}$ is compact since $\gamma_i'$ is continuous. Taking the maximum over $i = 1, \ldots, n$, there is $C > 0$ such that
 
-such that
+$$|\gamma_i'(t)| \le C, \quad t \in \left[ 0, 1 \right], \quad i = 1, \ldots, n$$
 
-$$U(g, Q) - L(g, Q) < \varepsilon.$$
+For $s, t \in \left[ 0, 1 \right]$ the mean value theorem ensures that
 
-For each $t \in \left[ 0, 1 \right]$, choose $\eta(t) > 0$ so small that every interval contained in
+$$|\gamma_i(s) - \gamma_i(t)| \le C |s - t|$$
 
-$$(t - \eta(t),\, t + \eta(t))$$
+Since $d_2 \le \sqrt{n} \, d_\infty$, we deduce
 
-lies in one subinterval $\left[ s_{k-1}, s_k \right]$ of $Q$. Since the metric derivative exists at every $t$, there exists $\delta_0(t) > 0$ such that
+$$\|\gamma(s) - \gamma(t)\|_2 \le \underbrace{\sqrt{n} \, C}_{L} |s - t|$$
 
-$$0 < |h| < \delta_0(t) \implies \left| d(\gamma(t+h), \gamma(t)) - g(t)|h| \right| < \varepsilon |h|.$$
+$\square$
 
-Equivalently,
-
-$$(g(t) - \varepsilon)|h| \le d(\gamma(t+h), \gamma(t)) \le (g(t) + \varepsilon)|h|.$$
-
-Now set
-
-$$\delta(t) := \min\{ \delta_0(t), \eta(t) \}.$$
-
-By the tagged-partition lemma, there exists a tagged partition
-
-$$0 = t_0 < t_1 < \cdots < t_n = 1, \qquad \tau_j \in \left[ t_{j-1}, t_j \right],$$
-
-such that
-
-$$\left[ t_{j-1}, t_j \right] \subset (\tau_j - \delta(\tau_j),\, \tau_j + \delta(\tau_j)) \qquad (j = 1, \ldots, n).$$
-
-Since $\delta(\tau_j) \le \eta(\tau_j)$, every interval $\left[ t_{j-1}, t_j \right]$ lies in one subinterval of $Q$. Hence
-
-$$L(g, Q) \le \sum_{j=1}^{n} g(\tau_j)(t_j - t_{j-1}) \le U(g, Q).$$
-
-Therefore
-
-$$\left| \sum_{j=1}^{n} g(\tau_j)(t_j - t_{j-1}) - \int_0^1 g(t) \, dt \right| < \varepsilon.$$
-
-We first prove the upper bound. Let
-
-$$P = \{ 0 = u_0 < u_1 < \cdots < u_r = 1 \}$$
-
-be any partition of $\left[ 0, 1 \right]$. For each interval $\left[ u_{i-1}, u_i \right]$, restrict the gauge $\delta$ to $\left[ u_{i-1}, u_i \right]$ and apply the tagged-partition lemma on this interval. Thus we obtain a tagged partition
-
-$$u_{i-1} = x_{i,0} < x_{i,1} < \cdots < x_{i,\ell_i} = u_i, \qquad \sigma_{i,k} \in \left[ x_{i,k-1}, x_{i,k} \right],$$
-
-such that
-
-$$\left[ x_{i,k-1}, x_{i,k} \right] \subset (\sigma_{i,k} - \delta(\sigma_{i,k}),\, \sigma_{i,k} + \delta(\sigma_{i,k})).$$
-
-Hence
-
-$$d(\gamma(x_{i,k}), \gamma(x_{i,k-1})) \le (g(\sigma_{i,k}) + \varepsilon)(x_{i,k} - x_{i,k-1}).$$
-
-Using the triangle inequality,
-
-$$d(\gamma(u_i), \gamma(u_{i-1})) \le \sum_{k=1}^{\ell_i} d(\gamma(x_{i,k}), \gamma(x_{i,k-1})) \le \sum_{k=1}^{\ell_i} (g(\sigma_{i,k}) + \varepsilon)(x_{i,k} - x_{i,k-1}).$$
-
-Summing over $i$ gives
-
-$$L(\gamma, P) \le \sum g(\sigma_{i,k})(x_{i,k} - x_{i,k-1}) + \varepsilon.$$
-
-Since each interval $\left[ x_{i,k-1}, x_{i,k} \right]$ lies in one subinterval of $Q$, the tagged sum is at most $U(g, Q)$. Therefore
-
-$$L(\gamma, P) \le U(g, Q) + \varepsilon < \int_0^1 g(t) \, dt + 2\varepsilon.$$
-
-Since $P$ was arbitrary,
-
-$$\ell(\gamma) \le \int_0^1 g(t) \, dt + 2\varepsilon.$$
-
-Letting $\varepsilon \rightarrow 0$ yields
-
-$$\ell(\gamma) \le \int_0^1 g(t) \, dt.$$
-
-For the reverse inequality, take the tagged partition
-
-$$0 = t_0 < t_1 < \cdots < t_n = 1, \qquad \tau_j \in \left[ t_{j-1}, t_j \right],$$
-
-constructed above, and refine it by inserting all tags:
-
-$$R := \{ 0, t_1, \ldots, t_n, \tau_1, \ldots, \tau_n \}.$$
-
-Then
-
-$$\ell(\gamma) \ge L(\gamma, R) \ge \sum_{j=1}^{n} \left( d(\gamma(\tau_j), \gamma(t_{j-1})) + d(\gamma(t_j), \gamma(\tau_j)) \right).$$
-
-Because
-
-$$|\tau_j - t_{j-1}| < \delta(\tau_j), \qquad |t_j - \tau_j| < \delta(\tau_j),$$
-
-the lower estimate gives
-
-$$d(\gamma(\tau_j), \gamma(t_{j-1})) \ge (g(\tau_j) - \varepsilon)(\tau_j - t_{j-1}),$$
-
-and
-
-$$d(\gamma(t_j), \gamma(\tau_j)) \ge (g(\tau_j) - \varepsilon)(t_j - \tau_j).$$
-
-Hence
-
-$$\ell(\gamma) \ge \sum_{j=1}^{n} (g(\tau_j) - \varepsilon)(t_j - t_{j-1}) = \sum_{j=1}^{n} g(\tau_j)(t_j - t_{j-1}) - \varepsilon.$$
-
-Since the tagged sum is at least $L(g, Q)$,
-
-$$\ell(\gamma) \ge L(g, Q) - \varepsilon > \int_0^1 g(t) \, dt - 2\varepsilon.$$
-
-Letting $\varepsilon \rightarrow 0$ yields
-
-$$\ell(\gamma) \ge \int_0^1 g(t) \, dt.$$
-
-Combining both inequalities, we obtain
-
-$$\ell(\gamma) = \int_0^1 |\dot{\gamma}|(t) \, dt. \qquad \square$$
-
-* Theorem    16.4.7: Length of a continuously differentiable curve in $\mathbb{R}^d$
+* Theorem     16.4.6:  Arc length of smooth curves
 
 Let $\gamma : \left[ 0, 1 \right] \rightarrow \mathbb{R}^d$ be continuously differentiable. Then
 
-$$\ell(\gamma) = \int_0^1 \sqrt{|\gamma_1'(t)|^2 + \cdots + |\gamma_n'(t)|^2} \, dt.$$
+$$\ell(\gamma) = \int_0^1 \sqrt{|\gamma_1'(t)|^2 + \cdots + |\gamma_n'(t)|^2} \, dt = \int_0^1 \|\gamma'(t)\|_2 \, dt$$
 
 *Proof.*
 
-Set
+The function $t \mapsto \|\gamma'(t)\|_2$ is continuous on $\left[ 0, 1 \right]$.
 
-$$g(t) := \sqrt{|\gamma_1'(t)|^2 + \cdots + |\gamma_n'(t)|^2}.$$
-
-Then $g$ is continuous on $\left[ 0, 1 \right]$.
-
-/Step 1:/ $L(\gamma) \le \int_0^1 g(t) \, dt$. Let $P = \{ t_0, \ldots, t_m \}$ be a partition. For each $j$ and each component, the mean value theorem gives
+*Step 1:* $\ell(\gamma) \le \int_0^1 g(t) \, dt$. Let $\mathcal{P} = \{t_0, \ldots, t_m\}$ be a partition of $\left[ 0, 1 \right]$. For each $j$ and each component, the mean value theorem gives
 
 $$\gamma_k(t_j) - \gamma_k(t_{j-1}) = \gamma_k'(\xi_{j,k})(t_j - t_{j-1})$$
 
 for some $\xi_{j,k} \in (t_{j-1}, t_j)$. Hence
 
-$$|\gamma_k(t_j) - \gamma_k(t_{j-1})| \le \sup_{t \in \left[ t_{j-1}, t_j \right]} |\gamma_k'(t)| \, (t_j - t_{j-1}).$$
+$$|\gamma_k(t_j) - \gamma_k(t_{j-1})| \le \sup_{t \in \left[ t_{j-1}, t_j \right]} |\gamma_k'(t)| \, (t_j - t_{j-1})$$
 
 Therefore
 
-$$\sqrt{\sum_{k=1}^{n} |\gamma_k(t_j) - \gamma_k(t_{j-1})|^2} \le \sup_{t \in \left[ t_{j-1}, t_j \right]} g(t) \, (t_j - t_{j-1}).$$
+$$\sqrt{\sum_{k=1}^{n} |\gamma_k(t_j) - \gamma_k(t_{j-1})|^2} \le \sup_{t \in \left[ t_{j-1}, t_j \right]} g(t) \, (t_j - t_{j-1})$$
 
-Summing and taking the supremum over all partitions yields
+Summing over $j$ and taking the supremum over all partitions yields
 
-$$\ell(\gamma) \le \int_0^1 g(t) \, dt.$$
+$$\ell(\gamma) \le \int_0^1 \|\gamma'(t)\|_2 \, dt$$
 
-/Step 2:/ $\ell(\gamma) \ge \int_0^1 g(t) \, dt$. Since $g$ is continuous, it is uniformly continuous. Let $\varepsilon > 0$ and choose a partition $P$ with mesh sufficiently small so that
+*Step 2:* $\ell(\gamma) \ge \int_0^1 g(t) \, dt$. Since $g$ is continuous, it is uniformly continuous. Let $\varepsilon > 0$ and choose a partition $\mathcal{P}$ with mesh sufficiently small so that
 
-$$\sqrt{\sum_{k=1}^{n} |\gamma_k'(s) - \gamma_k'(t)|^2} < \varepsilon \quad \text{whenever } s, t \text{ lie in one subinterval.}$$
+$$\sqrt{\sum_{k=1}^{n} |\gamma_k'(s) - \gamma_k'(t)|^2} < \varepsilon \quad \text{whenever } s, t \text{ lie in one subinterval}$$
 
 For each $j$, pick $\tau_j \in \left[ t_{j-1}, t_j \right]$. Using the mean value theorem componentwise as above, we obtain
 
-$$\left| \frac{\gamma_k(t_j) - \gamma_k(t_{j-1})}{t_j - t_{j-1}} - \gamma_k'(\tau_j) \right| \le \varepsilon \qquad (k = 1, \ldots, n).$$
+$$\left| \frac{\gamma_k(t_j) - \gamma_k(t_{j-1})}{t_j - t_{j-1}} - \gamma_k'(\tau_j) \right| \le \varepsilon \quad (k = 1, \ldots, n)$$
 
 Hence
 
-$$\sqrt{\sum_{k=1}^{n} \left| \frac{\gamma_k(t_j) - \gamma_k(t_{j-1})}{t_j - t_{j-1}} - \gamma_k'(\tau_j) \right|^2} \le \sqrt{n} \, \varepsilon.$$
+$$\sqrt{\sum_{k=1}^{n} \left| \frac{\gamma_k(t_j) - \gamma_k(t_{j-1})}{t_j - t_{j-1}} - \gamma_k'(\tau_j) \right|^2} \le \sqrt{n} \, \varepsilon$$
 
 Thus
 
-$$\sqrt{\sum_{k=1}^{n} |\gamma_k(t_j) - \gamma_k(t_{j-1})|^2} \ge (g(\tau_j) - \sqrt{n} \, \varepsilon)(t_j - t_{j-1}).$$
+$$\sqrt{\sum_{k=1}^{n} |\gamma_k(t_j) - \gamma_k(t_{j-1})|^2} \ge (g(\tau_j) - \sqrt{n} \, \varepsilon)(t_j - t_{j-1})$$
 
 Summing gives
 
-$$\ell(\gamma, P) \ge \sum_{j=1}^{m} g(\tau_j)(t_j - t_{j-1}) - \sqrt{n} \, \varepsilon.$$
+$$\ell(\gamma, \mathcal{P}) \ge \sum_{j=1}^{m} g(\tau_j)(t_j - t_{j-1}) - \sqrt{n} \, \varepsilon$$
 
 Passing to the limit (Riemann sums) and using $\ell(\gamma) \ge \ell(\gamma, P)$,
 
-$$\ell(\gamma) \ge \int_0^1 g(t) \, dt.$$
+$$\ell(\gamma) \ge \int_0^1 g(t) \, dt$$
 
 Combining both inequalities proves
 
-$$\ell(\gamma) = \int_0^1 \sqrt{|\gamma_1'(t)|^2 + \cdots + |\gamma_n'(t)|^2} \, dt. \qquad \square$$
+$$\ell(\gamma) = \int_0^1 \sqrt{|\gamma_1'(t)|^2 + \cdots + |\gamma_n'(t)|^2} \, dt$$
+
+$\square$
+
+* Lemma       16.4.8:  Reparametrisation invariance of arc length
+
+Let $f : \left[ a, b \right] \rightarrow \mathbb{R}^n$ be a continuously differentiable function and let $\phi : \left[ 0, 1 \right] \rightarrow \left[ a, b \right]$ be bijective and continuously differentiable. Then $\gamma := f \circ \phi : \left[ 0, 1 \right] \rightarrow \mathbb{R}^n$ satisfies
+
+$$\int_a^b \sqrt{|f_1'(x)|^2 + \cdots + |f_n'(x)|^2} \, dx = \int_0^1 \sqrt{|\gamma_1'(t)|^2 + \cdots + |\gamma_n'(t)|^2} \, dt$$
+
+*Proof.*
+
+The function $\phi$ is either strictly increasing or decreasing. Assume it is increasing, so that $\phi'(t) \ge 0$ with $\phi(0) = a$ and $\pi(1) = b$. Substituting $x = \phi(t)$ yields
+
+\begin{align*}
+\int_0^1 \sqrt{|\gamma_1'(t)|^2 + \cdots + |\gamma_n'(t)|^2} \, dt &= \int_0^1 \sqrt{|f_1'(\phi(t)) \phi'(t)|^2 + \cdots + |f_n'(\phi(t)) \phi'(t)|^2} \, dt \\
+&= \int_0^1 \sqrt{|f_1'(\phi(t))|^2 + \cdots + |f_n'(\phi(t))|^2} \, \phi'(t) \, dt \\
+&= \int_a^b \sqrt{|f_1'(x)|^2 + \cdots + |f_n'(x)|^2} \, dx
+\end{align*}
+
+The case that $\phi$ is decreasing is analogous. $\square$
+
+* Theorem     16.5.1:  Distinctive features in finite dimensions
+
+Let $V$ be a finite-dimensional normed vector space. Then the following statements hold:
+
+1. $V$ is complete.
+
+2. If $\| \cdot \|_a$ and $\| \cdot \|_b$ are norms on $V$, then there exist constants $c, C > 0$ such that
+
+   $$c \|v\|_a \le \|v\|_b \le C \|v\|_a \quad \forall v \in V$$
+
+3. Let $W$ be another normed vector space. If $f : V \rightarrow W$ is linear, then $f$ is continuous.
+
+*Proof.*
+
+(ii) Linear Algebra Course.
+
+(i) Fix a basis $B = \{b_1, \ldots, b_n\}$ of $V$ and recall the coordinate map $\chi_B : \mathbb{R}^n \rightarrow V$ given by $\chi_B(x) = \sum_{i=1}^{n} x_i b_i$. Define the coordinate norm
+
+$$\|v\|_B := \|\chi_B^{-1}(v)\|_1, \quad v \in V$$
+
+where $\| \cdot \|_1$ denotes the Euclidean 1-norm on $\mathbb{R}^n$.
+
+Let $(v_k)_{k\in\mathbb{N}}$ be a Cauchy sequence in $V$. By (ii), $(v_k)_{k\in\mathbb{N}}$ is Cauchy with respect to $\| \cdot \|_B$. Setting $x_k = \chi_B^{-1}(v_k)$, we obtain a Cauchy sequence in $\mathbb{R}^n$, which converges since $\mathbb{R}^n$ is complete. Hence $v_k \rightarrow \chi_B(x) \in V$ with respect to $\| \cdot \|_B$, and therefore with respect to the original norm by (ii).
+
+(iii) Set
+
+$$C := \max_{1 \le i \le n} \|f b_i\|$$
+
+For $v = \sum_{i=1}^{n} x_i b_i$ we have
+
+$$\|f v\| \le \sum_{i=1}^{n} |x_i| \, \|f b_i\| \le C \sum_{i=1}^{n} |x_i| = C \|v\|_B$$
+
+By (ii), $\|v\|_B \le C_1 \|v\|$ for some $C_1 > 0$, hence
+
+$$\|f(v_n - v)\| \le C C_1 \|v_n - v\| \rightarrow 0$$
+
+which proves continuity of $f$. $\square$
+
+* Definition  16.6.1:  Fréchet differentiability
+
+Let $V$ and $W$ be normed vector spaces. A function $f : V \rightarrow W$ is called Fréchet differentiable at $x \in V$ if there exists a continuous linear map $f'(x) : V \rightarrow W$ such that
+
+$$f(x + h) = f(x) + f'(x) h + o(\|h\|), \quad h \in V$$
+
+Since $f'(x)$ is required to be continuous, every Fréchet differentiable function is continuous.
+
+* Theorem     16.6.5:  Chain rule
+
+Let $V, W, W'$ be normed vector spaces. If $f : V \rightarrow W$ and $g : W \rightarrow W'$ are Fréchet differentiable, then the composition $g \circ f : V \rightarrow W'$ is Fréchet differentiable and
+
+$$(g \circ f)'(x) = g'(f(x)) \, f'(x)$$
+
+Here $f'(x) : V \rightarrow W$ and $g'(f(x)) : W \rightarrow W'$ are continuous linear maps, and their composition is again a continuous linear map from $V$ to $W'$.
+
+*Proof.*
+
+Define $\varphi(h)$ by
+
+$$g(f(x + h)) = g(f(x)) + g'(f(x)) \, f'(x) h + \varphi(h)$$
+
+We must show that $\varphi(h) / \|h\| \rightarrow 0$ as $h \rightarrow 0$.
+
+Since $f$ is Fréchet differentiable at $x$, there exists a remainder $\psi(h)$ such that
+
+$$f(x + h) = f(x) + f'(x) h + \psi(h), \quad \frac{\|\psi(h)\|}{\|h\|} \rightarrow 0 \quad (h \rightarrow 0)$$
+
+Substituting into $g$ yields
+
+$$\frac{\varphi(h)}{\|h\|} = \frac{g(f(x) + f'(x) h + \psi(h)) - g(f(x)) - g'(f(x)) \, f'(x) h}{\|h\|}$$
+
+Set $\varepsilon_h := f'(x) h + \psi(h)$. Then
+
+$$\frac{\varphi(h)}{\|h\|} = \frac{g(f(x) + \varepsilon_h) - g(f(x)) - g'(f(x)) \, \varepsilon_h}{\|h\|} + \frac{g'(f(x)) \, \psi(h)}{\|h\|}$$
+
+The second term tends to zero since $g'(f(x))$ is continuous and $\psi(h) / \|h\| \rightarrow 0$.
+
+For the first term we write
+
+$$\frac{g(f(x) + \varepsilon_h) - g(f(x)) - g'(f(x)) \, \varepsilon_h}{\|h\|} = \frac{\|\varepsilon_h\|}{\|h\|} \cdot \frac{g(f(x) + \varepsilon_h) - g(f(x)) - g'(f(x)) \, \varepsilon_h}{\|\varepsilon_h\|}$$
+
+Since $f'(x)$ is continuous, $\varepsilon_h \rightarrow 0$ as $h \rightarrow 0$, and the second factor tends to zero by the Fréchet differentiability of $g$. Moreover,
+
+$$\frac{\|\varepsilon_h\|}{\|h\|} \le \|f'(x)\| + \frac{\|\psi(h)\|}{\|h\|}$$
+
+which is bounded for small $h$. Hence $\varphi(h) / \|h\| \rightarrow 0$, proving the claim. $\square$
