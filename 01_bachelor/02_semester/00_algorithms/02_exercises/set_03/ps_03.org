@@ -1,0 +1,74 @@
+#+title: Ps 03
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-04-01>
+#+lastmod: <2026-04-01 14:04>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* Problem 30
+** Task
+#+begin_quote
+Prove that
+
+(a) $\binom{2n}{n} = \frac{2^{2n}}{\sqrt{\pi n}} \left(1 + O\!\left(\frac{1}{n}\right)\right)$,
+
+(b) $\binom{n}{k} \geq \frac{n^k}{4 k!}$ if $k \leq \sqrt{n}$.
+#+end_quote
+
+** Solution
+
+* Problem 31
+** Task
+#+begin_quote
+You shuffle a deck of 10 cards, each marked with a distinct number from 1 to 10. You then remove 3 cards from the deck, one by one. What is the probability that the cards arrive in increasingly sorted order?
+#+end_quote
+
+** Solution
+
+* Problem 32
+** Task
+#+begin_quote
+Let $A$, $B$, $C$ be events, i.e., subsets of $\Omega$. We call $A$ and $B$ conditionally independent given $C$, if
+
+$\Pr(A \cap B \mid C) = \Pr(A \mid C) \Pr(B \mid C)$.
+
+Give an example of three events $A$, $B$, and $C$ so that $A$ and $B$ are not independent but are conditionally independent given $C$.
+#+end_quote
+
+** Solution
+
+* Problem 33
+** Task
+#+begin_quote
+You are a fantasy role playing fan, and you know that the damage you cause with your fireball attack is $40d6$, which means that you have to roll 40 ordinary 6 sided dice and add up all the numbers (of course you could also roll the same 6 sided dice 40 times). Since this is rather tedious, you say that you would like to replace the rolling of the dice by the expected value. What is the expected value, and what is the probability that you are off by more than 1 when you actually do roll the dice?
+#+end_quote
+
+** Solution
+
+* Problem 34
+** Task
+#+begin_quote
+Let $X$ be a nonnegative random variable, and suppose that $E[X]$ is defined. Prove Markov's inequality
+
+$\Pr(X \geq t) \leq E[X]/t$
+
+for all $t \geq 0$.
+#+end_quote
+
+** Solution
+
+* Problem 35
+** Task
+#+begin_quote
+Prove that the variance of the geometric distribution is $q/p^2$.
+#+end_quote
+
+** Solution
