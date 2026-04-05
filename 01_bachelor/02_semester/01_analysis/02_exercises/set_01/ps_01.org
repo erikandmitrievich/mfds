@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-09 07:56>
+#+lastmod: <2026-04-05 15:38>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -44,11 +44,15 @@ Each $d_p$ defines a metric on $\mathbb{R}^n$.
 #+begin_src julia :results output :exports both :tangle julia/p_01_01.jl
 using Plots
 
+const grid_range = -1.5:0.02:1.5
+
 d_p(p, x, y) = sum(abs.(x .- y) .^ p) ^ (1/p)
 
-function unit_ball_scatter(p, grid_range=-1.5:0.02:1.5)
-    pts = [(x,y) for x in grid_range, y in grid_range if d_p(p, [x, y], [0.0, 0.0]) <= 1]
-    scatter(first.(pts), last.(pts),
+B_p(p) = [(x_1, x_2) for x_1 in grid_range for x_2 in grid_range if d_p(p, [x_1, x_2], [0.0, 0.0]) <= 1]
+
+function unit_ball_scatter(p)
+    points = B_p(p)
+    scatter(first.(points), last.(points),
             markersize=1, aspect_ratio=:equal,
             label="p=$p", title="Unit ball p=$p",
             xlabel="x_1", ylabel="x_2")
@@ -82,29 +86,29 @@ How the shape changes as $p$ increases:
 
 For $d_{\infty}$ to be a metric space of $\mathbb{R}^n$ it must satisfy the following properties of metric space:
 
-1. symmetry: $\forall x, y \in \mathbb{R}^{n}$
+- Symmetry: $\forall x,y \in \mathbb{R}^n$.
 
-   \begin{align*}
-   max_{(k=1, \cdots, n)} |x_k - y_k| &= max_{(k=1, \cdots, n)} |y_k - x_k| \\
-   d_{\infty}(x, y) &= d_{\infty}(y, x) \\
-   \end{align*}
+  \begin{align*}
+  \max_{k=1,\ldots,n} |x_k - y_k| &= \max_{k=1,\ldots,n} |y_k - x_k| \\
+  d_{\infty} (x, y) &= d_{\infty} (y, x) \\
+  \end{align*}
 
-2. triangle inequality: $\forall x, y, z \in \mathbb{R}^{n}$
+- Triangle inequality: $\forall x,y,z \in \mathbb{R}^n$.
 
-\begin{align*}
-max_{(k=1, \cdots, n)} |x_k - z_k| &= max_{(k=1, \cdots, n)} |x_k - z_k| \\
-max_{(k=1, \cdots, n)} |x_k - z_k| &= max_{(k=1, \cdots, n)} |x_k - y_k + y_k - z_k| \\
-max_{(k=1, \cdots, n)} |x_k - z_k| &\le max_{(k=1, \cdots, n)} |x_k - y_k| + |y_k - z_k| \\
-max_{(k=1, \cdots, n)} |x_k - z_k| &\le max_{(k=1, \cdots, n)} |x_k - y_k| + max_{(k=1, \cdots, n)} |y_k - z_k| \\
-d_{\infty}(x, z) &\le d_{\infty}(x, y) + d_{\infty}(y, z) \\
-\end{align*}
+  \begin{align*}
+  \max_{(k=1, \cdots, n)} |x_k - z_k| &=   \max_{(k=1, \cdots, n)} |x_k - z_k| \\
+  \max_{(k=1, \cdots, n)} |x_k - z_k| &=   \max_{(k=1, \cdots, n)} |x_k - y_k + y_k - z_k| \\
+  \max_{(k=1, \cdots, n)} |x_k - z_k| &\le \max_{(k=1, \cdots, n)} |x_k - y_k| + |y_k - z_k| \\
+  \max_{(k=1, \cdots, n)} |x_k - z_k| &\le \max_{(k=1, \cdots, n)} |x_k - y_k| + \max_{(k=1, \cdots, n)} |y_k - z_k| \\
+  d_{\infty} (x, z) &\le d_{\infty} (x, y) + d_{\infty} (y, z) \\
+  \end{align*}
 
-3. definiteness: $\forall x, y \in \mathbb{R}^n$
+- Definiteness: $\forall x,y \in \mathbb{R}^n$.
 
-   \begin{align*}
-   d_{\infty}(x, y) = 0 &\iff max_{(k=1, \cdots, n)} |x_k - y_k| = 0 \\
-                        &\iff x = y \\
-   \end{align*}
+  \begin{align*}
+  d_{\infty}(x, y) = 0 &\iff \max_{(k=1, \cdots, n)} |x_k - y_k| = 0 \\
+  &\iff x = y \\
+  \end{align*}
 
 * Problem 2 :DONE:
 ** Task
