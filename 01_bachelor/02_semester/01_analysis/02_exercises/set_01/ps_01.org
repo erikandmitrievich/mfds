@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-04-05 15:38>
+#+lastmod: <2026-04-06 12:17>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -127,7 +127,7 @@ and deduce that $d_p(x, y) \to d_\infty(x, y)$ as $p \to \infty$.
   Let $x, y \in \mathbb{R}^n$ be fixed. Write $a_i = |x_i - y_i|$ for each $i$, and set
   $M = \max_{1 \le i \le n} a_i = d_\infty(x, y)$. Then
 
-  $$d_p(x, y) = \left( \sum_{i=1}^{n} a_i^p \right)^{1/p}.$$
+  $$d_p(x, y) = \left( \sum_{i=1}^{n} a_i^p \right)^{1/p}$$
 
   *Claim.* For every $p \in [1, \infty)$,
 
@@ -190,7 +190,7 @@ Let $(X, d_X)$ and $(Y, d_Y)$ be metric spaces and let $f : X \to Y$ be a functi
 
   where $B_r(z)$ denotes the open ball of radius $r$ centred at $z$ in the
   appropriate metric space. We say $f$ is *continuous* if it is continuous at
-  every $x_0 \in X$.
+  every $x \in X$.
 
   *Claim.* $f$ is continuous if and only if $f^{-1}(U)$ is open in $X$ for every
   open set $U \subseteq Y$.

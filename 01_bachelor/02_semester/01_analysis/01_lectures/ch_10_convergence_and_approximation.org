@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-04-01 15:40>
+#+lastmod: <2026-04-05 18:17>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -173,7 +173,7 @@ Thus, $x_n \rightarrow x$.
 
 Let $X$ be a metric space and $x \in X$.
 
-1. We define a ball $B_{\epsilon}(x)$ of radius $\epsilon \ge 0$ and its interior $\mathring{B}(x)$ by
+1. We define a ball $B_{\epsilon}(x)$ of radius $\epsilon \ge 0$ and its interior $\mathring{B}_{\epsilon}(x)$ by
 
    \begin{align*}
    B_{\epsilon}(x) := \left\{ y \in X : d_X(x, y) \le \epsilon \right\} \\
