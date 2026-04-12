@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-06>
-#+lastmod: <2026-03-09 15:39>
+#+lastmod: <2026-04-08 13:55>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -35,8 +35,8 @@ Let $\alpha = (\alpha_1, \alpha_2, \alpha_3)$ be the shared coordinate vector. T
 Define $T : \mathbb{R}^3 \to \mathbb{R}^3$ by $T(\alpha) = M\alpha$, where $M$ has columns $(u_i - v_i)$. Then $\mathbb{F} = \ker(T)$.
 
 \begin{align*}
-M &=
-\begin{bmatrix}
+M =
+&\begin{bmatrix}
 0 & -h & -k \\
 h & 0  & 0  \\
 k & 0  & 0  \\
