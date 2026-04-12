@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-12>
-#+lastmod: <2026-04-12 18:04>
+#+lastmod: <2026-04-12 18:39>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -51,12 +51,7 @@ By analogous computation, $\partial_2 f(x, y) = 2y$.
 
 Therefore:
 
-\[
-\nabla f(x, y) =
-\begin{pmatrix}
-2x \\ 2y
-\end{pmatrix}.
-\]
+$$\nabla f(x, y) = \begin{pmatrix} 2x \\ 2y \end{pmatrix}$$
 
 *** (b)
 
@@ -74,9 +69,7 @@ The Fréchet derivative $Df(p) : \mathbb{R}^n \to \mathbb{R}^m$ is the unique li
 
 For $f : \mathbb{R}^n \to \mathbb{R}$, this linear functional has the representation $Df(p)(h) = \nabla f(p)^\top h$, yielding the affine approximation:
 
-\[
-L(x) = f(p) + \nabla f(p)^\top (x - p).
-\]
+$$L(x) = f(p) + \nabla f(p)^{\top} (x - p)$$
 
 With $p = (1, 2)$ and $f(1, 2) = 1^2 + 2^2 = 5$:
 
@@ -124,7 +117,7 @@ gif(anim, "./assets/p_01_c.gif", fps=30)
 #+RESULTS:
 : Plots.AnimatedGif("/Users/ziro2173/personal/university/01_bachelor/02_semester/01_analysis/02_exercises/set_04/assets/p_01_c.gif")
 
-* Problem 2
+* Problem 2 :DONE:
 ** Task
 #+begin_quote
 Let $f : \mathbb{R}^3 \to \mathbb{R}$ be defined by $f(x, y, z) = xyz$.
@@ -137,8 +130,93 @@ Let $f : \mathbb{R}^3 \to \mathbb{R}$ be defined by $f(x, y, z) = xyz$.
 #+end_quote
 
 ** Solution
+
+*** (a)
+
+Let $f : \mathbb{R}^3  \rightarrow \mathbb{R}, \quad f(x, y, z) = xyz$.
+
+By definition, the partial derivatives are:
+
+\begin{align*}
+\partial_1 f(x, y, z) &= \lim_{h \rightarrow 0} \frac{f((x + h), y, z) - f(x, y, z)}{h} \\
+\partial_2 f(x, y, z) &= \lim_{h \rightarrow 0} \frac{f(x, (y + h), z) - f(x, y, z)}{h} \\
+\partial_3 f(x, y, z) &= \lim_{h \rightarrow 0} \frac{f(x, y, (z + h)) - f(x, y, z)}{h} \\
+\end{align*}
+
+Computing $\partial_1 f(x, y, z)$:
+
+\begin{align*}
+\partial_1 f(x, y, z) &= \lim_{h \rightarrow 0} \frac{f((x + h), y, z) - f(x, y, z)}{h} \\
+                      &= \lim_{h \rightarrow 0} \frac{(x + h)yz - xyz}{h} \\
+                      &= \lim_{h \rightarrow 0} \frac{hyz}{h} \\
+                      &= yz \\
+\end{align*}
+
+By analogous computation, $\partial_2 f(x, y, z) = xz$, $\partial_3 f(x, y, z) = xy$.
+
+Therefore:
+
+$$\nabla f(x, y, z) = \begin{pmatrix} yz \\ xz \\ xy \end{pmatrix}$$
+
+*** (b)
+
+Evaluating the gradient at $p = (1, 1, 1)$:
+
+$$\nabla f(1, 1, 1) = \begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix}$$
+
+The Fréchet derivative $Df(p) : \mathbb{R}^3 \rightarrow \mathbb{R}$ is the unique linear map satisfying:
+
+$$\lim_{h \rightarrow 0} \frac{\| f(p + h) - f(p) - Df(p)(h) \|}{\| h \|} = 0$$
+
+For $f : \mathbb{R}^3 \rightarrow \mathbb{R}$, this linear functional has the representation $Df(p)(h) = \nabla f(p)^{\top}h$, yielding the affine approximation:
+
+$$L(x) = f(p) + \nabla f(p)^{\top} (x - p)$$
+
+With $p = (1, 1, 1)$, and $f(1, 1, 1) = 1$:
+
+\begin{align*}
+L(x, y, z) &= 1 + \begin{pmatrix} 1 & 1 & 1 \end{pmatrix} \begin{pmatrix} x - 1 \\ y - 1 \\ z - 1 \end{pmatrix} \\
+&= 1 + (x - 1) + (y - 1) + (z - 1) \\
+&= x + y + z - 2 \\
+\end{align*}
+
+*** (c)
+
 #+begin_src julia :results value :exports both :tangle julia/p_02.jl
+using Plots
+
+f(x, y) = x * y
+L(x, y) = x + y - 1
+
+xs = -6:0.05:6
+ys = -6:0.05:6
+
+anim = Animation()
+
+for azimuth in 0:2:360
+    surface(xs, ys, (x, y) -> f(x, y),
+            alpha=0.8,
+            colorbar=false,
+            label="f(x,y)")
+    surface!(xs, ys, (x, y) -> L(x, y),
+             alpha=0.6,
+             color=:reds,
+             label="L(x,y)")
+    scatter!([1], [1], [1],
+             color=:black,
+             markersize=4,
+             label="(1,1,1)")
+    plot!(xlabel="x", ylabel="y", zlabel="z",
+          camera=(azimuth, 20),
+          size=(800, 800))
+    frame(anim)
+end
+
+gif(anim, "./assets/p_02_c.gif", fps=30)
 #+end_src
+
+#+RESULTS:
+: Plots.AnimatedGif("/Users/ziro2173/personal/university/01_bachelor/02_semester/01_analysis/02_exercises/set_04/assets/p_02_c.gif")
 
 * Problem 3
 ** Task
