@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-12>
-#+lastmod: <2026-04-12 20:09>
+#+lastmod: <2026-04-12 20:20>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -278,7 +278,7 @@ L(x, y) &= 2 + \begin{pmatrix} 2 & 3 \end{pmatrix} \begin{pmatrix} x - 1 \\ y - 
 &= 2x + 3y - 3 \\
 \end{align*}
 
-* Problem 4
+* Problem 4 :DONE:
 ** Task
 #+begin_quote
 Let $f : \mathbb{R}^2 \to \mathbb{R}$ be defined by $f(x, y) = \frac{x}{x^2 + y^2 + 1}$.
@@ -289,8 +289,41 @@ Let $f : \mathbb{R}^2 \to \mathbb{R}$ be defined by $f(x, y) = \frac{x}{x^2 + y^
 #+end_quote
 
 ** Solution
+
+*** (a)
+
 #+begin_src julia :results value :exports both :tangle julia/p_04.jl
+using Plots
+
+f(x, y) = (x) / (x^2 + y^2 + 1)
+
+xs = -10:0.1:10
+ys = -10:0.1:10
+
+anim = Animation()
+
+for azimuth in 0:2:360
+    surface(xs, ys, (x, y) -> f(x, y),
+            alpha=0.8,
+            color=:reds,
+            label="f(x,y)")
+    plot!(xlabel="x", ylabel="y", zlabel="z",
+          camera=(azimuth, 20),
+          size=(800, 800))
+    frame(anim)
+end
+
+gif(anim, "./assets/p_04_a.gif", fps=30)
 #+end_src
+
+#+RESULTS:
+: Plots.AnimatedGif("/Users/ziro2173/personal/university/01_bachelor/02_semester/01_analysis/02_exercises/set_04/assets/p_04_a.gif")
+
+*** (b)
+
+From the plot, $f$ appears to have:
+- a local maximum at $(1, 0)$ with $f(1, 0) = \frac{1}{2}$,
+- a local minimum at $(-1, 0)$ with $f(-1, 0) = -\frac{1}{2}$.
 
 * Problem 5
 ** Task
