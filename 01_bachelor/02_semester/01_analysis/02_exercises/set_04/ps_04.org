@@ -1,0 +1,91 @@
+#+title: Ps 04
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-04-12>
+#+lastmod: <2026-04-12 13:58>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* Problem 1
+** Task
+#+begin_quote
+Let $f : \mathbb{R}^2 \to \mathbb{R}$ be defined by $f(x, y) = x^2 + y^2$.
+
+(a) Compute $\nabla f(x, y)$.
+
+(b) Evaluate it at $(1, 2)$ and determine the local (affine) linear approximation of $f$ in $(1, 2)$.
+
+(c) Plot $f$ and $\nabla f$ in Julia.
+#+end_quote
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_01.jl
+#+end_src
+
+* Problem 2
+** Task
+#+begin_quote
+Let $f : \mathbb{R}^3 \to \mathbb{R}$ be defined by $f(x, y, z) = xyz$.
+
+(a) Compute $\nabla f(x, y, z)$.
+
+(b) Evaluate it at $(1, 1, 1)$ and determine the local (affine) linear approximation of $f$ in $(1, 1, 1)$.
+
+(c) Plot $(x, y) \mapsto f(x, y, 1)$ in Julia.
+#+end_quote
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_02.jl
+#+end_src
+
+* Problem 3
+** Task
+#+begin_quote
+Let $f : \mathbb{R}^2 \to \mathbb{R}$ be defined by $f(x, y) = x^2 y + y^2$.
+
+(a) Compute $\operatorname{grad} f(x, y)$.
+
+(b) Determine the local (affine) linear approximation of $f$ at $(1, 1)$.
+#+end_quote
+
+** Solution
+
+* Problem 4
+** Task
+#+begin_quote
+Let $f : \mathbb{R}^2 \to \mathbb{R}$ be defined by $f(x, y) = \frac{x}{x^2 + y^2 + 1}$.
+
+(a) Plot $f$ in Julia.
+
+(b) Guess its local extrema from your plot.
+#+end_quote
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_04.jl
+#+end_src
+
+* Problem 5
+** Task
+#+begin_quote
+Let $f : \mathbb{R}^2 \to \mathbb{R}$ and $g : \mathbb{R} \to \mathbb{R}$ be twice continuously differentiable such that $f(x, y) = g(x + y)$.
+
+(a) Show that the Taylor polynomial of $g$ of order 1 centered at 0 and evaluated at $t = x + y$ coincides with the local (affine) linear approximation of $f$ in $(0, 0)$.
+
+(b) The Hessian matrix of $f$ is
+\[
+Hf(x, y) = \begin{pmatrix} \partial_x \partial_x f(x, y) & \partial_x \partial_y f(x, y) \\ \partial_y \partial_x f(x, y) & \partial_y \partial_y f(x, y) \end{pmatrix}.
+\]
+Consider $g(t) = e^t$ and show that the Taylor polynomial of $g$ of order 2 centered at 0 and evaluated at $t = x + y$ coincides with
+\[
+F(x, y) = f(0, 0) + \operatorname{grad} f(0, 0) \begin{pmatrix} x \\ y \end{pmatrix} + \frac{1}{2} (x, y) \, Hf(0, 0) \begin{pmatrix} x \\ y \end{pmatrix}.
+\]
+#+end_quote
+
+** Solution
