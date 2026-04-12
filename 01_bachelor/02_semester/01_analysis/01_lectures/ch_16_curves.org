@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-20>
-#+lastmod: <2026-04-01 15:29>
+#+lastmod: <2026-04-12 15:30>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,11 +13,11 @@
 #+options: num:t
 #+startup: overview latexpreview inlineimages
 
-* Definition  16.4.0: Curve
+* Definition  16.4.0:  Curve
 
 Let $X$ be a metric space. A map $f : \left[ 0,1 \right] \rightarrow X$ is also called a curve. If $X = \mathbb{R}^n$, then $f$ is called a space curve.
 
-* Definition  16.4.1: Length of a curve in a metric space
+* Definition  16.4.1:  Length of a curve in a metric space
 
 Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a curve. For a partition
 
@@ -33,7 +33,7 @@ $$\ell(\gamma) := \sup_{\mathcal{P}} \ell(\gamma, \mathcal{P}),$$
 
 where the supremum is taken over all partitions $\mathcal{P}$ of $\left[ 0, 1 \right]$. The curve $\gamma$ is called rectifiable if $\ell(\gamma) < \infty$.
 
-* Definition  16.4.2: Metric derivative
+* Definition  16.4.2:  Metric derivative
 
 Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a curve. If the limit exists,
 
@@ -41,7 +41,7 @@ $$|\dot{\gamma}|(t) = \lim_{h \rightarrow 0} \frac{d(\gamma(t + h), \gamma(t))}{
 
 then $|\dot{\gamma}|(t)$ is called the metric derivative of $\gamma$ in $t$.
 
-* Definition  16.4.3: Lipschitz continuous curve
+* Definition  16.4.3:  Lipschitz continuous curve
 
 Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a curve. We say that $\gamma$ is Lipschitz continuous if there is a constant $L > 0$ such that
 
@@ -242,3 +242,33 @@ Since $f'(x)$ is continuous, $\varepsilon_h \rightarrow 0$ as $h \rightarrow 0$,
 $$\frac{\|\varepsilon_h\|}{\|h\|} \le \|f'(x)\| + \frac{\|\psi(h)\|}{\|h\|}$$
 
 which is bounded for small $h$. Hence $\varphi(h) / \|h\| \rightarrow 0$, proving the claim. $\square$
+
+* Theorem     16.6.7:  Reduction to coordinates
+
+Let $\dim V = n$, $\dim W = m$, and $f : V \rightarrow W$. Choose bases $B_V \subseteq V$, $B_W \subseteq W$ and define $F : \mathbb{R}^n \rightarrow \mathbb{R}^m$ by
+
+$F := \chi_{B_W}^{-1} \circ f \circ \chi_{B_V}$, or equivalently by $f = \chi_{B_W} \circ F \circ \chi_{B_V}^{-1}$
+
+Then $f$ is Fréchet differentiable if and only if $F$ is Fréchet differentiable. In that case, for $x = \chi_{B_V}^{-1} v$, we have
+
+$$f'(v) = \chi_{B_W} \, F'(x) \, \chi_{B_V}^{-1}.$$
+
+*Proof.*
+
+Since the coordinate maps $\chi_{B_V}$ and $\chi_{B_W}$ are linear, their derivatives coincide with the maps themselves. Applying the chain rule, we obtain for $v \in V$ with $x = \chi_{B_V}^{-1} v$,
+
+$$f'(v) = \chi_{B_W} \, F'(x) \, \chi_{B_V}^{-1}.$$
+
+* Definition  16.6.8:  Partial derivatives
+
+The function $f : \mathbb{R}^n \rightarrow \mathbb{R}$ is called partially differentiable at $x \in \mathbb{R}^n$ if, for each $j = 1, \ldots, n$, the limit
+
+$$\partial_j f(x) := \lim_{h \rightarrow 0} \frac{f(x + h e_j) - f(x)}{h}$$
+
+exists. The row vector
+
+$$\operatorname{grad} f(x) := (\partial_1 f(x), \ldots, \partial_n f(x))$$
+
+is called the gradient of $f$ at $x$. Its transpose is a column vector and denoted by
+
+$$\nabla f(x) = \operatorname{grad} f(x)^\top.$$
