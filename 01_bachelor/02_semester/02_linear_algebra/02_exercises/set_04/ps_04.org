@@ -2,18 +2,20 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-13>
-#+lastmod: <2026-04-13 12:40>
+#+lastmod: <2026-04-13 15:07>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
 #+latex_header: \usepackage{amsmath}
 #+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
 #+latex_header: \usepackage{amsthm}
 #+latex_header: \usepackage[margin=1in]{geometry}
-#+options: num:t
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
 #+startup: overview latexpreview inlineimages
 
-* Problem 1.45                                         :dual_space:annihilator:basis:
+* Problem 1.45 :dual_space:annihilator:basis:
 ** Task
 #+begin_quote
 (Dual space and annihilator)
@@ -27,7 +29,33 @@ Let $\mathbb{E} = \mathbb{R}_n[X]$ with $n \geq 1$, and let $f \in \mathbb{E}^*$
 
 ** Solution
 
-* Problem 2.2                     :inner_product:completing_the_square:change_of_basis:orthonormal_basis:
+*** (i)
+
+Let $p(X) = a_0 + a_1 X + \ldots + a_n X^n \in \mathbb{F}$. Then $p(1) = 0$ gives:
+
+\begin{align*}
+a_0 + a_1 + \ldots + a_n &= 0 \\
+a_0 &= -(a_1 + \ldots + a_n)
+\end{align*}
+
+Substituting back:
+
+\begin{align*}
+p(X) &= -(a_1 + \ldots + a_n) + a_1 X + \ldots + a_n X^n \\
+     &= a_1(X - 1) + a_2(X^2 - 1) + \ldots + a_n(X^n - 1)
+\end{align*}
+
+The coefficients $a_1, \ldots, a_n \in \mathbb{R}$ are free, so $\mathcal{B}_{\mathbb{F}} = \{X - 1,\; X^2 - 1,\; \ldots,\; X^n - 1\}$ spans $\mathbb{F}$.
+
+These $n$ polynomials are linearly independent (the $k$ th has degree $k$), hence $\mathcal{B}_{\mathbb{F}}$ is a basis and $\dim \mathbb{F} = n$.
+
+*** (ii)
+
+$f \notin \mathbb{F}^{\circ}$: Take $X - 1 \in \mathbb{F}$. Then $f(X - 1) = (0) - 1 = -1 \neq 0$, so $f$ does not vanish on $\mathbb{F}$.
+
+Since $f \notin \mathbb{F}^{\circ}$, $\{f\}$ is not a basis for $\mathbb{F}^{\circ}$.
+
+* Problem 2.2 :inner_product:completing_the_square:change_of_basis:orthonormal_basis:
 ** Task
 #+begin_quote
 (Lagrange's Method for obtaining orthonormal basis)
