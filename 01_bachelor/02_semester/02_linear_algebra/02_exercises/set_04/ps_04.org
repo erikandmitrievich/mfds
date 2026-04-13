@@ -1,0 +1,62 @@
+#+title: Ps 04
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-04-13>
+#+lastmod: <2026-04-13 12:40>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t
+#+startup: overview latexpreview inlineimages
+
+* Problem 1.45                                         :dual_space:annihilator:basis:
+** Task
+#+begin_quote
+(Dual space and annihilator)
+
+Let $\mathbb{E} = \mathbb{R}_n[X]$ with $n \geq 1$, and let $f \in \mathbb{E}^*$ be defined by $f(p(X)) = p(0)$.
+
+(i) Let $\mathbb{F} = \{p(X) \in \mathbb{E} : p(1) = 0\}$. Find a basis of $\mathbb{F}$. What is $\dim \mathbb{F}$?
+
+(ii) Verify that $f \in \mathbb{F}^\circ$, is $f$ a basis for $\mathbb{F}^\circ$?
+#+end_quote
+
+** Solution
+
+* Problem 2.2                     :inner_product:completing_the_square:change_of_basis:orthonormal_basis:
+** Task
+#+begin_quote
+(Lagrange's Method for obtaining orthonormal basis)
+
+In $\mathbb{E} = \mathbb{R}^2$ we define the inner product
+\[
+\omega(x, y) = \begin{pmatrix} y_1 & y_2 \end{pmatrix} \begin{pmatrix} 1 & 2 \\ 2 & 5 \end{pmatrix} \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} = x_1 y_1 + 2x_1 y_2 + 2x_2 y_1 + 3x_2 y_2
+\]
+
+(i) Let $\|\cdot\|$ be the norm associated to $\omega$, express $\|x\|^2$ in terms of the coordinates $x_i$ of $x = (x_1, x_2)^T$.
+
+(ii) By completing the square on the expression obtained in the previous point, verify that $\|x\|^2 = (x_1 + 2x_2)^2 + x_2^2$.
+
+(iii) Let $y = (y_1, y_2)$ where $y_1 = x_1 + 2x_2$ and $y_2 = x_2$. Write out the matrix equation $y = Qx$ that relates $y$ and $x$.
+
+(iv) From the point of view of change of basis, the matrix $Q$ transforms the coordinates $(x_1, x_2)^T$ from the standard basis $\mathcal{E} = \{e_1, e_2\}$ to the coordinates $(y_1, y_2)^T$ of a new basis $\mathcal{U} = \{u_1, u_2\}$. Obtain the coordinates of $u_1$ and $u_2$ with respect to the standard basis $\mathcal{E}$.
+
+(v) Verify that $\mathcal{U} = \{u_1, u_2\}$ is an orthonormal basis with respect to $\omega(\cdot, \cdot)$, that is, $\omega(u_i, u_j) = \delta_{ij}$.
+#+end_quote
+
+** Solution
+
+* Problem 2.3                                    :inner_product:orthonormal_basis:
+** Task
+#+begin_quote
+(Lagrange's Method) Following a similar procedure to ex. 2.2, obtain an orthonormal basis on $\mathbb{E} = \mathbb{R}^3$ with respect to the following inner product:
+\[
+\omega(x, y) = y^T \begin{pmatrix} 2 & 1 & 0 \\ 1 & 2 & 0 \\ 0 & 0 & 1 \end{pmatrix} x = 2x_1 y_1 + 2x_2 y_2 + x_3 y_3 + x_1 y_2 + x_2 y_1
+\]
+#+end_quote
+
+** Solution
