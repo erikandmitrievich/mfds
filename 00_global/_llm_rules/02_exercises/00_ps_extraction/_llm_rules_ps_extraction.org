@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-25>
-#+lastmod: <2026-03-25 12:17>
+#+lastmod: <2026-04-13 12:38>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -30,7 +30,7 @@ Output must be strictly in **Emacs Org-mode** format.
 ** Structural Hierarchy (MANDATORY)
 For EVERY problem identified in the source text, you must generate exactly one top-level heading and two specific sub-headings.
 
-1.  **Top Level**: ~* Problem [Identifier]~
+1.  **Top Level**: ~* Problem [Identifier]~  followed by tags (see Rule 8).
 2.  **Sub Level 1**: ~** Task~
     - **CONSTRAINT**: The extracted problem text MUST be enclosed inside a ~#+begin_quote~ and ~#+end_quote~ block.
 3.  **Sub Level 2**: ~** Solution~
@@ -42,7 +42,8 @@ For EVERY problem identified in the source text, you must generate exactly one t
 ** Mathematical Notation
 - All mathematical expressions MUST be converted to LaTeX.
 - **Inline Math**: Enclose in single dollar signs (e.g., ~$x^2 + y^2 = z^2$~).
-- **Punctuation Constraint**: Do NOT include trailing punctuation (periods, commas, colons) inside the math delimiters. Punctuation must be placed *outside* the closing dollar sign.
+- **Display Math**: Use ~\[ \]~ for standalone equations, large matrices, or any expression that would be unreadable inline. Criteria: use display mode when the expression contains matrices, fractions with tall numerators/denominators, multi-line derivations, or is otherwise too dense for inline rendering.
+- **Punctuation Constraint**: Do NOT include trailing punctuation (periods, commas, colons) inside the math delimiters. Punctuation must be placed *outside* the closing dollar sign or ~\]~.
   - **Bad**: ~$A \in \mathbb{R}^{3\times3},$~
   - **Good**: ~$A \in \mathbb{R}^{3\times3}$,~
 - Do not use Unicode characters for math (e.g., do not use "×", use ~$\times$~).
@@ -89,6 +90,15 @@ If a problem explicitly requires using the Julia language to find a solution:
   (Where {ID} is the exact Problem Identifier, e.g., 01, 01_02, 1_31, 2_4a).
 - Constraint: The body of the code block must be empty. DO NOT generate solution code.
 
+** 8. Topic Tags
+Every top-level ~* Problem~ heading MUST end with Org-mode tags identifying the core mathematical topics of the problem.
+- Tags are lowercase, use underscores for multi-word concepts, placed at the end of the heading line in colons.
+- Assign 1–3 tags per problem. Choose the most specific applicable concept.
+- **Format**: ~* Problem 2.2 :inner_product:completing_the_square:change_of_basis:~
+- **Tag vocabulary** (extend as needed, but prefer reusing existing tags):
+  ~linear_map~, ~matrix~, ~determinant~, ~eigenvalue~, ~diagonalization~, ~inner_product~, ~orthonormal_basis~, ~gram_schmidt~, ~dual_space~, ~annihilator~, ~change_of_basis~, ~completing_the_square~, ~quadratic_form~, ~kernel~, ~image~, ~rank~, ~jordan_form~, ~spectral_theorem~, ~bilinear_form~, ~projection~, ~polynomial~, ~basis~, ~dimension~, ~subspace~
+- When a topic is not in the vocabulary, create a new tag following the same convention.
+
 * EXAMPLE OUTPUT
 Below is an example of how a specific input should be transformed.
 
@@ -98,7 +108,7 @@ Below is an example of how a specific input should be transformed.
 
 ** Output (Org-mode)
 ```org
-* Problem 3
+* Problem 3                                            :derivative:polynomial:
 ** Task
 #+begin_quote
 Given a function $f(x) = x^2 + 2x$, find the derivative.
