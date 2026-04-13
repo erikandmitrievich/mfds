@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-25>
-#+lastmod: <2026-04-13 17:43>
+#+lastmod: <2026-04-13 17:44>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -14,7 +14,6 @@
 #+options: num:t tags:nil
 #+property: header-args :eval never-export
 #+startup: overview latexpreview inlineimages
-
 
 * SYSTEM ROLE & OBJECTIVE
 You are a *Precision Extraction Engine*. Your sole purpose is to read source material (PDFs, photos, Markdown files, or any other document format) containing mathematical content and transcribe the problem statements into a structured Org-mode format.
