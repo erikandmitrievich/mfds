@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-13>
-#+lastmod: <2026-04-13 15:07>
+#+lastmod: <2026-04-13 17:28>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -78,7 +78,7 @@ In $\mathbb{E} = \mathbb{R}^2$ we define the inner product
 
 ** Solution
 
-* Problem 2.3                                    :inner_product:orthonormal_basis:
+* Problem 2.3 :inner_product:orthonormal_basis:
 ** Task
 #+begin_quote
 (Lagrange's Method) Following a similar procedure to ex. 2.2, obtain an orthonormal basis on $\mathbb{E} = \mathbb{R}^3$ with respect to the following inner product:
@@ -88,3 +88,4 @@ In $\mathbb{E} = \mathbb{R}^2$ we define the inner product
 #+end_quote
 
 ** Solution
+

@@ -1,16 +1,18 @@
-#+title:  Llm Workflow Plan Creation Handshake
+#+title: Llm Workflow Plan Creation Handshake
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-02-21>
-#+lastmod: <2026-02-21 13:43>
+#+lastmod: <2026-04-13 17:28>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
 #+latex_header: \usepackage{amsmath}
 #+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
 #+latex_header: \usepackage{amsthm}
 #+latex_header: \usepackage[margin=1in]{geometry}
-#+options: num:t
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
 #+startup: overview latexpreview inlineimages
 
 * Step 1: Rule Ingestion (The Hard Wait)

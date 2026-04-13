@@ -2,9 +2,18 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-09>
-#+lastmod: <2025-10-11 15:53>
-#+options: num:t
-#+startup: overview
+#+lastmod: <2026-04-13 17:28>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
 
 * 10.0 Introduction
 Before we go straight to the induction proof technique, we should first look on what kind of statements it proves.
