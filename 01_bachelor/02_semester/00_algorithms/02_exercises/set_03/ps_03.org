@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-01>
-#+lastmod: <2026-04-13 17:28>
+#+lastmod: <2026-04-14 10:59>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -15,7 +15,7 @@
 #+property: header-args :eval never-export
 #+startup: overview latexpreview inlineimages
 
-* Problem 30
+* Problem 30 :binomial_coefficient:stirling_approximation:asymptotics:
 ** Task
 #+begin_quote
 Prove that
@@ -27,7 +27,7 @@ Prove that
 
 ** Solution
 
-* Problem 31
+* Problem 31 :combinatorics:probability:
 ** Task
 #+begin_quote
 You shuffle a deck of 10 cards, each marked with a distinct number from 1 to 10. You then remove 3 cards from the deck, one by one. What is the probability that the cards arrive in increasingly sorted order?
@@ -35,7 +35,7 @@ You shuffle a deck of 10 cards, each marked with a distinct number from 1 to 10.
 
 ** Solution
 
-* Problem 32
+* Problem 32 :conditional_independence:conditional_probability:
 ** Task
 #+begin_quote
 Let $A$, $B$, $C$ be events, i.e., subsets of $\Omega$. We call $A$ and $B$ conditionally independent given $C$, if
@@ -47,7 +47,7 @@ Give an example of three events $A$, $B$, and $C$ so that $A$ and $B$ are not in
 
 ** Solution
 
-* Problem 33
+* Problem 33 :expected_value:central_limit_theorem:
 ** Task
 #+begin_quote
 You are a fantasy role playing fan, and you know that the damage you cause with your fireball attack is $40d6$, which means that you have to roll 40 ordinary 6 sided dice and add up all the numbers (of course you could also roll the same 6 sided dice 40 times). Since this is rather tedious, you say that you would like to replace the rolling of the dice by the expected value. What is the expected value, and what is the probability that you are off by more than 1 when you actually do roll the dice?
@@ -55,7 +55,7 @@ You are a fantasy role playing fan, and you know that the damage you cause with 
 
 ** Solution
 
-* Problem 34
+* Problem 34 :markov_inequality:expected_value:
 ** Task
 #+begin_quote
 Let $X$ be a nonnegative random variable, and suppose that $E[X]$ is defined. Prove Markov's inequality
@@ -67,7 +67,7 @@ for all $t \geq 0$.
 
 ** Solution
 
-* Problem 35
+* Problem 35 :variance:geometric_distribution:
 ** Task
 #+begin_quote
 Prove that the variance of the geometric distribution is $q/p^2$.
