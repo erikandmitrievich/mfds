@@ -1,0 +1,49 @@
+#+title: Ch 05 Probabilistic Analysis And Randomised Algorithms
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-04-14>
+#+lastmod: <2026-04-14 17:45>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* 5.1 The Hiring problem
+
+- Interview $n$ candidates sequentially; hire whenever candidate $i$ beats current best
+- Interview cost $c_i$, hiring cost $c_h$ (where $c_h \gg c_i$)
+- Total cost: $O(c_i n + c_h m)$ where $m$ = number of hires
+- Fixed $c_i n$ term → focus on analyzing $c_h m$
+
+** Worst Case
+
+- Candidates arrive in strictly increasing quality → hire all $n$
+- Hiring cost: $O(c_h n)$
+
+** Probabilistic Analysis
+
+- Assume input drawn from a known distribution → compute *average-case running time*
+- Hiring problem assumption: candidates arrive as a *uniform random permutation* — each of $n!$ orderings equally likely
+- Requires knowledge/assumptions about input distribution; not always applicable
+
+** Randomized Algorithms
+
+- When input distribution is unknown: inject randomness into the algorithm itself
+- Modified hiring: receive candidate list in advance, randomly permute interview order
+- Behavior depends on input + output of RNG → *randomized* algorithm
+- $\texttt{RANDOM}(a, b)$: returns integer in $[a, b]$ uniformly; independent calls
+- Running time analyzed as *expected running time* (expectation over RNG), not over inputs
+
+** Key Distinction
+
+|                        | Source of randomness | Analysis type             |
+|------------------------+----------------------+---------------------------|
+| Probabilistic analysis | Input distribution   | Average-case running time |
+| Randomized algorithm   | Algorithm's RNG      | Expected running time     |
