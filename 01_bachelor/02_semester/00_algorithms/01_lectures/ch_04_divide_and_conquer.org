@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-19>
-#+lastmod: <2026-04-14 13:22>
+#+lastmod: <2026-04-14 14:11>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -39,7 +39,7 @@ function multiply!(C, A, B)
     end
 end
 
-n = 128
+n = 4096
 A = rand(n, n)
 B = rand(n, n)
 C = zeros(n, n)
@@ -49,7 +49,7 @@ stats = @timed (fill!(C, 0.0); multiply!(C, A, B))
 #+end_src
 
 #+RESULTS:
-: 1.24ms, 2160 bytes
+: 33869.38ms, 2160 bytes
 
 ** Divide-and-Conquer: =MATRIX-MULTIPLY-RECURSIVE=
 
@@ -96,7 +96,7 @@ end
 
 function multiply_rec!(C, A, B)
     n = size(A, 1)
-    if n ≤ 1
+    if n ≤ 64
         naive_mul!(C, A, B)
         return
     end
@@ -109,7 +109,7 @@ function multiply_rec!(C, A, B)
     multiply_rec!(C22, A21, B12); multiply_rec!(C22, A22, B22)
 end
 
-n = 128
+n = 4096
 A = rand(n, n)
 B = rand(n, n)
 C = zeros(n, n)
@@ -119,7 +119,7 @@ stats = @timed (fill!(C, 0.0); multiply_rec!(C, A, B))
 #+end_src
 
 #+RESULTS:
-: 34.88ms, 2160 bytes
+: 18639.61ms, 2160 bytes
 
 ** Why No Speedup? (Recursion Tree Intuition)
 
@@ -210,6 +210,62 @@ $n^{\log_b a} = n^{\lg 7} \approx n^{2.807} > n^2$, so case 1 applies.
 - Each $P_i$ "encodes" contributions to multiple $C_{ij}$ blocks simultaneously.
 - We pay more additions ($\Theta(n^2)$), but save one multiplication — reducing
   the branching factor from 8 to 7 across all recursion levels.
+
+** Code
+
+#+begin_src julia :results value
+using BenchmarkTools
+
+function split4(M)
+    h, w = size(M) .÷ 2
+    (@view(M[1:h, 1:w]),     @view(M[1:h, w+1:end]),
+     @view(M[h+1:end, 1:w]), @view(M[h+1:end, w+1:end]))
+end
+
+function naive_mul!(C, A, B)
+    m, k, n = size(A, 1), size(A, 2), size(B, 2)
+    for j in 1:n, r in 1:k, i in 1:m
+        C[i, j] += A[i, r] * B[r, j]
+    end
+end
+
+function multiply_strassen(A, B)
+    n = size(A, 1)
+    if n ≤ 64
+        C = zeros(n, n)
+        naive_mul!(C, A, B)
+        return C
+    end
+    A11, A12, A21, A22 = split4(A)
+    B11, B12, B21, B22 = split4(B)
+    h = n ÷ 2
+
+    M1 = multiply_strassen(A11 + A22, B11 + B22)
+    M2 = multiply_strassen(A21 + A22, B11)
+    M3 = multiply_strassen(A11, B12 - B22)
+    M4 = multiply_strassen(A22, B21 - B11)
+    M5 = multiply_strassen(A11 + A12, B22)
+    M6 = multiply_strassen(A21 - A11, B11 + B12)
+    M7 = multiply_strassen(A12 - A22, B21 + B22)
+
+    C = zeros(n, n)
+    C[1:h, 1:h]       .= M1 .+ M4 .- M5 .+ M7
+    C[1:h, h+1:n]     .= M3 .+ M5
+    C[h+1:n, 1:h]     .= M2 .+ M4
+    C[h+1:n, h+1:n]   .= M1 .- M2 .+ M3 .+ M6
+    return C
+end
+
+n = 4096
+A = rand(n, n)
+B = rand(n, n)
+multiply_strassen(A, B);
+stats = @timed multiply_strassen(A, B)
+"$(round(stats.time * 1000, digits=2))ms, $(stats.bytes) bytes"
+#+end_src
+
+#+RESULTS:
+: 18999.39ms, 21246013504 bytes
 
 ** Practical Notes
 
