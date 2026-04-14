@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-19>
-#+lastmod: <2026-04-13 17:28>
+#+lastmod: <2026-04-14 13:22>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -29,6 +29,28 @@
 - Computes $C = C + A \cdot B$ (accumulates; init $C = 0$ if you want just $A \cdot B$).
 - Initialising $C$: $\Theta(n^2)$, absorbed into the $\Theta(n^3)$ total.
 
+#+begin_src julia :results value
+using BenchmarkTools
+
+function multiply!(C, A, B)
+    m, k, n = size(A, 1), size(A, 2), size(B, 2)
+    for j in 1:n, r in 1:k, i in 1:m
+        C[i, j] += A[i, r] * B[r, j]
+    end
+end
+
+n = 128
+A = rand(n, n)
+B = rand(n, n)
+C = zeros(n, n)
+multiply!(C, A, B); fill!(C, 0.0)
+stats = @timed (fill!(C, 0.0); multiply!(C, A, B))
+"$(round(stats.time * 1000, digits=2))ms, $(stats.bytes) bytes"
+#+end_src
+
+#+RESULTS:
+: 1.24ms, 2160 bytes
+
 ** Divide-and-Conquer: =MATRIX-MULTIPLY-RECURSIVE=
 
 *** Block decomposition
@@ -53,6 +75,51 @@ T(n) = 8\,T(n/2) + \Theta(1) \implies T(n) = \Theta(n^3)
 \]
 
 No improvement over the naive version.
+
+*** Code
+
+#+begin_src julia :results value
+using BenchmarkTools
+
+function split4(M)
+    h, w = size(M) .÷ 2
+    (@view(M[1:h, 1:w]),     @view(M[1:h, w+1:end]),
+     @view(M[h+1:end, 1:w]), @view(M[h+1:end, w+1:end]))
+end
+
+function naive_mul!(C, A, B)
+    m, k, n = size(A, 1), size(A, 2), size(B, 2)
+    for j in 1:n, r in 1:k, i in 1:m
+        C[i, j] += A[i, r] * B[r, j]
+    end
+end
+
+function multiply_rec!(C, A, B)
+    n = size(A, 1)
+    if n ≤ 1
+        naive_mul!(C, A, B)
+        return
+    end
+    A11, A12, A21, A22 = split4(A)
+    B11, B12, B21, B22 = split4(B)
+    C11, C12, C21, C22 = split4(C)
+    multiply_rec!(C11, A11, B11); multiply_rec!(C11, A12, B21)
+    multiply_rec!(C12, A11, B12); multiply_rec!(C12, A12, B22)
+    multiply_rec!(C21, A21, B11); multiply_rec!(C21, A22, B21)
+    multiply_rec!(C22, A21, B12); multiply_rec!(C22, A22, B22)
+end
+
+n = 128
+A = rand(n, n)
+B = rand(n, n)
+C = zeros(n, n)
+multiply_rec!(C, A, B); fill!(C, 0.0)
+stats = @timed (fill!(C, 0.0); multiply_rec!(C, A, B))
+"$(round(stats.time * 1000, digits=2))ms, $(stats.bytes) bytes"
+#+end_src
+
+#+RESULTS:
+: 34.88ms, 2160 bytes
 
 ** Why No Speedup? (Recursion Tree Intuition)
 
