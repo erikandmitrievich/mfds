@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-14>
-#+lastmod: <2026-04-14 17:45>
+#+lastmod: <2026-04-14 20:20>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -47,3 +47,74 @@
 |------------------------+----------------------+---------------------------|
 | Probabilistic analysis | Input distribution   | Average-case running time |
 | Randomized algorithm   | Algorithm's RNG      | Expected running time     |
+
+* 5.2 Indicator random variables
+
+** Definition
+
+Given sample space $S$ and event $A$:
+
+$$I\{A\} = \begin{cases} 1 & \text{if } A \text{ occurs} \\ 0 & \text{otherwise} \end{cases}$$
+
+*** Lemma 5.1
+
+$E[X_A] = \Pr\{A\}$
+
+Proof: $E[I\{A\}] = 1 \cdot \Pr\{A\} + 0 \cdot \Pr\{\bar{A}\} = \Pr\{A\}$
+
+** Key Property: Linearity of Expectation
+
+$E\left[\sum_{i=1}^{n} X_i\right] = \sum_{i=1}^{n} E[X_i]$
+
+- Holds *even when $X_i$ are dependent*
+- Converts hard counting problems into sum of easy per-event probabilities
+
+** Coin Flip Example
+
+$X_i = I\{\text{flip } i \text{ is heads}\}$, $X = \sum X_i$
+
+$$E[X] = \sum_{i=1}^{n} \frac{1}{2} = \frac{n}{2}$$
+
+** Application to Hiring Problem
+
+$X_i = I\{\text{candidate } i \text{ is hired}\}$, $X = \sum_{i=1}^{n} X_i$
+
+- Candidate $i$ is hired iff best among first $i$ → $\Pr\{\text{hired}\} = 1/i$
+- $E[X_i] = 1/i$
+
+*** Expected number of hires
+
+$$E[X] = \sum_{i=1}^{n} \frac{1}{i} = \ln n + O(1) = H_n$$
+
+*** Lemma 5.2
+
+Under uniform random permutation of candidates, HIRE-ASSISTANT has average-case hiring cost $O(c_h \ln n)$.
+
+(vs. worst-case $O(c_h n)$)
+
+*** Code
+
+#+begin_src julia :results value
+using Random
+
+function count_hires(n)
+    best = 0
+    hires = 0
+    for candidate in randperm(n)
+        if candidate > best
+            hires += 1
+            best = candidate
+        end
+    end
+    hires
+end
+
+function simulate(n, epochs)
+    sum(count_hires(n) for _ in 1:epochs) / epochs
+end
+
+simulate(100, 1_000_000)
+#+end_src
+
+#+RESULTS:
+: 5.188858
