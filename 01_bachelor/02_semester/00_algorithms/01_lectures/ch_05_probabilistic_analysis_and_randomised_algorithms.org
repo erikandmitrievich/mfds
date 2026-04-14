@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-14>
-#+lastmod: <2026-04-14 20:20>
+#+lastmod: <2026-04-14 20:45>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -118,3 +118,58 @@ simulate(100, 1_000_000)
 
 #+RESULTS:
 : 5.188858
+
+* 5.3 Randomized algorithms
+
+** Randomized Hire-Assistant
+
+- Don't *assume* input is uniformly random — *impose* it by permuting first
+- Converts average-case guarantee (over inputs) into expected-time guarantee (over RNG, for *any* input)
+- No adversarial input can trigger worst-case: bad performance requires unlucky RNG
+
+#+begin_example
+RANDOMIZED-HIRE-ASSISTANT(n)
+1  randomly permute the list of candidates
+2  HIRE-ASSISTANT(n)
+#+end_example
+
+** Lemma 5.3
+
+Expected hiring cost of RANDOMIZED-HIRE-ASSISTANT is $O(c_h \ln n)$.
+
+Proof: Permuting produces identical situation to Lemma 5.2's probabilistic analysis.
+
+** Lemma 5.2 vs 5.3
+
+|                          | Lemma 5.2 (probabilistic)           | Lemma 5.3 (randomized)               |
+|--------------------------+-------------------------------------+--------------------------------------|
+| Assumption               | Input is uniform random permutation | None (any input)                     |
+| Source of randomness     | Input distribution                  | Algorithm's RNG                      |
+| Cost term                | Average-case $O(c_h \ln n)$         | Expected $O(c_h \ln n)$              |
+| Deterministic per input? | Yes (same input → same hires)       | No (same input → varies across runs) |
+
+** Randomly Permuting Arrays (Fisher-Yates)
+
+#+begin_example
+RANDOMLY-PERMUTE(A, n)
+1  for i = 1 to n
+2      swap A[i] with A[RANDOM(i, n)]
+#+end_example
+
+- In-place, $\Theta(n)$ time
+- Goal: each of $n!$ permutations with probability $1/n!$
+
+** Correctness (Lemma 5.4)
+
+Loop invariant: before iteration $i$, each possible $(i-1)$ permutation appears in $A[1:i-1]$ with probability $(n - i + 1)!/n!$.
+
+- *Init*: $i = 1$ → $A[1:0]$ is empty → trivially holds (probability $n!/n! = 1$)
+- *Maintenance*: Want $\Pr\{\langle x_1, \ldots, x_i \rangle \text{ in } A[1:i]\}  = (n-i)!/n!$
+  - $E_1$: first $i-1$ iterations produced $\langle x_1, \ldots, x_{i-1} \rangle$ → $\Pr\{E_1\} = (n-i+1)!/n!$
+  - $E_2$: iteration $i$ places $x_i$ in $A[i]$ → $\Pr\{E_2 \mid E_1\} = 1/(n-i+1)$
+  - $\Pr\{E_2 \cap E_1\} = \frac{1}{n-i+1} \cdot \frac{(n-i+1)!}{n!} = \frac{(n-i)!}{n!}$ ✓
+- *Termination*: $i = n+1$ → $A[1:n]$ is any $n$ permutation with probability $0!/n! = 1/n!$
+
+** Subtlety
+
+Showing each element lands in each position with probability $1/n$ is *not sufficient* to prove uniform random permutation (Exercise 5.3-4).
