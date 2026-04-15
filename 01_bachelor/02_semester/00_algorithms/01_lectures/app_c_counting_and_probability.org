@@ -1,0 +1,55 @@
+#+title: App C Counting And Probability
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-04-15>
+#+lastmod: <2026-04-15 13:40>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* C.1 Counting
+
+** Rules of sum and product
+
+- *Rule of sum:* disjoint sets $A, B$ → $|A \cup B| = |A| + |B|$
+- *Rule of product:* ordered pairs from $A \times B$ → $|A \times B| = |A| \cdot |B|$
+
+** Strings
+
+- *String* over finite set $S$: sequence of elements of $S$; length-$k$ string = *$k$ string*
+- *Substring*: contiguous subsequence; *$k$ substring*: substring of length $k$
+- $k$ string over $S$ ↔ element of $S^k$, so $|S|^k$ total $k$-strings
+- Binary $k$ strings: $2^k$
+
+** Permutations
+
+- *Permutation* of $S$: ordered sequence of all elements, each exactly once → $n!$
+- *$k$ permutation*: ordered sequence of $k$ distinct elements from $n$ set → $\frac{n!}{(n-k)!}$
+
+** Combinations
+
+- *$k$ combination*: $k$ subset (order irrelevant)
+- Count: $k$ permutations / $k!$ (each subset counted $k!$ times) → $\frac{n!}{k!(n-k)!}$
+
+** Binomial coefficients
+
+- $\binom{n}{k} = \frac{n!}{k!(n-k)!}$
+- Symmetry: $\binom{n}{k} = \binom{n}{n-k}$
+- *Binomial theorem:* $(x+y)^n = \sum_{k=0}^{n} \binom{n}{k} x^k y^{n-k}$
+- Special case $x=y=1$: $2^n = \sum_{k=0}^{n} \binom{n}{k}$ (counting binary $n$ strings by number of 1s)
+
+** Binomial bounds
+
+- Lower: $\binom{n}{k} \geq \left(\frac{n}{k}\right)^k$
+- Upper (Stirling-based, using $k! \geq (k/e)^k$): $\binom{n}{k} \leq \frac{n^k}{k!} \leq \left(\frac{en}{k}\right)^k$
+- Upper (entropy): $\binom{n}{\lambda n} \leq 2^{n H(\lambda)}$ where $H(\lambda) = -\lambda \lg \lambda - (1-\lambda) \lg(1-\lambda)$ is the binary entropy function
+  - Derived from $\binom{n}{k} \leq \frac{n^n}{k^k (n-k)^{n-k}}$ with $k = \lambda n$
+  - Conventions: $0^0 = 1$, $0 \lg 0 = 0$, so $H(0) = H(1) = 0$
