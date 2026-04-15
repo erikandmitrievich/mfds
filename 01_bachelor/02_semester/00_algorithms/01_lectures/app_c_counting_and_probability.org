@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-15>
-#+lastmod: <2026-04-15 14:51>
+#+lastmod: <2026-04-15 20:07>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -53,3 +53,56 @@
 - Upper (entropy): $\binom{n}{\lambda n} \leq 2^{n H(\lambda)}$ where $H(\lambda) = -\lambda \lg \lambda - (1-\lambda) \lg(1-\lambda)$ is the binary entropy function
   - Derived from $\binom{n}{k} \leq \frac{n^n}{k^k (n-k)^{n-k}}$ with $k = \lambda n$
   - Conventions: $0^0 = 1$, $0 \lg 0 = 0$, so $H(0) = H(1) = 0$
+
+* C.2 Probability
+
+** Sample space and events
+
+- *Sample space* $S$: set of outcomes (elementary events)
+- *Event*: subset of $S$
+- *Certain event*: $S$; *null event*: $\emptyset$
+- *Mutually exclusive*: $A \cap B = \emptyset$
+
+** Axioms of probability
+
+1. $\Pr\{A\} \geq 0$
+2. $\Pr\{S\} = 1$
+3. $\Pr\{A \cup B\} = \Pr\{A\} + \Pr\{B\}$ for mutually exclusive $A, B$; extends to countable unions
+
+** Immediate consequences
+
+- $\Pr\{\emptyset\} = 0$
+- $A \subseteq B \Rightarrow \Pr\{A\} \leq \Pr\{B\}$
+- *Complement*: $\bar{A} = S - A$, $\Pr\{\bar{A}\} = 1 - \Pr\{A\}$
+- *Inclusion-exclusion*: $\Pr\{A \cup B\} = \Pr\{A\} + \Pr\{B\} - \Pr\{A \cap B\}$
+- *Union bound*: $\Pr\{A \cup B\} \leq \Pr\{A\} + \Pr\{B\}$
+
+** Discrete probability distributions
+
+- Discrete: finite or countably infinite $S$
+- $\Pr\{A\} = \sum_{s \in A} \Pr\{s\}$
+- *Uniform distribution*: $\Pr\{s\} = 1/|S|$ for all $s$
+- Coin flips: $S = \{H,T\}^n$, $|S| = 2^n$; event "exactly $k$ heads" has probability $\binom{n}{k}/2^n$
+
+** Continuous uniform distribution
+
+- Defined over $[a, b]$; $\Pr\{[c,d]\} = \frac{d - c}{b - a}$
+- Single point has probability 0
+- Events: subsets obtainable by countable unions of intervals (plus more complicated sets)
+
+** Conditional probability
+
+- $\Pr\{A \mid B\} = \frac{\Pr\{A \cap B\}}{\Pr\{B\}}$, requires $\Pr\{B\} \neq 0$
+
+** Independence
+
+- *Independent*: $\Pr\{A \cap B\} = \Pr\{A\}\Pr\{B\}$; equivalently $\Pr\{A \mid B\} = \Pr\{A\}$
+- *Pairwise independent*: $\Pr\{A_i \cap A_j\} = \Pr\{A_i\}\Pr\{A_j\}$ for all $i < j$
+- *(Mutual) independence*: $\Pr\{A_{i_1} \cap \cdots \cap A_{i_k}\} = \prod \Pr\{A_{i_j}\}$ for every $k$ subset, $2 \leq k \leq n$
+- Pairwise independence $\not\Rightarrow$ mutual independence
+
+** Bayes's theorem
+
+- From $A \cap B = B \cap A$: $\Pr\{A \cap B\} = \Pr\{B\}\Pr\{A \mid B\} = \Pr\{A\}\Pr\{B \mid A\}$
+- $\Pr\{A \mid B\} = \frac{\Pr\{A\}\Pr\{B \mid A\}}{\Pr\{B\}}$
+- Expanded form: $\Pr\{A \mid B\} = \frac{\Pr\{A\}\Pr\{B \mid A\}}{\Pr\{A\}\Pr\{B \mid A\} + \Pr\{\bar{A}\}\Pr\{B \mid \bar{A}\}}$
