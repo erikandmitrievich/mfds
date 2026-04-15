@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-01>
-#+lastmod: <2026-04-14 10:59>
+#+lastmod: <2026-04-15 16:19>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -26,6 +26,34 @@ Prove that
 #+end_quote
 
 ** Solution
+
+*** (a)
+
+Stirling approximation:
+
+$$n! = \sqrt{2 \pi n} \left(\frac{n}{e}\right)^n \left(1 + O\!\left(\frac{1}{n}\right)\right)$$
+\begin{align*}
+\binom{2n}{n} &= \frac{(2n)!}{(n!)^2} \\
+&= \frac{\sqrt{4\pi n} \left(\frac{2n}{e}\right)^{2n} \left(1 + O\!\left(\frac{1}{n}\right)\right)}{\left(\sqrt{2 \pi n} \left(\frac{n}{e}\right)^n \left(1 + O\!\left(\frac{1}{n}\right)\right)\right)^2} \\
+&= \frac{2\sqrt{\pi n} \cdot 2^{2n} \left(\frac{n}{e}\right)^{2n} \left(1 + O\!\left(\frac{1}{n}\right)\right)}{2 \pi n \left(\frac{n}{e}\right)^{2n} \left(1 + O\!\left(\frac{1}{n}\right)\right)^2} \\
+&= \frac{2^{2n}}{\sqrt{\pi n}} \cdot \frac{1 + O\!\left(\frac{1}{n}\right)}{\left(1 + O\!\left(\frac{1}{n}\right)\right)^2} \\
+&= \frac{2^{2n}}{\sqrt{\pi n}} \left(1 + O\!\left(\frac{1}{n}\right)\right)
+\end{align*}
+
+*** (b)
+
+\begin{align*}
+\binom{n}{k} &= \frac{n (n-1) \cdots (n-k+1)}{k!} \\
+&= \frac{n^k}{k!} \cdot \prod_{i=0}^{k-1} \left(1 - \frac{i}{n}\right)
+\end{align*}
+
+Using $\prod (1 - a_i) \geq 1 - \sum a_i$ for $a_i \in [0,1]$:
+
+\begin{align*}
+\prod_{i=0}^{k-1} \left(1 - \frac{i}{n}\right) &\geq 1 - \sum_{i=0}^{k-1} \frac{i}{n} = 1 - \frac{k(k-1)}{2n} > 1 - \frac{k^2}{2n} \geq 1 - \frac{1}{2} = \frac{1}{2} \geq \frac{1}{4}
+\end{align*}
+
+Hence $\binom{n}{k} \geq \frac{n^k}{k!} \cdot \frac{1}{4} = \frac{n^k}{4\,k!}$. $\qed$
 
 * Problem 31 :combinatorics:probability:
 ** Task
