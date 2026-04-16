@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-01>
-#+lastmod: <2026-04-15 17:40>
+#+lastmod: <2026-04-16 13:25>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -78,6 +78,33 @@ Give an example of three events $A$, $B$, and $C$ so that $A$ and $B$ are not in
 #+end_quote
 
 ** Solution
+
+Let $\Omega = \left\{ (F, HH), (F, HT), (F, TH), (F, TT), (B, HH) \right\}$, with $\Pr(F, \cdot) = \frac{1}{8}$ and $\Pr(B, HH) = \frac{1}{2}$.
+
+Define $A = \text{first flips heads}, B = \text{second flips heads}, C = \text{fair coin chosen}$.
+
+\begin{align*}
+A &= \left\{ (F, HH), (F, HT), (B, HH) \right\} \\
+B &= \left\{ (F, HH), (F, TH), (B, HH) \right\} \\
+C &= \left\{ (F, HH), (F, HT), (F, TH), (F, TT) \right\} \\
+\end{align*}
+
+- Non independence of $A$, $B$:
+
+  \begin{align*}
+  A \cap B &= \left\{ (F, HH), (B, HH) \right\}, \qquad \Pr(A \cap B) = \frac{1}{8} + \frac{1}{2} = \frac{5}{8} \\
+  \Pr(A) &= \underbrace{\frac{1}{8}}_{(F, HH)} + \underbrace{\frac{1}{8}}_{(F, HT)} + \underbrace{\frac{1}{2}}_{(B, HH)} = \frac{3}{4} \\
+  \Pr(B) &= \underbrace{\frac{1}{8}}_{(F, HH)} + \underbrace{\frac{1}{8}}_{(F, TH)} + \underbrace{\frac{1}{2}}_{(B, HH)} = \frac{3}{4} \\
+  \Pr(A)\Pr(B) &= \frac{3}{4} \cdot \frac{3}{4} = \frac{9}{16} \neq \frac{5}{8} = \Pr(A \cap B) \\
+  \end{align*}
+
+- Conditional independence given $C$:
+
+  \begin{align*}
+  \Pr(A \mid C) &= \frac{\left\{ (F, HH), (F, HT) \right\}}{\Pr(C)} = \frac{1/4}{1/2} = \frac{1}{2} \\
+  \Pr(B \mid C) &= \frac{\left\{ (F, HH), (F, TH) \right\}}{\Pr(C)} = \frac{1}{2} \\
+  \Pr(A \cap B \mid C) &= \frac{\left\{ (F, HH) \right\}}{\Pr(C)} = \frac{1/8}{1/2} = 1/4 = \Pr(A \mid C) \Pr(B \mid C) \\
+  \end{align*}
 
 * Problem 33 :expected_value:central_limit_theorem:
 ** Task
