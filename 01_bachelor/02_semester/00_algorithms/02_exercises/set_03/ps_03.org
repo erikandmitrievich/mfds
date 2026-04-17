@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-01>
-#+lastmod: <2026-04-17 14:14>
+#+lastmod: <2026-04-17 14:59>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -166,6 +166,19 @@ for all $t \geq 0$.
 #+end_quote
 
 ** Solution
+
+Let $t > 0$ (the case $t = 0$ is vacuous since $E[X]/t$ is undefined).
+
+Define $Y = t \cdot 1_{X \ge t}$. We claim $Y \le X$ pointwise:
+- If $X(\omega) \ge t$: $Y(\omega) = t \le X(\omega)$. ✓
+- If $X(\omega) < t$: $Y(\omega) = 0 \le X(\omega)$ since $X \ge 0$. ✓
+
+By monotonicity of expectation, $E[Y] \le E[X]$. Since $Y$ takes value $t$ with probability $\Pr(X \ge t)$ and $0$ otherwise, $E[Y] = t \cdot \Pr(X \ge t)$. Therefore:
+
+\begin{align*}
+t \cdot \Pr(X \ge t) &\le E(X) \\
+\Pr(X \ge t) &\le \frac{E(X)}{t}
+\end{align*}
 
 * Problem 35 :variance:geometric_distribution:
 ** Task
