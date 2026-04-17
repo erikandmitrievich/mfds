@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-01>
-#+lastmod: <2026-04-17 14:59>
+#+lastmod: <2026-04-17 15:33>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -187,3 +187,31 @@ Prove that the variance of the geometric distribution is $q/p^2$.
 #+end_quote
 
 ** Solution
+
+Define $p = \text{probability of success}, \quad q = 1 - p$.
+
+\begin{align*}
+E[X] &= \sum_{k=1}^{\infty} k q^{k-1} p \\
+&= \frac{p}{q} \sum_{k=0}^{\infty} k q^{k} \\
+&= \frac{p}{q} \cdot \frac{q}{(1-q)^2} \\
+&= \frac{p}{q} \cdot \frac{q}{p^2} \\
+&= \frac{1}{p} \\
+\end{align*}
+
+\begin{align*}
+E[X^2] &= \sum_{k=1}^{\infty} k^2 q^{k-1} p \\
+&= \frac{p}{q} \cdot \sum_{k=1}^{\infty} k^2 q^{k} \\
+&= \frac{p}{q} \cdot \sum_{k=1}^{\infty} (k(k-1) + k) q^{k} \\
+&= \frac{p}{q} \cdot \left( \sum_{k=1}^{\infty} k(k-1) q^{k} + \sum_{k=1}^{\infty} k q^{k} \right) \\
+&= \frac{p}{q} \cdot \left( \frac{2q^2}{(1-q)^3} + \frac{q}{(1-q)^2} \right) \\
+&= \frac{p}{q} \cdot \left( \frac{2q^2 + qp}{p^3} \right) \\
+&= \frac{2q + p}{p^2} \\
+&= \frac{2 - p}{p^2}
+\end{align*}
+
+\begin{align*}
+\mathrm{Var}[X] &= E[X^2] - (E[X])^2 \\
+&= \frac{2 - p}{p^2} - \frac{1}{p^2} \\
+&= \frac{1 - p}{p^2} \\
+&= \frac{q}{p^2} \\
+\end{align*}
