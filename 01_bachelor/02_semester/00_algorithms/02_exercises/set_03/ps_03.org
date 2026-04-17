@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-01>
-#+lastmod: <2026-04-17 15:33>
+#+lastmod: <2026-04-17 16:54>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -66,6 +66,37 @@ You shuffle a deck of 10 cards, each marked with a distinct number from 1 to 10.
 $$S = \left\{ SML, SLM, MSL, MLS, LSM, LMS \right\}$$
 
 With only one increasing event $SML$. Hence, $\Pr(SML) = \frac{1}{6}$.
+
+#+begin_src julia :results value
+using Combinatorics
+perms = permutations(1:10, 3) |> collect
+predicates = Dict(
+    "SML" => (a,b,c) -> a < b && b < c,
+    "SLM" => (a,b,c) -> a < c && c < b,
+    "MSL" => (a,b,c) -> b < a && a < c,
+    "MLS" => (a,b,c) -> c < a && a < b,
+    "LSM" => (a,b,c) -> b < c && c < a,
+    "LMS" => (a,b,c) -> c < b && b < a,
+)
+
+n = length(perms)
+lines = String[]
+
+for (name, pred) in sort(collect(predicates), by=first)
+    k = count(p -> pred(p...), perms)
+    push!(lines, "$name: $k / $n = $(k // n)")
+end
+
+join(lines, "\n")
+#+end_src
+
+#+RESULTS:
+| "LMS: 120 / 720 = 1//6 |
+| LSM: 120 / 720 = 1//6  |
+| MLS: 120 / 720 = 1//6  |
+| MSL: 120 / 720 = 1//6  |
+| SLM: 120 / 720 = 1//6  |
+| SML: 120 / 720 = 1//6" |
 
 * Problem 32 :conditional_independence:conditional_probability:
 ** Task
