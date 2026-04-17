@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-01>
-#+lastmod: <2026-04-16 13:25>
+#+lastmod: <2026-04-17 14:14>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -101,8 +101,8 @@ C &= \left\{ (F, HH), (F, HT), (F, TH), (F, TT) \right\} \\
 - Conditional independence given $C$:
 
   \begin{align*}
-  \Pr(A \mid C) &= \frac{\left\{ (F, HH), (F, HT) \right\}}{\Pr(C)} = \frac{1/4}{1/2} = \frac{1}{2} \\
-  \Pr(B \mid C) &= \frac{\left\{ (F, HH), (F, TH) \right\}}{\Pr(C)} = \frac{1}{2} \\
+  \Pr(A \mid C) &= \frac{\Pr(A \cap C)}{\Pr(C)} = \frac{1/4}{1/2} = \frac{1}{2} \\
+  \Pr(B \mid C) &= \frac{\Pr(B \cap C)}{\Pr(C)} = \frac{1}{2} \\
   \Pr(A \cap B \mid C) &= \frac{\left\{ (F, HH) \right\}}{\Pr(C)} = \frac{1/8}{1/2} = 1/4 = \Pr(A \mid C) \Pr(B \mid C) \\
   \end{align*}
 
@@ -113,6 +113,47 @@ You are a fantasy role playing fan, and you know that the damage you cause with 
 #+end_quote
 
 ** Solution
+
+Let $S = \sum_{i=1}^{40} X_i$ where $X_i$ are i.i.d (independent and identical distributed) rolls of a fair die.
+
+\begin{align*}
+E[X_i] &= \sum_{x=1}^6 x \cdot \frac{1}{6} = \frac{7}{2} \\
+E[S] &= 40 \cdot \frac{7}{2} = 140
+\end{align*}
+
+\begin{align*}
+E[X_i^2] &= \sum_{x=1}^6 x^2 \cdot \frac{1}{6} = \frac{1 + 4 + 9 + 16 + 25 + 36}{6} = \frac{91}{6} \\
+\mathrm{Var}(X_i) &= E[X_i^2] - (E[X_i])^2 = \frac{91}{6} - \frac{49}{4} = \frac{35}{12}
+\end{align*}
+
+\begin{align*}
+\mathrm{Var}(S) &= 40 \cdot \frac{35}{12} = \frac{350}{3}, \qquad
+\sigma_S = \sqrt{\frac{350}{3}} \approx 10.80
+\end{align*}
+
+By CLT, $S \dot\sim N(140, \frac{350}{3})$. Standardizing:
+
+\begin{align*}
+P(|S - 140| > 1) &= 1 - P\!\left(|Z| \leq \frac{1}{\sigma_S}\right) \\
+&= 1 - P(|Z| \leq 0.0926) \\
+&= 1 - (2\Phi(0.0926) - 1) \\
+&= 1 - (2 \cdot 0.5369 - 1) \\
+&= 1 - 0.0738 \\
+&\approx 0.926
+\end{align*}
+
+The expected value is $140$. The probability of being off by more than $1$ is $\approx 92.6\%$.
+
+#+begin_src julia :results output
+N = 20_000_000
+off = count(abs(sum(rand(1:6) for _ in 1:40) - 140) > 1 for _ in 1:N)
+println("P(|S-140|>1) ≈ $(round(off/N, digits=4))  (N=$N)")
+#+end_src
+
+#+RESULTS:
+: 20000000
+: 17797420
+: P(|S-140|>1) ≈ 0.8899  (N=20000000)
 
 * Problem 34 :markov_inequality:expected_value:
 ** Task

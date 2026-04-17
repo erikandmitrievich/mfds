@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-15>
-#+lastmod: <2026-04-17 13:23>
+#+lastmod: <2026-04-17 13:34>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -140,6 +140,7 @@
 - The *expected value* (or *expectation*, *mean*) of a discrete random variable $X$:
 
   \[ \mathrm{E}[X] = \sum_x x \cdot \Pr\{X = x\} \tag{C.23} \]
+
   well defined when the sum is finite or converges absolutely.
 
 - Sometimes denoted $\mu_X$ or just $\mu$.
