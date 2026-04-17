@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-15>
-#+lastmod: <2026-04-15 20:07>
+#+lastmod: <2026-04-17 13:23>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -106,3 +106,170 @@
 - From $A \cap B = B \cap A$: $\Pr\{A \cap B\} = \Pr\{B\}\Pr\{A \mid B\} = \Pr\{A\}\Pr\{B \mid A\}$
 - $\Pr\{A \mid B\} = \frac{\Pr\{A\}\Pr\{B \mid A\}}{\Pr\{B\}}$
 - Expanded form: $\Pr\{A \mid B\} = \frac{\Pr\{A\}\Pr\{B \mid A\}}{\Pr\{A\}\Pr\{B \mid A\} + \Pr\{\bar{A}\}\Pr\{B \mid \bar{A}\}}$
+
+* C.3 Discrete random variables
+
+** Discrete random variables
+
+- A *(discrete) random variable* $X$ is a function from a finite or countably infinite sample space $S$ to $\mathbb{R}$.
+
+- The event $X = x$ is defined as $\{s \in S : X(s) = x\}$, so $\Pr\{X = x\} = \sum_{s \in S : X(s) = x} \Pr\{s\}$.
+
+- The *probability density function* (pdf) of $X$ is $f(x) = \Pr\{X = x\}$.
+
+  - From axioms: $\Pr\{X = x\} \geq 0$ and $\sum_x \Pr\{X = x\} = 1$.
+
+- Example: rolling two fair dice, $X$ = maximum of the two values. $\Pr\{X = 3\} = 5/36$ since $X$ assigns 3 to the outcomes $(1,3), (2,3), (3,3), (3,2), (3,1)$.
+
+** Joint and marginal distributions
+
+- For two random variables $X, Y$ on the same sample space, the *joint probability density function* is $f(x, y) = \Pr\{X = x \text{ and } Y = y\}$.
+
+- Marginals recovered by summing out:
+
+  \[ \Pr\{Y = y\} = \sum_x \Pr\{X = x \text{ and } Y = y\} \]
+  \[ \Pr\{X = x\} = \sum_y \Pr\{X = x \text{ and } Y = y\} \]
+- Conditional probability for random variables (from definition C.16):
+
+  \[ \Pr\{X = x \mid Y = y\} = \frac{\Pr\{X = x \text{ and } Y = y\}}{\Pr\{Y = y\}} \]
+
+- Two random variables $X$ and $Y$ are *independent* if for all $x$ and $y$, $\Pr\{X = x \text{ and } Y = y\} = \Pr\{X = x\}\Pr\{Y = y\}$.
+
+** Expected value of a random variable
+
+- The *expected value* (or *expectation*, *mean*) of a discrete random variable $X$:
+
+  \[ \mathrm{E}[X] = \sum_x x \cdot \Pr\{X = x\} \tag{C.23} \]
+  well defined when the sum is finite or converges absolutely.
+
+- Sometimes denoted $\mu_X$ or just $\mu$.
+
+- Example: flip two fair coins, earn $3$ per head, lose $2$ per tail. $\mathrm{E}[X] = 6 \cdot (1/4) + 1 \cdot (1/2) - 4 \cdot (1/4) = 1$.
+
+** Linearity of expectation
+
+- *Linearity of expectation*: for any two random variables $X, Y$,
+
+  \[ \mathrm{E}[X + Y] = \mathrm{E}[X] + \mathrm{E}[Y] \tag{C.24} \]
+  whenever both expectations are defined. Holds even when $X$ and $Y$ are not independent.
+
+- Extends to finite and absolutely convergent summations.
+
+- Key property enabling probabilistic analyses via indicator random variables (see §5.2).
+
+- For any random variable $X$ and function $g$, the random variable $g(X)$ has expectation $\mathrm{E}[g(X)] = \sum_x g(x) \cdot \Pr\{X = x\}$, provided this is defined.
+
+- Scalar multiplication: for any constant $a$,
+
+  \[ \mathrm{E}[aX] = a\,\mathrm{E}[X] \tag{C.25} \]
+
+- Combined linearity: for any random variables $X, Y$ and constant $a$,
+
+  \[ \mathrm{E}[aX + Y] = a\,\mathrm{E}[X] + \mathrm{E}[Y] \tag{C.26} \]
+
+** Products of independent random variables
+
+- When $X$ and $Y$ are independent with defined expectations:
+
+  \begin{align*}
+  \mathrm{E}[XY] &= \sum_x \sum_y xy \cdot \Pr\{X = x \text{ and } Y = y\} \\
+  &= \sum_x \sum_y xy \cdot \Pr\{X = x\}\Pr\{Y = y\}
+  \end{align*}
+
+  Factor the sums:
+  \[ = \left(\sum_x x \cdot \Pr\{X = x\}\right)\left(\sum_y y \cdot \Pr\{Y = y\}\right) = \mathrm{E}[X]\,\mathrm{E}[Y] \]
+
+- Generalizes: for $n$ mutually independent random variables,
+  \[ \mathrm{E}[X_1 X_2 \cdots X_n] = \mathrm{E}[X_1]\,\mathrm{E}[X_2] \cdots \mathrm{E}[X_n] \tag{C.27} \]
+
+** Expectation for $\mathbb{N}$ valued random variables
+
+- When $X$ takes values in $\mathbb{N} = \{0, 1, 2, \dots\}$:
+  \[ \mathrm{E}[X] = \sum_{i=1}^{\infty} \Pr\{X \geq i\} \tag{C.28} \]
+  Derived by rewriting $\Pr\{X = i\} = \Pr\{X \geq i\} - \Pr\{X \geq i+1\}$ and telescoping; each term $\Pr\{X \geq i\}$ is added $i$ times and subtracted $i-1$ times.
+
+** Convexity and Jensen's inequality
+
+- A function $f(x)$ is *convex* if for all $x, y$ and all $0 \leq \lambda \leq 1$:
+
+  \[ f(\lambda x + (1-\lambda)y) \leq \lambda f(x) + (1-\lambda)f(y) \tag{C.29} \]
+
+- *Jensen's inequality:* for a convex function $f$ applied to a random variable $X$,
+
+  \[ \mathrm{E}[f(X)] \geq f(\mathrm{E}[X]) \tag{C.30} \]
+
+  provided expectations exist and are finite.
+
+** Variance and standard deviation
+
+- Expectation does not capture spread. Example: $X$ with $\Pr\{X = 1/4\} = \Pr\{X = 3/4\} = 1/2$ and $Y$ with $\Pr\{Y = 0\} = \Pr\{Y = 1\} = 1/2$ both have $\mathrm{E}[X] = \mathrm{E}[Y] = 1/2$, but $Y$ is more spread out.
+
+- The *variance* of $X$ with mean $\mathrm{E}[X]$:
+
+  \[ \mathrm{Var}[X] = \mathrm{E}[(X - \mathrm{E}[X])^2] = \mathrm{E}[X^2] - \mathrm{E}^2[X] \tag{C.31} \]
+
+  Derivation: expand $(X - \mathrm{E}[X])^2$, apply linearity, use the facts that $\mathrm{E}[\mathrm{E}^2[X]] = \mathrm{E}^2[X]$ (since $\mathrm{E}[X]$ is a constant) and $\mathrm{E}[X \cdot \mathrm{E}[X]] = \mathrm{E}^2[X]$ (by equation C.25 with $a = \mathrm{E}[X]$).
+
+- Rearranging (C.31) gives a formula for the second moment:
+
+  \[ \mathrm{E}[X^2] = \mathrm{Var}[X] + \mathrm{E}^2[X] \tag{C.32} \]
+
+- Scaling: $\mathrm{Var}[aX] = a^2 \,\mathrm{Var}[X]$.
+
+- For independent $X, Y$: $\mathrm{Var}[X + Y] = \mathrm{Var}[X] + \mathrm{Var}[Y]$.
+
+- Generalizes: for $n$ pairwise independent random variables,
+
+  \[ \mathrm{Var}\!\left[\sum_{i=1}^{n} X_i\right] = \sum_{i=1}^{n} \mathrm{Var}[X_i] \tag{C.33} \]
+
+  Note: only pairwise independence is needed, not mutual independence.
+
+- The *standard deviation* of $X$ is $\sigma_X = \sqrt{\mathrm{Var}[X]}$. The variance is then $\sigma^2$.
+
+** Code
+
+#+begin_src julia :results output
+using UnicodePlots
+
+function bounces(layers, balls)
+    results = Vector{Int}(undef, balls)
+    for i in 1:balls
+        displacement = 0
+        for _ in 1:layers
+            displacement += rand() > 0.5 ? 1 : -1
+        end
+        results[i] = displacement
+    end
+    return results
+end
+
+function main()
+    results = bounces(15, 10000)
+    histogram(results, nbins=21)
+end
+
+main()
+#+end_src
+
+#+RESULTS:
+#+begin_example
+bounces (generic function with 1 method)
+main (generic function with 1 method)
+                  ┌                                        ┐
+   [-14.0, -12.0) ┤▏ 3
+   [-12.0, -10.0) ┤▌ 32
+   [-10.0,  -8.0) ┤██▏ 124
+   [ -8.0,  -6.0) ┤██████▌ 402
+   [ -6.0,  -4.0) ┤██████████████▊ 908
+   [ -4.0,  -2.0) ┤████████████████████████▍ 1 497
+   [ -2.0,   0.0) ┤████████████████████████████████▎ 1 971
+   [  0.0,   2.0) ┤█████████████████████████████████  2 025
+   [  2.0,   4.0) ┤████████████████████████▊ 1 524
+   [  4.0,   6.0) ┤███████████████▎ 926
+   [  6.0,   8.0) ┤██████▊ 419
+   [  8.0,  10.0) ┤██▎ 133
+   [ 10.0,  12.0) ┤▌ 31
+   [ 12.0,  14.0) ┤▏ 5
+                  └                                        ┘
+                                   Frequency
+#+end_example
