@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-18>
-#+lastmod: <2026-04-18 17:03>
+#+lastmod: <2026-04-18 20:23>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -15,7 +15,7 @@
 #+property: header-args :eval never-export
 #+startup: overview latexpreview inlineimages
 
-* Problem 1                                        :extrema:saddle_point:gradient:
+* Problem 1 :extrema:saddle_point:gradient:
 ** Task
 #+begin_quote
 Let $f : \mathbb{R}^{2n} \to \mathbb{R}$ be defined by $f(x, y) = \|x\|^2 - \|y\|^2$ for $x, y \in \mathbb{R}^n$ and $\|\cdot\|$ the standard norm in $\mathbb{R}^n$.
@@ -48,7 +48,7 @@ Fix $\delta > 0$. Choose $h \in \mathbb{R}^n : 0 < \|h\| < \delta$.
 
 Let $q := (h, 0_{\mathbb{R}^n}) \in \mathbb{R}^{2n}$. Hence, $\|q - p\| = \sqrt{\|h\|^2 + \|0\|^2} = \|h\| < \delta$, so $q \in B_{\delta}(p)$. $f(q) = \|h\|^2 - \|0\|^2 = \|h\|^2 > 0 = f(p)$. Thus, $p$ is not a local maximum.
 
-Let $q' := (0_{\mathbb{R}^n}, h) \in \mathbb{R}^{2n}$. Hence, $\|q' - p\| = \sqrt{\|h\|^2 + \|0\|^2} = \|h\| < \delta$, so $q \in B_{\delta}(p)$. $f(q') = \|0\|^2 - \|h\|^2 = - \|h\|^2 < 0 = f(p)$. Thus, $p$ is not a local minimum.
+Let $q' := (0_{\mathbb{R}^n}, h) \in \mathbb{R}^{2n}$. Hence, $\|q' - p\| = \sqrt{\|h\|^2 + \|0\|^2} = \|h\| < \delta$, so $q' \in B_{\delta}(p)$. $f(q') = \|0\|^2 - \|h\|^2 = - \|h\|^2 < 0 = f(p)$. Thus, $p$ is not a local minimum.
 
 Hence, $p$ is a saddle. Since it is the unique critical point, $f$ has no local extrema, and $(0, 0)$ is the unique saddle point.
 
@@ -104,7 +104,7 @@ savefig("./assets/p_01_b.png")
 #+RESULTS:
 : /Users/ziro2173/personal/university/01_bachelor/02_semester/01_analysis/02_exercises/set_05/assets/p_01_b.png
 
-* Problem 2                                  :frechet_derivative:least_squares:normal_equations:
+* Problem 2 :frechet_derivative:least_squares:normal_equations:
 ** Task
 #+begin_quote
 Let $A \in \mathbb{R}^{m \times n}$ and $b \in \mathbb{R}^m$. We consider the loss function
@@ -123,10 +123,24 @@ A^* A x = b
 #+end_quote
 
 ** Solution
+
+*** (a)
+
+\begin{align*}
+L(x) &= \|Ax - b\|^2 \\
+L'(x) &= 2 \|Ax - b\|^2 \\
+\end{align*}
+
+*** (b)
+
+
+*** (c)
+
 #+begin_src julia :results value :exports both :tangle julia/p_02.jl
+
 #+end_src
 
-* Problem 3                                        :chain_rule:jacobian:composition:
+* Problem 3 :chain_rule:jacobian:composition:
 ** Task
 #+begin_quote
 Consider the functions $f : \mathbb{R}^2 \to \mathbb{R}^2$ and $g : \mathbb{R}^2 \to \mathbb{R}$ given by
@@ -138,7 +152,14 @@ Compute $(g \circ f)'(x, y)$.
 
 ** Solution
 
-* Problem 4                                        :jacobian:linear_approximation:
+\begin{align*}
+f'(x, y) &= \begin{pmatrix} 2x & 0 \\ 0 & 2y \end{pmatrix} \\
+g'(u, v) &= (1, -1) \\
+(g \circ f)'(x, y) &= (1, -1) \begin{pmatrix} 2x & 0 \\ 0 & 2y \end{pmatrix} \\
+&= (2x, -2y) \\
+\end{align*}
+
+* Problem 4 :jacobian:linear_approximation:
 ** Task
 #+begin_quote
 Let $f : \mathbb{R}^2 \to \mathbb{R}^2$ be defined by
