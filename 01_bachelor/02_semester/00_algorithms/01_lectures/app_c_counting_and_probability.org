@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-15>
-#+lastmod: <2026-04-17 13:34>
+#+lastmod: <2026-04-18 10:45>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -274,3 +274,100 @@ main (generic function with 1 method)
                   └                                        ┘
                                    Frequency
 #+end_example
+* C.4 The geometric and binomial distributions
+
+** Bernoulli trials
+
+- A *Bernoulli trial* has exactly two outcomes: *success* with probability $p$ and *failure* with probability $q = 1 - p$.
+
+- *Bernoulli trials* (collectively): mutually independent trials, each with the same success probability $p$ (unless stated otherwise).
+
+- Two distributions arise: the geometric distribution (trials until first success) and the binomial distribution (successes in $n$ trials).
+
+** The geometric distribution
+
+- Random variable $X$: number of trials needed to obtain the first success. $X \in \{1, 2, \dots\}$.
+
+- PMF: for $k \geq 1$,
+
+  \[ \Pr\{X = k\} = q^{k-1} p \,. \]
+
+  Reasoning: $k - 1$ failures each with probability $q$, then one success with probability $p$.
+
+- [FIGURE C.1: geometric distribution with $p = 1/3$, expectation $1/p = 3$]
+
+*** Expectation of the geometric distribution
+
+- *Expectation:*
+
+  \[ \mathrm{E}[X] = \sum_{k=1}^{\infty} k q^{k-1} p = \frac{p}{q} \sum_{k=0}^{\infty} k q^{k} = \frac{p}{q} \cdot \frac{q}{(1-q)^2} = \frac{p}{q} \cdot \frac{q}{p^2} = \frac{1}{p} \,. \]
+
+  Key step: uses identity $\sum_{k=0}^{\infty} k x^k = x/(1-x)^2$ for $|x| < 1$ (equation (A.11)).
+
+- *Variance:* $\mathrm{Var}[X] = q / p^2$ (equation (C.37)).
+
+- Example: rolling two dice until getting a 7 or 11. $p = 8/36 = 2/9$, so expected rolls $= 1/p = 9/2 = 4.5$.
+
+** The binomial distribution
+
+- Random variable $X$: number of successes in $n$ Bernoulli trials. $X \in \{0, 1, \dots, n\}$.
+
+- PMF: for $k = 0, 1, \dots, n$,
+
+  \[ \Pr\{X = k\} = \binom{n}{k} p^k q^{n-k} \,. \]
+
+  A distribution satisfying this is a *binomial distribution*.
+
+- Shorthand notation: $b(k; n, p) = \binom{n}{k} p^k (1-p)^{n-k}$.
+
+- Normalization: $\sum_{k=0}^{n} b(k; n, p) = 1$, since each term is the $k$ th term in the expansion of $(p + q)^n$ and $p + q = 1$ (equation (C.4)).
+
+- [FIGURE C.2: binomial distribution $b(k; 15, 1/3)$ with mean $np = 5$]
+
+*** Expectation of the binomial distribution
+
+- *Direct computation* (equation (C.41)):
+
+  \[ \mathrm{E}[X] = \sum_{k=0}^{n} k \cdot b(k; n, p) = \sum_{k=1}^{n} k \binom{n}{k} p^k q^{n-k} \,. \]
+
+  Use $k \binom{n}{k} = n \binom{n-1}{k-1}$ (equation (C.9)) to get:
+
+  \[ = np \sum_{k=0}^{n-1} \binom{n-1}{k} p^k q^{(n-1)-k} = np \sum_{k=0}^{n-1} b(k; n-1, p) = np \,. \]
+
+- *Via linearity of expectation* (simpler): let $X_i$ be the indicator for success on trial $i$. Then $\mathrm{E}[X_i] = p$ and
+
+  \[ \mathrm{E}[X] = \sum_{i=1}^{n} \mathrm{E}[X_i] = np \,. \]
+
+*** Variance of the binomial distribution
+
+- Each indicator $X_i$ is Bernoulli: $X_i^2 = X_i$, so $\mathrm{E}[X_i^2] = p$.
+
+- $\mathrm{Var}[X_i] = p - p^2 = pq$ (equation (C.43)).
+
+- Independence of trials allows summing variances (equation (C.33)):
+
+  \[ \mathrm{Var}[X] = \sum_{i=1}^{n} \mathrm{Var}[X_i] = npq \,. \]
+
+*** Mode of the binomial distribution
+
+- Ratio of successive terms (equation (C.45)):
+
+  \[ \frac{b(k; n, p)}{b(k-1; n, p)} = \frac{(n-k+1)p}{kq} = 1 + \frac{(n+1)p - k}{kq} \,. \]
+
+- This ratio is $> 1$ iff $(n+1)p - k > 0$, i.e. $k < (n+1)p$. So:
+
+  - $b(k; n, p)$ increases for $k < (n+1)p$,
+
+  - $b(k; n, p)$ decreases for $k > (n+1)p$.
+
+- If $(n+1)p$ is an integer, two equal maxima at $k = (n+1)p$ and $k = (n+1)p - 1 = np - q$.
+
+- Otherwise, unique maximum at the unique integer $k$ with $np - q < k < (n+1)p$.
+
+*** Lemma C.1 — upper bound on the binomial
+
+- *Lemma C.1:* let $n \geq 0$, $0 < p < 1$, $q = 1 - p$, and $0 \leq k \leq n$. Then
+
+  \[ b(k; n, p) \leq \left(\frac{np}{k}\right)^k \left(\frac{nq}{n-k}\right)^{n-k} \,. \]
+
+- *Proof:* start from the definition $b(k; n, p) = \binom{n}{k} p^k q^{n-k}$. Apply the bound $\binom{n}{k} \leq (n/k)^k \cdot (n/(n-k))^{n-k}$ (inequality (C.7)). Multiply through by $p^k q^{n-k}$ to get the result.
