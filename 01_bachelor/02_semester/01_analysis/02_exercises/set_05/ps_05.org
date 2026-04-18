@@ -1,0 +1,86 @@
+#+title: Ps 05
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-04-18>
+#+lastmod: <2026-04-18 10:54>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Problem 1                                        :extrema:saddle_point:gradient:
+** Task
+#+begin_quote
+Let $f : \mathbb{R}^{2n} \to \mathbb{R}$ be defined by $f(x, y) = \|x\|^2 - \|y\|^2$ for $x, y \in \mathbb{R}^n$ and $\|\cdot\|$ the standard norm in $\mathbb{R}^n$.
+
+(a) Determine all local extrema and all saddle points.
+
+(b) Visualize $f$ and $\nabla f$ in Julia for $n = 1$.
+#+end_quote
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_01.jl
+#+end_src
+
+* Problem 2                                  :frechet_derivative:least_squares:normal_equations:
+** Task
+#+begin_quote
+Let $A \in \mathbb{R}^{m \times n}$ and $b \in \mathbb{R}^m$. We consider the loss function
+\[
+L : \mathbb{R}^n \to \mathbb{R}, \quad x \mapsto \|Ax - b\|^2
+\]
+
+(a) Compute the Fréchet derivative of $L$.
+
+(b) Show that $x \in \mathbb{R}^n$ is a global minimum if and only if
+\[
+A^* A x = b
+\]
+
+(c) Implement the (affine) local approximation of $L$ in Julia.
+#+end_quote
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_02.jl
+#+end_src
+
+* Problem 3                                        :chain_rule:jacobian:composition:
+** Task
+#+begin_quote
+Consider the functions $f : \mathbb{R}^2 \to \mathbb{R}^2$ and $g : \mathbb{R}^2 \to \mathbb{R}$ given by
+\[
+f(x, y) = \begin{pmatrix} x^2 \\ y^2 \end{pmatrix}, \quad g(u, v) = u - v
+\]
+Compute $(g \circ f)'(x, y)$.
+#+end_quote
+
+** Solution
+
+* Problem 4                                        :jacobian:linear_approximation:
+** Task
+#+begin_quote
+Let $f : \mathbb{R}^2 \to \mathbb{R}^2$ be defined by
+\[
+f(x, y) = \begin{pmatrix} x y \\ x^2 + y^3 \end{pmatrix}
+\]
+
+(a) Compute the Jacobi matrix $J_f(x, y)$.
+
+(b) Evaluate $J_f(1, 1)$.
+
+(c) Determine the (affine) linear approximation of $f$ near the point $(1, 1)$.
+
+(d) Use this approximation to estimate $f(1.01, 0.98)$.
+#+end_quote
+
+** Solution
+
+* Errors/Typos
+- Problem 2(b): "$A^* A x = b$" → "$A^* A x = A^* b$" (standard normal equations for least squares; as written, the equation is dimensionally correct but does not characterize the minimizer unless $b \in \operatorname{im}(A)$ and additional conditions hold)
