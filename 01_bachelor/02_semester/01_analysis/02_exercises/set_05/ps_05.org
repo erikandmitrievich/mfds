@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-18>
-#+lastmod: <2026-04-18 10:54>
+#+lastmod: <2026-04-18 17:03>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -26,8 +26,83 @@ Let $f : \mathbb{R}^{2n} \to \mathbb{R}$ be defined by $f(x, y) = \|x\|^2 - \|y\
 #+end_quote
 
 ** Solution
+
+*** (a)
+
+Let $f : \mathbb{R}^{2n} \rightarrow \mathbb{R}, \quad f(x, y) = \|x\|^2 - \|y\|^2$ for $x, y \in \mathbb{R}^n$ and $\|\cdot\|$ the standard norm in $\mathbb{R}^n$.
+
+Hence,
+
+$$\nabla f(x, y) = (2x, -2y) = 0 \iff (x, y) = (0, 0)$$
+
+So $p = (0, 0) \in \mathbb{R}^{2n}$ is the unique critical point; $f(p) = 0$.
+
+Definitions:
+1. $p$ is a *local minimum* iff: $\exists \delta > 0 : \forall q \in B_{\delta}(p), f(q) \ge f(p)$.
+2. $p$ is a *local maximum* iff: $\exists \delta > 0 : \forall q \in B_{\delta}(p), f(q) \le f(p)$.
+3. $p$ is a *saddle* iff: $p$ is a critical point and neither (1) nor (2) holds.
+
+Thus,
+
+Fix $\delta > 0$. Choose $h \in \mathbb{R}^n : 0 < \|h\| < \delta$.
+
+Let $q := (h, 0_{\mathbb{R}^n}) \in \mathbb{R}^{2n}$. Hence, $\|q - p\| = \sqrt{\|h\|^2 + \|0\|^2} = \|h\| < \delta$, so $q \in B_{\delta}(p)$. $f(q) = \|h\|^2 - \|0\|^2 = \|h\|^2 > 0 = f(p)$. Thus, $p$ is not a local maximum.
+
+Let $q' := (0_{\mathbb{R}^n}, h) \in \mathbb{R}^{2n}$. Hence, $\|q' - p\| = \sqrt{\|h\|^2 + \|0\|^2} = \|h\| < \delta$, so $q \in B_{\delta}(p)$. $f(q') = \|0\|^2 - \|h\|^2 = - \|h\|^2 < 0 = f(p)$. Thus, $p$ is not a local minimum.
+
+Hence, $p$ is a saddle. Since it is the unique critical point, $f$ has no local extrema, and $(0, 0)$ is the unique saddle point.
+
+*** (b)
+
 #+begin_src julia :results value :exports both :tangle julia/p_01.jl
+using Plots
+
+# f and ∇f ----------------------------
+f(x, y)     = x^2 - y^2
+gradf(x, y) = (2x, -2y)
+
+# p1 ----------------------------------
+xs = -10:0.05:10
+p1 = heatmap(xs, xs, f;
+             c = :RdBu,
+             aspect_ratio = 1,
+             xlims = (-10, 10), ylims = (-10, 10),
+             xlabel = "x", ylabel = "y",
+             title  = "Level sets and ∇f")
+
+xq   = -10:1:10
+pts  = [(x, y) for x in xq, y in xq]
+X    = vec([p[1] for p in pts])
+Y    = vec([p[2] for p in pts])
+UV   = [gradf(p...) for p in pts]
+U, V = vec(first.(UV)), vec(last.(UV))
+s    = 0.9 * step(xq) / maximum(hypot.(U, V))
+
+quiver!(p1, X, Y; quiver = (s .* U, s .* V), color = :black, linewidth = 1)
+scatter!(p1, [0], [0]; color = :black, ms = 5, msw = 0, label = false)
+
+# p2 ----------------------------------
+p2 = surface(xs, xs, f;
+             alpha  = 0.99,
+             color  = :RdBu,
+             camera = (30, 30),
+             xlabel = "x", ylabel = "y", zlabel = "z",
+             title  = "Graph of f")
+
+ts = range(-10, 10, length = 200)
+plot3d!(p2, ts, zeros(length(ts)),  ts.^2;  color = :red,  lw = 3, label = "f(t,0) = t²")
+plot3d!(p2, zeros(length(ts)), ts, -ts.^2;  color = :blue, lw = 3, label = "f(0,t) = -t²")
+scatter!(p2, [0], [0], [0];
+         color = :black, markerstrokecolor = :white, markerstrokewidth = 1.5,
+         ms = 6, label = "saddle")
+
+# plot --------------------------------
+plot(p1, p2; layout = (1, 2), size = (1200, 600))
+savefig("./assets/p_01_b.png")
 #+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/university/01_bachelor/02_semester/01_analysis/02_exercises/set_05/assets/p_01_b.png
 
 * Problem 2                                  :frechet_derivative:least_squares:normal_equations:
 ** Task
