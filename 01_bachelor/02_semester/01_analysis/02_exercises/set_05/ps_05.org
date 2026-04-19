@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-18>
-#+lastmod: <2026-04-19 15:23>
+#+lastmod: <2026-04-19 19:28>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -116,7 +116,7 @@ L : \mathbb{R}^n \to \mathbb{R}, \quad x \mapsto \|Ax - b\|^2
 
 (b) Show that $x \in \mathbb{R}^n$ is a global minimum if and only if
 \[
-A^* A x = b
+A^* A x = A^{*}b
 \]
 
 (c) Implement the (affine) local approximation of $L$ in Julia.
@@ -126,19 +126,81 @@ A^* A x = b
 
 *** (a)
 
-\begin{align*}
-L(x) &= \|Ax - b\|^2 \\
-L'(x) &= 2 \|Ax - b\|^2 \\
-\end{align*}
+For $x, h \in \mathbb{R}^n$:
+
+$$L(x + h) = \|A(x + h) - b \|^2 = \|(Ax - b) + Ah \|^2$$
+
+Expanding via $\|u + v\|^2 = \|u\|^2 + 2\langle u, v \rangle + \|v\|^2$:
+
+$$L(x + h) = \|Ax - b\|^2 + 2\langle Ax - b, Ah \rangle + \|Ah\|^2$$
+
+Using the disjoint identity $\langle Ax - b, Ah \rangle = \langle A^{*}(Ax - b), h \rangle$:
+
+$$L(x + h) - L(x) = 2\langle A^{*}(Ax - b), h \rangle + \|Ah\|^2$$
+
+The map $h \rightarrow 2\langle A^{*}(Ax - b)$ is linear and bounded. The remainder satisfies:
+
+$$\frac{\|Ah\|^2}{\|h\|} \le \|A\|_{\mathrm{op}}^2 \|h\| \xrightarrow{h \rightarrow 0} 0$$
+
+So $\|Ah\|^2 = o(\|h\|)$ by Definition of Frechet derivative,
+
+$$\boxed{\,DL(x)[h] = 2\langle A^*(Ax - b),\, h\rangle, \qquad \nabla L(x) = 2A^*(Ax - b).\,}$$
 
 *** (b)
 
+Setting $y = x + h$ in the expansion of (a):
+
+$$L(y) - L(x) = 2\langle A^{*}(Ax - b), y - x \rangle + \|A(y - x)\|^2 \qquad (\star)$$
+
+$(\Leftarrow)$ Assume $A^{*}Ax = A^{*}b$, i.e. $A^{*}(Ax - b) = 0$. Then $(\star)$ gives
+
+$$L(y) - L(x) = \|A(y - x)\|^2 \ge 0 \quad \text{for all } y \in \mathbb{R}^n,$$
+
+so $x$ is a global minimum.
+
+$(\Rightarrow)$ Assume $x$ is a global minimum. Since $L$ is Fréchet differentiable, $DL(x) = 0$, hence
+
+$$\langle A^{*}(Ax - b), h \rangle = 0 \quad \text{for all } h \in \mathbb{R}^n.$$
+
+Taking $h = A^{*}(Ax - b)$ gives $\|A^{*}(Ax - b)\|^2 = 0$, so $A^{*}(Ax - b) = 0$, i.e. $A^{*}Ax = A^{*}b$. $\blacksquare$
 
 *** (c)
 
-#+begin_src julia :results value :exports both :tangle julia/p_02.jl
+The first-order Taylor approximation of $L$ at $x_0$ is
 
+$$\widehat{L}_{x_0}(x) = L(x_0) + DL(x_0)[x - x_0] = \|Ax_0 - b\|^2 + 2\langle A^{*}(Ax_0 - b), x - x_0 \rangle.$$
+
+#+begin_src julia :results output
+using LinearAlgebra, Random
+
+let
+    function affine_approx(A, b, x0, x)
+        r0 = A*x0 - b
+        g  = 2 * (A' * r0)
+        return dot(r0, r0) + dot(g, x - x0)
+    end
+
+    Random.seed!(42)
+    A  = randn(20, 3)
+    b  = randn(20)
+    x0 = randn(3)
+
+    L(x) = sum(abs2, A*x - b)
+
+    println(L(x0))
+    println(affine_approx(A, b, x0, x0))
+
+    dx = 1e-3 * randn(3)
+    println(L(x0 + dx) - affine_approx(A, b, x0, x0 + dx))
+    println(sum(abs2, A*dx))
+end
 #+end_src
+
+#+RESULTS:
+: 86.7136805598037
+: 86.7136805598037
+: 6.09536959785828e-5
+: 6.095369601422723e-5
 
 * Problem 3 :chain_rule:jacobian:composition:
 ** Task
