@@ -1,0 +1,78 @@
+#+title: The Top Study Habbits Andrew Huberman
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-04-19>
+#+lastmod: <2026-04-19 13:25>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+Notes on [[The Top Study Habits to Improve Learning][Andrew Huberman - The Top Study Habits to Improve Learning]] youtube video.
+
+* Notes: Structuring Days Like the Best Students (Huberman)
+
+** Source study
+- ~700 medical students, approx. equal male/female
+- Self-report survey; correlation, not causation
+- Identifies ~10 habits; top 5-6 account for most of the effect
+
+** Top habits of high-performing students
+- Scheduled, designated study time (treated as a calendar block)
+- Studied alone, not in groups
+- Phone away; signaled to friends/family as unreachable
+- 3-4 hours/day, broken into 2-3 sessions (not one long block)
+- Consistent ≥5 days/week
+- Taught peers the material
+
+** Teaching peers
+- Counterintuitive: no observed penalty for "giving away" the material
+- Lab heuristic: watch one, do one, teach one
+- Teaching functions as a mastery test, not a concession
+- Only applies where the act itself is safe
+
+** Attention as a finite resource
+- Adenosine accumulates during wake → sleepiness, degraded focus
+- Sleep clears adenosine; focus budget resets
+- Attention is limited but renewable
+- Chronotype varies; late-night study viable for some
+
+** Circadian entrainment of study time
+- Brain/body entrains to regular schedules (like sleep/wake)
+- ~3 days to establish a new rhythm
+- Studying at fixed times makes focus semi-automatic at those times
+- Recommendation: 1-2 fixed blocks/day, held through weekends where possible
+
+** Focus itself is a trainable skill
+- Not a trait; improves quickly with scheduling + repetition
+- Distraction-elimination (phone, Wi-Fi if possible) is non-negotiable
+
+** Motivation / identity
+- Top students reported broad, abstract, long-horizon aspirations
+  (family impact, life trajectory) — not granular goals
+- Functions as pull-through during fatigue / motivation dips
+- Less necessary when intrinsic interest in material is high
+
+** Challenge is the mechanism
+- Studying that feels hard is the most effective
+- Effort is the cornerstone of learning — known for centuries
+- No osmosis, no flow-state shortcut; desirable difficulty is the point
+
+** Testing as a learning tool (not just evaluation)
+- Among the most strongly supported findings in the peer-reviewed literature
+- Retrieval practice builds and retains knowledge; offsets forgetting
+- Self-quizzing during/after study is high-leverage, not optional
+
+** Operational summary
+- Fix 1-2 daily blocks, total ~3-4h, ≥5 days/week
+- Solo, phone away, give it 3 days to entrain
+- Close each block with retrieval, not rereading
+- Teach the material to someone as a mastery check
+- Attach an aspirational frame for friction days
