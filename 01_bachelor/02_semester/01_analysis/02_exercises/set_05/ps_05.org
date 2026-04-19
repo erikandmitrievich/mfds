@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-18>
-#+lastmod: <2026-04-18 20:23>
+#+lastmod: <2026-04-19 14:42>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -177,6 +177,57 @@ f(x, y) = \begin{pmatrix} x y \\ x^2 + y^3 \end{pmatrix}
 #+end_quote
 
 ** Solution
+
+*** (a)
+
+Define $f_1(x, y) = xy, f_2(x, y) = x^2 + y^3$. Hence,
+
+\begin{align*}
+f(x, y) &= \begin{pmatrix} f_1 \\ f_2 \end{pmatrix} \\
+\implies J_f(x, y) &=
+\begin{pmatrix}
+\partial_x f_1  & \partial_y f_1 \\
+\partial_x f_2  & \partial_y f_2 \\
+\end{pmatrix} \\
+&= \begin{pmatrix} y & x \\ 2x & 3y^2 \end{pmatrix} \\
+\end{align*}
+
+*** (b)
+
+\begin{align*}
+J_f(x, y) &= \begin{pmatrix} y & x \\ 2x & 3y^2 \end{pmatrix} \\
+J_f(1, 1) &= \begin{pmatrix} 1 & 1 \\ 2 & 3 \end{pmatrix} \\
+\end{align*}
+
+*** (c)
+
+Linear approximation of $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ at $x_0$ is
+
+$$L_f(x) = f(x_0) + J_f(x_0) (x - x_0)$$
+
+Define $x_0 = (1, 1)$. Thus,
+
+\begin{align*}
+L_{f}(x, y) &=
+\begin{pmatrix} 1 \\ 2 \end{pmatrix} +
+\begin{pmatrix} 1 & 1 \\ 2 & 3 \end{pmatrix}
+\begin{pmatrix} x - 1 \\ y - 1 \end{pmatrix} \\
+\end{align*}
+
+*** (d)
+
+\begin{align*}
+L_{f}(x, y) &=
+\begin{pmatrix} 1 \\ 2 \end{pmatrix} +
+\begin{pmatrix} x - 1 + y - 1 \\ 2x - 3 + 2y - 3 \end{pmatrix} \\
+&=
+\begin{pmatrix} 1 \\ 2 \end{pmatrix} +
+\begin{pmatrix} x + y - 2 \\ 2x + 2y - 6 \end{pmatrix} \\
+&=
+\begin{pmatrix} x + y - 1 \\ 2x + 2y - 4 \end{pmatrix} \\
+L_{f}(1.01, 0.98) &= \begin{pmatrix} 1.01 + 0.98 - 1 \\ 2(1.01) + 2(0.98) - 4 \end{pmatrix} \\
+&= \begin{pmatrix} 0.99 \\ -0.02 \end{pmatrix} \\
+\end{align*}
 
 * Errors/Typos
 - Problem 2(b): "$A^* A x = b$" → "$A^* A x = A^* b$" (standard normal equations for least squares; as written, the equation is dimensionally correct but does not characterize the minimizer unless $b \in \operatorname{im}(A)$ and additional conditions hold)
