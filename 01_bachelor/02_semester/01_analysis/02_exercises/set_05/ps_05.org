@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-18>
-#+lastmod: <2026-04-19 14:42>
+#+lastmod: <2026-04-19 15:23>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -219,14 +219,14 @@ L_{f}(x, y) &=
 \begin{align*}
 L_{f}(x, y) &=
 \begin{pmatrix} 1 \\ 2 \end{pmatrix} +
-\begin{pmatrix} x - 1 + y - 1 \\ 2x - 3 + 2y - 3 \end{pmatrix} \\
+\begin{pmatrix} x - 1 + y - 1 \\ 2x - 2 + 3y - 3 \end{pmatrix} \\
 &=
 \begin{pmatrix} 1 \\ 2 \end{pmatrix} +
-\begin{pmatrix} x + y - 2 \\ 2x + 2y - 6 \end{pmatrix} \\
+\begin{pmatrix} x + y - 2 \\ 2x + 3y - 5 \end{pmatrix} \\
 &=
-\begin{pmatrix} x + y - 1 \\ 2x + 2y - 4 \end{pmatrix} \\
-L_{f}(1.01, 0.98) &= \begin{pmatrix} 1.01 + 0.98 - 1 \\ 2(1.01) + 2(0.98) - 4 \end{pmatrix} \\
-&= \begin{pmatrix} 0.99 \\ -0.02 \end{pmatrix} \\
+\begin{pmatrix} x + y - 1 \\ 2x + 3y - 3 \end{pmatrix} \\
+L_{f}(1.01, 0.98) &= \begin{pmatrix} 1.01 + 0.98 - 1 \\ 2(1.01) + 3(0.98) - 3 \end{pmatrix} \\
+&= \begin{pmatrix} 0.99 \\ 1.96 \end{pmatrix} \\
 \end{align*}
 
 * Errors/Typos
