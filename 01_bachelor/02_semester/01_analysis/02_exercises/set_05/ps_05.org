@@ -291,5 +291,3 @@ L_{f}(1.01, 0.98) &= \begin{pmatrix} 1.01 + 0.98 - 1 \\ 2(1.01) + 3(0.98) - 3 \e
 &= \begin{pmatrix} 0.99 \\ 1.96 \end{pmatrix} \\
 \end{align*}
 
-* Errors/Typos
-- Problem 2(b): "$A^* A x = b$" → "$A^* A x = A^* b$" (standard normal equations for least squares; as written, the equation is dimensionally correct but does not characterize the minimizer unless $b \in \operatorname{im}(A)$ and additional conditions hold)
