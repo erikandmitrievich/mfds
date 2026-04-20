@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-20>
-#+lastmod: <2026-04-20 14:25>
+#+lastmod: <2026-04-20 14:45>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -155,11 +155,47 @@ Show that these vectors form a basis of $\mathbb{R}^3$, and compute the orthonor
 (Inner product and positive definiteness)
 
 In $\mathbb{R}^2$ we define $\omega(x, y) := xSy$, where
+
 \[S = \begin{pmatrix} 1 & p \\ p & q \end{pmatrix}\]
+
 Prove that $\omega : \mathbb{R}^2 \times \mathbb{R}^2 \to \mathbb{R}$ is an inner product if and only if $\Delta = q - p^2 > 0$. For which values of $(p, q)$ is the standard basis an orthonormal basis w.r.t. $\omega$? Can $\omega$ be an inner product if $p < 0$? What about when $q \leq 0$?
 #+end_quote
 
 ** Solution
+
+$\omega(x, y) = x^T S y$ with $S$ symmetric ($S^T = S$), so $\omega$ is automatically bilinear and symmetric. Only positive-definiteness is at stake. Setting $y = x$:
+
+$$\omega(x, x) = x_1^2 + 2p\,x_1 x_2 + q\,x_2^2$$
+
+1. $\omega$ is an inner product $\iff \Delta = q - p^2 > 0$
+
+   Complete the square in $x_1$:
+
+   $$\omega(x, x) = (x_1 + p x_2)^2 + (q - p^2)\,x_2^2$$
+
+   - ($\Leftarrow$) Assume $\Delta > 0$. Both summands are $\ge 0$ and vanish together only when $x_2 = 0$ and $x_1 + p x_2 = x_1 = 0$, i.e., $x = 0$. So $\omega(x, x) > 0$ for $x \ne 0$.
+
+   - ($\Rightarrow$) Contrapositive. If $\Delta \le 0$, take $x = (-p, 1)^T \ne 0$. The first square vanishes, giving $\omega(x, x) = \Delta \le 0$, contradicting positive-definiteness.
+
+2. Standard basis orthonormal w.r.t. $\omega$
+
+   In general $\omega(e_i, e_j) = S_{ij}$, so $\{e_1, e_2\}$ orthonormal w.r.t. $\omega$ $\iff S = I$:
+
+   - $\omega(e_1, e_1) = 1$ (always).
+   - $\omega(e_2, e_2) = q \stackrel{!}{=} 1$.
+   - $\omega(e_1, e_2) = p \stackrel{!}{=} 0$.
+
+   So $(p, q) = (0, 1)$, and $\omega$ reduces to the standard dot product. Consistency: $\Delta = 1 > 0$.
+
+3. Can $p < 0$?
+
+   Yes. The condition $q > p^2$ depends only on $|p|$, not on the sign of $p$. Example: $(p, q) = (-1, 2) \implies \Delta = 1 > 0$.
+
+4. Can $q \le 0$?
+
+   No. $\omega(e_2, e_2) = q$, and positive-definiteness requires $\omega(e_2, e_2) > 0$, hence $q > 0$. Equivalently, $q > p^2 \ge 0 \implies q > 0$.
+
+   /Asymmetry worth noting: $p$ is unconstrained in sign (off-diagonal cross-term), but $q$ must be strictly positive (diagonal entry = squared $\omega$-norm of $e_2$)./ $\blacksquare$
 
 * Problem 2.8 :inner_product:bilinear_form:isomorphism:
 ** Task
