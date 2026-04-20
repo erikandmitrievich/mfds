@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-20>
-#+lastmod: <2026-04-20 13:00>
+#+lastmod: <2026-04-20 14:25>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -71,13 +71,83 @@ is a norm on $\mathbb{R}^n$, but is not induced by an inner product for $n \geq 
 ** Task
 #+begin_quote
 Let $E = \mathbb{R}^3$, and consider the vectors $x, y, z \in \mathbb{R}^3$ expressed in coordinates from the canonical basis $\mathcal{E} = \{e_1, e_2, e_3\}$:
+
 \[[x]^{\mathcal{E}} = (1, 0, 1)^T\]
 \[[y]^{\mathcal{E}} = (0, 3, 1)^T\]
 \[[z]^{\mathcal{E}} = (-5, 1, 3)^T\]
+
 Show that these vectors form a basis of $\mathbb{R}^3$, and compute the orthonormal basis obtained by their Gram-Schmidt orthonormalization.
 #+end_quote
 
 ** Solution
+
+1. $\{x, y, z\}$ is a basis of $\mathbb{R}^3$
+
+   Three vectors in $\mathbb{R}^3$ form a basis iff they are linearly independent (dimension argument: $\dim \mathbb{R}^3 = 3$, so independence $\implies$ spanning).
+
+   - Set up $\alpha x + \beta y + \gamma z = 0$ componentwise:
+
+     $$\begin{cases} \alpha - 5\gamma = 0 \\ 3\beta + \gamma = 0 \\ \alpha + \beta + 3\gamma = 0 \end{cases}$$
+
+   - Row 1: $\alpha = 5\gamma$. Row 2: $\beta = -\tfrac{\gamma}{3}$. Substitute into row 3:
+
+     $$5\gamma - \tfrac{\gamma}{3} + 3\gamma = \tfrac{23\gamma}{3} = 0 \implies \gamma = 0 \implies \alpha = \beta = 0$$
+
+   - Only the trivial solution $\implies$ linearly independent $\implies$ basis.
+
+2. Gram–Schmidt orthonormalization
+
+   Set $x_1 := x, x_2 := y, x_3 := z$. Standard inner product $\langle a, b \rangle = a^T b$. Recursion (Thm 2.13):
+
+   $$e_1 := \frac{x_1}{\|x_1\|}, \qquad e_i := \frac{x_i - \sum_{j=1}^{i-1} \langle x_i, e_j \rangle e_j}{\|x_i - \sum_{j=1}^{i-1} \langle x_i, e_j \rangle e_j\|}, \quad 2 \le i \le n$$
+
+   - Step 1
+
+     $\|x_1\|^2 = 1 + 0 + 1 = 2 \implies \|x_1\| = \sqrt{2}$
+
+     $$e_1 = \tfrac{1}{\sqrt{2}}(1, 0, 1)^T$$
+
+   - Step 2
+
+     $\langle x_2, e_1 \rangle = \tfrac{1}{\sqrt{2}}(0 + 0 + 1) = \tfrac{1}{\sqrt{2}}$
+
+     $$\langle x_2, e_1 \rangle e_1 = \tfrac{1}{\sqrt{2}} \cdot \tfrac{1}{\sqrt{2}}(1, 0, 1)^T = \tfrac{1}{2}(1, 0, 1)^T$$
+
+     $$x_2 - \langle x_2, e_1 \rangle e_1 = (0, 3, 1)^T - \tfrac{1}{2}(1, 0, 1)^T = (-\tfrac{1}{2}, 3, \tfrac{1}{2})^T$$
+
+     $\|\cdot\|^2 = \tfrac{1}{4} + 9 + \tfrac{1}{4} = \tfrac{19}{2} \implies \|\cdot\| = \sqrt{\tfrac{19}{2}}$
+
+     Normalize (multiply num. and denom. by $2$ to clear fractions): $(-\tfrac{1}{2}, 3, \tfrac{1}{2})^T \cdot 2 = (-1, 6, 1)^T$, and $\sqrt{19/2} \cdot 2 = \sqrt{38}$.
+
+     $$e_2 = \tfrac{1}{\sqrt{38}}(-1, 6, 1)^T$$
+
+   - Step 3
+
+     $\langle x_3, e_1 \rangle = \tfrac{1}{\sqrt{2}}(-5 + 0 + 3) = \tfrac{-2}{\sqrt{2}} = -\sqrt{2}$
+
+     $\langle x_3, e_2 \rangle = \tfrac{1}{\sqrt{38}}(5 + 6 + 3) = \tfrac{14}{\sqrt{38}}$
+
+     $$\langle x_3, e_1 \rangle e_1 = -\sqrt{2} \cdot \tfrac{1}{\sqrt{2}}(1, 0, 1)^T = -(1, 0, 1)^T$$
+
+     $$\langle x_3, e_2 \rangle e_2 = \tfrac{14}{\sqrt{38}} \cdot \tfrac{1}{\sqrt{38}}(-1, 6, 1)^T = \tfrac{14}{38}(-1, 6, 1)^T = \tfrac{7}{19}(-1, 6, 1)^T$$
+
+     $$x_3 - \langle x_3, e_1 \rangle e_1 - \langle x_3, e_2 \rangle e_2 = (-5, 1, 3)^T + (1, 0, 1)^T - \tfrac{7}{19}(-1, 6, 1)^T$$
+
+     $$= (-4, 1, 4)^T - \tfrac{1}{19}(-7, 42, 7)^T = \tfrac{1}{19}\big((-76, 19, 76)^T - (-7, 42, 7)^T\big) = \tfrac{1}{19}(-69, -23, 69)^T = \tfrac{23}{19}(-3, -1, 3)^T$$
+
+     $\|\cdot\| = \tfrac{23}{19}\sqrt{9 + 1 + 9} = \tfrac{23}{19}\sqrt{19} = \tfrac{23}{\sqrt{19}}$
+
+     $$e_3 = \tfrac{\tfrac{23}{19}(-3, -1, 3)^T}{\tfrac{23}{\sqrt{19}}} = \tfrac{1}{\sqrt{19}}(-3, -1, 3)^T$$
+
+   - Verification
+
+     /$\propto$ means "equal up to a positive scalar"; the normalizing factors $\tfrac{1}{\sqrt{2}\sqrt{38}}$ etc. cannot affect whether the inner product is zero, so only the integer direction vectors matter./
+
+     $\langle e_1, e_2 \rangle \propto (1, 0, 1) \cdot (-1, 6, 1) = -1 + 0 + 1 = 0$
+
+     $\langle e_1, e_3 \rangle \propto (1, 0, 1) \cdot (-3, -1, 3) = -3 + 0 + 3 = 0$
+
+     $\langle e_2, e_3 \rangle \propto (-1, 6, 1) \cdot (-3, -1, 3) = 3 - 6 + 3 = 0 \qquad \blacksquare$
 
 * Problem 2.7 :inner_product:bilinear_form:orthonormal_basis:
 ** Task
@@ -114,5 +184,3 @@ where $\mathfrak{R}(z)$ and $\mathfrak{I}(z)$ are the real and imaginary part of
 
 ** Solution
 
-* Errors/Typos
-- Problem 2.1: "$\|\cdot\|_1 : \mathbb{E} \times \mathbb{E} \to \mathbb{R}$" → "$\|\cdot\|_1 : \mathbb{E} \to \mathbb{R}^+$" (a norm is unary; the signature $\mathbb{E} \times \mathbb{E} \to \mathbb{R}$ describes a bilinear form, not a norm)
