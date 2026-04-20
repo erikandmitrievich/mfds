@@ -1,0 +1,83 @@
+#+title: Ps 05
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-04-20>
+#+lastmod: <2026-04-20 08:40>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Problem 2.1 :norm:inner_product:parallelogram_law:
+** Task
+#+begin_quote
+(Parallelogram law & polarization identity)
+
+Let $\mathbb{E} = \mathbb{R}^n$. Prove that $\|\cdot\|_1 : \mathbb{E} \times \mathbb{E} \to \mathbb{R}$ given by
+\[ \|x\|_1 = \sum_{i=1}^{n} |x_i|, \quad x = (x_1, \ldots, x_n)^T \in \mathbb{R}^n \]
+is a norm on $\mathbb{R}^n$, but is not induced by an inner product for $n \geq 2$.
+#+end_quote
+
+** Solution
+
+* Problem 2.4 :inner_product:bilinear_form:matrix:
+** Task
+#+begin_quote
+(Inner product and matrix representation)
+
+Let $\mathbb{E} = \mathbb{R}^2$, and let $\omega(\cdot, \cdot) : \mathbb{E} \times \mathbb{E} \to \mathbb{R}$ be defined as
+\[ \omega\left(\begin{pmatrix} x_1 \\ x_2 \end{pmatrix}, \begin{pmatrix} y_1 \\ y_2 \end{pmatrix}\right) = x_1 y_1 + 2 x_2 y_2 + x_1 y_2 + x_2 y_1 \]
+
+Prove that $\omega$ is an inner product on $\mathbb{R}^2$, and obtain the matrix $S$ such that $\omega$ can be written as $\omega(x,y) = y^T S x$.
+#+end_quote
+
+** Solution
+
+* Problem 2.7 :inner_product:isomorphism:complex_numbers:
+** Task
+#+begin_quote
+(Complex field as matrices)
+
+Given $\mathbb{E} = \mathbb{R}^{2 \times 2}$ the space of real two-by-two matrices, we consider the subspace $\mathbb{F} = \mathrm{span}(\mathrm{Id}, J)$, where
+\[ J = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix} \]
+
+We define the following bilinear form:
+\[ \omega(A, B) = \frac{1}{2} \mathrm{Tr}(B^T A) \]
+where $\mathrm{Tr}(A)$ is the trace of a matrix $A$.
+
+(i) Prove that $\omega$ is an inner product on $\mathbb{F}$, and that $\{\mathrm{Id}, J\}$ forms an orthonormal basis w.r.t. $\omega$.
+
+(ii) We define the following linear function $\Phi : \mathbb{C} \to \mathbb{F}$ given by:
+\[ \Phi(z) = \Re(z) \cdot \mathrm{Id} + \Im(z) \cdot J = \begin{pmatrix} \Re(z) & -\Im(z) \\ \Im(z) & \Re(z) \end{pmatrix} \in \mathbb{F}, \quad \forall z \in \mathbb{C} \]
+where $\Re(z)$ and $\Im(z)$ are the real and imaginary part of $z$. Prove that $\Phi$ is an isomorphism between $\mathbb{C}$ and $\mathbb{F}$, and that for any complex numbers $z_1, z_2$ we have
+\[ \Phi(z_1 \cdot z_2) = \Phi(z_2) \cdot \Phi(z_1) \]
+
+(iii) Let $\|\cdot\| : \mathbb{F} \to \mathbb{R}^+$ be the norm associated to $\omega$, namely $\|\cdot\| := \sqrt{\omega(\cdot, \cdot)}$. Given a complex number $z \in \mathbb{C}$, what does $\|\Phi(z)\|$ represent? (*Indication*: One may first consider this: what does the $\Phi(z)^T$ represent?)
+#+end_quote
+
+** Solution
+
+* Problem 2.8 :inner_product:bilinear_form:orthonormal_basis:
+** Task
+#+begin_quote
+(Properties of inner product)
+
+(i) In $\mathbb{R}^2$ we define the following bilinear operation
+\[ \omega : \mathbb{R}^2 \times \mathbb{R}^2 \to \mathbb{R}, \quad \omega(x, y) = \epsilon(u, x)\epsilon(v, y) + \epsilon(u, y)\epsilon(v, x) \]
+where $u, v \in \mathbb{R}^2 \setminus \{0\}$ and $\epsilon$ is the standard Euclidean inner product (dot product). Does $\omega$ constitute an inner product for any choice of $u$ and $v$? If it does, calculate an orthonormal basis w.r.t. $\omega$.
+
+(ii) Conclude from the previous point that $\omega(x, y) = y^T S x$ where $S = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$ cannot be an inner product. What are the vectors $x \in \mathbb{E}$ such that $\omega(x, x) = 0$?
+#+end_quote
+
+** Solution
+
+* Errors/Typos
+- Problem 2.1: "$\|\cdot\|_1 : \mathbb{E} \times \mathbb{E} \to \mathbb{R}$" → "$\|\cdot\|_1 : \mathbb{E} \to \mathbb{R}^+$" (a norm takes a single vector, not a pair; domain should be $\mathbb{E}$, not $\mathbb{E} \times \mathbb{E}$)
+- Problem 2.8 (ii): "$x \in \mathbb{E}$" — $\mathbb{E}$ is not defined in this exercise; from part (i) it is presumably $\mathbb{R}^2$
