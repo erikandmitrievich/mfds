@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-20>
-#+lastmod: <2026-04-20 12:07>
+#+lastmod: <2026-04-20 13:00>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -20,12 +20,52 @@
 #+begin_quote
 (Parallelogram law & polarization identity)
 
-Let $\mathbb{E} = \mathbb{R}^n$. Prove that $\|\cdot\|_1 : \mathbb{E} \times \mathbb{E} \to \mathbb{R}$ given by
+Let $\mathbb{E} = \mathbb{R}^n$. Prove that $$\|\cdot\|_1 : \mathbb{E} \to \mathbb{R}^+$$ given by
 \[\|x\|_1 = \sum_{i=1}^{n} |x_i|, \quad x = (x_1, \ldots, x_n)^T \in \mathbb{R}^n\]
 is a norm on $\mathbb{R}^n$, but is not induced by an inner product for $n \geq 2$.
 #+end_quote
 
 ** Solution
+
+1. $\|\cdot\|_1$ is a norm
+
+   Let $x, y \in \mathbb{R}^n, \lambda \in \mathbb{R}$.
+
+   - non-negativity
+
+     $|x_i| \ge 0 \implies \|x\|_1 = \sum_{i=1}^n |x_i| \ge 0$.
+
+   - non-degeneracy
+
+     If $\|x\|_1 = 0$, then $\sum_{i=1}^n |x_i| = 0$ with non-neg summands, so $|x_i| = 0 \,\forall i \iff x = 0$.
+
+   - homogeneity
+
+     $$\|\lambda x\|_1 = \sum_{i=1}^n |\lambda x_i| = |\lambda| \sum_{i=1}^n |x_i| = |\lambda| \|x\|_1$$
+
+   - triangle inequality
+
+     $$\|x + y\|_1 = \sum_{i=1}^n |x_i + y_i| \le \sum_{i=1}^n \left( |x_i| + |y_i| \right) = \|x\|_1 + \|y\|_1$$
+
+2. Not induced by any inner product for $n \ge 2$
+
+   #+begin_quote
+   *Theorem 2.8: Jordan–von Neumann.* A norm $\|\cdot\|$ is induced by an inner product iff it satisfies the parallelogram identity:
+
+   $$\|x + y\|^2 + \|x - y\|^2 = 2(\|x\|^2 + \|y\|^2), \quad \forall x, y \in \mathbb{E}$$
+   #+end_quote
+
+   By contraposition, one counterexample pair suffices. Take $x = e_1, y = e_2$ (pad with zeros for $n > 2$):
+
+   - $\|x\|_1 = \|y\|_1 = 1$
+
+   - $x + y = (1, 1, 0, \ldots, 0) \implies \|x + y\|_1 = 2$
+
+   - $x - y = (1, -1, 0, \ldots, 0) \implies \|x - y\|_1 = 2$
+
+   $$\|x + y\|_1^2 + \|x - y\|_1^2 = 4 + 4 = 8 \ne 4 = 2(1 + 1) = 2(\|x\|_1^2 + \|y\|_1^2)$$
+
+   Parallelogram identity fails $\implies \|\cdot\|_1$ is not induced by any inner product. $\blacksquare$
 
 * Problem 2.4 :basis:gram_schmidt:orthonormal_basis:
 ** Task
