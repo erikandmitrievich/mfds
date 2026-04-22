@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-14>
-#+lastmod: <2026-04-15 13:14>
+#+lastmod: <2026-04-22 12:14>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -173,6 +173,7 @@ Loop invariant: before iteration $i$, each possible $(i-1)$ permutation appears 
 ** Subtlety
 
 Showing each element lands in each position with probability $1/n$ is *not sufficient* to prove uniform random permutation (Exercise 5.3-4).
+
 * 5.4 Probabilistic analysis and further uses of indicator random variables
 
 TODO

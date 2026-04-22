@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-22>
-#+lastmod: <2026-04-22 09:44>
+#+lastmod: <2026-04-22 12:34>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -22,6 +22,41 @@ Professor Gallup wants to create a random sample of the set $\{1, \ldots, n\}$, 
 #+end_quote
 
 ** Solution
+
+Fix $T \subseteq \{1, \ldots, n\}$ with $|T| = m$.
+
+RANDOMLY-PERMUTE yields each permutation with probability $1/n!$. Number of permutations whose first $m$ positions contain exactly $T$:
+
+- arrange $T$ in positions $1, \ldots, m$: $m!$ ways,
+- arrange $\{1, \ldots, n\} \setminus T$ in positions $m+1, \ldots, n$: $(n-m)!$ ways.
+
+\[
+\Pr[S = T] = \frac{m!(n-m)!}{n!} = \frac{1}{\binom{n}{m}}.
+\]
+
+Independent of $T$, so all $\binom{n}{m}$ subsets are equiprobable. $\blacksquare$
+
+*** Numerical check
+
+For $n = 10$, $m = 3$: $\Pr[S = T] = \frac{3!\,7!}{10!} = \frac{1}{\binom{10}{3}} = \frac{1}{120} \approx 0.00833$.
+
+#+begin_src julia :results value
+using Random
+let
+    n, m = 10, 3
+    target = Set(1:m)               # fix an arbitrary 3-subset
+    epochs = 1_000_000
+    hits = 0
+    for _ in 1:epochs
+        sample = Set(shuffle(1:n)[1:m])
+        hits += (sample == target)
+    end
+    hits / epochs                   # should be ≈ 1/120 ≈ 0.00833
+end
+#+end_src
+
+#+RESULTS:
+: 0.008319
 
 * Problem 37 :random_sampling:randomized_algorithm:
 ** Task
