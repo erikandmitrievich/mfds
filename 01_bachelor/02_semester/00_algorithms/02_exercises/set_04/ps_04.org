@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-22>
-#+lastmod: <2026-04-22 12:34>
+#+lastmod: <2026-04-22 14:54>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -86,21 +86,29 @@ Show that the procedure RANDOM SAMPLE returns a random $m$ subset $S$ of $\{1, \
 #+begin_quote
 Professor Knievel suggests the procedure PERMUTE-BY-CYCLE to generate a uniform random permutation. Show that each element $A[i]$ has a $1/n$ probability of winding up in any particular position in $B$. Then show that Professor Knievel is mistaken by showing that the resulting permutation is not uniformly random.
 
-1: procedure PERMUTE-BY-CYCLE($A, n$)
-2: let $B[1 : n]$ be a new array
-3: $\text{offset} = \text{RANDOM}(1, n)$
-4: for $i = 1$ to $n$ do
-5: $\text{dest} = i + \text{offset}$
-6: if $\text{dest} > n$ then
-7: $\text{dest} = \text{dest} - n$
-8: end if
-9: $B[\text{dest}] = A[i]$
-10: end for
-11: return $B$
+1:  procedure PERMUTE-BY-CYCLE($A, n$)
+2:    let $B[1 : n]$ be a new array
+3:    $\text{offset} = \text{RANDOM}(1, n)$
+4:    for $i = 1$ to $n$ do
+5:      $\text{dest} = i + \text{offset}$
+6:      if $\text{dest} > n$ then
+7:         $\text{dest} = \text{dest} - n$
+8:    end if
+9:    $B[\text{dest}] = A[i]$
+10:   end for
+11:   return $B$
 12: end procedure
 #+end_quote
 
 ** Solution
+
+*** (a)
+
+For a fixed $i$ and target position $j$, $A[i]$ lands at $j$ iff $i + \text{offset} \equiv j  \mod n$. Exactly one offset in $\{1, \ldots, n\}$ satisfies this. Since the offset is uniform on $\{1, \ldots, n\}$, probability is $\frac{1}{n}$.
+
+*** (b)
+
+The algorithm is fully determined by the choice of $\text{offset} \in \{1, \ldots, n\}$, so it produces at most $n$ distinct permutations. But $\{1, \ldots, n\}$ admits $n!$ permutations, and $n < n!$ for $n \geq 3$. Hence at least $n! - n$ permutations occur with probability $0$, so the distribution is not uniform.
 
 * Problem 39 :random_permutation:randomized_algorithm:
 ** Task
