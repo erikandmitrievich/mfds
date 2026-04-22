@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-22>
-#+lastmod: <2026-04-22 14:54>
+#+lastmod: <2026-04-22 15:16>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -116,13 +116,29 @@ The algorithm is fully determined by the choice of $\text{offset} \in \{1, \ldot
 Professor Kelp decides to write a procedure that produces at random any permutation except the identity permutation, in which every element ends up where it started. He proposes the procedure PERMUTE-WITHOUT-IDENTITY. Does this procedure do what Professor Kelp intends?
 
 1: procedure PERMUTE-WITHOUT-IDENTITY($A, n$)
-2: for $i = 1$ to $n - 1$ do
-3: swap $A[i]$ with $A[\text{RANDOM}(i + 1, n)]$
-4: end for
+2:   for $i = 1$ to $n - 1$ do
+3:     swap $A[i]$ with $A[\text{RANDOM}(i + 1, n)]$
+4:   end for
 5: end procedure
 #+end_quote
 
 ** Solution
+
+*** (a)
+
+Yes. At iteration $i = 1$, the algorithm swaps $A[1]$ with $A[\text{RANDOM}(2, n)]$, so $A[1]$ is displaced. Hence position $1$ cannot retain its original element, and the identity permutation is never produced.
+
+*** (b)
+
+No — the distribution is not uniform over the $n! - 1$ non-identity permutations.
+
+The algorithm performs $n - 1$ iterations; iteration $i$ draws from a range of size $n - i$. Total number of outcome sequences:
+
+\[
+\prod_{i=1}^{n-1}(n - i) = (n-1)!.
+\]
+
+For $n \geq 3$, $(n-1)! < n! - 1$, so at least $n! - 1 - (n-1)!$ non-identity permutations are unreachable and occur with probability $0$. $\blacksquare$
 
 * Problem 40 :random_permutation:randomized_algorithm:uniform_distribution:
 ** Task
