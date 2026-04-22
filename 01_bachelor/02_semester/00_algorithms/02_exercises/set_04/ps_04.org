@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-22>
-#+lastmod: <2026-04-22 15:16>
+#+lastmod: <2026-04-22 17:20>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -146,13 +146,19 @@ For $n \geq 3$, $(n-1)! < n! - 1$, so at least $n! - 1 - (n-1)!$ non-identity pe
 Consider the PERMUTE-WITH-ALL, which instead of swapping element $A[i]$ with a random element from the subarray $A[i : n]$, swaps it with a random element from anywhere in the array. Does PERMUTE-WITH-ALL produce a uniform random permutation? Why or why not?
 
 1: procedure PERMUTE-WITH-ALL($A, n$)
-2: for $i = 1$ to $n$ do
-3: swap $A[i]$ with $A[\text{RANDOM}(1, n)]$
-4: end for
+2:   for $i = 1$ to $n$ do
+3:     swap $A[i]$ with $A[\text{RANDOM}(1, n)]$
+4:   end for
 5: end procedure
 #+end_quote
 
 ** Solution
+
+No. The algorithm runs $n$ iterations, each independently choosing an index from $\{1, \ldots, n\}$, giving $n^n$ equally likely execution paths, each with probability $1/n^n$.
+
+If the resulting distribution over the $n!$ permutations were uniform, each permutation would be produced by exactly $n^n / n!$ paths. But the number of paths producing a given permutation is a non-negative integer, so uniformity requires $n! \mid n^n$.
+
+For $n = 3$: $n^n / n! = 27 / 6 = 9/2 \notin \mathbb{Z}$, so $3! \nmid 3^3$. Hence the distribution is not uniform. $\blacksquare$
 
 * Problem 41 :heap:binary_tree:height:
 ** Task
