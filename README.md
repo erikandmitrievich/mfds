@@ -1,10 +1,25 @@
-* MFDS
+# MFDS
 
-Bachelor notes. University of Vienna.
+Bachelor of Mathematical Foundations of Data Science, University of Vienna.
 
-Org-mode, LaTeX, Julia, Python, C++. Doom Emacs. Git.
+## Contents
 
-Don't copy the structure. It won't work for you.
+- Lecture notes
+- Problem sets and solutions
+- Mock exams and summaries
+- Embedded Julia, Python, and C++
+- LLM rulesets
 
----
-MIT / CC BY-NC-SA 4.0. Not affiliated with UniVie.
+## Stack
+
+Doom Emacs, Org-mode, LaTeX, git. Code is executed in place; math is rendered from source. Everything is plain text.
+
+## Scope
+
+Semester 2 of 6. In progress.
+
+## License
+
+Code: MIT. Prose: CC BY-NC-SA 4.0. See `LICENSE`.
+
+Not affiliated with UniVie.
