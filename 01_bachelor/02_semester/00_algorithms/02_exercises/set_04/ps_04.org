@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-22>
-#+lastmod: <2026-04-22 17:20>
+#+lastmod: <2026-04-23 15:36>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -64,16 +64,16 @@ end
 The method from Exercise 36 makes $n$ calls to the RANDOM procedure. In Professor Gallup's application, $n$ is much larger than $m$, and so the professor wants to create a random sample with fewer calls to RANDOM.
 
 1: procedure RANDOM SAMPLE($m, n$)
-2: $S = \emptyset$
-3: for $k = n - m + 1$ to $n$ do
-4: $i = \text{RANDOM}(1, k)$
-5: if $i \in S$ then
-6: $S = S \cup \{k\}$
-7: else
-8: $S = S \cup \{i\}$
-9: end if
-10: end for
-11: return $S$
+2:    $S = \emptyset$
+3:    for $k = n - m + 1$ to $n$ do
+4:      $i = \text{RANDOM}(1, k)$
+5:      if $i \in S$ then
+6:        $S = S \cup \{k\}$
+7:      else
+8:        $S = S \cup \{i\}$
+9:      end if
+10:   end for
+11:   return $S$
 12: end procedure
 
 Show that the procedure RANDOM SAMPLE returns a random $m$ subset $S$ of $\{1, \ldots, n\}$.
@@ -167,6 +167,22 @@ What are the minimum and maximum numbers of elements in a heap of height $h$? Sh
 #+end_quote
 
 ** Solution
+
+*** (a)
+
+Maximum number - $2^{h+1} - 1$, minimum - $2^h$.
+
+*** (b)
+
+A heap of height $h$ with $n$ elements satisfies, by (a),
+
+\begin{align*}
+2^h \le n &\le 2^{h+1} - 1 \\
+h \le \lg n &\le \lg (2^{h+1} - 1) < h + 1 \\
+h \le \lg n &< h + 1
+\end{align*}
+
+Hence $h = \lfloor \lg n \rfloor$. $\blacksquare$
 
 * Problem 42 :heap:max_heap:
 ** Task
