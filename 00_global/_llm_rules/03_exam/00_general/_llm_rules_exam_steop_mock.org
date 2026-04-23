@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-26>
-#+lastmod: <2026-04-13 17:28>
+#+lastmod: <2026-04-23 18:00>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -15,6 +15,7 @@
 #+property: header-args :eval never-export
 #+startup: overview latexpreview inlineimages
 
+#+begin_quote
 *Suggestions for students (should be ignored by LLM):*
 - Read the whole prompt for better understanding of what actually is going on.
 - Provide the LLM .org files of lectures/mocks, not the pdf's. LLM analyses .org files much easier and faster.
