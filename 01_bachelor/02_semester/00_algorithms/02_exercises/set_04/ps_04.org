@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-22>
-#+lastmod: <2026-04-23 16:25>
+#+lastmod: <2026-04-23 17:02>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -80,6 +80,8 @@ Show that the procedure RANDOM SAMPLE returns a random $m$ subset $S$ of $\{1, \
 #+end_quote
 
 ** Solution
+
+Don't really want to do this one...
 
 * Problem 38 :random_permutation:randomized_algorithm:uniform_distribution:
 ** Task
