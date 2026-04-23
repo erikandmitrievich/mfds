@@ -20,6 +20,6 @@ Semester 2 of 6. In progress.
 
 ## License
 
-Code: MIT. Prose: CC BY-NC-SA 4.0. See `LICENSE`.
+Code: MIT. Prose: CC BY-NC-SA 4.0. See [`LICENSE`](LICENSE).
 
 Not affiliated with UniVie.
