@@ -1,0 +1,60 @@
+#+title: Ch 06 Heapsort
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-04-22>
+#+lastmod: <2026-04-23 14:38>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* 6.1 Heaps
+
+** Array-as-tree representation
+- *(binary) heap*: array $A[1:n]$ viewed as a nearly complete binary tree — every level fully filled except possibly the last, which is filled left-to-right (see §B.5.3).
+- Attribute $A.\text{heap-size}$ with $0 \leq A.\text{heap-size} \leq n$: only $A[1 : A.\text{heap-size}]$ count as valid heap elements; remaining slots in $A$ may hold garbage.
+- $A.\text{heap-size} = 0$ → empty heap.
+- Root sits at $A[1]$.
+
+** Index arithmetic — =PARENT=, =LEFT=, =RIGHT=
+#+begin_example
+PARENT(i)
+  return ⌊i/2⌋
+
+LEFT(i)
+  return 2i
+
+RIGHT(i)
+  return 2i + 1
+#+end_example
+- $\text{PARENT}(i) = \lfloor i/2 \rfloor$, $\text{LEFT}(i) = 2i$, $\text{RIGHT}(i) = 2i + 1$.
+- Hardware shortcut: $2i$ is a single left bit shift, $2i + 1$ is a left shift then add 1, $\lfloor i/2 \rfloor$ is a right bit shift. Often implemented as macros or inline procedures.
+
+** Heap property — max vs min
+- Two kinds of binary heap, each defined by a *heap property* the node values satisfy.
+- *Max-heap property*: for every node $i$ other than the root,
+  \[ A[\text{PARENT}(i)] \geq A[i] \]
+  → maximum sits at the root; every subtree rooted at $x$ contains values $\leq A[x]$.
+- *Min-heap property*: for every node $i$ other than the root,
+  \[ A[\text{PARENT}(i)] \leq A[i] \]
+  → minimum sits at the root.
+- Usage split: =HEAPSORT= uses max-heaps; min-heaps commonly back priority queues (§6.5). When a claim holds for both kinds, the source drops the prefix and just says "heap".
+
+** Height
+- *Height of a node*: number of edges on the longest simple downward path from the node to a leaf.
+- *Height of the heap*: height of the root.
+- A heap of $n$ elements sits on a complete binary tree → height is $\Theta(\lg n)$.
+- Basic heap operations cost time proportional to the height → $O(\lg n)$.
+
+** Core procedures (chapter roadmap)
+- =MAX-HEAPIFY= — $O(\lg n)$; restores the max-heap property at one node.
+- =BUILD-MAX-HEAP= — linear time; produces a max-heap from an unordered array.
+- =HEAPSORT= — $O(n \lg n)$; in-place sort.
+- =MAX-HEAP-INSERT=, =MAX-HEAP-EXTRACT-MAX=, =MAX-HEAP-INCREASE-KEY=, =MAX-HEAP-MAXIMUM= — priority-queue API; each $O(\lg n)$ plus the cost of mapping inserted objects to heap indices.
