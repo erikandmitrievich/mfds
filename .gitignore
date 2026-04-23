@@ -1,24 +1,18 @@
-# macOS system files
+# system files
 .DS_Store
 
-# Thumbnails
-._*
-
-# Editor or IDE junk
-*.swp
-*.swo
-*~
+# IDE junk
 .vscode/
-.idea/
-*pi-prime/
 
 # latex
 *.tex
 
-# removing source files
+# source files
 *book.*
 *_source*
 *source.*
 *source.pdf
 *source.org
-# *02_exercise/
+
+# unrelated
+*ignore*
