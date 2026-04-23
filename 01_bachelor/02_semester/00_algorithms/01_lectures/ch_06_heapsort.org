@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-22>
-#+lastmod: <2026-04-23 15:20>
+#+lastmod: <2026-04-23 16:38>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -135,3 +135,104 @@ BUILD-MAX-HEAP(A, n)
 
 ** =BUILD-MIN-HEAP=
 - Identical to =BUILD-MAX-HEAP= but line 3 calls =MIN-HEAPIFY= instead of =MAX-HEAPIFY=. Produces a min-heap from an unordered array in linear time.
+* 6.4 The heapsort algorithm
+
+** =HEAPSORT=
+- Strategy: build a max-heap on $A[1:n]$, then repeatedly move the root (largest remaining element) to its final sorted position at the end of the array, shrink the heap, and restore the max-heap property.
+- Per iteration:
+  - Maximum sits at $A[1]$ → exchange $A[1]$ with $A[i]$ (current last heap slot); the largest remaining value is now in its correct final position.
+  - Decrement $A.\text{heap-size}$ → node $i$ leaves the heap. The root's two subtrees are still max-heaps, but the new $A[1]$ (formerly the last heap slot) may violate the max-heap property.
+  - =MAX-HEAPIFY(A, 1)= restores a max-heap on $A[1 : i-1]$.
+- Repeat for heap sizes $n, n-1, \dots, 2$ (size 1 is trivially sorted).
+#+begin_example
+HEAPSORT(A, n)
+  BUILD-MAX-HEAP(A, n)
+  for i = n downto 2
+    exchange A[1] with A[i]
+    A.heap-size = A.heap-size - 1
+    MAX-HEAPIFY(A, 1)
+#+end_example
+
+* 6.5 Priority queues
+
+** Context
+- Any comparison-based sort requires $\Omega(n \lg n)$ comparisons (Ch. 8) → =HEAPSORT= is asymptotically optimal, though a good =QUICKSORT= (Ch. 7) usually beats it in practice.
+- Beyond sorting, the heap's main use is as an efficient priority queue.
+- Two kinds: max-priority and min-priority queues. This section covers max; min is symmetric (Ex. 6.5-3).
+
+** Priority queue — ADT
+- *Priority queue*: data structure maintaining a set $S$ of elements, each with an associated *key*.
+- *Max-priority queue* operations:
+  - =INSERT(S, x, k)=: insert element $x$ with key $k$; equivalent to $S = S \cup \{x\}$.
+  - =MAXIMUM(S)=: return the element with the largest key.
+  - =EXTRACT-MAX(S)=: remove and return the element with the largest key.
+  - =INCREASE-KEY(S, x, k)=: raise $x$'s key to $k$, assumed $\geq$ current $x.\text{key}$.
+- *Min-priority queue* (symmetric): =INSERT=, =MINIMUM=, =EXTRACT-MIN=, =DECREASE-KEY=.
+- Applications: job scheduling on a shared machine (max-PQ, =EXTRACT-MAX= picks next job); event-driven simulation (min-PQ, =EXTRACT-MIN= picks next event by time). =DECREASE-KEY= features prominently in Ch. 21 and 22.
+
+** Mapping application objects ↔ heap indices
+- Heap slots store pointers to application objects; each object carries a =key= attribute, so $A[i].\text{key}$ is well-defined.
+- Heap positions change during operations, so both directions of the mapping (object → index, index → object) must be maintainable.
+- *Handles*: opaque tokens stored in both the object and the heap element, giving enough information to translate. When a heap element moves, the handle in the corresponding object is updated. Typical worst-case overhead: $O(1)$ per access.
+- *Alternative*: store the object → index mapping inside the priority queue itself.
+  - Advantage: application objects need no modification.
+  - Disadvantage: cost of establishing and maintaining the mapping.
+  - Hash-table option (Ch. 11): expected $O(1)$ per lookup, worst case $\Theta(n)$.
+- =MAX-HEAPIFY= is implicitly assumed to compare by =.key=, exchange pointers (not values), and update the index mapping on every swap. All running times below are $\cdot + \text{mapping overhead}$.
+
+** =MAX-HEAP-MAXIMUM= — implements =MAXIMUM=
+- Root of a max-heap is the maximum → return $A[1]$ after an underflow check.
+- *Running time*: $\Theta(1)$.
+#+begin_example
+MAX-HEAP-MAXIMUM(A)
+  if A.heap-size < 1
+      error "heap underflow"
+  return A[1]
+#+end_example
+
+** =MAX-HEAP-EXTRACT-MAX= — implements =EXTRACT-MAX=
+- Save $A[1]$, move the last heap element into the root, shrink the heap, then =MAX-HEAPIFY(A, 1)= to restore the property. Structurally identical to the body of the =HEAPSORT= for-loop (lines 3–5).
+- *Running time*: $O(\lg n)$ — constant work on top of =MAX-HEAPIFY=, plus mapping overhead.
+#+begin_example
+MAX-HEAP-EXTRACT-MAX(A)
+  max = MAX-HEAP-MAXIMUM(A)
+  A[1] = A[A.heap-size]
+  A.heap-size = A.heap-size - 1
+  MAX-HEAPIFY(A, 1)
+  return max
+#+end_example
+
+** =MAX-HEAP-INCREASE-KEY= — implements =INCREASE-KEY=
+- Reject if the new key $k$ would *decrease* $x.\text{key}$, then set $x.\text{key} = k$.
+- The increase may break the max-heap property along the path from $x$ toward the root. Walk that path: while the current node's key exceeds its parent's, swap with the parent (updating the index mapping); stop once parent $\geq$ current (property restored) or root is reached.
+- Structure mirrors the inner loop of =INSERTION-SORT= (p. 19).
+- *Running time*: $O(\lg n)$ — the path to the root has length $O(\lg n)$.
+#+begin_example
+MAX-HEAP-INCREASE-KEY(A, x, k)
+  if k < x.key
+      error "new key is smaller than current key"
+  x.key = k
+  find the index i in array A where object x occurs
+  while i > 1 and A[PARENT(i)].key < A[i].key
+      exchange A[i] with A[PARENT(i)], updating the information that maps
+              priority queue objects to array indices
+      i = PARENT(i)
+#+end_example
+
+** =MAX-HEAP-INSERT= — implements =INSERT=
+- Check capacity ($A.\text{heap-size} < n$), extend the heap by one slot whose key is the sentinel $-\infty$, map $x$ to that index, then call =MAX-HEAP-INCREASE-KEY= to raise the key to its true value $k$. The $-\infty$ sentinel makes the =INCREASE-KEY= precondition $k \geq x.\text{key}$ hold trivially.
+- *Running time*: $O(\lg n)$ plus mapping overhead.
+#+begin_example
+MAX-HEAP-INSERT(A, x, n)
+  if A.heap-size == n
+      error "heap overflow"
+  A.heap-size = A.heap-size + 1
+  k = x.key
+  x.key = -∞
+  A[A.heap-size] = x
+  map x to index heap-size in the array
+  MAX-HEAP-INCREASE-KEY(A, x, k)
+#+end_example
+
+** Summary
+- A heap supports every priority-queue operation on a set of size $n$ in $O(\lg n)$ time, plus the overhead for mapping objects to array indices.
