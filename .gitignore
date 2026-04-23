@@ -8,11 +8,8 @@
 *.tex
 
 # source files
-*book.*
-*_source*
-*source.*
-*source.pdf
-*source.org
+*book*
+*source*
 
 # unrelated
 *ignore*
