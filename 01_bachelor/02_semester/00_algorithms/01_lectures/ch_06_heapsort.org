@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-22>
-#+lastmod: <2026-04-23 14:38>
+#+lastmod: <2026-04-23 15:07>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -58,3 +58,38 @@ RIGHT(i)
 - =BUILD-MAX-HEAP= — linear time; produces a max-heap from an unordered array.
 - =HEAPSORT= — $O(n \lg n)$; in-place sort.
 - =MAX-HEAP-INSERT=, =MAX-HEAP-EXTRACT-MAX=, =MAX-HEAP-INCREASE-KEY=, =MAX-HEAP-MAXIMUM= — priority-queue API; each $O(\lg n)$ plus the cost of mapping inserted objects to heap indices.
+* 6.2 Maintaining the heap property
+
+** =MAX-HEAPIFY= — purpose and precondition
+- Inputs: array $A$ (with $\text{heap-size}$ attribute) and index $i$.
+- *Precondition*: the binary trees rooted at $\text{LEFT}(i)$ and $\text{RIGHT}(i)$ are already max-heaps; only $A[i]$ may violate the max-heap property.
+- *Action*: lets $A[i]$ "float down" so that the subtree rooted at $i$ obeys the max-heap property.
+
+** Mechanism
+- Determine the index of the largest value among $A[i]$, $A[\text{LEFT}(i)]$, $A[\text{RIGHT}(i)]$ (each child checked against $A.\text{heap-size}$); store it in $\textit{largest}$.
+- If $A[i]$ is already largest → subtree at $i$ is a max-heap, return.
+- Otherwise swap $A[i]$ with $A[\textit{largest}]$. Now $i$ and its two children satisfy the property locally, but the value just pushed into position $\textit{largest}$ may now be smaller than its own children → recurse with =MAX-HEAPIFY(A, largest)=.
+#+begin_example
+MAX-HEAPIFY(A, i)
+  l = LEFT(i)
+  r = RIGHT(i)
+  if l ≤ A.heap-size and A[l] > A[i]
+      largest = l
+  else largest = i
+  if r ≤ A.heap-size and A[r] > A[largest]
+      largest = r
+  if largest ≠ i
+      exchange A[i] with A[largest]
+      MAX-HEAPIFY(A, largest)
+#+end_example
+
+[FIGURE 6.2: Three-stage trace of =MAX-HEAPIFY(A, 2)= on a 10-node heap, $A.\text{heap-size} = 10$; violating node shown in blue at (a) $i=2$ (value 4), (b) $i=4$ after swapping with $A[4]$, (c) $i=9$ after swapping with $A[9]$, where the recursive call is a no-op.]
+
+** Running time
+- Let $T(n)$ be the worst-case time on a subtree of size at most $n$.
+- Per call: $\Theta(1)$ to fix the relationship among $A[i]$, $A[\text{LEFT}(i)]$, $A[\text{RIGHT}(i)]$, plus at most one recursive call on a child's subtree.
+- A child's subtree has size at most $2n/3$ (worst case occurs when the bottom level is exactly half full).
+- Recurrence:
+  \[ T(n) \leq T(2n/3) + \Theta(1) \tag{6.1} \]
+- By case 2 of the master theorem (Theorem 4.1): $T(n) = O(\lg n)$.
+- Equivalent characterization: on a node of height $h$, =MAX-HEAPIFY= runs in $O(h)$.
