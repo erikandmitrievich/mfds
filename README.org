@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-13>
-#+lastmod: <2026-04-23 19:12>
+#+lastmod: <2026-04-23 21:43>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -15,77 +15,17 @@
 #+property: header-args :eval never-export
 #+startup: overview latexpreview inlineimages
 
-* About This Repository
+* MFDS — A Workspace Built on a Thesis
 
-This is my personal study workspace for the *Bachelor of Mathematical Foundations of Data Science* (First Cohort).
+Most students treat a degree as four years of disposable notebooks. They hand-copy equations they'll never read again, stack PDFs in folders they'll never open, and call it studying. Then they're surprised when nothing compounds.
 
-This repository is a centralised workspace containing:
+I don't.
 
-- Lecture Notes
-- Scripts and Code
-- LLM Prompts/Rules
-- Mock Papers
-- Exam Preparation Plan
-- Summaries
+This repository is my degree as a single, versioned, executable artifact. Every theorem I encounter gets encoded, not drawn. Every script I write survives the semester it was written in. Every note is plain text the moment it exists, because plain text is the only format that doesn't rot.
 
-*My Goal:* To implement a new method of education, by making the learning process accumulative.
+Org-mode. LaTeX. Julia / Python / C++ under Org-babel. Doom Emacs. Git. An LLM ruleset that enforces how machine-extracted material enters the graph.
 
-/Disclaimer: This is a personal project. It is not officially affiliated with the University of Vienna. No copyrighted university materials are hosted here - only original notes, code, and links to official resources./
+You won't find polish here. You'll find a method. The method is the point.
 
-* Primary Motivation
-
-Whenever someone writes math on paper, they are essentially "drawing." It is a painting; written symbols lack semantic structure and are not reproducible. Most critically, paper notes suffer from knowledge decay-once the exam is over, the notebook is closed, and the knowledge becomes static and unsearchable.
-
-This repository represents a fundamental shift from that traditional model. My goal is to treat my education not as a series of isolated semesters, but as a continuous software project.
-
-- I want my work to be "real"-executable, queryable, and reusable. By digitizing the logic of mathematics and the syntax of programming:
-
-- I stop "drawing" and start "encoding": Equations become standard LaTeX, capable of being parsed by both humans and machines (LLMs).
-
-- I stop "reviewing" and start "running": Theorems are not just memorized; they are verified through embedded Julia/Python code.
-
-- I stop "losing" and start "compounding": A script written for Linear Algebra in Semester 1 becomes a utility function for Machine Learning in Semester 4.
-
-* Project Metrics
-
-As of 01/04/2026 (Easter break).
-
-To treat this degree as a software project, I track the volume and structure of knowledge accumulation.
-
-Current snapshot of the repository (excluding PDFs/assets):
-
-| Metric              | Volume           | Context                                          |
-|---------------------+------------------+--------------------------------------------------|
-| *Knowledge Base*    | 195,564 words    | Equivalent to approx. 2-3 textbooks              |
-| *Math Density*      | 12,339 fragments | LaTeX expressions (10,782 inline, 1,557 display) |
-| *Logic Layer*       | 2,032 lines      | Executable Julia, Python, and Shell code         |
-| *Structural Depth*  | 3,383 headings   | Outline depth across 198 files (org headings)    |
-| *Data Organization* | 779 rows         | Markdown/Org tables across the repository        |
-| *Efficiency*        | 1.34 MB          | Total repo size                                  |
-
-* What Will Interest You
-
-As mentioned above, this is a personal project/workspace. However, due to my exceptional work on structuring the material, you will (hopefully) find the structure intuitive. This would allow you to access all of the useful material mentioned above.
-
-What I believe would interest you the most are:
-
-- *Lecture Notes*: Clean, LaTeX-rendered PDFs of all STEOP lectures.
-- *Exam Preparation:* Relevant self-made mock papers, study guides, summaries.
-- *Resources*: Centralized access to almost all the necessary material.
-
-Advanced users familiar with *Git*, *Emacs*, and *LaTeX* can clone this repository to interact with the code, run math blocks locally, and customize the exam preparation plan.
-
-* The Workflow
-
-This repository is built using *Doom Emacs* + *Org-Mode* + *LaTeX*. While you don't need Emacs to read the notes (GitHub renders them, plus I also provide rendered PDFs), this stack was chosen for specific strategic reasons:
-
-1.  *Organization at Scale:* Centralized, structured notes + git = traceability. No more lost files.
-2.  *Reproducibility:* Code (Python, C++, Julia) is embedded directly in the notes. I can run and verify math immediately.
-3.  *Searchability:* `grep` my entire degree. Finding a specific theorem or code snippet takes milliseconds.
-4.  *LLM-Ready:* Plain text files are the perfect input for LLMs. I use LLM to automate the monotonous work, leaving the complex thinking to us.
-5.  *Exam Alignment:* The structure mirrors our problem sets, creating a near-optimal architecture for exam prep.
-
-* Tools & Conventions
-- *Primary Format:* =.org= (Org Mode) and =.pdf= (rendered Org files with LaTeX expressions).
-- *Languages:* =Python=, =C++=, =Julia=, =LaTeX=.
-- *Math:* Rendered using standard LaTeX syntax within Org files.
+---
+MIT / CC BY-NC-SA 4.0. Not affiliated with the University of Vienna.
