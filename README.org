@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-10-13>
-#+lastmod: <2026-04-13 17:28>
+#+lastmod: <2026-04-23 19:12>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -27,13 +27,10 @@ This repository is a centralised workspace containing:
 - Mock Papers
 - Exam Preparation Plan
 - Summaries
-- Study Guides
-
-It was not intentionally designed to be any kind of public resource. Though, it contains some tutorials on [[file:./00_global/julia/README.org][basics of programming]], covering basics of programming (Git/Github, Julia packages, LaTeX, etc.).
 
 *My Goal:* To implement a new method of education, by making the learning process accumulative.
 
-/Disclaimer: This is a personal project. It is not officially affiliated with the University of Vienna. No copyrighted university materials are hosted here-only original notes, code, and links to official resources./
+/Disclaimer: This is a personal project. It is not officially affiliated with the University of Vienna. No copyrighted university materials are hosted here - only original notes, code, and links to official resources./
 
 * Primary Motivation
 
