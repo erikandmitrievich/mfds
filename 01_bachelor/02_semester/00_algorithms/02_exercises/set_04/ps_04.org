@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-22>
-#+lastmod: <2026-04-23 15:57>
+#+lastmod: <2026-04-23 16:25>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -220,3 +220,28 @@ a max-heap?
 
 ** Solution
 
+*** (a)
+
+Yes. For sorted ascending $A$ and any valid $i$: $i < 2i$ and $i < 2i + 1$, so $A[i] \leq A[2i]$ and $A[i] \leq A[2i+1]$. Min-heap property holds. Converse fails (a min-heap need not be sorted).
+
+*** (b)
+
+No. $A[4] = 15$ but $A[9] = 16$, violating $A[i] \geq A[2i+1]$.
+
+#+begin_src julia :results output
+let
+    arr = [33, 19, 20, 15, 13, 10, 2, 13, 16, 12]
+    n = length(arr)
+    ok = true
+    for i in 1:div(n, 2)
+        if arr[i] < arr[2i] || (2i+1 ≤ n && arr[i] < arr[2i+1])
+            ok = false
+            break
+        end
+    end
+    println(ok ? "max-heap" : "not max-heap")
+end
+#+end_src
+
+#+RESULTS:
+: not max-heap
