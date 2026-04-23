@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-22>
-#+lastmod: <2026-04-23 17:02>
+#+lastmod: <2026-04-23 17:21>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -201,16 +201,12 @@ Leaves. In a max-heap any internal node exceeds its children, so the minimum can
 *** (b)
 
 \[
-\lceil \lg k \rceil \le \ell \le \lfloor \lg n \rfloor.
+1 \leq \ell \leq \min(k - 1, \lfloor \lg n \rfloor).
 \]
 
-Upper: $\ell \leq \lfloor \lg n \rfloor$ (heap height); $k \leq \lfloor n/2 \rfloor$ keeps the $k$ th largest off the leaf-only level.
+Lower: $k \geq 2$ excludes the root.
 
-Lower: the $k - 1$ larger elements must fit in levels $0, \ldots, \ell - 1$, which hold at most $2^\ell - 1$ nodes:
-
-\[
-k - 1 \leq 2^\ell - 1 \iff \ell \geq \lceil \lg k \rceil. \qquad \blacksquare
-\]
+Upper: the $\ell$ strict ancestors of the $k$ th largest are each greater than it, so $\ell \leq k - 1$; combined with the heap-height bound $\ell \leq \lfloor \lg n \rfloor$. $\blacksquare$
 
 * Problem 43 :heap:min_heap:max_heap:
 ** Task
