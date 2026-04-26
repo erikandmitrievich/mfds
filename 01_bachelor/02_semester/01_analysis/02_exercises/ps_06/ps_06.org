@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-26>
-#+lastmod: <2026-04-26 21:23>
+#+lastmod: <2026-04-26 21:59>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -157,6 +157,7 @@ savefig("./assets/p_03_b.png")
 ** Task
 #+begin_quote
 Consider the function $f : \mathbb{R}^2 \to \mathbb{R}$,
+
 \[ f(x, y) = x^2 + 3y^2 + 2xy \]
 
 (a) Determine all local extrema of $f$.
@@ -165,8 +166,67 @@ Consider the function $f : \mathbb{R}^2 \to \mathbb{R}$,
 #+end_quote
 
 ** Solution
+
+*** (a)
+
+The function $f$ is twice continuously differentiable on $\mathbb{R}^2$. Compute the partial derivatives:
+
+$$\partial_1 f(x, y) = 2x + 2y, \quad \partial_2 f(x, y) = 6y + 2x.$$
+
+A critical point satisfies $\operatorname{grad} f(x, y) = 0$, i.e.
+
+From the system:
+
+\begin{align*}
+2x + 2y &= 0 \implies x = -y, \\
+6y + 2x &= 0 \implies x = -3y.
+\end{align*}
+
+Combining gives $-y = -3y$, hence $y = 0$ and $x = 0$. Thus $f$ has the unique critical point $x_0 = (0, 0)$.
+
+The second-order partial derivatives are
+
+$$\partial_1 \partial_1 f = 2, \quad \partial_2 \partial_2 f = 6, \quad \partial_1 \partial_2 f = \partial_2 \partial_1 f = 2,$$
+
+so the Hessian matrix at $x_0$ is
+
+$$H_f(x_0) = \begin{pmatrix} 2 & 2 \\ 2 & 6 \end{pmatrix}.$$
+
+For any $h = (h_1, h_2) \in \mathbb{R}^2 \setminus \{0\}$,
+
+\begin{align*}
+h^\top H_f(x_0) h &= 2 h_1^2 + 4 h_1 h_2 + 6 h_2^2 \\
+&= 2(h_1^2 + 2 h_1 h_2 + h_2^2) + 4 h_2^2 \\
+&= 2(h_1 + h_2)^2 + 4 h_2^2 > 0,
+\end{align*}
+
+since the sum vanishes only if $h_2 = 0$ and $h_1 + h_2 = 0$, i.e. $h = 0$. Hence $H_f(x_0)$ is positive definite. By Theorem 7.2.5(1), $x_0 = (0, 0)$ is a strict local minimum, with
+
+$$f(0, 0) = 0.$$
+
+Since $x_0$ is the only critical point and $H_f$ is constant and positive definite on all of $\mathbb{R}^2$, $f$ has no other local extrema.
+
+*** (b)
+
 #+begin_src julia :results value :exports both :tangle julia/p_04.jl
+using Plots
+
+f(x, y) = x^2 + 3y^2 + 2x*y
+
+xs = range(-4, 4, length=200)
+ys = range(-4, 4, length=200)
+
+heatmap(xs, ys, (x, y) -> f(x, y), aspect_ratio=1,
+        xlabel="x", ylabel="y", title="f(x,y) = x² + 3y² + 2xy")
+
+scatter!([0], [0], color=:red, label="min (0,0)")
+
+mkpath("./assets")
+savefig("./assets/p_04_b.png")
 #+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_bachelor/02_semester/01_analysis/02_exercises/ps_06/assets/p_04_b.png
 
 * Errors/Typos
 - Problem 1(a): "$\|h\|^{|\alpha|}$" → "$\|h\|_\infty^{|\alpha|}$" (missing $\infty$ subscript on RHS; the natural bound from $|h_i| \leq \|h\|_\infty$ is in $\|h\|_\infty$)
