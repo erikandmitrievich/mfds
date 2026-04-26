@@ -1,0 +1,101 @@
+#+title: Ps 06
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-04-26>
+#+lastmod: <2026-04-26 15:20>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Problem 2.11 :inner_product:dual_space:matrix:
+** Task
+#+begin_quote
+(Inner product defined from a set of dual elements.)
+
+Let $\{f^1, \ldots, f^n\} \in \mathbb{E}^*$ be an independent set of vectors in the dual space of $\mathbb{E} = \mathbb{R}^n$, we define the following inner product
+\[
+\omega(x, y) = \sum_{h=1}^n f^h(x) f^h(y)
+\]
+Supposed that, given a basis $\mathcal{U} = \{u_1, \ldots, u_n\}$ of $\mathbb{E}$ and the corresponding dual basis $\mathcal{U}^* = \{u^1, \ldots, u^n\}$ in b$\mathbb{E}^*$, the dual elements $f^i$ have the representation
+\[
+[f^i]_{\mathcal{U}} = [a^i_1, \ldots, a^i_n]
+\]
+Then there exists the following alternative definition for $\omega$:
+\[
+\omega(x, y) = \left([x]^{\mathcal{U}}\right)^T A^T A \, [y]^{\mathcal{U}}, \quad \text{where} \quad A = \begin{pmatrix} a^1_1 & \cdots & a^1_n \\ \vdots & \ddots & \vdots \\ a^n_1 & \cdots & a^n_n \end{pmatrix}
+\]
+and consequently the matrix representation of $\omega$ w.r.t. the basis $\mathcal{U}$ is $[\omega]_{\mathcal{U}\mathcal{U}} = A^T A$.
+#+end_quote
+
+** Solution
+
+* Problem 2.12 :projection:inner_product:
+** Task
+#+begin_quote
+(Orthogonal projection and inner product)
+
+Let $\mathbb{E} = \mathbb{R}^4$, and let $\langle \cdot, \cdot \rangle$ be the standard dot product on $\mathbb{E}$. Calculate the orthogonal projection of the vector $x = (1, 2, 1, 2)^T$ onto the subspace $\mathbb{F} = \operatorname{span}\{(1, 2, 3, 4)^T, (4, 3, 2, 1)^T\}$ with respect to $\langle \cdot, \cdot \rangle$.
+#+end_quote
+
+** Solution
+
+* Problem 2.13 :projection:matrix:inner_product:
+** Task
+#+begin_quote
+(Matrix representation of an orthogonal projection)
+
+Let $(\mathbb{E}, \omega)$ be an $n$ dimensional real inner product space with a subspace $\mathbb{F} \subset \mathbb{E}$ with $\dim \mathbb{F} = q \leq n \in \mathbb{N}$, where $\mathcal{E} = \{e_1, \ldots, e_n\}$ denotes a basis of $\mathbb{E}$ and $\mathcal{F} = \{f_1, \ldots, f_q\}$ a basis of $\mathbb{F}$. Furthermore, let $P_{\mathbb{F}}: \mathbb{E} \to \mathbb{F}$ be the orthogonal projection onto the subspace $\mathbb{F}$.
+
+(i) Let $\iota_{\mathbb{F}}: \mathbb{F} \hookrightarrow \mathbb{E}$ be the /inclusion mapping/, i.e. $\iota_{\mathbb{F}}(y) = y \in \mathbb{E}$, for all $y \in \mathbb{F}$. Prove that $[\iota_{\mathbb{F}}]^{\mathcal{E}}_{\mathcal{F}}$ is the matrix formed by the column vectors $[f_i]^{\mathcal{E}}$.
+
+(ii) Since $\operatorname{im}(P_{\mathbb{F}}) \subset \mathbb{F}$, express $P_{\mathbb{F}}(x)$ as a linear combination of the basis vectors $\mathcal{F}$. Using matrix representation, can we express $[P_{\mathbb{F}}(x)]^{\mathcal{E}}$ in terms of the matrix $[\iota_{\mathbb{F}}]^{\mathcal{E}}_{\mathcal{F}}$ and a column vector of unknown coefficients $\lambda \in \mathbb{R}^q$?
+
+(iii) We know from the lectures that for all $x \in \mathbb{E}$, the vector $x - P_{\mathbb{F}}(x)$ is orthogonal to the subspace $\mathbb{F}$. Give the equation that expresses this idea.
+
+(iv) Using the two previous points, prove that
+\[
+\left([\iota_{\mathbb{F}}]^{\mathcal{E}}_{\mathcal{F}}\right)^T [\omega]_{\mathcal{E}\mathcal{E}} [\iota_{\mathbb{F}}]^{\mathcal{E}}_{\mathcal{F}} \lambda = \left([\iota_{\mathbb{F}}]^{\mathcal{E}}_{\mathcal{F}}\right)^T [\omega]_{\mathcal{E}\mathcal{E}} [x]^{\mathcal{E}}
+\]
+for all $x \in \mathbb{E}$.
+
+(v) Is $\left([\iota_{\mathbb{F}}]^{\mathcal{E}}_{\mathcal{F}}\right)^T [\omega]_{\mathcal{E}\mathcal{E}} [\iota_{\mathbb{F}}]^{\mathcal{E}}_{\mathcal{F}}$ an invertible matrix? Why? (*Indication:* Give an argument in terms of ranks.)
+
+(vi) From the two previous points, prove that
+\[
+[P_{\mathbb{F}}]^{\mathcal{E}}_{\mathcal{E}} = [\iota_{\mathbb{F}}]^{\mathcal{E}}_{\mathcal{F}} \left[ \left([\iota_{\mathbb{F}}]^{\mathcal{E}}_{\mathcal{F}}\right)^T [\omega]_{\mathcal{E}\mathcal{E}} [\iota_{\mathbb{F}}]^{\mathcal{E}}_{\mathcal{F}} \right]^{-1} \left([\iota_{\mathbb{F}}]^{\mathcal{E}}_{\mathcal{F}}\right)^T [\omega]_{\mathcal{E}\mathcal{E}}
+\]
+
+(vii) Using the expression above, verify that $P_{\mathbb{F}}$ is indeed a projection mapping. How would the formula for $[P_{\mathbb{F}}]^{\mathcal{E}}_{\mathcal{E}}$ change if $\mathcal{F}$ was a orthonormal basis for $\omega|_{\mathbb{F}}: \mathbb{F} \times \mathbb{F} \to \mathbb{R}$?
+#+end_quote
+
+** Solution
+
+* Problem 2.15 :inner_product:polynomial:
+** Task
+#+begin_quote
+(Inner products)
+
+In this exercise we ask whether the following $\omega(\cdot, \cdot): \mathbb{E} \times \mathbb{E} \to \mathbb{R}$ are inner products:
+
+(i) $\mathbb{E} = \mathbb{R}_n[X]$, with $\omega(P(X), Q(X)) = P(1)Q(1) + P(2)Q(2) + \ldots + P(n)Q(n)$
+
+(ii) $\mathbb{E} = \mathbb{R}_n[X]$, with $\omega(P(X), Q(X)) = P(0)Q(0) + P(1)Q(1) + \ldots + P(n)Q(n)$
+
+(iii) $\mathbb{E} = C[0, 1]$ is the space of continuous functions defined on $[0, 1]$ and $\omega(f, g) = \int_0^{1/2} = f(t) g(t) \, dt$.
+#+end_quote
+
+** Solution
+
+* Errors/Typos
+- Problem 2.11: "Supposed that" → "Suppose that"
+- Problem 2.11: "in b$\mathbb{E}^*$" → "in $\mathbb{E}^*$" (stray "b" preceding the blackboard E, likely a rendering artifact)
+- Problem 2.13 (vii): "a orthonormal basis" → "an orthonormal basis"
+- Problem 2.15 (iii): "$\int_0^{1/2} = f(t)g(t) \, dt$" → "$\int_0^{1/2} f(t)g(t) \, dt$" (extraneous "=" sign before the integrand)
