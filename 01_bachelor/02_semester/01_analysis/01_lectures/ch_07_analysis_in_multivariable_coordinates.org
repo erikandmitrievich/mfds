@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-26>
-#+lastmod: <2026-04-26 16:43>
+#+lastmod: <2026-04-26 17:39>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -185,3 +185,134 @@ $$\partial_1 \partial_2 \varphi(0, 0) = \partial_2 \partial_1 \varphi(0, 0).$$
 Let $U \subseteq \mathbb{R}^n$ be open and suppose that $f : U \rightarrow \mathbb{R}$ is twice continuously differentiable. The Hessian matrix of $f$ at $x \in U$ is defined by
 
 $$H_f(x) := \left( \partial_i \partial_j f(x) \right)_{i, j = 1}^{n}.$$
+* Theorem     7.2.1:   Taylor formula in $\mathbb{R}^n$
+
+Let $U \subseteq \mathbb{R}^n$ be open, $k \in \mathbb{N}$, and let $f : U \rightarrow \mathbb{R}$ be $k$ times continuously differentiable. Then for every $x_0 \in U$,
+
+$$f(x) = \sum_{|\alpha| \le k} \frac{\partial^\alpha f(x_0)}{\alpha!} (x - x_0)^\alpha + o(\|x - x_0\|^k) \quad (x \rightarrow x_0).$$
+
+The Taylor polynomial,
+
+$$x \mapsto \sum_{|\alpha| \le k} \frac{\partial^\alpha f(x_0)}{\alpha!} (x - x_0)^\alpha,$$
+
+provides a polynomial approximation of $f$ near $x_0$.
+
+*Remark 7.2.2* (Local approximation). /In data analysis, Taylor expansions are used to approximate complex models locally by simpler ones./
+
+*Proof.*
+
+Set $h := x - x_0$ and assume $\|h\|$ is small enough so that the line segment $\{x_0 + t h : t \in [0, 1]\} \subseteq U$. Define the one-dimensional function
+
+$$g : [0, 1] \rightarrow \mathbb{R}, \quad g(t) := f(x_0 + t h).$$
+
+/Step 1: compute $g^{(j)}(0)$ in multi-index form./ For $j \in \{0, \ldots, k\}$ one proves by induction (using the chain rule and the commutation of mixed partial derivatives) that $g$ is $k$-times continuously differentiable and
+
+$$g^{(j)}(t) = \sum_{|\alpha| = j} \frac{j!}{\alpha!} (\partial^\alpha f)(x_0 + t h) h^\alpha, \quad t \in [0, 1]. \quad (7.1)$$
+
+In particular,
+
+$$\frac{g^{(j)}(0)}{j!} = \sum_{|\alpha| = j} \frac{(\partial^\alpha f)(x_0)}{\alpha!} h^\alpha.$$
+
+Summing over $j = 0, \ldots, k$ yields
+
+$$\sum_{j=0}^{k} \frac{g^{(j)}(0)}{j!} = \sum_{|\alpha| \le k} \frac{(\partial^\alpha f)(x_0)}{\alpha!} h^\alpha,$$
+
+which is exactly the Taylor polynomial of order $k$.
+
+/Step 2: The univariate Taylor formula with integral remainder./ The univariate Taylor formula for $g$ yields
+
+$$g(1) = \sum_{j=0}^{k-1} \frac{g^{(j)}(0)}{j!} + \int_0^1 \frac{(1-t)^{k-1}}{(k-1)!} g^{(k)}(t) \, dt.$$
+
+We add and subtract $g^{(k)}(0)$ inside the integral and use $\int_0^1 (1-t)^{k-1} dt = 1/k$ to obtain
+
+$$g(1) = \sum_{j=0}^{k} \frac{g^{(j)}(0)}{j!} + \int_0^1 \frac{(1-t)^{k-1}}{(k-1)!} \left( g^{(k)}(t) - g^{(k)}(0) \right) dt.$$
+
+Since $g(1) = f(x)$, the remainder
+
+$$R(h) := \int_0^1 \frac{(1-t)^{k-1}}{(k-1)!} \left( g^{(k)}(t) - g^{(k)}(0) \right) dt.$$
+
+leads to the formula
+
+$$f(x) = \sum_{j=0}^{k} \frac{g^{(j)}(0)}{j!} + R(h).$$
+
+/Step 3: estimate the remainder./ We use the representation (7.1) for $j = k$ and derive
+
+$$g^{(k)}(t) - g^{(k)}(0) = \sum_{|\alpha| = k} \frac{k!}{\alpha!} \left( (\partial^\alpha f)(x_0 + t h) - (\partial^\alpha f)(x_0) \right) h^\alpha.$$
+
+Hence, with $|h^\alpha| \le \|h\|^{|\alpha|} = \|h\|^k$,
+
+$$|g^{(k)}(t) - g^{(k)}(0)| \le \|h\|^k \max_{|\alpha| = k} \left| (\partial^\alpha f)(x_0 + t h) - (\partial^\alpha f)(x_0) \right| \sum_{|\alpha| = k} \frac{k!}{\alpha!}.$$
+
+Thus, there is a constant $C > 0$ that depends only on $k$ and $n$ such that
+
+$$|R(h)| \le C \|h\|^k \sup_{t \in [0, 1]} \max_{|\alpha| = k} \left| (\partial^\alpha f)(x_0 + t h) - (\partial^\alpha f)(x_0) \right|.$$
+
+Since each $\partial^\alpha f$ with $|\alpha| = k$ is continuous at $x_0$, the function
+
+$$\omega(h) := \sup_{t \in [0, 1]} \max_{|\alpha| = k} \left| (\partial^\alpha f)(x_0 + t h) - (\partial^\alpha f)(x_0) \right| \rightarrow 0$$
+
+as $h \rightarrow 0$. Hence $R(h) = o(\|h\|^k)$.
+
+* Theorem     7.2.5:   Second-order sufficient conditions for extrema
+
+Let $f : \mathbb{R}^n \rightarrow \mathbb{R}$ be twice continuously differentiable and let $x_0 \in \mathbb{R}^n$ be a critical point, i.e. $\operatorname{grad} f(x_0) = 0$.
+
+1. If $H_f(x_0)$ is positive definite, then $x_0$ is a strict local minimum.
+
+2. If $H_f(x_0)$ is negative definite, then $x_0$ is a strict local maximum.
+
+3. If $H_f(x_0)$ is indefinite, then $x_0$ is a saddle point.
+
+*Remark 7.2.6.* /If the Hessian $H_f(x_0)$ is positive semidefinite or negative semidefinite but not definite, the second-order test is inconclusive./
+
+*Remark 7.2.7* (Local extrema). /In data-driven models, local extrema correspond to locally optimal parameter values where small changes do not improve the objective function./
+
+*Proof.*
+
+Since $f$ is twice continuously differentiable, Taylor's formula of second order yields, for $h$ sufficiently small,
+
+$$f(x_0 + h) = f(x_0) + \operatorname{grad} f(x_0) \cdot h + \frac{1}{2} h^\top H_f(x_0) h + o(\|h\|^2).$$
+
+Because $x_0$ is a critical point, $\operatorname{grad} f(x_0) = 0$, and hence
+
+$$f(x_0 + h) = f(x_0) + \frac{1}{2} h^\top H_f(x_0) h + \varphi(h),$$
+
+where $\varphi(h) / \|h\|^2 \rightarrow 0$ for $h \rightarrow 0$.
+
+1. The idea is to verify that $\frac{1}{2} h^\top H_f(x_0) h$ is positive and larger than $\varphi(h)$. We first define
+
+   $$\mathbb{S}^{n-1} = \{x \in \mathbb{R}^n : \|x\| = 1\}.$$
+
+   As the pre-image of the closed set $\{1\}$ of a continuous map $\|\cdot\|$, the set $\mathbb{S}^{n-1}$ is closed. It is also bounded. Heine-Borel extends from $\mathbb{R}$ to $\mathbb{R}^n$ and therefore $\mathbb{S}^{n-1}$ is compact. Since $h \mapsto \frac{1}{2} h^\top H_f(x_0) h$ is continuous, its image of $\mathbb{S}^{n-1}$ is compact. Therefore, it assumes its minimum, which must be a positive number since $H_f(x_0)$ is positive definite. We define
+
+   $$\alpha := \min_{h \in \mathbb{S}^{n-1}} \frac{1}{2} h^\top H_f(x_0) h.$$
+
+   For $h \in \mathbb{R}^n \setminus \{0\}$, we calculate
+
+   $$\frac{1}{2} h^\top H_f(x_0) h = \frac{1}{2} \|h\| \frac{h^\top}{\|h\|} H_f(x_0) \frac{h}{\|h\|} \|h\| \ge \frac{1}{2} \alpha \|h\|^2.$$
+
+   Since $\varphi(h) / \|h\|^2 \rightarrow 0$ for $h \rightarrow 0$, there is $\delta > 0$ such that
+
+   $$\frac{|\varphi(h)|}{\|h\|^2} \le \frac{\alpha}{4}, \quad \forall \|h\| \le \delta.$$
+
+   For $\|h\| \le \delta$, we obtain
+
+   \begin{align*}
+   f(x_0 + h) &= f(x_0) + \frac{1}{2} h^\top H_f(x_0) h + \varphi(h) \\
+   &\ge f(x_0) + \frac{\alpha}{2} \|h\|^2 - \frac{\alpha}{4} \|h\|^2 \\
+   &= f(x_0) + \frac{\alpha}{4} \|h\|^2.
+   \end{align*}
+
+   This shows that $x_0$ is a strict local minimum.
+
+2. If $H_f(x_0)$ is negative definite, the same argument applied to $-f$ shows that $x_0$ is a strict local maximum.
+
+3. Finally, if $H_f(x_0)$ is indefinite, there exist vectors $u, v \in \mathbb{R}^n$ such that
+
+   $$u^\top H_f(x_0) u > 0 \quad \text{and} \quad v^\top H_f(x_0) v < 0.$$
+
+   Choosing $x = x_0 + t u$ and $x = x_0 + t v$ with $t$ sufficiently small and using the Taylor expansion shows that $f(x) - f(x_0)$ takes both positive and negative values arbitrarily close to $x_0$. Hence $x_0$ is a saddle point.
+
+* Lemma       7.2.10:  Second-order characterization of convexity
+
+Let $f \in \mathcal{C}^2(\mathbb{R}^n)$. Then $f$ is convex if and only if $H_f(x)$ is positive semi-definite for all $x \in \mathbb{R}^n$.
