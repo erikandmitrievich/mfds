@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-26>
-#+lastmod: <2026-04-26 19:54>
+#+lastmod: <2026-04-26 21:23>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -72,14 +72,18 @@ Holds.
 #+begin_quote
 Suppose $f : \mathbb{R}^n \to \mathbb{R}$ is twice continuously differentiable.
 
-(a) Prove that the Taylor formula centered at $x_0 \in \mathbb{R}$ of order 2 is
-\[ f(x) = f(x_0) + (\nabla f(x_0))^\top (x - x_0)^\alpha + \frac{1}{2}(x - x_0)^\top H_f(x_0)(x - x_0) + o(\|x - x_0\|^2) \]
+(a) Prove that the Taylor formula centered at $x_0 \in \mathbb{R}^n$ of order 2 is
+\[ f(x) = f(x_0) + (\nabla f(x_0))^\top (x - x_0) + \frac{1}{2}(x - x_0)^\top H_f(x_0)(x - x_0) + o(\|x - x_0\|^2) \]
 
 (b) Implement and plot the Taylor approximation of $f$ of order 2 by a heatmap for the function
 \[ f : \mathbb{R}^2 \to \mathbb{R}, \quad f(x, y) = x^4 + y^4 + x^2 + y^2 \]
 #+end_quote
 
 ** Solution
+
+*** (a)
+
+$$f(x) = \sum_{|\alpha| \le 2} \frac{\partial^\alpha f(x_0)}{\alpha!} (x - x_0)^\alpha + o(\|x - x_0\|^2) \quad (x \rightarrow x_0)$$
 
 * Problem 3 :local_extrema:gradient:
 ** Task
@@ -93,8 +97,61 @@ Consider the function $f : \mathbb{R}^2 \to \mathbb{R}$,
 #+end_quote
 
 ** Solution
+
+*** (a)
+
+The function $f$ is twice continuously differentiable on $\mathbb{R}^2$. Compute the partial derivatives:
+
+$$\partial_1 f(x, y) = 2x + 2, \quad \partial_2 f(x, y) = 2y + 4.$$
+
+A critical point satisfies $\operatorname{grad} f(x, y) = 0$, i.e.
+
+\begin{align*}
+2x + 2 &= 0 \implies x = -1, \\
+2y + 4 &= 0 \implies y = -2.
+\end{align*}
+
+Hence $f$ has the unique critical point $x_0 = (-1, -2)$.
+
+The second-order partial derivatives are
+
+$$\partial_1 \partial_1 f = 2, \quad \partial_2 \partial_2 f = 2, \quad \partial_1 \partial_2 f = \partial_2 \partial_1 f = 0,$$
+
+so the Hessian matrix at $x_0$ is
+
+$$H_f(x_0) = \begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix}.$$
+
+For any $h = (h_1, h_2) \in \mathbb{R}^2 \setminus \{0\}$,
+
+$$h^\top H_f(x_0) h = 2 h_1^2 + 2 h_2^2 > 0,$$
+
+so $H_f(x_0)$ is positive definite. By Theorem 7.2.5(1), $x_0 = (-1, -2)$ is a strict local minimum, with
+
+$$f(-1, -2) = (-1)^2 + (-2)^2 + 2(-1) + 4(-2) = -5.$$
+
+Since $x_0$ is the only critical point and $H_f$ is positive definite on all of $\mathbb{R}^2$, $f$ has no other local extrema.
+
+*** (b)
+
 #+begin_src julia :results value :exports both :tangle julia/p_03.jl
+using Plots
+
+f(x, y) = x^2 + y^2 + 2x + 4y
+
+xs = range(-5, 3, length=200)
+ys = range(-6, 2, length=200)
+
+heatmap(xs, ys, (x, y) -> f(x, y), aspect_ratio=1,
+        xlabel="x", ylabel="y", title="f(x,y) = x² + y² + 2x + 4y")
+
+scatter!([-1], [-2], color=:red, label="min (-1,-2)")
+
+mkpath("./assets")
+savefig("./assets/p_03_b.png")
 #+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_bachelor/02_semester/01_analysis/02_exercises/ps_06/assets/p_03_b.png
 
 * Problem 4 :local_extrema:quadratic_form:hessian:
 ** Task
