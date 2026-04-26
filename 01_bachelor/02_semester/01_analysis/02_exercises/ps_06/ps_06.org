@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-26>
-#+lastmod: <2026-04-26 12:21>
+#+lastmod: <2026-04-26 19:54>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -21,16 +21,51 @@
 ( ... used in the proof of the Taylor formula)
 
 (a) Suppose that $\alpha \in \mathbb{N}^n$ and $h \in \mathbb{R}^n$ such that $\|h\|_\infty \leq 1$. Prove that
-\[ |h^\alpha| \leq \|h\|^{|\alpha|} \]
+\[ |h^\alpha| \leq \|h\|_{\infty}^{|\alpha|} \]
 
-(b) Let $k \in \mathbb{N}$ and suppose that $f : \mathbb{R}^n \to \mathbb{R}$ is $k$ times continuously differentiable. For $x, x_0 \in \mathbb{R}$ and $h = x - x_0$, define
+(b) Let $k \in \mathbb{N}$ and suppose that $f : \mathbb{R}^n \to \mathbb{R}$ is $k$ times continuously differentiable. For $x, x_0 \in \mathbb{R}^n$ and $h = x - x_0$, define
+
 \[ g : [-1, 1] \to \mathbb{R}, \quad g(t) := f(x_0 + th) \]
+
 For $j \in \{0, \ldots, k\}$ prove that $g$ is $k$ times continuously differentiable and
+
 \[ g^{(j)}(t) = \sum_{\substack{\alpha \in \mathbb{N}^n \\ |\alpha| = j}} \frac{j!}{\alpha!} (\partial^\alpha f)(x_0 + th)\, h^\alpha, \quad t \in [-1, 1] \]
+
 (hint: induction and chain rule)
 #+end_quote
 
 ** Solution
+
+*** (a)
+
+Define
+
+$$|h^{\alpha}| = \prod_{i=1}^n |h_i|^{\alpha_i}, \quad \|h\|_\infty^{|\alpha|} = \prod_{i=1}^n \|h\|_{\infty}^{\alpha_i}$$
+
+As, $|h_i| \le \|h\|_{\infty}$,
+
+$$|h^{\alpha}| = \prod_{i=1}^n |h_i|^{\alpha_i} \le \prod_{i=1}^n \|h\|_{\infty}^{\alpha_i} = \|h\|_\infty^{|\alpha|}$$
+
+*** (b)
+
+*Setup.* For $k \in \mathbb{N}$, $f : \mathbb{R}^n \rightarrow \mathbb{R}, \, f \in C^k$. Let $x, x_0 \in \mathbb{R}^n, \, h = x - x_0$. Define $g : \left[ -1, 1 \right] \rightarrow \mathbb{R}, \, g(t) := f(x_0 + th)$.
+
+*Proposition.* for $j \in \{ 0, \ldots , k \}$:
+
+1. $g \in C^k$
+2. For such $j$, $g^{(j)}(t) = \sum_{|\alpha| = j} \frac{j!}{\alpha!} (\partial^\alpha f)(x_0 + th)\, h^\alpha$
+
+*Base case.* $j = 0$, only $\alpha = 0 \in \mathbb{N}^n$ contributes.
+
+\begin{align*}
+g^{(0)}(t) &= \sum_{|\alpha| = 0} \frac{0!}{0! \ldots 0!} (\partial_1^0 \ldots \partial_n^0 f)(x_0 + th) h_1^0 \ldots h_n^0 \\
+&= \frac{1}{1} f(x_0 + th) \cdot 1 \\
+&= f(x_0 + th) \\
+\end{align*}
+
+Holds.
+
+*Inductive hypothesis.*
 
 * Problem 2 :taylor_formula:hessian:gradient:
 ** Task
