@@ -1,0 +1,187 @@
+#+title: Ch 07 Analysis In Multivariable Coordinates
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-04-26>
+#+lastmod: <2026-04-26 16:43>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Theorem     7.1.1:   Reduction to coordinates
+
+Let $\dim V = n$, $\dim W = m$, and $f : V \rightarrow W$. Choose bases $B_V \subseteq V$, $B_W \subseteq W$ and define $F : \mathbb{R}^n \rightarrow \mathbb{R}^m$ by
+
+$$F := \chi_{B_W}^{-1} \circ f \circ \chi_{B_V}, \quad \text{or equivalently by} \quad f = \chi_{B_W} \circ F \circ \chi_{B_V}^{-1}.$$
+
+Then $f$ is Fréchet differentiable if and only if $F$ is Fréchet differentiable. In that case, for $x = \chi_{B_V}^{-1} v$, we have
+
+$$f'(v) = \chi_{B_W} \, F'(x) \, \chi_{B_V}^{-1}.$$
+
+In contrast to linear algebra, we do not restrict to linear maps: if $f$ is nonlinear, then its coordinate representation $F : \mathbb{R}^n \rightarrow \mathbb{R}^m$ is nonlinear as well. Fréchet differentiable maps from $\mathbb{R}^n$ to $\mathbb{R}^m$ are often simply called /differentiable/.
+
+*Proof.*
+
+Since the coordinate maps $\chi_{B_V}$ and $\chi_{B_W}$ are linear, their derivatives coincide with the maps themselves. Applying the chain rule, we obtain for $v \in V$ with $x = \chi_{B_V}^{-1} v$,
+
+$$f'(v) = \chi_{B_W} \, F'(x) \, \chi_{B_V}^{-1}.$$
+
+* Definition  7.1.2:   Partial derivatives
+
+The function $f : \mathbb{R}^n \rightarrow \mathbb{R}$ is called partially differentiable at $x \in \mathbb{R}^n$ if, for each $j = 1, \ldots, n$, the limit
+
+$$\partial_j f(x) := \lim_{h \rightarrow 0} \frac{f(x + h e_j) - f(x)}{h}$$
+
+exists. The row vector
+
+$$\operatorname{grad} f(x) := \left( \partial_1 f(x), \ldots, \partial_n f(x) \right)$$
+
+is called the gradient of $f$ at $x$. Its transpose is a column vector and denoted by
+
+$$\nabla f(x) = \operatorname{grad} f(x)^\top.$$
+
+* Theorem     7.1.5:   Derivative and gradient in $\mathbb{R}^n$
+
+Let $f : \mathbb{R}^n \rightarrow \mathbb{R}$ be differentiable at $x \in \mathbb{R}^n$. Then $f$ is partially differentiable at $x$ and
+
+$$f'(x) = \operatorname{grad} f(x).$$
+
+In particular, $f'(x) e_j = \partial_j f(x)$, for $j = 1, \ldots, n$.
+
+*Proof.*
+
+Since $f$ is differentiable at $x$,
+
+$$f(x + h) = f(x) + f'(x) h + o(\|h\|) \quad (h \rightarrow 0).$$
+
+Fix $j \in \{1, \ldots, n\}$ and set $h = t e_j$. Then, as $t \rightarrow 0$,
+
+$$\frac{f(x + t e_j) - f(x)}{t} = \frac{f'(x)(t e_j)}{t} + \frac{o(\|t e_j\|)}{t} = f'(x) e_j + \frac{o(|t|)}{t}.$$
+
+Hence the limit exists and equals $f'(x) e_j$, i.e.
+
+$$\operatorname{grad} f(x) e_j = \partial_j f(x) = \lim_{t \rightarrow 0} \frac{f(x + t e_j) - f(x)}{t} = f'(x) e_j.$$
+
+Thus, the two linear maps $\operatorname{grad} f(x)$ and $f'(x)$ coincide, because they are equal on the basis $\{e_1, \ldots, e_n\}$.
+
+* Theorem     7.1.7:   Continuity of partials implies differentiability
+
+Let $U \subseteq \mathbb{R}^n$ be open and let $f : U \rightarrow \mathbb{R}$. If $f$ is partially differentiable in $U$ and all partial derivatives $\partial_1 f, \ldots, \partial_n f$ are continuous at $x \in U$, then $f$ is differentiable at $x$ and
+
+$$f'(x) = \operatorname{grad} f(x).$$
+
+*Proof.*
+
+Let $x \in U$ and $h = (h_1, \ldots, h_n) \in \mathbb{R}^n$ with $x + h \in U$. Define points
+
+$$x^{(j)} := x + \sum_{i=1}^{j} h_i e_i, \quad j = 0, \ldots, n.$$
+
+The telescope sum leads to
+
+$$f(x + h) - f(x) = \sum_{j=1}^{n} \left( f(x^{(j)}) - f(x^{(j-1)}) \right).$$
+
+Consider the one-dimensional functions
+
+$$\varphi_j(t) := f(x^{(j-1)} + t e_j), \quad j = 1, \ldots, n,$$
+
+defined for $t$ near 0. The partial differentiability yields
+
+$$\varphi_j'(t) = \lim_{\delta \rightarrow 0} \frac{f(x^{(j-1)} + (t + \delta) e_j) - f(x^{(j-1)} + t e_j)}{\delta} = \partial_j f(x^{(j-1)} + t e_j).$$
+
+By the mean value theorem, there exists $\theta_j \in (0, 1)$ such that
+
+\begin{align*}
+f(x^{(j)}) - f(x^{(j-1)}) &= \varphi_j(h_j) - \varphi_j(0) = \varphi_j'(\theta_j h_j) h_j \\
+&= \partial_j f(x^{(j-1)} + \theta_j h_j e_j) h_j.
+\end{align*}
+
+We now obtain
+
+$$f(x + h) - f(x) = \sum_{j=1}^{n} \partial_j f(x^{(j-1)} + \theta_j h_j e_j) h_j.$$
+
+This implies
+
+$$f(x + h) = f(x) + \sum_{j=1}^{n} \partial_j f(x) h_j + \varphi(h),$$
+
+where the remainder $\varphi(h)$ is
+
+\begin{align*}
+\varphi(h) &= \sum_{j=1}^{n} \partial_j f(x^{(j-1)} + \theta_j h_j e_j) h_j - \sum_{j=1}^{n} \partial_j f(x) h_j \\
+&= \sum_{j=1}^{n} \left( \partial_j f(x^{(j-1)} + \theta_j h_j e_j) - \partial_j f(x) \right) h_j.
+\end{align*}
+
+To verify $\varphi(h) / \|h\| \rightarrow 0$, we apply Cauchy-Schwartz in $\mathbb{R}^d$,
+
+\begin{align*}
+|\varphi(h)| &\le \sum_{j=1}^{n} \left| \left( \partial_j f(x^{(j-1)} + \theta_j h_j e_j) - \partial_j f(x) \right) h_j \right| \\
+&\le \|h\| \left( \sum_{j=1}^{n} \left| \left( \partial_j f(x^{(j-1)} + \theta_j h_j e_j) \right) \right|^2 \right)^{1/2}.
+\end{align*}
+
+For $h \rightarrow 0$, we note that $x^{(j-1)} + \theta_j h_j e_j \rightarrow x$, so that continuity of $\partial_j f$ implies
+
+$$\partial_j f(x^{(j-1)} + \theta_j h_j e_j) \rightarrow \partial_j f(x).$$
+
+This leads to $\varphi(h) / \|h\| \rightarrow 0$ and hence $f$ is differentiable in $x$ with
+
+$$f(x + h) = f(x) + \sum_{j=1}^{n} \partial_j f(x) h_j + \varphi(h) = f(x) + \operatorname{grad} f(x) h + \varphi(h).$$
+
+* Lemma       7.1.9:   Mixed partial derivatives commute
+
+Let $U \subseteq \mathbb{R}^n$ be open and let $f : U \rightarrow \mathbb{R}$ be twice continuously partially differentiable. Then for all $i, j \in \{1, \ldots, n\}$ and all $x \in U$,
+
+$$\partial_i \partial_j f(x) = \partial_j \partial_i f(x).$$
+
+*Proof.*
+
+Fix $x \in U$ and indices $i, j$. Since $U$ is open, there exists $\epsilon > 0$ such that
+
+$$x + s e_i + t e_j \in U \quad \text{for all } |s|, |t| < \epsilon.$$
+
+Define the function $\varphi : \mathbb{R}^2 \rightarrow \mathbb{R}$ by
+
+$$\varphi(s, t) := f(x + s e_i + t e_j).$$
+
+Since $f$ is twice continuously partially differentiable, the function $\varphi$ has continuous second-order partial derivatives, and by the chain rule we have
+
+$$\partial_1 \partial_2 \varphi(s, t) = \partial_i \partial_j f(x + s e_i + t e_j), \quad \partial_2 \partial_1 \varphi(s, t) = \partial_j \partial_i f(x + s e_i + t e_j).$$
+
+It therefore suffices to show that
+
+$$\partial_1 \partial_2 \varphi(0, 0) = \partial_2 \partial_1 \varphi(0, 0).$$
+
+Using the one-dimensional mean value theorem twice, there are $\xi_s \in (0, s)$ and $\xi_t \in (0, t)$, such that
+
+\begin{align*}
+\underbrace{\varphi(s, t) - \varphi(0, t)}_{p(t)} - \left( \underbrace{\varphi(s, 0) - \varphi(0, 0)}_{p(0)} \right) &= \partial p(\xi_t) t = \partial_2 \left( \varphi(s, \xi_t) - \varphi(0, \xi_t) \right) t \\
+&= \left( \partial_2 \varphi(s, \xi_t) - \partial_2 \varphi(0, \xi_t) \right) t \\
+&= \partial_1 \partial_2 \varphi(\xi_s, \xi_t) s t.
+\end{align*}
+
+We repeat this process with interchanged roles of $s$ and $t$. There are $\eta_s \in (0, s)$ and $\eta_t \in (0, t)$, such that
+
+\begin{align*}
+\underbrace{\varphi(s, t) - \varphi(s, 0)}_{q(s)} - \left( \underbrace{\varphi(0, t) - \varphi(0, 0)}_{q(0)} \right) &= \partial q(\eta_s) s = \partial_1 \left( \varphi(\eta_s, t) - \varphi(\eta_s, 0) \right) s \\
+&= \left( \partial_1 \varphi(\eta_s, t) - \partial_1 \varphi(\eta_s, 0) \right) s \\
+&= \partial_2 \partial_1 \varphi(\eta_s, \eta_t) s t.
+\end{align*}
+
+We have shown that
+
+$$\partial_1 \partial_2 \varphi(\xi_s, \xi_t) = \partial_2 \partial_1 \varphi(\eta_s, \eta_t).$$
+
+The limit $(s, t) \rightarrow 0$ implies $(\xi_s, \xi_t), (\eta_s, \eta_t) \rightarrow 0$. The continuity of $\partial_i \partial_j f$ and $\partial_j \partial_i f$ yields continuity of $\partial_1 \partial_2 \varphi$ and $\partial_2 \partial_1 \varphi$ in 0, so that we arrive at
+
+$$\partial_1 \partial_2 \varphi(0, 0) = \partial_2 \partial_1 \varphi(0, 0).$$
+
+* Definition  7.1.10:  Hessian matrix
+
+Let $U \subseteq \mathbb{R}^n$ be open and suppose that $f : U \rightarrow \mathbb{R}$ is twice continuously differentiable. The Hessian matrix of $f$ at $x \in U$ is defined by
+
+$$H_f(x) := \left( \partial_i \partial_j f(x) \right)_{i, j = 1}^{n}.$$
