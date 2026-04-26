@@ -1,0 +1,83 @@
+#+title: Ps 06
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-04-26>
+#+lastmod: <2026-04-26 12:21>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Problem 1 :taylor_formula:multi_index:chain_rule:
+** Task
+#+begin_quote
+( ... used in the proof of the Taylor formula)
+
+(a) Suppose that $\alpha \in \mathbb{N}^n$ and $h \in \mathbb{R}^n$ such that $\|h\|_\infty \leq 1$. Prove that
+\[ |h^\alpha| \leq \|h\|^{|\alpha|} \]
+
+(b) Let $k \in \mathbb{N}$ and suppose that $f : \mathbb{R}^n \to \mathbb{R}$ is $k$ times continuously differentiable. For $x, x_0 \in \mathbb{R}$ and $h = x - x_0$, define
+\[ g : [-1, 1] \to \mathbb{R}, \quad g(t) := f(x_0 + th) \]
+For $j \in \{0, \ldots, k\}$ prove that $g$ is $k$ times continuously differentiable and
+\[ g^{(j)}(t) = \sum_{\substack{\alpha \in \mathbb{N}^n \\ |\alpha| = j}} \frac{j!}{\alpha!} (\partial^\alpha f)(x_0 + th)\, h^\alpha, \quad t \in [-1, 1] \]
+(hint: induction and chain rule)
+#+end_quote
+
+** Solution
+
+* Problem 2 :taylor_formula:hessian:gradient:
+** Task
+#+begin_quote
+Suppose $f : \mathbb{R}^n \to \mathbb{R}$ is twice continuously differentiable.
+
+(a) Prove that the Taylor formula centered at $x_0 \in \mathbb{R}$ of order 2 is
+\[ f(x) = f(x_0) + (\nabla f(x_0))^\top (x - x_0)^\alpha + \frac{1}{2}(x - x_0)^\top H_f(x_0)(x - x_0) + o(\|x - x_0\|^2) \]
+
+(b) Implement and plot the Taylor approximation of $f$ of order 2 by a heatmap for the function
+\[ f : \mathbb{R}^2 \to \mathbb{R}, \quad f(x, y) = x^4 + y^4 + x^2 + y^2 \]
+#+end_quote
+
+** Solution
+
+* Problem 3 :local_extrema:gradient:
+** Task
+#+begin_quote
+Consider the function $f : \mathbb{R}^2 \to \mathbb{R}$,
+\[ f(x, y) = x^2 + y^2 + 2x + 4y \]
+
+(a) Determine all local extrema of $f$.
+
+(b) Plot $f$ in Julia by a heatmap to check your calculations in Part (a).
+#+end_quote
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_03.jl
+#+end_src
+
+* Problem 4 :local_extrema:quadratic_form:hessian:
+** Task
+#+begin_quote
+Consider the function $f : \mathbb{R}^2 \to \mathbb{R}$,
+\[ f(x, y) = x^2 + 3y^2 + 2xy \]
+
+(a) Determine all local extrema of $f$.
+
+(b) Plot $f$ in Julia by a heatmap to check your calculations in Part (a).
+#+end_quote
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_04.jl
+#+end_src
+
+* Errors/Typos
+- Problem 1(a): "$\|h\|^{|\alpha|}$" → "$\|h\|_\infty^{|\alpha|}$" (missing $\infty$ subscript on RHS; the natural bound from $|h_i| \leq \|h\|_\infty$ is in $\|h\|_\infty$)
+- Problem 1(b): "$x, x_0 \in \mathbb{R}$" → "$x, x_0 \in \mathbb{R}^n$" (required since $h = x - x_0 \in \mathbb{R}^n$)
+- Problem 2(a): "$x_0 \in \mathbb{R}$" → "$x_0 \in \mathbb{R}^n$"
+- Problem 2(a): "$(\nabla f(x_0))^\top (x - x_0)^\alpha$" → "$(\nabla f(x_0))^\top (x - x_0)$" (extraneous $\alpha$ exponent; no multi-index $\alpha$ is defined in this problem)
