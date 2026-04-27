@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-26>
-#+lastmod: <2026-04-27 14:22>
+#+lastmod: <2026-04-27 15:41>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -180,6 +180,64 @@ In this exercise we ask whether the following $\omega(\cdot, \cdot): \mathbb{E} 
 #+end_quote
 
 ** Solution
+
+*** (i)
+
+$\omega$ is *not* an inner product.
+
+Symmetry and bilinearity hold trivially. Positive definiteness fails.
+
+Compute:
+
+$$\omega(P, P) = P(1)^2 + P(2)^2 + \cdots + P(n)^2$$
+
+This is zero iff $P(1) = P(2) = \cdots = P(n) = 0$, i.e. iff $P$ has roots at $1, 2, \ldots, n$.
+
+Take:
+
+$$P(X) = (X-1)(X-2)\cdots(X-n)$$
+
+This has degree $n$, so $P \in \mathbb{R}_n[X]$, and $P \neq 0$. Yet $P(k) = 0$ for all $k \in \{1, \ldots, n\}$, so $\omega(P, P) = 0$.
+
+Positive definiteness fails. $\omega$ is not an inner product. $\square$
+
+*** (ii)
+
+$\omega$ *is* an inner product.
+
+*Symmetry:* $\omega(P, Q) = \sum_{k=0}^{n} P(k)Q(k) = \sum_{k=0}^{n} Q(k)P(k) = \omega(Q, P)$. $\checkmark$
+
+*Bilinearity:* For $\lambda \in \mathbb{R}$:
+
+$$\omega(\lambda P + R,\ Q) = \sum_{k=0}^{n}(\lambda P(k) + R(k))Q(k) = \lambda\sum_{k=0}^{n}P(k)Q(k) + \sum_{k=0}^{n}R(k)Q(k) = \lambda\,\omega(P,Q) + \omega(R,Q) \quad \checkmark$$
+
+*Positive definiteness:*
+
+$$\omega(P, P) = \sum_{k=0}^{n} P(k)^2 \geq 0$$
+
+Suppose $\omega(P, P) = 0$. Then $P(k) = 0$ for all $k \in \{0, 1, \ldots, n\}$ — that is $n+1$ roots. But $P \in \mathbb{R}_n[X]$ has degree $\leq n$, so a nonzero $P$ has at most $n$ roots. Therefore $P = 0$. $\checkmark$
+
+All three axioms hold. $\omega$ is an inner product. $\square$
+
+*** (iii)
+
+$\omega$ is *not* an inner product.
+
+Symmetry and bilinearity hold trivially (multiplication of real values and linearity of the integral). Positive definiteness fails.
+
+Compute:
+
+$$\omega(f, f) = \int_0^{1/2} f(t)^2\, dt \geq 0$$
+
+This is zero iff $f(t)^2 = 0$ for a.e. $t \in [0, 1/2]$, and since $f$ is continuous, iff $f \equiv 0$ on $[0, 1/2]$. But $f$ need not vanish on $(1/2, 1]$.
+
+Take:
+
+$$f(t) = \max(0,\ t - 1/2)$$
+
+This is continuous on $[0,1]$ and $f \neq 0$ in $C[0,1]$. Yet $f(t) = 0$ for all $t \in [0, 1/2]$, so $\omega(f, f) = 0$.
+
+Positive definiteness fails. $\omega$ is not an inner product. $\square$
 
 * Errors/Typos
 - Problem 2.11: "Supposed that" → "Suppose that"
