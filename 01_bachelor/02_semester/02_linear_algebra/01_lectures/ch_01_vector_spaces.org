@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-04-13 17:28>
+#+lastmod: <2026-04-27 17:19>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -351,6 +351,154 @@ $$[f_A(x)]^{\mathcal{F}} := A[x]^{\mathcal{E}}, \quad \forall x \in E.$$
 
 The mapping $f_A$ is linear since, by construction, $[f_A(x)]^{\mathcal{F}} = 0_{\mathbb{K}^n}$ and therefore $f_A(0) = 0$. Also, for all $x, y \in E$ and $\mu, \lambda \in \mathbb{K}$, $[f_A(\mu x + \lambda y)]^{\mathcal{F}} = A[\mu x + \lambda y]^{\mathcal{E}} = \lambda A[x]^{\mathcal{E}} + \mu A[x]^{\mathcal{E}} = \lambda f_A(x) + \mu f_A(y)$. This shows surjectivity. $\square$
 
+* Proposition 1.36:  Evaluation equals matrix vector product
+
+Let $f \in \mathcal{L}(E, F)$ and let $\mathcal{E}$ and $\mathcal{F}$ be two bases of $E$ and $F$ respectively. Then
+
+$$[f(x)]^{\mathcal{F}} = [f]^{\mathcal{F}}_{\mathcal{E}} [x]^{\mathcal{E}}, \quad \forall x \in E.$$
+
+*Proof.*
+
+Let $x \in E$, and denote $[x]^{\mathcal{E}} = (c_1, \ldots, c_n)^\top$ its coordinate representation in the basis $\mathcal{E}$. Then $f(x) = \sum_{j=1}^n c_j f(e_j)$, and by /Proposition 1.18/, $[f(x)]^{\mathcal{F}} = \sum_{j=1}^n c_j [f(e_j)]^{\mathcal{F}} = [f]^{\mathcal{F}}_{\mathcal{E}} [x]^{\mathcal{E}}$. To obtain the last equality, we have used the definition of $[f]^{\mathcal{F}}_{\mathcal{E}}$ from Eq. (1.2), and we have observed that the linear combination can be expressed as a matrix-vector product.
+
+* Proposition 1.37:  Matrix of linear combination equals linear combination of matrices
+
+Let $E, F$ be two finite $\mathbb{K}$ dimensional spaces, $f, g \in \mathcal{L}(E, F)$, $\alpha, \beta \in \mathbb{K}$, and $\mathcal{E}, \mathcal{F}$ bases of $E$ and $F$ respectively. It holds that
+
+$$[\alpha f + \beta g]^{\mathcal{F}}_{\mathcal{E}} = \alpha [f]^{\mathcal{F}}_{\mathcal{E}} + \beta [g]^{\mathcal{F}}_{\mathcal{E}}.$$
+
+*Proof.*
+
+It suffices to use the definition of $\operatorname{Mat}(\alpha f + \beta g) = [\alpha f + \beta g]^{\mathcal{F}}_{\mathcal{E}}$ in terms of matrices, and use linearity of the space of matrices.
+
+* Proposition 1.38:  Matrix of composition equals matrix product
+
+Let $E, F, G$ be three finite-dimensional $\mathbb{K}$ vector spaces, $f \in \mathcal{L}(E, F)$ and $g \in \mathcal{L}(F, G)$, and $\mathcal{E}, \mathcal{F}, \mathcal{G}$ bases of $E, F, G$. It holds that
+
+$$[g \circ f]^{\mathcal{G}}_{\mathcal{E}} = [g]^{\mathcal{G}}_{\mathcal{F}} [f]^{\mathcal{F}}_{\mathcal{E}}.$$
+
+*Proof.*
+
+Let $x \in E$. On the one hand, by /Proposition 1.36/, we have that
+
+$$[(g \circ f)(x)]^{\mathcal{G}} = [g \circ f]^{\mathcal{G}}_{\mathcal{E}} [x]^{\mathcal{E}}.$$
+
+On the other hand, using the nested structure of the composition, and again using /Proposition 1.36/, we also have that
+
+\begin{align*}
+[(g \circ f)(x)]^{\mathcal{G}} &= [g(f(x))]^{\mathcal{G}} = [g]^{\mathcal{G}}_{\mathcal{F}} [f(x)]^{\mathcal{F}} = [g]^{\mathcal{G}}_{\mathcal{F}} [f]^{\mathcal{F}}_{\mathcal{E}} [x]^{\mathcal{E}}.
+\end{align*}
+
+Therefore,
+
+$$[g \circ f]^{\mathcal{G}}_{\mathcal{E}} [x]^{\mathcal{E}} = [g]^{\mathcal{G}}_{\mathcal{F}} [f]^{\mathcal{F}}_{\mathcal{E}} [x]^{\mathcal{E}}, \quad \forall x \in E,$$
+
+which leads to the desired equality.
+
+* Proposition 1.39:  Matrix representation of inverse application
+
+Let $\mathcal{E}$ and $\mathcal{F}$ be bases of vector spaces $E$ and $F$, respectively, and let $f : E \rightarrow F$ be an invertible linear application. Then the inverse application $f^{-1} : F \rightarrow E$ has the following matrix representation:
+
+$$[f^{-1}]^{\mathcal{E}}_{\mathcal{F}} = \left( [f]^{\mathcal{F}}_{\mathcal{E}} \right)^{-1}.$$
+
+*Proof.*
+
+Left as an exercise.
+
+* Definition  1.40:  Matrix of change of basis
+
+Let $E$ be an $n$-dimensional vector space, and let an input and an output basis $\mathcal{E} = \{e_1, \ldots, e_n\}$ and $\mathcal{F} = \{f_1, \ldots, f_n\}$. The matrix of change of basis from $\mathcal{E}$ to $\mathcal{F}$ is the invertible matrix $[\operatorname{Id}]^{\mathcal{F}}_{\mathcal{E}}$. Its columns are the vectors of $\mathcal{E}$ written in the basis $\mathcal{F}$. The matrix converts coordinate vectors expressed in the basis $\mathcal{E}$ to coordinate vectors in $\mathcal{F}$.
+
+* Proposition 1.41:  Change of basis representation of endomorphisms
+
+Let $E$ be an $n$-dimensional vector space, let $\mathcal{E} = \{e_1, \ldots, e_n\}$ and $\mathcal{F} = \{f_1, \ldots, f_n\}$ be two bases, and let $T \in \mathcal{L}(E)$. Then
+
+$$[T]^{\mathcal{F}}_{\mathcal{F}} = [\operatorname{Id}]^{\mathcal{F}}_{\mathcal{E}} \, [T]^{\mathcal{E}}_{\mathcal{E}} \, [\operatorname{Id}]^{\mathcal{E}}_{\mathcal{F}}.$$
+
+*Proof.*
+
+Let $f_j$ be the $j$-th basis element of $\mathcal{F}$. By /Proposition 1.36/, it holds that
+
+$$[T(f_j)]^{\mathcal{E}}_{\mathcal{E}} = [T]^{\mathcal{E}}_{\mathcal{E}} [f_j]^{\mathcal{E}}.$$
+
+In addition, by Eq. (1.5), we have that $[T(f_j)]^{\mathcal{E}} = [\operatorname{Id}]^{\mathcal{E}}_{\mathcal{F}} [T(f_j)]^{\mathcal{F}}$. Inserting this formula into Eq. (1.6) and using the invertibility of $[\operatorname{Id}]^{\mathcal{E}}_{\mathcal{F}}$, we deduce $[T(f_j)]^{\mathcal{F}} = [\operatorname{Id}]^{\mathcal{F}}_{\mathcal{E}} [T]^{\mathcal{E}}_{\mathcal{E}} [f_j]^{\mathcal{E}}$. We now assemble $[T]^{\mathcal{F}}_{\mathcal{F}}$ by gathering all the vectors as matrix columns, and obtain
+
+\begin{align*}
+[T]^{\mathcal{F}}_{\mathcal{F}} &= \left( [T(f_1)]^{\mathcal{F}} \mid \ldots \mid [T(f_n)]^{\mathcal{F}} \right) \\
+&= [\operatorname{Id}]^{\mathcal{F}}_{\mathcal{E}} \, [T]^{\mathcal{E}}_{\mathcal{E}} \left( [f_1]^{\mathcal{E}} \mid \ldots \mid [f_n]^{\mathcal{E}} \right) \\
+&= [\operatorname{Id}]^{\mathcal{F}}_{\mathcal{E}} \, [T]^{\mathcal{E}}_{\mathcal{E}} \, [\operatorname{Id}]^{\mathcal{E}}_{\mathcal{F}}.
+\end{align*}
+
+* Definition  1.42:  Projection mapping
+
+Let $E$ be a vector space. A linear map $P : E \rightarrow E$ is called a projection mapping if and only if $P^2 = P$.
+
+* Definition  1.45:  Projection onto a subspace
+
+Let $E$ be a vector space with subspaces $F, G \subseteq E$ such that $F \oplus G = E$. The projection on $F$ associated to the direct sum $F \oplus G$ is the linear application
+
+\begin{align*}
+P_{F \oplus G} &: E \rightarrow F \subseteq E \\
+x = x_F + x_G &\mapsto x_F,
+\end{align*}
+
+where, for every $x \in E$, we use the unique decomposition $x = x_F + x_G$ with respect to the direct sum.
+
+* Definition  1.46:  Symmetry with respect to a subspace
+
+Let $E$ be a vector space with subspaces $F, G \subseteq E$ such that $F \oplus G = E$. The symmetry with respect to $F$ associated to the direct sum $F \oplus G$ is the linear application
+
+\begin{align*}
+S_{F \oplus G} &: E \rightarrow E \\
+x = x_F + x_G &\mapsto x_F - x_G.
+\end{align*}
+
+* Proposition 1.48:  Kernel and image of projection and symmetry
+
+Let $P_{F \oplus G}$, $S_{F \oplus G}$ be projection and symmetric mappings onto/with respect to $F$ associated to the direct sum $E = F \oplus G$. Then:
+
+\begin{align*}
+\ker(P_{F \oplus G}) &= G, & \operatorname{im}(P_{F \oplus G}) &= F, \\
+\ker(S_{F \oplus G}) &= \{0\}, & \operatorname{im}(S_{F \oplus G}) &= E.
+\end{align*}
+
+*Proof.*
+
+We shall prove the first two set equalities by double inclusion.
+
+1. ($\ker P = G$): For $x = x_G \in G$, from the definition of the projection mapping we have that $P(x) = P(0 + x_G) = 0$, therefore $G \subseteq \ker P$. Conversely, if $x \in \ker P$, we first decompose $x = x_F + x_G$, and from the fact that $P(x) = x_F = 0$ we know that $x = 0 + x_G = x_G \in G$, therefore $\ker P \subseteq G$.
+
+2. ($\operatorname{im} P = F$): If $x \in \operatorname{im} P$, then there exists $y \in E$ such that $P(y) = x$, writing the direct sum decomposition $y = y_F + y_G$ we get that $x = P(y) = y_F \in F$, therefore $\operatorname{im} P \subseteq F$. Conversely, for $x \in F$, since $P$ is a projection, we get that $P(x) = \operatorname{Id}(x) = x$ (why?), which implies that $x \in \operatorname{im} P$, therefore $F \subseteq \operatorname{im} P$.
+
+3. ($\ker S = 0$ and $\operatorname{im} S = E$): Observe that $S^2 = \operatorname{Id}$, therefore $S^{-1} = S$ and $S$ is an invertible linear application, consequently $\ker S = \{0\}$ and $\operatorname{im} P = E$.
+* Definition  1.49:  Distance function
+
+Let $E$ be a nonempty set. A function $d : E \times E \rightarrow \mathbb{R}$ is called a distance on $E$ if and only if:
+
+1. positivity:
+
+   $$d(x, y) \ge 0, \quad \forall x, y \in E,$$
+
+2. non-degeneracy: for all $x, y \in E$,
+
+   $$d(x, y) = 0 \Rightarrow x = y,$$
+
+3. symmetry:
+
+   $$d(x, y) = d(y, x), \quad \forall x, y \in E,$$
+
+4. triangle inequality:
+
+   $$d(x, z) \le d(x, y) + d(y, z), \quad \forall x, y, z \in E,$$
+
+5. reflexivity:
+
+   $$d(x, x) = 0, \quad \forall x \in E.$$
+
+* Definition  1.50:  Metric space
+
+A metric space $(E, d)$ is a pair of a set $E$ and a distance function $d : E \times E \rightarrow \mathbb{R}$.
+
 * Definition  1.52: Norm and normed vector space
 
 Let $(E, +, \cdot)$ be a $\mathbb{K}$ vector space. A norm is a mapping $\|\cdot\|_E : E \rightarrow \mathbb{R}$ satisfying:
@@ -382,6 +530,32 @@ Let $E$ be a $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\mathb
 
 $$\underline{c} \|x\|_{\alpha} \le \|x\|_{\beta} \le \overline{c} \|x\|_{\alpha}, \quad \forall x \in E.$$
 
+* Lemma       1.54:  Examples of normed vector spaces
+
+The following vector spaces can be endowed with norms and be seen as normed vector spaces:
+
+1. We can endow $\mathbb{R}^n$ and $\mathbb{C}^n$ with different norms:
+
+   $$\|(x_1, \ldots, x_n)\|_p := \left( \sum_{i=1}^{n} |x_i|^p \right)^{1/p}, \quad 1 \le p < +\infty$$
+
+   $$\|(x_1, \ldots, x_n)\|_\infty := \max\{|x_1|, \ldots, |x_n|\}.$$
+
+2. We can endow the space of matrices $\mathbb{K}^{q,n}$ with the following norms:
+
+   $$\|A\|_p := \left( \sum_{i=1}^{q} \sum_{j=1}^{n} |a_{i,j}|^p \right)^{1/p}, \quad \forall A \in \mathbb{K}^{q,n}, \quad p \ge 1,$$
+
+   $$\|A\|_\infty := \max_{i,j} |a_{i,j}|.$$
+
+3. The $\mathbb{R}$ vector space of continuous functions $\mathcal{C}([0,1]; \mathbb{R})$ over $[0, 1]$ and with values in $\mathbb{R}$ can be endowed with the following norms:
+
+   $$\|f\|_p := \left( \int_0^1 |f(x)|^p \mathrm{d}x \right)^{1/p}, \quad 1 \le p < +\infty$$
+
+   $$\|f\|_\infty := \max_{x \in [0,1]} |f(x)|.$$
+
+   The 2-norm is usually called the Frobenius, Schur or Hilbert-Schmidt norm.
+
+Showing that the above norms are indeed satisfying all necessary properties can become difficult for general values of $1 \le p < \infty$. The proof is easier for the cases $p \in \{1, 2, \infty\}$.
+
 * Theorem     1.56: All norms are equivalent in finite dimension
 
 Let $E$ be a $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$. Then:
@@ -389,3 +563,121 @@ Let $E$ be a $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\mathb
 1. If $E$ is finite dimensional, then all norms are equivalent,
 
 2. If $E$ is infinite dimensional, then there always exists norms that are not equivalent.
+* Definition  1.57:  Bounded linear mappings
+
+Let $(E, \|\cdot\|_E)$ and $(F, \|\cdot\|_F)$ be two normed vector spaces. A linear mapping $T \in \mathcal{L}(E, F)$ is called bounded if there exists a constant $C > 0$ such that
+
+$$\|T(x)\|_F \le C \|x\|_E, \quad \forall x \in E.$$
+
+The space of bounded linear mappings is
+
+$$\mathcal{B}(E, F) := \{T \in \mathcal{L}(E, F) : T \text{ is bounded}\}.$$
+
+* Lemma       1.58:  Bounded mappings contained in linear mappings
+
+It holds that
+
+$$\mathcal{B}(E, F) \subseteq \mathcal{L}(E, F),$$
+
+and: with infinite-dimensional spaces the inclusion may be strict, and when $E$ and $F$ are finite dimensional, equality holds.
+
+* Theorem     1.60:  Operator norm on bounded linear mappings
+
+The space $\mathcal{B}(E, F)$ endowed with the operator norm
+
+\begin{align*}
+\|T\|_{\mathrm{op}} &:= \sup_{\|x\|_E \le 1} \|T(x)\|_F = \sup_{\|x\|_E = 1} \|T(x)\|_F = \sup_{x \in E - \{0_E\}} \frac{\|T(x)\|_F}{\|x\|_E}, \quad \forall T \in \mathcal{B}(E, F)
+\end{align*}
+
+is a normed vector space, and it holds that
+
+$$\mathcal{B}(E, F) = \{T \in \mathcal{L}(E, F) : \|T\|_{\mathrm{op}} < +\infty\}.$$
+
+In addition, for any $T \in \mathcal{B}(E, F)$, $\|T\|_{\mathrm{op}}$ is the smallest constant $C > 0$ such that (1.9) holds.
+
+*Proof.*
+
+We first prove the three equalities given in Eq. (1.11):
+
+- We first show that $\sup_{\|x\|_E = 1} \|T(x)\|_F = \sup_{x \in E - \{0_E\}} \frac{\|T(x)\|_F}{\|x\|_E}$ for all $T \in \mathcal{B}(E, F)$. For this, let $T \in \mathcal{B}(E, F)$ and $x \ne 0_E$. Thus the vector $y := \frac{x}{\|x\|_E}$ has norm 1, and by linearity
+
+  $$\|T(y)\|_F = \frac{\|T(x)\|_F}{\|x\|_E}.$$
+
+  Consequently,
+
+  $$\sup_{\|y\|_E = 1} \|T(y)\|_F = \sup_{x \ne 0_E \in E} \frac{\|T(x)\|_F}{\|x\|_E},$$
+
+  and this shows the first equality that we want to prove.
+
+- We next show that $\sup_{\|x\|_E \le 1} \|T(x)\|_F = \sup_{\|x\|_E = 1} \|T(x)\|_F$ for all $T \in \mathcal{B}(E, F)$. Since $\{x \in E : \|x\|_E = 1\} \subseteq \{x \in E : \|x\|_E \le 1\}$ we immediately obtain
+
+  $$\sup_{\|x\|_E = 1} \|T(x)\|_F \le \sup_{\|x\|_E \le 1} \|T(x)\|_F.$$
+
+  To show the reverse inequality, we let $x \in E$ be such that $\|x\|_E \le 1$ and $x \ne 0$, and define $y = \frac{x}{\|x\|_E}$ so that $\|y\|_E = 1$. By linearity,
+
+  $$\|T(x)\|_F = \|x\|_E \|T(y)\| \le \|T(y)\|.$$
+
+  Hence
+
+  $$\sup_{\|x\|_E \le 1} \|T(x)\|_F \le \sup_{\|y\|=1} \|T(y)\|.$$
+
+  Combining the two inequalities yields the result.
+
+We now show that $\|\cdot\|_{\mathrm{op}}$ is a norm in $\mathcal{B}(E, F)$. For this, let $T \in \mathcal{B}(E, F)$.
+
+1. (positivity and definiteness): By definition, $\|T\|_{\mathrm{op}}$ is a supremum of nonnegative numbers, so $\|T\|_{\mathrm{op}} \ge 0$. If $\|T\|_{\mathrm{op}} = 0$, then $\|T(x)\|_F = 0$ for all $\|x\|_E \le 1$, hence $T(x) = 0$ on the unit ball. For any $y \in E$ with $y \ne 0$, set $x := y / \|y\|_E$, so $\|x\|_E = 1$, and by linearity
+
+   $$T(y) = T(\|y\|_E x) = \|y\|_E T(x) = 0.$$
+
+   Also $T(0_E) = 0_F$, so $T = 0$. Conversely, if $T = 0$ then clearly $\|T\|_{\mathrm{op}} = 0$.
+
+2. (absolute homogeneity): For any scalar $\alpha \in \mathbb{K}$,
+
+   $$\|T\|_{\mathrm{op}} = \sup_{\|x\|_E \le 1} \|(\alpha T)(x)\|_F = \sup_{\|x\|_E \le 1} |\alpha| \|T(x)\|_F = |\alpha| \sup_{\|x\|_E \le 1} \|T(x)\|_F = |\alpha| \|T\|_{\mathrm{op}}.$$
+
+3. (triangle inequality): For all $x$ with $\|x\|_E \le 1$,
+
+   $$\|(T_1 + T_2)(x)\|_F = \|T_1(x) + T_2(x)\|_F \le \|T_1(x)\|_F + \|T_2(x)\|_F.$$
+
+   Taking the supremum over $\{x : \|x\|_E \le 1\}$ gives
+
+   \begin{align*}
+   \|T_1 + T_2\|_{\mathrm{op}} &= \sup_{\|x\|_E \le 1} \|(T_1 + T_2)(x)\|_F \\
+   &\le \sup_{\|x\|_E \le 1} \|T_1(x)\|_F + \sup_{\|x\|_E \le 1} \|T_2(x)\|_F = \|T_1\|_{\mathrm{op}} + \|T_2\|_{\mathrm{op}}.
+   \end{align*}
+
+The three norm axioms are satisfied, hence $\|\cdot\|_{\mathrm{op}}$ is a norm on $\mathcal{B}(E, F)$. We finish by showing that Eq. (1.12) holds. Let $T \in \mathcal{B}(E, F)$. By definition Eq. (1.10) of $\mathcal{B}(E, F)$, $T$ is bounded, therefore there exists $C > 0$ such that $\frac{\|T(x)\|_F}{\|x\|_E} \le C$ for all $x \ne 0 \in E$. Taking the supremum in $x \ne 0_E$ shows that $\|T\|_{\mathrm{op}} \le C < +\infty$, which in turn implies that $T \in \{T \in \mathcal{L}(E, F) : \|T\|_{\mathrm{op}} < +\infty\}$, and therefore $\mathcal{B}(E, F) \subseteq \{T \in \mathcal{L}(E, F) : \|T\|_{\mathrm{op}}\}$. To show the reverse inclusion, we let $T \in \mathcal{L}(E, F)$ be such that $\|T\|_{\mathrm{op}} < +\infty$. Therefore, by the property of the supremizer, it holds that $\frac{\|T(x)\|_F}{\|x\|_E} < \infty$ for all $x \ne 0 \in E$. In addition $\|T(0)\|_F = 0$. This shows that $T$ is bounded, thus a member of $\mathcal{B}(E, F)$, and concludes the proof.
+
+* Lemma       1.61:  Boundedness and continuity
+
+For linear mappings between normed spaces $(E, \|\cdot\|_E)$ and $(F, \|\cdot\|_F)$ the following are equivalent:
+
+1. $T$ is bounded,
+
+2. $\|T\|_{\mathrm{op}} < +\infty$,
+
+3. $T$ is continuous, that is: for all $x \in E$, for all $\epsilon > 0$, there exists $\delta > 0$ such that for all $y \in E$ such that $\|x - y\|_E \le \delta \Rightarrow \|T(x) - T(y)\|_F \le \epsilon$.
+
+Therefore
+
+\begin{align*}
+\mathcal{B}(E, F) &= \{T \in \mathcal{L}(E, F) : T \text{ is bounded}\} \\
+&= \{T \in \mathcal{L}(E, F) : \|T\|_{\mathrm{op}} < +\infty\} \\
+&= \{T \in \mathcal{L}(E, F) : T \text{ is continuous}\}.
+\end{align*}
+
+* Definition  1.62:  Algebraic vs topological dual
+
+For a normed $\mathbb{K}$ vector space $(E, \|\cdot\|_E)$, there are two notions of dual spaces:
+
+- The algebraic dual is
+
+  $$E^* := \mathcal{L}(E, \mathbb{K}) = \{\ell : E \rightarrow \mathbb{K} : \ell \text{ is linear}\}$$
+
+  as already defined in /Definition 1.27/.
+
+- The topological or continuous dual is the space of bounded linear functionals,
+
+  $$E' := \mathcal{B}(E, \mathbb{K}) = \{\ell \in E^* : \|\ell\|_{\mathrm{op}} < +\infty\} \subseteq E^*.$$
+
+  By /Theorem 1.60/, it is a normed vector space when endowed with the operator norm Eq. (1.11), which is often called the dual norm.
