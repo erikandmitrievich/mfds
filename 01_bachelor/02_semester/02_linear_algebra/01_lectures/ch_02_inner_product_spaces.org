@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-27>
-#+lastmod: <2026-04-27 18:06>
+#+lastmod: <2026-04-27 21:44>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -258,3 +258,162 @@ Let $(E, \langle \cdot, \cdot \rangle_E)$ be a $\mathbb{K}$ inner-product vector
 3. orthogonal subspaces: We say that $W$ and $T$ are orthogonal ($W \perp T$) if $\langle w, t \rangle = 0$ for all $w \in W$ and $t \in T$.
 
 4. orthonormal set: We say that a set of vectors $\{v_1, \ldots, v_n\} \subseteq E$ is orthonormal if $\langle v_i, v_j \rangle = \delta_{ij}$.
+
+* Definition  2.11:  Orthogonal and orthonormal basis
+
+Let $E$ be an $n$-dimensional Euclidean space and $X = \{e_1, \ldots, e_n\}$ be a basis of $E$. We say that $X$ is an orthogonal basis if
+
+$$\langle e_i, e_j \rangle = 0, \quad \forall i \ne j.$$
+
+The basis is said to be orthonormal if
+
+$$\langle e_i, e_j \rangle = \delta_{ij}, \quad \forall 1 \le i, j \le n.$$
+
+* Proposition 2.12:  Coordinates in an orthonormal basis
+
+Let $E$ be a Euclidean space and $\mathcal{E}_n = \{e_1, \ldots, e_n\}$ an orthonormal basis of $E$. Then
+
+$$x = \sum_{i=1}^{n} \langle x, e_i \rangle e_i, \quad \text{and} \quad \|x\|^2 = \sum_{i=1}^{n} |\langle x, e_i \rangle|^2.$$
+
+*Proof.*
+
+Since $\mathcal{E}_n$ is a basis, there exist $(c_1, \ldots, c_n) \in \mathbb{R}^n$ such that $x = \sum_{i=1}^{n} c_i e_i$. Taking the inner product with $e_j$ yields $c_j = \langle x, e_j \rangle$ for all $1 \le j \le n$. To prove the formula with the norm, we simply write $\|x\|^2 = \langle x, x \rangle$ and develop the sum using that $x = \sum_{i=1}^{n} \langle x, e_i \rangle e_i$.
+
+* Theorem     2.13:  Gram-Schmidt orthonormalization
+
+Any euclidean space $E$ has an orthonormal basis.
+
+*Proof.*
+
+Let $\mathcal{X} = \{x_1, \ldots, x_n\}$ be a basis of $E$. We define by induction the following vectors,
+
+\begin{align*}
+e_1 &:= \frac{x_1}{\|x_1\|} \\
+e_i &:= \frac{x_i - \sum_{j=1}^{i-1} \langle x_i, e_j \rangle e_j}{\|x_i - \sum_{j=1}^{i-1} \langle x_i, e_j \rangle e_j\|}, \quad 2 \le i \le n.
+\end{align*}
+
+Our goal is to prove that $\mathcal{E}_n = \{e_1, \ldots, e_n\}$ is an orthonormal basis of $E$. For this, we start by noticing that each $e_i \in \text{span}\{x_1, \ldots, x_i\}$. This implies that for every $1 < i \le n$, $\|x_i - \sum_{j=1}^{i-1} \langle x_i, e_j \rangle e_j\| \ne 0$ given that $\sum_{j=1}^{i-1} \langle x_i, e_j \rangle e_j \in \text{span}\{x_1, \ldots, x_{i-1}\}$. This shows that definition (2.17) of the $e_i$ is well-posed in the sense that the denominator does not vanish.
+
+We are now going to show by induction that $\mathcal{E}_i$ is an orthonormal set for $1 \le i \le n$. We start with the case $i = 1$, for which it directly follows by the definition of $e_1$ that $\langle e_1, e_1 \rangle = \langle x_1, x_1 \rangle / \|x_1\|^2 = 1$. For the inductive step, let $1 < i \le n$, and assume that $\mathcal{E}_{i-1}$ is an orthonormal set. By the definition of $e_i$, we have that
+
+$$\langle e_i, e_i \rangle = \frac{\langle x_i - \sum_{j=1}^{i-1} \langle x_i, e_j \rangle e_j, x_i - \sum_{j=1}^{i-1} \langle x_i, e_j \rangle e_j \rangle}{\|x_i - \sum_{j=1}^{i-1} \langle x_i, e_j \rangle e_j\|^2} = 1.$$
+
+For any $1 \le k < i$,
+
+\begin{align*}
+\langle e_i, e_k \rangle &= \frac{\langle x_i, e_k \rangle - \sum_{j=1}^{i-1} \langle x_i, e_j \rangle \langle e_j, e_k \rangle}{\|x_i - \sum_{j=1}^{i-1} \langle x_i, e_j \rangle e_j\|} \\
+&= \frac{\langle x_i, e_k \rangle - \sum_{j=1}^{i-1} \langle x_i, e_j \rangle \delta_{j,k}}{\|x_i - \sum_{j=1}^{i-1} \langle x_i, e_j \rangle e_j\|} \quad \text{(induction hypothesis: } \mathcal{E}_{i-1} \text{ is an orthonormal set)} \\
+&= \frac{\langle x_i, e_k \rangle - \langle x_i, e_k \rangle}{\|x_i - \sum_{j=1}^{i-1} \langle x_i, e_j \rangle e_j\|} \\
+&= 0.
+\end{align*}
+
+This allows us to conclude that $\mathcal{E}_n$ is an orthonormal set. To show that $\mathcal{E}_n$ is a basis of $E$, it suffices to show that it is a linearly independent family. Let $\lambda_1, \ldots, \lambda_n \in \mathbb{K}$ be such that $\lambda_1 e_1 + \lambda_n e_n = 0$. Multiplying scalarly by $e_i$ and using that $\mathcal{E}_n$ is an orthonormal set, we deduce that $\lambda_i = 0$ for $1 \le i \le n$. Thus $\mathcal{E}_n$ is linearly independent, and therefore a basis of $E$.
+
+* Definition  2.14:  Orthogonal complement
+
+Let $E$ be an inner-product space and $F \subseteq E$ a subspace of $E$. We denote
+
+$$F^\perp := \{x \in E : \langle x, f \rangle = 0, \forall f \in F\}$$
+
+the orthogonal complement of $F$.
+
+* Proposition 2.15:  Properties of the orthogonal complement
+
+Let $F$ be a subspace of a euclidean space $E$. Then:
+
+1. $E = \{0\}^\perp$ and $E^\perp = \{0\}$.
+
+2. $F^\perp$ is a nonempty subspace of $E$.
+
+3. $E = F \oplus F^\perp$.
+
+4. $(F^\perp)^\perp = F$.
+
+*Proof.*
+
+1. To prove that $E^\perp = \{0\}$, we remark that if $x \in E^\perp$, then $\|x\| = 0$, thus $x = 0$.
+
+2. $F^\perp$ is non empty since $0 \in F^\perp$. The fact that $F^\perp$ is a subspace can easily be verified and is left as an exercise.
+
+3. Suppose that the dimension of $F$ is $p$ with $0 \le p \le n$. If $p = 0$ or $p = n$, the statement is proven thanks to point (i). Let us now deal with the case $1 \le p < n$. To prove the first statement, we consider a basis of $F$, to which we add linearly independent vectors to obtain a basis of $E$. We next orthonormalize the basis by Gram-Schmidt orthonormalization. This gives us an orthonormal basis $\mathcal{E} = \{e_1, \ldots, e_n\}$ where the first $p$ vectors form a basis of $F$. By using Eq. (2.18), we can then show that
+
+   $$F^\perp = \text{span}\{e_{p+1}, \ldots, e_n\}.$$
+
+   We thus conclude that $F = F \oplus F^\perp$ and $\dim(E) = \dim(F) + \dim(F^\perp)$.
+
+4. We start by observing that $\dim((F^\perp)^\perp) = \dim(E) - \dim(F^\perp)$. Then, we easily verify that $F \subseteq (F^\perp)^\perp$, which leads to the conclusion that $(F^\perp)^\perp = F$.
+
+* Definition  2.16:  Orthogonal projection
+
+Let $E = F \oplus F^\perp$ for a subspace $F \subseteq E$. The mapping
+
+\begin{align*}
+P_F = P_{F \oplus F^\perp} &: E \rightarrow F \subseteq E \\
+x = x_F + x_{F^\perp} &\mapsto x_F
+\end{align*}
+
+is called the orthogonal projector onto $F$, and $x_F$ is called the orthogonal projection of $x \in E$ onto $F$.
+
+* Proposition 2.18:  Properties of the orthogonal projection
+
+Let $F$ be a subspace of a euclidean vector space $E$. Then:
+
+1. $P_F$ is the projection onto $F$ in the sense that $\text{im}\, P_F = F$ and $P_F \circ P_F = P_F$.
+
+2. Orthogonality: For all $x \in E$ it holds that
+
+   $$x - P_F(x) \perp F$$
+
+   $$x = P_F(x) + P_{F^\perp}(x)$$
+
+3. Contraction: For all $x \in E$, $\|P_f(x)\| \le \|x\|$.
+
+4. If $f \in \mathcal{L}(E)$ is a linear map such that $f = f \circ f$ and $\text{im}(f) \perp \text{ker}(f)$, then $f$ is the orthogonal projection onto $\text{im}(f)$.
+
+5. Minimizing property: For all $x \in E$,
+
+   $$\|x - P_F(x)\| = \min_{f \in F} \|x - f\|.$$
+
+*Proof.*
+
+1. This property simply follows from the definition of the orthogonal projector $P_F$ as the subspace projection $P_{F \oplus F^\perp}$.
+
+2. Every $x \in E = F \oplus F^\perp$ can be uniquely decomposed into $x = x_F + x_{F^\perp}$, and by the definition of $P_F$ and $P_{F^\perp}$, $x_F = P_F(x)$ and $x_{F^\perp} = P_{F^\perp}(x)$. Thus $x = P_F(x) + P_{F^\perp}(x)$. Therefore $x - P_F(x) \in F^\perp$, which is equivalent to $x - P_F(x) \perp F$.
+
+3. For every $x \in E$,
+
+   $$\|x\|^2 = \langle x, x \rangle = \langle P_F(x) + P_{F^\perp}(x), P_F(x) + P_{F^\perp}(x) \rangle = \|P_F(x)\|^2 + \|P_{F^\perp}(x)\|^2 \ge \|P_F(x)\|^2.$$
+
+4. We start by proving that $E = \text{im}(p) + \text{ker}(p)$. Every $x \in E$ can be written as $x = p(x) + x - p(x)$. Since $p(x - p(x)) = 0$, it follows that $x - p(x) \in \text{ker}(p)$. In addition, the decomposition of $x$ into $p(x) \in \text{im}(f)$ and $x - p(x) \in \text{ker}(f)$ is unique because if $x = a + b$ with $b \in \text{ker}(p)$, then $p(x) = p(a) = a$. We conclude by the definition of orthogonal projection.
+
+5. For any $f \in F$, it holds that
+
+   \begin{align*}
+   \|x - f\|^2 &= \|x - P_F(x) + P_F(x) - f\|^2 \\
+   &= \|x - P_F(x)\|^2 + \|P_F(x) - f\|^2 \\
+   &\ge \|x - P_F(x)\|^2.
+   \end{align*}
+
+   Therefore $\|x - P_F(x)\| = \min_{f \in F} \|x - f\|$.
+
+* Proposition 2.19:  Coordinates of the orthogonal projection
+
+Let $(E, \omega)$ with $\dim E = n$ be a finite dimensional inner product space with inner product $\omega$. Let $F \subseteq E$ be a subspace of $E$ spanned by a basis $\mathcal{F} = \{f_1, \ldots, f_p\}$. Then the coordinates of the orthogonal projection $P_F : E \rightarrow F$ in $\mathcal{F}$ are given by
+
+$$[P_F(u)]^{\mathcal{F}} = [\omega]_{\mathcal{F}\mathcal{F}}^{-1}\, q, \quad \text{with} \quad q = (\omega(u, f_i))_{i=1}^{p}.$$
+
+*Proof.*
+
+Let $u \in E$. The orthogonal projection of $u$ onto $F$ can be written as
+
+$$P_F(u) = \sum_{i=1}^{p} [P_F(u)]_i^{\mathcal{F}} f_i.$$
+
+For shorthand notation, in this proof we write $\lambda = [P_F(u)]^{\mathcal{F}}$. Since $u - P_F(u) \perp F$, it follows that
+
+$$\omega(u - P_F(u), f_i) = 0, \quad 1 \le i \le p.$$
+
+Inserting Eq. (2.21) into Eq. (2.22), and rearranging, we are lead to the system of equations
+
+$$[\omega]_{\mathcal{F}\mathcal{F}}\, \lambda = q.$$
+
+Since the $f_i$ are linearly independent, then $[\omega]_{\mathcal{F}\mathcal{F}}$ is invertible, and this leads to Eq. (2.20).
