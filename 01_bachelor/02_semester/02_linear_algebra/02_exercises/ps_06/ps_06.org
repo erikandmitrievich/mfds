@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-26>
-#+lastmod: <2026-04-26 15:20>
+#+lastmod: <2026-04-27 12:27>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -24,7 +24,7 @@ Let $\{f^1, \ldots, f^n\} \in \mathbb{E}^*$ be an independent set of vectors in 
 \[
 \omega(x, y) = \sum_{h=1}^n f^h(x) f^h(y)
 \]
-Supposed that, given a basis $\mathcal{U} = \{u_1, \ldots, u_n\}$ of $\mathbb{E}$ and the corresponding dual basis $\mathcal{U}^* = \{u^1, \ldots, u^n\}$ in b$\mathbb{E}^*$, the dual elements $f^i$ have the representation
+Suppose that, given a basis $\mathcal{U} = \{u_1, \ldots, u_n\}$ of $\mathbb{E}$ and the corresponding dual basis $\mathcal{U}^* = \{u^1, \ldots, u^n\}$ in $\mathbb{E}^*$, the dual elements $f^i$ have the representation
 \[
 [f^i]_{\mathcal{U}} = [a^i_1, \ldots, a^i_n]
 \]
@@ -36,6 +36,30 @@ and consequently the matrix representation of $\omega$ w.r.t. the basis $\mathca
 #+end_quote
 
 ** Solution
+
+\begin{align*}
+\omega (x, y) &= \sum_{h = 1}^n f^h(x) f^h(y) \\
+&= \sum_{h = 1}^n \left( [f^h]_{U}^{\top}[x]_{U} \right) \left( [f^h]_{U}^{\top}[y]_{U} \right) \\
+&= \sum_{h = 1}^n \left( [f^h]_{U}^{\top}[x]_{U} \right)^{\top} \left( [f^h]_{U}^{\top}[y]_{U} \right) \\
+&= \sum_{h = 1}^n \left( [x]_{U}^{\top}[f^h]_{U} \right) \left( [f^h]_{U}^{\top}[y]_{U} \right) \\
+&= [x]_{U}^{\top} \left( \sum_{h = 1}^n [f^h]_{U} [f^h]_{U}^{\top} \right) [y]_{U}
+\end{align*}
+
+where $[f^h]_{U}^{\top} = [a_1^h, \ldots, a_n^h]$ and $[f^h]_{U} = [a_1^h, \ldots, a_n^h]^{\top}$. The $(i,j)$ entry of the sum is:
+
+\[
+\left( \sum_{h=1}^n [f^h]_{U} [f^h]_{U}^{\top} \right)_{ij}
+= \sum_{h=1}^n \left( [f^h]_{U} [f^h]_{U}^{\top} \right)_{ij}
+= \sum_{h=1}^n a_i^h a_j^h
+= \sum_{h=1}^n A_{hi} A_{hj}
+= (A^{\top} A)_{ij}
+\]
+
+hence $\displaystyle\sum_{h=1}^n [f^h]_{U} [f^h]_{U}^{\top} = A^{\top} A$, and
+
+\begin{align*}
+\omega(x, y) &= [x]_{U}^{\top} (A^{\top} A) [y]_{U}
+\end{align*}
 
 * Problem 2.12 :projection:inner_product:
 ** Task
@@ -73,7 +97,7 @@ for all $x \in \mathbb{E}$.
 [P_{\mathbb{F}}]^{\mathcal{E}}_{\mathcal{E}} = [\iota_{\mathbb{F}}]^{\mathcal{E}}_{\mathcal{F}} \left[ \left([\iota_{\mathbb{F}}]^{\mathcal{E}}_{\mathcal{F}}\right)^T [\omega]_{\mathcal{E}\mathcal{E}} [\iota_{\mathbb{F}}]^{\mathcal{E}}_{\mathcal{F}} \right]^{-1} \left([\iota_{\mathbb{F}}]^{\mathcal{E}}_{\mathcal{F}}\right)^T [\omega]_{\mathcal{E}\mathcal{E}}
 \]
 
-(vii) Using the expression above, verify that $P_{\mathbb{F}}$ is indeed a projection mapping. How would the formula for $[P_{\mathbb{F}}]^{\mathcal{E}}_{\mathcal{E}}$ change if $\mathcal{F}$ was a orthonormal basis for $\omega|_{\mathbb{F}}: \mathbb{F} \times \mathbb{F} \to \mathbb{R}$?
+(vii) Using the expression above, verify that $P_{\mathbb{F}}$ is indeed a projection mapping. How would the formula for $[P_{\mathbb{F}}]^{\mathcal{E}}_{\mathcal{E}}$ change if $\mathcal{F}$ was an orthonormal basis for $\omega|_{\mathbb{F}}: \mathbb{F} \times \mathbb{F} \to \mathbb{R}$?
 #+end_quote
 
 ** Solution
@@ -89,7 +113,7 @@ In this exercise we ask whether the following $\omega(\cdot, \cdot): \mathbb{E} 
 
 (ii) $\mathbb{E} = \mathbb{R}_n[X]$, with $\omega(P(X), Q(X)) = P(0)Q(0) + P(1)Q(1) + \ldots + P(n)Q(n)$
 
-(iii) $\mathbb{E} = C[0, 1]$ is the space of continuous functions defined on $[0, 1]$ and $\omega(f, g) = \int_0^{1/2} = f(t) g(t) \, dt$.
+(iii) $\mathbb{E} = C[0, 1]$ is the space of continuous functions defined on $[0, 1]$ and $\omega(f, g) = \int_0^{1/2} f(t) g(t) \, dt$.
 #+end_quote
 
 ** Solution
