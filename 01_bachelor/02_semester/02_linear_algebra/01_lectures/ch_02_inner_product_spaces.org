@@ -1,0 +1,260 @@
+#+title: Ch 02 Inner Product Spaces
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-04-27>
+#+lastmod: <2026-04-27 18:06>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Definition  2.01:  Inner product (aka. scalar product)
+
+Let $E$ be an $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$. An inner product on $E$ is a map $\langle \cdot, \cdot \rangle_E : E \times E \rightarrow \mathbb{K}$ satisfying for all $x, y, z \in E$ and $\lambda \in \mathbb{K}$:
+
+1. linearity with respect to the first variable:
+
+   $$\langle \lambda x + \mu y, z \rangle_E = \lambda \langle x, z \rangle_E + \mu \langle y, z \rangle_E, \quad \forall x, y, z \in E \text{ and } \lambda, \mu \in \mathbb{K}$$
+
+2. conjugate symmetry:
+
+   $$\langle x, y \rangle_E = \overline{\langle y, x \rangle}_E, \quad \forall x, y \in E$$
+
+3. positive-definiteness:
+
+   $$\langle x, x \rangle_E \ge 0, \quad \forall x \in E \quad \text{and} \quad \langle x, x \rangle_E = 0 \iff x = 0_E$$
+
+* Lemma       2.02:  Norm induced by an inner product
+
+Let $E$ be an $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$ and $\langle \cdot, \cdot \rangle_E$ be an inner product over $E$. The map
+
+$$\|\cdot\|_E : E \rightarrow \mathbb{R}, \quad x \mapsto \|x\|_E := \langle x, x \rangle_E^{1/2} \tag{2.1}$$
+
+is a norm on $E$ which is called the norm induced by the inner product.
+
+*Proof.*
+
+We have to prove that the mapping defined in Eq. (2.1) satisfies all the properties of a norm. The only nontrivial point is the triangle inequality. For this, we let $x, y \in E$ and write
+
+\begin{align*}
+\|x + y\|^2 &= \langle x + y, x + y \rangle \\
+&= \|x\|^2 + \langle x, y \rangle + \langle y, x \rangle + \|y\|^2 \\
+&= \|x\|^2 + \langle x, y \rangle + \overline{\langle x, y \rangle} + \|y\|^2 \\
+&= \|x\|^2 + 2\Re(\langle x, y \rangle) + \|y\|^2 \\
+&\le \|x\|^2 + 2|\langle x, y \rangle| + \|y\|^2 \\
+\end{align*}
+
+By the Cauchy-Schwarz inequality,
+
+$$\|x + y\|^2 \le \|x\|^2 + 2\|x\| \|y\| + \|y\|^2 = (\|x\| + \|y\|)^2$$
+
+* Lemma       2.03:  Cauchy-Schwarz inequality
+
+Let $E$ be an $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$ and let $\langle \cdot, \cdot \rangle_E$ be defined as in Eq. (2.1). Then
+
+$$|\langle x, y \rangle_E| \le \|x\|_E \|y\|_E,$$
+
+and equality holds if and only if $x$ and $y$ are linearly dependent.
+
+*Proof.*
+
+We first start with the real case $\mathbb{K} = \mathbb{R}$. Let us define the map $p : \lambda \in \mathbb{R} \mapsto \|x + \lambda y\|^2$, which is nonnegative for every $\lambda \in \mathbb{R}$. Then
+
+$$p(\lambda) = \|x + \lambda y\|^2 = \langle x + \lambda y, x + \lambda y \rangle = \|x\|^2 + 2\lambda \langle x, y \rangle + \lambda^2 \|y\|^2$$
+
+Thus $p$ is a polynomial of degree two in $\lambda$. Since $p(\lambda) \ge 0$ for all $\lambda \in \mathbb{R}$, then its discriminant must be nonpositive, which translates into,
+
+$$4|\langle x, y \rangle|^2 \le 4 \|x\|^2 \|y\|^2,$$
+
+and yields the desired inequality. In addition, in case of an equality, this means that $|\langle x, y \rangle| = \|x\| \|y\|$. The discriminant is equal to zero, and $p$ has a unique root $\mu$. From the fact that $p(\mu) = 0$, it follows that $\|x + \mu y\| = 0$ which is equivalent to $x + \mu y$ (linear dependence).
+
+We now consider the case $\mathbb{K} = \mathbb{C}$, and let $x, y \in E$. Since $\langle x, y \rangle \in \mathbb{C}$, it admits a polar decomposition of the form $\langle x, y \rangle = \rho e^{i\theta}$ with $\rho = |\langle x, y \rangle| \ge 0$ and $\theta \in \mathbb{R}$. We now let $x' = e^{i\theta} x$, and define for all $\lambda \in \mathbb{R}$
+
+\begin{align*}
+p(\lambda) &:= \|x' + \lambda y\|^2 \\
+&= \langle x' + \lambda y, x' + \lambda y \rangle \tag{2.2} \\
+&= \|x'\|^2 + \|\lambda y\|^2 + \langle x', \lambda y \rangle + \langle \lambda y, x' \rangle \\
+&= \|x'\|^2 + \|\lambda y\|^2 + 2\Re(\langle x', \lambda y \rangle) \\
+&= \|x\|^2 + \lambda^2 \|y\|^2 + 2\rho \lambda \tag{2.3} \\
+\end{align*}
+
+From Eq. (2.3), it follows that $p$ is a real-valued polynomial in $\lambda$. In addition, from Eq. (2.2) we have that $p(\lambda) \ge 0$ due to the nonnegativity of the inner product (see point 3 in /Definition 2.1/). Therefore, the discriminant of $p$ is nonpositive, and we conclude following the same lines as for the real case.
+
+* Definition  2.04:  Inner-Product, Hilbert and Euclidean Spaces
+
+1. inner-product space: An inner-product space is a normed space $(E, \|\cdot\|_E)$ where the norm is induced by an inner product $\langle \cdot, \cdot \rangle_E$. We usually denote it as $(E, \langle \cdot, \cdot \rangle_E)$.
+
+2. Hilbert space: A Hilbert space is an inner-product space which is also complete (i.e. any Cauchy sequence of elements of $E$ converges in this norm to a limiting element which is also in $E$).
+
+3. Euclidean space: A Euclidean space is a finite-dimensional, real inner-product space.
+
+You will learn about completeness in your analysis, topology and functional analysis courses.
+
+* Proposition 2.06:  Parallelogram Identity
+
+Let $(E, \langle \cdot, \cdot \rangle_E)$ be a $\mathbb{K}$ inner-product vector space, and let $\|\cdot\|$ be its induced norm. Then
+
+$$\|x + y\|^2 + \|x - y\|^2 = 2(\|x\|^2 + \|y\|^2), \quad \forall x, y \in E$$
+
+* Lemma       2.07:  Polarization identity
+
+Let $(E, \|\cdot\|)$ be a $\mathbb{K}$ vector space that satisfies the parallelogram identity. For a real vector space, define
+
+$$\langle x, y \rangle := \frac{1}{4} ( \|x + y\|^2 - \|x - y\|^2 ) \tag{2.5}$$
+
+and for a complex vector space define
+
+$$\langle x, y \rangle := \frac{1}{4} \sum_{k=0}^{3} i^k \|x + i^k y\|^2$$
+
+Then:
+
+1. $\langle \cdot, \cdot \rangle$ is an inner product,
+
+2. $\langle \cdot, \cdot \rangle$ is the only inner-product that induces the norm $\|\cdot\|_E$.
+
+*Proof.*
+
+We give the proof for the real case:
+
+(i) It is easy to see that $\langle \cdot, \cdot \rangle$ is symmetric and positive, we proceed by checking the additivity and homogeneity.
+
+*Additivity:* We first give a few identities that can be directly derived from the parallelogram identity (simply applying eq. (2.6) on the pairs $\{u, v\}$, $\{w, t\}$, ... etc.), let $x, y, z \in E$:
+
+\begin{align*}
+\begin{cases} u = x + z \\ v = y + z \end{cases} &\Rightarrow \|x + z\|^2 + \|y + z\|^2 = \frac{1}{2} ( \|x + y + 2z\|^2 + \|x - y\|^2 ) \tag{2.6} \\
+\begin{cases} w = x - z \\ t = y - z \end{cases} &\Rightarrow \|x - z\|^2 + \|y - z\|^2 = \frac{1}{2} ( \|x + y - 2z\|^2 + \|x - y\|^2 ) \tag{2.7} \\
+\begin{cases} r = x + y + z \\ s = z \end{cases} &\Rightarrow \|x + y + z\|^2 + \|z\|^2 = \frac{1}{2} ( \|x + y + 2z\|^2 + \|x + y\|^2 ) \tag{2.8} \\
+\begin{cases} p = x + y - z \\ q = -z \end{cases} &\Rightarrow \|x + y - z\|^2 + \|z\|^2 = \frac{1}{2} ( \|x + y - 2z\|^2 + \|x + y\|^2 ) \tag{2.9} \\
+\end{align*}
+
+We then have
+
+\begin{align*}
+\langle x, z \rangle + \langle y, z \rangle &\stackrel{(2.5)}{=} \frac{1}{4} ( \|x + z\|^2 + \|y + z\|^2 - \|x - z\|^2 - \|y - z\|^2 ) \\
+&\stackrel{(2.6),(2.7)}{=} \frac{1}{4} \left[ \frac{1}{2} ( \|x + y + 2z\|^2 + \|x - y\|^2 ) - \frac{1}{2} ( \|x + y - 2z\|^2 + \|x - y\|^2 ) \right] \\
+&= \frac{1}{4} \left[ \frac{1}{2} \|x + y + 2z\|^2 - \frac{1}{2} \|x + y - 2z\|^2 \right] \\
+&\stackrel{(2.8),(2.9)}{=} \frac{1}{4} \left[ ( \|x + y + z\|^2 + \|z\|^2 - \tfrac{1}{2} \|x + y\|^2 ) - ( \|x + y - z\|^2 + \|z\|^2 - \tfrac{1}{2} \|x + y\|^2 ) \right] \\
+&= \frac{1}{4} ( \|x + y + z\|^2 - \|x + y - z\|^2 ) \\
+&\stackrel{(2.5)}{=} \langle x + y, z \rangle \\
+\end{align*}
+
+which is the additivity we wish to prove.
+
+*Homogeneity:* We wish to prove that
+
+$$\langle \lambda x, y \rangle = \lambda \langle x, y \rangle, \quad \forall \lambda \in \mathbb{R}$$
+
+Firstly, using the additivity of $\langle \cdot, \cdot \rangle$ that we have just proved, it is easy to see that for natural numbers:
+
+$$\langle nx, y \rangle = n \langle x, y \rangle, \quad \forall n \in \mathbb{N} \tag{2.10}$$
+
+For negative natural numbers $-n$, we have that
+
+$$\langle -nx, y \rangle + n \langle x, y \rangle \stackrel{(2.10)}{=} \langle -nx, y \rangle + \langle nx, y \rangle \stackrel{(\text{Add.})}{=} \langle -nx + nx, y \rangle = \langle 0, y \rangle = 0$$
+
+Or equivalently:
+
+$$\langle -nx, y \rangle = -n \langle x, y \rangle, \quad \forall n \in \mathbb{N} \tag{2.11}$$
+
+Equations (2.10) and (2.11) can be summarised as
+
+$$\langle zx, y \rangle = z \langle x, y \rangle, \quad \forall z \in \mathbb{Z} \tag{2.12}$$
+
+Now we turn to rational numbers. Let $q \in \mathbb{Q}$, then there exists $n, m \in \mathbb{Z}$ with $m \ne 0$ such that $q = n/m$. Therefore for $x, y \in E$ we get
+
+$$m \langle qx, y \rangle \stackrel{(2.12)}{=} \langle m \cdot (qx), y \rangle \stackrel{(mq=n)}{=} \langle nx, y \rangle \stackrel{(2.12)}{=} n \langle x, y \rangle$$
+
+Dividing both sides by $m$ we get
+
+$$\langle qx, y \rangle = q \langle x, y \rangle, \quad \forall q \in \mathbb{Q} \tag{2.13}$$
+
+Lastly, let $\lambda \in \mathbb{R}$, from analysis we know that there exists a sequence of rational numbers $(q_n)_{n=1}^{\infty} \subseteq \mathbb{Q}$ that converges to $\lambda$. For each $n \in \mathbb{N}$, thanks to (2.13) we have
+
+$$\langle q_n x, y \rangle = q_n \langle x, y \rangle \tag{2.14}$$
+
+On the right hand side we have
+
+$$\lim_{n \rightarrow \infty} q_n \langle x, y \rangle = \lambda \langle x, y \rangle$$
+
+The left hand side is trickier: we first expand the expression:
+
+$$\langle q_n x, y \rangle = \frac{1}{4} \left[ \|q_n x + y\|^2 - \|q_n x - y\|^2 \right] \tag{2.15}$$
+
+Using the reverse triangle inequality we see that
+
+$$\left| \|q_n x + y\| - \|\lambda x + y\| \right| \le \|(q_n - \lambda) \cdot x\| = \underbrace{|q_n - \lambda|}_{\xrightarrow{n \rightarrow \infty} 0} \cdot \|x\| \xrightarrow{n \rightarrow \infty} 0 \quad \Rightarrow \quad \lim_{n \rightarrow \infty} \|q_n x + y\| = \|\lambda x + y\|,$$
+
+similarly $\lim_{n \rightarrow \infty} \|q_n x - y\| = \|\lambda x - y\|$, putting this back to (2.15) we get
+
+\begin{align*}
+\lim_{n \rightarrow \infty} \langle q_n x, y \rangle &= \lim_{n \rightarrow \infty} \frac{1}{4} \left[ \|q_n x + y\|^2 - \|q_n x - y\|^2 \right] = \frac{1}{4} \left[ \lim_{n \rightarrow \infty} \|q_n x + y\|^2 - \lim_{n \rightarrow \infty} \|q_n x - y\|^2 \right] \\
+&= \frac{1}{4} \left[ \|\lambda x + y\|^2 - \|\lambda x - y\|^2 \right] = \langle \lambda x, y \rangle \\
+\end{align*}
+
+Going back to (2.14) we have that
+
+$$\langle \lambda x, y \rangle \xleftarrow{n \rightarrow \infty} \langle q_n x, y \rangle = q_n \langle x, y \rangle \xrightarrow{n \rightarrow \infty} \lambda \langle x, y \rangle \stackrel{(\text{Uniqueness of limit})}{\Longrightarrow} \langle \lambda x, y \rangle = \lambda \langle x, y \rangle$$
+
+Which is the homogeneity condition that we wanted to prove.
+
+(ii) We first prove that the inner-produc[?] (2.5) induces the norm. This is true since we have
+
+$$\langle x, x \rangle \stackrel{(2.5)}{=} \frac{1}{4} ( \|x + x\|^2 + \|x - x\|^2 ) = \frac{1}{4} ( \|2x\|^2 + \|0\|^2 ) = \frac{1}{4} ( 4 \|x\|^2 ) = \|x\|^2$$
+
+We now show that (2.5) is the unique product that induces the norm. Let $\omega(\cdot, \cdot) : E \times E$ be an arbitrary inner product on $E$ that satisfies
+
+$$\|x\|^2 = \omega(x, x), \forall x \in E \tag{2.16}$$
+
+For simplicity, we assume that $\mathbb{K} = \mathbb{R}$ so that $\omega$ is symmetric (for $\mathbb{K} = \mathbb{C}$ we need to minimally adapt the proof for $\omega$ being conjugate symmetric). Then for $x, y \in E$, from (2.16) we see that
+
+\begin{align*}
+\|x + y\|^2 &= \omega(x + y, x + y) = \omega(x, x) + \omega(y, y) + 2\omega(x, y) = \|x\|^2 + \|y\|^2 + 2\omega(x, y), \quad \text{and} \\
+\|x - y\|^2 &= \omega(x - y, x - y) = \omega(x, x) + \omega(y, y) - 2\omega(x, y) = \|x\|^2 + \|y\|^2 - 2\omega(x, y) \\
+\end{align*}
+
+Combining both lines we see that
+
+$$\|x + y\|^2 - \|x - y\|^2 = 4\omega(x, y) \quad \iff \quad \omega(x, y) = \frac{1}{4} ( \|x + y\|^2 - \|x - y\|^2 ) \stackrel{(2.5)}{=} \langle x, y \rangle$$
+
+We have thus proven that any inner product on $E$ that satisfies the property (2.16) is necessarily equal to $\langle \cdot, \cdot \rangle$. Or in other words, $\langle \cdot, \cdot \rangle$ is the unique inner product that has said property.
+
+For the case where $\mathbb{K} = \mathbb{C}$, the lemma can be proved in analogous manner, although with more complex (no pun intended) calculations.
+
+* Theorem     2.08:  Jordan von-Neumann
+
+Let $\|\cdot\|$ be a norm on a $\mathbb{K}$ vector space $E$. Then we have the equivalence:
+
+$$\|\cdot\| \text{ is induced by an inner product} \iff \|\cdot\| \text{ satisfies the parallelogram identity}$$
+
+*Proof.*
+
+The direction $\Leftarrow$ holds thanks to the parallelogram identity. The direction $\Rightarrow$ holds by the polarization identity, which gives us an explicit construction of the inner-product inducing the given norm.
+
+* Definition  2.09:  Angle between 2 vectors
+
+The angle $\alpha \in \left[ 0, \pi \right]$ between two vectors $x, y \in E$ is defined through its cosine as
+
+$$\cos(\alpha) := \frac{\langle x, y \rangle}{\|x\| \|y\|}$$
+
+This definition makes sense since, by the Cauchy-Schwarz inequality, $\left| \frac{\langle x, y \rangle}{\|x\| \|y\|} \right| \le 1$, therefore we can interpret this quantity as the cosine of an angle. We may note that we recover the classical definition of angle between vectors in $\mathbb{R}^n$.
+
+Interesting things happen when the vectors 'become perpendicular' in the sense that $\alpha = \pi / 2$. This happens when $\langle x, y \rangle = 0$ (assuming that $x, y \ne 0$). This is gives raise to the general notion of orthonogonality and orthonormality, which are key concepts in inner-product spaces.
+
+* Definition  2.10:  Orthogonality and Orthonormality
+
+Let $(E, \langle \cdot, \cdot \rangle_E)$ be a $\mathbb{K}$ inner-product vector space with $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$, and let $W$ and $T$ be two subspaces of $E$.
+
+1. orthogonal vectors: We say that two vectors $x, y \in E$ are orthogonal if $\langle x, y \rangle = 0$, and we often denote this as $x \perp y$.
+
+2. vector orthogonal to subspace: We say that $x$ is orthogonal to $W$ ($x \perp W$) if $\langle x, w \rangle = 0$ for all $w \in W$.
+
+3. orthogonal subspaces: We say that $W$ and $T$ are orthogonal ($W \perp T$) if $\langle w, t \rangle = 0$ for all $w \in W$ and $t \in T$.
+
+4. orthonormal set: We say that a set of vectors $\{v_1, \ldots, v_n\} \subseteq E$ is orthonormal if $\langle v_i, v_j \rangle = \delta_{ij}$.
