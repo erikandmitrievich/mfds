@@ -1,0 +1,295 @@
+#+title: Ps 05
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-04-27>
+#+lastmod: <2026-04-28 19:51>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Problem 44 :random_search:expected_value:randomized_algorithm:
+** Task
+#+begin_quote
+Searching an unsorted array 1 This problem examines an algorithm for searching for a value $x$ in an unsorted array $A$ consisting of $n$ elements called =random_search=. Consider the following randomized strategy: pick a random index $i$ into $A$. If $A[i] = x$, then terminate; otherwise, continue the search by picking a new random index into $A$. Continue picking random indices into $A$ until you find an index $j$ such that $A[j] = x$ or until every element of $A$ has been checked. This strategy may examine a given element more than once, because it picks from the whole set of indices each time. In the following we assume that all possible permutations of the input array are equally likely.
+
+(a) Implement a procedure =random_search= to realise the strategy above. Be sure that your algorithm terminates when all indices into $A$ have been picked.
+
+(b) Suppose that there is exactly one index $i$ such that $A[i] = x$. What is the expected number of indices into $A$ that must be picked before $x$ is found and =random_search= terminates?
+
+(c) Suppose now that there are $k > 1$ indices $i$ such that $A[i] = x$. What is the expected number of indices into $A$ that must be picked before $x$ is found and random search terminates? Your answer should be a function of $n$ and $k$.
+
+(d) Suppose that there are no indices $i$ such that $A[i] = x$. What is the expected number of indices into $A$ that must be picked before all elements of $A$ have been checked and random search terminates?
+#+end_quote
+
+** Solution
+
+*** (a)
+
+#+begin_src julia :results output
+using Random
+
+let
+    function random_search(A, x)
+        seen = falses(length(A))
+        count = 0
+
+        while !all(seen)
+            count += 1
+            i = rand(eachindex(A))
+            A[i] == x && return (i, count)
+            seen[i] = true
+        end
+
+        return (nothing, count)
+    end
+
+    arr = [1, 2, 3, 4, 5, 7, 7, 8, 9, 0]
+    idx, _ = random_search(arr, 7)
+    println("found at index $idx")
+end
+#+end_src
+#+RESULTS:
+: found at index 6
+
+*** (b)
+
+#+begin_src julia :results output
+using Random
+
+let
+    function random_search(A, x)
+        seen = falses(length(A))
+        count = 0
+
+        while !all(seen)
+            count += 1
+            i = rand(eachindex(A))
+            A[i] == x && return (i, count)
+            seen[i] = true
+        end
+
+        return (nothing, count)
+    end
+
+    mean_picks(A, x; trials=1_000_000) = sum(random_search(A, x)[2] for _ in 1:trials) / trials
+
+    arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+    println("E(T) ≈ $(mean_picks(arr, 7))")
+end
+#+end_src
+#+RESULTS:
+: E(T) ≈ 9.993828
+
+Let $n = |A|$. Each pick is i.i.d. Bernoulli$(1/n)$: independence from sampling with replacement, identical distribution from uniform index choice. Let $T$ be the number of picks until the first success.
+
+When $x \in A$, the unique successful index lies among the $n$ indices, so the algorithm returns before the =seen= guard fires; the bounded $T$ equals the unbounded geometric $T$ almost surely.
+
+\begin{align*}
+P(T = k) &= (1 - p)^{k-1} p, \quad k = 1, 2, \dots \\
+E(T) &= \sum_{k=1}^{\infty} k \, (1 - p)^{k-1} p \\
+     &= p \sum_{k=1}^{\infty} k (1 - p)^{k-1} \\
+     &= p \cdot \frac{1}{(1 - (1 - p))^2} \quad \left( \sum_{k=1}^{\infty} k x^{k-1} = \frac{1}{(1-x)^2}, \; |x| < 1 \right) \\
+     &= \frac{1}{p} = n.
+\end{align*}
+
+Sanity check: $n = 10$, predicted $E(T) = 10$, empirical $9.993$.
+
+*** (c)
+
+#+begin_src julia :results output
+using Random
+
+let
+    function random_search(A, x)
+        seen = falses(length(A))
+        count = 0
+
+        while !all(seen)
+            count += 1
+            i = rand(eachindex(A))
+            A[i] == x && return (i, count)
+            seen[i] = true
+        end
+
+        return (nothing, count)
+    end
+
+    mean_picks(A, x; trials=1_000_000) = sum(random_search(A, x)[2] for _ in 1:trials) / trials
+
+    arr = [1, 2, 3, 4, 5, 7, 7, 8, 9, 0]
+    println("E(T) ≈ $(mean_picks(arr, 7))")
+end
+#+end_src
+
+#+RESULTS:
+: E(T) ≈ 4.998466
+
+By the same argument as (b): each pick is i.i.d. Bernoulli$(p)$, but now $p = k/n$, since $k$ of the $n$ indices yield $A[i] = x$. The =seen= guard does not fire (at least one successful index exists, so the loop returns first), so $T$ is geometric. Hence
+
+$$E(T) = \frac{1}{p} = \frac{n}{k}.$$
+
+Sanity check: $n = 10$, $k = 2$, predicted $E(T) = 5$, empirical $4.998$.
+
+*** (d)
+
+#+begin_src julia :results output
+using Random
+
+let
+    function random_search(A, x)
+        seen = falses(length(A))
+        count = 0
+
+        while !all(seen)
+            count += 1
+            i = rand(eachindex(A))
+            A[i] == x && return (i, count)
+            seen[i] = true
+        end
+
+        return (nothing, count)
+    end
+
+    mean_picks(A, x; trials=1_000_000) = sum(random_search(A, x)[2] for _ in 1:trials) / trials
+
+    arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+    println("E(T) ≈ $(mean_picks(arr, 10))")
+end
+#+end_src
+
+#+RESULTS:
+: E(T) ≈ 29.294806
+
+Define $T_i$ be a number of picks made while you have exactly $i-1$ distinct indices seen, until the new $i$ th element was picked. Hence, $T = T_1 + T_2 + \ldots + T_n$.
+
+Each $T_i$ is geometric, at the moment $i - 1$ was picked, the probability of picking new is $p_i = \frac{(n-i+1)}{n}$.
+
+\begin{align*}
+E(T) &= E\!\left(\sum_{i=1}^{n} T_i\right) \\
+     &= \sum_{i=1}^{n} E(T_i) \qquad \text{(linearity of expectation)} \\
+     &= \sum_{i=1}^{n} \frac{1}{p_i} \qquad \text{(by (b), since } T_i \sim \mathrm{Geometric}(p_i)\text{)} \\
+     &= \sum_{i=1}^{n} \frac{n}{n - i + 1} \\
+     &= n \sum_{j=1}^{n} \frac{1}{j} \qquad (j = n - i + 1) \\
+     &= n H_n.
+\end{align*}
+
+Sanity check: $n = 10$, predicted $E(T) \approx 29.29$, empirical $29.29$.
+
+* Problem 45 :deterministic_search:average_case:search:
+** Task
+#+begin_quote
+Searching an unsorted array 2 This problem examines the search algorithm deterministic search. This algorithm searches $A$ for $x$ in order, considering $A[1], A[2], \ldots A[n]$, until either it finds $A[i] = x$ or it reaches the end of the array. In the following we again assume that all possible permutations of the input array are equally likely.
+
+(a) Implement a procedure deterministic search to realise the strategy above.
+
+(b) Suppose that there is exactly one index $i$ such that $A[i] = x$. What is the average-case running time of deterministic search? What is its worst-case running time?
+
+(c) Suppose that there are $k > 1$ indices $i$ such that $A[i] = x$. What is the average-case running time of deterministic search? What is the worst-case running time of deterministic search? Your answer should be a function of $n$ and $k$.
+
+(d) Suppose that there are no indices $i$ such that $A[i] = x$. What is the average-case running time of deterministic search? What is its worst-case running time?
+#+end_quote
+
+** Solution
+
+* Problem 46 :scramble_search:randomized_algorithm:expected_value:
+** Task
+#+begin_quote
+Searching an unsorted array 3 This problem examines the search algorithm scramble search. It first randomly permutes the input array and then runs the algorithm deterministic search on the resulting permuted array. In the following we also assume that all possible permutations of the input array are equally likely.
+
+(a) Implement a procedure scramble search to realise the strategy above. Use your implementation of deterministic search from Exercise 45.
+
+(b) Suppose that there is exactly one index $i$ such that $A[i] = x$. What is the expected number of indices into $A$ that must be picked before $x$ is found and scramble search terminates?
+
+(c) Suppose now that there are $k > 1$ indices $i$ such that $A[i] = x$. What is the expected number of indices into $A$ that must be picked before $x$ is found and scramble search terminates? Your answer should be a function of $n$ and $k$.
+
+(d) Suppose that there are no indices $i$ such that $A[i] = x$. What is the expected number of indices into $A$ that must be picked before all elements of $A$ have been checked and scramble search terminates?
+
+Which of the three searching algorithms random search, deterministic search, or scramble search would you use and why?
+#+end_quote
+
+** Solution
+
+* Problem 47 :heap:priority_queue:data_structure:
+** Task
+#+begin_quote
+Scheduling In the Linux system all processes get a base priority value between 0 and 139. The process scheduler computes a real priority value from the process's base priority value. Lower priority values are better than higher priority values, i.e. from two processes the one with higher priority is the one with lower real priority value. Assume that the process scheduler always picks the next process among those with lowest real priority value. Assume further that every process has in addition to its two priority values the following additional information of the specified type: process id (integer), process name (string), user id (integer), group id (integer), registers (array(integer) of size 20), process flags (array(boolean) of size 20), floating point registers (array(double) of size 16).
+
+Implement a heap data structure that can be used for the priority queue as described above.
+#+end_quote
+
+** Solution
+
+* Problem 48 :priority_queue:handles:data_structure:
+** Task
+#+begin_quote
+Implement a priority queue data structure for the process scheduler using the implemented heap of Exercise 47 and handles.
+#+end_quote
+
+** Solution
+
+* Problem 49 :scheduler:priority_queue:simulation:
+** Task
+#+begin_quote
+Implement a simple scheduler that performs a loop, such that every iteration performs the following algorithm:
+
+(a) Pick and remove the highest priority process $P$ from the priority queue.
+
+(b) Decrease the real priority value of every process still in the queue by 1.
+
+(c) With a 10% chance discard the process $P$ (it has terminated), with a 90% chance re-insert the process $P$ into the queue with a new real priority value of 10 times its base priority value plus 1.
+
+(d) With a 10% chance randomly create a new process with random base priority in the range $[1, 138]$ and put it in the queue with real priority value equal to its base priority value.
+
+Then populate the priority queue with a process called "kernel" with process id 0, user id 0, group id 0, base priority value 1, the rest random, a process called "idle" with process id 1, user id 0, group id 0, base priority value 139, the rest random, and three other completely random processes. Then perform 1000 iterations of your process scheduler and print the process that was chosen in every iteration.
+#+end_quote
+
+** Solution
+
+* Problem 50 :randomized_quicksort:recursion:
+** Task
+#+begin_quote
+When RANDOMIZED-QUICKSORT runs, how many calls are made to the random-number generator RANDOM in the worst case? How about in the best case? Give your answer in terms of $\Theta$ notation.
+#+end_quote
+
+** Solution
+
+* Problem 51 :stooge_sort:recurrence:sorting:
+** Task
+#+begin_quote
+Professors Howard, Fine, and Howard have proposed a deceptively simple sorting algorithm, named stooge sort in their honor.
+
+1: procedure STOOGE-SORT(A,p,r)
+2: if $A[p] > A[r]$ then
+3: exchange $A[p]$ with $A[r]$
+4: end if
+5: if $p + 1 < r$ then
+6: $k = \lfloor (r - p + 1)/3 \rfloor$
+7: end if
+8: STOOGE-SORT(A, p, r - k) // first two-thirds
+9: STOOGE-SORT(A, p + k, r) // last two-thirds
+10: STOOGE-SORT(A, p, r - k) // first two-thirds again
+11: end procedure
+
+(a) Argue that the call STOOGE-SORT(A, 1, n) correctly sorts the array $A[1 : n]$.
+
+(b) Give a recurrence for the worst-case running time of STOOGE-SORT and a tight asymptotic ($\Theta$ notation) bound on the worst-case running time.
+
+(c) Compare the worst-case running time of STOOGE-SORT with that of insertion sort, merge sort, heapsort, and quicksort. Do the professors deserve tenure?
+#+end_quote
+
+** Solution
+
+* Errors/Typos
+- Problem 44: "called random_search]." → stray "]" (likely orphaned bracket from "[random search]" or footnote marker)
+- Problem 44(c): "ramdom search" → "random search"
+- Problem 45: "This problem examine the search algorithm" → "This problem examines the search algorithm"
+- Problem 47: "all processes gets a base priority value" → "all processes get a base priority value"
+- Problem 51: ~end if~ on line 7 is misplaced — the three recursive calls (lines 8–10) should be inside the ~if p + 1 < r~ block, otherwise $k$ is undefined when $p + 1 \geq r$. The ~end if~ should be on line 11 (after the recursive calls), and the procedure's ~end procedure~ on line 12.
