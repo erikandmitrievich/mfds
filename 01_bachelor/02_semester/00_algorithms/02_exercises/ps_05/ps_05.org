@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-27>
-#+lastmod: <2026-04-28 19:51>
+#+lastmod: <2026-04-29 12:59>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -186,18 +186,138 @@ Sanity check: $n = 10$, predicted $E(T) \approx 29.29$, empirical $29.29$.
 * Problem 45 :deterministic_search:average_case:search:
 ** Task
 #+begin_quote
-Searching an unsorted array 2 This problem examines the search algorithm deterministic search. This algorithm searches $A$ for $x$ in order, considering $A[1], A[2], \ldots A[n]$, until either it finds $A[i] = x$ or it reaches the end of the array. In the following we again assume that all possible permutations of the input array are equally likely.
+Searching an unsorted array 2 This problem examines the search algorithm =deterministic_search=. This algorithm searches $A$ for $x$ in order, considering $A[1], A[2], \ldots A[n]$, until either it finds $A[i] = x$ or it reaches the end of the array. In the following we again assume that all possible permutations of the input array are equally likely.
 
-(a) Implement a procedure deterministic search to realise the strategy above.
+(a) Implement a procedure =deterministic_search= to realise the strategy above.
 
-(b) Suppose that there is exactly one index $i$ such that $A[i] = x$. What is the average-case running time of deterministic search? What is its worst-case running time?
+(b) Suppose that there is exactly one index $i$ such that $A[i] = x$. What is the average-case running time of =deterministic_search=? What is its worst-case running time?
 
-(c) Suppose that there are $k > 1$ indices $i$ such that $A[i] = x$. What is the average-case running time of deterministic search? What is the worst-case running time of deterministic search? Your answer should be a function of $n$ and $k$.
+(c) Suppose that there are $k > 1$ indices $i$ such that $A[i] = x$. What is the average-case running time of =deterministic_search=? What is the worst-case running time of =deterministic_search=? Your answer should be a function of $n$ and $k$.
 
-(d) Suppose that there are no indices $i$ such that $A[i] = x$. What is the average-case running time of deterministic search? What is its worst-case running time?
+(d) Suppose that there are no indices $i$ such that $A[i] = x$. What is the average-case running time of =deterministic_search=? What is its worst-case running time?
 #+end_quote
 
 ** Solution
+
+*** (a)
+
+#+begin_src julia :results output
+using Random
+
+let
+    function deterministic_search(A, x)
+        for i in eachindex(A)
+            if A[i] == x
+                return i
+            end
+        end
+        return nothing
+    end
+
+    arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+    idx = deterministic_search(arr, 7)
+    println("found at index $idx")
+end
+#+end_src
+
+#+RESULTS:
+: found at index 7
+
+*** (b)
+
+Assume uniform distribution of all possible permutations of an array, with $p_i = \frac{1}{n}$, where $n = |A|$.
+
+By definition of the algorithm, it does $i$ comparisons to reach position $i$. Hence,
+
+\begin{align*}
+T_i &= i \\
+T_{\text{avg}} &= \sum_{i=1}^{n} p_i \cdot T_i \\
+&= \sum_{i=1}^{n} \frac{i}{n} \\
+&= \frac{1}{n} \cdot \sum_{i=1}^{n} i \\
+&= \frac{1}{n} \cdot \frac{n(n+1)}{2} \\
+&= \frac{n+1}{2} \\
+\end{align*}
+
+Worst case running time would be traversing through every element of the array, hence $\Theta(n)$.
+
+*** (c)
+
+#+begin_src julia :results output
+using Random
+
+let
+    function deterministic_search(A, x)
+        count = 0
+
+        for i in eachindex(A)
+            count += 1
+            if A[i] == x
+                break
+            end
+        end
+        return count
+    end
+
+    mean_picks(A, x; trials=1_000_000) = sum(deterministic_search(shuffle(A), x) for _ in 1:trials) / trials
+
+    arr = [1, 2, 3, 4, 5, 7, 7, 8, 9, 0]
+    println("T_avg ≈ $(mean_picks(arr, 7))")
+end
+#+end_src
+
+#+RESULTS:
+: T_avg ≈ 3.667904
+
+\begin{align*}
+P(\text{first match at } j) &= \frac{\binom{n-j}{k-1}}{\binom{n}{k}} \\
+&= \frac{\text{arrangements with first x at position j}}{\text{total arrangement of x's positions}} \\
+T_{\text{avg}} &= \sum_{j = 1}^{n - k + 1} j \cdot P(\text{first match at } j) \\
+&= \sum_{j = 1}^{n - k + 1} j \cdot \frac{\binom{n-j}{k-1}}{\binom{n}{k}} \\
+\end{align*}
+
+/Note, this expression can be simplified, I just do not want to do it./
+
+Worst case running time would be traversing through every non $x$ element of the array, hence $\Theta(n-k+1)$.
+
+\begin{align*}
+P(\text{first match at } j) &= \sum_{j = 1}^{10 - 2 + 1} j \cdot \frac{\binom{10-j}{2-1}}{\binom{10}{2}} \\
+&= \frac{11}{3} \\
+&\approx 3.666 \\
+\end{align*}
+
+Sanity check: $n = 10, k = 2$, predicted $P(\text{first match at } j) \approx 3.666$, empirical $3.667$.
+
+*** (d)
+
+#+begin_src julia :results output
+using Random
+
+let
+    function deterministic_search(A, x)
+        count = 0
+
+        for i in eachindex(A)
+            count += 1
+            if A[i] == x
+                break
+            end
+        end
+        return count
+    end
+
+    mean_picks(A, x; trials=1_000_000) = sum(deterministic_search(shuffle(A), x) for _ in 1:trials) / trials
+
+    arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+    println("T_avg ≈ $(mean_picks(arr, 10))")
+end
+#+end_src
+
+#+RESULTS:
+: T_avg ≈ 10.0
+
+As there is no $i : A[i] = x$, the algorithm would traverse whole array, resulting in $\Theta(n)$, where $n = |A|$.
+
+Sanity check: $n = 10, k = 0$, predicted $P(\text{first match at } j) = n = 10$, empirical $10.0$.
 
 * Problem 46 :scramble_search:randomized_algorithm:expected_value:
 ** Task
