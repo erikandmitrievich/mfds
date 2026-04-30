@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-27>
-#+lastmod: <2026-04-30 20:12>
+#+lastmod: <2026-04-30 20:24>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -1122,17 +1122,17 @@ end
 #+begin_quote
 Professors Howard, Fine, and Howard have proposed a deceptively simple sorting algorithm, named stooge sort in their honor.
 
-1: procedure STOOGE-SORT(A,p,r)
-2: if $A[p] > A[r]$ then
-3: exchange $A[p]$ with $A[r]$
-4: end if
-5: if $p + 1 < r$ then
-6: $k = \lfloor (r - p + 1)/3 \rfloor$
-7: end if
-8: STOOGE-SORT(A, p, r - k) // first two-thirds
-9: STOOGE-SORT(A, p + k, r) // last two-thirds
-10: STOOGE-SORT(A, p, r - k) // first two-thirds again
-11: end procedure
+1:   procedure STOOGE-SORT(A,p,r)
+2:     if $A[p] > A[r]$ then
+3:       exchange $A[p]$ with $A[r]$
+4:     end if
+5:     if $p + 1 < r$ then
+6:       $k = \lfloor (r - p + 1)/3 \rfloor$
+7:       STOOGE-SORT(A, p, r - k) // first two-thirds
+8:       STOOGE-SORT(A, p + k, r) // last two-thirds
+9:       STOOGE-SORT(A, p, r - k) // first two-thirds again
+10:    end if
+11:  end procedure
 
 (a) Argue that the call STOOGE-SORT(A, 1, n) correctly sorts the array $A[1 : n]$.
 
@@ -1142,6 +1142,95 @@ Professors Howard, Fine, and Howard have proposed a deceptively simple sorting a
 #+end_quote
 
 ** Solution
+
+*** (a)
+
+Induction on $n = r - p + 1$.
+
+/Base./ $n \le 2$: lines 2–3 perform the only nontrivial work and produce a sorted pair (or singleton); the recursion guard $p + 1 < r$ blocks further calls.
+
+/Step./ $n \ge 3$, so $k = \lfloor n/3 \rfloor \ge 1$ and each recursive call has size $n - k = \lceil 2n/3 \rceil < n$. Let $L = A[p..r-k]$ and $R = A[p+k..r]$, both of size $n - k$, with $|L \cap R| = n - 2k \ge 0$ since $k \le n/3$.
+
+By IH all three recursive calls sort their subarrays. Trace:
+
+1. After call 1 ($L$ sorted): the $k$ largest entries of $L$ sit at positions $[r - 2k + 1,\ r - k]$. This range lies inside $R$, since $p + k \le r - 2k + 1 \iff 3k \le n$, which holds.
+
+2. The $k$ globally largest entries of $A[p..r]$ are either originally in $L$ — now in its top-$k$ tail $\subset R$ — or in $A[r-k+1..r] \subset R$. Either way, after call 1 they all sit inside $R$.
+
+3. After call 2 ($R$ sorted): the top $k$ of $R$ — equal to the top $k$ of $A$ by step 2 — occupy $A[r-k+1..r]$ in sorted order.
+
+4. After call 3 ($L$ sorted): $L$ holds the $n - k$ smallest entries of $A$ in sorted order. Concatenated with the sorted $A[r-k+1..r]$, $A[p..r]$ is sorted.
+
+*** (b)
+
+Outside recursion the work is $\Theta(1)$ (one comparison, optional swap). Three recursive calls on size $\lceil 2n/3 \rceil$:
+
+$$T(n) = 3\, T\!\left(\left\lceil \tfrac{2n}{3} \right\rceil\right) + \Theta(1).$$
+
+Master theorem with $a = 3$, $b = 3/2$: $\log_b a = \log_{3/2} 3 = \dfrac{\ln 3}{\ln 3 - \ln 2} \approx 2.7095$. Since $f(n) = \Theta(1) = O(n^{\log_b a - \varepsilon})$ for small $\varepsilon$, case 1 applies:
+
+$$T(n) = \Theta\!\left(n^{\log_{3/2} 3}\right) \approx \Theta(n^{2.71}).$$
+
+#+begin_src julia :results output
+using Random
+
+let
+    ops = Ref(0)
+
+    function stooge_sort!(A, p=1, r=length(A))
+        ops[] += 1
+        if A[p] > A[r]
+            A[p], A[r] = A[r], A[p]
+        end
+        if p + 1 < r
+            k = (r - p + 1) ÷ 3
+            stooge_sort!(A, p, r - k)
+            stooge_sort!(A, p + k, r)
+            stooge_sort!(A, p, r - k)
+        end
+        return A
+    end
+
+    Random.seed!(0)
+    for _ in 1:500
+        n = rand(1:40)
+        A = rand(-100:100, n)
+        @assert stooge_sort!(copy(A)) == sort(A)
+    end
+    println("correctness ok")
+
+    α = log(3) / log(1.5)
+    for n in (50, 100, 500, 1000)
+        ops[] = 0
+        stooge_sort!(rand(n))
+        slope = log(ops[]) / log(n)
+        println("n=$n  ops=$(ops[])  log(ops)/log(n) = $(round(slope, digits=4))")
+    end
+    println("α = log_{3/2}(3) ≈ $(round(α, digits=4))")
+end
+#+end_src
+
+#+RESULTS:
+: correctness ok
+: n=50  ops=29524  log(ops)/log(n) = 2.6311
+: n=100  ops=265720  log(ops)/log(n) = 2.7122
+: n=500  ops=21523360  log(ops)/log(n) = 2.7169
+: n=1000  ops=64570081  log(ops)/log(n) = 2.6033
+: α = log_{3/2}(3) ≈ 2.7095
+
+Sanity check: empirical log–log slopes oscillate around $\alpha \approx 2.71$; the wobble comes from floor/ceiling effects in $k = \lfloor n/3 \rfloor$, not from a violated bound.
+
+*** (c)
+
+| Algorithm      | Worst case                                          |
+|----------------+-----------------------------------------------------|
+| Insertion sort | $\Theta(n^2)$                                       |
+| Merge sort     | $\Theta(n \log n)$                                  |
+| Heapsort       | $\Theta(n \log n)$                                  |
+| Quicksort      | $\Theta(n^2)$                                       |
+| Stooge sort    | $\Theta(n^{\log_{3/2} 3}) \approx \Theta(n^{2.71})$ |
+
+Stooge sort is asymptotically worse than every algorithm in the comparison, including the quadratic ones. Tenure denied.
 
 * Errors/Typos
 - Problem 44: "called random_search]." → stray "]" (likely orphaned bracket from "[random search]" or footnote marker)
