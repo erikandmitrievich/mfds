@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-27>
-#+lastmod: <2026-04-30 18:08>
+#+lastmod: <2026-04-30 19:16>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -668,6 +668,368 @@ Then populate the priority queue with a process called "kernel" with process id 
 #+end_quote
 
 ** Solution
+
+#+begin_src julia :results output
+using Random
+
+let
+    mutable struct Handle
+        idx::Int
+    end
+
+    mutable struct Node
+        base_priority::Int
+        real_priority::Int
+        process_id::Int
+        process_name::String
+        user_id::Int
+        group_id::Int
+        registers::NTuple{20, Int64}
+        process_flags::NTuple{20, Bool}
+        f_registers::NTuple{16, Float64}
+    end
+
+    struct MinHeap
+        data::Vector{Node}
+        handles::Vector{Handle}
+        MinHeap() = new(Node[], Handle[])
+    end
+
+    #------------------------------------------
+
+    parent(i) = i ÷ 2
+    left(i)   = 2i
+    right(i)  = 2i + 1
+
+    #------------------------------------------
+
+    function swap!(h::MinHeap, i::Int, j::Int)
+        h.data[i], h.data[j] = h.data[j], h.data[i]
+        h.handles[i], h.handles[j] = h.handles[j], h.handles[i]
+        h.handles[i].idx = i
+        h.handles[j].idx = j
+    end
+
+    function siftup!(h::MinHeap, i::Int)
+        d = h.data
+        while i > 1 && d[parent(i)].real_priority > d[i].real_priority
+            swap!(h, i, parent(i))
+            i = parent(i)
+        end
+    end
+
+    function siftdown!(h::MinHeap, i::Int)
+        d = h.data
+        while left(i) <= length(d)
+            j = left(i)
+            if right(i) <= length(d) && d[right(i)].real_priority < d[j].real_priority
+                j = right(i)
+            end
+            d[i].real_priority <= d[j].real_priority && break
+            swap!(h, i, j)
+            i = j
+        end
+    end
+
+    function Base.push!(h::MinHeap, n::Node)
+        push!(h.data, n)
+        i = length(h.data)
+        handle = Handle(i)
+        push!(h.handles, handle)
+        siftup!(h, i)
+        return handle
+    end
+
+    function Base.pop!(h::MinHeap)
+       isempty(h.data) && return nothing
+       result = h.data[1]
+       popped_handle = h.handles[1]
+       swap!(h, 1, length(h.data))
+       pop!(h.data); pop!(h.handles)
+       popped_handle.idx = 0
+       siftdown!(h, 1)
+       return result
+   end
+
+    Base.peek(h::MinHeap) = h.data[1]
+
+    function decrease_key(h::MinHeap, handle::Handle, rp)
+        handle.idx == 0 && return
+        @assert rp <= h.data[handle.idx].real_priority
+        h.data[handle.idx].real_priority = Int(rp)
+        siftup!(h, handle.idx)
+    end
+
+    function increase_key(h::MinHeap, handle::Handle, rp)
+        handle.idx == 0 && return
+        @assert rp >= h.data[handle.idx].real_priority
+        h.data[handle.idx].real_priority = Int(rp)
+        siftdown!(h, handle.idx)
+    end
+
+    #------------------------------------------
+
+    function random_node(; pid=rand(Int), uid=rand(Int), gid=rand(Int), base=rand(1:138), name=randstring(8))
+        Node(
+            base,
+            base,
+            pid, name, uid, gid,
+            ntuple(_ -> rand(Int),    20),
+            ntuple(_ -> rand(Bool),   20),
+            ntuple(_ -> rand(),       16),
+        )
+    end
+
+    function step!(h::MinHeap)
+        isempty(h.data) && return nothing
+        hp = pop!(h)
+        for n in h.data
+            n.real_priority -= 1
+        end
+        if rand() < 0.9
+            hp.real_priority = hp.base_priority * 10 + 1
+            push!(h, hp)
+        end
+        if rand() < 0.1
+            push!(h, random_node())
+        end
+        return hp
+    end
+
+    function scheduler(h::MinHeap, n::Int=1000)
+        for _ in 1:n
+            p = step!(h)
+            (p === nothing) || println(p.process_name, " (pid=", p.process_id, ")")
+        end
+    end
+
+    h = MinHeap()
+    push!(h, random_node(pid=0, uid=0, gid=0, base=1,   name="kernel"))
+    push!(h, random_node(pid=1, uid=0, gid=0, base=139, name="idle"))
+    for _ in 1:3
+        push!(h, random_node())
+    end
+    scheduler(h, 1000)
+end
+#+end_src
+
+#+RESULTS:
+#+begin_example
+kernel (pid=0)
+kernel (pid=0)
+kernel (pid=0)
+kernel (pid=0)
+kernel (pid=0)
+kernel (pid=0)
+kernel (pid=0)
+kernel (pid=0)
+kernel (pid=0)
+kernel (pid=0)
+kernel (pid=0)
+kernel (pid=0)
+sO81yWfI (pid=6098878896715955361)
+00u2vhqy (pid=-4085129693727430007)
+UeYdIKY0 (pid=-7807681412908936421)
+2PUlyQ1x (pid=65165999772993361)
+YUDhTGqa (pid=4004126849518487845)
+idle (pid=1)
+lGkcuy6l (pid=-4497509044890938028)
+BZ2PbEL9 (pid=2900543848609925147)
+sO81yWfI (pid=6098878896715955361)
+sO81yWfI (pid=6098878896715955361)
+sO81yWfI (pid=6098878896715955361)
+sO81yWfI (pid=6098878896715955361)
+sO81yWfI (pid=6098878896715955361)
+sO81yWfI (pid=6098878896715955361)
+00u2vhqy (pid=-4085129693727430007)
+00u2vhqy (pid=-4085129693727430007)
+00u2vhqy (pid=-4085129693727430007)
+UeYdIKY0 (pid=-7807681412908936421)
+UeYdIKY0 (pid=-7807681412908936421)
+UeYdIKY0 (pid=-7807681412908936421)
+UeYdIKY0 (pid=-7807681412908936421)
+2PUlyQ1x (pid=65165999772993361)
+2PUlyQ1x (pid=65165999772993361)
+2PUlyQ1x (pid=65165999772993361)
+nWVb7VwD (pid=9160950269583976056)
+2PUlyQ1x (pid=65165999772993361)
+2PUlyQ1x (pid=65165999772993361)
+2PUlyQ1x (pid=65165999772993361)
+2PUlyQ1x (pid=65165999772993361)
+2PUlyQ1x (pid=65165999772993361)
+2PUlyQ1x (pid=65165999772993361)
+2PUlyQ1x (pid=65165999772993361)
+2PUlyQ1x (pid=65165999772993361)
+nWVb7VwD (pid=9160950269583976056)
+nWVb7VwD (pid=9160950269583976056)
+nWVb7VwD (pid=9160950269583976056)
+nWVb7VwD (pid=9160950269583976056)
+nWVb7VwD (pid=9160950269583976056)
+BZ2PbEL9 (pid=2900543848609925147)
+BZ2PbEL9 (pid=2900543848609925147)
+BZ2PbEL9 (pid=2900543848609925147)
+BZ2PbEL9 (pid=2900543848609925147)
+TutzQ9LZ (pid=-1152951384459168004)
+TutzQ9LZ (pid=-1152951384459168004)
+TutzQ9LZ (pid=-1152951384459168004)
+TutzQ9LZ (pid=-1152951384459168004)
+nGtWBuFj (pid=2295719176812030289)
+nGtWBuFj (pid=2295719176812030289)
+nGtWBuFj (pid=2295719176812030289)
+nGtWBuFj (pid=2295719176812030289)
+nGtWBuFj (pid=2295719176812030289)
+nGtWBuFj (pid=2295719176812030289)
+nGtWBuFj (pid=2295719176812030289)
+nGtWBuFj (pid=2295719176812030289)
+nP2waQLx (pid=4294469619088590339)
+nGtWBuFj (pid=2295719176812030289)
+nGtWBuFj (pid=2295719176812030289)
+nGtWBuFj (pid=2295719176812030289)
+ncRvT267 (pid=-5192173367669723963)
+nP2waQLx (pid=4294469619088590339)
+nP2waQLx (pid=4294469619088590339)
+nP2waQLx (pid=4294469619088590339)
+nP2waQLx (pid=4294469619088590339)
+nP2waQLx (pid=4294469619088590339)
+nP2waQLx (pid=4294469619088590339)
+nP2waQLx (pid=4294469619088590339)
+nP2waQLx (pid=4294469619088590339)
+nP2waQLx (pid=4294469619088590339)
+nP2waQLx (pid=4294469619088590339)
+nP2waQLx (pid=4294469619088590339)
+nP2waQLx (pid=4294469619088590339)
+nP2waQLx (pid=4294469619088590339)
+ncRvT267 (pid=-5192173367669723963)
+ncRvT267 (pid=-5192173367669723963)
+ncRvT267 (pid=-5192173367669723963)
+BZ2PbEL9 (pid=2900543848609925147)
+lGkcuy6l (pid=-4497509044890938028)
+BZ2PbEL9 (pid=2900543848609925147)
+BZ2PbEL9 (pid=2900543848609925147)
+BZ2PbEL9 (pid=2900543848609925147)
+BZ2PbEL9 (pid=2900543848609925147)
+BZ2PbEL9 (pid=2900543848609925147)
+BZ2PbEL9 (pid=2900543848609925147)
+BZ2PbEL9 (pid=2900543848609925147)
+BZ2PbEL9 (pid=2900543848609925147)
+BZ2PbEL9 (pid=2900543848609925147)
+BZ2PbEL9 (pid=2900543848609925147)
+BZ2PbEL9 (pid=2900543848609925147)
+BZ2PbEL9 (pid=2900543848609925147)
+BZ2PbEL9 (pid=2900543848609925147)
+qH76Zniv (pid=-7196423160221408673)
+BZ2PbEL9 (pid=2900543848609925147)
+nXul42Ev (pid=4044666408936539721)
+nXul42Ev (pid=4044666408936539721)
+nXul42Ev (pid=4044666408936539721)
+nXul42Ev (pid=4044666408936539721)
+KOVPMWjP (pid=-3566893223880282587)
+nXul42Ev (pid=4044666408936539721)
+r8VE058B (pid=-4081646566473810214)
+r8VE058B (pid=-4081646566473810214)
+r8VE058B (pid=-4081646566473810214)
+nXul42Ev (pid=4044666408936539721)
+nXul42Ev (pid=4044666408936539721)
+nXul42Ev (pid=4044666408936539721)
+nXul42Ev (pid=4044666408936539721)
+nXul42Ev (pid=4044666408936539721)
+Zx4dy4vI (pid=-1503248143410698521)
+nXul42Ev (pid=4044666408936539721)
+nXul42Ev (pid=4044666408936539721)
+nXul42Ev (pid=4044666408936539721)
+nXul42Ev (pid=4044666408936539721)
+nXul42Ev (pid=4044666408936539721)
+nXul42Ev (pid=4044666408936539721)
+nXul42Ev (pid=4044666408936539721)
+nXul42Ev (pid=4044666408936539721)
+LmmNwWMR (pid=-1974998040046349783)
+nXul42Ev (pid=4044666408936539721)
+nXul42Ev (pid=4044666408936539721)
+nXul42Ev (pid=4044666408936539721)
+KOVPMWjP (pid=-3566893223880282587)
+KOVPMWjP (pid=-3566893223880282587)
+KOVPMWjP (pid=-3566893223880282587)
+KOVPMWjP (pid=-3566893223880282587)
+KOVPMWjP (pid=-3566893223880282587)
+KOVPMWjP (pid=-3566893223880282587)
+LmmNwWMR (pid=-1974998040046349783)
+LmmNwWMR (pid=-1974998040046349783)
+LmmNwWMR (pid=-1974998040046349783)
+LmmNwWMR (pid=-1974998040046349783)
+LmmNwWMR (pid=-1974998040046349783)
+Zx4dy4vI (pid=-1503248143410698521)
+Zx4dy4vI (pid=-1503248143410698521)
+Zx4dy4vI (pid=-1503248143410698521)
+Zx4dy4vI (pid=-1503248143410698521)
+Zx4dy4vI (pid=-1503248143410698521)
+Zx4dy4vI (pid=-1503248143410698521)
+Zx4dy4vI (pid=-1503248143410698521)
+Zx4dy4vI (pid=-1503248143410698521)
+BZ2PbEL9 (pid=2900543848609925147)
+lGkcuy6l (pid=-4497509044890938028)
+YUDhTGqa (pid=4004126849518487845)
+BZ2PbEL9 (pid=2900543848609925147)
+BZ2PbEL9 (pid=2900543848609925147)
+BZ2PbEL9 (pid=2900543848609925147)
+qH76Zniv (pid=-7196423160221408673)
+idle (pid=1)
+qH76Zniv (pid=-7196423160221408673)
+qH76Zniv (pid=-7196423160221408673)
+qH76Zniv (pid=-7196423160221408673)
+qH76Zniv (pid=-7196423160221408673)
+qH76Zniv (pid=-7196423160221408673)
+qH76Zniv (pid=-7196423160221408673)
+qH76Zniv (pid=-7196423160221408673)
+qH76Zniv (pid=-7196423160221408673)
+qH76Zniv (pid=-7196423160221408673)
+oqZ5PnDp (pid=-316532622240915688)
+oqZ5PnDp (pid=-316532622240915688)
+7KU1kGtk (pid=-2657784539617933542)
+7KU1kGtk (pid=-2657784539617933542)
+7KU1kGtk (pid=-2657784539617933542)
+7KU1kGtk (pid=-2657784539617933542)
+7KU1kGtk (pid=-2657784539617933542)
+7KU1kGtk (pid=-2657784539617933542)
+7KU1kGtk (pid=-2657784539617933542)
+oqZ5PnDp (pid=-316532622240915688)
+qH76Zniv (pid=-7196423160221408673)
+qH76Zniv (pid=-7196423160221408673)
+qH76Zniv (pid=-7196423160221408673)
+qH76Zniv (pid=-7196423160221408673)
+YUDhTGqa (pid=4004126849518487845)
+oIfjil2d (pid=4567519100579612077)
+YUDhTGqa (pid=4004126849518487845)
+YUDhTGqa (pid=4004126849518487845)
+zQv0YyFy (pid=-7077100690933138163)
+zQv0YyFy (pid=-7077100690933138163)
+zQv0YyFy (pid=-7077100690933138163)
+zQv0YyFy (pid=-7077100690933138163)
+ubJaC7ub (pid=-6771826983277176994)
+5c8lPqFJ (pid=-7769108046316480427)
+ubJaC7ub (pid=-6771826983277176994)
+ubJaC7ub (pid=-6771826983277176994)
+ubJaC7ub (pid=-6771826983277176994)
+ubJaC7ub (pid=-6771826983277176994)
+ubJaC7ub (pid=-6771826983277176994)
+ubJaC7ub (pid=-6771826983277176994)
+ubJaC7ub (pid=-6771826983277176994)
+5c8lPqFJ (pid=-7769108046316480427)
+5c8lPqFJ (pid=-7769108046316480427)
+5c8lPqFJ (pid=-7769108046316480427)
+5c8lPqFJ (pid=-7769108046316480427)
+zQv0YyFy (pid=-7077100690933138163)
+zQv0YyFy (pid=-7077100690933138163)
+zQv0YyFy (pid=-7077100690933138163)
+zQv0YyFy (pid=-7077100690933138163)
+YUDhTGqa (pid=4004126849518487845)
+YUDhTGqa (pid=4004126849518487845)
+idle (pid=1)
+YUDhTGqa (pid=4004126849518487845)
+YUDhTGqa (pid=4004126849518487845)
+YUDhTGqa (pid=4004126849518487845)
+YUDhTGqa (pid=4004126849518487845)
+YUDhTGqa (pid=4004126849518487845)
+#+end_example
 
 * Problem 50 :randomized_quicksort:recursion:
 ** Task
