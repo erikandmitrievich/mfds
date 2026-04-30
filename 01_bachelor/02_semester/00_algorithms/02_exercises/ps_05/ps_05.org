@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-27>
-#+lastmod: <2026-04-29 12:59>
+#+lastmod: <2026-04-30 13:06>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -207,9 +207,7 @@ using Random
 let
     function deterministic_search(A, x)
         for i in eachindex(A)
-            if A[i] == x
-                return i
-            end
+            A[i] == x && return i
         end
         return nothing
     end
@@ -247,15 +245,10 @@ using Random
 
 let
     function deterministic_search(A, x)
-        count = 0
-
         for i in eachindex(A)
-            count += 1
-            if A[i] == x
-                break
-            end
+            A[i] == x && return i
         end
-        return count
+        return nothing
     end
 
     mean_picks(A, x; trials=1_000_000) = sum(deterministic_search(shuffle(A), x) for _ in 1:trials) / trials
@@ -266,7 +259,7 @@ end
 #+end_src
 
 #+RESULTS:
-: T_avg ≈ 3.667904
+: T_avg ≈ 3.667191
 
 \begin{align*}
 P(\text{first match at } j) &= \frac{\binom{n-j}{k-1}}{\binom{n}{k}} \\
@@ -280,12 +273,12 @@ T_{\text{avg}} &= \sum_{j = 1}^{n - k + 1} j \cdot P(\text{first match at } j) \
 Worst case running time would be traversing through every non $x$ element of the array, hence $\Theta(n-k+1)$.
 
 \begin{align*}
-P(\text{first match at } j) &= \sum_{j = 1}^{10 - 2 + 1} j \cdot \frac{\binom{10-j}{2-1}}{\binom{10}{2}} \\
+T_{\text{avg}} &= \sum_{j = 1}^{10 - 2 + 1} j \cdot \frac{\binom{10-j}{2-1}}{\binom{10}{2}} \\
 &= \frac{11}{3} \\
 &\approx 3.666 \\
 \end{align*}
 
-Sanity check: $n = 10, k = 2$, predicted $P(\text{first match at } j) \approx 3.666$, empirical $3.667$.
+Sanity check: $n = 10, k = 2$, predicted $T_{\text{avg}} \approx 3.666$, empirical $3.667$.
 
 *** (d)
 
@@ -322,20 +315,133 @@ Sanity check: $n = 10, k = 0$, predicted $P(\text{first match at } j) = n = 10$,
 * Problem 46 :scramble_search:randomized_algorithm:expected_value:
 ** Task
 #+begin_quote
-Searching an unsorted array 3 This problem examines the search algorithm scramble search. It first randomly permutes the input array and then runs the algorithm deterministic search on the resulting permuted array. In the following we also assume that all possible permutations of the input array are equally likely.
+Searching an unsorted array 3 This problem examines the search algorithm =scramble_search=. It first randomly permutes the input array and then runs the algorithm =deterministic_search= on the resulting permuted array. In the following we also assume that all possible permutations of the input array are equally likely.
 
-(a) Implement a procedure scramble search to realise the strategy above. Use your implementation of deterministic search from Exercise 45.
+(a) Implement a procedure =scramble_search= to realise the strategy above. Use your implementation of =deterministic_search= from Exercise 45.
 
-(b) Suppose that there is exactly one index $i$ such that $A[i] = x$. What is the expected number of indices into $A$ that must be picked before $x$ is found and scramble search terminates?
+(b) Suppose that there is exactly one index $i$ such that $A[i] = x$. What is the expected number of indices into $A$ that must be picked before $x$ is found and =scramble_search= terminates?
 
-(c) Suppose now that there are $k > 1$ indices $i$ such that $A[i] = x$. What is the expected number of indices into $A$ that must be picked before $x$ is found and scramble search terminates? Your answer should be a function of $n$ and $k$.
+(c) Suppose now that there are $k > 1$ indices $i$ such that $A[i] = x$. What is the expected number of indices into $A$ that must be picked before $x$ is found and =scramble_search= terminates? Your answer should be a function of $n$ and $k$.
 
-(d) Suppose that there are no indices $i$ such that $A[i] = x$. What is the expected number of indices into $A$ that must be picked before all elements of $A$ have been checked and scramble search terminates?
+(d) Suppose that there are no indices $i$ such that $A[i] = x$. What is the expected number of indices into $A$ that must be picked before all elements of $A$ have been checked and =scramble_search= terminates?
 
-Which of the three searching algorithms random search, deterministic search, or scramble search would you use and why?
+Which of the three searching algorithms =random_search=, =deterministic_search=, or =scramble_search= would you use and why?
 #+end_quote
 
 ** Solution
+
+*** (a)
+
+#+begin_src julia :results output
+using Random
+
+let
+    function deterministic_search(A, x)
+        for i in eachindex(A)
+            if A[i] == x
+                return i
+            end
+        end
+        return nothing
+    end
+
+    function scramble_search(A, x)
+        return deterministic_search(shuffle(A), x)
+    end
+
+    arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+    idx = scramble_search(arr, 7)
+    println("found at index $idx")
+end
+#+end_src
+
+#+RESULTS:
+: found at index 9
+
+*** (b)
+
+Let $J$ be the index of $x$ after shuffling. Since all permutations are equiprobable, $J \equiv \mathrm{Uniform}\{1, \ldots, n \}$, and $T = J$.
+
+$$E(T) = \sum_{j=1}^n j \cdot \frac{1}{n} = \frac{n+1}{2}$$
+
+*** (c)
+
+#+begin_src julia :results output
+using Random
+
+let
+    function deterministic_search(A, x)
+        for i in eachindex(A)
+            A[i] == x && return i
+        end
+        return nothing
+    end
+
+    scramble_search(A, x) = deterministic_search(shuffle(A), x)
+
+    mean_picks(A, x; trials=1_000_000) = sum(scramble_search(A, x) for _ in 1:trials) / trials
+
+    arr = [1, 2, 3, 4, 5, 7, 7, 8, 9, 0]
+    println("E(T) ≈ $(mean_picks(arr, 7))")
+end
+#+end_src
+
+#+RESULTS:
+: E(T) ≈ 3.669679
+
+Let $J$ be the position of the first match after shuffling. With $k$ matches placed uniformly at random among $n$ positions:
+
+\begin{align*}
+P(J = j) &= \frac{\binom{n-j}{k-1}}{\binom{n}{k}}, \quad 1 \le j \le n - k + 1 \\
+E(J) &= \sum_{j=1}^{n-k+1} j \cdot \frac{\binom{n-j}{k-1}}{\binom{n}{k}}
+\end{align*}
+
+Substituting $i = n - j$ and applying the hockey-stick identity twice, using:
+
+$$i\binom{i}{k-1} = k\binom{i}{k} + (k-1)\binom{i}{k-1}$$
+
+\begin{align*}
+\sum_{j=1}^{n-k+1} j \binom{n-j}{k-1}
+  &= n\binom{n}{k} - k\binom{n}{k+1} - (k-1)\binom{n}{k} \\
+  &= (n-k+1)\binom{n}{k} - k\binom{n}{k+1} \\
+  &= \frac{n+1}{k+1}\binom{n}{k}
+\end{align*}
+
+Hence
+
+$$E(T) = \frac{n+1}{k+1}$$
+
+Sanity: $n=10, k=2 \Rightarrow \frac{11}{3} \approx 3.667$, matching the shuffle simulation from Problem 44(c).
+
+*** (d)
+
+#+begin_src julia :results output
+using Random
+
+let
+    function deterministic_search(A, x)
+        for i in eachindex(A)
+            A[i] == x && return i
+        end
+        return length(A)
+    end
+
+    scramble_search(A, x) = deterministic_search(shuffle(A), x)
+
+    mean_picks(A, x; trials=1_000_000) = sum(scramble_search(A, x) for _ in 1:trials) / trials
+
+    arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+    println("E(T) ≈ $(mean_picks(arr, 10))")
+end
+#+end_src
+#+RESULTS:
+: E(T) ≈ 10.0
+
+With no $i$ such that $A[i] = x$, every permutation forces the algorithm to examine all $n$ elements before terminating. Hence $T = n$ deterministically and
+
+$$E(T) = n$$
+
+Sanity: $n = 10 \Rightarrow E(T) = 10$, empirical $10.0$ (zero variance, as expected).
 
 * Problem 47 :heap:priority_queue:data_structure:
 ** Task
