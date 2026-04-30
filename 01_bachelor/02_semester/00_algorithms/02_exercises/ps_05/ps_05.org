@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-27>
-#+lastmod: <2026-04-30 19:16>
+#+lastmod: <2026-04-30 20:12>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -1038,6 +1038,84 @@ When RANDOMIZED-QUICKSORT runs, how many calls are made to the random-number gen
 #+end_quote
 
 ** Solution
+
+RANDOMIZED-PARTITION calls RANDOM exactly once per invocation, so the count of RANDOM calls equals the number of partition calls during the sort. Each partition fixes one element (the pivot) in its final position and recurses on the two remaining sides. Let $f(n)$ denote the number of RANDOM calls on an array of size $n$, with $f(0) = f(1) = 0$. For a split of sizes $k$ and $n - 1 - k$:
+
+\[
+f(n) = 1 + f(k) + f(n - 1 - k), \qquad 0 \le k \le n - 1.
+\]
+
+- Worst case
+
+  The pivot is always the minimum or maximum, so $k = 0$:
+
+  \[
+  f(n) = 1 + f(n - 1) = n - 1 = \Theta(n).
+  \]
+
+- Best case
+
+  The pivot is always the median, so $k = \lfloor (n-1)/2 \rfloor$:
+
+  \[
+  f(n) = 1 + 2 f\!\left(\tfrac{n-1}{2}\right) = n - \Theta(\log n) = \Theta(n).
+  \]
+
+  The savings over the worst case come only from size-1 subarrays reaching the
+  base case without a partition call; there are $\Theta(\log n)$ levels of
+  those, so the gap between best and worst is sublinear.
+
+
+Both the best and worst case make $\Theta(n)$ calls to RANDOM. This is in contrast to the comparison count, which is $\Theta(n \log n)$ in the best case and $\Theta(n^2)$ in the worst case - the RANDOM count is invariant to balance because every partition costs exactly one coin flip.
+
+#+begin_src julia :results output
+using Random
+let
+    function randomized_partition!(A, lo, hi)
+        p = rand(lo:hi)
+        A[p], A[hi] = A[hi], A[p]
+        pivot = A[hi]
+        i = lo - 1
+        @inbounds for j in lo:hi-1
+            if A[j] ≤ pivot
+                i += 1
+                A[i], A[j] = A[j], A[i]
+            end
+        end
+        A[i+1], A[hi] = A[hi], A[i+1]
+        return i + 1
+    end
+    function randomized_quicksort!(A, lo=1, hi=length(A))
+        if lo < hi
+            q = randomized_partition!(A, lo, hi)
+            randomized_quicksort!(A, lo, q - 1)
+            randomized_quicksort!(A, q + 1, hi)
+        end
+        return A
+    end
+    randomized_quicksort(A) = randomized_quicksort!(copy(A))
+
+    # Count RANDOM calls in best- and worst-case shapes
+    worst(n) = n ≤ 1 ? 0 : 1 + worst(n - 1)
+    function best(n)
+        n ≤ 1 && return 0
+        k = (n - 1) ÷ 2
+        1 + best(k) + best(n - 1 - k)
+    end
+
+    A = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+    println(randomized_quicksort(A))
+    for n in (10, 100, 1000)
+        println("n=$n  worst=$(worst(n))  best=$(best(n))")
+    end
+end
+#+end_src
+
+#+RESULTS:
+: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+: n=10  worst=9  best=6
+: n=100  worst=99  best=63
+: n=1000  worst=999  best=511
 
 * Problem 51 :stooge_sort:recurrence:sorting:
 ** Task
