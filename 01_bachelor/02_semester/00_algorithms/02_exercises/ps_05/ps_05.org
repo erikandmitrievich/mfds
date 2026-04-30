@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-27>
-#+lastmod: <2026-04-30 13:06>
+#+lastmod: <2026-04-30 16:08>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -452,6 +452,81 @@ Implement a heap data structure that can be used for the priority queue as descr
 #+end_quote
 
 ** Solution
+
+#+begin_src julia :results output
+let
+    struct Node
+        base_priority::UInt8
+        real_priority::UInt8
+        process_id::Int64
+        process_name::String
+        user_id::Int64
+        group_id::Int64
+        registers::NTuple{20, Int64}
+        process_flags::NTuple{20, Bool}
+        f_registers::NTuple{16, Float64}
+    end
+
+    struct MinHeap
+        data::Vector{Node}
+        MinHeap() = new(Node[])
+    end
+
+    #------------------------------------------
+
+    parent(i) = i ÷ 2
+    left(i)   = 2i
+    right(i)  = 2i + 1
+
+    #------------------------------------------
+
+    function Base.push!(h::MinHeap, n::Node)
+        d = h.data
+        push!(d, n)
+        i = length(d)
+        while i > 1 && d[parent(i)].real_priority > d[i].real_priority
+            d[parent(i)], d[i] = d[i], d[parent(i)]
+            i = parent(i)
+        end
+        return h
+    end
+
+    function Base.pop!(h::MinHeap)
+        d = h.data
+        isempty(d) && return nothing
+        result = d[1]
+        d[1] = d[end]
+        pop!(d)
+        i = 1
+        while left(i) <= length(d)
+            j = left(i)
+            if right(i) <= length(d) && d[right(i)].real_priority < d[j].real_priority
+                j = right(i)
+            end
+            d[i].real_priority <= d[j].real_priority && break
+            d[i], d[j] = d[j], d[i]
+            i = j
+        end
+        return result
+    end
+
+    Base.peek(h::MinHeap) = h.data[1]
+
+    #------------------------------------------
+
+    make_node(p) = Node(0x00, UInt8(p), 0, "", 0, 0, ntuple(_->0,20), ntuple(_->false,20), ntuple(_->0.0,16))
+
+    ps = [50, 10, 90, 30, 70, 20, 40, 80, 60, 5, 100, 1]
+    h = MinHeap()
+    foreach(p -> push!(h, make_node(p)), ps)
+    @assert [Int(pop!(h).real_priority) for _ in ps] == sort(ps)
+    println("ok")
+
+end
+#+end_src
+
+#+RESULTS:
+: ok
 
 * Problem 48 :priority_queue:handles:data_structure:
 ** Task
