@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-27>
-#+lastmod: <2026-04-30 16:08>
+#+lastmod: <2026-04-30 18:08>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -455,7 +455,7 @@ Implement a heap data structure that can be used for the priority queue as descr
 
 #+begin_src julia :results output
 let
-    struct Node
+    mutable struct Node
         base_priority::UInt8
         real_priority::UInt8
         process_id::Int64
@@ -535,6 +535,121 @@ Implement a priority queue data structure for the process scheduler using the im
 #+end_quote
 
 ** Solution
+
+#+begin_src julia :results output
+let
+    mutable struct Handle
+        idx::Int
+    end
+
+    mutable struct Node
+        base_priority::UInt8
+        real_priority::UInt8
+        process_id::Int64
+        process_name::String
+        user_id::Int64
+        group_id::Int64
+        registers::NTuple{20, Int64}
+        process_flags::NTuple{20, Bool}
+        f_registers::NTuple{16, Float64}
+    end
+
+    struct MinHeap
+        data::Vector{Node}
+        handles::Vector{Handle}
+        MinHeap() = new(Node[], Handle[])
+    end
+
+    #------------------------------------------
+
+    parent(i) = i ÷ 2
+    left(i)   = 2i
+    right(i)  = 2i + 1
+
+    #------------------------------------------
+
+    function swap!(h::MinHeap, i::Int, j::Int)
+        h.data[i], h.data[j] = h.data[j], h.data[i]
+        h.handles[i], h.handles[j] = h.handles[j], h.handles[i]
+        h.handles[i].idx = i
+        h.handles[j].idx = j
+    end
+
+    function siftup!(h::MinHeap, i::Int)
+        d = h.data
+        while i > 1 && d[parent(i)].real_priority > d[i].real_priority
+            swap!(h, i, parent(i))
+            i = parent(i)
+        end
+    end
+
+    function siftdown!(h::MinHeap, i::Int)
+        d = h.data
+        while left(i) <= length(d)
+            j = left(i)
+            if right(i) <= length(d) && d[right(i)].real_priority < d[j].real_priority
+                j = right(i)
+            end
+            d[i].real_priority <= d[j].real_priority && break
+            swap!(h, i, j)
+            i = j
+        end
+    end
+
+    function Base.push!(h::MinHeap, n::Node)
+        push!(h.data, n)
+        i = length(h.data)
+        handle = Handle(i)
+        push!(h.handles, handle)
+        siftup!(h, i)
+        return handle
+    end
+
+    function Base.pop!(h::MinHeap)
+       isempty(h.data) && return nothing
+       result = h.data[1]
+       popped_handle = h.handles[1]
+       swap!(h, 1, length(h.data))
+       pop!(h.data); pop!(h.handles)
+       popped_handle.idx = 0
+       siftdown!(h, 1)
+       return result
+   end
+
+    Base.peek(h::MinHeap) = h.data[1]
+
+    function decrease_key(h::MinHeap, handle::Handle, rp)
+        handle.idx == 0 && return
+        @assert rp <= h.data[handle.idx].real_priority
+        h.data[handle.idx].real_priority = UInt8(rp)
+        siftup!(h, handle.idx)
+    end
+
+    function increase_key(h::MinHeap, handle::Handle, rp)
+        handle.idx == 0 && return
+        @assert rp >= h.data[handle.idx].real_priority
+        h.data[handle.idx].real_priority = UInt8(rp)
+        siftdown!(h, handle.idx)
+    end
+
+    #------------------------------------------
+
+    make_node(p) = Node(0x00, UInt8(p), 0, "", 0, 0, ntuple(_->0,20), ntuple(_->false,20), ntuple(_->0.0,16))
+
+    ps = [50, 10, 90, 30, 70, 20, 40, 80, 60, 5, 100, 1]
+    h = MinHeap()
+    foreach(p -> push!(h, make_node(p)), ps)
+    @assert [Int(pop!(h).real_priority) for _ in ps] == sort(ps)
+    h2 = MinHeap()
+    hs = [push!(h2, make_node(p)) for p in [50, 80, 30]]
+    decrease_key(h2, hs[2], 5)
+    @assert pop!(h2).real_priority == 5
+    println("ok")
+end
+#+end_src
+
+#+RESULTS:
+: ok
 
 * Problem 49 :scheduler:priority_queue:simulation:
 ** Task
