@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-03>
-#+lastmod: <2026-05-03 20:48>
+#+lastmod: <2026-05-03 21:18>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -338,22 +338,120 @@ g(tx + (1-t)y) &= f_1\bigl(A(tx + (1-t)y) - b\bigr) \\
 ** Task
 #+begin_quote
 Let $n = 1000$, $d = 3$, and define
+
 \[ a_i = \begin{pmatrix} 1 \\ t_i \\ t_i^2 \end{pmatrix}, \quad t_i = \frac{i}{n}, \quad x_{\text{true}} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} \]
+
 Set $b_i = a_i^\top x_{\text{true}}$ and consider
+
 \[ f(x) = \frac{1}{n} \sum_{i=1}^{n} (a_i^\top x - b_i)^2 \]
+
 (a) Show that
+
 \[ \nabla f(x) = \frac{2}{n} \sum_{i=1}^{n} (a_i^\top x - b_i) a_i \]
+
 (b) Implement the following three methods with
+
 \[ x_0 = 0, \quad \eta = 0.01, \quad N = 50000, \quad m = 8 \]
+
 \[ x_{k+1}^{\text{GD}} = x_k - \eta \nabla f(x_k) \tag{1} \]
-\[ x_{k+1}^{\text{SGD}} = x_k - \eta \, 2(a_{i_k}^T x_k - y_{i_k}) a_{i_k}, \quad i_k = 1 + (k \bmod n) \tag{2} \]
-\[ x_{k+1}^{\text{MB}} = x_k - \eta \, \frac{1}{m} \sum_{i \in B_k} 2(a_i^T x_k - y_i) a_i \tag{3} \]
+
+\[ x_{k+1}^{\text{SGD}} = x_k - \eta \, 2(a_{i_k}^T x_k - b_{ik}}) a_{i_k}, \quad i_k = 1 + (k \bmod n) \tag{2} \]
+
+\[ x_{k+1}^{\text{MB}} = x_k - \eta \, \frac{1}{m} \sum_{i \in B_k} 2(a_i^T x_k - b_i) a_i \tag{3} \]
+
 where
+
 \[ B_k = \{1 + (km + j \bmod n) : j = 0, \ldots, m-1\} \]
+
 (c) Plot $f(x_k)$ for all three methods.
 #+end_quote
 
 ** Solution
+
+*** (a)
+
+\begin{align*}
+\nabla f(x)
+&= \frac{1}{n} \sum_{i=1}^{n} \nabla (a_i^\top x - b_i)^2
+   && \text{(linearity)} \\
+&= \frac{1}{n} \sum_{i=1}^{n} 2(a_i^\top x - b_i)\, \nabla(a_i^\top x - b_i)
+   && \text{(chain rule)} \\
+&= \frac{2}{n} \sum_{i=1}^{n} (a_i^\top x - b_i)\, a_i,
+\end{align*}
+
+since $\nabla_x(a_i^\top x - b_i) = a_i$ ($b_i$ constant in $x$, and $\partial(a_i^\top x)/\partial x_j = (a_i)_j$).
+
+*** (b)
+
+#+begin_src julia :results value
+# Setup
+n = 1000
+d = 3
+eta = 0.01
+N = 50_000
+m = 8
+
+t = [i/n for i in 1:n]
+A = hcat(ones(n), t, t.^2)
+x_true = [1.0, 2.0, 3.0]
+b = A * x_true
+
+f(x) = sum((A*x - b).^2) / n
+
+function run_gd()
+    x = zeros(d)
+    hist = [f(x)]
+    for k in 1:N
+        grad = (2/n) * A' * (A*x - b)
+        x = x - eta * grad
+        push!(hist, f(x))
+    end
+    hist
+end
+
+function run_sgd()
+    x = zeros(d)
+    hist = [f(x)]
+    for k in 1:N
+        i = 1 + (k % n)
+        a_i = A[i, :]
+        grad = 2 * (a_i' * x - b[i]) * a_i
+        x = x - eta * grad
+        push!(hist, f(x))
+    end
+    hist
+end
+
+function run_mb()
+    x = zeros(d)
+    hist = [f(x)]
+    for k in 1:N
+        indices = [1 + ((k*m + j) % n) for j in 0:m-1]
+        A_batch = A[indices, :]
+        b_batch = b[indices]
+        grad = (2/m) * A_batch' * (A_batch*x - b_batch)
+        x = x - eta * grad
+        push!(hist, f(x))
+    end
+    hist
+end
+
+hist_gd  = run_gd()
+hist_sgd = run_sgd()
+hist_mb  = run_mb()
+
+# (c)
+using Plots
+plot(0:N, hist_gd,  label="GD",  xlabel="iteration k", ylabel="f(x_k)",
+     yscale=:log10, lw=2)
+plot!(0:N, hist_sgd, label="SGD", lw=2)
+plot!(0:N, hist_mb,  label="MB (m=8)", lw=2)
+
+savefig("./assets/p_04_c.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_bachelor/02_semester/01_analysis/02_exercises/ps_07/assets/p_04_c.png
 
 * Errors/Typos
 - Problem 3: "be a normed spaces" → "be normed spaces" (number disagreement)
