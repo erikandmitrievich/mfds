@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-03>
-#+lastmod: <2026-05-03 19:20>
+#+lastmod: <2026-05-03 20:48>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -255,15 +255,84 @@ savefig("./assets/p_02_c.png")
 * Problem 3 :convex_function:normed_space:
 ** Task
 #+begin_quote
-Let $V$ and $W$ be a normed spaces and let $f_1, \ldots, f_n : V \to \mathbb{R}$ be convex. Prove that the following functions are also convex.
+Let $V$ and $W$ be normed spaces and let $f_1, \ldots, f_n : V \to \mathbb{R}$ be convex. Prove that the following functions are also convex.
+
 (a) $\sum_{i=1}^{n} \alpha_i f_i$ for $\alpha_1, \ldots, \alpha_n \geq 0$.
 (b) $g : V \to \mathbb{R}$ given by $g(x) = \max_{i=1,\ldots,n} f_i(x)$.
 (c) If $A : W \to V$ is linear and $b \in V$, then $g : W \to \mathbb{R}$ given by
+
 \[ g(x) = f_1(Ax - b) \]
+
 is also convex.
 #+end_quote
 
 ** Solution
+
+#+begin_quote
+*Definition 4.3.19* (convex function). A function $f : \mathbb{R} \rightarrow \mathbb{R}$ is called a convex if for all $x, y \in \mathbb{R}$ and all $t \in [0,1]$,
+
+$$f(tx + (1-t)y) \le tf(x) + (1-t)f(y)$$
+#+end_quote
+
+*** (a)
+
+Let $h = \sum_{i=1}^{n} \alpha_i f_i$ for $\alpha_1, \ldots, \alpha_n \ge 0$.
+
+By convexity of each $f_i$:
+
+$$f_i(tx + (1 - t)y) \le tf_i(x) + (1 - t)f_i(y)$$
+
+Since $\alpha_i \ge 0$, multiplying preserves the inequality:
+
+\begin{align*}
+\sum_{i=1}^n \alpha_i f_i(tx + (1 - t)y) &\le \sum_{i=1}^n \alpha_i t f_i(x) + \sum_{i=1}^n \alpha_i (1 - t) f_i(y) \\
+\sum_{i=1}^n \alpha_i f_i(tx + (1 - t)y) &\le t \sum_{i=1}^n \alpha_i f_i(x) + (1 - t) \sum_{i=1}^n \alpha_i f_i(y) \\
+h(tx + (1 - t)y) &\le t h(x) + (1 - t) h(y) \\
+\end{align*}
+
+*** (b)
+
+Let $g(x) = \max_{i=1}^n f_i(x)$.
+
+By definition of $g$, $\forall i$:
+
+$$f_i(x) \le g(x), \qquad f_i(y) \le g(y)$$
+
+Since $t, (1-t) \ge 0$, inequality preserves:
+
+$$tf_i(x) + (1-t)f_i(y) \le tg(x) + (1-t)g(y)$$
+
+Chaining with the convexity of $f_i$:
+
+\begin{align*}
+f_i(tx + (1-t)y) &\le tf_i(x) + (1-t)f_i(y) \\
+&\le tg(x) + (1-t)g(y) \\
+\end{align*}
+
+This holds $\forall i \in \{1, \ldots, n\}$, and the right-hand side is independent of $i$. Taking the max over $i$ on the left:
+
+$$g(tx + (1-t)y) = \max_{i=1,\ldots,n} f_i(tx + (1-t)y) \le tg(x) + (1-t)g(y)$$
+
+*** (c)
+
+Let $g : W \to \mathbb{R}$, $g(x) = f_1(Ax - b)$, with $A : W \to V$ linear and $b \in V$.
+
+For $x, y \in W$ and $t \in [0,1]$, using linearity of $A$:
+
+\begin{align*}
+A(tx + (1-t)y) - b &= tAx + (1-t)Ay - b \\
+                   &= tAx + (1-t)Ay - tb - (1-t)b \\
+                   &= t(Ax - b) + (1-t)(Ay - b) \\
+\end{align*}
+
+So $A(\cdot) - b$ preserves convex combinations. Applying convexity of $f_1$:
+
+\begin{align*}
+g(tx + (1-t)y) &= f_1\bigl(A(tx + (1-t)y) - b\bigr) \\
+               &= f_1\bigl(t(Ax - b) + (1-t)(Ay - b)\bigr) \\
+               &\le tf_1(Ax - b) + (1-t)f_1(Ay - b) \\
+               &= tg(x) + (1-t)g(y) \\
+\end{align*}
 
 * Problem 4 :gradient_descent:stochastic_gradient_descent:least_squares:
 ** Task
