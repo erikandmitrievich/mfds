@@ -1,0 +1,155 @@
+#+title: Ps 07
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-03>
+#+lastmod: <2026-05-03 19:53>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Problem 2.17 :rotation:unitary_operator:matrix:
+** Task
+#+begin_quote
+(Rotations). The goal of this exercise is to show that rotations in 2d and 3d are unitary operators.
+
+1. Let $E = (\mathbb{R}^2, \langle \cdot, \cdot \rangle_2)$ and let $\mathcal{E}$ be the canonical basis. Given $\theta \in \mathbb{R}$, we consider the mapping $R_\theta : E \to E$ whose matrix representation in $\mathcal{E}$ is
+\[
+[R_\theta]_{\mathcal{E}}^{\mathcal{E}} = \begin{pmatrix} \cos(\theta) & -\sin(\theta) \\ \sin(\theta) & \cos(\theta) \end{pmatrix}
+\]
+This operation is the rotation of angle $\theta$ in the 2d plane. Show that $R_\theta$ is a unitary operator.
+
+2. Let $E = (\mathbb{R}^3, \langle \cdot, \cdot \rangle_2)$.
+
+   (a) Interpret the action of the mappings given by the following matrices
+   \[
+   [R_{e_1, \alpha}]_{\mathcal{E}}^{\mathcal{E}} = \begin{pmatrix} 1 & 0 & 0 \\ 0 & \cos(\alpha) & -\sin(\alpha) \\ 0 & \sin(\alpha) & \cos(\alpha) \end{pmatrix}, \quad [R_{e_2, \beta}]_{\mathcal{E}}^{\mathcal{E}} = \begin{pmatrix} \cos(\beta) & 0 & \sin(\beta) \\ 0 & 1 & 0 \\ -\sin(\beta) & 0 & \cos(\beta) \end{pmatrix}
+   \]
+   \[
+   [R_{e_3, \gamma}]_{\mathcal{E}}^{\mathcal{E}} = \begin{pmatrix} \cos(\gamma) & -\sin(\gamma) & 0 \\ \sin(\gamma) & \cos(\gamma) & 0 \\ 0 & 0 & 1 \end{pmatrix}
+   \]
+   where $\alpha, \beta, \gamma \in \mathbb{R}$.
+
+   (b) Let the mapping $R : \mathbb{R}^3 \to \mathbb{R}^3$ be defined by $R = R_{e_3, \gamma} \circ R_{e_2, \beta} \circ R_{e_1, \alpha}$. Explain the action of this mapping, and justify why one can interpret $R$ as a rotation in 3d.
+
+   (c) Give the matrix representation $[R]_{\mathcal{E}}^{\mathcal{E}}$.
+
+   (d) Show that $R$ is a unitary operator.
+
+   (e) Show that $R$ is invariant with respect to the order in which the elementary operations $R_{e_1, \alpha}, \ldots, R_{e_3, \gamma}$ are taken.
+#+end_quote
+
+** Solution
+
+* Problem 2.18 :inner_product:vector_space:riemann_sum:
+** Task
+#+begin_quote
+(Inner product of continuous functions (Programming Exercise)). In this exercise, we want to illustrate that computing inner-products in infinite-dimensional spaces in practice is not an easy task. We illustrate what happens for $E = \mathcal{C}([0,1], \mathbb{R})$.
+
+(a) Prove that $\mathcal{C}([0,1], \mathbb{R})$ is a vector space over the field $\mathbb{K} = \mathbb{R}$.
+
+(b) Prove that the operator
+\[
+\omega : \mathcal{C}([0,1], \mathbb{R}) \times \mathcal{C}([0,1], \mathbb{R}) \to \mathbb{R}
+\]
+\[
+(f, g) \mapsto \omega(f, g) := \int_0^1 f(x) g(x) \, dx
+\]
+is an inner product on $\mathcal{C}([0,1])$.
+
+In general, calculating analytically the inner product of two functions is not possible or difficult, so the inner product is approximated. One way to do so is by using Riemann sums. Consider a partition of $[0, 1]$ into $n$ equal intervals with grid points
+\[
+x_i^n = \frac{i}{n}, \quad i = 0, \ldots, n
+\]
+and step size $\Delta x = \frac{1}{n}$. We define the following Riemann sums:
+
+- Left Riemann sum: $R_-(f) := \sum_{i=0}^{n-1} f(x_i^n) \Delta x$.
+- Right Riemann sum: $R_+(f) := \sum_{i=0}^{n-1} f(x_{i+1}^n) \Delta x$.
+- Central Riemann summm: $R_0(f) := \sum_{i=0}^{n-1} f(x_i^n + \frac{\Delta x}{2}) \Delta x$.
+
+We next ask you to answer the following questions by programming a code that evaluates the above Riemann sums:
+
+(c) Let $n = 10$. Visualize the left, right and central Riemann sum approximation of the inner product of $f(x) = x^2$ and $g(x) = \sin(2\pi x)$. Plot the piecewise constant approximations corresponding to the left, right, and midpoint Riemann sums of $f$, $g$ and $fg$, i.e. one plot for left Riemann sum, one for the right Riemann sum, etc. Compare the approximation of each method with the analytical solution.
+
+We now consider the space $L^2([0,1], \mathbb{R})$, containing all functions that are square integrable, i.e. $f \in L^2([0,1], \mathbb{R}) \Leftrightarrow \int_0^1 |f(x)|^2 dx < \infty$.
+
+(d) Show that $\mathcal{C}([0,1], \mathbb{R}) \subset L^2([0,1], \mathbb{R})$.
+
+$L^2([0,1])$ also contains non-continuous functions, for example piecewise continuous functions.
+
+(e) Let $f(x) = \lfloor 3x \rfloor$ and $g(x) = x^2 \sin(2\pi x)$. Note the discontinuities of $f$ at $x = \frac{1}{3}, \frac{2}{3}$. Visualize the three Riemann approximations and notice the difference.
+
+(f) Now increase $n$. Plot the error (i.e. difference of approximation with analytical solution) of the methods for both the functions of (c) and (e) against $n$ for $n = \{10, 11, \ldots, 30\}$. Discuss what you observe.
+
+(g) What would happen to the error if there are $k$ discontinuities on $[0, 1]$?
+
+*Programming hints*
+
+When implementing the numerical approximations, it can be useful to structure your code into small reusable functions. For example, you may define a Julia function that numerically approximates the inner product
+\[
+\langle f, g \rangle = \int_0^1 f(x) g(x) \, dx
+\]
+using a Riemann sum with $n$ bins: ~riemann(f, g, n, method)~ with
+
+- ~f~ and ~g~ are functions,
+- ~n~ is the number of bins,
+- ~method~ specifies the Riemann method (e.g. 'left', 'right', or 'midpoint').
+
+Inside the function you can construct the grid points $x_i = i/n$, evaluate the product $f(x)g(x)$ at the appropriate sample points, multiply by $\Delta x = 1/n$ and sum the contributions.
+#+end_quote
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_2_18.jl
+#+end_src
+
+* Problem 3.1 :bilinear_form:vector_space:dual_space:
+** Task
+#+begin_quote
+(Bilinear form) Let $\mathbb{E}$ be a $\mathbb{K}$ vector space, prove the following:
+
+(i) For all bilinear forms $b, \tilde{b} : \mathbb{E} \times \mathbb{E} \to \mathbb{K}$ and for all $\lambda, \mu \in \mathbb{K}$,
+\[
+\lambda b + \mu \tilde{b} : \mathbb{E} \times \mathbb{E} \to \mathbb{K}
+\]
+\[
+(x, y) \mapsto \lambda b(x, y) + \mu \tilde{b}(x, y)
+\]
+is a bilinear form. Thus the set $\mathrm{Bil}(\mathbb{E})$ of all bilinear forms on $\mathbb{E}$ is a vector space with these operations of vector sum and scalar multiplication.
+
+(ii) For linear forms $\phi_1, \ldots, \phi_k, \psi_1, \ldots, \psi_k \in \mathbb{E}^*$, the function $b := \phi_1 \otimes \psi_1 + \ldots + \phi_k \otimes \psi_k$ is a bilinear form. Where $\phi_i \otimes \psi_i : \mathbb{E} \times \mathbb{E} \to \mathbb{K}$ is defined by
+\[
+\phi_i \otimes \psi_i : \mathbb{E} \times \mathbb{E} \to \mathbb{K}
+\]
+\[
+(x, y) \mapsto \phi_i \otimes \psi_i (x, y) = \phi_i(x) \psi_i(y)
+\]
+Furthermore, for $\mathcal{U}$ basis on $\mathbb{E}$, we have
+\[
+[b]_{\mathcal{U}\mathcal{U}} = \sum_{i=1}^{k} ([\phi_i]_{\mathcal{U}})^T [\psi_i]_{\mathcal{U}} = ([\phi_1]_{\mathcal{U}})^T [\psi_1]_{\mathcal{U}} + \ldots + ([\phi_k]_{\mathcal{U}})^T [\psi_k]_{\mathcal{U}}
+\]
+#+end_quote
+
+** Solution
+
+* Problem 3.3 :bilinear_form:polynomial:matrix:
+** Task
+#+begin_quote
+(Bilinear form on polynomial spaces) Let $\mathbb{E} = \mathbb{R}_2[X]$ be the space of real polynomials with degree less or equal to 2, and let $b : \mathbb{E} \times \mathbb{E} \to \mathbb{K}$ be defined by
+\[
+b(P(X), Q(X)) = P(1) Q'(2) + P(4) \int_{-1}^{1} Q(X) \, dX
+\]
+Prove that $b$ is a bilinear form and give $[b]_{\mathcal{E}\mathcal{E}}$, where $\mathcal{E} = \{1, X, X^2\}$ is the standard basis on $\mathbb{E}$.
+#+end_quote
+
+** Solution
+
+* Errors/Typos
+- Problem 2.18: "Central Riemann summm" → "Central Riemann sum"
+- Problem 3.3: "degree less or equal to 2" → "degree less than or equal to 2"
