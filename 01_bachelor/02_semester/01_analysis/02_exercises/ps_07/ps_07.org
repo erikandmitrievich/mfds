@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-03>
-#+lastmod: <2026-05-03 10:22>
+#+lastmod: <2026-05-03 17:45>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -19,13 +19,131 @@
 ** Task
 #+begin_quote
 Let $f : (-\frac{1}{2}, \infty) \times (-\frac{1}{2}, \infty) \to \mathbb{R}$ be defined by
+
 \[ f(x, y) = \log(1 + x + y) \]
+
 (a) Determine the Taylor polynomial of order 3 of $f$ at $(0, 0)$.
 (b) Use your result to approximate $f(0.1, 0.1)$.
 (c) Plot heatmaps of $f$, of the Taylor polynomial of order 3, and of the difference of the two in $[0, 1]^2$.
 #+end_quote
 
 ** Solution
+
+*** (a)
+
+\begin{align*}
+f(x) &= \sum_{|\alpha| \le K} \frac{\partial^{\alpha} f(x_0)}{\alpha!} (x - x_0)^{\alpha} + o(\|x - x_0\|^{K})
+\end{align*}
+
+Since $f(x,y) = \log(1 + x + y)$ depends on $(x,y)$ only through $s = x + y$, all partials of equal total order coincide:
+
+\begin{align*}
+\partial_1 f &= \partial_2 f = \dfrac{1}{1 + x + y} \\
+\partial_1^2 f &= \partial_1 \partial_2 f = \partial_2^2 f = -\dfrac{1}{(1 + x + y)^2} \\
+\partial_1^3 f &= \partial_1^2 \partial_2 f = \partial_1 \partial_2^2 f = \partial_2^3 f = \dfrac{2}{(1 + x + y)^3} \\
+\end{align*}
+
+Evaluated at $(0,0)$:
+
+\begin{align*}
+f(0,0) &= 0 \\
+\partial_1 f(0,0) &= 1 \\
+\partial_1^2 f(0,0) &= -1 \\
+\partial_1^3 f(0,0) &= 2 \\
+\end{align*}
+
+Each term of $P_3$ has the form
+
+$$\mathrm{term}_{\alpha} = \dfrac{\partial^{\alpha} f(0,0)}{\alpha!} x^{\alpha_1} y^{\alpha_2}.$$
+
+Order $0$: $\alpha = (0,0)$, term $= 0$.
+
+Order $1$:
+
+- $\alpha = (1,0)$: $\dfrac{1}{1!\,0!}\, x = x$
+- $\alpha = (0,1)$: $\dfrac{1}{0!\,1!}\, y = y$
+
+Sum: $x + y$.
+
+Order $2$:
+
+- $\alpha = (2,0)$: $\dfrac{-1}{2!\,0!}\, x^2 = -\dfrac{1}{2}x^2$
+- $\alpha = (1,1)$: $\dfrac{-1}{1!\,1!}\, xy = -xy$
+- $\alpha = (0,2)$: $\dfrac{-1}{0!\,2!}\, y^2 = -\dfrac{1}{2}y^2$
+
+Sum: $-\dfrac{1}{2}x^2 - xy - \dfrac{1}{2}y^2 = -\dfrac{1}{2}(x+y)^2$.
+
+Order $3$:
+
+- $\alpha = (3,0)$: $\dfrac{2}{3!\,0!}\, x^3 = \dfrac{1}{3}x^3$
+- $\alpha = (2,1)$: $\dfrac{2}{2!\,1!}\, x^2 y = x^2 y$
+- $\alpha = (1,2)$: $\dfrac{2}{1!\,2!}\, x y^2 = x y^2$
+- $\alpha = (0,3)$: $\dfrac{2}{0!\,3!}\, y^3 = \dfrac{1}{3}y^3$
+
+Sum: $\dfrac{1}{3}x^3 + x^2 y + x y^2 + \dfrac{1}{3}y^3 = \dfrac{1}{3}(x+y)^3$.
+
+Hence,
+
+\begin{align*}
+P_3(x,y) &= (x + y) - \dfrac{1}{2}(x+y)^2 + \dfrac{1}{3}(x+y)^3.
+\end{align*}
+
+*** (b)
+
+\begin{align*}
+P_3(0.1, 0.1) &= (0.1+0.1) - \frac{1}{2}(0.1+0.1)^2 + \frac{1}{3}(0.1+0.1)^3 \\
+&= (0.2) - \frac{1}{2}(0.2)^2 + \frac{1}{3}(0.2)^3 \\
+&\approx 0.1826 \\
+\end{align*}
+
+*** (c)
+
+#+begin_src julia :results value
+using Plots
+
+f(x, y) = log(1 + x + y)
+P3(x, y) = (x + y) - 1/2 * (x + y)^2 + 1/3 * (x + y)^3
+err(x, y) = f(x, y) - P3(x, y)
+
+xs = 0:0.01:1
+ys = 0:0.01:1
+
+cl = (0, P3(1, 1))
+
+p1 = heatmap(xs, ys, f,
+             title="f",
+             clim=cl,
+             aspect_ratio=1,
+             c=:viridis)
+
+p2 = heatmap(xs, ys, P3,
+             title="P3",
+             clim=cl,
+             aspect_ratio=1,
+             c=:viridis)
+
+p3 = heatmap(xs, ys, err,
+             title="f - P3",
+             aspect_ratio=1,
+             c=cgrad(:reds, rev=true))
+
+p4 = surface(xs, ys, f,
+             title="f vs P3",
+             c=:viridis,
+             alpha=0.7)
+
+surface!(p4, xs, ys, P3,
+         c=:viridis,
+         alpha=0.7)
+
+plot(p1, p2, p3, p4, layout=(2,2), size=(1200, 1200))
+
+mkpath("./assets")
+savefig("./assets/p_01_c.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_bachelor/02_semester/01_analysis/02_exercises/ps_07/assets/p_01_c.png
 
 * Problem 2 :critical_points:hessian:gradient_descent:
 ** Task

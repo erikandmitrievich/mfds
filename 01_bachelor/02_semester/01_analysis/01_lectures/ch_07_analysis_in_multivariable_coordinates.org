@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-26>
-#+lastmod: <2026-04-26 17:39>
+#+lastmod: <2026-05-03 15:03>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -32,6 +32,18 @@ In contrast to linear algebra, we do not restrict to linear maps: if $f$ is nonl
 Since the coordinate maps $\chi_{B_V}$ and $\chi_{B_W}$ are linear, their derivatives coincide with the maps themselves. Applying the chain rule, we obtain for $v \in V$ with $x = \chi_{B_V}^{-1} v$,
 
 $$f'(v) = \chi_{B_W} \, F'(x) \, \chi_{B_V}^{-1}.$$
+
+** Q&A
+
+- Q_01
+
+  What is $\chi$?
+
+- A_01
+
+  In this context, $\chi_{B_{V}} : \mathbb{R}^n \rightarrow V$ is the coordinate isomorphism, induced by the basis $B_{V} = \{ e_1, \ldots, e_n \}$:
+
+  $$\chi_{B_V} (x_1, \ldots, x_n) = \sum_{i=1}^n x_i e_i$$
 
 * Definition  7.1.2:   Partial derivatives
 
@@ -185,6 +197,7 @@ $$\partial_1 \partial_2 \varphi(0, 0) = \partial_2 \partial_1 \varphi(0, 0).$$
 Let $U \subseteq \mathbb{R}^n$ be open and suppose that $f : U \rightarrow \mathbb{R}$ is twice continuously differentiable. The Hessian matrix of $f$ at $x \in U$ is defined by
 
 $$H_f(x) := \left( \partial_i \partial_j f(x) \right)_{i, j = 1}^{n}.$$
+
 * Theorem     7.2.1:   Taylor formula in $\mathbb{R}^n$
 
 Let $U \subseteq \mathbb{R}^n$ be open, $k \in \mathbb{N}$, and let $f : U \rightarrow \mathbb{R}$ be $k$ times continuously differentiable. Then for every $x_0 \in U$,
