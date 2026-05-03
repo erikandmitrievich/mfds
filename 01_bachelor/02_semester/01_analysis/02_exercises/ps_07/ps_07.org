@@ -1,0 +1,80 @@
+#+title: Ps 07
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-03>
+#+lastmod: <2026-05-03 10:22>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Problem 1 :taylor_polynomial:multivariable_calculus:
+** Task
+#+begin_quote
+Let $f : (-\frac{1}{2}, \infty) \times (-\frac{1}{2}, \infty) \to \mathbb{R}$ be defined by
+\[ f(x, y) = \log(1 + x + y) \]
+(a) Determine the Taylor polynomial of order 3 of $f$ at $(0, 0)$.
+(b) Use your result to approximate $f(0.1, 0.1)$.
+(c) Plot heatmaps of $f$, of the Taylor polynomial of order 3, and of the difference of the two in $[0, 1]^2$.
+#+end_quote
+
+** Solution
+
+* Problem 2 :critical_points:hessian:gradient_descent:
+** Task
+#+begin_quote
+Consider the function $f : \mathbb{R}^2 \to \mathbb{R}$ defined by
+\[ f(x, y) = x^4 + y^4 - 2x^2 - 2y^2 \]
+(a) Compute the gradient $\nabla f(x, y)$.
+(b) Determine all critical points of $f$ and classify them as local minima, local maxima, or saddle points via the Hessian matrix.
+(c) Implement gradient descent for $f$ in Julia. Experiment with several starting values and describe which critical points the algorithm converges to.
+#+end_quote
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_2.jl
+#+end_src
+
+* Problem 3 :convex_function:normed_space:
+** Task
+#+begin_quote
+Let $V$ and $W$ be a normed spaces and let $f_1, \ldots, f_n : V \to \mathbb{R}$ be convex. Prove that the following functions are also convex.
+(a) $\sum_{i=1}^{n} \alpha_i f_i$ for $\alpha_1, \ldots, \alpha_n \geq 0$.
+(b) $g : V \to \mathbb{R}$ given by $g(x) = \max_{i=1,\ldots,n} f_i(x)$.
+(c) If $A : W \to V$ is linear and $b \in V$, then $g : W \to \mathbb{R}$ given by
+\[ g(x) = f_1(Ax - b) \]
+is also convex.
+#+end_quote
+
+** Solution
+
+* Problem 4 :gradient_descent:stochastic_gradient_descent:least_squares:
+** Task
+#+begin_quote
+Let $n = 1000$, $d = 3$, and define
+\[ a_i = \begin{pmatrix} 1 \\ t_i \\ t_i^2 \end{pmatrix}, \quad t_i = \frac{i}{n}, \quad x_{\text{true}} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} \]
+Set $b_i = a_i^\top x_{\text{true}}$ and consider
+\[ f(x) = \frac{1}{n} \sum_{i=1}^{n} (a_i^\top x - b_i)^2 \]
+(a) Show that
+\[ \nabla f(x) = \frac{2}{n} \sum_{i=1}^{n} (a_i^\top x - b_i) a_i \]
+(b) Implement the following three methods with
+\[ x_0 = 0, \quad \eta = 0.01, \quad N = 50000, \quad m = 8 \]
+\[ x_{k+1}^{\text{GD}} = x_k - \eta \nabla f(x_k) \tag{1} \]
+\[ x_{k+1}^{\text{SGD}} = x_k - \eta \, 2(a_{i_k}^T x_k - y_{i_k}) a_{i_k}, \quad i_k = 1 + (k \bmod n) \tag{2} \]
+\[ x_{k+1}^{\text{MB}} = x_k - \eta \, \frac{1}{m} \sum_{i \in B_k} 2(a_i^T x_k - y_i) a_i \tag{3} \]
+where
+\[ B_k = \{1 + (km + j \bmod n) : j = 0, \ldots, m-1\} \]
+(c) Plot $f(x_k)$ for all three methods.
+#+end_quote
+
+** Solution
+
+* Errors/Typos
+- Problem 3: "be a normed spaces" → "be normed spaces" (number disagreement)
+- Problem 4: equations (2) and (3) reference $y_{i_k}$ and $y_i$, but the variable defined in the setup is $b_i = a_i^\top x_{\text{true}}$ — should be $b_{i_k}$ and $b_i$ respectively
