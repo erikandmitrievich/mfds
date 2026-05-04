@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-27>
-#+lastmod: <2026-04-30 20:24>
+#+lastmod: <2026-05-04 17:42>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -1039,34 +1039,41 @@ When RANDOMIZED-QUICKSORT runs, how many calls are made to the random-number gen
 
 ** Solution
 
-RANDOMIZED-PARTITION calls RANDOM exactly once per invocation, so the count of RANDOM calls equals the number of partition calls during the sort. Each partition fixes one element (the pivot) in its final position and recurses on the two remaining sides. Let $f(n)$ denote the number of RANDOM calls on an array of size $n$, with $f(0) = f(1) = 0$. For a split of sizes $k$ and $n - 1 - k$:
+RANDOMIZED-PARTITION calls RANDOM exactly once each time it runs, so counting RANDOM calls is the same as counting partition calls. Let $f(n)$ be the number of partition calls on an array of size $n$, with $f(0) = f(1) = 0$ (no partition is called on an empty or singleton subarray). If a partition produces sides of sizes $k$ and $n - 1 - k$, then
 
 \[
-f(n) = 1 + f(k) + f(n - 1 - k), \qquad 0 \le k \le n - 1.
+f(n) = 1 + f(k) + f(n - 1 - k).
 \]
+
+To bound $f(n)$ I look at the recursion tree. Let $I = f(n)$ be the number of internal nodes (partition calls) and $L = I + 1$ the number of leaves (a property of any binary tree where every internal node has two children). Each partition fixes exactly one element as its pivot, so out of the $n$ original elements, $n - I$ of them end up alone in size-1 leaves. The rest of the leaves are size-0:
+
+\[
+L_1 = n - I, \qquad L_0 = (I + 1) - L_1 = 2I + 1 - n.
+\]
+
+Since $L_0 \ge 0$, we get $I \ge \lceil (n-1)/2 \rceil$. So no matter what splits happen, $f(n) = \Omega(n)$.
 
 - Worst case
 
-  The pivot is always the minimum or maximum, so $k = 0$:
+  This is when partitions are as unbalanced as possible: the pivot is always the smallest or largest element, so one side has size $0$ and the other has size $n - 1$. Then
 
   \[
-  f(n) = 1 + f(n - 1) = n - 1 = \Theta(n).
+  f(n) = 1 + f(n - 1), \quad f(1) = 0 \implies f(n) = n - 1 = \Theta(n).
   \]
 
 - Best case
 
-  The pivot is always the median, so $k = \lfloor (n-1)/2 \rfloor$:
+  To minimize $f(n)$ I want to minimize the number of partition calls, which by the bound above means making $L_0$ as small as possible. Splitting into sizes $1$ and $n - 2$ at every step gives $L_0 = 0$ (when $n$ is odd) and saturates the bound:
 
   \[
-  f(n) = 1 + 2 f\!\left(\tfrac{n-1}{2}\right) = n - \Theta(\log n) = \Theta(n).
+  f(n) = 1 + f(1) + f(n - 2) = 1 + f(n - 2) = \lceil (n-1)/2 \rceil = \Theta(n).
   \]
 
-  The savings over the worst case come only from size-1 subarrays reaching the
-  base case without a partition call; there are $\Theta(\log n)$ levels of
-  those, so the gap between best and worst is sublinear.
+  Note: in CLRS the "best case" usually means the median split, because that is what minimizes the *running time*. For just the RANDOM count, $(1, n-2)$ splits are actually fewer calls than median splits, but both are $\Theta(n)$, so the asymptotic answer is the same either way.
 
+So both the best and worst case make $\Theta(n)$ calls to RANDOM. This is different from the number of comparisons, which is $\Theta(n \log n)$ in the best case and $\Theta(n^2)$ in the worst case. The reason RANDOM is the same in both cases: every partition costs exactly one coin flip, and the lower bound $I \ge \lceil (n-1)/2 \rceil$ already forces $\Theta(n)$ partition calls regardless of how balanced the splits are.
 
-Both the best and worst case make $\Theta(n)$ calls to RANDOM. This is in contrast to the comparison count, which is $\Theta(n \log n)$ in the best case and $\Theta(n^2)$ in the worst case - the RANDOM count is invariant to balance because every partition costs exactly one coin flip.
+I checked this with a small simulation in Julia:
 
 #+begin_src julia :results output
 using Random
@@ -1095,27 +1102,30 @@ let
     end
     randomized_quicksort(A) = randomized_quicksort!(copy(A))
 
-    # Count RANDOM calls in best- and worst-case shapes
-    worst(n) = n ≤ 1 ? 0 : 1 + worst(n - 1)
-    function best(n)
+    # Counting RANDOM calls in the three split shapes
+    worst(n)        = n ≤ 1 ? 0 : 1 + worst(n - 1)
+    best(n)         = n ≤ 1 ? 0 : cld(n - 1, 2)
+    function median_split(n)
         n ≤ 1 && return 0
         k = (n - 1) ÷ 2
-        1 + best(k) + best(n - 1 - k)
+        1 + median_split(k) + median_split(n - 1 - k)
     end
 
     A = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
     println(randomized_quicksort(A))
     for n in (10, 100, 1000)
-        println("n=$n  worst=$(worst(n))  best=$(best(n))")
+        println("n=$n  worst=$(worst(n))  best=$(best(n))  median=$(median_split(n))")
     end
 end
 #+end_src
 
 #+RESULTS:
 : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-: n=10  worst=9  best=6
-: n=100  worst=99  best=63
-: n=1000  worst=999  best=511
+: n=10  worst=9  best=5  median=6
+: n=100  worst=99  best=50  median=63
+: n=1000  worst=999  best=500  median=511
+
+The numbers confirm that all three cases grow linearly in $n$.
 
 * Problem 51 :stooge_sort:recurrence:sorting:
 ** Task
