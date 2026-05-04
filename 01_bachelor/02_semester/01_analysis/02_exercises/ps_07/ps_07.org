@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-03>
-#+lastmod: <2026-05-04 07:16>
+#+lastmod: <2026-05-04 08:37>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -208,8 +208,6 @@ H_f(0, \pm 1) &= \begin{pmatrix} -4 & 0 \\ 0 & 8 \end{pmatrix} \quad \text{(sadd
 
 *** (c)
 
-$f(x,y) = g(x) + g(y)$ with $g(t) = t^4 - 2t^2$, so the gradient separates and each axis evolves independently. Generic starts give $x_k \to \mathrm{sign}(x_0)$, $y_k \to \mathrm{sign}(y_0)$, hence GD converges to a corner $(\pm 1, \pm 1)$. Saddles and the origin require $x_0 = 0$ or $y_0 = 0$ — measure zero.
-
 #+begin_src julia :results value :exports both :tangle julia/p_2.jl
 using Plots
 
@@ -241,8 +239,8 @@ contour(xs, ys, f, levels=50, c=:viridis, aspect_ratio=1, colorbar=false, size=(
 for s in starts
     p = gd(s)
     plot!(p[1,:], p[2,:], lw=2, label=false)
-    scatter!([p[1,1]],   [p[2,1]],   c=:black, msw=0, label=false)
-    scatter!([p[1,end]], [p[2,end]], c=:black, msw=0, label=false)
+    scatter!([p[1,1]],   [p[2,1]],   c=:black, label=false)
+    scatter!([p[1,end]], [p[2,end]], c=:black, label=false)
 end
 
 mkpath("./assets")
@@ -378,8 +376,6 @@ where
    && \text{(chain rule)} \\
 &= \frac{2}{n} \sum_{i=1}^{n} (a_i^\top x - b_i)\, a_i,
 \end{align*}
-
-since $\nabla_x(a_i^\top x - b_i) = a_i$ ($b_i$ constant in $x$, and $\partial(a_i^\top x)/\partial x_j = (a_i)_j$).
 
 *** (b) + (c)
 
