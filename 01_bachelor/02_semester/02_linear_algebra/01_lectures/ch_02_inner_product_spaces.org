@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-27>
-#+lastmod: <2026-04-27 21:44>
+#+lastmod: <2026-05-04 12:45>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -417,3 +417,173 @@ Inserting Eq. (2.21) into Eq. (2.22), and rearranging, we are lead to the system
 $$[\omega]_{\mathcal{F}\mathcal{F}}\, \lambda = q.$$
 
 Since the $f_i$ are linearly independent, then $[\omega]_{\mathcal{F}\mathcal{F}}$ is invertible, and this leads to Eq. (2.20).
+
+* Definition  2.20:  The supervised learning problem
+
+Given an unknown function $f : X \rightarrow Y$ between spaces $X$ and $Y$, find a good approximation of $f$ using only a dataset of $N$ samples:
+
+$$\mathcal{D} = \left\{ (x_i, y_i) \right\}_{i=1}^N \quad \text{with} \quad y_i = f(x_i) \quad \text{for all } i = 1 \ldots N.$$
+
+The space $X$ is also called the /feature space/ and its elements are referred to as feature vectors. The space $Y$ is also called the /label space/ and its elements are referred to as labels. We denote the dimensions of these spaces by $d = \dim X$ and $q = \dim Y$.
+
+The general approach to solving this problem consists of three main steps.
+
+1. Choose a model function $F : X \times W \rightarrow Y$ parametrized by a parameter space $W$ ($W$ stands for weights, since that is how parameters are often referred to). The goal is to find an appropriate value $w^* \in W$ for the parameters such that $F(x; w^*)$ is as close as possible to $f(x)$ for every $x \in X$.
+
+2. We need to choose a measure of quality for the model's output, so we need to choose a /loss function/ $\ell : Y \times Y \rightarrow \mathbb{R}$, where $\ell(y_1, y_2)$ indicates 'how different' $y_1$ and $y_2$ are. With this choice, $\ell(F(x; w^*), f(x))$ will indicate how close $F(x; w^*)$ and $f(x)$ are. Of course, since we only have the samples $\mathcal{D}$, we can only evaluate the loss for the $x$ in the dataset $\mathcal{D}$.
+
+3. Based on the dataset and the loss function $\ell$, choose $w \in W$ so that $F(\,\cdot\,; w)$ is the 'best' possible approximation of the target function $f$. One of the most common strategies is to minimize the loss on the dataset, i.e. to search for
+
+   $$w^* = \arg\min_{w \in W} \sum_{i=1}^N \ell(F(x_i; w), y_i). \qquad (2.23)$$
+
+* Theorem     2.21:  Riesz Theorem
+
+Let $(E, \langle \cdot, \cdot \rangle_E)$ be a Hilbert space in $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$. For every $\ell \in E'$, there exists exactly one vector $u$ such that
+
+$$\ell(x) = \langle x, u \rangle_E, \quad \forall x \in E,$$
+
+and
+
+$$\|\ell\|_{op} = \|u\|_E.$$
+
+We say that $u$ is the /Riesz representer/ of $\ell$ in $(E, \langle \cdot, \cdot \rangle_E)$.
+
+Importantly, for complex inner-product spaces, $u$ is always located in the antilinear coordinate of the inner-product.
+
+*Proof.*
+
+If $\ell = 0$, then $u = 0$ works and is unique, and $\|\ell\|_{op} = 0 = \|u\|_E$. Assume henceforth that $\ell \ne 0$.
+
+Let $K := \ker \ell = \{x \in E : \ell(x) = 0\}$. Then $K$ is a subspace of $E$ and, since $\ell \ne 0$, we have $K \ne E$. In a finite-dimensional inner-product space,
+
+$$E = K \oplus K^{\perp}.$$
+
+Pick $v \in K^{\perp}$ with $v \ne 0$ (possible because $K^{\perp} \ne \{0\}$). Since $v \notin K$, we have $\ell(v) \ne 0$.
+
+*Existence:* For our fixed $v \in K^{\perp}$, define
+
+$$u := \frac{\overline{\ell(v)}}{\|v\|_E^2} v \quad (\text{overline denotes complex conjugation; in } \mathbb{R} \text{ it is the identity}).$$
+
+We claim that $\ell(x) = \langle x, u \rangle_E$ for all $x \in E$. Indeed, for any $x \in E$ write uniquely $x = y + \alpha v$ with $y \in K$ and $\alpha \in \mathbb{K}$. Then $\ell(y) = 0$ and hence
+
+$$\ell(x) = \ell(y) + \alpha \ell(v) = \alpha \ell(v).$$
+
+On the other hand, since $y \perp v$, and using that the inner product is conjugate-linear in the second argument,
+
+$$\langle x, u \rangle_E = \left\langle y + \alpha v, \frac{\overline{\ell(v)}}{\|v\|_E^2} v \right\rangle_E = \alpha \, \overline{\left(\frac{\overline{\ell(v)}}{\|v\|_E^2}\right)} \langle v, v \rangle_E = \alpha \, \frac{\ell(v)}{\|v\|_E^2} \|v\|_E^2 = \alpha \ell(v),$$
+
+so indeed $\ell(x) = \langle x, u \rangle_E$ for all $x \in E$.
+
+*Uniqueness:* Suppose $u_1, u_2 \in E$ satisfy $\ell(x) = \langle x, u_1 \rangle_E = \langle x, u_2 \rangle_E$ for all $x$. Then $\langle x, u_1 - u_2 \rangle_E = 0$ for all $x \in E$. Taking $x = u_1 - u_2$ gives $\|u_1 - u_2\|_E^2 = 0$, hence $u_1 = u_2$.
+
+*Norm identity:* For any $x \in E$, by Cauchy–Schwarz,
+
+$$|\ell(x)| = |\langle x, u \rangle_E| \le \|x\|_E \|u\|_E.$$
+
+Taking the supremum over $x \ne 0$ yields $\|\ell\|_{op} \le \|u\|_E$. Conversely, choose $x = u$. Then
+
+$$\|\ell\|_{op} \ge \frac{|\ell(u)|}{\|u\|_E} = \frac{|\langle u, u \rangle_E|}{\|u\|_E} = \|u\|_E.$$
+
+Therefore $\|\ell\|_{op} = \|u\|_E$, and concludes the proof.
+
+* Theorem     2.22:  Adjoint Operator
+
+Let $(E, \langle \cdot, \cdot \rangle_E)$ and $(F, \langle \cdot, \cdot \rangle_F)$ be inner-product spaces over $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$, and let $T \in \mathcal{B}(E, F)$ be a /bounded/ linear map. There exists a unique bounded linear map $T^* : F \rightarrow E$, called the /adjoint operator/ of $T$, which is such that
+
+$$\langle T(x), y \rangle_F = \langle x, T^*(y) \rangle_E \qquad \text{for all } x \in E, y \in F. \qquad (2.27)$$
+
+Furthermore, it holds that $\|T\|_{op} = \|T^*\|_{op}$.
+
+*Proof.*
+
+Fix $y \in F$, and define the linear functional $f_y(x) := \langle T(x), y \rangle_F$ for all $x \in E$. Since $T$ is a bounded linear operator, by the Cauchy-Schwarz inequality we have
+
+$$|f_y(x)| = |\langle T(x), y \rangle_F| \le \|T(x)\|_F \|y\|_F \le \underbrace{\|T\|_{op} \|y\|_F}_{=C<+\infty} \|x\|_E,$$
+
+which shows that $f_y : E \rightarrow \mathbb{K}$ is bounded. Therefore, $f_y \in E'$ (the continuous dual of $E$, see Eq. (1.13)). By the Riesz representation theorem, there exists a unique $z \in E$ such that $f_y(x) = \langle x, z \rangle_E$. Therefore, for each $y \in F$, there exists a unique $z \in E$ such that $\langle x, z \rangle_E = \langle T(x), y \rangle_F$. Now, define $T^* : F \rightarrow E$ the mapping $T^*(y) = z$ for all $y \in F$. Thus,
+
+$$\langle x, T^*(y) \rangle_E = \langle T(x), y \rangle_F, \quad \forall x \in E, y \in F.$$
+
+The uniqueness of $T^*$ follows again from the /Riesz representation theorem/. Suppose that there exists $T_1^*, T_2^* : F \rightarrow E$ with the adjoint property (2.27). This implies that $\langle (T_1^* - T_2^*)(x), y \rangle_F = 0$ for all $x, y$ which, in turn, implies that $T_1^* - T_2^* = 0$.
+
+* Lemma       2.23:  Matrix representation
+
+Let $(E, \langle \cdot, \cdot \rangle_E)$ and $(F, \langle \cdot, \cdot \rangle_F)$ be two inner-product spaces of finite dimension $p$ and $n \in \mathbb{N}$ respectively. Let $\mathcal{E}$ and $\mathcal{F}$ be bases of $E$ and $F$, and let $T \in \mathcal{L}(E, F)$ be a linear map. Then,
+
+$$[T^*]_{\mathcal{F}}^{\mathcal{E}} = G_E^{-1} ([T]_{\mathcal{E}}^{\mathcal{F}})^H G_F \in \mathbb{K}^{p \times n},$$
+
+where
+
+$$G_E := (\langle e_i, e_j \rangle_E)_{1 \le i, j \le p} \in \mathbb{K}^{p \times p}, \qquad G_F := (\langle f_i, f_j \rangle_F)_{1 \le i, j \le n} \in \mathbb{K}^{n \times n},$$
+
+are the so-called Gram-matrices of the vectors of $\mathcal{E}$ and $\mathcal{F}$ respectively. In particular, when $\mathcal{E}$ and $\mathcal{F}$ are orthonormal bases, then
+
+$$[T^*]_{\mathcal{F}}^{\mathcal{E}} = ([T]_{\mathcal{E}}^{\mathcal{F}})^H \in \mathbb{K}^{p \times n}.$$
+
+*Proof.*
+
+We will prove the claim only for the cases when $\mathcal{E}$ and $\mathcal{F}$ are orthonormal bases. In this case, by /Proposition 2.12/, we have that
+
+$$T(e_i) = \sum_{j=1}^n \langle T(e_i), f_j \rangle f_j, \quad 1 \le i \le p$$
+
+$$T^*(f_j) = \sum_{i=1}^p \langle T^*(f_j), e_i \rangle\, e_i, \quad 1 \le j \le n.$$
+
+Therefore
+
+$$[T]_{\mathcal{E}}^{\mathcal{F}} = \left([T(e_1)]^{\mathcal{F}} \mid \ldots \mid [T(e_p)]^{\mathcal{F}}\right) = (\langle T(e_i), f_j \rangle_F)_{\substack{1 \le i \le p \\ 1 \le j \le n}},$$
+
+and
+
+\begin{align*}
+[T^*]_{\mathcal{F}}^{\mathcal{E}} &= \left([T^*(f_1)]^{\mathcal{E}} \mid \ldots \mid [T^*(f_n)]^{\mathcal{E}}\right) \\
+&= (\langle T^*(f_i), e_j \rangle_E)_{\substack{1 \le i \le n \\ 1 \le j \le p}} \\
+&= \left(\overline{\langle e_j, T^*(f_i) \rangle_E}\right)_{\substack{1 \le i \le n \\ 1 \le j \le p}} \quad \text{(by conjugate symmetry)} \\
+&= \left(\overline{\langle T(e_j), f_i \rangle_F}\right)_{\substack{1 \le i \le n \\ 1 \le j \le p}} \quad \text{(by Eq. (2.27))} \\
+&= ([T]_{\mathcal{E}}^{\mathcal{F}})^H.
+\end{align*}
+
+* Theorem     2.24:  Unitary operators
+
+Let $T \in \mathcal{B}(E, E)$. Then the following properties are equivalent:
+
+1. $TT^* = T^*T = \mathrm{Id}_E$,
+
+2. $T$ is bijective and $T^{-1} = T^*$.
+
+3. $T$ is surjective and it preserves inner products:
+
+   $$\langle T(x), T(y) \rangle_E = \langle x, y \rangle_E, \quad \forall x, y \in E.$$
+
+4. $T$ is surjective and it preserves the norm:
+
+   $$\|T(x)\|_E = \|x\|_E, \quad \forall x \in E.$$
+
+5. $[T]_{\mathcal{E}}^{\mathcal{E}}$ is unitary ($\mathbb{K} = \mathbb{C}$) or orthogonal ($\mathbb{K} = \mathbb{R}$) if $E$ is finite dimensional and $\mathcal{E} = \{e_i\}_{i=1}^n$ is an orthonormal basis.
+
+If one of these properties hold, we say that $T$ is a /unitary operator/ ($\mathbb{K} = \mathbb{C}$) or /orthogonal operator/ ($\mathbb{K} = \mathbb{R}$).
+
+*Proof.*
+
+- ($1 \Rightarrow 2$) Suppose $x \ne 0 \in \ker(T)$. Then $T^*T(x) = 0_E$ which implies that $x = 0_E$. This is a contradiction which implies that $\ker(T) = \{0_E\}$. Therefore $T$ is injective.
+
+  We now show that $T$ is surjective. Let $y \in E$, and choose $x = T^*(y)$. We then have $T(x) = (TT^*)(y) = y$ which shows that $T$ is surjective.
+
+  It follows that $T$ is bijective, thus invertible, and from the identity $TT^* = T^*T = \mathrm{Id}_E$ we deduce that $T^{-1} = T^*$.
+
+- ($2 \Rightarrow 1$) Trivial.
+
+- ($1 \Rightarrow 3$) Let $x, y \in E$. By property (2.27) of the adjoint,
+
+  $$\langle T(x), T(y) \rangle_E = \langle x, (T^*T)(y) \rangle_E = \langle x, y \rangle_E.$$
+
+  In addition, we already proved earlier that having $TT^* = \mathrm{Id}_E$ implies that $T$ is surjective.
+
+- ($3 \Rightarrow 1$) It holds that $\langle x, (T^*T - \mathrm{Id})(y) \rangle_E = 0$ for all $x \in E$. Therefore $(T^*T - \mathrm{Id})(y) = 0$ for all $y \in E$, which implies that $T^*T = \mathrm{Id}_E$. This also implies that $T$ is injective as shown earlier. In addition, we are assuming that $T$ is also surjective. Therefore $T$ is bijective, thus invertible. From the fact that $T^*T = \mathrm{Id}$ we deduce that $T^{-1} = T^*$ and therefore $TT^* = \mathrm{Id}_E$, which concludes the proof.
+
+- ($3 \Rightarrow 4$) Trivial.
+
+- ($4 \Rightarrow 3$) Let $x, y \in E$ and suppose that $E$ is a real vector space. By the polarization identity (2.5),
+
+  $$\langle T(x), T(y) \rangle = \frac{1}{4}\left(\|T(x) + T(y)\|_E^2 - \|T(x) - T(y)\|_E^2\right) = \frac{1}{4}\left(\|x + y\|_E^2 - \|x - y\|_E^2\right) = \langle x, y \rangle_E.$$
+
+- ($1 \Leftrightarrow 5$) To prove this equivalence, we essentially need to use that $[T^*]_{\mathcal{E}}^{\mathcal{E}} = ([T]_{\mathcal{E}}^{\mathcal{E}})^H$.
