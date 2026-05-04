@@ -5,6 +5,10 @@
 .vscode/
 
 # latex
+*.aux
+*.log
+*.out
+*.toc
 *.tex
 
 # source files
@@ -13,3 +17,8 @@
 
 # unrelated
 *ignore*
+
+# Jupyter
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+
