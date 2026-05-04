@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-03>
-#+lastmod: <2026-05-03 19:53>
+#+lastmod: <2026-05-04 15:48>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -21,9 +21,11 @@
 (Rotations). The goal of this exercise is to show that rotations in 2d and 3d are unitary operators.
 
 1. Let $E = (\mathbb{R}^2, \langle \cdot, \cdot \rangle_2)$ and let $\mathcal{E}$ be the canonical basis. Given $\theta \in \mathbb{R}$, we consider the mapping $R_\theta : E \to E$ whose matrix representation in $\mathcal{E}$ is
+
 \[
 [R_\theta]_{\mathcal{E}}^{\mathcal{E}} = \begin{pmatrix} \cos(\theta) & -\sin(\theta) \\ \sin(\theta) & \cos(\theta) \end{pmatrix}
 \]
+
 This operation is the rotation of angle $\theta$ in the 2d plane. Show that $R_\theta$ is a unitary operator.
 
 2. Let $E = (\mathbb{R}^3, \langle \cdot, \cdot \rangle_2)$.
@@ -47,6 +49,183 @@ This operation is the rotation of angle $\theta$ in the 2d plane. Show that $R_\
 #+end_quote
 
 ** Solution
+
+*** (1)
+
+#+begin_quote
+*Theorem 2.24:  Unitary operators*
+
+Let $T \in \mathcal{B}(E, E)$. Then the following properties are equivalent:
+
+1. $TT^* = T^*T = \mathrm{Id}_E$,
+
+2. $T$ is bijective and $T^{-1} = T^*$.
+
+3. $T$ is surjective and it preserves inner products:
+
+   $$\langle T(x), T(y) \rangle_E = \langle x, y \rangle_E, \quad \forall x, y \in E.$$
+
+4. $T$ is surjective and it preserves the norm:
+
+   $$\|T(x)\|_E = \|x\|_E, \quad \forall x \in E.$$
+
+5. $[T]_{\mathcal{E}}^{\mathcal{E}}$ is unitary ($\mathbb{K} = \mathbb{C}$) or orthogonal ($\mathbb{K} = \mathbb{R}$) if $E$ is finite dimensional and $\mathcal{E} = \{e_i\}_{i=1}^n$ is an orthonormal basis.
+
+If one of these properties hold, we say that $T$ is a /unitary operator/ ($\mathbb{K} = \mathbb{C}$) or /orthogonal operator/ ($\mathbb{K} = \mathbb{R}$).
+#+end_quote
+
+\begin{align*}
+M &= [R_{\theta}]_{\mathcal{E}}^{\mathcal{E}} \\
+M^{\top}M &=
+\begin{pmatrix} \cos(\theta) & \sin(\theta) \\ -\sin(\theta) & \cos(\theta) \end{pmatrix}
+\begin{pmatrix} \cos(\theta) & -\sin(\theta) \\ \sin(\theta) & \cos(\theta) \end{pmatrix} \\
+&= \begin{pmatrix} \cos(\theta)^2+\sin(\theta)^2 & 0 \\ 0 & \sin(\theta)^2+\cos(\theta)^2 \end{pmatrix} \\
+&= I_2 \\
+\end{align*}
+
+*** (2)
+
+**** (a)
+
+#+begin_src julia :results value
+using DataFrames
+
+R_e1(a) = [1 0          0
+           0 cospi(a)  -sinpi(a)
+           0 sinpi(a)   cospi(a)]
+
+R_e2(a) = [ cospi(a) 0 sinpi(a)
+            0        1 0
+           -sinpi(a) 0 cospi(a)]
+
+R_e3(a) = [cospi(a) -sinpi(a) 0
+           sinpi(a)  cospi(a) 0
+           0         0        1]
+
+M = [1 2 3
+     4 5 6
+     7 8 9]
+
+DataFrame(R_e1(1//2) * M, :auto)
+#+end_src
+
+#+RESULTS:
+|  1.0 |  2.0 |  3.0 |
+| -7.0 | -8.0 | -9.0 |
+|  4.0 |  5.0 |  6.0 |
+
+Each $R_{e_i, \theta}$ fixes $e_i$ and rotates the orthogonal plane $\mathrm{span}(e_j, e_k)$ by $\theta$, where $(j,k)$ is chosen so that $e_j \times e_k = e_i$.
+
+- $R_{e_1, \alpha}$: fixes $e_1$, rotates $(e_2, e_3)$ by $\alpha$.
+
+- $R_{e_2, \beta}$: fixes $e_2$, rotates $(e_3, e_1)$ by $\beta$. The transposed sign pattern in the $(1,3)$ block reflects that the canonical order $(e_1, e_3)$ is left-handed relative to $e_2$.
+
+- $R_{e_3, \gamma}$: fixes $e_3$, rotates $(e_1, e_2)$ by $\gamma$.
+
+**** (b)
+
+#+begin_src julia :results value
+using DataFrames
+
+R_e1(a) = [1 0          0
+           0 cospi(a)  -sinpi(a)
+           0 sinpi(a)   cospi(a)]
+
+R_e2(a) = [ cospi(a) 0 sinpi(a)
+            0        1 0
+           -sinpi(a) 0 cospi(a)]
+
+R_e3(a) = [cospi(a) -sinpi(a) 0
+           sinpi(a)  cospi(a) 0
+           0         0        1]
+
+R(a) = R_e3(a) * R_e2(a) * R_e1(a)
+
+M = [1 2 3
+     4 5 6
+     7 8 9]
+
+DataFrame(R(1//2) * M, :auto)
+#+end_src
+
+#+RESULTS:
+|  7.0 |  8.0 |  9.0 |
+|  4.0 |  5.0 |  6.0 |
+| -1.0 | -2.0 | -3.0 |
+
+**** (c)
+
+Using the shorthand $c_x := \cos x$, $s_x := \sin x$, and noting that
+composition of linear maps corresponds to matrix product in the same
+order:
+
+$$
+[R]_{\mathcal{E}}^{\mathcal{E}}
+= [R_{e_3,\gamma}]_{\mathcal{E}}^{\mathcal{E}}\,
+  [R_{e_2,\beta}]_{\mathcal{E}}^{\mathcal{E}}\,
+  [R_{e_1,\alpha}]_{\mathcal{E}}^{\mathcal{E}}
+$$
+
+*Step 1.* Compute $[R_{e_2,\beta}][R_{e_1,\alpha}]$:
+
+\begin{align*}
+\begin{pmatrix} c_\beta & 0 & s_\beta \\ 0 & 1 & 0 \\ -s_\beta & 0 & c_\beta \end{pmatrix}
+\begin{pmatrix} 1 & 0 & 0 \\ 0 & c_\alpha & -s_\alpha \\ 0 & s_\alpha & c_\alpha \end{pmatrix}
+=
+\begin{pmatrix}
+c_\beta & s_\beta s_\alpha & s_\beta c_\alpha \\
+0 & c_\alpha & -s_\alpha \\
+-s_\beta & c_\beta s_\alpha & c_\beta c_\alpha
+\end{pmatrix}
+\end{align*}
+
+*Step 2.* Left-multiply by $[R_{e_3,\gamma}]$:
+
+\begin{align*}
+\begin{pmatrix} c_\gamma & -s_\gamma & 0 \\ s_\gamma & c_\gamma & 0 \\ 0 & 0 & 1 \end{pmatrix}
+\begin{pmatrix}
+c_\beta & s_\beta s_\alpha & s_\beta c_\alpha \\
+0 & c_\alpha & -s_\alpha \\
+-s_\beta & c_\beta s_\alpha & c_\beta c_\alpha
+\end{pmatrix}
+\end{align*}
+
+Therefore:
+
+\begin{align*}
+[R]_{\mathcal{E}}^{\mathcal{E}}
+=
+\begin{pmatrix}
+c_\gamma c_\beta & c_\gamma s_\beta s_\alpha - s_\gamma c_\alpha & c_\gamma s_\beta c_\alpha + s_\gamma s_\alpha \\
+s_\gamma c_\beta & s_\gamma s_\beta s_\alpha + c_\gamma c_\alpha & s_\gamma s_\beta c_\alpha - c_\gamma s_\alpha \\
+-s_\beta & c_\beta s_\alpha & c_\beta c_\alpha
+\end{pmatrix}
+\end{align*}
+
+**** (d)
+
+It suffices to show that $R$ is surjective and preserves the Euclidean norm.
+
+*Each $R_{e_i, \theta}$ preserves the norm.* For $R_{e_1, \alpha}$ and $x = (x_1, x_2, x_3)$:
+
+\begin{align*}
+\|R_{e_1, \alpha} x\|_2^2
+&= x_1^2 + (c_\alpha x_2 - s_\alpha x_3)^2 + (s_\alpha x_2 + c_\alpha x_3)^2 \\
+&= x_1^2 + (c_\alpha^2 + s_\alpha^2)(x_2^2 + x_3^2)
+ = \|x\|_2^2.
+\end{align*}
+
+The cases $R_{e_2, \beta}$ and $R_{e_3, \gamma}$ are identical up to a permutation of the coordinate roles.
+
+*Each $R_{e_i, \theta}$ is surjective.* The matrix $[R_{e_i, -\theta}]_{\mathcal{E}}^{\mathcal{E}}$ is a left and right inverse (direct check), so each elementary rotation is bijective.
+
+*Composition.* Both properties pass to compositions:
+
+$$
+\|R(x)\|_2 = \|R_{e_3,\gamma}(R_{e_2,\beta}(R_{e_1,\alpha}(x)))\|_2 = \|x\|_2,
+$$
+
+and a composition of bijections is a bijection, hence $R$ is surjective. By Theorem 2.24, $(4) \Rightarrow$ $R$ is unitary. $\blacksquare$
 
 * Problem 2.18 :inner_product:vector_space:riemann_sum:
 ** Task
