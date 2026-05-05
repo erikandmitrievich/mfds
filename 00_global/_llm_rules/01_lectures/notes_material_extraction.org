@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-15>
-#+lastmod: <2026-04-27 17:36>
+#+lastmod: <2026-05-05 14:25>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -57,10 +57,10 @@ Concrete cases:
 
 | Number     | Length | N | Result                |
 |------------+--------+---+-----------------------|
-| =9.5=      |      3 | 5 | =9.5:     Title=      |
-| =10.2=     |      4 | 4 | =10.2:    Title=      |
-| =11.1.1=   |      6 | 2 | =11.1.1:  Title=      |
-| =11.1.13=  |      7 | 1 | =11.1.13: Title=      |
+| =9.5=      |      3 | 5 | =9.5:      Title=     |
+| =10.2=     |      4 | 4 | =10.2:     Title=     |
+| =11.1.1=   |      6 | 2 | =11.1.1:   Title=     |
+| =11.1.13=  |      7 | 1 | =11.1.13:  Title=     |
 | =10.1.1.2= |      8 | 1 | =10.1.1.2: Title=     |
 
 For numbers of length ≥ 8 the title-column alignment is sacrificed; the minimum of 1 space after the colon is preserved.
