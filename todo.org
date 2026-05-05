@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-05>
-#+lastmod: <2026-05-05 16:02>
+#+lastmod: <2026-05-05 16:04>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -15,5 +15,5 @@
 #+property: header-args :eval never-export
 #+startup: overview latexpreview inlineimages
 
-- [ ] Rewrite all STEOP problem sets into latex for consistency.
-- [ ] Potentially reorganise/rename =./01_bachelor= folder.
+- [ ] Rewrite all STEOP problem sets into latex for consistency (summer 2026).
+- [ ] Potentially reorganise/rename =./01_bachelor= folder (long term).
