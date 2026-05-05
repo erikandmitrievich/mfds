@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-05-05 15:02>
+#+lastmod: <2026-05-05 17:53>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -127,50 +127,71 @@ We say that $\cdot$ is compatible with $+$ if and only if for all $x, y \in E$ a
 
 4. distributivity of scalar multiplication w.r.t. field addition:
 
-   $$(\lambda + \mu) \cdot x = \lambda \cdot x + \mu \cdot y$$
+   $$(\lambda + \mu) \cdot x = \lambda \cdot x + \mu \cdot x$$
+
+** Questions
+
+*** DONE Are we talking about $\cdot_E, +_E$ or $\cdot_{\mathbb{K}}, +_{\mathbb{K}}$ or a bridge operations?
+
+The definition works with the following operations:
+
+- $+_{\mathbb{K}}$: fiels addition
+
+- $\cdot_{\mathbb{K}}$: field multiplication
+
+- $+_E$: vector multiplication
+
+Scalar multiplication $\cdot : \mathbb{K} \times E \rightarrow E$ is a new bridge operation.
+
+So each axiom uses operation based on the context. Example:
+
+$$(\lambda \mu) \cdot x = \lambda \cdot (\mu \cdot x)$$
+
+$\lambda \mu$ - uses a $\cdot_{\mathbb{K}}$, while RHS uses scalar multiplication.
+
+*** DONE Is this ok to mix operations? i.e. using $\cdot$ without labeling $E$ or $\mathbb{K}$?
+
+Yes, its a standard practice. Otherwise it would be a context overload.
+
+*** DONE What is the point in compatability? What happens if $\cdot$ and $+$ are not compatable?
+
+Without axioms, scalar multiplication is just some arbitrary function $\mathbb{K} \times E \rightarrow E$.
+
+The compatability axioms are exactly what is needed so that the field structure and the Abelian/commutative group structure talk to each other. Without them you won't have a vector space, you would have a set with two unrelated algebraic structures bolted on.
+
+*** DONE Compatible with $+_E$ or $+_\mathbb{K}$?
+
+Both actually. Look for axioms 3 and 4.
 
 * Definition  1.07:  Vector space
 
-*Definition (Vector Space)* A vector space $V$ over a field $\mathbb{F}$ is equipped with two operations:
+Given a field $\mathbb{K}$, a set $E$, a binary operation $+ : E \times E \rightarrow E$ and a scalar multiplication $\cdot : \mathbb{K} \times E \rightarrow E$. We call the triplet $(E, +, \cdot)$ a $\mathbb{K}$ vector space if and only if $(E, +)$ is a commutative group, and $\cdot$ is compatible with the binary operation $+$. That is, for all $x, y, z \in E$ and all $\lambda, \mu \in \mathbb{K}$:
 
-- Vector addition $+ : V + V \rightarrow V$
-- Vector multiplication $\times : \mathbb{F} \times V \rightarrow V$
+1. $(x + y) + z = x + (y + z)$
 
-Such that the following axioms hold for all $u, v, w \in V$ and all scalars $a,b \in \mathbb{F}$:
+2. $\exists\, 0_E \in E$ s.t. $x + 0_E = x$
 
-1. Associativity of addition
+3. $\forall x \in E, \exists\, \tilde{x} \in E$ s.t. $x + \tilde{x} = 0_E$ (denoted by $-x$)
 
-   $(u + v) + w = u + (v + w)$
+4. $x + y = y + x$
 
-2. Commutativity of addition
+5. $1_{\mathbb{K}} \cdot x = x$
 
-   $u + v = v + u$
+6. $(\lambda \mu) \cdot x = \lambda \cdot (\mu \cdot x)$
 
-3. Additive identity
+7. $\lambda \cdot (x + y) = \lambda \cdot x + \lambda \cdot y$
 
-   $\exists 0 \in V : \forall u \in V,  u + 0 = u$
+8. $(\lambda + \mu) \cdot x = \lambda \cdot x + \mu \cdot x$
 
-4. Additive inverse
+** Questions
 
-   $\forall u \in V, \exists -u \in V : u + (-u) = 0$
+*** DONE Why do we call it a $\mathbb{K}$ vector space when the main work is with $E$?
 
-5. Distributivity over scalar additon
+Because the structure of $E$ hugely depends on the choice of $\mathbb{K}$. The same set $E$ with the same addition can be a vector space over $\mathbb{R}$, over $\mathbb{Q}$, over $\mathbb{F}_2$ - and these are genuinely different vector spaces (e.g. dimensions would be different).
 
-   $(a + b) \times u = (a \times u) + (b \times u)$
+*** DONE Why "$\cdot$ is compatible with the binary operation $+$" and not "operations" when we talk about both $E$ and $\mathbb{K}$ addition operations?
 
-6. Distributivity over vector addition
-
-   $a \times (u + v) = (a \times u) + (a \times v)$
-
-7. Compatability of scalar multiplication
-
-   $a \times (b \times u) = (a \times b) \times u$
-
-8. Scalar multiplicative identity
-
-   $1 \times u = u$
-
-   Where $1$ is a multiplicative identity of $\mathbb{F}$.
+Good point. This is actually a slightly imprecise shorthand, since axioms 5-8 involves two different addition operations: $+_{E}, +_{\mathbb{K}}$.
 
 * Definition  1.10:  $\mathbb{K}[X]$ and degree of a polynomial
 
@@ -182,11 +203,41 @@ The degree of a polynomial $p \in \mathbb{K}[X]$ is
 
 $$\deg(p) := \max\{ n \in \mathbb{N}_0 \;:\; a_n \neq 0_{\mathbb{K}} \}.$$
 
+** Questions
+
+*** DONE Do I understand right that there would be +1 number of polynomials than its degree?
+
+Rephrasing: "a polynomial of a degree $n$ would have $n+1$ coefficients" - yes, thats correct.
+
+*** DONE Does the definition need to define what $X$ is?
+
+No, and thats the point. $X$ is not an element of $\mathbb{K}$ or any set you plug the values into. Its a formal indeterminate - a syntactic placeholder. A polynomial $\sum a_k X^k$ is really just a sequence $(a_0, a_1, \ldots)$ thats eventually zero.
+
+You should understand that there are two different polynomials: polynomial function and polynomial object.
+
+Polynomial function is basically $p(x) = 3x^2 + 2x + 1$, a function, where you plug numbers.
+
+Polynomial object is $p = 3X^2 + 2X + 1$, a finite sequence of $\mathbb{K}$ elements $(1, 2, 3, 0, 0, \ldots)$.
+
+Imagine $\mathbb{R}^3$, thats $\mathbb{R}_2[X]$, just in other form.
+
+*** DONE But what is the point of writing $X^k$ and not $X_k$ if $X$ is not a variable?
+
+Convention.
+
 * Definition  1.13:  Linear combination
 
 Let $E$ be a $\mathbb{K}$ vector space. Given vectors $x_1, \ldots, x_n \in E$, a /linear combination/ of these vectors is any vector of the form
 
 $$v = \lambda_1 x_1 + \lambda_2 x_2 + \cdots + \lambda_n x_n, \qquad \text{with } \lambda_1, \ldots, \lambda_n \in \mathbb{K}, \text{ and } n \in \mathbb{N}.$$
+
+** Questions
+
+*** DONE Are vector spaces infinite?
+
+Over an infinite field ($\mathbb{R}$, $\mathbb{C}$, $\mathbb{Q}$, etc) - infinite.
+
+Over a finite field $\mathbb{F}_q : |V| = q^n$ for dimension $n$ - finite.
 
 * Definition  1.14:  Generating set (Spanning set)
 
@@ -746,3 +797,9 @@ For a normed $\mathbb{K}$ vector space $(E, \|\cdot\|_E)$, there are two notions
   $$E' := \mathcal{B}(E, \mathbb{K}) = \{\ell \in E^* : \|\ell\|_{\mathrm{op}} < +\infty\} \subseteq E^*.$$
 
   By /Theorem 1.60/, it is a normed vector space when endowed with the operator norm Eq. (1.11), which is often called the dual norm.
+
+* Typos
+
+- [ ] Definition 1.6: axiom 4.
+- [ ] Definition 1.7: "binary operations" -> "binary operation"
+- [ ] Definition 1.7: axiom 8.
