@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-05-05 17:53>
+#+lastmod: <2026-05-05 18:34>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -249,6 +249,12 @@ Equivalently,
 
 $$E = \text{span}\{x_i\}_{i=1}^{n}.$$
 
+** Questions
+
+*** DONE Is there any big reason behind the $\mathcal{X}$ notation over $X$?
+
+Purely conventional.
+
 * Definition  1.15:  Linearly independent set (Free family)
 
 Let $\mathcal{X} = \{x_1, \ldots x_n\}$ be a finite subset of vectors of $E$ with $n \in \mathbb{N}$. We say that $X$ is a linearly independent set (or a free family) if the only linear combination that gives the zero vector is the trivial one:
@@ -258,6 +264,17 @@ $$\lambda_1 x_1 + \cdots + \lambda_n x_n = 0 \;\text{for some}\; \lambda_1, \ldo
 * Definition  1.16:  Basis
 
 A set of vectors $\mathcal{B} = \{x_1, \ldots x_n\} \subset E$ is a /basis/ of $E$ if it is both generating and linearly independent.
+
+** Questions
+
+*** DONE Can it be that $\mathcal{B} = E$, meaning the notation $\mathcal{B} \subset E$ is a typo?
+
+No. $\mathcal{B} \neq E$, because:
+
+1. $E$ is a vector space, so $0_E \in E$.
+2. $\mathcal{B} = E \implies 0_E \in \mathcal{B}$.
+3. $1_{\mathbb{K}} \cdot 0_E = 0_E$ holds.
+4. This contradicts the definition of linear independence.
 
 * Proposition 1.17:  Coordinate of a vector on a given basis
 
@@ -278,15 +295,29 @@ x &\mapsto [x]^{\mathcal{B}}
 
 is a isomorphism.
 
-** Q&A
+** Questions
 
-- Q_01
+*** DONE Does $[x]^{\mathcal{B}}$ mean $x$ is defined through linear combination of a basis?
 
-  What is the last point?
+Not "defined through", but "represented as". The vector $x \in E$ exists independently of any basis. $[x]^{\mathcal{B}}$ extracts the unique coefficients that express $x$ in terms of $\mathcal{B}$.
 
-- A_01
+Different basis, different coefficients, same vector.
+
+*** DONE Is this a regular notation with $\mathcal{B}$ in $[x]^{\mathcal{B}}$?
+
+Not really, heavily depends on the context.
+
+*** DONE What exactly is $\mathrm{Vec}$ and why it was not used in definition?
+
+Purely educational reason. $\mathrm{Vec}(x) = [x]^{\mathcal{B}}$ holds.
+
+*** DONE What is isomorphism?
 
   The point is that isomorphism means the two spaces are "structurally identical" as a vector spaces. So once you fix a basis $\mathcal{B}$, your abstract vectors space $E$ becomes indistinguishable from $\mathbb{K}^n$ in terms of linear algebra.
+
+*** DONE What does it mean to fix a basis?
+
+To choose one basis and commit to it for the duration of the work.
 
 * Proposition 1.18:  Linearity of coordinate representation
 
