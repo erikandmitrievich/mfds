@@ -1,0 +1,19 @@
+#+title: Todo
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-05>
+#+lastmod: <2026-05-05 16:02>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+- [ ] Rewrite all STEOP problem sets into latex for consistency.
+- [ ] Potentially reorganise/rename =./01_bachelor= folder.
