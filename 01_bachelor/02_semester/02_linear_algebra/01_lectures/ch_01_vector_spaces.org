@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-04-27 17:22>
+#+lastmod: <2026-05-05 15:02>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -24,27 +24,92 @@ A binary operation on set $E$ is a mapping
 (x, y) &\mapsto x + y \\
 \end{align*}
 
-which produces an element $E$ out of two elements from $E$.
+which produces an element of $E$ out of two elements from $E$.
 
-* Definition  1.03:  Commutative Group
+** Questions
+
+*** DONE Why is it called a binary operation?
+
+Its called binary because of the number of inputs.
+
+- 1 input:  unary
+- 2 inputs: binary
+- 3 inputs: ternary
+- n inputs: n-ary
+
+*** DONE What does the $\mapsto$ mean?
+
+It stands for "maps to". Its specifies the rule of the function, where each individual input is sent to.
+
+- $\rightarrow$: specifies the type signature
+- $\mapsto$: specifies the rule of a function
+
+*** DONE Important.
+
+This definition defines what it means to be a *binary operation*, not $+$ (addition) specifically, it can be any other binary operation, such as multiplication, union, or function composition.
+
+* Definition  1.03:  (Commutative) Group
 
 We say that $(E, +)$ is a group when $E$ is a set, and $+$ is a binary operation on $E$ satisfying:
 
-1. Associativity: $(x + y) + z = x + (y + z), \quad \forall x, y, z \in E$
-2. Identity element: $\exists 0_{E} : x + 0_{E} = x$
-3. Inverse element: $\forall x \in E, \exists \tilde{x} \in E : x + \tilde{x} = 0_{E}$
-4. Commutativity: $x + y = y + x$
+1. associativity: $(x + y) + z = x + (y + z)$, $\forall x, y, z \in E$
+
+2. identity element (aka. neutral element): there exists $0_E \in E$ such that $x + 0_E = x$
+
+3. inverse element: for every $x \in E$, there exists $\tilde{x} \in E$ such that $x + \tilde{x} = 0_E$. We usually denote it by $-x$.
+
+If, in addition, the elements commute, then we speak about a commutative group (aka. Abelian group):
+
+4. commutativity: $x + y = y + x$, $\forall x, y \in E$
+
+** Questions
+
+*** DONE What does "commutative" mean?
+
+From Latin, "commutare" means "to exchange". Thats it.
+
+*** DONE What is the point of defining a group?
+
+In any group, $a + x = b$ has a unique $x = -a + b$ solution. Existence comes from the identity, uniqueness comes from inverses. All four axioms are precisely what is needed to guaranty this.
 
 * Definition  1.05:  Scalar multiplication
 
 Scalar multiplication on $E$ over the field $\mathbb{K}$ is a map
 
 \begin{align*}
-\times : \mathbb{K} \times E &\rightarrow E \\
-(\lambda, x) &\mapsto \lambda \times x \\
+\cdot : \mathbb{K} \times E &\rightarrow E \\
+(\lambda, x) &\mapsto \lambda \cdot x \\
 \end{align*}
 
 which produces an element in $E$ out of scalar $\lambda$ and an input element $x \in E$.
+
+** Questions
+
+*** DONE What does it mean "Scalar multiplication on $E$ *over* $\mathbb{K}$"?
+
+Whatever follows the "over" - is a source of a scalars, whatever preceeds the "over" - is what's being acted upon.
+
+*** DONE Is $E$ a set and a part of the field $\mathbb{K}$ along with addition and multiplication?
+
+No, $E$ is not part of the $\mathbb{K}$.
+
+- $\mathbb{K}$ is a *field*: a set with its own addition $+_{\mathbb{K}}$ and multiplication $\cdot_{\mathbb{K}}$ satisfying field axioms.
+
+- $E$ is a set (which will become an Abelian/commutative group, then a vector space): equipped with its own addition $+_{E}$.
+
+Note that $\cdot$ is a *third operation*. Its essentially a *bridge*, connecting $E$ to $\mathbb{K}$. It lives neither in $E$, nor in $\mathbb{K}$.
+
+|-------------------------+-------------------------------------------------------+--------------|
+| Operation               | Type signature                                        | Lives in     |
+|-------------------------+-------------------------------------------------------+--------------|
+| $+_E$                   | $E \times E \rightarrow E$                            | $E$          |
+|-------------------------+-------------------------------------------------------+--------------|
+| $+_{\mathbb{K}}$        | $\mathbb{K} \times \mathbb{K} \rightarrow \mathbb{K}$ | $\mathbb{K}$ |
+|-------------------------+-------------------------------------------------------+--------------|
+| $\times_{\mathbb{K}}$   | $\mathbb{K} \times \mathbb{K} \rightarrow \mathbb{K}$ | $\mathbb{K}$ |
+|-------------------------+-------------------------------------------------------+--------------|
+| $\times$ (scalar mult.) | $\mathbb{K} \times E \rightarrow E$                   | bridge       |
+|-------------------------+-------------------------------------------------------+--------------|
 
 * Definition  1.06:  Compatibility between $\cdot$ and $+$
 
