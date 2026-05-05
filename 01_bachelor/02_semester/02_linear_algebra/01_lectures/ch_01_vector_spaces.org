@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-05-05 18:34>
+#+lastmod: <2026-05-05 21:05>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -339,6 +339,12 @@ Let $(E, +, \cdot)$ be a $\mathbb{K}$ vector space, and let $F \subset E$ be a s
 
 3. $\forall\, x \in F$, $\lambda \in \mathbb{K}$, $\lambda x \in F$.
 
+** Questions
+
+*** DONE What does "stable by linear combinations" mean?
+
+Specifically the phrase "stable by" comes from French mathematics "stable par" which means "closed under". Hence, it meant $F$ is closed under linear combinations, which implies axioms 2 and 3.
+
 * Proposition 1.20:  Subspace characterization via closure under linear combinations
 
 $F \subset E$ is a subspace of $E$ if and only if:
@@ -346,6 +352,12 @@ $F \subset E$ is a subspace of $E$ if and only if:
 1. $0 \in F$
 
 2. $\forall\, x, y \in F$, $\forall\, \lambda, \mu \in \mathbb{K}$, $\lambda x + \mu y \in F$.
+
+** Questions
+
+*** DONE Is this just another form of subspace validation (Definition 1.19)?
+
+Yes, it just packs axioms 2 and 3 of *Definition 1.19* into one. Axioms 1 in both *Proposition 1.20* and *Definition 1.19* are equivalent as well.
 
 * Proposition 1.22:  Subspace intersection, union, and sum
 
@@ -359,15 +371,19 @@ Let $F$ and $G$ be two subspaces of a vector space $E$. Then:
 
    $$\dim(F + G) = \dim(F) + \dim(G) - \dim(F \cap G)$$
 
-** Q&A
+** Questions
 
-- Q_01
+*** DONE This is a proposition, why there is no proof of proposed content?
 
-  Why is $F \cap G$ is a subspace of $E$, while $F \cup G$ is "generaly" not?
+True, lecture notes misses the proof of that points.
 
-- A_01
+*Proof.*
 
-  The intersection $F \cap G$ is a subspace because if two elements both belong to $F$ and to $G$, any linear combination of them remains in $F$ (since $F$ is a subspace) and in $G$ (since $G$ is a subspace), so it stays in $F \cap G$. The union $F \cup G$ generally fails because you can pick $x \in F \setminus G$ and $y \in G \setminus F$, and their sum $x + y$ typically belongs to neither $F$ nor $G$, breaking closure under addition. (It only works when one subspace contains the other, making the union trivially equal to the larger one.)
+1. $F \cap G$ is a subspace: $0_E \in F$ and $0_E \in G$, so $0_E \in F \cap G$. If $x, y \in F \cap G$ and $\lambda, \mu \in \mathbb{K}$, $\lambda x + \mu y \in F$ (since $F$ is a subspace), and $\lambda x + \mu y \in G$ (since $G$ is a subspace), hence $\lambda x + \mu y \in F \cap G$.
+
+2. $F \cup G$ is in general not a subspace: Take $\mathbb{R}^2$, let $F$ be $x$ axis and $G$ be $y$ axis. Then, $(1,0) \in F \cup G$ and $(0,1) \in F \cup G$, but $(1,0) + (0,1) = (1,1) \in F \cup G$.
+
+3. $F + G$ is a subspace: $0_E = 0_E + 0_E \in F + G$. If $x_1 + y_1, x_2 + y_2 \in F + G$, with $x_i \in F, y_i \in G$, then $\lambda(x_1 + y_1) + \mu(x_2 + y_2) = (\lambda x_1 + \lambda y_1) + (\mu x_2 + \mu y_2) \in F + G$.
 
 * Definition  1.23:  Direct sum
 
