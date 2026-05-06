@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-05-05 21:05>
+#+lastmod: <2026-05-06 19:49>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -393,6 +393,20 @@ $$x = x_F + x_G$$
 
 such that $x_F \in F$ and $x_G \in G$. This is equivalent to the condition $F \cap G = \{0\}$. The two subspaces are said to be complementary when their sum is direct and $E = F \oplus G$.
 
+** Question
+
+*** DONE Would it be more accurate to write $F \cap G = \{ 0_E \}$?
+
+Yes, it would be more accurate.
+
+*** DONE What is the point of a "complementary" definition, when the definition of a direct sum is enough ($\forall x \in E, x = x_F + x_G$)?
+
+Yes, that is a non-standard definition. The standard approach separates two things:
+
+- *Direct sum*: $F + G$ is derect iff $F \cap G = \{0_E\}$. This is purely about the uniquness of decomposition within $F + G$, which may be a proper subspace of $E$.
+
+- *Complementary*: $F$ and $G$ are complementary iff $F \oplus G = E$, i.e. the direct sum exhausts the whole vector space.
+
 * Definition  1.24:  Linear map
 
 Let $E$ and $F$ be two $\mathbb{K}$ vector spaces. The mapping $f : E \rightarrow F$ is linear if and only if
@@ -400,6 +414,14 @@ Let $E$ and $F$ be two $\mathbb{K}$ vector spaces. The mapping $f : E \rightarro
 $$f(\lambda x + \mu y) = \lambda f(x) + \mu f(y), \quad \forall x, y \in E, \; \lambda, \mu \in \mathbb{K}$$
 
 We denote by $\mathcal{L}(E, F)$ the set of all linear mappings from $E$ to $F$. When $F = E$, the mapping is called an endomorphism, and the set of endomorphisms is denoted as $\mathcal{L}(E) := \mathcal{L}(E, E)$.
+
+** Questions
+
+*** DONE What is the idea behind the map being linear? What if a map is not linear?
+
+A linear map preserves addition and scaling. Map is fully determined by what it does to a basis, $f(\sum_{\lambda_i e_i}) = \sum \lambda_i f(e_i)$.
+
+If the map is not linear, you loose all of that, $f(x + y) \neq f(x) + f(y)$. You wouldn't be able to use the entire machinery of linear algebra: rank, kernel, eigenvalues, etc.
 
 * Proposition 1.25:  Subspace and kernel/image structure of linear maps
 
@@ -413,23 +435,33 @@ Let $E$ and $F$ be two $\mathbb{K}$ vector spaces, and $f \in \mathcal{L}(E, F)$
 
    $$\mathrm{im}(f) := \{y \in F : \exists x \in E \; \text{s.t.} \; y = f(x)\}$$
 
-   are subspaces of $E$.
+   are subspaces of $E$ and $F$ respectively.
 
-** Q&A
+** Question
 
-- Q_01
+*** DONE Would it be more accurate to write $\ker(f) := \{\forall x \in E : f(x) = 0\}$ (same idea for $\mathrm{im}(f)$)?
 
-  I understand that $\mathcal{L}(E, F)$ is a subspace of $\mathcal{F}(E, F)$, but how can it be a vector space when it is a set of linear maps?
+No, the set builder notation already implies that. So its unnecessary.
 
-- A_01
+*** DONE What exactly is a $\mathcal{F}(E, F)$?
 
-  The key insight is that a vector space is just a set equipped with addition and scalar multiplication satisfying the axioms - the "vectors" don't have to be arrows or tuples. Here, the elements of $\mathcal{L}(E, F)$ are linear maps, and the operations are pointwise: $(f + g)(x) = f(x) + g(x)$ and $(\lambda f)(x) = \lambda f(x)$. These operations satisfy all the vector space axioms (the zero vector is the zero map, additive inverses are $(-f)(x) = -f(x)$, etc.), so $\mathcal{L}(E, F)$ is a perfectly valid vector space whose "vectors" happen to be functions. In fact, this is precisely what being a subspace of $\mathcal{F}(E, F)$ gives you for free: $\mathcal{F}(E, F)$ is already a vector space under pointwise operations, and any subspace of a vector space is itself a vector space, so you only need to verify the subspace criteria rather than re-checking all the axioms from scratch.
+$\mathcal{F}(E, F)$ is a set of *all* functions from $E$ to $F$, not only the linear ones.
+
+*** DONE Why last line says "are subspaces of $E$" when $\mathrm{im}(f)$ is subspace of $F$?
+
+Thats a typo.
 
 * Definition  1.27:  Linear form, dual space
 
 Let $E$ be a $\mathbb{K}$ vector space. The dual space of $E$ is the set $E^* := \mathcal{L}(E, \mathbb{K})$. Every $f \in E^*$ is called a linear functional.
 
 /The underlying intuition is that elements of the dual space are "machines" that take a vector and return a number./
+
+** Questions
+
+*** DONE So the point of this definition is basically introducing alias $E^{*}$ for $\mathcal{L}(E, \mathbb{K})$ and linear functional?
+
+Yes.
 
 * Theorem     1.29:  Existence of dual basis
 
@@ -847,6 +879,8 @@ For a normed $\mathbb{K}$ vector space $(E, \|\cdot\|_E)$, there are two notions
 
 * Typos
 
-- [ ] Definition 1.6: axiom 4.
-- [ ] Definition 1.7: "binary operations" -> "binary operation"
-- [ ] Definition 1.7: axiom 8.
+- [ ] Definition 1.6: axiom 4 - $\ldots \lambda \cdot x + \mu \cdot y$ -> $\ldots \lambda \cdot x + \mu \cdot x$.
+- [ ] Definition 1.7: "binary operations" -> "binary operation".
+- [ ] Definition 1.7: axiom 8 - same as Definition 1.6 typo.
+- [ ] Definition 1.23: complementary definition is redundant.
+- [ ] Proposition 1.25: "are subspaces of $E$" - $\mathrm{im}(f)$ is a subspace of $F$.
