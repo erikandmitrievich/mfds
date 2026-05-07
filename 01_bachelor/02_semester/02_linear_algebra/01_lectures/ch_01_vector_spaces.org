@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-05-07 17:16>
+#+lastmod: <2026-05-07 20:57>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -630,6 +630,12 @@ $$[g \circ f]^{\mathcal{G}}_{\mathcal{E}} [x]^{\mathcal{E}} = [g]^{\mathcal{G}}_
 
 which leads to the desired equality.
 
+** Questions
+
+*** DONE Whenever I see something like $[f]_{\mathcal{E}}^{\mathcal{F}}$, should I think of it as a matrix straight away?
+
+Yes, and Lemma 1.34 already said that.
+
 * Proposition 1.39:  Matrix representation of inverse application
 
 Let $\mathcal{E}$ and $\mathcal{F}$ be bases of vector spaces $E$ and $F$, respectively, and let $f : E \rightarrow F$ be an invertible linear application. Then the inverse application $f^{-1} : F \rightarrow E$ has the following matrix representation:
@@ -640,19 +646,43 @@ $$[f^{-1}]^{\mathcal{E}}_{\mathcal{F}} = \left( [f]^{\mathcal{F}}_{\mathcal{E}} 
 
 Left as an exercise.
 
+** Questions
+
+*** DONE What is $M^{-1}$ for a matrix?
+
+For a $M \in \mathbb{K}^{n \times n}$:
+
+$$MM^{-1} = M^{-1}M = I_n$$
+
+*** TODO What is the proof?
+
 * Definition  1.40:  Matrix of change of basis
 
-Let $E$ be an $n$-dimensional vector space, and let an input and an output basis $\mathcal{E} = \{e_1, \ldots, e_n\}$ and $\mathcal{F} = \{f_1, \ldots, f_n\}$. The matrix of change of basis from $\mathcal{E}$ to $\mathcal{F}$ is the invertible matrix $[\operatorname{Id}]^{\mathcal{F}}_{\mathcal{E}}$. Its columns are the vectors of $\mathcal{E}$ written in the basis $\mathcal{F}$. The matrix converts coordinate vectors expressed in the basis $\mathcal{E}$ to coordinate vectors in $\mathcal{F}$.
+Let $E$ be an $n$ dimensional vector space, and let an input and an output basis $\mathcal{E} = \{e_1, \ldots, e_n\}$ and $\mathcal{F} = \{f_1, \ldots, f_n\}$. The matrix of change of basis from $\mathcal{E}$ to $\mathcal{F}$ is the invertible matrix $[\operatorname{Id}]^{\mathcal{F}}_{\mathcal{E}}$. Its columns are the vectors of $\mathcal{E}$ written in the basis $\mathcal{F}$. The matrix converts coordinate vectors expressed in the basis $\mathcal{E}$ to coordinate vectors in $\mathcal{F}$.
+
+** Questions
+
+*** DONE What is an invertable matrix?
+
+$M \in \mathbb{K}^{n \times n}$ is invertable iff $\exists M^{-1} : MM^{-1} = M^{-1}M = I_n$
+
+*** DONE What is an $\mathrm{Id}$ matrix?
+
+$$\mathrm{Id} : E \rightarrow E, \quad \mathrm{Id}(x) = x$$
+
+*** DONE This definition is just rephrasing of what was said in Lemma 1.34 up to Proposition 1.39. What is the point of it then?
+
+Yes. Definition 1.40 is special case of Proposition 1.36.
 
 * Proposition 1.41:  Change of basis representation of endomorphisms
 
-Let $E$ be an $n$-dimensional vector space, let $\mathcal{E} = \{e_1, \ldots, e_n\}$ and $\mathcal{F} = \{f_1, \ldots, f_n\}$ be two bases, and let $T \in \mathcal{L}(E)$. Then
+Let $E$ be an $n$ dimensional vector space, let $\mathcal{E} = \{e_1, \ldots, e_n\}$ and $\mathcal{F} = \{f_1, \ldots, f_n\}$ be two bases, and let $T \in \mathcal{L}(E)$. Then
 
 $$[T]^{\mathcal{F}}_{\mathcal{F}} = [\operatorname{Id}]^{\mathcal{F}}_{\mathcal{E}} \, [T]^{\mathcal{E}}_{\mathcal{E}} \, [\operatorname{Id}]^{\mathcal{E}}_{\mathcal{F}}.$$
 
 *Proof.*
 
-Let $f_j$ be the $j$-th basis element of $\mathcal{F}$. By /Proposition 1.36/, it holds that
+Let $f_j$ be the $j$ th basis element of $\mathcal{F}$. By /Proposition 1.36/, it holds that
 
 $$[T(f_j)]^{\mathcal{E}}_{\mathcal{E}} = [T]^{\mathcal{E}}_{\mathcal{E}} [f_j]^{\mathcal{E}}.$$
 
@@ -664,20 +694,44 @@ In addition, by Eq. (1.5), we have that $[T(f_j)]^{\mathcal{E}} = [\operatorname
 &= [\operatorname{Id}]^{\mathcal{F}}_{\mathcal{E}} \, [T]^{\mathcal{E}}_{\mathcal{E}} \, [\operatorname{Id}]^{\mathcal{E}}_{\mathcal{F}}.
 \end{align*}
 
+** Questions
+
+*** DONE Was the point of this proposition to show that to apply a linear map $T \in \mathcal{L}(E)$ we would need to change basis from $F$ to $E$, apply linear map $T$, and then convert back to $F$?
+
+Yes, thats structurally correct, but thats not the only point of Proposition.
+
 * Definition  1.42:  Projection mapping
 
 Let $E$ be a vector space. A linear map $P : E \rightarrow E$ is called a projection mapping if and only if $P^2 = P$.
+
+** Questions
+
+*** DONE Why is it called a "projection mapping"?
+
+The name comes from the geometric picture. If $P^2 = P$, then applying $P$ twice does the same thing as applying it once, meaning everything in the image of $P$ is already fixed by $P$.
+
+*** DONE But would it be more accurate to define projection mapping through some object, and not from the linear map itself?
+
+Yes, here is another definition:
+
+Given $E = W \oplus W'$, define $P : E \rightarrow E$ by $P(w + w') = w : w \in W, w' \in W'$. This is equivalent to $P^{2} = P$, the projection keeps the $W$ component ($\mathrm{im](P) = W$) and kills the $W'$ component $\mathrm{ker}(P) = W'$.
+
+*** DONE Would a definition with $P^{n} = P : n \ge 2$ be accurate as well?
+
+Yes, they are equivalent.
 
 * Definition  1.45:  Projection onto a subspace
 
 Let $E$ be a vector space with subspaces $F, G \subseteq E$ such that $F \oplus G = E$. The projection on $F$ associated to the direct sum $F \oplus G$ is the linear application
 
 \begin{align*}
-P_{F \oplus G} &: E \rightarrow F \subseteq E \\
+P_{F \oplus G} : E &\rightarrow F \subseteq E \\
 x = x_F + x_G &\mapsto x_F,
 \end{align*}
 
 where, for every $x \in E$, we use the unique decomposition $x = x_F + x_G$ with respect to the direct sum.
+
+** Questions
 
 * Definition  1.46:  Symmetry with respect to a subspace
 
