@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-27>
-#+lastmod: <2026-05-04 17:42>
+#+lastmod: <2026-05-08 18:00>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -1248,3 +1248,83 @@ Stooge sort is asymptotically worse than every algorithm in the comparison, incl
 - Problem 45: "This problem examine the search algorithm" → "This problem examines the search algorithm"
 - Problem 47: "all processes gets a base priority value" → "all processes get a base priority value"
 - Problem 51: ~end if~ on line 7 is misplaced — the three recursive calls (lines 8–10) should be inside the ~if p + 1 < r~ block, otherwise $k$ is undefined when $p + 1 \geq r$. The ~end if~ should be on line 11 (after the recursive calls), and the procedure's ~end procedure~ on line 12.
+
+* Questions
+
+** Problem 47
+
+*** DONE What is a =mutable struct= and why was it used?
+
+In Julia, struct by default is immutable: once constructed, fields can not be reassigned. Mutable struct on the other hand, allows assignment after construction.
+
+It was used here because Problem 48 would need =decrease_key= and =increase_key= to mutate =real_priority=. With an immutable struct, =decrease_key= and =increase_key= would need to reconstruct the whole =Node=.
+
+*** DONE But why then the =MinHeap= is not =mutable struct=? In Problem 49, =MinHeap= deletes the nodes.
+
+The distinction is between /reassigning the field/ and /mutating the object a field points to/.
+
+#+begin_src julia
+
+h.data = some_other_vector   # reassigning the data field itself
+
+h.data[i].real_priority = UInt8(rp)   # reassigning a field of a Node (mutating object)
+
+#+end_src
+
+*** DONE Why =NTuple= when exercise asks for an array?
+
+"Array of size 20" describes a fixed-size sequence — that's what Julia spells =NTuple{20, T}=.
+
+Julia's =Array= is the wrong translation: dynamically resizable, heap-allocated behind a pointer, GC-tracked.
+
+=NTuple= just fits better.
+
+*** DONE What is =MinHeap() = new(Node[])= and what is for?
+
+This is an inner constructor.
+
+*** DONE But why does the inner constructor not define what to assign to what?
+
+It construct in a sequence. As there is only one field, it gets assigned to it.
+
+*** DONE Where in the exercise were mentioned to do =push!= =pop!= and =peek=?
+
+"the process scheduler always picks the next process among those with lowest real priority value" - implies.
+
+As for the names, actually =heap_insert= and =heap_extract_min= would be more accurate. =peek= was unnecessary.
+
+*** DONE What is =Base= in =Base.push!= and =Base.pop!=?
+
+=Base.push!/pop!= extends an existing function instead of creating a new one.
+
+*** DONE What is a general name for those functions?
+
+Those are called methods.
+
+*** DONE Why base priority is =0x00=? What is it?
+
+It is basically =UInt8(0)=, a zero with type =UInt8=.
+
+*** DONE But what was the point of =0x00=? Why not write just a =0=?
+
+Style choice.
+
+*** DONE What is this notation =ntuple(_->0,20)=?
+
+=ntuple(f, n)= is a Base function that construct a tuple =(f(1), ..., f(n))=. In my example, I was using the anonimous function that returns =0=. Hence it populates tuple with n amount of zeros.
+
+*** DONE What is =@assert=?
+
+It is a quard condition that throws an error if the condition was false.
+
+** Problem 48
+
+*** TODO What is the point of priority queue data structure?
+
+*** TODO What is a =Handle= structure?
+
+*** TODO The point of extracting =swap!= from =siftup!= and =siftdown!=?
+
+*** TODO Why =decrease_key= and =increase_key=? Whats their point?
+
+*** TODO What does second test do?
