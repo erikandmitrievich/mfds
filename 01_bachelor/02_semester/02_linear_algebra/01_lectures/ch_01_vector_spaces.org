@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-05-07 20:57>
+#+lastmod: <2026-05-08 12:10>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -381,7 +381,7 @@ True, lecture notes misses the proof of that points.
 
 1. $F \cap G$ is a subspace: $0_E \in F$ and $0_E \in G$, so $0_E \in F \cap G$. If $x, y \in F \cap G$ and $\lambda, \mu \in \mathbb{K}$, $\lambda x + \mu y \in F$ (since $F$ is a subspace), and $\lambda x + \mu y \in G$ (since $G$ is a subspace), hence $\lambda x + \mu y \in F \cap G$.
 
-2. $F \cup G$ is in general not a subspace: Take $\mathbb{R}^2$, let $F$ be $x$ axis and $G$ be $y$ axis. Then, $(1,0) \in F \cup G$ and $(0,1) \in F \cup G$, but $(1,0) + (0,1) = (1,1) \in F \cup G$.
+2. $F \cup G$ is in general not a subspace: Take $\mathbb{R}^2$, let $F$ be $x$ axis and $G$ be $y$ axis. Then, $(1,0) \in F \cup G$ and $(0,1) \in F \cup G$, but $(1,0) + (0,1) = (1,1) \notin F \cup G$.
 
 3. $F + G$ is a subspace: $0_E = 0_E + 0_E \in F + G$. If $x_1 + y_1, x_2 + y_2 \in F + G$, with $x_i \in F, y_i \in G$, then $\lambda(x_1 + y_1) + \mu(x_2 + y_2) = (\lambda x_1 + \lambda y_1) + (\mu x_2 + \mu y_2) \in F + G$.
 
@@ -714,7 +714,7 @@ The name comes from the geometric picture. If $P^2 = P$, then applying $P$ twice
 
 Yes, here is another definition:
 
-Given $E = W \oplus W'$, define $P : E \rightarrow E$ by $P(w + w') = w : w \in W, w' \in W'$. This is equivalent to $P^{2} = P$, the projection keeps the $W$ component ($\mathrm{im](P) = W$) and kills the $W'$ component $\mathrm{ker}(P) = W'$.
+Given $E = W \oplus W'$, define $P : E \rightarrow E$ by $P(w + w') = w : w \in W, w' \in W'$. This is equivalent to $P^{2} = P$, the projection keeps the $W$ component ($\mathrm{im}(P) = W$) and kills the $W'$ component $\mathrm{ker}(P) = W'$.
 
 *** DONE Would a definition with $P^{n} = P : n \ge 2$ be accurate as well?
 
@@ -733,6 +733,10 @@ where, for every $x \in E$, we use the unique decomposition $x = x_F + x_G$ with
 
 ** Questions
 
+*** DONE I do not quite understand the point here. Is it just the same definition that I outlined in previous Definition 1.42 question?
+
+Yes, the Definition 1.45 is the subspace based definition I wrote in answer for question in Definition 1.42.
+
 * Definition  1.46:  Symmetry with respect to a subspace
 
 Let $E$ be a vector space with subspaces $F, G \subseteq E$ such that $F \oplus G = E$. The symmetry with respect to $F$ associated to the direct sum $F \oplus G$ is the linear application
@@ -741,6 +745,34 @@ Let $E$ be a vector space with subspaces $F, G \subseteq E$ such that $F \oplus 
 S_{F \oplus G} &: E \rightarrow E \\
 x = x_F + x_G &\mapsto x_F - x_G.
 \end{align*}
+
+** Questions
+
+*** DONE I do not quite understand the concept of $x_{F} - x_{G}$, as $F \cap G = \{0\}$ - they do not have any shared dimensions. So how could there be a difference of one vector with another?
+
+$F \cap G = \{0\}$ means they share no non zero vectors - but $x_{F} - x_{G}$ does not require them to share anything. Both $x_{F}, x_{G}$ are elements of $E$. Imagine it like $E = \mathbb{R}^{2}, F = \mathrm{span}((1,0)), G = \mathrm{span}((0,1))$, take $x = (3,5)$, then $x_{F} = (3,0), x_{G} = (0,5)$.
+
+- Projection: $P(x) = (3,0)$
+- Symmetry: $S(x) = (3,0) - (0,5) = (3,-5)$
+
+Notice, that the relationship is: $S = 2P - \mathrm{Id}$.
+
+*** DONE But why is it called a symmetry? Where symmetry is? I do not see one.
+
+A symmetry is that $S^2 = \mathrm{Id}$.
+
+\begin{align*}
+S(x_{F} + x_{G}) &= x_{F} - x_{G} \\
+S(x_{F} - x_{G}) &= x_{F} + x_{G} \\
+&= x \\
+\end{align*}
+
+*** DONE But then, is it a projection?
+
+No. Projection satisfies $P^{2} = P$, while symmetry satisfies $S^{2} = \mathrm{Id}$.
+
+- Projection: $x_{G} \mapsto 0$ (kills it)
+- Symmetry: $x_{G} \mapsto -x_{G}$ (negate it)
 
 * Proposition 1.48:  Kernel and image of projection and symmetry
 
@@ -760,6 +792,22 @@ We shall prove the first two set equalities by double inclusion.
 2. ($\operatorname{im} P = F$): If $x \in \operatorname{im} P$, then there exists $y \in E$ such that $P(y) = x$, writing the direct sum decomposition $y = y_F + y_G$ we get that $x = P(y) = y_F \in F$, therefore $\operatorname{im} P \subseteq F$. Conversely, for $x \in F$, since $P$ is a projection, we get that $P(x) = \operatorname{Id}(x) = x$ (why?), which implies that $x \in \operatorname{im} P$, therefore $F \subseteq \operatorname{im} P$.
 
 3. ($\ker S = 0$ and $\operatorname{im} S = E$): Observe that $S^2 = \operatorname{Id}$, therefore $S^{-1} = S$ and $S$ is an invertible linear application, consequently $\ker S = \{0\}$ and $\operatorname{im} P = E$.
+
+** Questions
+
+*** DONE What exactly does the "associated" mean? I saw it multiple times already.
+
+It just means: "defined using" or "determined by".
+
+*** DONE I thought that $\mathrm{ker}(P_{F \oplus G}) = F$ and $\mathrm{im}(P_{F \oplus G}) = G$. Am I wrong? I think I might be mixing vector spaces with complementary subspaces.
+
+Yes, you are wrong.
+
+$P$ projects onto $F$, meaning $F$ is what survives, $G$ is killed:
+
+- $\mathrm{im}(P) = F$: the output is always $F$
+- $\mathrm{ker}(P) = G$: the input that maps to $0$ is $G$
+
 * Definition  1.49:  Distance function
 
 Let $E$ be a nonempty set. A function $d : E \times E \rightarrow \mathbb{R}$ is called a distance on $E$ if and only if:
