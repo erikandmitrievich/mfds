@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-05-09 15:41>
+#+lastmod: <2026-05-09 15:44>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -139,7 +139,7 @@ The definition works with the following operations:
 
 - $\cdot_{\mathbb{K}}$: field multiplication
 
-- $+_E$: vector multiplication
+- $+_E$: vector addition
 
 Scalar multiplication $\cdot : \mathbb{K} \times E \rightarrow E$ is a new bridge operation.
 
