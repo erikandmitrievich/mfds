@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-05-09 15:37>
+#+lastmod: <2026-05-09 15:41>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -511,10 +511,6 @@ Nothing to do with matrices. $i$ is responsible for elements of dual basis, whil
 * Corollary   1.30:  Dimension of dual space
 
 If $E$ is finite-dimensional, then $\dim(E) = \dim(E^*)$.
-
-** Questions
-
-*** WAIT But why if $E$ would be infinite dimensional $\mathrm{dim}(E) \neq \mathrm{dim}(E^{*})$?
 
 * Definition  1.31:  Annihilator
 
@@ -1126,7 +1122,7 @@ Therefore
 
 *** DONE But doesn't $\mathcal{B}(E,F)$ definition through $T$'s continuity need to establish a relationship between epsilon and delta directly to prove it?
 
-Yes, and the lemma misses it. It should be $\delta = \dfrac{\epsilon}{\|T\|_{\mathrm{op}}}$.
+Not really, This belongs to the proof section. It should be $\delta = \dfrac{\epsilon}{\|T\|_{\mathrm{op}}}$.
 
 * Definition  1.62:  Algebraic vs topological dual
 
@@ -1154,7 +1150,7 @@ They are not the same object.
 
 - $E'$: vector space of all *bounded* linear functionals $E \rightarrow \mathbb{K}$
 
-Hence $E' \in E^{*}$.
+Hence $E' \subseteq E^{*}$.
 
 The part "there are two notions of dual spaces" is misleading.
 
