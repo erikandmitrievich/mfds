@@ -1,0 +1,95 @@
+#+title: Ps 08
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-09>
+#+lastmod: <2026-05-09 17:18>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Problem 3.4 :inner_product:matrix:
+** Task
+#+begin_quote
+(Inner product defined by matrices) Let $B \in \mathbb{C}^{p \times q}$ be a matrix with $p \geq q$, and let $\omega : \mathbb{C}^q \times \mathbb{C}^q \to \mathbb{C}$ be the following mapping:
+\[
+\omega(x, y) = (By)^H B x
+\]
+Give necessary and sufficient condition on the matrix $B$ such that $\omega$ is an inner product.
+#+end_quote
+
+** Solution
+
+* Problem 3.5 :bilinear_form:matrix:
+** Task
+#+begin_quote
+(Bilinear form from trace) Let $\mathbb{E} = \mathbb{R}^2$, we define the following function $b : \mathbb{E} \times \mathbb{E} \to \mathbb{R}$ with
+\[
+b\left( \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}, \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} \right) = \operatorname{Tr} \begin{pmatrix} x_1 & y_1 \\ x_2 & y_2 \end{pmatrix}
+\]
+Is $b$ a bilinear form? If so, give $[b]_{\mathcal{E}\mathcal{E}}$, where $\mathcal{E} = \{e_1, e_2\}$ is the standard basis on $\mathbb{R}^2$.
+#+end_quote
+
+** Solution
+
+* Problem 3.6 :inner_product:bilinear_form:orthonormal_basis:
+** Task
+#+begin_quote
+(Inner product of trigonometric functions) We define the following vector space:
+\[
+\mathbb{E} = \{ f : \mathbb{R} \to \mathbb{R} \;:\; f(x) = \alpha \cos x + b \sin x,\ \alpha, b \in \mathbb{R} \}
+\]
+We assume proven that $\mathcal{B} = \{\cos x, \sin x\}$ forms a basis on this space.
+
+(i) On $\mathbb{E}$ we define the following bilinear form:
+\[
+\omega(f, g) = \int_0^\pi f(x) g(x) \, dx
+\]
+Give the representation $[\omega]_{\mathcal{B}\mathcal{B}}$. Can we conclude from this matrix representation that $\omega$ is an inner product? Is the basis $\mathcal{B}$ an orthogonal basis w.r.t. $\omega$? Is it orthonormal? Give an orthogonal/orthonormal basis if $\mathcal{B}$ is not.
+
+(ii) Given $y \in \mathbb{R}$, we define the /phase shift operator/ $T_y : \mathbb{E} \to \mathbb{E}$ as in ex. 1.41.
+
+(iii) Show that the mapping $b : \mathbb{E} \to \mathbb{E}$ where $b(f, g) := \omega(T_y f, T_y g)$ is also an inner product.
+
+(*Indication*: If $T_y : \mathbb{E} \to \mathbb{E}$ is an automorphism, then we can apply the result from ex. 2.10.)
+
+(iv) From the previous point, prove that $\omega$ is /invariant/ under the actions of $T_y$, that is to say:
+\[
+\omega(f, g) = \omega(T_y f, T_y g), \quad \forall f, g \in \mathbb{E}
+\]
+(*Indication*: instead of evaluating these messy integrals, make use of the matrix representations of $\omega(\cdot, \cdot)$ and $b(\cdot, \cdot) = \omega(T_y \cdot, T_y \cdot)$.)
+#+end_quote
+
+** Solution
+
+* Problem 3.8 :bilinear_form:polynomial:
+** Task
+#+begin_quote
+(Bilinear form on polynomial spaces) Let $\mathbb{E} = \mathbb{R}_2[X]$ be the space of polynomials with degree less or equal to 2, and $\mathcal{E} = \{1, X, X^2\}$ be the standard basis on $\mathbb{E}$.
+
+(i) Let $b : \mathbb{E} \times \mathbb{E} \to \mathbb{R}$ be the bilinear form defined by $b(P, Q) = \int_0^1 P'(X) Q(X) \, dX$, where $P(X), Q(X) \in \mathbb{E}$. Compute $[b]_{\mathcal{E}\mathcal{E}}$.
+
+(ii) Is $b$ symmetric? If not, give a specific pair of $P, Q \in \mathbb{E}$ such that $b(P, Q) \neq b(Q, P)$.
+
+(iii) Is $b$ /left-degenerate/ (i.e. does there exists a non-zero $P \in \mathbb{E}$ such that $b(P, Q) = 0$ for all $Q \in \mathbb{E}$)?
+
+(iv) Is $b$ /right-degenerate/ (i.e. does there exists a non-zero $Q \in \mathbb{E}$ such that $b(P, Q) = 0$ for all $P \in \mathbb{E}$)? Justify the existence of such polynomials using an argument of the rank of $[b]_{\mathcal{E}\mathcal{E}}$, and find a specific polynomial $\tilde{Q} \in \mathbb{E}$ that satisfies $b(P, Q) = 0,\ \forall P \in \mathbb{E}$.
+
+(v) (*Optional*) Check using integration by parts the $\tilde{Q}$ that we have obtained in the previous point satisfies $\int_0^1 P'(X) \tilde{Q}(X) \, dX = 0$, for all $P(X) \in \mathbb{E}$.
+#+end_quote
+
+** Solution
+
+* Errors/Typos
+- Problem 3.6: "$\alpha \cos x + b \sin x,\ \alpha, b \in \mathbb{R}$" → likely intended "$a \cos x + b \sin x,\ a, b \in \mathbb{R}$" (Greek $\alpha$ paired with Latin $b$ is inconsistent; standard parametrization uses $a, b$).
+- Problem 3.8 (iii): "does there exists" → "does there exist"
+- Problem 3.8 (iv): "does there exists" → "does there exist"
+- Problem 3.8 (iv): final clause "$b(P, Q) = 0,\ \forall P \in \mathbb{E}$" → should be "$b(P, \tilde{Q}) = 0,\ \forall P \in \mathbb{E}$" (the polynomial being characterised is $\tilde{Q}$, not a generic $Q$).
+- Problem 3.8 (v): "Check using integration by parts the $\tilde{Q}$ that we have obtained in the previous point satisfies …" → missing conjunction; intended "Check using integration by parts *that* the $\tilde{Q}$ … satisfies …".
