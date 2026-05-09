@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-05-08 12:10>
+#+lastmod: <2026-05-09 15:37>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -832,6 +832,14 @@ Let $E$ be a nonempty set. A function $d : E \times E \rightarrow \mathbb{R}$ is
 
    $$d(x, x) = 0, \quad \forall x \in E.$$
 
+** Questions
+
+*** DONE But why is it decided that distance function codomain is $\mathbb{R}$? Why is it 1 dimensional? Why is it not $\mathbb{R}$ and not a field that $E$ is over?
+
+First, $E$ here is a nonempty set, not a vector space.
+
+Second, distance in $\mathbb{R}$ because its canonical total order.
+
 * Definition  1.50:  Metric space
 
 A metric space $(E, d)$ is a pair of a set $E$ and a distance function $d : E \times E \rightarrow \mathbb{R}$.
@@ -850,6 +858,28 @@ Let $(E, +, \cdot)$ be a $\mathbb{K}$ vector space. A norm is a mapping $\|\cdot
 
 $(E, \|\cdot\|_E)$ is called a normed vector space.
 
+** Questions
+
+*** DONE What is the point of writing $E$ in $\|\cdot\|_{E}$? Is it to be more precise when working with multiple vector spaces?
+
+Yes, exaclty. Just disambiguation when multiple spaces are present.
+
+*** DONE Why this notation $\|\cdot\|$? What does $\cdot$ there mean?
+
+The double bar $\|\cdot\|$ was deliberately chosen to evoke the absolute value $|\cdot|$, because the norm generalises it.
+
+$\cdot$ is just a placeholder for the argument.
+
+*** DONE What is the difference between norm and distance $d(0_{E}, x)$?
+
+Numerically identical: every norm induces a metric via $d(x,y) = \|x - y\|$, and then $d(0_{E}, x) = \|x\|$. But structurally, they are different levels of hierarchy.
+
+Norm requires more structure than distance:
+
+- Distance needs a set. Norm needs vector space - it uses scalar multiplication and addition.
+
+- Distance is between pair of points with no distinguished origin. Norm measures the size relative to $0_{E}$.
+
 * Proposition 1.53:  Norm induced metric
 
 Let $(E, \|\cdot\|_E)$ be a normed vector space. Define the function
@@ -861,11 +891,21 @@ d_{\|\cdot\|_E} &: E \times E \rightarrow \mathbb{R} \\
 
 Then $d_{\|\cdot\|_E}$ is a distance on $E$, and $(E, d_{\|\cdot\|_E})$ is a metric space.
 
-* Definition  1.55:  Norm equivalence
+** Questions
 
-Let $E$ be a $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$, and let $\|\cdot\|_{\alpha}$ and $\|\cdot\|_{\beta}$ be two norms on $E$. We say that $\|\cdot\|_{\alpha}$ and $\|\cdot\|_{\beta}$ are equivalent if there exists two constants $0 < \underline{c} \le \overline{c}$ such that
+*** DONE What is the point of $d_{\|\cdot\|_{E}}$? I do not understand the notation. Why is there $d$ and $\|\cdot\|_E$ together? It feels redundant and confusing. I feel I have a wrong understanding of norm and distance relationship.
 
-$$\underline{c} \|x\|_{\alpha} \le \|x\|_{\beta} \le \overline{c} \|x\|_{\alpha}, \quad \forall x \in E.$$
+The subscript $\|\cdot\|_E$ in $\|\cdot\|_{E}$ is not applying the norm, it's a label. It just says "the function $d$ was built from the norm $\|\cdot\|_E$".
+
+The thing is that $E$ can carry multiple norms ($\|\cdot\|_1, \|\cdot\|_2, \|\cdot\|_{\infty}$). Hence, each norm induces different distance functions:
+
+$$d_{\|\cdot\|_1}(x,y) = \|x - y\|_1, \qquad d_{\|\cdot\|_2}(x,y) = \|x - y\|_2$$
+
+*** DONE I see, but I still don't get the relationship between norm and distance. How are they related?
+
+Norm and distance measure different things. Norm measures the size of one vector relative to $0_E$, while distance - the gap between two points.
+
+Both of them are related by construction. If you have a norm, you could build a distance by $d(x,y) = \|x - y\|$. A reverse does not always work. Norm is a stronger concept, which requires more structure.
 
 * Lemma       1.54:  Examples of normed vector spaces
 
@@ -893,6 +933,44 @@ The following vector spaces can be endowed with norms and be seen as normed vect
 
 Showing that the above norms are indeed satisfying all necessary properties can become difficult for general values of $1 \le p < \infty$. The proof is easier for the cases $p \in \{1, 2, \infty\}$.
 
+** Questions
+
+*** DONE I do not quite understand this notation $\mathcal{C}([0,1], \mathbb{R})$. Please explain it.
+
+$\mathcal{C}$ means continuous, $[0,1]$ is domain, $\mathbb{R}$ is codomain.
+
+Together they mean a set of continuous functions $f : [0,1] \rightarrow \mathbb{R}$.
+
+*** DONE I do not quite understand the point of norm for a functions. Can you please explain it intuitively?
+
+A norm on $\mathbb{R}^{n}$ measures the size of the vector. A norm on $\mathcal{C}([0,1], \mathbb{R})$ measures the "size" of a function. The question is just "what do you mean by size?".
+
+- $\|f\|_{\infty} = \max_{x\in[0,1]}(f(x))$: tallest peak
+
+- $\|f\|_{1} = \int_0^1 |f(x)| dx$: total area under $|f|$
+
+- $\|f\|_{2} = \left( \int_0^1 |f(x)|^{2} dx \right)^{1/2}$: penalizes large values more than $\|\cdot\|_1$, but does not fixate on peak like $\|\cdot\|_{\infty}$
+
+* Definition  1.55:  Norm equivalence
+
+Let $E$ be a $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$, and let $\|\cdot\|_{\alpha}$ and $\|\cdot\|_{\beta}$ be two norms on $E$. We say that $\|\cdot\|_{\alpha}$ and $\|\cdot\|_{\beta}$ are equivalent if there exists two constants $0 < \underline{c} \le \overline{c}$ such that
+
+$$\underline{c} \|x\|_{\alpha} \le \|x\|_{\beta} \le \overline{c} \|x\|_{\alpha}, \quad \forall x \in E.$$
+
+** Questions
+
+*** DONE The definition of equivalence with two constants give impression that there exist norms such that their difference on those norms on same vector is enourmous. Gives Big O notation vibes. Am I right?
+
+Yes, exactly. Two equivalent norms can disagree wildly in numerical value, but never worse than a constant factor. The sandwitch $\underline{c} \|x\|_{\alpha} \le \|x\|_{\beta} \le \overline{c} \|x\|_{\alpha}$ is $\|x\|_{\beta} = \Theta(\|x\|_{\alpha})$.
+
+Concrete example in $\mathbb{R}^{n}$:
+
+$$\|x\|_{\infty} \le \|x\|_2 \le \sqrt{n} \|x\|_{\infty}$$
+
+*** DONE But I thought $\|\cdot\|_n : \forall n \in \mathbb{N} \cup \{\infty\}$ are the only existing norms.
+
+Those are called p-norms, and yes, they are not the only ones. One example of other norm is an operator norm in Theorem 1.60.
+
 * Theorem     1.56:  All norms are equivalent in finite dimension
 
 Let $E$ be a $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$. Then:
@@ -900,6 +978,7 @@ Let $E$ be a $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\mathb
 1. If $E$ is finite dimensional, then all norms are equivalent,
 
 2. If $E$ is infinite dimensional, then there always exists norms that are not equivalent.
+
 * Definition  1.57:  Bounded linear mappings
 
 Let $(E, \|\cdot\|_E)$ and $(F, \|\cdot\|_F)$ be two normed vector spaces. A linear mapping $T \in \mathcal{L}(E, F)$ is called bounded if there exists a constant $C > 0$ such that
@@ -910,13 +989,35 @@ The space of bounded linear mappings is
 
 $$\mathcal{B}(E, F) := \{T \in \mathcal{L}(E, F) : T \text{ is bounded}\}.$$
 
+** Questions
+
+*** DONE Why constant is a capital letter? Is there any point behind it?
+
+No deep meaning, pure convention. $c$ is just oftenly used for coordinates or coefficients.
+
+*** DONE Could you please explain intuitively boundedness of a linear map?
+
+A linear map can stretch vectors, but a bounded one stretches by at most a finite factor.
+
+$\|T(x)\|_F \le C \|x\|_E$: the output is never more than $C$ times the input.
+
+*** DONE $\mathcal{B}$ in $\mathcal{B}(E, F)$ looks very like basis. Do they relate?
+
+No, $\mathcal{B}$ stands for "bounded".
+
 * Lemma       1.58:  Bounded mappings contained in linear mappings
 
 It holds that
 
 $$\mathcal{B}(E, F) \subseteq \mathcal{L}(E, F),$$
 
-and: with infinite-dimensional spaces the inclusion may be strict, and when $E$ and $F$ are finite dimensional, equality holds.
+and: with infinite-dimensional spaces the inclusion is strict, and when $E$ and $F$ are finite dimensional, equality holds.
+
+** Questions
+
+*** DONE "with infinite-dimensional spaces the inclusion may be strict" - only "may"? I thought it would be a rule.
+
+Yes, that was an error.
 
 * Theorem     1.60:  Operator norm on bounded linear mappings
 
@@ -985,6 +1086,24 @@ We now show that $\|\cdot\|_{\mathrm{op}}$ is a norm in $\mathcal{B}(E, F)$. For
 
 The three norm axioms are satisfied, hence $\|\cdot\|_{\mathrm{op}}$ is a norm on $\mathcal{B}(E, F)$. We finish by showing that Eq. (1.12) holds. Let $T \in \mathcal{B}(E, F)$. By definition Eq. (1.10) of $\mathcal{B}(E, F)$, $T$ is bounded, therefore there exists $C > 0$ such that $\frac{\|T(x)\|_F}{\|x\|_E} \le C$ for all $x \ne 0 \in E$. Taking the supremum in $x \ne 0_E$ shows that $\|T\|_{\mathrm{op}} \le C < +\infty$, which in turn implies that $T \in \{T \in \mathcal{L}(E, F) : \|T\|_{\mathrm{op}} < +\infty\}$, and therefore $\mathcal{B}(E, F) \subseteq \{T \in \mathcal{L}(E, F) : \|T\|_{\mathrm{op}}\}$. To show the reverse inclusion, we let $T \in \mathcal{L}(E, F)$ be such that $\|T\|_{\mathrm{op}} < +\infty$. Therefore, by the property of the supremizer, it holds that $\frac{\|T(x)\|_F}{\|x\|_E} < \infty$ for all $x \ne 0 \in E$. In addition $\|T(0)\|_F = 0$. This shows that $T$ is bounded, thus a member of $\mathcal{B}(E, F)$, and concludes the proof.
 
+** Questions
+
+*** DONE What exactly is $\|x\|_{E} \le 1$, $\|x\|_{E} = 1$?
+
+$\|x\|_{E} \le 1 := \{x \in E : \|x\|_{E} \le 1\}$, its a unit ball.
+
+$\|x\|_{E} = 1 := \{x \in E : \|x\|_{E} = 1\}$, its a unit sphere.
+
+The theorem says the supremum over the ball equals to supremum over a sphere. This works because $T$ is linear: any vector inside the ball is a scaled down version of something on the sphere. $T$ can not produce larger output inside than on the boundary.
+
+*** DONE Could you please explain $\|T\|_{\mathrm{op}}$ definition in a more understandable way rather than formula?
+
+$\|T\|_{\mathrm{op}}$ is a maximum stretching factor of $T$. You feed in every unit vector, and take the biggest output.
+
+*** DONE Do I understand right that $\|\cdot\|_{\mathrm{op}}$ is basically a function on a function?
+
+Yes, $\mathcal{B}(E, F)$ is a vector space of a bounded linear maps (functions), and $\|\cdot\|_{\mathrm{op}} : \mathcal{B}(E, F) \rightarrow \mathbb{R}$.
+
 * Lemma       1.61:  Boundedness and continuity
 
 For linear mappings between normed spaces $(E, \|\cdot\|_E)$ and $(F, \|\cdot\|_F)$ the following are equivalent:
@@ -1003,6 +1122,12 @@ Therefore
 &= \{T \in \mathcal{L}(E, F) : T \text{ is continuous}\}.
 \end{align*}
 
+** Questions
+
+*** DONE But doesn't $\mathcal{B}(E,F)$ definition through $T$'s continuity need to establish a relationship between epsilon and delta directly to prove it?
+
+Yes, and the lemma misses it. It should be $\delta = \dfrac{\epsilon}{\|T\|_{\mathrm{op}}}$.
+
 * Definition  1.62:  Algebraic vs topological dual
 
 For a normed $\mathbb{K}$ vector space $(E, \|\cdot\|_E)$, there are two notions of dual spaces:
@@ -1019,6 +1144,20 @@ For a normed $\mathbb{K}$ vector space $(E, \|\cdot\|_E)$, there are two notions
 
   By /Theorem 1.60/, it is a normed vector space when endowed with the operator norm Eq. (1.11), which is often called the dual norm.
 
+** Questions
+
+*** DONE I do not understand, are algebraic dual and topological dual the same object? If yes, then why topological is defined through functionals of algebraic dual space instead of $\mathcal{L}(E, \mathbb{K})$?
+
+They are not the same object.
+
+- $E^{*}$: vector space of all linear functionals $E \rightarrow \mathbb{K}$
+
+- $E'$: vector space of all *bounded* linear functionals $E \rightarrow \mathbb{K}$
+
+Hence $E' \in E^{*}$.
+
+The part "there are two notions of dual spaces" is misleading.
+
 * Typos
 
 - [ ] Definition 1.6: axiom 4 - $\ldots \lambda \cdot x + \mu \cdot y$ -> $\ldots \lambda \cdot x + \mu \cdot x$.
@@ -1030,5 +1169,7 @@ For a normed $\mathbb{K}$ vector space $(E, \|\cdot\|_E)$, there are two notions
 - [ ] Lemma 1.34: $\mathbb{K}^{p \times n}$ -> $\mathbb{K}^{n \times p}$.
 - [ ] Lemma 1.34: "for all $i = 1, \ldots, n$" -> "for all $i = 1, \ldots, p$".
 - [ ] Lemma 1.34: $x = \sum_{i=1}^{n} c_i e_i$ -> $x = \sum_{i=1}^{p} c_i e_i$.
-- [ ] Lemma 1.34: $\lambda A[x]^{\mathcal{E}} + \mu A[x]^{\mathcal{E}}$ -> $\lambda A[x]^{\mathcal{E}} + \mu A[y]^{\mathcal{E}}$
-- [ ] Lemma 1.34: $[f_A(\mu x + \lambda y)]^{\mathcal{F}} = A[\mu x + \lambda y]^{\mathcal{E}} = \lambda A[x]^{\mathcal{E}} + \mu A[x]^{\mathcal{E}} = \lambda f_A(x) + \mu f_A(y)$ ->$[f_A(\lambda x + \mu y)]^{\mathcal{F}} = A[\lambda x + \mu y]^{\mathcal{E}} = \lambda A[x]^{\mathcal{E}} + \mu A[y]^{\mathcal{E}} = \lambda f_A(x) + \mu f_A(y)$ (or other form)
+- [ ] Lemma 1.34: $\lambda A[x]^{\mathcal{E}} + \mu A[x]^{\mathcal{E}}$ -> i$\lambda A[x]^{\mathcal{E}} + \mu A[y]^{\mathcal{E}}$.
+- [ ] Lemma 1.34: $[f_A(\mu x + \lambda y)]^{\mathcal{F}} = A[\mu x + \lambda y]^{\mathcal{E}} = \lambda A[x]^{\mathcal{E}} + \mu A[x]^{\mathcal{E}} = \lambda f_A(x) + \mu f_A(y)$ ->$[f_A(\lambda x + \mu y)]^{\mathcal{F}} = A[\lambda x + \mu y]^{\mathcal{E}} = \lambda A[x]^{\mathcal{E}} + \mu A[y]^{\mathcal{E}} = \lambda f_A(x) + \mu f_A(y)$ (or other form).
+- [ ] Lemma 1.58: "with infinite-dimensional spaces the inclusion may be strict" -> "with infinite-dimensional spaces the inclusion is strict".
+- [ ] Definition 1.52: "there are two notions of dual spaces" is misleading ("two notions of dual spaces" suggests two alternative ways of looking at the same thing).
