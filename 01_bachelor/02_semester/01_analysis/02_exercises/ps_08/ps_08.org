@@ -1,0 +1,91 @@
+#+title: Ps 08
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-09>
+#+lastmod: <2026-05-09 11:32>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Problem 1 :critical_point:classification:
+** Task
+#+begin_quote
+Consider $f: \mathbb{R}^2 \to \mathbb{R}$ given by
+\[
+f(x, y) = \sqrt{1 + x^2 + y^2}.
+\]
+Determine all critical points and classify them into local minima, maxima, and saddle points.
+#+end_quote
+
+** Solution
+
+* Problem 2 :critical_point:lipschitz:gradient_descent:
+** Task
+#+begin_quote
+Consider the function $f: \mathbb{R}^2 \to \mathbb{R}$ given by
+\[
+f(x, y) = \sin x + \cos y.
+\]
+
+(a) Determine all critical points and classify them as local minima, maxima, and saddle points.
+
+(b) Show that $\nabla f$ is $L$ -Lipschitz continuous.
+
+(c) Compute all critical points within $[0, 2\pi] \times [-\frac{\pi}{2}, \frac{3}{2}\pi]$ in Julia via gradient descent by selecting suitable initial vectors $(x_0, y_0)$.
+#+end_quote
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_02.jl
+#+end_src
+
+* Problem 3 :newton_method:linearization:
+** Task
+#+begin_quote
+Let $f: [a, b] \to \mathbb{R}$ be continuously differentiable. The Newton iteration is defined by
+\[
+x_{k+1} := x_k - \frac{f(x_k)}{f'(x_k)}, \quad k \in \mathbb{N},
+\]
+whenever $f'(x_k) \neq 0$.
+
+Justify the following interpretation of Newton's method:
+
+In the $k$ -th Newton iteration, the function $f$ is replaced by its affine linear approximation $F_k$ at $x_k$. The next iterate $x_{k+1}$ is then defined as the solution of the linearized equation $F_k(x) = 0$.
+
+More precisely:
+
+1. Determine the affine linear approximation $F_k$ of $f$ at $x_k$.
+2. Show that solving $F_k(x) = 0$ yields exactly the Newton iteration formula.
+#+end_quote
+
+** Solution
+
+* Problem 4 :newton_method:convergence:julia:
+** Task
+#+begin_quote
+Write a Julia function
+
+myNewton(f, x0, tol, maxiter)
+
+that performs Newton's method for a function $f$, starting from the initial value $x_0$. The iteration should terminate when either
+\[
+|x_{k+1} - x_k| < \text{tol},
+\]
+or when the maximal number of iterations maxiter is reached. Your function should return:
+- the final approximation,
+- the number of iterations used,
+- and a vector containing all iterates.
+
+Test your implementation on the equations $x^2 - 2 = 0$ and $\cos(x) - x = 0$. Experiment with different initial values $x_0$. What do you observe? Plot the convergence history $k \mapsto |x_k - x^*|$ for one suitable example, where $x^*$ denotes the computed root.
+#+end_quote
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_04.jl
+#+end_src
