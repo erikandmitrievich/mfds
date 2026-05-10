@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-09>
-#+lastmod: <2026-05-10 12:45>
+#+lastmod: <2026-05-10 20:56>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -74,6 +74,29 @@ H_f(0,0) &=
 1 & 0 \\
 0 & 1 \\
 \end{pmatrix} \\
+\end{align*}
+
+\begin{align*}
+\begin{pmatrix}
+x_1 & x_2 \\
+\end{pmatrix}
+\begin{pmatrix}
+1 & 0 \\
+0 & 1 \\
+\end{pmatrix}
+\begin{pmatrix}
+x_1 \\
+x_2 \\
+\end{pmatrix}
+&=
+\begin{pmatrix}
+x_1 & x_2 \\
+\end{pmatrix}
+\begin{pmatrix}
+x_1 \\
+x_2 \\
+\end{pmatrix} \\
+&= x_1^2 + x_2^2 > 0 \\
 &\implies (0,0) \text{ is a strict local minimum.}
 \end{align*}
 
@@ -94,6 +117,7 @@ savefig(joinpath(mkpath("./assets"), "p_01.png"))
 ** Task
 #+begin_quote
 Consider the function $f: \mathbb{R}^2 \to \mathbb{R}$ given by
+
 \[
 f(x, y) = \sin x + \cos y.
 \]
@@ -106,8 +130,159 @@ f(x, y) = \sin x + \cos y.
 #+end_quote
 
 ** Solution
-#+begin_src julia :results value :exports both :tangle julia/p_02.jl
+
+*** (a)
+
+\begin{align*}
+\nabla f(x,y) &=
+\begin{pmatrix}
+\cos(x) \\
+-\sin(y) \\
+\end{pmatrix} \\
+\nabla f(x,y) &= 0 \iff x = \dfrac{\pi}{2} + n\pi \text{ and } y = m\pi, \quad \forall n,m \in \mathbb{Z} \\
+\end{align*}
+
+\begin{align*}
+\partial_1 f &= \cos(x)
+& \partial_2 f &= -\sin(y) \\
+\end{align*}
+
+\begin{align*}
+\partial_{11} f &= -\sin(x)
+& \partial_{22} f &= -\cos(y) \\
+\partial_{12} f &= 0
+& \partial_{21} f &= \partial_{12} f \quad \text{(Schwarz)} \\
+\end{align*}
+
+\begin{align*}
+H_f(x,y) &=
+\begin{pmatrix}
+-\sin(x) & 0 \\
+0 & -\cos(y) \\
+\end{pmatrix} \\
+H_f\!\left(\tfrac{\pi}{2} + n\pi,\; m\pi\right) &=
+\begin{pmatrix}
+-\sin\!\left(\tfrac{\pi}{2} + n\pi\right) & 0 \\
+0 & -\cos(m\pi) \\
+\end{pmatrix}
+=
+\begin{pmatrix}
+(-1)^{n+1} & 0 \\
+0 & (-1)^{m+1} \\
+\end{pmatrix} \\
+\end{align*}
+
+\begin{align*}
+\begin{pmatrix}
+x_1 & x_2 \\
+\end{pmatrix}
+\begin{pmatrix}
+(-1)^{n+1} & 0 \\
+0 & (-1)^{m+1} \\
+\end{pmatrix}
+\begin{pmatrix}
+x_1 \\
+x_2 \\
+\end{pmatrix}
+&= (-1)^{n+1} x_1^2 + (-1)^{m+1} x_2^2 \\
+\end{align*}
+
+Case analysis on the parities of $n$ and $m$:
+\begin{align*}
+
+n \text{ odd},\; m \text{ odd}:\quad
+& x_1^2 + x_2^2 > 0
+&&\implies \left(\tfrac{\pi}{2} + n\pi,\; m\pi\right) \text{ is a strict local minimum.} \\
+n \text{ even},\; m \text{ even}:\quad
+& -x_1^2 - x_2^2 < 0
+&&\implies \left(\tfrac{\pi}{2} + n\pi,\; m\pi\right) \text{ is a strict local maximum.} \\
+n \text{ odd},\; m \text{ even}:\quad
+& x_1^2 - x_2^2 \text{ indefinite}
+&&\implies \left(\tfrac{\pi}{2} + n\pi,\; m\pi\right) \text{ is a saddle point.} \\
+n \text{ even},\; m \text{ odd}:\quad
+& -x_1^2 + x_2^2 \text{ indefinite}
+&&\implies \left(\tfrac{\pi}{2} + n\pi,\; m\pi\right) \text{ is a saddle point.} \\
+\end{align*}
+
+#+begin_src julia :results value
+using Plots
+
+f(x, y) = sin(x) + cos(y)
+xs = ys = -2π:0.05:2π
+
+ticks = (-2π:π/2:2π, ["-2π", "-3π/2", "-π", "-π/2", "0", "π/2", "π", "3π/2", "2π"])
+
+heatmap(xs, ys, f, c=:viridis, aspect_ratio=1, size=(800, 800), xticks=ticks, yticks=ticks)
+
+savefig(joinpath(mkpath("./assets"), "p_02_a.png"))
 #+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_bachelor/02_semester/01_analysis/02_exercises/ps_08/assets/p_02_a.png
+
+*** (b)
+
+\begin{align*}
+\nabla f(x,y) - \nabla f(\tilde{x}, \tilde{y}) &=
+\begin{pmatrix}
+\cos(x) - \cos(\tilde{x}) \\
+-\sin(y) + \sin(\tilde{y}) \\
+\end{pmatrix}
+\end{align*}
+
+By the mean value theorem applied to $\sin$ and $\cos$ on $\mathbb{R}$, together with $|\sin'| = |\cos| \leq 1$ and $|\cos'| = |\sin| \leq 1$:
+
+\begin{align*}
+|\cos(x) - \cos(\tilde{x})| &\leq |x - \tilde{x}| \\
+|\sin(y) - \sin(\tilde{y})| &\leq |y - \tilde{y}|
+\end{align*}
+
+Hence
+
+\begin{align*}
+\|\nabla f(x,y) - \nabla f(\tilde{x}, \tilde{y})\|^2
+&= (\cos(x) - \cos(\tilde{x}))^2 + (\sin(y) - \sin(\tilde{y}))^2 \\
+&\leq (x - \tilde{x})^2 + (y - \tilde{y})^2 \\
+&= \|(x,y) - (\tilde{x}, \tilde{y})\|^2.
+\end{align*}
+
+Therefore $\nabla f$ is $L$ -Lipschitz with $L = 1$. $\blacksquare$
+
+*** (c)
+
+#+begin_src julia :results output :exports both :tangle julia/p_02.jl
+let
+    ∇f(x, y) = (cos(x), -sin(y))
+
+    function gd(∇F, x0, y0; η=1.0, tol=1e-10, maxiter=10_000)
+        x, y = x0, y0
+        for _ in 1:maxiter
+            gx, gy = ∇F(x, y)
+            x -= η * gx
+            y -= η * gy
+            hypot(gx, gy) < tol && break
+        end
+        (x, y)
+    end
+
+    # Descent on f finds minima; descent on -f finds maxima.
+    # Separable structure: descend in x, ascend in y (etc.) to reach saddles.
+    ∇f_neg(x, y) = .-∇f(x, y)
+    ∇f_xmin_ymax(x, y) = (cos(x),  sin(y))   # min in x, max in y
+    ∇f_xmax_ymin(x, y) = (-cos(x), -sin(y))  # max in x, min in y
+
+    println("min:    ", gd(∇f,          4.0,  3.0))   # → (3π/2, π)
+    println("max:    ", gd(∇f_neg,      2.0,  0.5))   # → (π/2, 0)
+    println("saddle: ", gd(∇f_xmin_ymax, 4.0, 0.5))   # → (3π/2, 0)
+    println("saddle: ", gd(∇f_xmax_ymin, 2.0, 3.0))   # → (π/2, π)
+end
+#+end_src
+
+#+RESULTS:
+: min:    (4.71238898038469, 3.141592653589793)
+: max:    (1.5707963267948966, 0.0)
+: saddle: (4.71238898038469, 0.0)
+: saddle: (1.5707963267948966, 3.141592653589793)
 
 * Problem 3 :newton_method:linearization:
 ** Task
