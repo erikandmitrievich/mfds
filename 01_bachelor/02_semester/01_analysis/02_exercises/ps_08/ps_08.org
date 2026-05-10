@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-09>
-#+lastmod: <2026-05-09 11:32>
+#+lastmod: <2026-05-10 12:45>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -19,13 +19,76 @@
 ** Task
 #+begin_quote
 Consider $f: \mathbb{R}^2 \to \mathbb{R}$ given by
+
 \[
 f(x, y) = \sqrt{1 + x^2 + y^2}.
 \]
+
 Determine all critical points and classify them into local minima, maxima, and saddle points.
 #+end_quote
 
 ** Solution
+
+\begin{align*}
+\nabla f(x,y) &=
+\begin{pmatrix}
+\dfrac{x}{\sqrt{1 + x^2 + y^2}} \\
+\dfrac{y}{\sqrt{1 + x^2 + y^2}} \\
+\end{pmatrix} \\
+\nabla f(x,y) &= 0 \iff x = 0 \text{ and } y = 0 \\
+\end{align*}
+
+\begin{align*}
+\partial_1 f &= \dfrac{x}{\sqrt{1 + x^2 + y^2}}
+& \partial_2 f &= \dfrac{y}{\sqrt{1 + x^2 + y^2}} \\
+\end{align*}
+
+\begin{align*}
+\partial_{11} f
+  &= \dfrac{\sqrt{1+x^2+y^2} \;-\; x \cdot \dfrac{x}{\sqrt{1+x^2+y^2}}}{1 + x^2 + y^2}
+   = \dfrac{(1+x^2+y^2) - x^2}{(1+x^2+y^2)^{3/2}}
+   = \dfrac{1 + y^2}{(1 + x^2 + y^2)^{3/2}} \\
+\partial_{22} f
+  &= \dfrac{\sqrt{1+x^2+y^2} \;-\; y \cdot \dfrac{y}{\sqrt{1+x^2+y^2}}}{1 + x^2 + y^2}
+   = \dfrac{(1+x^2+y^2) - y^2}{(1+x^2+y^2)^{3/2}}
+   = \dfrac{1 + x^2}{(1 + x^2 + y^2)^{3/2}} \\
+\partial_{12} f
+  &= x \cdot \left(-\tfrac{1}{2}\right)(1+x^2+y^2)^{-3/2} \cdot 2y
+   = \dfrac{-xy}{(1 + x^2 + y^2)^{3/2}} \\
+\partial_{21} f &= \partial_{12} f \quad \text{(Schwarz)} \\
+\end{align*}
+
+\begin{align*}
+H_f(x,y) &=
+\begin{pmatrix}
+\dfrac{1 + y^2}{(1 + x^2 + y^2)^{3/2}} & \dfrac{-xy}{(1 + x^2 + y^2)^{3/2}} \\
+\dfrac{-xy}{(1 + x^2 + y^2)^{3/2}} & \dfrac{1 + x^2}{(1 + x^2 + y^2)^{3/2}} \\
+\end{pmatrix} \\
+H_f(0,0) &=
+\begin{pmatrix}
+\dfrac{1 + 0^2}{(1 + 0^2 + 0^2)^{3/2}} & \dfrac{-0}{(1 + 0^2 + 0^2)^{3/2}} \\
+\dfrac{-0}{(1 + 0^2 + 0^2)^{3/2}} & \dfrac{1 + 0^2}{(1 + 0^2 + 0^2)^{3/2}} \\
+\end{pmatrix}
+=
+\begin{pmatrix}
+1 & 0 \\
+0 & 1 \\
+\end{pmatrix} \\
+&\implies (0,0) \text{ is a strict local minimum.}
+\end{align*}
+
+#+begin_src julia :results value
+using Plots
+
+f(x, y) = (1 + x^2 + y^2)^(1/2)
+xs = ys = -2:0.05:2
+heatmap(xs, ys, f, c=:viridis, aspect_ratio=1, size=(800, 800))
+
+savefig(joinpath(mkpath("./assets"), "p_01.png"))
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_bachelor/02_semester/01_analysis/02_exercises/ps_08/assets/p_01.png
 
 * Problem 2 :critical_point:lipschitz:gradient_descent:
 ** Task
