@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-26>
-#+lastmod: <2026-05-03 15:03>
+#+lastmod: <2026-05-10 13:32>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -15,7 +15,7 @@
 #+property: header-args :eval never-export
 #+startup: overview latexpreview inlineimages
 
-* Theorem     7.1.1:   Reduction to coordinates
+* Theorem     7.1.01:  Reduction to coordinates
 
 Let $\dim V = n$, $\dim W = m$, and $f : V \rightarrow W$. Choose bases $B_V \subseteq V$, $B_W \subseteq W$ and define $F : \mathbb{R}^n \rightarrow \mathbb{R}^m$ by
 
@@ -45,7 +45,7 @@ $$f'(v) = \chi_{B_W} \, F'(x) \, \chi_{B_V}^{-1}.$$
 
   $$\chi_{B_V} (x_1, \ldots, x_n) = \sum_{i=1}^n x_i e_i$$
 
-* Definition  7.1.2:   Partial derivatives
+* Definition  7.1.02:  Partial derivatives
 
 The function $f : \mathbb{R}^n \rightarrow \mathbb{R}$ is called partially differentiable at $x \in \mathbb{R}^n$ if, for each $j = 1, \ldots, n$, the limit
 
@@ -59,7 +59,7 @@ is called the gradient of $f$ at $x$. Its transpose is a column vector and denot
 
 $$\nabla f(x) = \operatorname{grad} f(x)^\top.$$
 
-* Theorem     7.1.5:   Derivative and gradient in $\mathbb{R}^n$
+* Theorem     7.1.05:  Derivative and gradient in $\mathbb{R}^n$
 
 Let $f : \mathbb{R}^n \rightarrow \mathbb{R}$ be differentiable at $x \in \mathbb{R}^n$. Then $f$ is partially differentiable at $x$ and
 
@@ -83,7 +83,7 @@ $$\operatorname{grad} f(x) e_j = \partial_j f(x) = \lim_{t \rightarrow 0} \frac{
 
 Thus, the two linear maps $\operatorname{grad} f(x)$ and $f'(x)$ coincide, because they are equal on the basis $\{e_1, \ldots, e_n\}$.
 
-* Theorem     7.1.7:   Continuity of partials implies differentiability
+* Theorem     7.1.07:  Continuity of partials implies differentiability
 
 Let $U \subseteq \mathbb{R}^n$ be open and let $f : U \rightarrow \mathbb{R}$. If $f$ is partially differentiable in $U$ and all partial derivatives $\partial_1 f, \ldots, \partial_n f$ are continuous at $x \in U$, then $f$ is differentiable at $x$ and
 
@@ -144,7 +144,7 @@ This leads to $\varphi(h) / \|h\| \rightarrow 0$ and hence $f$ is differentiable
 
 $$f(x + h) = f(x) + \sum_{j=1}^{n} \partial_j f(x) h_j + \varphi(h) = f(x) + \operatorname{grad} f(x) h + \varphi(h).$$
 
-* Lemma       7.1.9:   Mixed partial derivatives commute
+* Lemma       7.1.09:  Mixed partial derivatives commute
 
 Let $U \subseteq \mathbb{R}^n$ be open and let $f : U \rightarrow \mathbb{R}$ be twice continuously partially differentiable. Then for all $i, j \in \{1, \ldots, n\}$ and all $x \in U$,
 
@@ -198,7 +198,7 @@ Let $U \subseteq \mathbb{R}^n$ be open and suppose that $f : U \rightarrow \math
 
 $$H_f(x) := \left( \partial_i \partial_j f(x) \right)_{i, j = 1}^{n}.$$
 
-* Theorem     7.2.1:   Taylor formula in $\mathbb{R}^n$
+* Theorem     7.2.01:  Taylor formula in $\mathbb{R}^n$
 
 Let $U \subseteq \mathbb{R}^n$ be open, $k \in \mathbb{N}$, and let $f : U \rightarrow \mathbb{R}$ be $k$ times continuously differentiable. Then for every $x_0 \in U$,
 
@@ -266,7 +266,7 @@ $$\omega(h) := \sup_{t \in [0, 1]} \max_{|\alpha| = k} \left| (\partial^\alpha f
 
 as $h \rightarrow 0$. Hence $R(h) = o(\|h\|^k)$.
 
-* Theorem     7.2.5:   Second-order sufficient conditions for extrema
+* Theorem     7.2.05:  Second-order sufficient conditions for extrema
 
 Let $f : \mathbb{R}^n \rightarrow \mathbb{R}$ be twice continuously differentiable and let $x_0 \in \mathbb{R}^n$ be a critical point, i.e. $\operatorname{grad} f(x_0) = 0$.
 
@@ -329,3 +329,187 @@ where $\varphi(h) / \|h\|^2 \rightarrow 0$ for $h \rightarrow 0$.
 * Lemma       7.2.10:  Second-order characterization of convexity
 
 Let $f \in \mathcal{C}^2(\mathbb{R}^n)$. Then $f$ is convex if and only if $H_f(x)$ is positive semi-definite for all $x \in \mathbb{R}^n$.
+
+* Lemma       7.3.01:  Jensen's inequality
+
+Let $f : \mathbb{R}^n \rightarrow \mathbb{R}$ be convex and $m \in \mathbb{N}$ with $m \ge 1$. Then
+
+$$f(\sum_{i=1}^{m} \lambda_i x_i) \le \sum_{i=1}^{m} \lambda_i f(x_i), \quad x_i \in \mathbb{R}^n, \quad \lambda_i \in \left[ 0, 1 \right], \quad \sum_{i=1}^{m} \lambda_i = 1.$$
+
+*Proof.*
+
+The case $m = 1$ is obvious and $m = 2$ is the definition of convexity. Assume that the claim holds for $m$. To verify the inequality for $m + 1$, we consider $\lambda_i \in \left[ 0, 1 \right]$ and $\sum_{i=1}^{m+1} \lambda_i = 1$. There must be one index $i$ such $\lambda_i \ne 0$. Without loss of generality, we may assume that $i = m + 1$, otherwise we may reorder. For $\lambda_{m+1} \ne 0$, we obtain
+
+\begin{align*}
+f(\sum_{i=1}^{m+1} \lambda_i x_i) &= f((1 - \lambda_{m+1}) \sum_{i=1}^{m} \frac{\lambda_i}{1 - \lambda_{m+1}} x_i + \lambda_{m+1} x_{m+1}) \\
+&\le (1 - \lambda_{m+1}) f(\sum_{i=1}^{m} \frac{\lambda_i}{1 - \lambda_{m+1}} x_i) + \lambda_{m+1} f(x_{m+1}).
+\end{align*}
+
+The induction hypothesis for $m$ leads to
+
+$$f(\sum_{i=1}^{m} \frac{\lambda_i}{1 - \lambda_{m+1}} x_i) \le \sum_{i=1}^{m} \frac{\lambda_i}{1 - \lambda_{m+1}} f(x_i),$$
+
+because $\sum_{i=1}^{m} \frac{\lambda_i}{1 - \lambda_{m+1}} = \frac{1}{1 - \lambda_{m+1}} \sum_{i=1}^{m} \lambda_i = 1$. We therefore derive
+
+\begin{align*}
+f(\sum_{i=1}^{m+1} \lambda_i x_i) &\le (1 - \lambda_{m+1}) \sum_{i=1}^{m} \frac{\lambda_i}{1 - \lambda_{m+1}} f(x_i) + \lambda_{m+1} f(x_{m+1}) \\
+&= \sum_{i=1}^{m+1} \lambda_i f(x_i).
+\end{align*}
+
+* Theorem     7.3.02:  Gradient descent
+
+Let $f : \mathbb{R}^d \rightarrow \mathbb{R}$ be convex and differentiable and assume that
+
+$$\| \nabla f(x) \| \le C \quad \text{for all } x \in \mathbb{R}^d$$
+
+for some $C > 0$. Let $x^*$ be a minimizer of $f$. For an initial $x_0 \in \mathbb{R}^d$, consider gradient descent
+
+$$x_{k+1} := x_k - \eta \, \nabla f(x_k)$$
+
+with step size $\eta > 0$. Define the average iterate
+
+$$\bar{x}_N := \frac{1}{N} \sum_{k=0}^{N-1} x_k.$$
+
+Then for every $N \ge 1$,
+
+$$|f(\bar{x}_N) - f(x^*)| \le \frac{\| x_0 - x^* \|^2}{2 \eta N} + \frac{\eta C^2}{2}.$$
+
+In particular, with $\eta = \| x_0 - x^* \| / (C \sqrt{N})$,
+
+$$|f(\bar{x}_N) - f(x^*)| \le N^{-\frac{1}{2}} \, C \| x_0 - x^* \|.$$
+
+Thus, the error is bounded by $|f(\bar{x}_N) - f(x^*)|$ decays as $N^{-1/2}$.
+
+*Proof.*
+
+Let $e_k := x_k - x^*$. Expanding the update gives
+
+\begin{align*}
+\| e_{k+1} \|^2 &= \| x_k - \eta \nabla f(x_k) - x^* \|^2 \\
+&= \| e_k - \eta \nabla f(x_k) \|^2 \\
+&= \| e_k \|^2 - 2 \eta \langle \nabla f(x_k), e_k \rangle + \eta^2 \| \nabla f(x_k) \|^2,
+\end{align*}
+
+and rearranging terms leads to
+
+$$2 \eta \langle \nabla f(x_k), e_k \rangle = \| e_k \|^2 - \| e_{k+1} \|^2 + \eta^2 \| \nabla f(x_k) \|^2.$$
+
+The first-order characterization of convexity in /Lemma 6.4.9/ yields
+
+$$f(x_k) - f(x^*) \le \text{grad} \, f(x_k) \, (x_k - x^*) = \langle \nabla f(x_k), e_k \rangle.$$
+
+The gradient bound, $\| \nabla f(x_k) \|^2 \le C^2$, leads to
+
+$$2 \eta (f(x_k) - f(x^*)) \le \| e_k \|^2 - \| e_{k+1} \|^2 + \eta^2 C^2.$$
+
+Summing from $k = 0$ to $N - 1$ telescopes:
+
+\begin{align*}
+2 \eta \sum_{k=0}^{N-1} (f(x_k) - f(x^*)) &\le \sum_{k=0}^{N-1} (\| e_k \|^2 - \| e_{k+1} \|^2) + N \eta^2 C^2 \\
+&= \| e_0 \|^2 - \| e_{N+1} \|^2 + N \eta^2 C^2 \\
+&\le \| e_0 \|^2 + N \eta^2 C^2.
+\end{align*}
+
+Divide by $2 \eta N$ and use convexity (Jensen) $f(\bar{x}_N) \le \frac{1}{N} \sum_{k=0}^{N-1} f(x_k)$ to conclude the claim.
+
+* Theorem     7.3.03:  Stochastic gradient descent for finite-sum problems
+
+Let $f_1, \ldots, f_n : \mathbb{R}^d \rightarrow \mathbb{R}$ be convex and differentiable, and define
+
+$$F(x) := \frac{1}{n} \sum_{i=1}^{n} f_i(x).$$
+
+Let $x^*$ be a minimizer of $f$. Assume that
+
+$$\| \nabla f_i(x) \| \le C \quad \text{for all } x \in \mathbb{R}^d, \quad i = 1, \ldots, n,$$
+
+for some $C > 0$. Let $(i_k)_{k\in\mathbb{N}}$ be independent uniformly distributed on $\{ 1, \ldots, n \}$, and define
+
+$$x_{k+1} = x_k - \eta \, \nabla f_{i_k}(x_k),$$
+
+with step size $\eta > 0$. Then for $\bar{x}_N := \frac{1}{N} \sum_{k=0}^{N-1} x_k$,
+
+$$\mathbb{E}[F(\bar{x}_N)] - F(x^*) \le \frac{\| x_0 - x^* \|^2}{2 \eta N} + \frac{\eta C^2}{2}.$$
+
+In particular, choosing $\eta = \| x_0 - x^* \| / (C \sqrt{N})$ yields
+
+$$\mathbb{E}[F(\bar{x}_N)] - F(x^*) \le N^{-\frac{1}{2}} \, C \| x_0 - x^* \|.$$
+
+*Proof idea.*
+
+The only probabilistic input we use is the following elementary fact: if $i$ is independently, uniformly distributed on $\{ 1, \ldots, n \}$ and $\psi : \{ 1, \ldots, n \} \rightarrow \mathbb{R}^m$ is any function, then
+
+$$\mathbb{E}_i[\psi(i)] = \frac{1}{n} \sum_{j=1}^{n} \psi(j).$$
+
+In our setting, this implies
+
+$$\mathbb{E}_{i_k}[\nabla f_{i_k}(x)] = \frac{1}{N} \sum_{i=1}^{N} \nabla f_i(x) = \nabla F(x).$$
+
+We now follow the proof of gradient descent and use the expectation at the appropriate locations. We omit the details.
+
+* Definition  7.3.04:  L-Lipschitz continuous
+
+A function $g : \mathbb{R}^d \rightarrow \mathbb{R}$ is called L-Lipschitz continuous if there exists a constant $L > 0$ such that
+
+$$\| g(x) - g(y) \| \le L \| x - y \|, \quad \forall x, y \in \mathbb{R}^d.$$
+
+* Lemma       7.3.05:  Descent lemma
+
+Let $f : \mathbb{R}^d \rightarrow \mathbb{R}$ be differentiable and suppose that $\nabla f$ is L-Lipschitz continuous. Then
+
+$$f(y) - f(x) \le \nabla f(x)^\top (y - x) + \frac{L}{2} \| y - x \|^2, \quad \forall x, y \in \mathbb{R}^d.$$
+
+*Proof.*
+
+Define the path $\phi : \left[ 0, 1 \right] \rightarrow \mathbb{R}$ by
+
+$$\phi(t) = f(x + t(y - x)).$$
+
+The chain rule leads to
+
+$$\phi'(t) = \nabla f(x + t(y - x))^\top (y - x).$$
+
+The fundamental theorem of calculus and Cauchy-Schwartz yield
+
+\begin{align*}
+f(y) - f(x) &= \int_0^1 \phi'(t) \, dt \\
+&= \int_0^1 \nabla f(x + t(y - x))^\top (y - x) \, dt \\
+&= \nabla f(x)^\top (y - x) + \int_0^1 \left( \nabla f(x + t(y - x)) - \nabla f(x)^\top \right)^\top (y - x) \, dt \\
+&\le \nabla f(x)^\top (y - x) + \int_0^1 \| \nabla f(x + t(y - x)) - \nabla f(x) \| \, \| y - x \| \, dt \\
+&\le \nabla f(x)^\top (y - x) + \int_0^1 L \| t(y - x) \| \, \| y - x \| \, dt \\
+&= \nabla f(x)^\top (y - x) + L \| y - x \|^2 \int_0^1 t \, dt \\
+&= \nabla f(x)^\top (y - x) + \frac{L}{2} \| y - x \|^2.
+\end{align*}
+
+* Theorem     7.3.06:  Gradient descent with Lipschitz gradient
+
+Let $f : \mathbb{R}^d \rightarrow \mathbb{R}$ be differentiable, bounded from below, so that $f(x) \ge r_0$ for all $x \in \mathbb{R}^d$. Suppose that $\nabla f$ is L-Lipschitz continuous. Then gradient descent
+
+$$x_{k+1} = x_k - \eta \nabla f(x_k), \quad 0 < \eta < \frac{2}{L},$$
+
+satisfies
+
+$$\nabla f(x_k) \rightarrow 0.$$
+
+*Proof.*
+
+By /Lemma 7.3.5/,
+
+$$f(x_{k+1}) - f(x_k) \le \nabla f(x_k)^\top (x_{k+1} - x_k) + \frac{L}{2} \| x_{k+1} - x_k \|^2.$$
+
+According to $x_{k+1} = x_k - \eta \nabla f(x_k)$, we derive
+
+$$f(x_{k+1}) - f(x_k) \le -\eta \| \nabla f(x_k) \|^2 + \frac{L \eta^2}{2} \| \nabla f(x_k) \|^2.$$
+
+We define $c := \eta(1 - \frac{L \eta}{2}) > 0$ and obtain
+
+$$f(x_{k+1}) - f(x_k) \le -\eta(1 - \frac{L \eta}{2}) \| \nabla f(x_k) \|^2 = -c \| \nabla f(x_k) \|^2.$$
+
+This implies $c \| \nabla f(x_k) \|^2 \le f(x_k) - f(x_{k+1})$ and summing from $k = 0$ to $N$ yields
+
+$$c \sum_{k=0}^{N} \| \nabla f(x_k) \|^2 \le \sum_{k=0}^{N} (f(x_k) - f(x_{k+1})) = f(x_0) - f(x_{N+1}) \le f(x_0) - r_0.$$
+
+Since this inequality holds for all $N \in \mathbb{N}$, we deduce that the series converges with
+
+$$c \sum_{k=0}^{\infty} \| \nabla f(x_k) \|^2 \le f(x_0) - r_0.$$
+
+This implies that $\| \nabla f(x_k) \|^2 \rightarrow 0$.
