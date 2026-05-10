@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-20>
-#+lastmod: <2026-05-10 13:25>
+#+lastmod: <2026-05-10 15:59>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -211,11 +211,57 @@ The case that $\phi$ is decreasing is analogous. $\square$
 
 * Definition  6.3.01:  Frechet differentiability
 
-Let $V$ and $W$ be normed vector spaces. A function $f : V \rightarrow W$ is called Fréchet differentiable at $x \in V$ if there exists a continuous linear map $f'(x) : V \rightarrow W$ such that
+Let $V$ and $W$ be normed vector spaces. A function $f : V \rightarrow W$ is called Frechet differentiable at $x \in V$ if there exists a continuous linear map $f'(x) : V \rightarrow W$ such that
 
 $$f(x + h) = f(x) + f'(x) h + o(\|h\|), \quad h \in V$$
 
-Since $f'(x)$ is required to be continuous, every Fréchet differentiable function is continuous.
+Since $f'(x)$ is required to be continuous, every Frechet differentiable function is continuous.
+
+** Questions
+
+*** DONE So a function $f$ is called Frechet differentiable at some point $x$ if there exists some continuous funtion $f'$ (not a derivative, just some function) such that $f(x+h) = f(x) + f'(x)h + o(\|h\|), \, h \in V$? Isn't it strange? Can't I get some completely unrelated function for $f'$?
+
+No you can not. The thing is, the definition is more constrained than you think. Constraint hides in uniqeness of a function $f'$.
+
+Suppose $\exists f_1', f_2'$ such that satisfy the definition. Then
+
+\begin{align*}
+f(x + h) &= f(x) + f_1'(x)h + r_1(h) \\
+f(x + h) &= f(x) + f_2'(x)h + r_2(h) \\
+\end{align*}
+
+where $r_1, r_2 : V \rightarrow W$ are functions satisfying
+
+$$\lim_{h \to 0} \frac{\|r_i(h)\|}{\|h\|} = 0, \quad i = 1, 2.$$
+
+This is what the symbol $o(\|h\|)$ means — the *existence* of such a remainder function, not a fixed function. So when two different decompositions are written down, the remainders are *different* functions and must be named separately.
+
+Subtracting the second equation from the first:
+
+\begin{align*}
+0 &= (f_1'(x) - f_2'(x))h + (r_1(h) - r_2(h)) \\
+(f_2'(x) - f_1'(x))h &= r_1(h) - r_2(h) \quad (*) \\
+\end{align*}
+
+Let $D := f_2'(x) - f_1'(x)$. This is a continuous linear map $V \to W$ (difference of two such maps). The goal is to show $D = 0$.
+
+Fix arbitrary $v \in V$ with $v \neq 0$. For $t > 0$, set $h = tv$. By linearity of $D$:
+
+$$D(tv) = t \cdot Dv$$
+
+So $(*)$ becomes
+
+$$t \cdot Dv = r_1(tv) - r_2(tv)$$
+
+Take norms and divide by $\|h\| = t\|v\|$ (note $t > 0$, $v \neq 0$):
+
+$$\frac{\|Dv\|}{\|v\|} = \frac{\|r_1(tv) - r_2(tv)\|}{t\|v\|} \leq \frac{\|r_1(tv)\|}{\|tv\|} + \frac{\|r_2(tv)\|}{\|tv\|}$$
+
+As $t \to 0^+$, we have $tv \to 0$ in $V$, so both terms on the right tend to $0$ by the defining property of $r_1, r_2$. The left-hand side $\dfrac{\|Dv\|}{\|v\|}$ does not depend on $t$ — it is a fixed nonnegative real number. Hence it must equal $0$.
+
+So $Dv = 0$ for every $v \neq 0$, and trivially for $v = 0$. Therefore $D = 0$ as a map, i.e. $f_1'(x) = f_2'(x)$.
+
+The map $f'(x)$ in the definition is therefore unique whenever it exists, which justifies calling it /the/ derivative and writing $f'(x)$ rather than "some $f'$".
 
 * Theorem     6.3.05:  Chain rule
 
