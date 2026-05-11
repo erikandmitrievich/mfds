@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-09>
-#+lastmod: <2026-05-09 17:18>
+#+lastmod: <2026-05-11 15:03>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -19,25 +19,77 @@
 ** Task
 #+begin_quote
 (Inner product defined by matrices) Let $B \in \mathbb{C}^{p \times q}$ be a matrix with $p \geq q$, and let $\omega : \mathbb{C}^q \times \mathbb{C}^q \to \mathbb{C}$ be the following mapping:
+
 \[
 \omega(x, y) = (By)^H B x
 \]
+
 Give necessary and sufficient condition on the matrix $B$ such that $\omega$ is an inner product.
 #+end_quote
 
 ** Solution
 
+By Lemma 3.05, any sesquilinear form on $\mathbb{C}^q$ is of the form $x^\top M \overline{y}$ for some $M \in \mathbb{C}^{q \times q}$. We rewrite $\omega$ in this form:
+
+\begin{aligned}
+\omega(x, y) = (By)^H B x = \overline{y}^\top \overline{B}^\top B x = x^\top (\overline{B}^\top B)^\top \overline{y},
+\end{aligned}
+
+so $\omega \in \operatorname{Sesq}(\mathbb{C}^q)$ with matrix representation $M = (\overline{B}^\top B)^\top$. Equivalently, $\omega(x, y) = y^H (B^H B) x$.
+
+This gives axiom 1 (linearity in the first variable) for free.
+
+*** Conjugate symmetry
+
+Since $(B^H B)^H = B^H B$,
+
+\begin{aligned}
+\overline{\omega(x, y)} = \overline{y^H B^H B x} = x^H (B^H B)^H y = x^H B^H B y = \omega(y, x).
+\end{aligned}
+
+Holds for any $B$.
+
+*** Positive-definiteness
+
+$$\omega(x, x) = x^H B^H B x = (Bx)^H (Bx) = \lVert Bx \rVert_2^2 \geq 0,$$
+
+with equality iff $Bx = 0$. Hence
+
+$$\omega(x, x) = 0 \iff x = 0 \iff \ker B = \{0\}.$$
+
+*** Conclusion
+
+$$\boxed{\;\omega \text{ is an inner product} \iff \ker B = \{0\} \iff \operatorname{rank} B = q.\;}$$
+
+(Since $p \geq q$, this is attainable.)
+
 * Problem 3.5 :bilinear_form:matrix:
 ** Task
 #+begin_quote
 (Bilinear form from trace) Let $\mathbb{E} = \mathbb{R}^2$, we define the following function $b : \mathbb{E} \times \mathbb{E} \to \mathbb{R}$ with
-\[
+
+\begin{align*}
 b\left( \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}, \begin{pmatrix} y_1 \\ y_2 \end{pmatrix} \right) = \operatorname{Tr} \begin{pmatrix} x_1 & y_1 \\ x_2 & y_2 \end{pmatrix}
-\]
+\end{align*}
+
 Is $b$ a bilinear form? If so, give $[b]_{\mathcal{E}\mathcal{E}}$, where $\mathcal{E} = \{e_1, e_2\}$ is the standard basis on $\mathbb{R}^2$.
 #+end_quote
 
 ** Solution
+
+Compute the trace:
+
+$$b(x, y) = \operatorname{Tr} \begin{pmatrix} x_1 & y_1 \\ x_2 & y_2 \end{pmatrix} = x_1 + y_2.$$
+
+For $b$ to be bilinear, the map $x \mapsto b(x, y)$ must be linear for every fixed $y \in \mathbb{R}^2$. Any linear map sends the zero vector to $0$, so a necessary condition is $b(0, y) = 0$ for all $y$.
+
+Compute:
+
+$$b(0, y) = 0 + y_2 = y_2,$$
+
+which is nonzero whenever $y_2 \neq 0$. Hence $x \mapsto b(x, y)$ is not linear (e.g. for $y = e_2$), and $b$ is **not** bilinear.
+
+Since $b$ is not bilinear, $[b]_{\mathcal{E}\mathcal{E}}$ is not defined: Lemma 3.05 applies only to elements of $\operatorname{Bil}(\mathbb{R}^2)$.
 
 * Problem 3.6 :inner_product:bilinear_form:orthonormal_basis:
 ** Task
