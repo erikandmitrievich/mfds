@@ -1,0 +1,156 @@
+#+title: Ch 03 Sesquilinear And Bilinear Forms
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-11>
+#+lastmod: <2026-05-11 11:59>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Definition  3.01:   Sesquilinear/Bilinear form
+
+Let $E$ be a $\mathbb{K}$ vector space. We say that a mapping $b : E \times E \rightarrow \mathbb{K}$ is sesquilinear (resp. bilinear) if it is:
+
+- Linear in the first variable,
+
+- Conjugate linear (resp. linear) in the second variable.
+
+In other words, for all $x, y \in E$ and all $\lambda, \mu \in \mathbb{K}$,
+
+\begin{align*}
+a(\lambda x + \mu y, z) &= \lambda a(x, z) + \mu a(y, z) \\
+a(x, \lambda y + \mu z) &= \bar{\lambda} a(x, y) + \bar{\mu} a(x, z) \\
+\end{align*}
+
+* Definition  3.02:   Spaces of bilinear and sesquilinear maps
+
+Let $E$ be a $\mathbb{K}$ vector space. We denote by
+
+\begin{align*}
+\mathrm{Bil}(E) &:= \{ b : E \times E \rightarrow \mathbb{K} \ : \ b \text{ is bilinear} \} \\
+\mathrm{Sesq}(E) &:= \{ b : E \times E \rightarrow \mathbb{K} \ : \ b \text{ is sesquilinear} \} \\
+\end{align*}
+
+the sets of bilinear and sesquilinear maps.
+
+* Lemma       3.03:   Bil and Sesq are linear subspaces
+
+$\mathrm{Bil}(E)$ and $\mathrm{Sesq}(E)$ are linear subspaces of $\mathcal{F}(E \times E, \mathbb{K})$.
+
+*Proof.*
+
+Left as an exercise.
+
+* Lemma       3.05:   Matrix representation in finite dimensional spaces
+
+Let $E$ be $n$-dimensional $\mathbb{K}$ vector space, $\mathcal{E} = \{ e_1, \ldots, e_p \}$ be a basis, and $b \in \mathrm{Bil}(E)$ and $s \in \mathrm{Sesq}(E)$. It holds that
+
+$$b(x, y) = ([x]^{\mathcal{E}})^{\top} [b]_{\mathcal{E}\mathcal{E}} [y]^{\mathcal{E}}, \quad s(x, y) = ([x]^{\mathcal{E}})^{\top} [s]_{\mathcal{E}\mathcal{E}} \overline{[y]^{\mathcal{E}}}, \quad \forall x, y \in E. \tag{3.2}$$
+
+where
+
+$$[b]_{\mathcal{E}\mathcal{E}} := (b(e_i, e_j))_{1 \le i, j \le n}, \quad [s]_{\mathcal{E}\mathcal{E}} := (s(e_i, e_j))_{1 \le i, j \le n}$$
+
+are called the matrix representation of $b$ and $s$.
+
+*Proof.*
+
+Let $s \in \mathrm{Sesq}(E)$, and $x, y \in E$. It holds that
+
+$$s(x, y) = \sum_{1 \le i, j \le n} ([x]_{\mathcal{E}})_i \overline{([y]_{\mathcal{E}})_j} s(e_i, e_j) = ([x]^{\mathcal{E}})^{\top} [s]_{\mathcal{E}\mathcal{E}} \overline{[y]^{\mathcal{E}}}$$
+
+* Lemma       3.06:   Uniqueness of matrix representation
+
+Let $E$ be $n$-dimensional $\mathbb{K}$ vector space and $\mathcal{E} = \{ e_1, \ldots, e_p \}$ be a basis. The mappings
+
+$$\mathrm{BMat} : \mathrm{Bil}(E) \rightarrow \mathbb{K}^{n \times n}, \quad b \mapsto [b]_{\mathcal{E}\mathcal{E}}$$
+
+and
+
+$$\mathrm{SMat} : \mathrm{Sesq}(E) \rightarrow \mathbb{K}^{n \times n}, \quad s \mapsto [s]_{\mathcal{E}\mathcal{E}}$$
+
+are isomorphisms.
+
+*Proof.*
+
+We next prove that =BMat= is linear, surjective and injective.
+
+*Injectivity:* Let $b, \tilde{b} \in \mathrm{Bil}(e_i, e_j)$ such that $[b]_{\mathcal{E}\mathcal{E}} = [\tilde{b}]_{\mathcal{E}\mathcal{E}}$. For any $x, y \in E$, we have that
+
+$$b(x, y) = ([x]_{\mathcal{E}})^{\top} [b]_{\mathcal{E}\mathcal{E}} [y]_{\mathcal{E}} = ([x]_{\mathcal{E}})^{\top} [\tilde{b}]_{\mathcal{E}\mathcal{E}} [y]_{\mathcal{E}} = b(x, y).$$
+
+Therefore $b = \tilde{b}$ and =BMat= is injective.
+
+*Surjectivity:* Let $A \in \mathbb{K}^{n \times n}$, and define $b_A : E \times E \rightarrow \mathbb{K}$ such that $b(x, y) := ([x]_{\mathcal{E}})^{\top} A [y]_{\mathcal{E}}$. We can readily verify that $b \in \mathrm{Bil}(E)$, and this shows that =BMat= is surjective.
+
+The proof for the sesquilinear case follows the same lines, with due care for complex conjugation.
+
+*Linearity:* Trivial.
+
+* Lemma       3.07:   Matrix representation under change of basis
+
+Let $E$ be $n$-dimensional $\mathbb{K}$ vector space, and $b \in \mathrm{Bil}(E)$ and $s \in \mathrm{Sesq}(E)$. Then the matrix representation of $b$ and $s$ for two different bases $\mathcal{E}$ and $\mathcal{U}$ of $E$ are connected as
+
+$$[b]_{\mathcal{U}\mathcal{U}} = ([\mathrm{Id}]_{\mathcal{U}}^{\mathcal{E}})^{\top} [b]_{\mathcal{E}\mathcal{E}} [\mathrm{Id}]_{\mathcal{U}}^{\mathcal{E}}, \quad \text{and} \quad [s]_{\mathcal{U}\mathcal{U}} = ([\mathrm{Id}]_{\mathcal{U}}^{\mathcal{E}})^{\top} [s]_{\mathcal{E}\mathcal{E}} \overline{[\mathrm{Id}]_{\mathcal{U}}^{\mathcal{E}}}$$
+
+*Proof.*
+
+Let $x, y \in E$. By the matrix representation of $b(x, y)$ (see Eq. (3.2)),
+
+\begin{align*}
+b(x, y) &= ([x]^{\mathcal{E}})^{\top} [b]_{\mathcal{E}\mathcal{E}} [y]^{\mathcal{E}} \\
+&= ([x]^{\mathcal{U}})^{\top} ([\mathrm{Id}]_{\mathcal{U}}^{\mathcal{E}})^{\top} [b]_{\mathcal{E}\mathcal{E}} [\mathrm{Id}]_{\mathcal{U}}^{\mathcal{E}} [y]^{\mathcal{U}} \quad \text{(since } [x]^{\mathcal{E}} = [\mathrm{Id}]_{\mathcal{U}}^{\mathcal{E}} [x]^{\mathcal{U}} \text{)} \\
+\end{align*}
+
+In addition, since Eq. (3.2) also applies for the basis $\mathcal{U}$, we also have
+
+$$b(x, y) = ([x]^{\mathcal{U}})^{\top} [b]_{\mathcal{U}\mathcal{U}} [y]^{\mathcal{U}}$$
+
+Therefore, $[b]_{\mathcal{U}\mathcal{U}} = ([\mathrm{Id}]_{\mathcal{U}}^{\mathcal{E}})^{\top} [b]_{\mathcal{E}\mathcal{E}} [\mathrm{Id}]_{\mathcal{U}}^{\mathcal{E}}$. We proceed similarly to prove the claim for $s \in \mathrm{Sesq}(E)$.
+
+* Definition  3.08:   Tensor product: axioms
+
+The tensor product operation $\otimes$ maps a pair of vectors $(x, y) \in E \times E$ to an object called the tensor product $x \otimes y$. We can add tensors and scale them. The product satisfies the following properties:
+
+1. sesquilinearity: for all $x, y, z \in E$ and $\lambda, \mu \in \mathbb{K}$
+
+   \begin{align*}
+   (\lambda x + \mu y) \otimes z &= \lambda x \otimes z + \mu y \otimes z \\
+   x \otimes (\lambda y + \mu z) &= \bar{\lambda} x \otimes y + \bar{\mu} x \otimes z \\
+   \end{align*}
+
+2. interaction with the zero vector: for all $x, y \in E$,
+
+   $$x \otimes 0 = 0 \otimes 0 = 0 \otimes y$$
+
+3. faithfulness: for $x, y \in E$, if
+
+   $$x \otimes y = 0 \otimes 0,$$
+
+   then either $x = 0$ or $y = 0$.
+
+* Definition  3.11:  Tensor product space
+
+Let $E$ be a $\mathbb{K}$ vector space. We define its tensor product space as
+
+$$E \otimes E := \left\{ \sum_{i=1}^{r} \alpha_i x_i \otimes y_i \ : \ r \in \mathbb{N}, \alpha_i \in \mathbb{K}, x_i, y_i \in E \ \text{ for } \ 1 \le i \le r \right\}$$
+
+* Lemma       3.12:  Tensor product space is a vector space
+
+$E \otimes E$ is a $\mathbb{K}$ vector space with neutral element $0_{E \otimes E} = 0_E \otimes 0_E$.
+
+*Proof.*
+
+It holds that $0_{E \otimes E}$ is indeed the neutral element, and that for all $\lambda_1, \lambda_2 \in \mathbb{K}$ and $T_1, T_2 \in E \otimes E$, $\lambda_1 T_1 + \lambda_2 T_2 \in E \otimes E$.
+
+* Definition  3.13:  Tensor product space as algebraic dual
+
+Let $E$ be a vector space. The tensor product space $E \otimes E$ is the algebraic dual of the space of bilinear forms $\mathrm{Bil}(E)$.
