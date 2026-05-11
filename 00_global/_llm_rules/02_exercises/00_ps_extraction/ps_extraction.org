@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-25>
-#+lastmod: <2026-04-20 08:42>
+#+lastmod: <2026-05-11 08:16>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -128,3 +128,9 @@ Given a function $f(x) = x^2 + 2x$, find the derivtive.
 * Errors/Typos
 - Problem 3: "derivtive" → "derivative"
 ```
+
+* TIME ESTIMATES
+After all problems (and after ~* Errors/Typos~ if present), append a single top-level ~* Time Estimates~ heading containing an Org plain list with one entry per extracted problem. Estimate the approximate completion time in minutes based on the problem's scope and difficulty.
+- Format: ~- Problem [ID]: ~XX min~~
+- Include every extracted problem, including trivial ones.
+- This section appears *once*, at the very end of the file.
