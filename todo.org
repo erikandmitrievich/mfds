@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-05>
-#+lastmod: <2026-05-05 16:04>
+#+lastmod: <2026-05-11 08:52>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -17,3 +17,5 @@
 
 - [ ] Rewrite all STEOP problem sets into latex for consistency (summer 2026).
 - [ ] Potentially reorganise/rename =./01_bachelor= folder (long term).
+- [X] Add approximate time completion for problem set extraction llm ruleset.
+- [X] Add silly "** Questions" section for the material extraction llm rulest.
