@@ -1,0 +1,136 @@
+#+title: Ps 06
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-11>
+#+lastmod: <2026-05-11 08:57>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Problem 52 :queue:stack:
+
+** Task
+
+#+begin_quote
+Show how to implement a queue using two stacks. Analyze the running time of the queue operations.
+#+end_quote
+
+** Solution
+
+* Problem 53 :stack:queue:
+
+** Task
+
+#+begin_quote
+Show how to implement a stack using two queues. Analyze the running time of the stack operations.
+#+end_quote
+
+** Solution
+
+* Problem 54 :linked_list:insertion:deletion:
+
+** Task
+
+#+begin_quote
+Explain why the dynamic-set operation INSERT on a singly linked list can be implemented in $\Theta(1)$ time, but the worst-case time for DELETE is $\Theta(n)$.
+#+end_quote
+
+** Solution
+
+* Problem 55 :linked_list:reversal:
+
+** Task
+
+#+begin_quote
+Implement a $\Theta(n)$ -time nonrecursive procedure that reverses a singly linked list of $n$ elements. The procedure should use no more than constant storage beyond that needed for the list itself.
+#+end_quote
+
+** Solution
+
+* Problem 56 :binary_tree:traversal:recursion:
+
+** Task
+
+#+begin_quote
+Write an $O(n)$ recursive procedure that, given an $n$ -node binary tree, prints the key of each node in the tree. Make sure that the key of a node is printed after the keys of their descendants, i.e., the last key printed should be the key of the root.
+#+end_quote
+
+** Solution
+
+* Problem 57 :binary_tree:traversal:stack:
+
+** Task
+
+#+begin_quote
+Write an $O(n)$ -time nonrecursive procedure that, given an $n$ -node binary tree, prints out the key of each node in the tree. Use a stack as an auxiliary data structure.
+#+end_quote
+
+** Solution
+
+* Problem 58 :binary_tree:traversal:
+
+** Task
+
+#+begin_quote
+Write an $O(n)$ -time nonrecursive procedure that, given an $n$ -node binary tree, prints out the key of each node. Use no more than constant extra space outside of the tree itself and do not modify the tree, even temporarily, during the procedure.
+#+end_quote
+
+** Solution
+
+* Problem 59 :universal_hashing:
+
+** Task
+
+#+begin_quote
+Show that any $\varepsilon$ -universal family $H$ of hash functions from a finite set $U$ to a finite set $Q$ has
+$$
+\varepsilon \geq \frac{1}{|Q|} - \frac{1}{|U|}
+$$
+#+end_quote
+
+** Solution
+
+* Problem 60 :double_hashing:
+
+** Task
+
+#+begin_quote
+Show that, with double hashing, if $m$ and $h_2(k)$ have greatest common divisor $d > 1$ for some key $k$, then an unsuccessful search for key $k$ examines $\frac{1}{d}$ th of the hash table before returning to slot $h_1(k)$. Thus, when $d = 1$, so that $m$ and $h_2(k)$ are relatively prime, the search may examine the entire hash table.
+#+end_quote
+
+** Solution
+
+* Problem 61 :open_addressing:hashing:
+
+** Task
+
+#+begin_quote
+Consider an open-address hash table with independent uniform permutation hashing and no deletions. Give upper bounds on the expected number of probes in an unsuccessful search and on the expected number of probes in a successful search when the load factor is $3/4$ and when it is $7/8$.
+#+end_quote
+
+** Solution
+
+* Errors/Typos
+
+- Problem 56: "their descendants" → "its descendants"
+
+* Time Estimates
+
+- Problem 52: ~20 min~
+- Problem 53: ~20 min~
+- Problem 54: ~10 min~
+- Problem 55: ~15 min~
+- Problem 56: ~10 min~
+- Problem 57: ~15 min~
+- Problem 58: ~30 min~
+- Problem 59: ~25 min~
+- Problem 60: ~20 min~
+- Problem 61: ~15 min~
