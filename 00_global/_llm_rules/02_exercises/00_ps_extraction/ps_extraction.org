@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-25>
-#+lastmod: <2026-05-11 08:18>
+#+lastmod: <2026-05-11 08:29>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -37,6 +37,7 @@ For EVERY problem identified in the source text, you must generate exactly one t
     - **CONSTRAINT**: The extracted problem text MUST be enclosed inside a ~#+begin_quote~ and ~#+end_quote~ block.
 3.  **Sub Level 2**: ~** Solution~
     - Leave the body of this section blank, UNLESS Rule 7 (Julia Scaffolding) applies.
+    - If the problem is multi-part (Rule 5), the section is further subdivided per Rule 9.
 4.  **Trailing Section**: ~* Errors/Typos~
     - This heading appears *once*, after the last problem, and only if any typos or errors were found (see Rule 3).
 
@@ -91,11 +92,11 @@ Do not include any citations in the text.
 
 ** 7. Julia Scaffolding
 If a problem explicitly requires using the Julia language to find a solution:
-- Action: Insert an empty Julia source code block inside the ~** Solution~ section.
+- Action: Insert an empty Julia source code block inside the ~** Solution~ section. For multi-part problems (Rule 9), place the block inside the specific ~*** (x)~ sub-heading that requires Julia; if every part requires Julia, place one block per sub-heading.
 - Format:
   #+begin_src julia :results value :exports both :tangle julia/p_{ID}.jl
   #+end_src
-  (Where {ID} is the exact Problem Identifier, e.g., 01, 01_02, 1_31, 2_4a).
+  (Where {ID} is the exact Problem Identifier, e.g., 01, 01_02, 1_31, 2_4a. For multi-part problems, append the part label, e.g., ~p_2_4_a.jl~.)
 - Constraint: The body of the code block must be empty. DO NOT generate solution code.
 
 ** 8. Topic Tags
@@ -106,6 +107,14 @@ Every top-level ~* Problem~ heading MUST end with Org-mode tags identifying the 
 - **Tag vocabulary** (extend as needed, but prefer reusing existing tags):
   ~linear_map~, ~matrix~, ~determinant~, ~eigenvalue~, ~diagonalization~, ~inner_product~, ~orthonormal_basis~, ~gram_schmidt~, ~dual_space~, ~annihilator~, ~change_of_basis~, ~completing_the_square~, ~quadratic_form~, ~kernel~, ~image~, ~rank~, ~jordan_form~, ~spectral_theorem~, ~bilinear_form~, ~projection~, ~polynomial~, ~basis~, ~dimension~, ~subspace~
 - When a topic is not in the vocabulary, create a new tag following the same convention.
+
+** 9. Solution Sub-Structure for Multi-Part Problems
+When a problem contains lettered or numbered sub-items as defined by Rule 5, the ~** Solution~ section MUST be subdivided into third-level headings, one per sub-item, mirroring the source labels in the same order they appear in the Task.
+- Format: ~*** (a)~, ~*** (b)~, ~*** (c)~, ... (use ~*** (i)~, ~*** (ii)~, ... when the source uses roman numerals; use ~*** 1.~, ~*** 2.~, ... when the source uses numbered sub-items).
+- The label inside the parentheses must match the source convention exactly (casing, numerals).
+- The body of each ~*** (x)~ heading is left blank, subject to Rule 7 (Julia Scaffolding).
+- The parent ~** Solution~ heading itself remains singular and contains no body text; all content lives under the ~*** (x)~ children.
+- This rule does NOT apply when the problem is single-part — no ~*** ~ children are emitted in that case.
 
 * EXAMPLE OUTPUT
 Below is an example of how a specific input should be transformed.
