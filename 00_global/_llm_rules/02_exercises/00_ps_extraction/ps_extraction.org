@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-25>
-#+lastmod: <2026-05-11 08:16>
+#+lastmod: <2026-05-11 08:18>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -45,9 +45,10 @@ For EVERY problem identified in the source text, you must generate exactly one t
 
 ** Mathematical Notation
 - All mathematical expressions MUST be converted to LaTeX.
+- **Permitted delimiters (exhaustive)**: ~$...$~, ~$$...$$~, and ~\begin{aligned}...\end{aligned}~ (used inside ~$$...$$~). Do NOT use ~\[ \]~, ~\( \)~, or any other delimiter.
 - **Inline Math**: Enclose in single dollar signs (e.g., ~$x^2 + y^2 = z^2$~).
-- **Display Math**: Use ~\[ \]~ for standalone equations, large matrices, or any expression that would be unreadable inline. Criteria: use display mode when the expression contains matrices, fractions with tall numerators/denominators, multi-line derivations, or is otherwise too dense for inline rendering.
-- **Punctuation Constraint**: Do NOT include trailing punctuation (periods, commas, colons) inside the math delimiters. Punctuation must be placed *outside* the closing dollar sign or ~\]~.
+- **Display Math**: Use ~$$...$$~ for standalone equations, large matrices, or any expression that would be unreadable inline. For multi-line derivations or systems with alignment, wrap an ~\begin{aligned}...\end{aligned}~ environment inside ~$$...$$~. Criteria: use display mode when the expression contains matrices, fractions with tall numerators/denominators, multi-line derivations, or is otherwise too dense for inline rendering.
+- **Punctuation Constraint**: Do NOT include trailing punctuation (periods, commas, colons) inside the math delimiters. Punctuation must be placed *outside* the closing ~$~ or ~$$~.
   - **Bad**: ~$A \in \mathbb{R}^{3\times3},$~
   - **Good**: ~$A \in \mathbb{R}^{3\times3}$,~
 - Do not use Unicode characters for math (e.g., do not use "×", use ~$\times$~).
