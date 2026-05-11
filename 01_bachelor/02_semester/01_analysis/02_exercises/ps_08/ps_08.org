@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-09>
-#+lastmod: <2026-05-10 20:56>
+#+lastmod: <2026-05-11 07:11>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -265,14 +265,12 @@ let
         (x, y)
     end
 
-    # Descent on f finds minima; descent on -f finds maxima.
-    # Separable structure: descend in x, ascend in y (etc.) to reach saddles.
     ∇f_neg(x, y) = .-∇f(x, y)
     ∇f_xmin_ymax(x, y) = (cos(x),  sin(y))   # min in x, max in y
     ∇f_xmax_ymin(x, y) = (-cos(x), -sin(y))  # max in x, min in y
 
-    println("min:    ", gd(∇f,          4.0,  3.0))   # → (3π/2, π)
-    println("max:    ", gd(∇f_neg,      2.0,  0.5))   # → (π/2, 0)
+    println("min:    ", gd(∇f,           4.0, 3.0))   # → (3π/2, π)
+    println("max:    ", gd(∇f_neg,       2.0, 0.5))   # → (π/2, 0)
     println("saddle: ", gd(∇f_xmin_ymax, 4.0, 0.5))   # → (3π/2, 0)
     println("saddle: ", gd(∇f_xmax_ymin, 2.0, 3.0))   # → (π/2, π)
 end
@@ -305,17 +303,39 @@ More precisely:
 
 ** Solution
 
+*** 1. Affine linear approximation of $f$ at $x_k$
+
+The affine linear approximation (first-order Taylor polynomial) of $f$ at $x_k$ is
+
+\begin{align*}
+F_k(x) &:= f(x_k) + f'(x_k)(x - x_k).
+\end{align*}
+
+*** 2. Solving $F_k(x) = 0$
+
+Assume $f'(x_k) \neq 0$. Then
+
+\begin{align*}
+F_k(x) = 0
+&\iff f(x_k) + f'(x_k)(x - x_k) = 0 \\
+&\iff f'(x_k)(x - x_k) = -f(x_k) \\
+&\iff x - x_k = -\dfrac{f(x_k)}{f'(x_k)} \\
+&\iff x = x_k - \dfrac{f(x_k)}{f'(x_k)}.
+\end{align*}
+
+Defining $x_{k+1} := x$ recovers the Newton iteration. $\blacksquare$
+
 * Problem 4 :newton_method:convergence:julia:
 ** Task
 #+begin_quote
 Write a Julia function
 
-myNewton(f, x0, tol, maxiter)
+=myNewton(f, x0, tol, maxiter)=
 
 that performs Newton's method for a function $f$, starting from the initial value $x_0$. The iteration should terminate when either
-\[
-|x_{k+1} - x_k| < \text{tol},
-\]
+
+$$|x_{k+1} - x_k| < \text{tol}$$
+
 or when the maximal number of iterations maxiter is reached. Your function should return:
 - the final approximation,
 - the number of iterations used,
@@ -325,5 +345,56 @@ Test your implementation on the equations $x^2 - 2 = 0$ and $\cos(x) - x = 0$. E
 #+end_quote
 
 ** Solution
-#+begin_src julia :results value :exports both :tangle julia/p_04.jl
+
+#+begin_src julia :results output :exports both :tangle julia/p_04.jl
+using Plots
+
+function myNewton(f, df, x0, tol, maxiter)
+    xs = [float(x0)]
+    for k in 1:maxiter
+        x = xs[end]
+        x_new = x - f(x) / df(x)
+        push!(xs, x_new)
+        abs(x_new - x) < tol && return (x_new, k, xs)
+    end
+    (xs[end], maxiter, xs)
+end
+
+# --- Test 1: x^2 - 2 = 0, roots ±√2 ---
+f1(x)  = x^2 - 2
+df1(x) = 2x
+
+for x0 in (2.0, -2.0, 0.5, 100.0)
+    x★, k, _ = myNewton(f1, df1, x0, 1e-14, 100)
+    println("f1, x0=$x0:  x★=$x★, iters=$k")
+end
+
+# --- Test 2: cos(x) - x = 0, root ≈ 0.739085 ---
+f2(x)  = cos(x) - x
+df2(x) = -sin(x) - 1
+
+for x0 in (0.0, 1.0, -5.0, 10.0)
+    x★, k, _ = myNewton(f2, df2, x0, 1e-14, 100)
+    println("f2, x0=$x0:  x★=$x★, iters=$k")
+end
+
+# --- Convergence history for f1, x0 = 2.0 ---
+x★, k, xs = myNewton(f1, df1, 2.0, 1e-14, 100)
+errs = abs.(xs .- x★)
+plot(0:k, errs, yscale=:log10, marker=:circle,
+     xlabel="k", ylabel="|x_k - x★|",
+     title="Newton convergence: x² - 2, x₀ = 2", legend=false)
+savefig(joinpath(mkpath("./assets"), "p_04.png"))
 #+end_src
+
+*** Observations
+
+- *Quadratic convergence.* For both equations, the error roughly squares each step: $|x_{k+1} - x^*| \approx C \, |x_k - x^*|^2$. On a log plot the error drops with doubling slope until machine precision saturates around $10^{-16}$.
+
+- *Sign of $x_0$ selects the root for $f_1$.* Newton on $x^2 - 2$ converges to $\sqrt{2}$ for $x_0 > 0$ and to $-\sqrt{2}$ for $x_0 < 0$. The iteration $x_{k+1} = (x_k + 2/x_k)/2$ preserves sign and is a contraction toward the same-sign root.
+
+- *Failure at $x_0 = 0$ for $f_1$.* $f_1'(0) = 0$, so the update divides by zero. The course problem doesn't ask to handle this, but it's worth noting since the instructions only guarantee the iteration "whenever $f'(x_k) \neq 0$".
+
+- *Robustness for $f_2$.* $f_2'(x) = -\sin(x) - 1 \in [-2, 0]$, vanishing only at $x = \pi/2 + 2\pi n$. Away from those points Newton converges to the unique root $x^* \approx 0.739085$ from essentially any reasonable $x_0$. Starting *at* one of those points triggers division by zero.
+
+- *Far-from-root behavior.* For $x_0 = 100$ on $f_1$, Newton spends several iterations roughly halving $x_k$ (the linearization is poor far from the root) before entering the quadratic regime. This is generic: quadratic convergence is a *local* phenomenon; the first few steps can be slow.
