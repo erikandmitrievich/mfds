@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-25>
-#+lastmod: <2026-05-11 08:29>
+#+lastmod: <2026-05-11 08:45>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -30,7 +30,7 @@ Output must be strictly in **Emacs Org-mode** format.
 **CRITICAL**: The final output must be wrapped in a single Markdown code block (using ```org) to facilitate copy-pasting.
 
 ** Structural Hierarchy (MANDATORY)
-For EVERY problem identified in the source text, you must generate exactly one top-level heading and two specific sub-headings.
+For EVERY problem identified in the source text, you must generate exactly one top-level heading and two specific sub-headings. The second sub-heading (~** Solution~) is further subdivided into third-level headings if and only if the problem is multi-part (see Rule 9).
 
 1.  **Top Level**: ~* Problem [Identifier]~  followed by tags (see Rule 8).
 2.  **Sub Level 1**: ~** Task~
@@ -38,8 +38,10 @@ For EVERY problem identified in the source text, you must generate exactly one t
 3.  **Sub Level 2**: ~** Solution~
     - Leave the body of this section blank, UNLESS Rule 7 (Julia Scaffolding) applies.
     - If the problem is multi-part (Rule 5), the section is further subdivided per Rule 9.
-4.  **Trailing Section**: ~* Errors/Typos~
+4.  **Trailing Section (conditional)**: ~* Errors/Typos~
     - This heading appears *once*, after the last problem, and only if any typos or errors were found (see Rule 3).
+5.  **Trailing Section (mandatory)**: ~* Time Estimates~
+    - This heading appears *once*, at the very end of the file, after ~* Errors/Typos~ if that section is present, otherwise immediately after the last problem (see *TIME ESTIMATES* section).
 
 ** Whitespace & Layout
 - Insert exactly one blank line between the ~#+end_quote~ block and the ~** Solution~ heading.
@@ -53,7 +55,7 @@ For EVERY problem identified in the source text, you must generate exactly one t
   - **Bad**: ~$A \in \mathbb{R}^{3\times3},$~
   - **Good**: ~$A \in \mathbb{R}^{3\times3}$,~
 - Do not use Unicode characters for math (e.g., do not use "×", use ~$\times$~).
-- **Hyphen Constraint**: Never place a hyphen directly after a closing ~$~ delimiter — Org's LaTeX preview breaks on ~$...$-something~. Insert a space before the hyphen instead: write ~$\mathbb{K}$ vector space~, not ~$\mathbb{K}$-vector space~.
+- **Hyphen Constraint**: Never place a hyphen directly after a closing ~$~ delimiter — Org's LaTeX preview breaks on ~$...$-something~. Insert a space before the hyphen instead: write ~$\mathbb{K}$ -vector space~, not ~$\mathbb{K}$-vector space~.
 
 * EXTRACTION RULES (STRICT)
 
@@ -96,7 +98,7 @@ If a problem explicitly requires using the Julia language to find a solution:
 - Format:
   #+begin_src julia :results value :exports both :tangle julia/p_{ID}.jl
   #+end_src
-  (Where {ID} is the exact Problem Identifier, e.g., 01, 01_02, 1_31, 2_4a. For multi-part problems, append the part label, e.g., ~p_2_4_a.jl~.)
+  (Where {ID} is the exact Problem Identifier with dots replaced by underscores and letters left attached, e.g., ~01~, ~01_02~, ~1_31~, ~2_4a~. For multi-part problems, append the part label using the same convention, e.g., ~p_2_4a.jl~ for part (a) of problem 2.4.)
 - Constraint: The body of the code block must be empty. DO NOT generate solution code.
 
 ** 8. Topic Tags
