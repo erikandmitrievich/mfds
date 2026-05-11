@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-25>
-#+lastmod: <2026-05-11 08:45>
+#+lastmod: <2026-05-11 08:51>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -44,11 +44,13 @@ For EVERY problem identified in the source text, you must generate exactly one t
     - This heading appears *once*, at the very end of the file, after ~* Errors/Typos~ if that section is present, otherwise immediately after the last problem (see *TIME ESTIMATES* section).
 
 ** Whitespace & Layout
-- Insert exactly one blank line between the ~#+end_quote~ block and the ~** Solution~ heading.
+- Insert exactly one blank line between any two consecutive elements: between sibling headings at the same level (e.g., between two ~* Problem~ blocks, between ~*** (a)~ and ~*** (b)~, between ~* Errors/Typos~ and ~* Time Estimates~); between a heading and its non-heading body; between a body block (e.g., ~#+end_quote~ or ~#+end_src~) and the next heading.
+- Never emit two or more consecutive blank lines.
 
 ** Mathematical Notation
 - All mathematical expressions MUST be converted to LaTeX.
-- **Permitted delimiters (exhaustive)**: ~$...$~, ~$$...$$~, and ~\begin{aligned}...\end{aligned}~ (used inside ~$$...$$~). Do NOT use ~\[ \]~, ~\( \)~, or any other delimiter.
+- **Permitted math-mode entry delimiters (exhaustive)**: ~$...$~ and ~$$...$$~. Do NOT use ~\[ \]~, ~\( \)~, or any other delimiter to enter math mode.
+- **Environments inside math mode**: Any standard LaTeX environment provided by the loaded packages (~amsmath~, ~amssymb~, ~mathtools~) is permitted *inside* ~$...$~ or ~$$...$$~, including ~\begin{aligned}...\end{aligned}~, ~\begin{pmatrix}...\end{pmatrix}~, ~\begin{bmatrix}...\end{bmatrix}~, ~\begin{cases}...\end{cases}~, ~\begin{vmatrix}...\end{vmatrix}~, etc.
 - **Inline Math**: Enclose in single dollar signs (e.g., ~$x^2 + y^2 = z^2$~).
 - **Display Math**: Use ~$$...$$~ for standalone equations, large matrices, or any expression that would be unreadable inline. For multi-line derivations or systems with alignment, wrap an ~\begin{aligned}...\end{aligned}~ environment inside ~$$...$$~. Criteria: use display mode when the expression contains matrices, fractions with tall numerators/denominators, multi-line derivations, or is otherwise too dense for inline rendering.
 - **Punctuation Constraint**: Do NOT include trailing punctuation (periods, commas, colons) inside the math delimiters. Punctuation must be placed *outside* the closing ~$~ or ~$$~.
@@ -60,7 +62,11 @@ For EVERY problem identified in the source text, you must generate exactly one t
 * EXTRACTION RULES (STRICT)
 
 ** 1. Verbatim Text Preservation
-You must preserve the exact wording of the problem statement inside the Quote Block.
+Preserve the exact wording of the problem statement inside the Quote Block, subject to exactly three permitted transformations:
+1. Mathematical notation is converted to LaTeX per *Mathematical Notation*.
+2. Typos in the source are preserved verbatim per Rule 3 (not corrected).
+3. Citations are stripped per Rule 6.
+No other rewording, abbreviation, paraphrase, or "cleanup" is permitted.
 - **Source**: "Calculate the velocity v."
 - **Bad Output**: "Find v."
 - **Good Output**: "Calculate the velocity $v$."
@@ -70,11 +76,16 @@ If a problem relies on an accompanying diagram or graph in the source material:
 - Do not ignore it.
 - Insert a placeholder tag in square brackets describing the visual inside the Quote Block.
 - Format: ~[GRAPHIC: Description of the triangle ABC with angle alpha]~
+- **Placement**: Put each placeholder on its own line, separated from surrounding prose by blank lines. If the source references the visual inline (e.g., "see Figure 3"), keep the inline reference *and* emit the placeholder on its own line after the relevant paragraph.
+- **One placeholder per distinct visual.** Do not collapse multiple unrelated diagrams into one tag.
 
 ** 3. Typos and Errors
 If the source material contains a typo, **preserve the typo** in the Quote Block. Do not correct "caluclate" to "calculate". Your job is transcription, not editing.
 However, you must also **collect every typo or error** you encounter and list them at the end of the file under the ~* Errors/Typos~ heading. Each entry should state the problem identifier, the erroneous text, and the likely intended correction. Use an Org plain list:
 - Format: ~- Problem [ID]: "caluclate" → "calculate"~
+- **One bullet per typo.** A problem containing multiple typos produces multiple bullets, each prefixed with the same Problem ID:
+  - ~- Problem 7: "caluclate" → "calculate"~
+  - ~- Problem 7: "matricies" → "matrices"~
 If no typos or errors are found, omit the ~* Errors/Typos~ section entirely.
 
 ** 4. Numbering
@@ -83,6 +94,7 @@ Maintain the numbering system exactly as it appears in the source material for t
 - Source: "3.5", Output: ~* Problem 3.5~
 - Source: "1.31", Output: ~* Problem 1.31~
 - Source: "2.4a", Output: ~* Problem 2.4a~ (only when "2.4a" is already the atomic identifier in the source)
+- **Unnumbered sources**: If the source has no explicit problem numbering (e.g., an exam with bare exercises), assign sequential integer identifiers ~1, 2, 3, ...~ in the order the problems appear in the source.
 
 ** 5. Multi-Part Problems
 If a problem contains lettered or numbered sub-items (a), (b), (c), … they are *parts of one problem*, NOT separate problems. Keep all sub-items together inside a single ~#+begin_quote~ block under one ~* Problem~ heading. Do NOT split them into separate headings such as ~* Problem 18a~, ~* Problem 18b~, etc.
@@ -112,20 +124,28 @@ Every top-level ~* Problem~ heading MUST end with Org-mode tags identifying the 
 
 ** 9. Solution Sub-Structure for Multi-Part Problems
 When a problem contains lettered or numbered sub-items as defined by Rule 5, the ~** Solution~ section MUST be subdivided into third-level headings, one per sub-item, mirroring the source labels in the same order they appear in the Task.
-- Format: ~*** (a)~, ~*** (b)~, ~*** (c)~, ... (use ~*** (i)~, ~*** (ii)~, ... when the source uses roman numerals; use ~*** 1.~, ~*** 2.~, ... when the source uses numbered sub-items).
-- The label inside the parentheses must match the source convention exactly (casing, numerals).
+- **Label format**: The third-level heading uses the source's sub-item label *verbatim*, including any brackets, punctuation, and casing.
+  - Source uses ~(a)~ → ~*** (a)~
+  - Source uses ~a)~  → ~*** a)~
+  - Source uses ~a.~  → ~*** a.~
+  - Source uses ~(i)~ → ~*** (i)~
+  - Source uses ~1.~  → ~*** 1.~
+  - Source uses bare ~a~ → ~*** a~
+- **Inconsistent source styles**: If a single problem mixes label conventions across sub-items (e.g., "(a)" then "b)"), uniformize all sub-headings to the style of the *first* sub-item. Do not record this in Errors/Typos.
 - The body of each ~*** (x)~ heading is left blank, subject to Rule 7 (Julia Scaffolding).
-- The parent ~** Solution~ heading itself remains singular and contains no body text; all content lives under the ~*** (x)~ children.
+- The parent ~** Solution~ heading itself contains no body text; all content lives under the ~*** (x)~ children.
 - This rule does NOT apply when the problem is single-part — no ~*** ~ children are emitted in that case.
 
 * EXAMPLE OUTPUT
-Below is an example of how a specific input should be transformed.
+Below are two examples covering the typical cases.
 
-** Input (Source Content)
+** Example 1 — Single-part problem with a graphic and a typo
+
+*** Input (Source Content)
 > 3. Given a function f(x) = x² + 2x, find the derivtive.
 >    (Image of a parabola)
 
-** Output (Org-mode)
+*** Output (Org-mode)
 ```org
 * Problem 3 :derivative:polynomial:
 ** Task
@@ -139,10 +159,61 @@ Given a function $f(x) = x^2 + 2x$, find the derivtive.
 
 * Errors/Typos
 - Problem 3: "derivtive" → "derivative"
+
+* Time Estimates
+- Problem 3: ~10 min~
+```
+
+** Example 2 — Multi-part problem with display math, partial Julia, no typos
+
+*** Input (Source Content)
+> Exercise 5. Let A ∈ ℝ^(2×2).
+> (a) Compute det(A) where A = ((1, 2), (3, 4)).
+> (b) Using Julia, find the eigenvalues of A.
+> (c) Show that the system
+>     x + 2y = 5
+>     3x + 4y = 11
+>     has a unique solution.
+
+*** Output (Org-mode)
+```org
+* Problem 5 :determinant:eigenvalue:linear_system:
+** Task
+#+begin_quote
+Let $A \in \mathbb{R}^{2\times2}$.
+
+(a) Compute $\det(A)$ where $A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$.
+
+(b) Using Julia, find the eigenvalues of $A$.
+
+(c) Show that the system
+$$
+\begin{aligned}
+x + 2y &= 5 \\
+3x + 4y &= 11
+\end{aligned}
+$$
+has a unique solution.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+#+begin_src julia :results value :exports both :tangle julia/p_5b.jl
+#+end_src
+
+*** (c)
+
+* Time Estimates
+- Problem 5: ~25 min~
 ```
 
 * TIME ESTIMATES
-After all problems (and after ~* Errors/Typos~ if present), append a single top-level ~* Time Estimates~ heading containing an Org plain list with one entry per extracted problem. Estimate the approximate completion time in minutes based on the problem's scope and difficulty.
-- Format: ~- Problem [ID]: ~XX min~~
-- Include every extracted problem, including trivial ones.
+After all problems (and after ~* Errors/Typos~ if present), append a single top-level ~* Time Estimates~ heading containing an Org plain list with one entry per extracted problem.
+- **Format**: ~- Problem [ID]: ~XX min~~ where ~XX~ is an integer count of minutes wrapped in Org code markup (~~...~~) for visual emphasis.
+- **Granularity**: For multi-part problems, emit a *single aggregate* estimate covering all sub-parts. Do NOT break the estimate down per sub-part.
+- **Rounding**: Round to the nearest 5 minutes. Minimum estimate is ~5 min~.
+- **Coverage**: Include every extracted problem, including trivial ones.
+- **Estimation basis**: Derive the estimate from heuristic signals visible in the problem statement — length and density of the text, number and complexity of sub-parts, topic difficulty (proof vs. computation, abstract vs. concrete), and required techniques inferable from the prompt and tags. Do NOT solve the problem to estimate. Estimates are approximate; the goal is a *realistic best estimate* for scheduling, not an authoritative measurement.
 - This section appears *once*, at the very end of the file.
