@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-15>
-#+lastmod: <2026-05-11 17:30>
+#+lastmod: <2026-05-11 21:30>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -30,14 +30,16 @@ Output must be strictly in **Emacs Org-mode** format.
 **CRITICAL**: The final output must be wrapped in a single fenced code block (using ~```org~) to facilitate copy-pasting. No commentary, preamble, or explanation outside the code block.
 
 ** Structural Hierarchy (MANDATORY)
-Every extracted item is a top-level Org heading whose body is the statement (and proof, if present). No sub-headings, no file headers (~#+title:~, ~#+author:~, etc.), no ~** Q&A~ sections.
+For EVERY item identified in the source, you must generate exactly one top-level heading (statement and proof) followed by exactly one sub-heading (~** Questions~) with an empty body. No file headers (~#+title:~, ~#+author:~, etc.) in the output.
 
 1.  **Top Level**: ~* <Type> <Number>: <Title>~ — exact spacing is governed by Rules 1, 2, and 3.
-2.  **Body**: Plain prose paragraphs immediately below the heading, separated by exactly one blank line from the heading. See Rules 4–10 for body content.
-3.  **Multiple items per output**: If a single source contains multiple items (e.g. Definition 10.1.1 and Proposition 10.1.2), place them all in the same code block, separated by exactly one blank line between top-level headings.
+2.  **Body**: Plain prose paragraphs immediately below the heading, separated by exactly one blank line from the heading. See Rules 4–10 for body content (statement, italic gloss, proof).
+3.  **Sub Level 1**: ~** Questions~
+    - **CONSTRAINT**: The body of this section MUST be left blank. Do not invent questions; they are written separately.
+4.  **Multiple items per output**: If a single source contains multiple items (e.g. Definition 10.1.1 and Proposition 10.1.2), place them all in the same code block, separated by exactly one blank line between top-level headings.
 
 ** Whitespace & Layout
-- Insert exactly one blank line between any two consecutive elements: between a heading and its body; between paragraphs; between a paragraph and a display equation; between two top-level headings.
+- Insert exactly one blank line between any two consecutive elements: between a heading and its body; between paragraphs; between a paragraph and a display equation; between the last body element and ~** Questions~; between ~** Questions~ and the next top-level heading.
 - Never emit two or more consecutive blank lines.
 
 ** Mathematical Notation
@@ -158,10 +160,18 @@ Short intuitive summaries of proof steps go in italics on their own indented lin
 
 Same trigger as Rule 7: only intuitive restatements of an argument step. Do not fabricate.
 
-** 11. Cross-References
+** 11. Questions Sub-Heading
+After the statement body (and proof, if present), emit exactly one ~** Questions~ sub-heading per top-level item. Its body MUST be empty.
+
+- **Placement**: immediately after the last element of the body — whether that is the final paragraph of the statement, a numbered list item, an italic gloss, or the last line of a proof.
+- **Whitespace**: exactly one blank line before ~** Questions~ and one blank line after it (before the next top-level heading, if any).
+- **Content**: none. Do not invent questions. Do not insert placeholders such as ~*** TODO~. The section is reserved for content written separately by the human.
+- **Mandatory**: applies to every item, including those whose statements are trivially short or whose proofs are omitted.
+
+** 12. Cross-References
 References to other lemmas, definitions, or theorems within proofs are written in Org italics: ~/Lemma 10.1.11/~, ~/Lemma 10.3.6/~. The form is type keyword followed by full number, no title. Applies to both within-chapter and cross-chapter references.
 
-** 12. Partial or Illegible Source
+** 13. Partial or Illegible Source
 If part of a statement, equation, or proof is cut off, illegible, or otherwise not fully visible:
 - Transcribe what is visible.
 - Mark each gap inline with ~[?]~ at the position of the missing content.
@@ -173,6 +183,8 @@ Example:
 * Lemma       10.3.[?]: Compactness implies completeness
 
 Let $X$ be a compact metric space. Then every Cauchy sequence in $X$ [?].
+
+** Questions
 #+end_example
 
 * EXAMPLE OUTPUT
@@ -200,6 +212,8 @@ A metric space is a pair $(X, d_X)$ where $X$ is a set and $d_X : X \times X \ri
 3. triangle inequality: for all $x, y, z \in X$,
 
    $$d_X(x, z) \le d_X(x, y) + d_X(y, z)$$
+
+** Questions
 ```
 
 ** Example 2 — Lemma with proof and italic gloss
@@ -222,6 +236,8 @@ Let $X$ be a compact metric space. Then every Cauchy sequence in $X$ converges t
 *Proof.*
 
 Let $(x_n)_{n\in\mathbb{N}} \in X$ be a Cauchy sequence. By compactness, there exists a convergent subsequence $(x_{n_j})_{j\in\mathbb{N}} \rightarrow x \in X$. We show $x_n \rightarrow x$. ...
+
+** Questions
 ```
 
 ** Example 3 — Theorem with bidirectional proof
@@ -244,4 +260,6 @@ A subset $S \subseteq \mathbb{R}$ is path-connected iff $S$ is an interval.
 - ($\Rightarrow$) Let $S$ be path-connected. ...
 
 - ($\Leftarrow$) Let $S$ be an interval. ...
+
+** Questions
 ```

@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-25>
-#+lastmod: <2026-05-11 08:51>
+#+lastmod: <2026-05-11 17:44>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -50,9 +50,9 @@ For EVERY problem identified in the source text, you must generate exactly one t
 ** Mathematical Notation
 - All mathematical expressions MUST be converted to LaTeX.
 - **Permitted math-mode entry delimiters (exhaustive)**: ~$...$~ and ~$$...$$~. Do NOT use ~\[ \]~, ~\( \)~, or any other delimiter to enter math mode.
-- **Environments inside math mode**: Any standard LaTeX environment provided by the loaded packages (~amsmath~, ~amssymb~, ~mathtools~) is permitted *inside* ~$...$~ or ~$$...$$~, including ~\begin{aligned}...\end{aligned}~, ~\begin{pmatrix}...\end{pmatrix}~, ~\begin{bmatrix}...\end{bmatrix}~, ~\begin{cases}...\end{cases}~, ~\begin{vmatrix}...\end{vmatrix}~, etc.
+- **Environments inside math mode**: Any standard LaTeX environment provided by the loaded packages (~amsmath~, ~amssymb~, ~mathtools~) is permitted *inside* ~$...$~ or ~$$...$$~, including ~\begin{align*}...\end{align*}~, ~\begin{pmatrix}...\end{pmatrix}~, ~\begin{bmatrix}...\end{bmatrix}~, ~\begin{cases}...\end{cases}~, ~\begin{vmatrix}...\end{vmatrix}~, etc.
 - **Inline Math**: Enclose in single dollar signs (e.g., ~$x^2 + y^2 = z^2$~).
-- **Display Math**: Use ~$$...$$~ for standalone equations, large matrices, or any expression that would be unreadable inline. For multi-line derivations or systems with alignment, wrap an ~\begin{aligned}...\end{aligned}~ environment inside ~$$...$$~. Criteria: use display mode when the expression contains matrices, fractions with tall numerators/denominators, multi-line derivations, or is otherwise too dense for inline rendering.
+- **Display Math**: Use ~$$...$$~ for standalone equations, large matrices, or any expression that would be unreadable inline. For multi-line derivations or systems with alignment, wrap an ~\begin{align*}...\end{align*}~ environment inside ~$$...$$~. Criteria: use display mode when the expression contains matrices, fractions with tall numerators/denominators, multi-line derivations, or is otherwise too dense for inline rendering.
 - **Punctuation Constraint**: Do NOT include trailing punctuation (periods, commas, colons) inside the math delimiters. Punctuation must be placed *outside* the closing ~$~ or ~$$~.
   - **Bad**: ~$A \in \mathbb{R}^{3\times3},$~
   - **Good**: ~$A \in \mathbb{R}^{3\times3}$,~
@@ -187,12 +187,12 @@ Let $A \in \mathbb{R}^{2\times2}$.
 (b) Using Julia, find the eigenvalues of $A$.
 
 (c) Show that the system
-$$
-\begin{aligned}
+
+\begin{align*}
 x + 2y &= 5 \\
 3x + 4y &= 11
-\end{aligned}
-$$
+\end{align*}
+
 has a unique solution.
 #+end_quote
 
