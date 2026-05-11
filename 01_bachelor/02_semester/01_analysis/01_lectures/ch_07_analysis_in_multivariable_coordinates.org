@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-26>
-#+lastmod: <2026-05-10 18:57>
+#+lastmod: <2026-05-10 20:48>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -537,6 +537,33 @@ We now follow the proof of gradient descent and use the expectation at the appro
 A function $g : \mathbb{R}^d \rightarrow \mathbb{R}$ is called L-Lipschitz continuous if there exists a constant $L > 0$ such that
 
 $$\| g(x) - g(y) \| \le L \| x - y \|, \quad \forall x, y \in \mathbb{R}^d.$$
+
+** Questions
+
+*** DONE Is there any point of choosing $d$ over standard $n$ in $g : \mathbb{R}^d \rightarrow \mathbb{R}$?
+
+No, purely notational.
+
+*** DONE I also do not quite see the point of the definition. Its either super trivial, or I do not see what is going on.
+
+The inequality itself is simple — the substance is in what it excludes.
+
+Lipschitz is a /quantitative/ strengthening of continuity: a global linear bound $L$ on rate of change with explicit constant, rather than the qualitative $\varepsilon\delta$ relation.
+
+Strict hierarchy:
+
+\begin{align*}
+\{C^1 \text{ bounded derivative}\} &\subsetneq \{\text{Lipschitz}\} \\
+&\subsetneq \{\text{uniformly continuous}\} \\
+&\subsetneq \{\text{continuous}\} \\
+\end{align*}
+
+Most continuous functions are /not/ Lipschitz:
+
+- $x^2$ fails on $\mathbb{R}$ (unbounded slope)
+- $\sqrt{x}$ fails on $[0,1]$ (slope blows up at $0$)
+
+For differentiable $g$: $L$ -Lipschitz $\Leftrightarrow$ $\|\nabla g(x)\| \leq L$ everywhere. The operational payoff (gradient-descent convergence, ODE existence, error bounds) belongs to downstream theorems.
 
 * Lemma       7.3.05:  Descent lemma
 
