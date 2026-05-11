@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-11>
-#+lastmod: <2026-05-11 11:59>
+#+lastmod: <2026-05-11 14:14>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -15,9 +15,9 @@
 #+property: header-args :eval never-export
 #+startup: overview latexpreview inlineimages
 
-* Definition  3.01:   Sesquilinear/Bilinear form
+* Definition  3.01:  Sesquilinear/Bilinear form
 
-Let $E$ be a $\mathbb{K}$ vector space. We say that a mapping $b : E \times E \rightarrow \mathbb{K}$ is sesquilinear (resp. bilinear) if it is:
+Let $E$ be a $\mathbb{K}$ vector space. We say that a mapping $a : E \times E \rightarrow \mathbb{K}$ is sesquilinear (resp. bilinear) if it is:
 
 - Linear in the first variable,
 
@@ -30,7 +30,21 @@ a(\lambda x + \mu y, z) &= \lambda a(x, z) + \mu a(y, z) \\
 a(x, \lambda y + \mu z) &= \bar{\lambda} a(x, y) + \bar{\mu} a(x, z) \\
 \end{align*}
 
-* Definition  3.02:   Spaces of bilinear and sesquilinear maps
+** Questions
+
+*** DONE What does prefix "sesqui" in "sesquilinear" mean?
+
+"sesqui-" from Latin - "one and a half".
+
+*** DONE What does "resp." mean?
+
+Respectively.
+
+*** DONE If sesquiential mapping would also be positive-definite, would it be an inner product?
+
+Close. It would also need to be conjugate symmetric.
+
+* Definition  3.02:  Spaces of bilinear and sesquilinear maps
 
 Let $E$ be a $\mathbb{K}$ vector space. We denote by
 
@@ -41,7 +55,9 @@ Let $E$ be a $\mathbb{K}$ vector space. We denote by
 
 the sets of bilinear and sesquilinear maps.
 
-* Lemma       3.03:   Bil and Sesq are linear subspaces
+** Questions
+
+* Lemma       3.03:  Bil and Sesq are linear subspaces
 
 $\mathrm{Bil}(E)$ and $\mathrm{Sesq}(E)$ are linear subspaces of $\mathcal{F}(E \times E, \mathbb{K})$.
 
@@ -49,9 +65,9 @@ $\mathrm{Bil}(E)$ and $\mathrm{Sesq}(E)$ are linear subspaces of $\mathcal{F}(E 
 
 Left as an exercise.
 
-* Lemma       3.05:   Matrix representation in finite dimensional spaces
+* Lemma       3.05:  Matrix representation in finite dimensional spaces
 
-Let $E$ be $n$-dimensional $\mathbb{K}$ vector space, $\mathcal{E} = \{ e_1, \ldots, e_p \}$ be a basis, and $b \in \mathrm{Bil}(E)$ and $s \in \mathrm{Sesq}(E)$. It holds that
+Let $E$ be $n$ -dimensional $\mathbb{K}$ vector space, $\mathcal{E} = \{ e_1, \ldots, e_p \}$ be a basis, and $b \in \mathrm{Bil}(E)$ and $s \in \mathrm{Sesq}(E)$. It holds that
 
 $$b(x, y) = ([x]^{\mathcal{E}})^{\top} [b]_{\mathcal{E}\mathcal{E}} [y]^{\mathcal{E}}, \quad s(x, y) = ([x]^{\mathcal{E}})^{\top} [s]_{\mathcal{E}\mathcal{E}} \overline{[y]^{\mathcal{E}}}, \quad \forall x, y \in E. \tag{3.2}$$
 
@@ -67,7 +83,7 @@ Let $s \in \mathrm{Sesq}(E)$, and $x, y \in E$. It holds that
 
 $$s(x, y) = \sum_{1 \le i, j \le n} ([x]_{\mathcal{E}})_i \overline{([y]_{\mathcal{E}})_j} s(e_i, e_j) = ([x]^{\mathcal{E}})^{\top} [s]_{\mathcal{E}\mathcal{E}} \overline{[y]^{\mathcal{E}}}$$
 
-* Lemma       3.06:   Uniqueness of matrix representation
+* Lemma       3.06:  Uniqueness of matrix representation
 
 Let $E$ be $n$-dimensional $\mathbb{K}$ vector space and $\mathcal{E} = \{ e_1, \ldots, e_p \}$ be a basis. The mappings
 
@@ -95,7 +111,7 @@ The proof for the sesquilinear case follows the same lines, with due care for co
 
 *Linearity:* Trivial.
 
-* Lemma       3.07:   Matrix representation under change of basis
+* Lemma       3.07:  Matrix representation under change of basis
 
 Let $E$ be $n$-dimensional $\mathbb{K}$ vector space, and $b \in \mathrm{Bil}(E)$ and $s \in \mathrm{Sesq}(E)$. Then the matrix representation of $b$ and $s$ for two different bases $\mathcal{E}$ and $\mathcal{U}$ of $E$ are connected as
 
@@ -116,7 +132,7 @@ $$b(x, y) = ([x]^{\mathcal{U}})^{\top} [b]_{\mathcal{U}\mathcal{U}} [y]^{\mathca
 
 Therefore, $[b]_{\mathcal{U}\mathcal{U}} = ([\mathrm{Id}]_{\mathcal{U}}^{\mathcal{E}})^{\top} [b]_{\mathcal{E}\mathcal{E}} [\mathrm{Id}]_{\mathcal{U}}^{\mathcal{E}}$. We proceed similarly to prove the claim for $s \in \mathrm{Sesq}(E)$.
 
-* Definition  3.08:   Tensor product: axioms
+* Definition  3.08:  Tensor product: axioms
 
 The tensor product operation $\otimes$ maps a pair of vectors $(x, y) \in E \times E$ to an object called the tensor product $x \otimes y$. We can add tensors and scale them. The product satisfies the following properties:
 
@@ -154,3 +170,7 @@ It holds that $0_{E \otimes E}$ is indeed the neutral element, and that for all 
 * Definition  3.13:  Tensor product space as algebraic dual
 
 Let $E$ be a vector space. The tensor product space $E \otimes E$ is the algebraic dual of the space of bilinear forms $\mathrm{Bil}(E)$.
+
+* Typos
+
+- [ ] Definition 3.01: mapping $b$ should be renamed to $a$ for consistency.

@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-27>
-#+lastmod: <2026-05-04 12:45>
+#+lastmod: <2026-05-11 12:36>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -30,6 +30,38 @@ Let $E$ be an $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\math
 3. positive-definiteness:
 
    $$\langle x, x \rangle_E \ge 0, \quad \forall x \in E \quad \text{and} \quad \langle x, x \rangle_E = 0 \iff x = 0_E$$
+
+** Questions
+
+*** DONE Do I understand right that $\langle \lambda x + \mu y, z \rangle_E = \langle \lambda x, z \rangle_E + \langle \mu y, z \rangle_E = \lambda \langle x, z \rangle_E + \mu \langle y, z \rangle_E$?
+
+Yes, thats correct.
+
+First equiality uses additivity, second - homogeneity.
+
+*** TODO What do they mean by "with respect to the first variable"? What about second?
+
+*** DONE What is "conjugate"?
+
+The term "conjugate" is overloaded in mathematics. In specifically thi context, "Inner product", we are talking about "complex conjugates".
+
+The complex number has the form $c = a + bi : a,b \in \mathbb{R}, \, i^{2} = -1$. Complex conjugate of $z$, (written as $\overline{z}$), flips the sign of the imaginary part:
+
+$$z = a + bi \implies \overline{z} = a - bi$$
+
+Three additional fact:
+
+1. *Complex conjugation fixes real numbers*: If $b=0$, $z=a$ and $\overline{z}=a$. So $z=\overline{z} \implies z \in \mathbb{R}$
+
+2. *A number times its complex conjugate is real and non negative*:
+
+   $$z\overline{z} = (a+bi)(a-bi) = a^2 - (bi)^2 = a^2 + b^2 \ge 0$$
+
+3. *Complex conjugation distributes over the sums and products*:
+
+   $$\overline{z + w} = \overline{z} + \overline{w} \quad \text{and} \quad \overline{zw} = \overline{z} \cdot \overline{w}$$
+
+*** TODO I noticed most definitions combine two axioms into one "positive definiteness". Is it because both of them are trivial? Or there is another reason?
 
 * Lemma       2.02:  Norm induced by an inner product
 
