@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-11>
-#+lastmod: <2026-05-12 18:45>
+#+lastmod: <2026-05-12 19:32>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -868,6 +868,116 @@ Write an $O(n)$ -time nonrecursive procedure that, given an $n$ -node binary tre
 #+end_quote
 
 ** Solution
+
+#+begin_src julia :results output
+mutable struct Node{T}
+    data::T
+    parent::Union{Node{T}, Nothing}
+    left::Union{Node{T}, Nothing}
+    right::Union{Node{T}, Nothing}
+end
+
+mutable struct BinaryTree{T}
+    root::Union{Node{T}, Nothing}
+    BinaryTree{T}() where T = new(nothing)
+end
+
+Base.isempty(b::BinaryTree) = b.root === nothing
+
+function wire_parents!(n::Union{Node, Nothing}, p::Union{Node, Nothing}=nothing)
+    n === nothing && return
+    n.parent = p
+    wire_parents!(n.left, n)
+    wire_parents!(n.right, n)
+end
+
+function inorder(io::IO, b::BinaryTree)
+    isempty(b) && return
+    prev = nothing
+    curr = b.root
+    while curr !== nothing
+        if prev === nothing || prev === curr.parent
+            # descending from parent
+            if curr.left !== nothing
+                next = curr.left
+            else
+                # no left subtree — left work is done, visit now
+                print(io, curr.data, " ")
+                next = curr.right !== nothing ? curr.right : curr.parent
+            end
+        elseif prev === curr.left
+            # returned from left subtree — visit now
+            print(io, curr.data, " ")
+            next = curr.right !== nothing ? curr.right : curr.parent
+        else  # prev === curr.right
+            # returned from right subtree — go up
+            next = curr.parent
+        end
+        prev = curr
+        curr = next
+    end
+end
+
+# ------------------------------------------
+
+using Test
+
+@testset "inorder" begin
+
+    @testset "empty tree" begin
+        b = BinaryTree{Int}()
+        @test sprint(inorder, b) == ""
+    end
+
+    @testset "single node" begin
+        b = BinaryTree{Int}()
+        b.root = Node(1, nothing, nothing, nothing)
+        wire_parents!(b.root)
+        @test sprint(inorder, b) == "1 "
+    end
+
+    @testset "left-only chain" begin
+        b = BinaryTree{Int}()
+        b.root = Node(2, nothing,
+                      Node(1, nothing, nothing, nothing),
+                      nothing)
+        wire_parents!(b.root)
+        @test sprint(inorder, b) == "1 2 "
+    end
+
+    @testset "right-only chain" begin
+        b = BinaryTree{Int}()
+        b.root = Node(2, nothing,
+                      nothing,
+                      Node(3, nothing, nothing, nothing))
+        wire_parents!(b.root)
+        @test sprint(inorder, b) == "2 3 "
+    end
+
+    @testset "full small tree" begin
+        #      4
+        #     / \
+        #    2   5
+        #   / \
+        #  1   3
+        b = BinaryTree{Int}()
+        b.root = Node(4, nothing,
+                      Node(2, nothing,
+                           Node(1, nothing, nothing, nothing),
+                           Node(3, nothing, nothing, nothing)),
+                      Node(5, nothing, nothing, nothing))
+        wire_parents!(b.root)
+        @test sprint(inorder, b) == "1 2 3 4 5 "
+    end
+
+end
+#+end_src
+
+#+RESULTS:
+: wire_parents! (generic function with 2 methods)
+: inorder (generic function with 1 method)
+: Test Summary: | Pass  Total  Time
+: inorder       |    5      5  0.0s
 
 * Problem 59 :universal_hashing:
 
