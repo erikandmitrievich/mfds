@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-11>
-#+lastmod: <2026-05-12 16:20>
+#+lastmod: <2026-05-12 16:49>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -414,6 +414,127 @@ Explain why the dynamic-set operation INSERT on a singly linked list can be impl
 #+end_quote
 
 ** Solution
+
+#+begin_src julia :results output
+mutable struct Node{T}
+    data::T
+    next::Union{Node{T}, Nothing}
+end
+
+mutable struct LinkedList{T}
+    head::Union{Node{T}, Nothing}
+    LinkedList{T}() where T = new(nothing)
+end
+
+Base.isempty(l::LinkedList) = l.head === nothing
+
+function insert!(l::LinkedList{T}, d::T) where T
+    l.head = Node{T}(d, l.head)
+    l
+end
+
+function delete!(l::LinkedList{T}, n::Node{T}) where T
+    if (l.head === n)
+        l.head = l.head.next
+    else
+        p = l.head
+        while (p !== nothing && p.next !== n)
+            p = p.next
+        end
+        (p === nothing) && throw(ArgumentError("node not in list"))
+        p.next = n.next
+    end
+    l
+end
+
+# ------------------------------------------
+
+using Test
+
+@testset "LinkedList" begin
+
+    @testset "empty list" begin
+        L = LinkedList{Int}()
+        @test isempty(L)
+    end
+
+    @testset "insert! single" begin
+        L = LinkedList{Int}()
+        insert!(L, 1)
+        @test !isempty(L)
+        @test L.head.data == 1
+        @test L.head.next === nothing
+    end
+
+    @testset "insert! prepends" begin
+        L = LinkedList{Int}()
+        insert!(L, 1); insert!(L, 2); insert!(L, 3)  # 3 -> 2 -> 1
+        @test L.head.data == 3
+        @test L.head.next.data == 2
+        @test L.head.next.next.data == 1
+        @test L.head.next.next.next === nothing
+    end
+
+    @testset "delete! head" begin
+        L = LinkedList{Int}()
+        insert!(L, 1); insert!(L, 2); insert!(L, 3)
+        delete!(L, L.head)
+        @test L.head.data == 2
+        @test L.head.next.data == 1
+    end
+
+    @testset "delete! middle" begin
+        L = LinkedList{Int}()
+        insert!(L, 1); insert!(L, 2); insert!(L, 3)
+        delete!(L, L.head.next)
+        @test L.head.data == 3
+        @test L.head.next.data == 1
+        @test L.head.next.next === nothing
+    end
+
+    @testset "delete! tail" begin
+        L = LinkedList{Int}()
+        insert!(L, 1); insert!(L, 2); insert!(L, 3)
+        delete!(L, L.head.next.next)
+        @test L.head.data == 3
+        @test L.head.next.data == 2
+        @test L.head.next.next === nothing
+    end
+
+    @testset "delete! foreign node" begin
+        L = LinkedList{Int}()
+        insert!(L, 1); insert!(L, 2)
+        foreign = Node{Int}(99, nothing)
+        @test_throws ArgumentError delete!(L, foreign)
+    end
+
+    @testset "delete! from empty" begin
+        L = LinkedList{Int}()
+        foreign = Node{Int}(1, nothing)
+        @test_throws ArgumentError delete!(L, foreign)
+    end
+
+    @testset "type constraint" begin
+        @test_throws MethodError insert!(LinkedList{Int}(), "foo")
+    end
+
+end
+#+end_src
+
+#+RESULTS:
+: insert! (generic function with 1 method)
+: delete! (generic function with 1 method)
+: Test Summary: | Pass  Total  Time
+: LinkedList    |   19     19  0.0s
+
+CLRS's INSERT takes a value; DELETE takes a *pointer to a node*. The asymmetry is in what is specified, not in the work itself.
+
+- =insert!=: allocate one node, reassign =L.head=. Both steps $\Theta(1)$, independent of $n$.
+
+- =delete!=: splicing out $x$ requires writing $x$'s predecessor's =next= field to skip $x$. A singly linked list stores no back-pointer from $x$ to its predecessor, so the predecessor must be located by walking from =L.head=. Worst case (when $x$ is the tail) this is
+  $\Theta(n)$.
+
+Even with $x$ "in hand", single linkage forces a linear lookup of its predecessor. A doubly linked list eliminates the lookup — =x.prev= gives the predecessor in $\Theta(1)$ — and DELETE drops to $\Theta(1)$.
 
 * Problem 55 :linked_list:reversal:
 
