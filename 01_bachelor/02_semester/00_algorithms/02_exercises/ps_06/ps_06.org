@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-11>
-#+lastmod: <2026-05-12 17:12>
+#+lastmod: <2026-05-12 17:41>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -673,6 +673,70 @@ Write an $O(n)$ recursive procedure that, given an $n$ -node binary tree, prints
 #+end_quote
 
 ** Solution
+
+#+begin_src julia :results output
+struct Node{T}
+    data::T
+    left::Union{Node{T}, Nothing}
+    right::Union{Node{T}, Nothing}
+end
+
+mutable struct BinaryTree{T}
+    root::Union{Node{T}, Nothing}
+    BinaryTree{T}() where T = new(nothing)
+end
+
+function postorder(io::IO, b::Union{Node{T}, Nothing}) where T
+    b === nothing && return
+    postorder(io, b.left)
+    postorder(io, b.right)
+    print(io, b.data, " ")
+end
+
+# ------------------------------------------
+
+using Test
+
+@testset "postorder" begin
+
+    @testset "single node" begin
+        t = Node(1, nothing, nothing)
+        @test sprint(postorder, t) == "1 "
+    end
+
+    @testset "left-only chain" begin
+        t = Node(2, Node(1, nothing, nothing), nothing)
+        @test sprint(postorder, t) == "1 2 "
+    end
+
+    @testset "right-only chain" begin
+        t = Node(2, nothing, Node(3, nothing, nothing))
+        @test sprint(postorder, t) == "3 2 "
+    end
+
+    @testset "full small tree" begin
+        #      4
+        #     / \
+        #    2   5
+        #   / \
+        #  1   3
+        t = Node(4, Node(2, Node(1, nothing, nothing), Node(3, nothing, nothing)), Node(5, nothing, nothing))
+        @test sprint(postorder, t) == "1 3 2 5 4 "
+    end
+
+    @testset "root printed last" begin
+        t = Node(99, Node(1, nothing, nothing), Node(2, nothing, nothing))
+        @test last(split(strip(sprint(postorder, t)))) == "99"
+    end
+
+end
+
+#+end_src
+
+#+RESULTS:
+: postorder (generic function with 1 method)
+: Test Summary: | Pass  Total  Time
+: postorder     |    5      5  0.0s
 
 * Problem 57 :binary_tree:traversal:stack:
 
