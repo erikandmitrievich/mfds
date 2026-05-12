@@ -1,0 +1,49 @@
+#+title: Ch 11 Hash Tables
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-12>
+#+lastmod: <2026-05-12 19:53>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* 11.1 Direct-address tables
+
+** Direct-address table
+
+- *Direct addressing* works well when the universe $U$ of keys is reasonably small.
+- $U = \{0, 1, \ldots, m-1\}$ with $m$ not too large; element keys are distinct.
+- *Direct-address table* $T[0 : m-1]$: array where each position (a *slot*) corresponds to one key in $U$.
+- $T[k]$ points to the element with key $k$; $T[k] = \text{NIL}$ when no element with key $k$ is in the set.
+
+[FIGURE 11.1: direct-address table $T$ with $U = \{0, 1, \ldots, 9\}$ and actual key set $K = \{2, 3, 5, 8\}$; slots in $K$ hold pointers to elements, the rest hold NIL]
+
+** Dictionary operations
+
+- =DIRECT-ADDRESS-SEARCH=, =DIRECT-ADDRESS-INSERT=, =DIRECT-ADDRESS-DELETE= are one-liners. Each runs in $O(1)$.
+
+#+begin_example
+DIRECT-ADDRESS-SEARCH(T, k)
+1  return T[k]
+
+DIRECT-ADDRESS-INSERT(T, x)
+1  T[x.key] = x
+
+DIRECT-ADDRESS-DELETE(T, x)
+1  T[x.key] = NIL
+#+end_example
+
+** Storing objects directly in slots
+
+- The table can hold the elements themselves instead of pointers to external objects — eliminates the indirection and the satellite object's own space overhead.
+- A separate way is then needed to mark a slot empty:
+  - Reserve a special key value meaning "empty".
+  - Or drop the stored $key$ entirely — the slot's index *is* the key — but still keep some empty/occupied indicator.
