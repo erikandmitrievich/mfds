@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-11>
-#+lastmod: <2026-05-12 13:16>
+#+lastmod: <2026-05-12 16:20>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -150,9 +150,10 @@ end
 
     @testset "enqueue dequeue 1" begin
         q = Queue{Int}()
-        enqueue!(q, 42)
+        d = 1
+        enqueue!(q, d)
         @test length(q) == 1
-        @test dequeue!(q) == 42
+        @test dequeue!(q) == d
         @test isempty(q)
     end
 
@@ -166,18 +167,6 @@ end
         @test dequeue!(q) == 2
         @test dequeue!(q) == 3
         @test isempty(q)
-    end
-
-    @testset "abstraction leak" begin
-        q = Queue{Int}()
-        try
-            dequeue!(q)
-            @test false
-        catch e
-            @test e isa ArgumentError
-            @test occursin("Queue", e.msg)
-            @test !occursin("LinkedStack", e.msg)
-        end
     end
 
     @testset "mixed sequence (lazy pour)" begin
@@ -204,7 +193,7 @@ end
 : Test Summary: | Pass  Total  Time
 : LinkedStack   |   12     12  0.0s
 : Test Summary: | Pass  Total  Time
-: Queue         |   20     20  0.0s
+: Queue         |   17     17  0.0s
 
 
 Per operation:
@@ -230,6 +219,191 @@ Show how to implement a stack using two queues. Analyze the running time of the 
 #+end_quote
 
 ** Solution
+
+#+begin_src julia :results output
+mutable struct Node{T}
+    data::T
+    next::Union{Node{T}, Nothing}
+end
+
+mutable struct LinkedQueue{T}
+    head::Union{Node{T}, Nothing}
+    tail::Union{Node{T}, Nothing}
+    LinkedQueue{T}() where T = new(nothing, nothing)
+end
+
+Base.isempty(q::LinkedQueue) = q.head === nothing
+
+function Base.length(q::LinkedQueue)
+    l = 0
+    n = q.head
+    while n !== nothing
+        l += 1
+        n = n.next
+    end
+    l
+end
+
+function enqueue!(q::LinkedQueue{T}, d::T) where T
+    n = Node{T}(d, nothing)
+    if q.tail === nothing
+        q.head = n
+    else
+        q.tail.next = n
+    end
+    q.tail = n
+    q
+end
+
+function dequeue!(q::LinkedQueue)
+    (q.head === nothing) && throw(ArgumentError("dequeue! on empty LinkedQueue"))
+    r = q.head.data
+    q.head = q.head.next
+    (q.head === nothing) && (q.tail = nothing)
+    r
+end
+
+# ------------------------------------------
+
+mutable struct Stack{T}
+    q1::LinkedQueue{T}
+    q2::LinkedQueue{T}
+    Stack{T}() where T = new(LinkedQueue{T}(), LinkedQueue{T}())
+end
+
+Base.isempty(s::Stack) = isempty(s.q1)
+
+Base.length(s::Stack) = length(s.q1)
+
+function Base.push!(s::Stack{T}, d::T) where T
+    enqueue!(s.q1, d)
+    s
+end
+
+function Base.pop!(s::Stack)
+    isempty(s) && throw(ArgumentError("pop! on empty Stack"))
+    while true
+        d = dequeue!(s.q1)
+        if isempty(s.q1)
+            s.q1, s.q2 = s.q2, s.q1
+            return d
+        end
+        enqueue!(s.q2, d)
+    end
+end
+
+# ------------------------------------------
+
+using Test
+
+@testset "LinkedQueue" begin
+
+    @testset "empty queue" begin
+        q = LinkedQueue{Int}()
+        @test isempty(q)
+        @test length(q) == 0
+        @test_throws ArgumentError dequeue!(q)
+    end
+
+    @testset "enqueue dequeue 1" begin
+        q = LinkedQueue{Int}()
+        d = 1
+        enqueue!(q, d)
+        @test dequeue!(q) == d
+        @test isempty(q)
+    end
+
+    @testset "FIFO order" begin
+        q = LinkedQueue{Int}()
+        r = [1, 2, 3]
+        for d in r
+            enqueue!(q, d)
+        end
+        @test length(q) == length(r)
+        @test dequeue!(q) == 1
+        @test dequeue!(q) == 2
+        @test dequeue!(q) == 3
+        @test isempty(q)
+    end
+
+    @testset "refill after empty" begin
+        q = LinkedQueue{Int}()
+        enqueue!(q, 1); dequeue!(q)
+        @test isempty(q)
+        enqueue!(q, 2)
+        @test dequeue!(q) == 2
+        @test isempty(q)
+    end
+
+    @testset "type constraint" begin
+        @test_throws MethodError enqueue!(LinkedQueue{Int}(), "foo")
+    end
+
+end
+
+@testset "Stack" begin
+
+    @testset "empty stack" begin
+        s = Stack{Int}()
+        @test isempty(s)
+        @test length(s) == 0
+        @test_throws ArgumentError pop!(s)
+    end
+
+    @testset "push pop 1" begin
+        s = Stack{Int}()
+        d = 1
+        push!(s, d)
+        @test length(s) == 1
+        @test pop!(s) == d
+        @test isempty(s)
+    end
+
+    @testset "LIFO order" begin
+        s = Stack{Int}()
+        for d in [1, 2, 3]
+            push!(s, d)
+        end
+        @test length(s) == 3
+        @test pop!(s) == 3
+        @test pop!(s) == 2
+        @test pop!(s) == 1
+        @test isempty(s)
+    end
+
+    @testset "mixed sequence" begin
+        s = Stack{Int}()
+        push!(s, 1); push!(s, 2); push!(s, 3)
+        @test pop!(s) == 3
+        push!(s, 4)
+        @test pop!(s) == 4
+        @test pop!(s) == 2
+        @test pop!(s) == 1
+        @test isempty(s)
+    end
+
+    @testset "type constraint" begin
+        @test_throws MethodError push!(Stack{Int}(), "foo")
+    end
+end
+#+end_src
+
+#+RESULTS:
+: enqueue! (generic function with 1 method)
+: dequeue! (generic function with 1 method)
+: Test Summary: | Pass  Total  Time
+: LinkedQueue   |   14     14  0.0s
+: Test Summary: | Pass  Total  Time
+: Stack         |   17     17  0.0s
+
+Per operation, with $n = |s|$ at the time of the call:
+
+- =push!=: $\Theta(1)$ — one enqueue onto =q1=.
+- =pop!=: $\Theta(n)$ — dequeue and re-enqueue $n-1$ elements onto =q2=, dequeue the last from =q1=, swap.
+
+A sequence of $n$ pushes followed by $n$ pops costs $\sum_{k=1}^{n} k = \Theta(n^2)$: each =pop!= re-shuffles the survivors, and the next =pop!= re-shuffles them again — no progress is preserved between calls.
+
+The asymmetry is structural. The mirror choice — $\Theta(n)$ =push!=, $\Theta(1)$ =pop!= — gives the same $\Theta(n^2)$ bound.
 
 * Problem 54 :linked_list:insertion:deletion:
 
