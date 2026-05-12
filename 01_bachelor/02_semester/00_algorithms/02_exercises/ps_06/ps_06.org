@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-11>
-#+lastmod: <2026-05-12 17:41>
+#+lastmod: <2026-05-12 18:45>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -54,7 +54,7 @@ function Base.push!(s::LinkedStack{T}, d::T) where T
 end
 
 function Base.pop!(s::LinkedStack)
-    (s.top === nothing) && throw(ArgumentError("pop! on empty LinkedStack"))
+    isempty(s) && throw(ArgumentError("pop! on empty LinkedStack"))
     r = s.top.data
     s.top = s.top.next
     r
@@ -256,7 +256,7 @@ function enqueue!(q::LinkedQueue{T}, d::T) where T
 end
 
 function dequeue!(q::LinkedQueue)
-    (q.head === nothing) && throw(ArgumentError("dequeue! on empty LinkedQueue"))
+    isempty(q) && throw(ArgumentError("dequeue! on empty LinkedQueue"))
     r = q.head.data
     q.head = q.head.next
     (q.head === nothing) && (q.tail = nothing)
@@ -747,6 +747,117 @@ Write an $O(n)$ -time nonrecursive procedure that, given an $n$ -node binary tre
 #+end_quote
 
 ** Solution
+
+#+begin_src julia :results output
+struct StackNode{T}
+    data::T
+    next::Union{StackNode{T}, Nothing}
+end
+
+mutable struct LinkedStack{T}
+    top::Union{StackNode{T}, Nothing}
+    LinkedStack{T}() where T = new(nothing)
+end
+
+Base.isempty(s::LinkedStack) = s.top === nothing
+
+function Base.length(s::LinkedStack)
+    l = 0
+    n = s.top
+    while n !== nothing
+        l += 1
+        n = n.next
+    end
+    l
+end
+
+function Base.push!(s::LinkedStack{T}, d::T) where T
+    s.top = StackNode(d, s.top)
+    s
+end
+
+function Base.pop!(s::LinkedStack)
+    isempty(s) && throw(ArgumentError("pop! on empty LinkedStack"))
+    r = s.top.data
+    s.top = s.top.next
+    r
+end
+
+# ------------------------------------------
+
+struct Node{T}
+    data::T
+    left::Union{Node{T}, Nothing}
+    right::Union{Node{T}, Nothing}
+end
+
+mutable struct BinaryTree{T}
+    root::Union{Node{T}, Nothing}
+    BinaryTree{T}() where T = new(nothing)
+end
+
+Base.isempty(b::BinaryTree) = b.root === nothing
+
+function preorder(io::IO, b::BinaryTree{T}) where T
+    s = LinkedStack{Node{T}}()
+    isempty(b) && return
+    push!(s, b.root)
+
+    while (!isempty(s))
+        n = pop!(s)
+        print(io, n.data, " ")
+        (n.right !== nothing) && push!(s, n.right)
+        (n.left !== nothing) && push!(s, n.left)
+    end
+end
+
+# ------------------------------------------
+
+using Test
+
+@testset "preorder" begin
+
+    @testset "empty tree" begin
+        b = BinaryTree{Int}()
+        @test sprint(preorder, b) == ""
+    end
+
+    @testset "single node" begin
+        b = BinaryTree{Int}()
+        b.root = Node(1, nothing, nothing)
+        @test sprint(preorder, b) == "1 "
+    end
+
+    @testset "left-only chain" begin
+        b = BinaryTree{Int}()
+        b.root = Node(2, Node(1, nothing, nothing), nothing)
+        @test sprint(preorder, b) == "2 1 "
+    end
+
+    @testset "right-only chain" begin
+        b = BinaryTree{Int}()
+        b.root = Node(2, nothing, Node(3, nothing, nothing))
+        @test sprint(preorder, b) == "2 3 "
+    end
+
+    @testset "full small tree" begin
+        #      4
+        #     / \
+        #    2   5
+        #   / \
+        #  1   3
+        b = BinaryTree{Int}()
+        b.root = Node(4, Node(2, Node(1, nothing, nothing), Node(3, nothing, nothing)), Node(5, nothing, nothing))
+        @test sprint(preorder, b) == "4 2 1 3 5 "
+    end
+
+end
+#+end_src
+
+#+RESULTS:
+: preorder (generic function with 1 method)
+: Test Summary: | Pass  Total  Time
+: preorder      |    5      5  0.0s
 
 * Problem 58 :binary_tree:traversal:
 
