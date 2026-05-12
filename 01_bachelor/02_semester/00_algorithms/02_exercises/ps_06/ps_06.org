@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-11>
-#+lastmod: <2026-05-12 16:49>
+#+lastmod: <2026-05-12 17:12>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -545,6 +545,124 @@ Implement a $\Theta(n)$ -time nonrecursive procedure that reverses a singly link
 #+end_quote
 
 ** Solution
+
+#+begin_src julia :results output
+mutable struct Node{T}
+    data::T
+    next::Union{Node{T}, Nothing}
+end
+
+mutable struct LinkedList{T}
+    head::Union{Node{T}, Nothing}
+    LinkedList{T}() where T = new(nothing)
+end
+
+Base.isempty(l::LinkedList) = l.head === nothing
+
+function insert!(l::LinkedList{T}, d::T) where T
+    l.head = Node{T}(d, l.head)
+    l
+end
+
+function delete!(l::LinkedList{T}, n::Node{T}) where T
+    if (l.head === n)
+        l.head = l.head.next
+    else
+        p = l.head
+        while (p !== nothing && p.next !== n)
+            p = p.next
+        end
+        (p === nothing) && throw(ArgumentError("node not in list"))
+        p.next = n.next
+    end
+    l
+end
+
+function Base.reverse!(l::LinkedList)
+    prev = nothing
+    curr = l.head
+
+    while curr !== nothing
+        next = curr.next
+        curr.next = prev
+        prev = curr
+        curr = next
+    end
+    l.head = prev
+    l
+end
+
+# ------------------------------------------
+
+using Test
+
+@testset "reverse!" begin
+
+    @testset "empty list" begin
+        L = LinkedList{Int}()
+        reverse!(L)
+        @test isempty(L)
+    end
+
+    @testset "single element" begin
+        L = LinkedList{Int}()
+        insert!(L, 1)
+        reverse!(L)
+        @test L.head.data == 1
+        @test L.head.next === nothing
+    end
+
+    @testset "two elements" begin
+        L = LinkedList{Int}()
+        insert!(L, 1); insert!(L, 2)
+        reverse!(L)
+        @test L.head.data == 1
+        @test L.head.next.data == 2
+        @test L.head.next.next === nothing
+    end
+
+    @testset "multi-element reverses order" begin
+        L = LinkedList{Int}()
+        for d in 1:5
+            insert!(L, d)
+        end
+        reverse!(L)
+        n = L.head
+        for d in 1:5
+            @test n.data == d
+            n = n.next
+        end
+        @test n === nothing
+    end
+
+    @testset "involution" begin
+        L = LinkedList{Int}()
+        for d in 1:5
+            insert!(L, d)
+        end
+        reverse!(L); reverse!(L)
+        n = L.head
+        for d in 5:-1:1
+            @test n.data == d
+            n = n.next
+        end
+        @test n === nothing
+    end
+
+    @testset "returns list" begin
+        L = LinkedList{Int}()
+        insert!(L, 1)
+        @test reverse!(L) === L
+    end
+
+end
+#+end_src
+
+#+RESULTS:
+: insert! (generic function with 1 method)
+: delete! (generic function with 1 method)
+: Test Summary: | Pass  Total  Time
+: reverse!      |   19     19  0.0s
 
 * Problem 56 :binary_tree:traversal:recursion:
 
