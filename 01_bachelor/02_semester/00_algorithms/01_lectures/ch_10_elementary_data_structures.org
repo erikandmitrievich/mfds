@@ -1,0 +1,303 @@
+#+title: Ch 10 Elementary Data Structures
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-12>
+#+lastmod: <2026-05-12 10:19>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* 10.1 Simple array-based data structures: arrays, matrices, stacks, queues
+
+** 10.1.1 Arrays
+
+- Array stored as a contiguous sequence of bytes. First index $s$ (commonly $s = 1$, sometimes $s = 0$); start address $a$; each element occupies $b$ bytes.
+- $i$ th element occupies bytes $a + b(i - s)$ through $a + b(i - s + 1) - 1$.
+  - $s = 1$: bytes $a + b(i - 1)$ through $a + bi - 1$.
+  - $s = 0$: bytes $a + bi$ through $a + b(i + 1) - 1$.
+- *RAM model* (§2.2): every memory location accessed in equal time → element access is $O(1)$ regardless of index.
+- *Variable-size elements*: formulas fail because $b$ is not constant. Store pointers (uniform size) in the array; follow the pointer to reach the object.
+
+** 10.1.2 Matrices
+
+- An $m \times n$ matrix is represented by one or more 1D arrays.
+- *Row-major order*: store row by row.
+- *Column-major order*: store column by column.
+- Example matrix:
+  \[ M = \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{pmatrix} \]
+  - Row-major: $1, 2, 3,\ 4, 5, 6$.
+  - Column-major: $1, 4,\ 2, 5,\ 3, 6$.
+
+*** Single-array indexing
+
+- With first index $s$ for rows, columns, and the storage array, $M[i, j]$ sits at array index:
+  - Row-major: $s + n(i - s) + (j - s)$.
+  - Column-major: $s + m(j - s) + (i - s)$.
+- $s = 1$: row-major $n(i - 1) + j$; column-major $i + m(j - 1)$.
+- $s = 0$: row-major $ni + j$; column-major $i + mj$.
+- Example under 1-origin indexing: $M[2, 1]$ → row-major index $3(2 - 1) + 1 = 4$; column-major index $2 + 2(1 - 1) = 2$.
+
+*** Multiple-array representations
+
+- *Row-major multi*: each row stored as its own length-$n$ array; a length-$m$ pointer array $A$ with $A[i]$ pointing to row $i$. Then $A[i][j] = M[i, j]$.
+- *Column-major multi*: $n$ arrays each of length $m$; $M[i, j]$ stored in $A[j][i]$.
+- Trade-off: single-array is typically more efficient on modern hardware. Multiple-array allows *ragged arrays* — rows of differing lengths (row-major case) or columns of differing lengths (column-major case).
+
+*** Block representation
+
+- Matrix is divided into blocks; each block stored contiguously.
+- Example: the $4 \times 4$ matrix
+  \[ \begin{pmatrix} 1 & 2 & 3 & 4 \\ 5 & 6 & 7 & 8 \\ 9 & 10 & 11 & 12 \\ 13 & 14 & 15 & 16 \end{pmatrix} \]
+  divided into $2 \times 2$ blocks is stored as $\langle 1, 2, 5, 6,\ 3, 4, 7, 8,\ 9, 10, 13, 14,\ 11, 12, 15, 16 \rangle$.
+
+[FIGURE 10.1: layouts of $M$ — (a)(b) single-array row-major and column-major; (c)(d) corresponding multiple-array versions]
+
+** 10.1.3 Stacks and queues
+
+- Both are *dynamic sets* in which the element removed by =DELETE= is prespecified by the structure (=DELETE= takes no argument).
+- *Stack*: *LIFO* (last-in, first-out) — most recently inserted is deleted first.
+- *Queue*: *FIFO* (first-in, first-out) — element that has been in the set longest is deleted first.
+
+*** Stacks
+
+- =INSERT= is called =PUSH=; =DELETE= is called =POP= (no argument). Pop order is the reverse of push order — only the top is accessible.
+- Array $S[1 : n]$ with attributes:
+  - $S.top$ — index of the most recently inserted element.
+  - $S.size = n$ — array capacity.
+- Stack contents: $S[1 : S.top]$, with $S[1]$ at the bottom and $S[S.top]$ at the top.
+- $S.top = 0$ → stack is *empty*. =STACK-EMPTY= tests this.
+- *Underflow*: =POP= on an empty stack (error).
+- *Overflow*: $S.top$ exceeds $S.size$.
+- =STACK-EMPTY=, =PUSH=, =POP= each run in $O(1)$.
+
+#+begin_example
+STACK-EMPTY(S)
+1  if S.top == 0
+2      return TRUE
+3  else return FALSE
+
+PUSH(S, x)
+1  if S.top == S.size
+2      error "overflow"
+3  else S.top = S.top + 1
+4      S[S.top] = x
+
+POP(S)
+1  if STACK-EMPTY(S)
+2      error "underflow"
+3  else S.top = S.top - 1
+4      return S[S.top + 1]
+#+end_example
+
+[FIGURE 10.2: effects of =PUSH= and =POP= on an array-based stack]
+
+*** Queues
+
+- =INSERT= is called =ENQUEUE=; =DELETE= is called =DEQUEUE= (no argument).
+- Queue has a *head* (element that has waited longest, leaves next) and a *tail* (next free insertion slot).
+- Array $Q[1 : n]$, $Q.size = n$, holds *at most* $n - 1$ elements (one slot reserved so that empty and full can be distinguished).
+- Attributes:
+  - $Q.head$ — index of the head element.
+  - $Q.tail$ — index of the next location at which an arriving element will be inserted.
+- Contents occupy locations $Q.head, Q.head + 1, \dots, Q.tail - 1$ with *wrap-around*: location $1$ immediately follows location $n$ in a circular order.
+- State conditions:
+  - *Empty*: $Q.head = Q.tail$. Initially $Q.head = Q.tail = 1$.
+  - *Full*: $Q.head = Q.tail + 1$, or $Q.head = 1$ and $Q.tail = Q.size$.
+  - *Underflow*: =DEQUEUE= on empty queue.
+  - *Overflow*: =ENQUEUE= on full queue.
+- The pseudocode below omits the underflow/overflow checks. Each operation runs in $O(1)$.
+
+#+begin_example
+ENQUEUE(Q, x)
+1  Q[Q.tail] = x
+2  if Q.tail == Q.size
+3      Q.tail = 1
+4  else Q.tail = Q.tail + 1
+
+DEQUEUE(Q)
+1  x = Q[Q.head]
+2  if Q.head == Q.size
+3      Q.head = 1
+4  else Q.head = Q.head + 1
+5  return x
+#+end_example
+
+[FIGURE 10.3: queue states under sequences of =ENQUEUE= and =DEQUEUE= operations, illustrating wrap-around]
+
+* 10.2 Linked lists
+
+** Linked list structure
+
+- *Linked list*: a collection of objects arranged in a linear order determined by a pointer in each object (rather than by array indices). Also called *search lists*.
+- *Doubly linked list* $L$: each element is an object with attribute $key$ and two pointer attributes $next$, $prev$.
+  - $x.next$ → successor; $x.prev$ → predecessor.
+  - $x.prev = \text{NIL}$ → $x$ is the *head* of the list.
+  - $x.next = \text{NIL}$ → $x$ is the *tail* of the list.
+  - $L.head$ points to the first element; $L.head = \text{NIL}$ means the list is empty.
+- Variants:
+  - *Singly linked*: only a $next$ pointer, no $prev$.
+  - *Sorted*: list order matches key order; head is the minimum, tail is the maximum.
+  - *Unsorted*: keys appear in arbitrary order.
+  - *Circular list*: the head's $prev$ points to the tail and the tail's $next$ points to the head — a ring of elements.
+- The rest of §10.2 assumes *unsorted, doubly linked*.
+
+[FIGURE 10.4: doubly linked list operations — (a) list $\{1, 4, 9, 16\}$; (b) after =LIST-PREPEND= with key $25$; (c) after =LIST-INSERT= with key $36$ following the object with key $9$; (d) after =LIST-DELETE= of key $4$]
+
+** Searching
+
+- =LIST-SEARCH(L, k)= returns a pointer to the first element with key $k$, or NIL if no such element exists. Simple linear scan from the head.
+- *Worst case:* $\Theta(n)$ — the entire list may be scanned.
+
+#+begin_example
+LIST-SEARCH(L, k)
+1  x = L.head
+2  while x != NIL and x.key != k
+3      x = x.next
+4  return x
+#+end_example
+
+** Inserting
+
+- =LIST-PREPEND(L, x)= adds $x$ at the front of the list in $O(1)$.
+- Attribute notation cascades: $L.head.prev$ denotes the $prev$ attribute of the object that $L.head$ points to.
+
+#+begin_example
+LIST-PREPEND(L, x)
+1  x.next = L.head
+2  x.prev = NIL
+3  if L.head != NIL
+4      L.head.prev = x
+5  L.head = x
+#+end_example
+
+- =LIST-INSERT(x, y)= splices $x$ into the list immediately after object $y$ in $O(1)$. No $L$ parameter — the procedure never references the list object.
+
+#+begin_example
+LIST-INSERT(x, y)
+1  x.next = y.next
+2  x.prev = y
+3  if y.next != NIL
+4      y.next.prev = x
+5  y.next = x
+#+end_example
+
+** Deleting
+
+- =LIST-DELETE(L, x)= splices $x$ out of the list given a pointer to $x$. $O(1)$.
+- To delete by key: first =LIST-SEARCH=, then =LIST-DELETE=. Combined worst case: $\Theta(n)$.
+
+#+begin_example
+LIST-DELETE(L, x)
+1  if x.prev != NIL
+2      x.prev.next = x.next
+3  else L.head = x.next
+4  if x.next != NIL
+5      x.next.prev = x.prev
+#+end_example
+
+- *Doubly linked list vs. array* — operation costs:
+  - Insert or delete at the front: array $\Theta(n)$ (shift all existing elements); doubly linked list $O(1)$.
+  - Access the $k$th element: array $O(1)$ regardless of $k$; linked list $\Theta(k)$ (must traverse from the head).
+
+** Sentinels
+
+- The branches in =LIST-DELETE= exist only to handle the boundary conditions at the head and tail. A *sentinel* removes them.
+- *Sentinel*: a dummy object that simplifies boundary conditions. In a linked list, $L.nil$ stands in for NIL but carries the full attribute set of a normal list object. Every reference to NIL is replaced by a reference to $L.nil$.
+- The result is a *circular, doubly linked list with sentinel*:
+  - $L.nil$ sits between head and tail in the cycle.
+  - $L.nil.next$ points to the head; $L.nil.prev$ points to the tail.
+  - The tail's $next$ and the head's $prev$ both point to $L.nil$.
+  - $L.head$ is eliminated — every use of it becomes $L.nil.next$.
+  - Empty list: $L.nil$ alone, with $L.nil.next = L.nil.prev = L.nil$.
+
+[FIGURE 10.5: circular doubly linked list with sentinel — (a) empty (just $L.nil$); (b) keys $9, 16, 4, 1$; (c) after =LIST-INSERT'(x, L.nil)= with $x.key = 25$ (new head); (d) after deleting key $1$ (new tail is the object with key $4$); (e) after =LIST-INSERT'(x, y)= with $x.key = 36$, $y$ at the object with key $9$]
+
+*** Simplified delete and insert
+
+- =LIST-DELETE'(x)=: no boundary checks needed — real elements never have $next$ or $prev$ equal to NIL; they point to $L.nil$ instead.
+
+#+begin_example
+LIST-DELETE'(x)
+1  x.prev.next = x.next
+2  x.next.prev = x.prev
+#+end_example
+
+- Never delete the sentinel $L.nil$ unless the entire list is being destroyed.
+- =LIST-INSERT'(x, y)= inserts $x$ immediately after $y$. A separate prepend procedure is unnecessary:
+  - Prepend at the head: set $y = L.nil$.
+  - Append at the tail: set $y = L.nil.prev$.
+
+#+begin_example
+LIST-INSERT'(x, y)
+1  x.next = y.next
+2  x.prev = y
+3  y.next.prev = x
+4  y.next = x
+#+end_example
+
+*** Sentinel-based search
+
+- Same asymptotic $\Theta(n)$ worst case as =LIST-SEARCH=, but the inner loop drops one comparison per iteration.
+- =LIST-SEARCH= line 2 tests two conditions: $x \neq \text{NIL}$ (have we run off the end?) and $x.key \neq k$ (mismatch). The end-of-list test is needed only because we cannot assume the key is in the list.
+- The sentinel removes that uncertainty: write $k$ into $L.nil.key$ before the scan. The search is then guaranteed to terminate by encountering $k$ — either in a real element or in the sentinel.
+  - Stops in a real element → genuine match.
+  - Stops in the sentinel → $k$ was not in the list; return NIL.
+- If the sentinel's $key$ must be NIL by invariant, restore $L.nil.key = \text{NIL}$ before returning NIL.
+
+#+begin_example
+LIST-SEARCH'(L, k)
+1  L.nil.key = k        // store the key in the sentinel to guarantee it is in list
+2  x = L.nil.next       // start at the head of the list
+3  while x.key != k
+4      x = x.next
+5  if x == L.nil        // found k in the sentinel
+6      return NIL       // k was not really in the list
+7  else return x        // found k in element x
+#+end_example
+
+*** When to use sentinels
+
+- Sentinels typically buy a small constant-factor speedup and code simplification — *not* an asymptotic improvement.
+- *Cost*: each sentinel is a full object; many small lists multiply the wasted storage.
+- CLRS convention: use a sentinel only when it significantly simplifies the code.
+
+* 10.3 Representing rooted trees
+
+** Binary trees
+
+- Each tree node is an object with attribute $key$ and pointer attributes that vary with the tree variant (applies to every scheme below).
+- *Binary tree* attributes: $p$ (parent), $left$ (left child), $right$ (right child).
+- $x.p = \text{NIL}$ → $x$ is the root.
+- $x.left = \text{NIL}$ → $x$ has no left child; similarly $x.right = \text{NIL}$ → no right child.
+- $T.root$ points to the root of tree $T$; $T.root = \text{NIL}$ → tree is empty.
+
+[FIGURE 10.6: binary tree storing parent, left-child, and right-child pointers in each node]
+
+** Rooted trees with unbounded branching
+
+- *Bounded-degree scheme*: if every node has at most $k$ children for some constant $k$, replace $left$ and $right$ with $child_1, child_2, \ldots, child_k$. Two limitations:
+  - Unbounded branching: cannot pre-allocate $k$, so the scheme breaks entirely.
+  - Bounded but large $k$ with mostly-small actual node degrees: most of the allocated slots are NIL — wasted memory.
+- *Left-child, right-sibling representation*: $O(n)$ space on any rooted tree with $n$ nodes, independent of branching.
+  - Each node $x$ stores its parent pointer $p$ plus *two* additional pointers:
+    1. $x.\textit{left-child}$ — leftmost child of $x$.
+    2. $x.\textit{right-sibling}$ — sibling immediately to the right of $x$.
+  - $x.\textit{left-child} = \text{NIL}$ → $x$ has no children.
+  - $x.\textit{right-sibling} = \text{NIL}$ → $x$ is the rightmost child of its parent.
+  - $T.root$ still points to the root.
+
+[FIGURE 10.7: left-child, right-sibling representation of a rooted tree]
+
+** Other tree representations
+
+- *Array-backed heap* (Ch. 6): complete binary tree stored as a single array plus an attribute giving the index of the last node — no per-node pointers needed.
+- *Parent-pointer trees* (Ch. 19): traversed only toward the root, so each node stores just a parent pointer; no child pointers at all.
+- Many other schemes are possible; the right choice depends on the application.
