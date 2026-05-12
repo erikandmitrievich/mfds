@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-11>
-#+lastmod: <2026-05-11 08:57>
+#+lastmod: <2026-05-12 13:16>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -24,6 +24,202 @@ Show how to implement a queue using two stacks. Analyze the running time of the 
 #+end_quote
 
 ** Solution
+
+#+begin_src julia :results output
+struct Node{T}
+    data::T
+    next::Union{Node{T}, Nothing}
+end
+
+mutable struct LinkedStack{T}
+    top::Union{Node{T}, Nothing}
+    LinkedStack{T}() where T = new(nothing)
+end
+
+Base.isempty(s::LinkedStack) = s.top === nothing
+
+function Base.length(s::LinkedStack)
+    l = 0
+    n = s.top
+    while n !== nothing
+        l += 1
+        n = n.next
+    end
+    l
+end
+
+function Base.push!(s::LinkedStack{T}, d::T) where T
+    s.top = Node(d, s.top)
+    s
+end
+
+function Base.pop!(s::LinkedStack)
+    (s.top === nothing) && throw(ArgumentError("pop! on empty LinkedStack"))
+    r = s.top.data
+    s.top = s.top.next
+    r
+end
+
+# ------------------------------------------
+
+struct Queue{T}
+    in::LinkedStack{T}
+    out::LinkedStack{T}
+    Queue{T}() where T = new(LinkedStack{T}(), LinkedStack{T}())
+end
+
+Base.isempty(q::Queue) = isempty(q.in) && isempty(q.out)
+
+Base.length(q::Queue) = length(q.in) + length(q.out)
+
+function pour!(s_1::LinkedStack{T}, s_2::LinkedStack{T}) where T
+    while (!isempty(s_1))
+        d = pop!(s_1)
+        push!(s_2, d)
+    end
+end
+
+function enqueue!(q::Queue{T}, d::T) where T
+    push!(q.in, d)
+    q
+end
+
+function dequeue!(q::Queue)
+    isempty(q) && throw(ArgumentError("dequeue! on empty Queue"))
+    (isempty(q.out)) && pour!(q.in, q.out)
+    pop!(q.out)
+end
+
+# ------------------------------------------
+
+using Test
+
+@testset "LinkedStack" begin
+
+    @testset "empty stack" begin
+        s = LinkedStack{Int}()
+        @test isempty(s)
+        @test length(s) == 0
+        @test_throws ArgumentError pop!(s)
+    end
+
+    @testset "push pop 1" begin
+        s = LinkedStack{Int}()
+        d = 1
+        push!(s, d)
+        @test pop!(s) == d
+        @test isempty(s)
+    end
+
+    @testset "push pop 2" begin
+        s = LinkedStack{Int}()
+        r = [1, 2, 3]
+        for d in r
+            push!(s, d)
+        end
+        @test length(s) == length(r)
+        @test pop!(s) == 3
+        @test pop!(s) == 2
+        @test pop!(s) == 1
+        @test isempty(s)
+    end
+
+    @testset "length" begin
+        s = LinkedStack{Int}()
+        r = [1, 2, 3, 4, 5]
+        for d in r
+            push!(s, d)
+        end
+        @test length(s) == length(r)
+    end
+
+    @testset "string" begin
+        @test_throws MethodError push!(LinkedStack{Int}(), "foo")
+    end
+
+end
+
+@testset "Queue" begin
+
+    @testset "empty queue" begin
+        q = Queue{Int}()
+        @test isempty(q)
+        @test length(q) == 0
+        @test_throws ArgumentError dequeue!(q)
+    end
+
+    @testset "enqueue dequeue 1" begin
+        q = Queue{Int}()
+        enqueue!(q, 42)
+        @test length(q) == 1
+        @test dequeue!(q) == 42
+        @test isempty(q)
+    end
+
+    @testset "FIFO order" begin
+        q = Queue{Int}()
+        for d in [1, 2, 3]
+            enqueue!(q, d)
+        end
+        @test length(q) == 3
+        @test dequeue!(q) == 1
+        @test dequeue!(q) == 2
+        @test dequeue!(q) == 3
+        @test isempty(q)
+    end
+
+    @testset "abstraction leak" begin
+        q = Queue{Int}()
+        try
+            dequeue!(q)
+            @test false
+        catch e
+            @test e isa ArgumentError
+            @test occursin("Queue", e.msg)
+            @test !occursin("LinkedStack", e.msg)
+        end
+    end
+
+    @testset "mixed sequence (lazy pour)" begin
+        q = Queue{Int}()
+        enqueue!(q, 1); enqueue!(q, 2); enqueue!(q, 3)
+        @test dequeue!(q) == 1
+        enqueue!(q, 4)
+        @test dequeue!(q) == 2
+        @test dequeue!(q) == 3
+        @test dequeue!(q) == 4
+        @test isempty(q)
+    end
+
+    @testset "type constraint" begin
+        @test_throws MethodError enqueue!(Queue{Int}(), "foo")
+    end
+end
+#+end_src
+
+#+RESULTS:
+: pour! (generic function with 1 method)
+: enqueue! (generic function with 1 method)
+: dequeue! (generic function with 1 method)
+: Test Summary: | Pass  Total  Time
+: LinkedStack   |   12     12  0.0s
+: Test Summary: | Pass  Total  Time
+: Queue         |   20     20  0.0s
+
+
+Per operation:
+
+- =enqueue!=: $\Theta(1)$ — a single push onto =in=.
+- =dequeue!=: $\Theta(1)$ if =out= is non-empty; $\Theta(n)$ if =out= is empty and =pour!= must transfer all $n$ elements.
+
+The $\Theta(n)$ bound is tight per operation but not per sequence. Each element follows a fixed path:
+
+1. push onto =in= (in =enqueue!=),
+2. pop from =in= (in =pour!=),
+3. push onto =out= (in =pour!=),
+4. pop from =out= (in =dequeue!=).
+
+Steps 2 and 3 occur at most once per element. So $e$ enqueues and any number of dequeues from empty cost at most $4e$ stack operations; $m$ operations total cost $\Theta(m)$.
 
 * Problem 53 :stack:queue:
 

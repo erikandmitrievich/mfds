@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-05>
-#+lastmod: <2026-05-11 17:45>
+#+lastmod: <2026-05-11 21:32>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -19,6 +19,6 @@
 - [ ] Potentially reorganise/rename =./01_bachelor= folder (long term).
 - [X] Add approximate time completion for problem set extraction llm ruleset.
 - [ ] Add silly "** Questions" section for the material extraction llm ruleset.
-- [ ] Adjust latex syntax for material extraction llm ruleset. (+ empty lines surrounding math notation for $$...$$ and \begin{aligned*} ... \end{aligned*}).
+- [X] Adjust latex syntax for material extraction llm ruleset. (+ empty lines surrounding math notation for $$...$$ and \begin{aligned*} ... \end{aligned*}).
 - [ ] Potentially write llm ruleset for answering questions for lecture notes material.
 
