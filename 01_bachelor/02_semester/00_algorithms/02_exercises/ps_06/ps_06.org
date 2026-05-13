@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-11>
-#+lastmod: <2026-05-13 17:44>
+#+lastmod: <2026-05-13 17:49>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -994,7 +994,7 @@ $$
 
 Let $U$ be finite set of keys, such that $n = |U|$.
 Let $Q$ be finite set of hashes, such that $m = |Q|$.
-Let $H$ he a family of hash functions, such that $\forall h \in H, \, h : U \rightarrow Q$.
+Let $H$ be a family of hash functions, such that $\forall h \in H, \, h : U \rightarrow Q$.
 Let $H$ be $\epsilon$ -universal, such that $\forall k_1, k_2 \in U : k_1 \neq k_2, P(h(k_1) = h(k_2)) \le \epsilon$ for some uniformly drawn $h \in H$.
 
 Choose uniformly $k_1, k_2$ from $U$ (allowing $k_1 = k_2$).
@@ -1002,6 +1002,8 @@ Choose uniformly $h$ from $H$.
 
 
 *** Lower bound
+
+For fixed $h$:
 
 $$p_q = \dfrac{|\{k \in U : h(k) = q\}|}{|U|} \qquad (\text{probability of } k \text{ landing in } q \text{ under } h)$$
 
@@ -1012,18 +1014,23 @@ Thus,
 
 Hence,
 
-$$P_{k_1, k_2}\Big[h(k_1) = h(k_2)\Big] = \sum_{q \in Q}P\Big[h(k_1) = q \text{ and } h(k_2) = q\Big] = \sum_{q \in Q} p_q^2$$
+$$P_{k_1, k_2}\Big[h(k_1) = h(k_2)\Big] = \sum_{q \in Q}P\Big[h(k_1) = q \text{ and } h(k_2) = q\Big] = \sum_{q \in Q} p_q^2 \qquad (\text{independence})$$
+
 Using Cauchy–Schwarz:
 
 \begin{align*}
 1 = \Big(\sum_{q \in Q} p_q\Big)^2 = \Big(\sum_{q \in Q} 1 \cdot p_q\Big)^2 &\le \Big(\sum_{q \in Q} 1^2\Big) \Big(\sum_{q \in Q} p_q^2\Big) = m \cdot \sum_{q \in Q} p_q^2 \\
 \dfrac{1}{m} &\le \sum_{q \in Q} p_q^2 \\
-\dfrac{1}{m} &\le P\Big[h(k_1) = h(k_2)\Big]  \\
+\dfrac{1}{m} &\le P_{k_1, k_2}\Big[h(k_1) = h(k_2)\Big]  \\
 \end{align*}
+
+Since this holds for every $h$, averaging over $h$ preserves it:
+
+$$\dfrac{1}{m} \le P\Big[h(k_1) = h(k_2)\Big]$$
 
 *** Upper bound
 
-$$P \Big[h(k_1) = h(k_2)\Big] = \underbrace{P\Big[k_1 = k_1, h(k_1) = h(k_2)\Big]}_{(A)} + \underbrace{P\Big[k_1 \neq k_1, h(k_1) = h(k_2)\Big]}_{(B)}$$
+$$P \Big[h(k_1) = h(k_2)\Big] = \underbrace{P\Big[k_1 = k_2, h(k_1) = h(k_2)\Big]}_{(A)} + \underbrace{P\Big[k_1 \neq k_2, h(k_1) = h(k_2)\Big]}_{(B)}$$
 
 - Term $(A)$:
 
@@ -1031,15 +1038,17 @@ $$P \Big[h(k_1) = h(k_2)\Big] = \underbrace{P\Big[k_1 = k_1, h(k_1) = h(k_2)\Big
 
   Thus,
 
-  $$(A) = P\Big[k_1 = k_1\Big] = \dfrac{1}{n}$$
+  $$(A) = P\Big[k_1 = k_2\Big] = \dfrac{1}{n}$$
 
 - Term $(B)$:
 
-  $$(B) = \underbrace{P\Big[k_1 \neq k_2\Big]}_{\frac{n-1}{n}\le 1} \cdot \underbrace{P\Big[h(k_1) = h(k_2) \mid k_1 \neq k_1\Big]}_{\epsilon} \le \epsilon$$
+  $$(B) = \underbrace{P\Big[k_1 \neq k_2\Big]}_{\frac{n-1}{n}\le 1} \cdot \underbrace{P\Big[h(k_1) = h(k_2) \mid k_1 \neq k_2\Big]}_{\le \epsilon} \le \epsilon$$
 
 Combine terms:
 
-$$P \Big[h(k_1) = h(k_2)\Big] &= (A) + (B) \le \dfrac{1}{n} + \epsilon$$
+\begin{align*}
+P \Big[h(k_1) = h(k_2)\Big] &= (A) + (B) \le \dfrac{1}{n} + \epsilon
+\end{align*}
 
 *** Combine
 
