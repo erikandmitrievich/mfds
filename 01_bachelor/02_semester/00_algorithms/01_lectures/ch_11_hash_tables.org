@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-12>
-#+lastmod: <2026-05-12 19:53>
+#+lastmod: <2026-05-13 14:27>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -47,3 +47,98 @@ DIRECT-ADDRESS-DELETE(T, x)
 - A separate way is then needed to mark a slot empty:
   - Reserve a special key value meaning "empty".
   - Or drop the stored $key$ entirely — the slot's index *is* the key — but still keep some empty/occupied indicator.
+
+* 11.2 Hash tables
+
+** Hash function and collisions
+
+- Direct addressing fails when $|U|$ is large or infinite: a table of size $|U|$ may be impractical, and if the set $K$ of actually stored keys is much smaller than $U$, most slots are wasted.
+- A hash table reduces storage to $\Theta(|K|)$ while keeping $O(1)$ search — but $O(1)$ here is *average-case*, not worst-case as in direct addressing.
+- *Hash function* $h : U \to \{0, 1, \ldots, m-1\}$ maps the universe into the slots of the *hash table* $T[0 : m-1]$, with $m \ll |U|$ typically.
+- An element with key $k$ *hashes* to slot $h(k)$; $h(k)$ is the *hash value* of $k$.
+- $h$ must be deterministic: the same input always yields the same output.
+- Example: $h(k) = k \bmod m$ (simple but not particularly good).
+- *Collision*: distinct keys $k_1, k_2$ with $h(k_1) = h(k_2)$.
+- Since $|U| > m$, the pigeonhole principle forces at least two keys to share a hash value — collisions are unavoidable, so a resolution mechanism is required.
+
+[FIGURE 11.2: a hash function $h$ mapping keys $k_1, k_2, \ldots$ into slots of $T$; $k_2$ and $k_5$ collide at the same slot]
+
+** Independent uniform hashing
+
+- An *independent uniform hash function* (also called a *random oracle*): for each $k \in U$, $h(k)$ is chosen randomly and independently, uniformly from $\{0, 1, \ldots, m-1\}$; subsequent calls with the same $k$ return that same value.
+- *Independent uniform hashing*: hashing under such an $h$.
+- A theoretical ideal — not implementable in practice — used as the analysis assumption. Practical approximations appear in §11.3.
+
+** Collision resolution by chaining
+
+- *Chaining*: each slot $T[j]$ stores a pointer to a linked list of all elements with hash value $j$ (or NIL if no such elements exist).
+- Conceptual view: a nonrecursive divide-and-conquer — $n$ elements partitioned into $m$ subsets of expected size $n/m$, each managed independently as a list.
+- Dictionary operations reduce to linked-list calls (see §10.2):
+
+#+begin_example
+CHAINED-HASH-INSERT(T, x)
+1  LIST-PREPEND(T[h(x.key)], x)
+
+CHAINED-HASH-SEARCH(T, k)
+1  return LIST-SEARCH(T[h(k)], k)
+
+CHAINED-HASH-DELETE(T, x)
+1  LIST-DELETE(T[h(x.key)], x)
+#+end_example
+
+- *Insertion:* $O(1)$ worst case. Assumes $x$ is not already present; enforcing this would require a prior search (extra cost).
+- *Search:* worst-case time proportional to $|T[h(k)]|$.
+- *Deletion:* $O(1)$ worst case if lists are doubly linked and the element $x$ (not just its key) is given. With singly linked lists, deletion would need a traversal, matching the search cost asymptotically.
+
+[FIGURE 11.3: chaining — each nonempty slot $T[j]$ heads a doubly linked list of all keys with hash value $j$; example has $h(k_1) = h(k_4)$ and $h(k_5) = h(k_2) = h(k_7)$]
+
+** Analysis of hashing with chaining
+
+- *Load factor:* $\alpha = n/m$, the average chain length. Can be $< 1$, $= 1$, or $> 1$.
+- *Worst case:* all $n$ keys hash to the same slot → single list of length $n$ → search is $\Theta(n)$ plus the hash computation. Hash tables are not chosen for their worst-case performance.
+- *Average case* depends on $h$. Two properties matter:
+  - *Uniform*: each key is equally likely to land in any of the $m$ slots.
+  - *Independent*: where one element hashes is independent of where any others do.
+  - Together: *independent uniform hashing*.
+- Independent uniform hashing is *universal*: any two distinct keys $k_1, k_2$ collide with probability $\leq 1/m$. Concrete universal families are constructed in §11.3.2.
+- Setup. Let $n_j$ denote the length of list $T[j]$, so
+  \[ n = n_0 + n_1 + \cdots + n_{m-1} \]
+  with $\mathrm{E}[n_j] = \alpha = n/m$.
+- Computing $h(k)$ costs $O(1)$, so search time is $O(1) + |T[h(k)]|$. We analyze the expected number of elements examined in two cases: unsuccessful (no element with key $k$ exists) and successful.
+
+- *Theorem 11.1:* under independent uniform hashing, an unsuccessful search in a hash table with chaining takes $\Theta(1 + \alpha)$ time on average.
+- *Proof.*
+  - Under independent uniform hashing, a key $k$ not already in the table is equally likely to hash to any of the $m$ slots.
+  - The search must scan list $T[h(k)]$ end to end; its expected length is $\mathrm{E}[n_{h(k)}] = \alpha$.
+  - Including the $O(1)$ cost of computing $h(k)$: total $\Theta(1 + \alpha)$. ∎
+
+*** Theorem 11.2 — successful search
+
+- *Theorem 11.2:* under independent uniform hashing, a successful search in a hash table with chaining takes $\Theta(1 + \alpha)$ time on average.
+- *Setup of proof.* Assume the target element is equally likely to be any of the $n$ stored elements. Unlike unsuccessful search, a successful search cannot end at an empty slot — longer chains are more likely to contain the target. The number of elements examined for $x$ equals $1$ plus the number of elements in front of $x$ in $x$'s list. Since =LIST-PREPEND= inserts at the head, the elements in front of $x$ are exactly those inserted *after* $x$.
+- *Proof.*
+  - Let $x_i$ be the $i$ th element inserted, $i = 1, 2, \ldots, n$, and $k_i = x_i.key$.
+  - For each slot $q$ and each pair of distinct indices $i, j$, define the indicator
+    \[ X_{ijq} = \mathrm{I}\{\text{search is for } x_i \text{ and } h(k_i) = h(k_j) = q\} \]
+    so $X_{ijq} = 1$ iff $k_i$ and $k_j$ collide at slot $q$ *and* the target is $x_i$.
+  - The three constituent events are independent with probabilities $1/n$, $1/m$, $1/m$, hence
+    \[ \Pr\{X_{ijq} = 1\} = \frac{1}{nm^2}, \quad \mathrm{E}[X_{ijq}] = \frac{1}{nm^2} \]
+  - For each $x_j$, let
+    \[ Y_j = \mathrm{I}\{x_j \text{ appears in the list before the target}\} = \sum_{q=0}^{m-1} \sum_{i=1}^{j-1} X_{ijq} \]
+    At most one $X_{ijq}$ in this sum equals 1: the target $x_i$ must share $x_j$'s list (so $h(k_i) = h(k_j) = q$), and $i < j$ ensures $x_i$ was inserted later and so precedes $x_j$ under prepending.
+  - Let $Z = \sum_{j=1}^{n} Y_j$ count the total number of elements ahead of the target. The number of elements examined in a successful search is $Z + 1$ (the target itself counts).
+  - *Linearity of expectation* gives
+    \[ \mathrm{E}[Z + 1] = 1 + \sum_{q=0}^{m-1} \sum_{j=1}^{n} \sum_{i=1}^{j-1} \mathrm{E}[X_{ijq}] = 1 + \sum_{q=0}^{m-1} \sum_{j=1}^{n} \sum_{i=1}^{j-1} \frac{1}{nm^2} \]
+  - The inner double sum is $\sum_{j=1}^{n}(j - 1) = \frac{n(n-1)}{2}$ (equation (A.2)); the outer $q$-sum contributes a factor $m$:
+    \[ \mathrm{E}[Z + 1] = 1 + m \cdot \frac{n(n-1)}{2} \cdot \frac{1}{nm^2} = 1 + \frac{n-1}{2m} = 1 + \frac{\alpha}{2} - \frac{\alpha}{2n} \]
+  - Total successful search time (including the $O(1)$ hash computation):
+    \[ \Theta\!\left(2 + \frac{\alpha}{2} - \frac{\alpha}{2n}\right) = \Theta(1 + \alpha) \tag*{$\blacksquare$} \]
+
+** Consequences
+
+- If $n = O(m)$ (number of elements at most proportional to the number of slots), then $\alpha = n/m = O(1)$, so search is $O(1)$ on average.
+- Insertion is $O(1)$ worst case; deletion is $O(1)$ worst case under doubly linked lists with the target element (not just its key) supplied.
+- → all dictionary operations run in $O(1)$ on average under independent uniform hashing with $\alpha = O(1)$.
+- Both theorems rest on only two properties of independent uniform hashing:
+  - *Uniformity*: each key is equally likely to hash to any of the $m$ slots.
+  - *Independence*: any two distinct keys collide with probability $1/m$.
