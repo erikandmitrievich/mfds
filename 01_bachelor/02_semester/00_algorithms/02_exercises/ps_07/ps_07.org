@@ -1,0 +1,119 @@
+#+title: Ps 07
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-13>
+#+lastmod: <2026-05-13 18:57>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Problem 62 :binary_search_tree:lower_bound:sorting:
+** Task
+#+begin_quote
+Argue that since sorting $n$ elements takes $\Omega(n \lg n)$ time in the worst case in the comparison model, any comparison-based algorithm for constructing a binary search tree from an arbitrary list of $n$ elements takes $\Omega(n \lg n)$ time in the worst case.
+#+end_quote
+
+** Solution
+
+* Problem 63 :binary_search_tree:predecessor:pseudocode:
+** Task
+#+begin_quote
+Write the TREE-PREDECESSOR procedure for a binary search tree.
+#+end_quote
+
+** Solution
+
+* Problem 64 :binary_search_tree:counterexample:
+** Task
+#+begin_quote
+Professor Kilmer claims to have discovered a remarkable property of binary search trees. Suppose that the search for key $k$ in a binary search tree ends up at a leaf. Consider three sets: $A$, the keys to the left of the search path; $B$, the keys on the search path; and $C$, the keys to the right of the search path. Professor Kilmer claims that any three keys $a \in A$, $b \in B$, and $c \in C$ must satisfy $a \leq b \leq c$. Give a smallest possible counterexample to the professor's claim.
+#+end_quote
+
+** Solution
+
+* Problem 65 :binary_search_tree:predecessor:successor:
+** Task
+#+begin_quote
+Let $T$ be a binary search tree whose keys are distinct, let $x$ be a leaf node, and let $y$ be its parent. Show that $y.key$ is either the smallest key in $T$ larger than $x.key$ or the largest key in $T$ smaller than $x.key$.
+#+end_quote
+
+** Solution
+
+* Problem 66 :binary_search_tree:deletion:
+** Task
+#+begin_quote
+When TREE-DELETE calls TRANSPLANT, under what circumstances can the parameter $v$ of TRANSPLANT be NIL?
+#+end_quote
+
+** Solution
+
+* Problem 67 :binary_search_tree:deletion:commutativity:
+** Task
+#+begin_quote
+Is the operation of deletion "commutative" in the sense that deleting $x$ and then $y$ from a binary search tree leaves the same tree as deleting $y$ and then $x$? Argue why it is or give a counterexample.
+#+end_quote
+
+** Solution
+
+* Problem 68 :red_black_tree:black_height:
+** Task
+#+begin_quote
+What is the largest possible number of internal nodes in a red-black tree with black-height $k$? What is the smallest possible number?
+#+end_quote
+
+** Solution
+
+* Problem 69 :red_black_tree:node_ratio:
+** Task
+#+begin_quote
+Describe a red-black tree on $n$ keys that realizes the largest possible ratio of red internal nodes to black internal nodes. What is this ratio? What tree has the smallest possible ratio, and what is the ratio?
+#+end_quote
+
+** Solution
+
+* Problem 70 :binary_search_tree:rotation:pseudocode:
+** Task
+#+begin_quote
+Write pseudocode for RIGHT-ROTATE.
+#+end_quote
+
+** Solution
+
+* Problem 71 :binary_tree:rotation:
+** Task
+#+begin_quote
+Show that any arbitrary $n$ -node binary tree can be transformed into any other arbitrary $n$ -node binary tree using $O(n)$ rotations.
+
+Hint: Show that at most $n-1$ rotations suffice to transform the tree into a right-going chain
+#+end_quote
+
+** Solution
+
+* Problem 72 :red_black_tree:insertion:
+** Task
+#+begin_quote
+The newly inserted node in RB-INSERT is set to the color red, which causes the problems with properties 2 and 4 of the RB–tree. If we would set it to black neither property would be violated. So why do we not set the new node to black instead of red?
+#+end_quote
+
+** Solution
+
+* Time Estimates
+- Problem 62: ~10 min~
+- Problem 63: ~10 min~
+- Problem 64: ~15 min~
+- Problem 65: ~10 min~
+- Problem 66: ~5 min~
+- Problem 67: ~10 min~
+- Problem 68: ~10 min~
+- Problem 69: ~15 min~
+- Problem 70: ~10 min~
+- Problem 71: ~20 min~
+- Problem 72: ~10 min~
