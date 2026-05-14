@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-12>
-#+lastmod: <2026-05-13 19:34>
+#+lastmod: <2026-05-14 15:10>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -278,3 +278,115 @@ Let $\mathcal{H}$ have range $\{0, 1, \ldots, m-1\}$, with $h$ picked uniformly 
   - Direct: $h(k) = \text{SHA-256}(k) \bmod m$.
   - Family via prepended "salt" $a$: $h_a(k) = \text{SHA-256}(a \mathbin\Vert k) \bmod m$, where $a \mathbin\Vert k$ denotes string concatenation.
 - §11.5 covers an RC6-based design.
+
+* 11.4 Open addressing
+
+** Concept and operations
+
+- *Open addressing*: all elements reside inside the hash table itself — each slot contains either an element or NIL. No external lists or pointers; the memory saved allows more slots in the same space, potentially fewer collisions and faster retrieval.
+- The table can fill up → $\alpha$ can never exceed 1.
+- Collision handling: an element is placed in its first-choice slot if possible, otherwise its second choice, and so on until an empty slot is found. Different elements have different preference orders.
+- To search: follow the element's preference order until the key is found or an empty slot proves it absent.
+
+- A *probe* is one examination of a slot. The hash function takes the probe number (starting from 0) as a second input:
+  \[ h : U \times \{0, 1, \ldots, m-1\} \to \{0, 1, \ldots, m-1\} \]
+- The *probe sequence* $\langle h(k,0), h(k,1), \ldots, h(k,m-1) \rangle$ must be a permutation of $\langle 0, 1, \ldots, m-1 \rangle$ for every key $k$, so that every slot is eventually considered.
+- =HASH-INSERT= assumes keys carry no satellite data (slot stores the key itself, or NIL). It returns the slot where $k$ is stored or signals overflow.
+- =HASH-SEARCH= probes the same sequence that insertion would use; it terminates successfully on a match, unsuccessfully on NIL (since $k$ would have been placed there, not later).
+
+#+begin_example
+HASH-INSERT(T, k)
+1  i = 0
+2  repeat
+3      q = h(k, i)
+4      if T[q] == NIL
+5          T[q] = k
+6          return q
+7      else i = i + 1
+8  until i == m
+9  error "hash table overflow"
+
+HASH-SEARCH(T, k)
+1  i = 0
+2  repeat
+3      q = h(k, i)
+4      if T[q] == k
+5          return q
+6      i = i + 1
+7  until T[q] == NIL or i == m
+8  return NIL
+#+end_example
+
+** Deletion
+
+- Deletion is tricky: storing NIL in a vacated slot $q$ would break searches for any key $k$ whose insertion probed and found $q$ occupied.
+- Standard fix: mark the slot with a special value DELETED instead of NIL. =HASH-INSERT= treats DELETED as empty (can insert there); =HASH-SEARCH= skips over it.
+- Downside: with DELETED markers, search time no longer depends solely on $\alpha$. For this reason chaining is often preferred when deletions are frequent.
+- Linear probing (§11.5.1) avoids the DELETED marker entirely.
+
+** Independent uniform permutation hashing
+
+- *Independent uniform permutation hashing* (also confusingly called *uniform hashing* in the literature): the probe sequence for each key $k$ is equally likely to be any of the $m!$ permutations of $\langle 0, 1, \ldots, m-1 \rangle$.
+- Generalizes independent uniform hashing (which produces a single slot) to producing an entire probe sequence.
+- Not implementable directly; double hashing and linear probing are practical approximations.
+
+** Double hashing
+
+- *Double hashing*: $h(k, i) = (h_1(k) + i \cdot h_2(k)) \bmod m$, where $h_1$ and $h_2$ are *auxiliary hash functions*.
+- First probe goes to $T[h_1(k)]$; successive probes are offset by $h_2(k) \bmod m$.
+- The probe sequence depends on $k$ in *two* ways (initial position $h_1(k)$ and step size $h_2(k)$).
+- $h_2(k)$ must be relatively prime to $m$ for the full table to be searched. Two convenient designs:
+  - $m = 2^\ell$: make $h_2$ always return an odd number.
+  - $m$ prime: let $h_2$ always return a positive integer less than $m$.
+- Example with $m$ prime: $h_1(k) = k \bmod m$, $h_2(k) = 1 + (k \bmod m')$ with $m' < m$ (say, $m' = m - 1$). For $k = 123456$, $m = 701$, $m' = 700$: $h_1(k) = 80$, $h_2(k) = 257$.
+- When $m$ is prime or an exact power of 2, double hashing produces $\Theta(m^2)$ probe sequences (one per $(h_1(k), h_2(k))$ pair) — far from $m!$ but large enough for good practical performance.
+
+[FIGURE 11.5: double hashing insertion with $m = 13$, $h_1(k) = k \bmod 13$, $h_2(k) = 1 + (k \bmod 11)$; key 14 goes to slot 9 after slots 1 and 5 are found occupied]
+
+** Linear probing
+
+- *Linear probing*: set $h_2(k) = 1$ for all $k$, giving
+  \[ h(k, i) = (h_1(k) + i) \bmod m \]
+- Simplest open-addressing scheme. First probe at $h_1(k)$; if occupied, try $h_1(k)+1, h_1(k)+2, \ldots$, wrapping around to 0 after slot $m-1$, stopping before revisiting $h_1(k)$.
+- Only $m$ distinct probe sequences (one per starting slot) — very far from $m!$.
+- Revisited in §11.5.1.
+
+** Analysis of open-address hashing
+
+- Load factor: $\alpha = n/m$. With open addressing $n \leq m$, so $\alpha \leq 1$. The analysis requires $\alpha < 1$ (at least one empty slot) and assumes no deletions.
+- Assume *independent uniform permutation hashing*.
+- Intuition for the bound $1/(1-\alpha) = 1 + \alpha + \alpha^2 + \alpha^3 + \cdots$: the first probe always occurs; with probability $\approx \alpha$ the first slot is occupied, triggering a second probe; with probability $\approx \alpha^2$ both are occupied, triggering a third; and so on.
+
+*** Theorem 11.6 — unsuccessful search
+
+- *Theorem 11.6:* given an open-address hash table with $\alpha = n/m < 1$, the expected number of probes in an unsuccessful search is at most $1/(1 - \alpha)$, assuming independent uniform permutation hashing and no deletions.
+- *Proof.*
+  - Let $X$ be the number of probes. Every probe but the last hits an occupied slot; the last hits an empty slot.
+  - Define $A_i$ ($i = 1, 2, \ldots$) = event that the $i$th probe occurs and finds an occupied slot. Then $\{X \geq i\} = A_1 \cap A_2 \cap \cdots \cap A_{i-1}$.
+  - By the chain rule for conditional probability:
+    \[ \Pr\{A_1 \cap \cdots \cap A_{i-1}\} = \Pr\{A_1\} \cdot \Pr\{A_2 \mid A_1\} \cdots \Pr\{A_{i-1} \mid A_1 \cap \cdots \cap A_{i-2}\} \]
+  - $\Pr\{A_1\} = n/m$. For $j > 1$, the $j$th probe lands on one of $m - (j-1)$ unexamined slots, of which $n - (j-1)$ are occupied (by independence of the permutation), giving $\Pr\{A_j \mid A_1 \cap \cdots \cap A_{j-1}\} = (n-j+1)/(m-j+1)$.
+  - Since $n < m$ implies $(n-j)/(m-j) \leq n/m$ for $0 \leq j < m$:
+    \[ \Pr\{X \geq i\} = \frac{n}{m} \cdot \frac{n-1}{m-1} \cdots \frac{n-i+2}{m-i+2} \leq \left(\frac{n}{m}\right)^{i-1} = \alpha^{i-1} \]
+    (the product has $i-1$ factors; when $i = 1$ the product is empty = 1, so $\Pr\{X \geq 1\} = 1$).
+  - For $i > n+1$ all $n$ occupied slots have been probed, so the next probe is empty: $\Pr\{X \geq i\} = 0$.
+  - Bound $\mathrm{E}[X]$ using equation (C.28):
+    \[ \mathrm{E}[X] = \sum_{i=1}^{\infty} \Pr\{X \geq i\} = \sum_{i=1}^{n+1} \Pr\{X \geq i\} \leq \sum_{i=1}^{\infty} \alpha^{i-1} = \sum_{i=0}^{\infty} \alpha^i = \frac{1}{1 - \alpha} \]
+    (geometric series, $0 \leq \alpha < 1$, by equation (A.7)). ∎
+
+- *Interpretation.* If $\alpha$ is a constant, unsuccessful search is $O(1)$. At half full: $\leq 1/(1 - 0.5) = 2$ probes. At 90% full: $\leq 1/(1 - 0.9) = 10$.
+
+*** Corollary 11.7 — insertion
+
+- *Corollary 11.7:* inserting into an open-address table with $\alpha < 1$ takes at most $1/(1-\alpha)$ probes on average, assuming independent uniform permutation hashing and no deletions.
+- *Proof.* Insertion requires an unsuccessful search (to find the first empty slot) followed by placing the key. Hence the bound is the same as Theorem 11.6. ∎
+
+*** Theorem 11.8 — successful search
+
+- *Theorem 11.8:* given an open-address hash table with $\alpha < 1$, the expected number of probes in a successful search is at most $\frac{1}{\alpha} \ln \frac{1}{1 - \alpha}$, assuming independent uniform permutation hashing, no deletions, and each stored key equally likely to be searched.
+- *Proof.*
+  - Searching for key $k$ replays the probe sequence from when $k$ was inserted. If $k$ was the $(i+1)$st key inserted, the load factor at insertion time was $i/m$, so by Corollary 11.7 the expected probes for that insertion (and hence for searching $k$) are at most $\frac{1}{1 - i/m} = \frac{m}{m - i}$.
+  - Average over all $n$ keys:
+    \[ \frac{1}{n} \sum_{i=0}^{n-1} \frac{m}{m-i} = \frac{m}{n} \sum_{i=0}^{n-1} \frac{1}{m-i} = \frac{1}{\alpha} \sum_{k=m-n+1}^{m} \frac{1}{k} \]
+  - Bounding the sum by an integral (inequality (A.19)):
+    \[ \leq \frac{1}{\alpha} \int_{m-n}^{m} \frac{1}{x}\, dx = \frac{1}{\alpha}(\ln m - \ln(m-n)) = \frac{1}{\alpha} \ln \frac{m}{m-n} = \frac{1}{\alpha} \ln \frac{1}{1-\alpha} \tag*{$\blacksquare$} \]
