@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-27>
-#+lastmod: <2026-05-11 12:36>
+#+lastmod: <2026-05-14 21:19>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -39,7 +39,22 @@ Yes, thats correct.
 
 First equiality uses additivity, second - homogeneity.
 
-*** TODO What do they mean by "with respect to the first variable"? What about second?
+*** DONE What do they mean by "with respect to the first variable"? What about second?
+
+"With respect to the first variable" means: fix the second slot $z$, vary the first; the resulting map $x \mapsto \langle x, z \rangle_E$ is $\mathbb{K}$ linear. Axiom 1 states exactly this.
+
+The second variable is *not* linear in general — it is *conjugate-linear* (also called /antilinear/ or /semilinear/). This follows from axioms 1 and 2 combined:
+
+\begin{align*}
+\langle z, \lambda x + \mu y \rangle_E &= \overline{\langle \lambda x + \mu y, z \rangle}_E \\
+&= \overline{\lambda \langle x, z \rangle_E + \mu \langle y, z \rangle_E} \\
+&= \overline{\lambda} \, \overline{\langle x, z \rangle}_E + \overline{\mu} \, \overline{\langle y, z \rangle}_E \\
+&= \overline{\lambda} \langle z, x \rangle_E + \overline{\mu} \langle z, y \rangle_E
+\end{align*}
+
+So scalars pulled out of the second slot get conjugated. Such a map — linear in one slot, conjugate-linear in the other — is called *sesquilinear* (Latin /sesqui-/ = "one and a half").
+
+Over $\mathbb{R}$ conjugation is the identity, so both slots are linear and the form is /bilinear/. The first-vs-second distinction only has bite over $\mathbb{C}$.
 
 *** DONE What is "conjugate"?
 
@@ -61,13 +76,47 @@ Three additional fact:
 
    $$\overline{z + w} = \overline{z} + \overline{w} \quad \text{and} \quad \overline{zw} = \overline{z} \cdot \overline{w}$$
 
-*** TODO I noticed most definitions combine two axioms into one "positive definiteness". Is it because both of them are trivial? Or there is another reason?
+*** DONE I noticed most definitions combine two axioms into one "positive definiteness". Is it because both of them are trivial? Or there is another reason?
+
+Not because they are trivial. Two reasons:
+
+1. *They are the two halves of one concept.* "Positive definite" as a single property of a quadratic form $Q(x) = \langle x, x \rangle_E$ means $Q(x) \ge 0$ /and/ $Q(x) = 0 \iff x = 0$. Splitting them obscures the standard terminology:
+
+   - $\langle x, x \rangle_E \ge 0$ alone $=$ *positive semidefinite*.
+
+   - $\langle x, x \rangle_E \ge 0$ together with $\langle x, x \rangle_E = 0 \iff x = 0_E$ $=$ *positive definite*.
+
+   The combined name names the combined property.
+
+2. *They are tightly coupled in use.* You almost never invoke nonnegativity without also invoking definiteness — e.g. defining the induced norm $\|x\|_E := \langle x, x \rangle_E^{1/2}$ in /Lemma 2.02/ needs nonnegativity (so the square root is real) /and/ definiteness (so $\|x\|_E = 0 \iff x = 0_E$, which is the norm axiom). Both clauses participate in essentially every downstream argument.
+
+Calling them trivial is a separate (and weaker) claim. Nonnegativity is structural; definiteness is what kills the degenerate cases and is precisely what fails for /semi/-inner products and seminorms.
+
+*** DONE What exactly does the inner product? The definition did not describe it at all. Is it an error?
+
+No, its not an error. Defitions in mathematics specify what an object is by listing its axioms, not what it does operationally. Never the less, the question is fair.
+
+An inner product is a generalised dot product. Concretely, in $\mathbb{R}^{n}$, the standard inner product is:
+
+$$\langle x,y \rangle_{\mathbb{R}^n} = \sum_{i=1}^n x_i y_i = \|x\| \|y\| \cos(\theta)$$
+
+where $\theta$ is the angle between $x$ and $y$. From this, one reads off what inner product does:
+
+1. Measures length: $\|x\|_E := \langle x, x \rangle_{E}^{1/2}$
+
+2. Measures angle: $\cos(\theta) = \dfrac{\langle x,y \rangle_E}{\|x\|_E \|y\|_E}$
+
+3. Detects orhogonality: $x \bot y \iff \langle x,y \rangle_E = 0$
+
+4. Projects: the component of $x$ along the unit vector $u$ is $\langle x,u \rangle_E$
 
 * Lemma       2.02:  Norm induced by an inner product
 
 Let $E$ be an $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$ and $\langle \cdot, \cdot \rangle_E$ be an inner product over $E$. The map
 
-$$\|\cdot\|_E : E \rightarrow \mathbb{R}, \quad x \mapsto \|x\|_E := \langle x, x \rangle_E^{1/2} \tag{2.1}$$
+\begin{equation}
+\|\cdot\|_E : E \rightarrow \mathbb{R}, \quad x \mapsto \|x\|_E := \langle x, x \rangle_E^{1/2} \tag{2.1}
+\end{equation}
 
 is a norm on $E$ which is called the norm induced by the inner product.
 
@@ -86,6 +135,21 @@ We have to prove that the mapping defined in Eq. (2.1) satisfies all the propert
 By the Cauchy-Schwarz inequality,
 
 $$\|x + y\|^2 \le \|x\|^2 + 2\|x\| \|y\| + \|y\|^2 = (\|x\| + \|y\|)^2$$
+
+** Questions
+
+*** DONE I see the point of how it works, but I have a feeling that the inner product and norm are unrelated things, and inducing norm from inner product is strange, even though it works.
+
+Your feeling is wrong, but it points at a real historical fact.
+
+Inner product and norm are not unrelated. The relationship is precise:
+
+- Every inner product induces a norm (this lemma)
+- Not every norm comes from an inner product. A norm comes from inner product iff it satisfies the parallelogram identity (Proposition 2.06).
+
+Intuition: An inner product gives lenght, angle and orthogonality. A norm gives you only length.
+
+Historical context: Historically, the abstract notion of norm (Banach 1922) and abstract inner product (Hilbert 1906, von Neumann 1929) emerged in different context and were unified only later.
 
 * Lemma       2.03:  Cauchy-Schwarz inequality
 
@@ -118,6 +182,8 @@ p(\lambda) &:= \|x' + \lambda y\|^2 \\
 \end{align*}
 
 From Eq. (2.3), it follows that $p$ is a real-valued polynomial in $\lambda$. In addition, from Eq. (2.2) we have that $p(\lambda) \ge 0$ due to the nonnegativity of the inner product (see point 3 in /Definition 2.1/). Therefore, the discriminant of $p$ is nonpositive, and we conclude following the same lines as for the real case.
+
+** Questions
 
 * Definition  2.04:  Inner-Product, Hilbert and Euclidean Spaces
 
