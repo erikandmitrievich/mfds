@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-11>
-#+lastmod: <2026-05-14 14:27>
+#+lastmod: <2026-05-14 14:39>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -1105,6 +1105,37 @@ Consider an open-address hash table with independent uniform permutation hashing
 #+end_quote
 
 ** Solution
+
+*Setup.*
+
+Under independent uniform permutation hashing, the standard CLRS bounds apply. Let $\alpha = n/m$ be the load factor.
+
+- Unsuccessful search: $\mathbb{E}[\text{probes}] \leq \dfrac{1}{1 - \alpha}$
+- Successful search: $\mathbb{E}[\text{probes}] \leq \dfrac{1}{\alpha} \ln \dfrac{1}{1 - \alpha}$
+
+*Case $\alpha = 3/4$.*
+
+Unsuccessful:
+
+$$\mathbb{E}[\text{probes}] \leq \frac{1}{1 - 3/4} = 4$$
+
+Successful:
+
+$$\mathbb{E}[\text{probes}] \leq \frac{4}{3} \ln 4 = \frac{8}{3} \ln 2 \approx 1.848$$
+
+*Case $\alpha = 7/8$.*
+
+Unsuccessful:
+
+$$\mathbb{E}[\text{probes}] \leq \frac{1}{1 - 7/8} = 8$$
+
+Successful:
+
+$$\mathbb{E}[\text{probes}] \leq \frac{8}{7} \ln 8 = \frac{24}{7} \ln 2 \approx 2.377$$
+
+*Remark.*
+
+Doubling the empty fraction (from $1/4$ to $1/8$) doubles the unsuccessful cost ($4 \to 8$) but only adds $\approx 0.5$ to the successful cost. The unsuccessful bound is the operative constraint when sizing a table: the cliff at $\alpha \to 1$ is hyperbolic, while the successful cost grows logarithmically.
 
 * Errors/Typos
 
