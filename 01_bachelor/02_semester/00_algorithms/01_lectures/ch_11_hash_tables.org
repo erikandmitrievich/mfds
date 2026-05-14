@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-12>
-#+lastmod: <2026-05-13 14:27>
+#+lastmod: <2026-05-13 19:34>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -142,3 +142,139 @@ CHAINED-HASH-DELETE(T, x)
 - Both theorems rest on only two properties of independent uniform hashing:
   - *Uniformity*: each key is equally likely to hash to any of the $m$ slots.
   - *Independence*: any two distinct keys collide with probability $1/m$.
+
+* 11.3 Hash functions
+
+** What makes a good hash function
+
+- A good hash function approximates *independent uniform hashing*: each key is equally likely to land in any of the $m$ slots, independently of where any others land.
+- "Equally likely" only makes sense relative to the input distribution, which is rarely known. Toy case where it holds: keys $k$ are uniform reals in $[0, 1)$, then $h(k) = \lfloor km \rfloor$ satisfies the assumption.
+- A *static* (fixed) hash function tries to be independent of patterns in the data — e.g., division by a prime unrelated to those patterns.
+- A *random* hash function (chosen at runtime from a family) sidesteps the unknown input distribution entirely — randomness comes from the choice of $h$, not the input.
+- Recommendation: use random hashing.
+- Two practical key types: short nonnegative integers fitting in one machine word (typically 32 or 64 bits), or short integer vectors / variable-length byte strings. §§11.3.1–11.3.4 assume short integer keys; long inputs are handled in §11.3.5.
+
+** Static hashing
+
+- *Static hashing* uses a single fixed $h$. Randomness only via the (usually unknown) input distribution.
+- No longer recommended in general; the multiplication method survives as a foundation for the families used in random hashing.
+
+*** Division method
+
+- *Division method*: $h(k) = k \bmod m$. One division — fast.
+- Example: $m = 12$, $k = 100 \Rightarrow h(k) = 4$.
+- Works well when $m$ is prime and not too close to a power of 2.
+- Provides no average-case guarantee; constrains $m$ to be prime.
+
+*** Multiplication method
+
+- *Multiplication method*: $h(k) = \lfloor m \cdot (kA \bmod 1) \rfloor$ for a fixed $0 < A < 1$.
+- "$kA \bmod 1$" = fractional part of $kA$, i.e., $kA - \lfloor kA \rfloor$.
+- $m$ is not critical and can be chosen independently of $A$.
+
+*** Multiply-shift method
+
+- Specialize the multiplication method to $m = 2^\ell$ with $\ell \leq w$, where $w$ is the machine-word width in bits. Fix a nonzero $a = A \cdot 2^w$, so $0 < a < 2^w$, taking $a$ as a positive integer of $w$ bits.
+- Definition:
+  \[ h_a(k) = (ka \bmod 2^w) \gg (w - \ell) \]
+  - $ka$ has $2w$ bits; $\bmod\ 2^w$ keeps the low-order $w$ bits as $r_0$ (the high-order $w$ bits, $r_1$, are discarded).
+  - $\gg$ is logical right shift by $w - \ell$ — extracts the top $\ell$ bits of $r_0$. Equivalent to $\lfloor r_0 / 2^{w-\ell} \rfloor$.
+- Three machine instructions: multiply, subtract, logical right shift.
+- *Example.* $k = 123456$, $\ell = 14$, $m = 2^{14} = 16384$, $w = 32$, $a = 2654435769$:
+  - $ka = 327706022297664 = 76300 \cdot 2^{32} + 17612864$, so $r_1 = 76300$, $r_0 = 17612864$.
+  - Top 14 bits of $r_0$ give $h_a(k) = 67$.
+- Speed-only — no average-case guarantee with a fixed $a$. The randomized variant in §11.3.4 fixes that.
+
+[FIGURE 11.4: multiply-shift method — multiply key $k$ by $a = A \cdot 2^w$ to obtain a product of $2w$ bits; the top $\ell$ bits of the low half $r_0$ form $h_a(k)$]
+
+** Random hashing
+
+- *Adversary argument.* Given any fixed hash function, an adversary can pick $n$ keys that all hash to the same slot, forcing $\Theta(n)$ retrieval. Every static $h$ is vulnerable.
+- *Random hashing*: at program start, pick $h$ uniformly at random from a family $\mathcal{H}$, *independent of the keys to be stored*. Randomization moves from the unknown input distribution to the known function-selection process — analogous to randomized quicksort.
+- *Universal hashing*: the special case yielding provably good chaining performance.
+
+- *Universal family* $\mathcal{H}$ (formal): a finite family of functions $h : U \to \{0, 1, \ldots, m-1\}$ such that for every distinct pair $k_1, k_2 \in U$,
+  \[ |\{h \in \mathcal{H} : h(k_1) = h(k_2)\}| \leq |\mathcal{H}| / m \]
+  Equivalently, for $h$ chosen uniformly from $\mathcal{H}$, $\Pr\{h(k_1) = h(k_2)\} \leq 1/m$.
+
+- *Independent uniform vs. universal.*
+  - Independent uniform hashing = picking $h$ uniformly from the family of $m^n$ functions, each giving an independent uniform assignment of the $n$ keys to the $m$ slots.
+  - Every independent uniform family is universal. Converse fails: with $U = \{0, 1, \ldots, m-1\}$ and $\mathcal{H} = \{\text{identity}\}$, distinct keys never collide ($\Pr = 0 \leq 1/m$), yet each key hashes to a fixed slot — not uniform.
+
+- *Corollary 11.3:* Using universal hashing with chaining on an initially empty table of $m$ slots, any sequence of $s$ INSERT, SEARCH, DELETE operations containing $n = O(m)$ INSERTs takes $\Theta(s)$ expected time.
+- *Proof.*
+  - INSERT and DELETE each take $O(1)$ worst case.
+  - $n = O(m) \Rightarrow \alpha = O(1)$.
+  - Theorem 11.2's proof depends only on the per-pair collision probability, which under a universal family is $\leq 1/m$ (vs. $= 1/m$ under independent uniform hashing). So SEARCH is $O(1)$ expected.
+  - Linearity of expectation: total expected time is $O(s)$. Each operation costs $\Omega(1)$, so the total is $\Theta(s)$. ∎
+
+** Properties of random hash families
+
+Let $\mathcal{H}$ have range $\{0, 1, \ldots, m-1\}$, with $h$ picked uniformly at random from $\mathcal{H}$. Probabilities below are over that choice.
+
+- *Uniform*: for every key $k$ and slot $q$, $\Pr\{h(k) = q\} = 1/m$.
+- *Universal*: for every distinct $k_1, k_2$, $\Pr\{h(k_1) = h(k_2)\} \leq 1/m$.
+- $\epsilon\text{-universal}$: $\Pr\{h(k_1) = h(k_2)\} \leq \epsilon$ for every distinct $k_1, k_2$. A universal family is $1/m\text{-universal}$.
+- $d\text{-independent}$: for any distinct $k_1, \ldots, k_d$ and any (not necessarily distinct) slots $q_1, \ldots, q_d$, $\Pr\{h(k_i) = q_i \text{ for all } i\} = 1/m^d$.
+- Universality is the simplest property that supports provably efficient hash-table operations on arbitrary input.
+
+** Universal family via number theory
+
+- Pick a prime $p$ large enough that every possible key lies in $\{0, 1, \ldots, p - 1\}$, with $p > m$.
+- $\mathbb{Z}_p = \{0, 1, \ldots, p-1\}$; $\mathbb{Z}_p^* = \{1, 2, \ldots, p-1\}$.
+- For $a \in \mathbb{Z}_p^*$ and $b \in \mathbb{Z}_p$, define
+  \[ h_{ab}(k) = ((ak + b) \bmod p) \bmod m \]
+- Example: $p = 17$, $m = 6 \Rightarrow h_{3,4}(8) = ((3 \cdot 8 + 4) \bmod 17) \bmod 6 = (28 \bmod 17) \bmod 6 = 11 \bmod 6 = 5$.
+- The family:
+  \[ \mathcal{H}_{pm} = \{h_{ab} : a \in \mathbb{Z}_p^*,\ b \in \mathbb{Z}_p\} \]
+  with $|\mathcal{H}_{pm}| = p(p - 1)$. The output size $m$ is arbitrary — need not be prime.
+- *Theorem 11.4:* $\mathcal{H}_{pm}$ is universal.
+
+*** Proof of Theorem 11.4
+
+- Consider distinct $k_1, k_2 \in \mathbb{Z}_p$. For any $h_{ab} \in \mathcal{H}_{pm}$, set
+  \[ r_1 = (ak_1 + b) \bmod p, \quad r_2 = (ak_2 + b) \bmod p \]
+- *Step 1:* $r_1 \neq r_2$ — no collisions at the mod-$p$ level.
+  - $r_1 - r_2 \equiv a(k_1 - k_2) \pmod{p}$.
+  - $p$ is prime; $a \neq 0$ (since $a \in \mathbb{Z}_p^*$); $k_1 - k_2 \neq 0$.
+  - By Theorem 31.6 (no zero divisors mod a prime), the product is nonzero mod $p$, so $r_1 \neq r_2$.
+- *Step 2:* the map $(a, b) \mapsto (r_1, r_2)$ is a bijection between $\mathbb{Z}_p^* \times \mathbb{Z}_p$ and the set of pairs $(r_1, r_2) \in \mathbb{Z}_p \times \mathbb{Z}_p$ with $r_1 \neq r_2$.
+  - Solving for $(a, b)$:
+    \[ a = \bigl((r_1 - r_2)\bigl((k_1 - k_2)^{-1} \bmod p\bigr)\bigr) \bmod p, \quad b = (r_1 - ak_1) \bmod p \]
+    $(k_1 - k_2)^{-1} \bmod p$ exists and is unique since $p$ is prime.
+  - $|\mathbb{Z}_p^* \times \mathbb{Z}_p| = p(p-1)$ and there are $p \cdot (p-1)$ pairs $(r_1, r_2)$ with $r_1 \neq r_2$ — same cardinality, and the map above is one-to-one.
+- *Step 3:* reduce universality to a mod-$m$ collision question.
+  - Picking $(a, b)$ uniformly from $\mathbb{Z}_p^* \times \mathbb{Z}_p$ makes $(r_1, r_2)$ uniform over all distinct-pair values in $\mathbb{Z}_p$.
+  - Hence $\Pr\{h_{ab}(k_1) = h_{ab}(k_2)\} = \Pr\{r_1 \equiv r_2 \pmod{m}\}$ when $r_1, r_2$ are random distinct values in $\mathbb{Z}_p$.
+- *Step 4:* bound that probability.
+  - Fix $r_1$. Among the $p - 1$ remaining choices for $r_2$, the number satisfying $r_2 \equiv r_1 \pmod{m}$ and $r_2 \neq r_1$ is at most
+    \[ \lceil p / m \rceil - 1 \leq \frac{p + m - 1}{m} - 1 = \frac{p - 1}{m} \quad \text{(inequality (3.7))} \]
+  - So $\Pr\{r_2 \equiv r_1 \pmod m\} \leq \dfrac{(p-1)/m}{p-1} = 1/m$.
+- Therefore $\Pr\{h_{ab}(k_1) = h_{ab}(k_2)\} \leq 1/m$, and $\mathcal{H}_{pm}$ is universal. ∎
+
+** Multiply-shift universal family
+
+- Practical recommendation: the multiply-shift family parameterized by a *randomly chosen odd* multiplier:
+  \[ \mathcal{H} = \{h_a : a \text{ odd},\ 1 \leq a < m,\ h_a \text{ as in the multiply-shift definition}\} \]
+- *Theorem 11.5:* $\mathcal{H}$ is $2/m\text{-universal}$. (Proof omitted in the source.)
+- Collision bound is twice that of a strictly universal family ($2/m$ vs. $1/m$), but compute speed in practice typically more than compensates.
+
+** Hashing long inputs
+
+- Inputs may be too long to encode modulo a reasonable prime or to fit in a single machine word — typical case: variable-length byte strings.
+
+*** Number-theoretic approaches
+
+- Extend the universal construction of §11.3.4 to variable-length inputs; details deferred to §11.5.2.
+
+*** Cryptographic hashing
+
+- *Cryptographic hash functions*: complex pseudorandom functions designed for cryptography, but robust, widely implemented, and usable as hash-table hash functions.
+- Input: arbitrary byte string. Output: fixed-length block.
+- Example: SHA-256 (NIST standard) emits 256 bits (32 bytes) for any input.
+- Hardware support: AES-NI executes in tens of nanoseconds; a CBC-MAC over AES is a usable hash function.
+- Cryptographic hash functions approximate a *random oracle* — equivalent to an independent uniform hash function family. The random oracle itself is a theoretical, unachievable ideal: a deterministic function returning a randomly chosen output for each input, with the same output on repeat queries.
+- Concrete constructions:
+  - Direct: $h(k) = \text{SHA-256}(k) \bmod m$.
+  - Family via prepended "salt" $a$: $h_a(k) = \text{SHA-256}(a \mathbin\Vert k) \bmod m$, where $a \mathbin\Vert k$ denotes string concatenation.
+- §11.5 covers an RC6-based design.
