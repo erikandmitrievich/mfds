@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-11>
-#+lastmod: <2026-05-13 17:49>
+#+lastmod: <2026-05-14 14:27>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -1000,7 +1000,6 @@ Let $H$ be $\epsilon$ -universal, such that $\forall k_1, k_2 \in U : k_1 \neq k
 Choose uniformly $k_1, k_2$ from $U$ (allowing $k_1 = k_2$).
 Choose uniformly $h$ from $H$.
 
-
 *** Lower bound
 
 For fixed $h$:
@@ -1070,6 +1069,32 @@ Show that, with double hashing, if $m$ and $h_2(k)$ have greatest common divisor
 #+end_quote
 
 ** Solution
+
+*Claim.*
+
+Let $d = \gcd(m, h_2(k))$. The smallest positive integer $i$ such that $h(i,k) = h(0,k) \mod m$ is $i = \frac{m}{d}$. Hence, an unsuccessful search examines exactly $\frac{m}{d} = \frac{1}{d} \cdot m$ slots before returning to $h_1(k)$.
+
+*Proof.*
+
+The probe sequence returns to $h_1(k)$ at step $i$ iff:
+
+$$h_1(k) + i \cdot h_2(k) \equiv h_1(k) \mod m \iff i \cdot h_2(k) \equiv 0 \mod m \qquad (*)$$
+
+We find the smallest positive $i$ satisfying $(*)$.
+
+Write $m = d \cdot m'$ and $h_2(k) = d \cdot h'$ with $\gcd(m', h') = 1$. Substituting into $(*)$:
+
+$$m \mid i \cdot h_2(k) \iff d m' \mid i \cdot d h' \iff m' \mid i \cdot h'$$
+
+Since $\gcd(m', h') = 1$, this forces $m' \mid i$. The smallest positive such $i$ is $i = m' = \frac{m}{d}$, and it satisfies $(*)$:
+
+$$\frac{m}{d} \cdot h_2(k) = \frac{m}{d} \cdot d h' = m h' \equiv 0 \mod m$$
+
+Therefore the probe sequence visits exactly $\frac{m}{d}$ distinct slots — one $d$-th of the table — before returning to $h_1(k)$. $\blacksquare$
+
+*Corollary.*
+
+When $d = 1$, the smallest such $i$ is $m$, so the probe sequence examines every slot. This is why $m$ and $h_2(k)$ must be relatively prime — typically enforced by choosing $m$ prime and $h_2(k) < m$.
 
 * Problem 61 :open_addressing:hashing:
 
