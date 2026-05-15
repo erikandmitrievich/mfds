@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-27>
-#+lastmod: <2026-05-14 21:19>
+#+lastmod: <2026-05-15 13:37>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -185,6 +185,15 @@ From Eq. (2.3), it follows that $p$ is a real-valued polynomial in $\lambda$. In
 
 ** Questions
 
+*** DONE I do not quite understand how discriminant is nonpositive and how does it imply $4|\langle x, y \rangle|^2 \le 4 \|x\|^2 \|y\|^2$.
+
+A real quadratic $a \lambda^2 + b \lambda + c = 0$ that is everywhere nonneg has at most one real root, so its discriminant $\Delta = b^2 - 4ac \le 0$. Here $a = \|y\|^2, b = 2\langle x,y \rangle, c = \|x\|^2$, so:
+
+\begin{align*}
+\Delta &= (2\langle x,y \rangle) - 4\|x\|^2\|y\|^2 = 4\langle x,y \rangle - 4\|x\|^2\|y\|^2 \le 0 \\
+&\implies 4\langle x,y \rangle \le 4 \|x\|^2\|y\|^2  \\
+\end{align*}
+
 * Definition  2.04:  Inner-Product, Hilbert and Euclidean Spaces
 
 1. inner-product space: An inner-product space is a normed space $(E, \|\cdot\|_E)$ where the norm is induced by an inner product $\langle \cdot, \cdot \rangle_E$. We usually denote it as $(E, \langle \cdot, \cdot \rangle_E)$.
@@ -195,11 +204,35 @@ From Eq. (2.3), it follows that $p$ is a real-valued polynomial in $\lambda$. In
 
 You will learn about completeness in your analysis, topology and functional analysis courses.
 
+** Questions
+
+*** DONE Why inner-product space is denoted $(E, \langle \cdot,\cdot \rangle_E)$ and not $(E, \langle \cdot,\cdot \rangle_E^{1/2})$?
+
+Because the inner product $\langle \cdot,\cdot \rangle$ is a primary structure, from which norm $(E, \langle \cdot,\cdot \rangle_E^{1/2})$ is derived.
+
+*** DONE What is the relationship between all spaces so far?
+
+\begin{align*}
+\text{Euclidian sp. (finite-dim)} &\subseteq \text{Hilbert sp. (completeness)} \\
+&\subseteq \text{Inner prod. sp. } \langle \cdot, \cdot \rangle \\
+&\subseteq \text{Normed vec. sp. } \|\cdot\| \\
+&\subseteq \text{Metric sp. } d(\cdot, \cdot) \\
+\end{align*}
+
 * Proposition 2.06:  Parallelogram Identity
 
 Let $(E, \langle \cdot, \cdot \rangle_E)$ be a $\mathbb{K}$ inner-product vector space, and let $\|\cdot\|$ be its induced norm. Then
 
 $$\|x + y\|^2 + \|x - y\|^2 = 2(\|x\|^2 + \|y\|^2), \quad \forall x, y \in E$$
+
+*Proof.*
+
+\begin{align*}
+\|x + y\|^2 + \|x - y\|^2 &= \langle x + y, x + y \rangle + \langle x - y, x - y \rangle \\
+&= \langle x,x\rangle + \langle x,y\rangle + \langle y,x\rangle + \langle y,y\rangle + \langle x,x\rangle - \langle x,y\rangle - \langle y,x\rangle + \langle y,y\rangle \\
+&= 2\langle x,x\rangle + 2\langle y,y\rangle \\
+&= 2(|x|^2 + |y|^2). \qquad\blacksquare \\
+\end{align*}
 
 * Lemma       2.07:  Polarization identity
 
@@ -345,6 +378,12 @@ This definition makes sense since, by the Cauchy-Schwarz inequality, $\left| \fr
 
 Interesting things happen when the vectors 'become perpendicular' in the sense that $\alpha = \pi / 2$. This happens when $\langle x, y \rangle = 0$ (assuming that $x, y \ne 0$). This is gives raise to the general notion of orthonogonality and orthonormality, which are key concepts in inner-product spaces.
 
+** Questions
+
+*** DONE Why does it assume that $\left| \frac{\langle x, y \rangle}{\|x\| \|y\|} \right| \le 1$ would imply $\cos(\alpha) := \frac{\langle x, y \rangle}{\|x\| \|y\|}$? Is it only because values are in range $[-1,1]$?
+
+Yes, $\cos : [0,\pi] \rightarrow [-1,1]$ is a mere bijection. Angle becomes more abstract concept.
+
 * Definition  2.10:  Orthogonality and Orthonormality
 
 Let $(E, \langle \cdot, \cdot \rangle_E)$ be a $\mathbb{K}$ inner-product vector space with $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$, and let $W$ and $T$ be two subspaces of $E$.
@@ -357,15 +396,47 @@ Let $(E, \langle \cdot, \cdot \rangle_E)$ be a $\mathbb{K}$ inner-product vector
 
 4. orthonormal set: We say that a set of vectors $\{v_1, \ldots, v_n\} \subseteq E$ is orthonormal if $\langle v_i, v_j \rangle = \delta_{ij}$.
 
+** Questions
+
+*** DONE Could you please give some intuitive example for points 2 and 3?
+
+Take $E = \mathbb{R}^3$.
+
+Point 2: Let $W = \mathrm{span}((1,0,0), (0,1,0))$ — the $xy$ plane. The vector $x = (0,0,1)$ is orthogonal to $W$ because $\langle x, w \rangle = 0$ for every $w$ in that plane. Note: you must check against *all* $w \in W$, not just a basis.
+
+Point 3: Let $W = \mathrm{span}((1,0,0))$ (the $x$ axis) and $T = \mathrm{span}((0,1,0), (0,0,1))$ (the $yz$ plane). Then $W \perp T$ because every vector on the $x$ axis is orthogonal to every vector in the $yz$ plane.
+
+*** DONE I do not really understand the concept of 4th. How should I understand $\langle v_i, v_j \rangle = \delta_{ij}$?
+
+It packs two conditions into one formula:
+
+- $i \neq j \implies \langle v_i, v_j \rangle = 0$: all pairs are orthogonal.
+
+- $i = j \implies \langle v_i, v_i \rangle = 1$: every vector has unit norm.
+
+So "orthonormal" = "mutually orthogonal" + "each of length 1." The standard basis $\{(1,0,0), (0,1,0), (0,0,1)\}$ in $\mathbb{R}^3$ is the canonical example.
+
 * Definition  2.11:  Orthogonal and orthonormal basis
 
-Let $E$ be an $n$-dimensional Euclidean space and $X = \{e_1, \ldots, e_n\}$ be a basis of $E$. We say that $X$ is an orthogonal basis if
+Let $E$ be an $n$ -dimensional Euclidean space and $X = \{e_1, \ldots, e_n\}$ be a basis of $E$. We say that $X$ is an orthogonal basis if
 
 $$\langle e_i, e_j \rangle = 0, \quad \forall i \ne j.$$
 
 The basis is said to be orthonormal if
 
 $$\langle e_i, e_j \rangle = \delta_{ij}, \quad \forall 1 \le i, j \le n.$$
+
+** Questions
+
+*** DONE What is the point behind outlining $\forall 1 \le i, j \le n$?
+
+It includes the case $i = j$, which forces $\langle e_i, e_i \rangle = 1$ (unit norm).
+
+The orthogonal definition uses $\forall i \neq j$, which says nothing about self-inner-products. The range $\forall 1 \le i, j \le n$ is what upgrades orthogonal to orthonormal.
+
+*** DONE Do I understand right that the difference between orthogonal and orthonormal basis is that inner product of orthonormal basis equals to $1$?
+
+Yes. Orthogonal basis: all pairs perpendicular, but each vector can have arbitrary nonzero length. Orthonormal basis: all pairs perpendicular *and* each vector has unit length.
 
 * Proposition 2.12:  Coordinates in an orthonormal basis
 
