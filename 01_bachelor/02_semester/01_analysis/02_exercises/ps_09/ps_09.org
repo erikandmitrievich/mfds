@@ -1,0 +1,120 @@
+#+title: Ps 09
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-16>
+#+lastmod: <2026-05-16 14:30>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Problem 1 :matrix:operator_norm:norm:
+** Task
+#+begin_quote
+Consider $A \in \mathbb{R}^{m\times n}$ and prove the following claims made in class:
+
+(a) If $\mathbb{R}^m$ and $\mathbb{R}^n$ are equipped with the sum norm, then the operator norm of $A$ is the column sum norm $\|A\|_1$.
+
+(b) If $\mathbb{R}^m$ and $\mathbb{R}^n$ are equipped with the max norm, then the operator norm of $A$ is the row sum norm $\|A\|_\infty$.
+
+(c) Find matrices $A$ such that
+- $\|A\|_1 = \|A\|_\infty$,
+- $\|A\|_1 > \|A\|_\infty$,
+- $\|A\|_1 < \|A\|_\infty$.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+* Problem 2 :von_neumann_series:banach_space:induction:
+** Task
+#+begin_quote
+Connections between geometric sum and von Neumann series:
+
+(a) Implement the geometric sum $\sum_{k=0}^n x^k$ in Julia as a function ~myGeometricSum(x,n)~ by simply calling the Julia function ~myNeumann~ from the lecture notes. Do you see the connections?
+
+(b) Let $B$ be a Banach space. Prove by induction over $n$: if $g \in L(B)$ is such that $\mathrm{id}_B - g$ is invertible in $L(B)$, then
+$$\sum_{k=0}^n g^k = (\mathrm{id}_B - g^{n+1})(\mathrm{id}_B - g)^{-1}$$
+#+end_quote
+
+** Solution
+*** (a)
+
+#+begin_src julia :results value :exports both :tangle julia/p_2a.jl
+#+end_src
+
+*** (b)
+
+* Problem 3 :matrix:inverse:von_neumann_series:
+** Task
+#+begin_quote
+Consider the matrix
+
+\begin{align*}
+A =
+\begin{pmatrix}
+\frac{1}{2} & 0 & 0 \\
+0 & \frac{1}{3} & 0 \\
+0 & 0 & \frac{1}{4} \\
+\end{pmatrix}
+\end{align*}
+
+(a) Determine the inverse of $A$ by computing the associated von Neumann series by hand.
+
+(b) Implement the von Neumann iteration and compute the inverse of $B$ in Julia:
+$$B = \begin{pmatrix} 1.20 & 0.05 & 0 & 0 & 0.02 \\ 0.03 & 0.90 & 0.04 & 0 & 0 \\ 0 & 0.02 & 1.10 & -0.03 & 0 \\ 0 & 0 & 0.05 & 0.85 & 0.04 \\ 0.01 & 0 & 0 & 0.02 & 1.15 \end{pmatrix}$$
+
+(c) Use "Rational{BigInt}" in Julia and check that "inv(B)" and the von Neumann series computed till the first $n = 150$ terms in Rational{BigInt} deviate by at most $10^{-100}$ in each entry.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+#+begin_src julia :results value :exports both :tangle julia/p_3b.jl
+#+end_src
+
+*** (c)
+#+begin_src julia :results value :exports both :tangle julia/p_3c.jl
+#+end_src
+
+* Problem 4 :normed_space:linear_map:continuity:
+** Task
+#+begin_quote
+Consider the space
+$$C([0, 1]) := \{f : [0, 1] \to \mathbb{R} : f \text{ continuous}\}$$
+
+(a) Prove that $C([0, 1])$ is a normed, linear vector space with norm
+$$\|f\| := \int_0^1 |f(x)|\, dx$$
+(You may assume that this is a norm...)
+
+(b) Show that the map $S : C([0, 1]) \to \mathbb{R}$,
+$$S(f) = f(0)$$
+is linear but not continuous.
+
+(c) Is there an alternative norm on $C([0, 1])$ such that $S$ is continuous?
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+* Time Estimates
+- Problem 1: ~40 min~
+- Problem 2: ~30 min~
+- Problem 3: ~45 min~
+- Problem 4: ~35 min~
