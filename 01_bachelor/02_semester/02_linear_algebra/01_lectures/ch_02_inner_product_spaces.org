@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-27>
-#+lastmod: <2026-05-15 13:37>
+#+lastmod: <2026-05-15 15:59>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -448,6 +448,20 @@ $$x = \sum_{i=1}^{n} \langle x, e_i \rangle e_i, \quad \text{and} \quad \|x\|^2 
 
 Since $\mathcal{E}_n$ is a basis, there exist $(c_1, \ldots, c_n) \in \mathbb{R}^n$ such that $x = \sum_{i=1}^{n} c_i e_i$. Taking the inner product with $e_j$ yields $c_j = \langle x, e_j \rangle$ for all $1 \le j \le n$. To prove the formula with the norm, we simply write $\|x\|^2 = \langle x, x \rangle$ and develop the sum using that $x = \sum_{i=1}^{n} \langle x, e_i \rangle e_i$.
 
+** Questions
+
+*** DONE Do I understand right that in $x = \sum_{i=1}^n \langle x, e_i \rangle e_i$ we are just redifining $x$ through sum of basis vectors (multiplied by $x$'s coefficient)?
+
+Yes, thats all.
+
+*** DONE What is the point of $x = \sum_{i=1}^n \langle x, e_i \rangle e_i$? Why was it demonstrated?
+
+It shows that in an orthonormal basis, the coefficient $c_i$ equals $\langle x, e_i \rangle$. You extract coordinates by taking inner products instead of solving a system.
+
+*** DONE Second $e_1$ in $x = \sum_{i=1}^n \langle x, e_i \rangle e_i$ was removed in $\|x\|^2$ because we don't need the vector factor, since we are working with norm, right?
+
+Yes. You expand $\|x\|^2 = \langle x, x \rangle$ using $x = \sum_i \langle x, e_i \rangle e_i$. Orthonormality ($\langle e_i, e_j \rangle = \delta_{ij}$) kills cross terms and turns each diagonal term into $|\langle x, e_i \rangle|^2 \cdot 1$. The basis vectors collapse out, leaving only the squared coefficients.
+
 * Theorem     2.13:  Gram-Schmidt orthonormalization
 
 Any euclidean space $E$ has an orthonormal basis.
@@ -486,6 +500,16 @@ $$F^\perp := \{x \in E : \langle x, f \rangle = 0, \forall f \in F\}$$
 
 the orthogonal complement of $F$.
 
+** Questions
+
+*** DONE Do I understand right that orthogonal complement is generally a subset of a complement? Meaning that all orthogonal complement is a complement and not every complement is orthogonal complement?
+
+Not quite. A complement $G$ of $F$ is any subspace such that $F \oplus G = E$. A given $F$ can have many different complementary subspaces.
+
+Take $E = \mathbb{R}^2$, $F = \mathrm{span}((1,0))$. Then $G_1 = \mathrm{span}((0,1))$, $G_2 = \mathrm{span}((1,1))$, $G_3 = \mathrm{span}((2,1))$ are all complements of $F$, since $F \oplus G_k = E$ for each. Only $G_1 = F^{\perp}$ is the orthogonal complement.
+
+So: $F^{\perp}$ is one specific complement among many, not a "subset of a complement."
+
 * Proposition 2.15:  Properties of the orthogonal complement
 
 Let $F$ be a subspace of a euclidean space $E$. Then:
@@ -511,6 +535,8 @@ Let $F$ be a subspace of a euclidean space $E$. Then:
    We thus conclude that $F = F \oplus F^\perp$ and $\dim(E) = \dim(F) + \dim(F^\perp)$.
 
 4. We start by observing that $\dim((F^\perp)^\perp) = \dim(E) - \dim(F^\perp)$. Then, we easily verify that $F \subseteq (F^\perp)^\perp$, which leads to the conclusion that $(F^\perp)^\perp = F$.
+
+** Questions
 
 * Definition  2.16:  Orthogonal projection
 
