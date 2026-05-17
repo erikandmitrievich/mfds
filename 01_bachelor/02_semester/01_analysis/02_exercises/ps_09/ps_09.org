@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-16>
-#+lastmod: <2026-05-16 14:30>
+#+lastmod: <2026-05-17 18:25>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -33,9 +33,60 @@ Consider $A \in \mathbb{R}^{m\times n}$ and prove the following claims made in c
 ** Solution
 *** (a)
 
+*Claim.*
+
+$$\sup_{\|x\|_1 = 1} \|Ax\|_1 = \max_{j=1, \ldots, n} \sum_{i=1}^{m} |a_{ij}|$$
+
+*Proof.*
+
+- $\le$
+
+  Choose $x \in \mathbb{R}^n : \|x\|_1 = 1$ ($\sum_{j=1}^n |x_j| = 1$).
+
+  \begin{align*}
+  &\|Ax\|_1 = \|\sum_{j=1}^n x_j a_{\cdot j}\|_1 \le \sum_{j=1}^n |x_{j}| \cdot \|a_{\cdot j}\|_1 \le \sum_{j=1}^n |x_{j}| \cdot \max_j \|a_{\cdot j}\|_1 = \max_j \|a_{\cdot j}\|_1 \\
+  &\implies \sup_{\|x\|_1 = 1} \|Ax\|_1 \le \max_{j=1, \ldots, n} \sum_{i=1}^{m} |a_{ij}| \\
+  \end{align*}
+
+- $\ge$
+
+  Let $j^{*} := \arg \max_{j=1, \ldots, n} \sum_{i=1}^m |a_{ij}|$. Choose $x = e_{j^{*}}$. Then $\|e_{j^{*}}\|_1 = 1$ and
+
+  \begin{align*}
+  &\|Ae_{j^{*}}\|_1 = \|a_{\cdot j^{*}}\|_1 = \sum_{i=1}^m |a_{ij^{*}}| = \max_{j=1, \ldots, n} \sum_{i=1}^{m} |a_{ij}| \\
+  &\implies \sup_{\|x\|_1 = 1} \|Ax\|_1 \ge \max_{j=1, \ldots, n} \sum_{i=1}^{m} |a_{ij}| \\
+  \end{align*}
+
+Thus,
+
+$$\sup_{\|x\|_1 = 1} \|Ax\|_1 = \max_{j=1, \ldots, n} \sum_{i=1}^{m} |a_{ij}|$$
+
 *** (b)
 
+*Claim.*
+
+$$\sup_{\|x\|_{\infty} = 1} \|Ax\|_{\infty} = \max_{i=1, \ldots, m} \sum_{j = 1}^n |a_{ij}|$$
+
+*Proof.*
+
+- $\le$
+
+  Choose $x \in \mathbb{R}^n : \|x\|_{\infty} = 1$.
+
+  \begin{align*}
+  \|Ax\|_{\infty} = \max_{i = 1, \ldots, m} \left|\sum_{j}^n a_{ij} x_{j}\right| &\le \max_{i = 1, \ldots, m} \sum_{j}^n |a_{ij}| \cdot \|x\|_{\infty} = \max_{i = 1, \ldots, m} \sum_{j}^n |a_{ij}| \\
+  \|Ax\|_{\infty} &\le \max_{i = 1, \ldots, m} \sum_{j}^n |a_{ij}| \\
+  \end{align*}
+
+- $\ge$
+
 *** (c)
+
+- $\|A\|_1 = \|A\|_\infty$: $A = I_2 = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}. \quad \|A\|_1 = 1 = \|A\|_\infty$.
+
+- $\|A\|_1 > \|A\|_\infty$: $A = \begin{pmatrix} 1 \\ 1 \end{pmatrix}. \quad \|A\|_1 = 2, \|A\|_\infty = 1$.
+
+- $\|A\|_1 < \|A\|_\infty$: $A = \begin{pmatrix} 1 & 1 \end{pmatrix}. \quad \|A\|_1 = 1, \|A\|_\infty = 2$.
 
 * Problem 2 :von_neumann_series:banach_space:induction:
 ** Task
