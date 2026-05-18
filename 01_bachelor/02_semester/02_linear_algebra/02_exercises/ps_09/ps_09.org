@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-14>
-#+lastmod: <2026-05-18 14:39>
+#+lastmod: <2026-05-18 15:37>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -60,7 +60,7 @@ Show that $b$ is a bilinear form.
 ** Task
 
 #+begin_quote
-We call a bilinear $\alpha : \mathbb{E} \times \mathbb{E} \to \mathbb{K}$ skew-symmetric if for all $x, y \in \mathbb{E}$, $\alpha(x, y) = -\alpha(x, y)$.
+We call a bilinear $\alpha : \mathbb{E} \times \mathbb{E} \to \mathbb{K}$ skew-symmetric if for all $x, y \in \mathbb{E}$, $\alpha(x, y) = -\alpha(y, x)$.
 
 (i) Let $\mathcal{S}(\mathbb{E}) \subset \text{Bil}(\mathbb{E})$ be the set of all symmetric bilinear forms, and $\mathcal{A}(\mathbb{E}) \subset \text{Bil}(\mathbb{E})$ be the set of all skew-symmetric bilinear forms. Prove that $\mathcal{S}(\mathbb{E}), \mathcal{A}(\mathbb{E})$ are subspaces of $\text{Bil}(\mathbb{E})$.
 
@@ -204,3 +204,8 @@ $\square$
 - Problem 3.10: ~30 min~
 - Problem 4.1: ~25 min~
 - Problem 4.5: ~20 min~
+
+* Typos/Errors
+
+- [ ] Problem 3.10 task: "$\alpha(x, y) = -\alpha(x, y)$" -> "$\alpha(x, y) = -\alpha(y, x)$" (definition of skew-symmetric).
+- [ ] Problem 3.10 (iii): the implication $2 \cdot b(x,y) = 0 \implies b(x,y) = 0$ requires $\mathrm{char}(\mathbb{K}) \neq 2$; this assumption is also needed in /(ii)/ to divide by $2$. The problem should state $\mathbb{K} \in \{\mathbb{R}, \mathbb{C}\}$ or $\mathrm{char}(\mathbb{K}) \neq 2$.
