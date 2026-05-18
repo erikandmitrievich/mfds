@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-14>
-#+lastmod: <2026-05-14 21:45>
+#+lastmod: <2026-05-18 14:18>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -104,6 +104,36 @@ where $n \geq 3$. What happens when $n < 3$?
 #+end_quote
 
 ** Solution
+
+The entry in row $i$, column $j$ (for $1 \le i, j \le n$) is
+
+$$M_{ij} = j + (i-1)n$$
+
+*Case $n \ge 3$.* Apply the row operation $R_i \leftarrow R_i - R_1$ for each $i = 2, 3, \ldots, n$. By /Corollary 4.08/ point 1, this preserves the determinant. The new entries in row $i$ ($i \ge 2$) are
+
+$$(R_i - R_1)_j = [j + (i-1)n] - j = (i-1)n$$
+
+So:
+
+$$\det(M_n) = \det \begin{pmatrix} 1 & 2 & 3 & \dots & n \\ n & n & n & \dots & n \\ 2n & 2n & 2n & \dots & 2n \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ (n-1)n & (n-1)n & (n-1)n & \dots & (n-1)n \end{pmatrix}$$
+
+For $n \ge 3$, rows $2$ and $3$ are $n \cdot (1, \ldots, 1)$ and $2n \cdot (1, \ldots, 1)$, both proportional to $(1, \ldots, 1)$. Hence the rows of $M_n$ are linearly dependent, and by /Corollary 4.08/ point 5:
+
+$$\det(M_n) = 0, \quad n \ge 3$$
+
+*Case $n < 3$.* The argument above needs two rows proportional to $(1, \ldots, 1)$, which requires $n \ge 3$.
+
+- $n = 1$: $M_1 = (1)$, so $\det(M_1) = 1$ by /Lemma 4.02/ point 1.
+
+- $n = 2$:
+
+  $$M_2 = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}, \quad \det(M_2) = 1 \cdot 4 - 2 \cdot 3 = -2$$
+
+*Summary.*
+
+$$\det(M_n) = \begin{cases} 1 & n = 1 \\ -2 & n = 2 \\ 0 & n \ge 3 \end{cases}$$
+
+$\square$
 
 * Time Estimates
 
