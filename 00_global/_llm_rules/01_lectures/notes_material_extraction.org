@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-15>
-#+lastmod: <2026-05-11 21:30>
+#+lastmod: <2026-05-18 12:38>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -134,12 +134,12 @@ Personal intuitive restatements or "in other words" glosses go in Org-mode itali
 - **Never invent**: italic commentary must come from the source. Do not fabricate.
 
 ** 8. Proofs
-If a proof is visible in the source, include it. The proof begins with ~*Proof.*~ on its own line (bold "Proof" followed by a period, all inside bold markers — no space between ~*~ and ~Proof~):
+If a proof is visible in the source, wrap it in a ~#+begin_proof ... #+end_proof~ special block. The opening and closing markers each sit on their own line, with the proof body between them:
 
 #+begin_example
-*Proof.*
-
+#+begin_proof
 Let $(x_n)_{n\in\mathbb{N}} \in X$ be a Cauchy sequence. ...
+#+end_proof
 #+end_example
 
 ** 9. Bidirectional Proofs (iff)
@@ -233,9 +233,9 @@ Let $X$ be a compact metric space. Then every Cauchy sequence in $X$ converges t
 
 /Intuitively, compactness is strong enough to force Cauchy sequences to actually have a limit./
 
-*Proof.*
-
+#+begin_proof
 Let $(x_n)_{n\in\mathbb{N}} \in X$ be a Cauchy sequence. By compactness, there exists a convergent subsequence $(x_{n_j})_{j\in\mathbb{N}} \rightarrow x \in X$. We show $x_n \rightarrow x$. ...
+#+end_proof
 
 ** Questions
 ```
@@ -255,11 +255,11 @@ Let $(x_n)_{n\in\mathbb{N}} \in X$ be a Cauchy sequence. By compactness, there e
 
 A subset $S \subseteq \mathbb{R}$ is path-connected iff $S$ is an interval.
 
-*Proof.*
-
+#+begin_proof
 - ($\Rightarrow$) Let $S$ be path-connected. ...
 
 - ($\Leftarrow$) Let $S$ be an interval. ...
+#+end_proof
 
 ** Questions
 ```
