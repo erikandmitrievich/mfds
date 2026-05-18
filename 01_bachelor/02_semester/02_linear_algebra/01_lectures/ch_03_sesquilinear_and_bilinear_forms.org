@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-11>
-#+lastmod: <2026-05-18 13:23>
+#+lastmod: <2026-05-18 16:59>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -79,9 +79,9 @@ the sets of bilinear and sesquilinear maps.
 
 $\mathrm{Bil}(E)$ and $\mathrm{Sesq}(E)$ are linear subspaces of $\mathcal{F}(E \times E, \mathbb{K})$.
 
-*Proof.*
-
+#+begin_proof
 Left as an exercise.
+#+end_proof
 
 * Lemma       3.05:  Matrix representation in finite dimensional spaces
 
@@ -95,15 +95,15 @@ $$[b]_{\mathcal{E}\mathcal{E}} := (b(e_i, e_j))_{1 \le i, j \le n}, \quad [s]_{\
 
 are called the matrix representation of $b$ and $s$.
 
-*Proof.*
-
+#+begin_proof
 Let $s \in \mathrm{Sesq}(E)$, and $x, y \in E$. It holds that
 
 $$s(x, y) = \sum_{1 \le i, j \le n} ([x]_{\mathcal{E}})_i \overline{([y]_{\mathcal{E}})_j} s(e_i, e_j) = ([x]^{\mathcal{E}})^{\top} [s]_{\mathcal{E}\mathcal{E}} \overline{[y]^{\mathcal{E}}}$$
+#+end_proof
 
 * Lemma       3.06:  Uniqueness of matrix representation
 
-Let $E$ be $n$-dimensional $\mathbb{K}$ vector space and $\mathcal{E} = \{ e_1, \ldots, e_p \}$ be a basis. The mappings
+Let $E$ be $n$ -dimensional $\mathbb{K}$ vector space and $\mathcal{E} = \{ e_1, \ldots, e_p \}$ be a basis. The mappings
 
 $$\mathrm{BMat} : \mathrm{Bil}(E) \rightarrow \mathbb{K}^{n \times n}, \quad b \mapsto [b]_{\mathcal{E}\mathcal{E}}$$
 
@@ -113,8 +113,7 @@ $$\mathrm{SMat} : \mathrm{Sesq}(E) \rightarrow \mathbb{K}^{n \times n}, \quad s 
 
 are isomorphisms.
 
-*Proof.*
-
+#+begin_proof
 We next prove that =BMat= is linear, surjective and injective.
 
 *Injectivity:* Let $b, \tilde{b} \in \mathrm{Bil}(e_i, e_j)$ such that $[b]_{\mathcal{E}\mathcal{E}} = [\tilde{b}]_{\mathcal{E}\mathcal{E}}$. For any $x, y \in E$, we have that
@@ -128,15 +127,15 @@ Therefore $b = \tilde{b}$ and =BMat= is injective.
 The proof for the sesquilinear case follows the same lines, with due care for complex conjugation.
 
 *Linearity:* Trivial.
+#+end_proof
 
 * Lemma       3.07:  Matrix representation under change of basis
 
-Let $E$ be $n$-dimensional $\mathbb{K}$ vector space, and $b \in \mathrm{Bil}(E)$ and $s \in \mathrm{Sesq}(E)$. Then the matrix representation of $b$ and $s$ for two different bases $\mathcal{E}$ and $\mathcal{U}$ of $E$ are connected as
+Let $E$ be $n$ -dimensional $\mathbb{K}$ vector space, and $b \in \mathrm{Bil}(E)$ and $s \in \mathrm{Sesq}(E)$. Then the matrix representation of $b$ and $s$ for two different bases $\mathcal{E}$ and $\mathcal{U}$ of $E$ are connected as
 
 $$[b]_{\mathcal{U}\mathcal{U}} = ([\mathrm{Id}]_{\mathcal{U}}^{\mathcal{E}})^{\top} [b]_{\mathcal{E}\mathcal{E}} [\mathrm{Id}]_{\mathcal{U}}^{\mathcal{E}}, \quad \text{and} \quad [s]_{\mathcal{U}\mathcal{U}} = ([\mathrm{Id}]_{\mathcal{U}}^{\mathcal{E}})^{\top} [s]_{\mathcal{E}\mathcal{E}} \overline{[\mathrm{Id}]_{\mathcal{U}}^{\mathcal{E}}}$$
 
-*Proof.*
-
+#+begin_proof
 Let $x, y \in E$. By the matrix representation of $b(x, y)$ (see Eq. (3.2)),
 
 \begin{align*}
@@ -149,6 +148,7 @@ In addition, since Eq. (3.2) also applies for the basis $\mathcal{U}$, we also h
 $$b(x, y) = ([x]^{\mathcal{U}})^{\top} [b]_{\mathcal{U}\mathcal{U}} [y]^{\mathcal{U}}$$
 
 Therefore, $[b]_{\mathcal{U}\mathcal{U}} = ([\mathrm{Id}]_{\mathcal{U}}^{\mathcal{E}})^{\top} [b]_{\mathcal{E}\mathcal{E}} [\mathrm{Id}]_{\mathcal{U}}^{\mathcal{E}}$. We proceed similarly to prove the claim for $s \in \mathrm{Sesq}(E)$.
+#+end_proof
 
 * Definition  3.08:  Tensor product: axioms
 
@@ -181,9 +181,9 @@ $$E \otimes E := \left\{ \sum_{i=1}^{r} \alpha_i x_i \otimes y_i \ : \ r \in \ma
 
 $E \otimes E$ is a $\mathbb{K}$ vector space with neutral element $0_{E \otimes E} = 0_E \otimes 0_E$.
 
-*Proof.*
-
+#+begin_proof
 It holds that $0_{E \otimes E}$ is indeed the neutral element, and that for all $\lambda_1, \lambda_2 \in \mathbb{K}$ and $T_1, T_2 \in E \otimes E$, $\lambda_1 T_1 + \lambda_2 T_2 \in E \otimes E$.
+#+end_proof
 
 * Definition  3.13:  Tensor product space as algebraic dual
 
