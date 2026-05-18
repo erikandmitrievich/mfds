@@ -325,9 +325,9 @@ Let $x, y \in E$. Then
 
 $$[\alpha x + \beta y]^{\mathcal{E}} = \alpha [x]^{\mathcal{E}} + \beta [y]^{\mathcal{E}}, \quad \forall\, \alpha, \beta \in \mathbb{K}.$$
 
-*Proof.*
-
+#+begin_proof
 We simply use the definition of the coordinate representation and the fact that $\mathbb{R}^n$ is a vector space. $\square$
+#+end_proof
 
 * Definition  1.19:  Subspace
 
@@ -377,13 +377,13 @@ Let $F$ and $G$ be two subspaces of a vector space $E$. Then:
 
 True, lecture notes misses the proof of that points.
 
-*Proof.*
-
+#+begin_proof
 1. $F \cap G$ is a subspace: $0_E \in F$ and $0_E \in G$, so $0_E \in F \cap G$. If $x, y \in F \cap G$ and $\lambda, \mu \in \mathbb{K}$, $\lambda x + \mu y \in F$ (since $F$ is a subspace), and $\lambda x + \mu y \in G$ (since $G$ is a subspace), hence $\lambda x + \mu y \in F \cap G$.
 
 2. $F \cup G$ is in general not a subspace: Take $\mathbb{R}^2$, let $F$ be $x$ axis and $G$ be $y$ axis. Then, $(1,0) \in F \cup G$ and $(0,1) \in F \cup G$, but $(1,0) + (0,1) = (1,1) \notin F \cup G$.
 
 3. $F + G$ is a subspace: $0_E = 0_E + 0_E \in F + G$. If $x_1 + y_1, x_2 + y_2 \in F + G$, with $x_i \in F, y_i \in G$, then $\lambda(x_1 + y_1) + \mu(x_2 + y_2) = (\lambda x_1 + \lambda y_1) + (\mu x_2 + \mu y_2) \in F + G$.
+#+end_proof
 
 * Definition  1.23:  Direct sum
 
@@ -480,8 +480,7 @@ is a basis of $E^*$, which is called the dual basis of $\mathcal{E}$. Furthermor
 
 $$e_i^{*}(e_j) = \delta_{i,j}, \quad \forall \; 1 \le i, j \le n$$
 
-*Proof.*
-
+#+begin_proof
 The mapping $e_i^*$ is linear by /Proposition 1.18/, and the fact that component extraction is also a linear application. We next prove that $\mathcal{B}^*$ is a basis of $E^*$ by showing that it is both a linearly independent and generating set.
 
 - Linear Independence: Let $\lambda_1, \ldots, \lambda_n \in \mathbb{K}$ such that $\lambda_1 e_1^* + \cdots + \lambda_n e_n^* = 0$. Then, $(\lambda_1 e_1^* + \cdots + \lambda_n e_n^*)(e_i) = \lambda_i = 0$ for all $1 \le i \le n$, which shows that $\mathcal{B}^*$ is a linearly independent set.
@@ -495,8 +494,7 @@ The mapping $e_i^*$ is linear by /Proposition 1.18/, and the fact that component
   $$\varphi = \varphi(e_1) e_1^* + \cdots + \varphi(e_n) e_n^*$$
 
   It expresses $\varphi$ as linear combination of the elements $e_i^* \in E^*$, thus showing that $\varphi \in \mathrm{span}\{\mathcal{B}^*\}_{i=1}^{n}$. Since this holds for every $\varphi \in E^*$, we have shown that $E^* = \mathrm{span}\{\mathcal{B}^*\}$.
-
-$\square$
+#+end_proof
 
 ** Questions
 
@@ -534,9 +532,9 @@ Let $E$ be a $\mathbb{K}$ vector space of dimension $n$, and let $W$ be a subspa
 
 $$\dim(E) = \dim(W) + \dim(W^{\circ}).$$
 
-*Proof.*
-
+#+begin_proof
 Suppose that $1 \le \dim(W) = k < n$, and let $(e_1, \ldots, e_k)$ be a basis of $W$. We complete this basis with $n - k$ vectors $(e_{k+1}, \ldots, e_n)$ to obtain a basis of $E$ which we call $\mathcal{B}$. We introduce the dual basis $\mathcal{B}^* = \{e_1^*, \ldots, e_n^*\}$, and observe that $W^{\circ} = \text{span}\{e_{k+1}^*, \ldots, e_n^*\}$. Indeed, we clearly have that $e_{k+1}^*, \ldots, e_n^* \in W^{\circ}$. In addition, any element $\mu \in W^{\circ}$ cannot have components in $e_1^*, \ldots, e_k^*$ since $\mu(e_1) = \cdots = \mu(e_k) = 0$. Therefore $\dim(W^{\circ}) = n - k$. $\square$
+#+end_proof
 
 ** Questions
 
@@ -560,8 +558,7 @@ $$f \mapsto \text{Mat}(f) = [f]_{\mathcal{E}}^{\mathcal{F}} := \left( [f(e_1)]^{
 
 is an isomorphism. For every $f \in \mathcal{L}(E, F)$, $[f]_{\mathcal{E}}^{\mathcal{F}}$ is called the matrix representation of $f$ in the bases $\mathcal{E}$ and $\mathcal{F}$.
 
-*Proof.*
-
+#+begin_proof
 We next prove that $\text{Mat}$ is both surjective and injective.
 
 *Injectivity:* Let $f, g \in \mathcal{L}(E, F)$ such that $\text{Mat}(f) = \text{Mat}(g)$. Then $[f(e_i)]^{\mathcal{F}} = [g(e_i)]^{\mathcal{F}}$ for all $i = 1, \ldots, p$. Since the coordinate representation is unique, it follows that this equality is also true at the level of the vectors, $f(e_i) = g(e_i)$. Let now $x \in E$ such that $x = \sum_{i=1}^{p} c_i e_i$. Then $f(x) = \sum_{i=1}^{n} c_i f(e_i) = \sum_{i=1}^{n} c_i g(e_i) = g(x)$. Since this holds for all $x \in E$, it follows that $f = g$, and we have proven injectivity.
@@ -571,6 +568,7 @@ We next prove that $\text{Mat}$ is both surjective and injective.
 $$[f_A(x)]^{\mathcal{F}} := A[x]^{\mathcal{E}}, \quad \forall x \in E.$$
 
 The mapping $f_A$ is linear since, by construction, $[f_A(x)]^{\mathcal{F}} = 0_{\mathbb{K}^n}$ and therefore $f_A(0) = 0$. Also, for all $x, y \in E$ and $\lambda, \mu \in \mathbb{K}$, $[f_A(\lambda x + \mu y)]^{\mathcal{F}} = A[\lambda x + \mu y]^{\mathcal{E}} = \lambda A[x]^{\mathcal{E}} + \mu A[y]^{\mathcal{E}} = \lambda f_A(x) + \mu f_A(y)$. This shows surjectivity. $\square$
+#+end_proof
 
 ** Questions
 
@@ -588,9 +586,9 @@ Let $f \in \mathcal{L}(E, F)$ and let $\mathcal{E}$ and $\mathcal{F}$ be two bas
 
 $$[f(x)]^{\mathcal{F}} = [f]^{\mathcal{F}}_{\mathcal{E}} [x]^{\mathcal{E}}, \quad \forall x \in E.$$
 
-*Proof.*
-
+#+begin_proof
 Let $x \in E$, and denote $[x]^{\mathcal{E}} = (c_1, \ldots, c_n)^\top$ its coordinate representation in the basis $\mathcal{E}$. Then $f(x) = \sum_{j=1}^n c_j f(e_j)$, and by /Proposition 1.18/, $[f(x)]^{\mathcal{F}} = \sum_{j=1}^n c_j [f(e_j)]^{\mathcal{F}} = [f]^{\mathcal{F}}_{\mathcal{E}} [x]^{\mathcal{E}}$. To obtain the last equality, we have used the definition of $[f]^{\mathcal{F}}_{\mathcal{E}}$ from Eq. (1.2), and we have observed that the linear combination can be expressed as a matrix-vector product.
+#+end_proof
 
 * Proposition 1.37:  Matrix of linear combination equals linear combination of matrices
 
@@ -598,9 +596,9 @@ Let $E, F$ be two finite $\mathbb{K}$ dimensional spaces, $f, g \in \mathcal{L}(
 
 $$[\alpha f + \beta g]^{\mathcal{F}}_{\mathcal{E}} = \alpha [f]^{\mathcal{F}}_{\mathcal{E}} + \beta [g]^{\mathcal{F}}_{\mathcal{E}}.$$
 
-*Proof.*
-
+#+begin_proof
 It suffices to use the definition of $\operatorname{Mat}(\alpha f + \beta g) = [\alpha f + \beta g]^{\mathcal{F}}_{\mathcal{E}}$ in terms of matrices, and use linearity of the space of matrices.
+#+end_proof
 
 * Proposition 1.38:  Matrix of composition equals matrix product
 
@@ -608,8 +606,7 @@ Let $E, F, G$ be three finite-dimensional $\mathbb{K}$ vector spaces, $f \in \ma
 
 $$[g \circ f]^{\mathcal{G}}_{\mathcal{E}} = [g]^{\mathcal{G}}_{\mathcal{F}} [f]^{\mathcal{F}}_{\mathcal{E}}.$$
 
-*Proof.*
-
+#+begin_proof
 Let $x \in E$. On the one hand, by /Proposition 1.36/, we have that
 
 $$[(g \circ f)(x)]^{\mathcal{G}} = [g \circ f]^{\mathcal{G}}_{\mathcal{E}} [x]^{\mathcal{E}}.$$
@@ -625,6 +622,7 @@ Therefore,
 $$[g \circ f]^{\mathcal{G}}_{\mathcal{E}} [x]^{\mathcal{E}} = [g]^{\mathcal{G}}_{\mathcal{F}} [f]^{\mathcal{F}}_{\mathcal{E}} [x]^{\mathcal{E}}, \quad \forall x \in E,$$
 
 which leads to the desired equality.
+#+end_proof
 
 ** Questions
 
@@ -638,9 +636,9 @@ Let $\mathcal{E}$ and $\mathcal{F}$ be bases of vector spaces $E$ and $F$, respe
 
 $$[f^{-1}]^{\mathcal{E}}_{\mathcal{F}} = \left( [f]^{\mathcal{F}}_{\mathcal{E}} \right)^{-1}.$$
 
-*Proof.*
-
+#+begin_proof
 Left as an exercise.
+#+end_proof
 
 ** Questions
 
@@ -676,8 +674,7 @@ Let $E$ be an $n$ dimensional vector space, let $\mathcal{E} = \{e_1, \ldots, e_
 
 $$[T]^{\mathcal{F}}_{\mathcal{F}} = [\operatorname{Id}]^{\mathcal{F}}_{\mathcal{E}} \, [T]^{\mathcal{E}}_{\mathcal{E}} \, [\operatorname{Id}]^{\mathcal{E}}_{\mathcal{F}}.$$
 
-*Proof.*
-
+#+begin_proof
 Let $f_j$ be the $j$ th basis element of $\mathcal{F}$. By /Proposition 1.36/, it holds that
 
 $$[T(f_j)]^{\mathcal{E}}_{\mathcal{E}} = [T]^{\mathcal{E}}_{\mathcal{E}} [f_j]^{\mathcal{E}}.$$
@@ -689,6 +686,7 @@ In addition, by Eq. (1.5), we have that $[T(f_j)]^{\mathcal{E}} = [\operatorname
 &= [\operatorname{Id}]^{\mathcal{F}}_{\mathcal{E}} \, [T]^{\mathcal{E}}_{\mathcal{E}} \left( [f_1]^{\mathcal{E}} \mid \ldots \mid [f_n]^{\mathcal{E}} \right) \\
 &= [\operatorname{Id}]^{\mathcal{F}}_{\mathcal{E}} \, [T]^{\mathcal{E}}_{\mathcal{E}} \, [\operatorname{Id}]^{\mathcal{E}}_{\mathcal{F}}.
 \end{align*}
+#+end_proof
 
 ** Questions
 
@@ -779,8 +777,7 @@ Let $P_{F \oplus G}$, $S_{F \oplus G}$ be projection and symmetric mappings onto
 \ker(S_{F \oplus G}) &= \{0\}, & \operatorname{im}(S_{F \oplus G}) &= E.
 \end{align*}
 
-*Proof.*
-
+#+begin_proof
 We shall prove the first two set equalities by double inclusion.
 
 1. ($\ker P = G$): For $x = x_G \in G$, from the definition of the projection mapping we have that $P(x) = P(0 + x_G) = 0$, therefore $G \subseteq \ker P$. Conversely, if $x \in \ker P$, we first decompose $x = x_F + x_G$, and from the fact that $P(x) = x_F = 0$ we know that $x = 0 + x_G = x_G \in G$, therefore $\ker P \subseteq G$.
@@ -788,6 +785,7 @@ We shall prove the first two set equalities by double inclusion.
 2. ($\operatorname{im} P = F$): If $x \in \operatorname{im} P$, then there exists $y \in E$ such that $P(y) = x$, writing the direct sum decomposition $y = y_F + y_G$ we get that $x = P(y) = y_F \in F$, therefore $\operatorname{im} P \subseteq F$. Conversely, for $x \in F$, since $P$ is a projection, we get that $P(x) = \operatorname{Id}(x) = x$ (why?), which implies that $x \in \operatorname{im} P$, therefore $F \subseteq \operatorname{im} P$.
 
 3. ($\ker S = 0$ and $\operatorname{im} S = E$): Observe that $S^2 = \operatorname{Id}$, therefore $S^{-1} = S$ and $S$ is an invertible linear application, consequently $\ker S = \{0\}$ and $\operatorname{im} P = E$.
+#+end_proof
 
 ** Questions
 
@@ -1029,8 +1027,7 @@ $$\mathcal{B}(E, F) = \{T \in \mathcal{L}(E, F) : \|T\|_{\mathrm{op}} < +\infty\
 
 In addition, for any $T \in \mathcal{B}(E, F)$, $\|T\|_{\mathrm{op}}$ is the smallest constant $C > 0$ such that (1.9) holds.
 
-*Proof.*
-
+#+begin_proof
 We first prove the three equalities given in Eq. (1.11):
 
 - We first show that $\sup_{\|x\|_E = 1} \|T(x)\|_F = \sup_{x \in E - \{0_E\}} \frac{\|T(x)\|_F}{\|x\|_E}$ for all $T \in \mathcal{B}(E, F)$. For this, let $T \in \mathcal{B}(E, F)$ and $x \ne 0_E$. Thus the vector $y := \frac{x}{\|x\|_E}$ has norm 1, and by linearity
@@ -1081,6 +1078,7 @@ We now show that $\|\cdot\|_{\mathrm{op}}$ is a norm in $\mathcal{B}(E, F)$. For
    \end{align*}
 
 The three norm axioms are satisfied, hence $\|\cdot\|_{\mathrm{op}}$ is a norm on $\mathcal{B}(E, F)$. We finish by showing that Eq. (1.12) holds. Let $T \in \mathcal{B}(E, F)$. By definition Eq. (1.10) of $\mathcal{B}(E, F)$, $T$ is bounded, therefore there exists $C > 0$ such that $\frac{\|T(x)\|_F}{\|x\|_E} \le C$ for all $x \ne 0 \in E$. Taking the supremum in $x \ne 0_E$ shows that $\|T\|_{\mathrm{op}} \le C < +\infty$, which in turn implies that $T \in \{T \in \mathcal{L}(E, F) : \|T\|_{\mathrm{op}} < +\infty\}$, and therefore $\mathcal{B}(E, F) \subseteq \{T \in \mathcal{L}(E, F) : \|T\|_{\mathrm{op}}\}$. To show the reverse inclusion, we let $T \in \mathcal{L}(E, F)$ be such that $\|T\|_{\mathrm{op}} < +\infty$. Therefore, by the property of the supremizer, it holds that $\frac{\|T(x)\|_F}{\|x\|_E} < \infty$ for all $x \ne 0 \in E$. In addition $\|T(0)\|_F = 0$. This shows that $T$ is bounded, thus a member of $\mathcal{B}(E, F)$, and concludes the proof.
+#+end_proof
 
 ** Questions
 
