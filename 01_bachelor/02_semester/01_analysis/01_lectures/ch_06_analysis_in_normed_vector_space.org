@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-20>
-#+lastmod: <2026-05-16 14:55>
+#+lastmod: <2026-05-16 15:44>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -106,6 +106,10 @@ Let $V$ and $W$ be normed vector spaces and let $f : V \rightarrow W$ be linear 
 $$\|f\|_{\mathrm{op}} := \sup_{0 \neq v \in V} \frac{\|fv\|}{\|v\|}.$$
 
 ** Questions
+
+*** DONE Do I understand right, that the operator norm is a norm defined on the vector space of continuous linear maps $V \rightarrow W$, given by the supremum of $\dfrac{\|fv\|_W}{\|v\|_V}$ over all nonzero $v \in V$?
+
+Yes.
 
 * Lemma       6.1.09:  Completeness of the operator space
 

@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-27>
-#+lastmod: <2026-05-15 15:59>
+#+lastmod: <2026-05-18 12:59>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,7 +13,7 @@
 #+latex_header: \usepackage[margin=1in]{geometry}
 #+options: num:t tags:nil
 #+property: header-args :eval never-export
-#+startup: overview latexpreview inlineimages
+#+startup: overview hideblocks latexpreview inlineimages
 
 * Definition  2.01:  Inner product (aka. scalar product)
 
@@ -536,24 +536,34 @@ Let $F$ be a subspace of a euclidean space $E$. Then:
 
 4. We start by observing that $\dim((F^\perp)^\perp) = \dim(E) - \dim(F^\perp)$. Then, we easily verify that $F \subseteq (F^\perp)^\perp$, which leads to the conclusion that $(F^\perp)^\perp = F$.
 
-** Questions
-
 * Definition  2.16:  Orthogonal projection
 
 Let $E = F \oplus F^\perp$ for a subspace $F \subseteq E$. The mapping
 
 \begin{align*}
-P_F = P_{F \oplus F^\perp} &: E \rightarrow F \subseteq E \\
+P_F = P_{F \oplus F^\perp} : E &\rightarrow F \subseteq E \\
 x = x_F + x_{F^\perp} &\mapsto x_F
 \end{align*}
 
 is called the orthogonal projector onto $F$, and $x_F$ is called the orthogonal projection of $x \in E$ onto $F$.
 
+** Questions
+
+*** DONE So orthogonal projection is a function such that loses $x_{F^{\bot}}$ component of domain $E$, and outputs in $F$?
+
+Yes, $P_{F}$ keeps the $F$ compnent and kills the $F^{\bot}$ component:
+
+- $\mathrm{im}(P_F) = F$
+
+- $\mathrm{ker}(P_F) = F^{\bot}$
+
+- $P_F^2 = P_F$
+
 * Proposition 2.18:  Properties of the orthogonal projection
 
 Let $F$ be a subspace of a euclidean vector space $E$. Then:
 
-1. $P_F$ is the projection onto $F$ in the sense that $\text{im}\, P_F = F$ and $P_F \circ P_F = P_F$.
+1. $P_F$ is the projection onto $F$ in the sense that $\mathrm{im}\, P_F = F$ and $P_F \circ P_F = P_F$.
 
 2. Orthogonality: For all $x \in E$ it holds that
 
@@ -561,16 +571,15 @@ Let $F$ be a subspace of a euclidean vector space $E$. Then:
 
    $$x = P_F(x) + P_{F^\perp}(x)$$
 
-3. Contraction: For all $x \in E$, $\|P_f(x)\| \le \|x\|$.
+3. Contraction: For all $x \in E$, $\|P_F(x)\| \le \|x\|$.
 
-4. If $f \in \mathcal{L}(E)$ is a linear map such that $f = f \circ f$ and $\text{im}(f) \perp \text{ker}(f)$, then $f$ is the orthogonal projection onto $\text{im}(f)$.
+4. If $f \in \mathcal{L}(E)$ is a linear map such that $f = f \circ f$ and $\mathrm{im}(f) \perp \ker(f)$, then $f$ is the orthogonal projection onto $\mathrm{im}(f)$.
 
 5. Minimizing property: For all $x \in E$,
 
    $$\|x - P_F(x)\| = \min_{f \in F} \|x - f\|.$$
 
-*Proof.*
-
+#+begin_proof
 1. This property simply follows from the definition of the orthogonal projector $P_F$ as the subspace projection $P_{F \oplus F^\perp}$.
 
 2. Every $x \in E = F \oplus F^\perp$ can be uniquely decomposed into $x = x_F + x_{F^\perp}$, and by the definition of $P_F$ and $P_{F^\perp}$, $x_F = P_F(x)$ and $x_{F^\perp} = P_{F^\perp}(x)$. Thus $x = P_F(x) + P_{F^\perp}(x)$. Therefore $x - P_F(x) \in F^\perp$, which is equivalent to $x - P_F(x) \perp F$.
@@ -579,7 +588,7 @@ Let $F$ be a subspace of a euclidean vector space $E$. Then:
 
    $$\|x\|^2 = \langle x, x \rangle = \langle P_F(x) + P_{F^\perp}(x), P_F(x) + P_{F^\perp}(x) \rangle = \|P_F(x)\|^2 + \|P_{F^\perp}(x)\|^2 \ge \|P_F(x)\|^2.$$
 
-4. We start by proving that $E = \text{im}(p) + \text{ker}(p)$. Every $x \in E$ can be written as $x = p(x) + x - p(x)$. Since $p(x - p(x)) = 0$, it follows that $x - p(x) \in \text{ker}(p)$. In addition, the decomposition of $x$ into $p(x) \in \text{im}(f)$ and $x - p(x) \in \text{ker}(f)$ is unique because if $x = a + b$ with $b \in \text{ker}(p)$, then $p(x) = p(a) = a$. We conclude by the definition of orthogonal projection.
+4. We start by proving that $E = \mathrm{im}(p) + \ker(p)$. Every $x \in E$ can be written as $x = p(x) + x - p(x)$. Since $p(x - p(x)) = 0$, it follows that $x - p(x) \in \ker(p)$. In addition, the decomposition of $x$ into $p(x) \in \mathrm{im}(f)$ and $x - p(x) \in \ker(f)$ is unique because if $x = a + b$ with $b \in \ker(p)$, then $p(x) = p(a) = a$. We conclude by the definition of orthogonal projection.
 
 5. For any $f \in F$, it holds that
 
@@ -590,6 +599,67 @@ Let $F$ be a subspace of a euclidean vector space $E$. Then:
    \end{align*}
 
    Therefore $\|x - P_F(x)\| = \min_{f \in F} \|x - f\|$.
+#+end_proof
+
+** Questions
+
+*** DONE Do I understand right that in "2. Orthogonality", $P_{F^{\bot}}$ has the same idea as $P_{F}$, but reversed? ($P_{F^{\bot}} : E \rightarrow F^{\bot}$)
+
+Structurally yes, but "reversed" is imprecise. They are *complementary*, not inverse. Both are defined via the same direct sum $E = F \oplus F^\perp$:
+
+- $P_F(x_F + x_{F^\perp}) = x_F$: $\mathrm{im}(P_F) = F$, $\ker(P_F) = F^\perp$
+- $P_{F^\perp}(x_F + x_{F^\perp}) = x_{F^\perp}$: $\mathrm{im}(P_{F^\perp}) = F^\perp$, $\ker(P_{F^\perp}) = F$
+
+The precise relationship: $P_F + P_{F^\perp} = \mathrm{Id}_E$, which is exactly the second equation of point 2.
+
+*** DONE In "3. Contraction", it says $\|P_F(x)\| \le \|x\|$. I thought that projections are like functions, which apply linear transformations and lose some components, but it turns out not to be the case, right?
+
+Your intuition is correct; the contraction inequality is precisely the *quantitative* form of "losing components". Projections do lose components — they kill $F^\perp$. The Pythagorean decomposition
+
+$$\|x\|^2 = \|P_F(x)\|^2 + \|P_{F^\perp}(x)\|^2$$
+
+shows that what's lost in norm is exactly $\|P_{F^\perp}(x)\|^2$. Equality $\|P_F(x)\| = \|x\|$ holds iff $P_{F^\perp}(x) = 0$, i.e. $x \in F$ already.
+
+Caveat: contraction is a feature of *orthogonal* projections. A non-orthogonal (oblique) projection can have $\|P(x)\| > \|x\|$.
+
+*** DONE To be honest, point 4 feels like some kind of generalisation of projection being a function, or do I miss something?
+
+Not a generalisation — a *characterisation*. Points 1–3 go: "if $P$ is the orthogonal projection (built from $E = F \oplus F^\perp$), then properties X, Y, Z hold." Point 4 reverses the implication: any linear map $f$ satisfying $f^2 = f$ and $\mathrm{im}(f) \perp \ker(f)$ *is* an orthogonal projection onto $\mathrm{im}(f)$.
+
+The full picture is an iff:
+
+$$f \text{ is an orthogonal projection} \iff f^2 = f \text{ and } \mathrm{im}(f) \perp \ker(f).$$
+
+Note the splitting:
+- $f^2 = f$ alone (Definition 1.42) gives a *projection*, but possibly oblique.
+- Adding $\mathrm{im}(f) \perp \ker(f)$ upgrades it to *orthogonal* projection.
+
+Useful in practice: to verify a map is an orthogonal projection, check idempotency and orthogonality of image/kernel — no need to construct the direct sum first.
+
+*** DONE Don't you find confusing the use of $f \in F$ in Point 5, while previous Point 4 used $f \in \mathcal{L}(E)$?
+
+Yes, the notation is overloaded. Within a single proposition, $f$ means:
+
+- Point 4: a linear endomorphism, $f \in \mathcal{L}(E)$.
+- Point 5: a vector in the subspace $F$.
+
+Inside point 5 the collision compounds: $f$ is a vector while $F$ is the subspace containing it, distinguishable only by case. Standard practice would use $y \in F$ or $v \in F$ in point 5.
+
+*** DONE I follow the Point 5 logical flow in proof, but I can not feel what it means.
+
+/Among all vectors in $F$, the one closest to $x$ is $P_F(x)$./
+
+The orthogonal projection is not just "some" map onto $F$ — it is the map picking the nearest point in $F$ to $x$. This is why orthogonal projections appear in least-squares regression, Fourier series, function approximation: each is a "closest element of a subspace" problem.
+
+Picture in $\mathbb{R}^3$: let $F$ be a plane through the origin and $x$ a point off the plane. Drop a perpendicular from $x$ to $F$; the foot is $P_F(x)$. Any other $f \in F$ is farther — you'd have to travel along the plane after landing, and that horizontal travel adds Pythagorean-ly to the perpendicular distance. The proof's split
+
+$$\|x - f\|^2 = \underbrace{\|x - P_F(x)\|^2}_{\text{perpendicular drop}} + \underbrace{\|P_F(x) - f\|^2}_{\text{travel within } F}$$
+
+captures exactly this. The second term is $\ge 0$ and vanishes only when $f = P_F(x)$.
+
+The split works because $x - P_F(x) \in F^\perp$ (point 2) while $P_F(x) - f \in F$, so the cross term in the inner product is zero.
+
+Reframed: the optimisation problem $\min_{f \in F} \|x - f\|$ — which a priori needs calculus or search — has a closed-form linear-algebraic answer, $f^* = P_F(x)$. That collapse is the practical content of orthogonality.
 
 * Proposition 2.19:  Coordinates of the orthogonal projection
 
@@ -782,3 +852,8 @@ If one of these properties hold, we say that $T$ is a /unitary operator/ ($\math
   $$\langle T(x), T(y) \rangle = \frac{1}{4}\left(\|T(x) + T(y)\|_E^2 - \|T(x) - T(y)\|_E^2\right) = \frac{1}{4}\left(\|x + y\|_E^2 - \|x - y\|_E^2\right) = \langle x, y \rangle_E.$$
 
 - ($1 \Leftrightarrow 5$) To prove this equivalence, we essentially need to use that $[T^*]_{\mathcal{E}}^{\mathcal{E}} = ([T]_{\mathcal{E}}^{\mathcal{E}})^H$.
+
+* Typos
+
+- [ ] Proposition 2.18: Point 3, $\|P_f(x)\| \le \|x\|$ -> $\|P_F(x)\| \le \|x\|$
+- [ ] Proposition 2.18: Point 4, 5. The notion of $f$ is overloaded. Point 4: a linear endomporphism, $f \in \mathcal{L}(E)$. Point 5: a vector in the subspace $F$.
