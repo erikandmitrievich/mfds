@@ -1,0 +1,425 @@
+#+title: Ch 04 Determinants
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-18>
+#+lastmod: <2026-05-18 13:40>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Definition  4.01:  Leibniz Formula of the determinant
+
+For any $A \in \mathbb{K}^{n \times n}$, its determinant is defined as
+
+$$\det(A) = \begin{vmatrix} a_{1,1} & \ldots & a_{1,n} \\ \vdots & & \vdots \\ a_{n,1} & \ldots & a_{n,n} \end{vmatrix} := \sum_{\sigma \in \mathcal{S}_n} \varepsilon(\sigma) a_{1,\sigma(1)} a_{2,\sigma(2)} \ldots a_{n,\sigma(n)} = \sum_{\sigma \in \mathcal{S}_n} \varepsilon(\sigma) \prod_{i=1}^{n} a_{i,\sigma(i)}.$$
+
+** Questions
+
+* Lemma       4.02:  Laplace expansion
+
+The determinant of a matrix $A \in \mathbb{K}^{n \times n}$ is given by
+
+1. If $n = 1$, then $\det(A) = a_{1,1}$.
+
+2. If $n > 1$, then for every $j = 1, \ldots, n$,
+
+   $$\det(A) = \sum_{i=1}^{n} (-1)^{i+j} a_{i,j} \det(A_{i,j}^{\star}).$$
+
+#+begin_proof
+We omit it for brevity.
+#+end_proof
+
+** Questions
+
+* Proposition 4.04:  Determinant of upper and lower triangular matrices
+
+For any lower or upper triangular matrix $A \in \mathbb{K}^{n \times n}$,
+
+$$\det(A) = \prod_{i=1}^{n} a_{i,i}.$$
+
+In particular,
+
+$$\det(\mathrm{Id}_n) = 1.$$
+
+#+begin_proof
+We use the Laplace expansion and proceed by induction. Left as an exercise.
+#+end_proof
+
+** Questions
+
+* Lemma       4.05:  Determinant of the transpose
+
+$$\det(A^\top) = \det(A).$$
+
+#+begin_proof
+By the Leibniz formula,
+
+$$\det(A) = \sum_{\sigma \in \mathcal{S}_n} \varepsilon(\sigma) \prod_{i=1}^{n} a_{i,\sigma(i)},$$
+
+and
+
+$$\det(A^\top) = \sum_{\sigma \in \mathcal{S}_n} \varepsilon(\sigma) \prod_{i=1}^{n} (A^\top)_{i,\sigma(i)} = \sum_{\sigma \in \mathcal{S}_n} \varepsilon(\sigma) \prod_{i=1}^{n} a_{\sigma(i),i}.$$
+
+Now let $\tau = \sigma^{-1}$. Since the map $\sigma \mapsto \sigma^{-1}$ is a bijection on $\mathcal{S}_n$, and since $\varepsilon(\sigma^{-1}) = \varepsilon(\sigma)$, we rewrite the sum as
+
+$$\det(A^\top) = \sum_{\tau \in \mathcal{S}_n} \varepsilon(\tau) \prod_{j=1}^{n} a_{j,\tau(j)}.$$
+
+Indeed, if $j = \sigma(i)$, then $i = \sigma^{-1}(j) = \tau(j)$, so
+
+$$\prod_{i=1}^{n} a_{\sigma(i),i} = \prod_{j=1}^{n} a_{j,\tau(j)}.$$
+
+Therefore,
+
+$$\det(A^\top) = \sum_{\tau \in \mathcal{S}_n} \varepsilon(\tau) \prod_{j=1}^{n} a_{j,\tau(j)} = \det(A).$$
+#+end_proof
+
+** Questions
+
+* Proposition 4.06:  Determinant of $A + tB$ is a polynomial of degree at most $n$
+
+Let $A, B \in \mathbb{K}^{n \times n}$. The mapping
+
+$$\begin{aligned} \mathbb{K} &\rightarrow \mathbb{K} \\ t &\mapsto \det(A + tB) \end{aligned}$$
+
+is a polynomial of degree at most $n$.
+
+#+begin_proof
+This follows immediately by applying formula (4.1) to $A + tB$.
+#+end_proof
+
+** Questions
+
+* Lemma       4.07:  Linearity in each column, vanishing on repeated columns
+
+1. Linearity with respect to each column: Let $j_0 \in \{1, \ldots, n\}$, and let $v, w \in \mathbb{K}^n$ and $\lambda, \mu \in \mathbb{K}$. Then
+
+   $$\det(u_1, \ldots, u_{j_0-1}, (\lambda v + \mu w), u_{j_0+1}, \ldots, u_n) = \lambda \det(u_1, \ldots, u_{j_0-1}, v, u_{j_0+1}, \ldots, u_n) + \mu \det(u_1, \ldots, u_{j_0-1}, w, u_{j_0+1}, \ldots, u_n). \quad (4.2)$$
+
+2. If two columns are identical, then the determinant is zero: If $u_i = u_j$ for two indices $1 \le i \ne j \le n$, then
+
+   $$\det(u_1, \ldots, u_n) = 0.$$
+
+3. The above two claims also hold for rows instead of columns.
+
+#+begin_proof
+(i) Let the matrix $A, B, C \in \mathbb{K}^{n \times n}$ be defined as
+
+$$\begin{align*} A &= (u_1, \ldots, u_{j_0-1}, (\lambda v + \mu w), u_{j_0+1}, \ldots, u_n) \\ B &= (u_1, \ldots, u_{j_0-1}, v, u_{j_0+1}, \ldots, u_n) \\ C &= (u_1, \ldots, u_{j_0-1}, w, u_{j_0+1}, \ldots, u_n) \end{align*}$$
+
+The determinant of $A$ is
+
+$$\det(A) = \sum_{\sigma \in \mathcal{S}_n} \varepsilon(\sigma) a_{1,\sigma(1)} a_{2,\sigma(2)} \ldots a_{n,\sigma(n)}.$$
+
+Fix $\sigma \in \mathcal{S}_n$ and consider the product $a_{1,\sigma(1)} a_{2,\sigma(2)} \ldots a_{n,\sigma(n)}$. In this product, exactly one term comes from the column $j_0$ because there is a unique $i_0$ such that $\sigma(i_0) = j_0$. Since $a_{i_0,\sigma(i_0)} = a_{i_0,j_0} = \lambda v_{i_0} + \mu w_{i_0}$, it follows that
+
+$$\begin{align*} a_{1,\sigma(1)} a_{2,\sigma(2)} \ldots a_{n,\sigma(n)} &= \lambda a_{1,\sigma(1)} \cdots a_{i_0-1,\sigma(i_0-1)} v_{i_0,j_0} a_{i_0+1,\sigma(i_0+1)} \cdots a_{n,\sigma(n)} \\ &\quad + \mu a_{1,\sigma(1)} \cdots a_{i_0-1,\sigma(i_0-1)} w_{i_0,j_0} a_{i_0+1,\sigma(i_0+1)} \cdots a_{n,\sigma(n)} \\ &= \lambda b_{1,\sigma(1)} \cdots b_{i_0-1,\sigma(i_0-1)} b_{i_0,j_0} b_{i_0+1,\sigma(i_0+1)} \cdots b_{n,\sigma(n)} \\ &\quad + \mu c_{1,\sigma(1)} \cdots c_{i_0-1,\sigma(i_0-1)} c_{i_0,j_0} c_{i_0+1,\sigma(i_0+1)} \cdots c_{n,\sigma(n)}. \end{align*}$$
+
+We now multiply this last expression by $\varepsilon(\sigma)$ and sum over $\sigma \in \mathcal{S}_n$. This leads to Eq. (4.2).
+
+(ii) Let $A = (u_1, \ldots, u_n)$ with $u_i = u_j = v$ for two indices $1 \le i \ne j \le n$. Fix $\sigma \in \mathcal{S}_n$, and consider the product $a_{1,\sigma(1)} a_{2,\sigma(2)} \ldots a_{n,\sigma(n)}$. There exist indices $i_0, j_0 \in \{1, \ldots, n\}$ such that $\sigma(i_0) = i$ and $\sigma(j_0) = j$. For that fixed $\sigma$, there exists $\tilde{\sigma}$ such that $\tilde{\sigma}(i_0) = j$ and $\tilde{\sigma}(j_0) = i$ and $\sigma(k) = \tilde{\sigma}(k)$ for any other index $k \ne i_0, j_0$. These permutations $\sigma$ and $\tilde{\sigma}$ differ only by one swap, therefore $\varepsilon(\sigma) = -\varepsilon(\tilde{\sigma})$. Consequently,
+
+$$\begin{align*} \varepsilon(\sigma) a_{1,\sigma(1)} a_{2,\sigma(2)} & \ldots a_{n,\sigma(n)} + \varepsilon(\tilde{\sigma}) a_{1,\tilde{\sigma}(1)} a_{2,\tilde{\sigma}(2)} \ldots a_{n,\tilde{\sigma}(n)} \\ &= \varepsilon(\sigma) (a_{i_0,\sigma(i_0)} a_{j_0,\sigma(j_0)} - a_{i_0,\tilde{\sigma}(i_0)} a_{j_0,\tilde{\sigma}(j_0)}) \prod_{k \ne i_0, j_0} a_{k,\sigma(k)} \\ &= \varepsilon(\sigma) (a_{i_0,i} a_{j_0,j} - a_{i_0,j} a_{j_0,i}) \prod_{k \ne i_0, j_0} a_{k,\sigma(k)} \\ &= 0 \quad \text{(since columns } i \text{ and } j \text{ are identical)}. \end{align*}$$
+
+Summing over all permutations leads to the conclusion that $\det(A) = 0$.
+
+(iii) Since $\det(A) = \det(A^\top)$, the claims also apply for rows.
+#+end_proof
+
+** Questions
+* Corollary   4.08:  Elementary operations and the determinant
+
+1. Adding a multiple of a column or a row to another: If $i$ and $j$ are two integers in $\{1, \ldots, n\}$ with $j \ne i$, and if $\alpha$ is any scalar, then
+
+   $$\det(u_1, \ldots, u_{j-1}, (u_j + \alpha u_i), u_{j+1}, \ldots, u_n) = \det(u_1, \ldots, u_n).$$
+
+   In other words, an operation of the form
+
+   $$C_j \leftarrow C_j + \alpha C_i \quad (i \ne j)$$
+
+   does not change the determinant. This also holds for operations per rows: or
+
+   $$R_j \leftarrow R_j + \alpha R_i \quad (i \ne j)$$
+
+   does not change the determinant.
+
+2. Scaling a single column/row: It holds that
+
+   $$\det(u_1, \ldots, u_{j-1}, \alpha u_j, u_{j+1}, \ldots, u_n) = \alpha \det(u_1, \ldots, u_{j-1}, u_j, u_{j+1}, \ldots, u_n)$$
+
+   and the same holds for rows.
+
+3. Scaling the whole matrix:
+
+   $$\det(\lambda A) = \lambda^n \det(A).$$
+
+4. Swapping two columns or two rows: If $n \ge 2$, if $u_1, \ldots, u_n$ are vectors of $\mathbb{K}^n$, and if $i < j$ are two distinct integers between $1$ and $n$, then
+
+   $$\det(u_1, \ldots, u_{i-1}, u_j, u_{i+1}, \ldots, u_{j-1}, u_i, u_{j+1}, \ldots, u_n) = (-1) \det(u_1, \ldots, u_n).$$
+
+   So when one swaps two rows of a matrix $A$, the determinant is replaced by its opposite.
+
+5. The determinant of linearly dependent vectors is zero: If $u_1, \ldots, u_n \in \mathbb{K}^n$ is a linearly dependent set, then $\det(u_1, \ldots, u_n) = 0$.
+
+#+begin_proof
+These are direct consequences of /Lemma 4.7/. Left as an exercise.
+#+end_proof
+
+** Questions
+
+* Lemma       4.10:  We can compute the determinant by the pivot method
+
+We will give the statement in a narrated way, and in a more mathematical way:
+
+- By a sequence of operations of types (a) to (c) above, one can reduce the computation of the determinant of any matrix $A \in \mathbb{K}^{n \times n}$ to that of an upper triangular matrix.
+
+- It holds that $\det(A) = (-1)^s \prod_{i=1}^{n} u_{i,i}$ where $U$ is the upper triangular matrix from the $PLU$ decomposition of $A$ and $s$ is the number of row swaps in the permutation matrix $P$.
+
+#+begin_proof
+$$\begin{align*} \det(A) &= \det(PLU) \\ &= \det(P) \det(L) \det(U) \quad \text{(by /Lemma 4.12/ stated just below)} \\ &= (-1)^s \prod_{i=1}^{n} u_{i,i}, \end{align*}$$
+
+where in the last line we have used that $\det(P) = (-1)^s$, that $L$ is a lower triangular matrix with unity diagonal (hence $\det(L) = 1$), and that $U$ is a triangular matrix.
+#+end_proof
+
+** Questions
+
+* Lemma       4.12:  Determinant of the matrix product
+
+Let $A, B \in \mathbb{K}^{n \times n}$. It holds that
+
+$$\det(AB) = \det(A) \det(B)$$
+
+#+begin_proof
+Let $C = AB = (c_{ij})_{1 \le i,j \le n}$, where $c_{ij} = \sum_{k=1}^{n} a_{ik} b_{kj}$. The Leibniz formula for the determinant of $C$ reads
+
+$$\det(C) = \sum_{\sigma \in \mathcal{S}_n} \varepsilon(\sigma) \prod_{i=1}^{n} c_{i,\sigma(i)} = \sum_{\sigma \in \mathcal{S}_n} \varepsilon(\sigma) \prod_{i=1}^{n} \left( \sum_{k_i=1}^{n} a_{i k_i} b_{k_i, \sigma(i)} \right).$$
+
+Expanding the product of sums gives
+
+$$\det(AB) = \sum_{\sigma \in \mathcal{S}_n} \varepsilon(\sigma) \sum_{k_1, \ldots, k_n = 1}^{n} \prod_{i=1}^{n} a_{i k_i} b_{k_i, \sigma(i)}.$$
+
+Reordering the sums,
+
+$$\det(AB) = \sum_{k_1, \ldots, k_n = 1}^{n} \left( \prod_{i=1}^{n} a_{i k_i} \right) \sum_{\sigma \in \mathcal{S}_n} \varepsilon(\sigma) \prod_{i=1}^{n} b_{k_i, \sigma(i)}.$$
+
+We now observe that if two indices $k_r = k_s$ with $r \ne s$, then two rows in the matrix $(b_{k_i, j})$ are equal, so
+
+$$\sum_{\sigma \in \mathcal{S}_n} \varepsilon(\sigma) \prod_{i=1}^{n} b_{k_i, \sigma(i)} = 0.$$
+
+Hence only tuples $(k_1, \ldots, k_n)$ with distinct entries contribute. Since each $k_i \in \{1, \ldots, n\}$, such a tuple must be a permutation $\tau \in \mathcal{S}_n$, i.e.
+
+$$k_i = \tau(i).$$
+
+Therefore,
+
+$$\det(AB) = \sum_{\tau \in \mathcal{S}_n} \left( \prod_{i=1}^{n} a_{i, \tau(i)} \right) \sum_{\sigma \in \mathcal{S}_n} \varepsilon(\sigma) \prod_{i=1}^{n} b_{\tau(i), \sigma(i)}.$$
+
+Now reindex the inner product by $j = \tau(i)$. Then
+
+$$\prod_{i=1}^{n} b_{\tau(i), \sigma(i)} = \prod_{j=1}^{n} b_{j, (\sigma \circ \tau^{-1})(j)}.$$
+
+Thus,
+
+$$\sum_{\sigma \in \mathcal{S}_n} \varepsilon(\sigma) \prod_{i=1}^{n} b_{\tau(i), \sigma(i)} = \varepsilon(\tau) \sum_{\pi \in \mathcal{S}_n} \varepsilon(\pi) \prod_{j=1}^{n} b_{j, \pi(j)},$$
+
+where $\pi = \sigma \circ \tau^{-1}$. Hence,
+
+$$\sum_{\sigma \in \mathcal{S}_n} \varepsilon(\sigma) \prod_{i=1}^{n} b_{\tau(i), \sigma(i)} = \varepsilon(\tau) \det(B).$$
+
+Substituting back,
+
+$$\det(AB) = \sum_{\tau \in \mathcal{S}_n} \left( \prod_{i=1}^{n} a_{i, \tau(i)} \right) \varepsilon(\tau) \det(B).$$
+
+Factoring out $\det(B)$,
+
+$$\det(AB) = \det(B) \sum_{\tau \in \mathcal{S}_n} \varepsilon(\tau) \prod_{i=1}^{n} a_{i, \tau(i)}.$$
+
+The remaining sum is exactly $\det(A)$. Therefore $\det(AB) = \det(A) \det(B)$.
+#+end_proof
+
+** Questions
+
+* Corollary   4.13:  Determinant and invertibility
+
+A matrix $A \in \mathbb{K}^{n \times n}$ is invertible if and only if
+
+$$\det(A) \ne 0.$$
+
+In that case,
+
+$$\det(A^{-1}) = \frac{1}{\det(A)}.$$
+
+#+begin_proof
+- If $A$ is invertible, then
+
+  $$A(A^{-1}) = I_n,$$
+
+  and therefore
+
+  $$\det(A) \det(A^{-1}) = \det(I_n) = 1,$$
+
+  so $\det(A)$ cannot be zero, and indeed
+
+  $$\det(A^{-1}) = \frac{1}{\det(A)}.$$
+
+- If $A$ is not invertible, then there exists a linear dependence relation among its rows, and we have already seen that in this case the determinant of $A$ is zero.
+#+end_proof
+
+** Questions
+
+* Definition  4.14:  Similar matrices
+
+Two square matrices $A$ and $B \in \mathbb{K}^{n \times n}$ are similar if and only if there exists an invertible matrix $P \in \mathbb{K}^{n \times n}$ such that
+
+$$A = PBP^{-1}.$$
+
+** Questions
+
+* Corollary   4.15:  Similar matrices have the same determinant
+
+If $A$ and $B$ are two similar matrices, then
+
+$$\det(A) = \det(B).$$
+
+#+begin_proof
+To say that $A$ and $B$ are similar means that there exists an invertible matrix $P$ such that
+
+$$A = PBP^{-1}.$$
+
+Hence
+
+$$\det(A) = \det(P) \det(B) \det(P^{-1}).$$
+
+But we have just seen that
+
+$$\det(P^{-1}) = \frac{1}{\det(P)},$$
+
+and the product
+
+$$\det(P) \det(B) \frac{1}{\det(P)}$$
+
+is just a product of real numbers, so it is of course equal to $\det(B)$.
+#+end_proof
+
+** Questions
+
+* Definition  4.16:  Determinant of an endomorphism
+
+Let $E$ be an $n$ -dimensional $\mathbb{K}$ vector space and let $f : E \rightarrow E$ be an endomorphism of $E$ ($f \in \mathcal{L}(E)$). We define the determinant of $f$ as the determinant of its matrix representation $[f]_{\mathcal{E}}^{\mathcal{E}}$ on a basis $\mathcal{E}$ of $E$. The determinant is independent to the choice of the basis,
+
+$$\det(f) := \det([f]_{\mathcal{E}}^{\mathcal{E}}), \quad \forall \mathcal{E} \text{ basis of } E.$$
+
+** Questions
+
+* Definition  4.17:  Alternating $n$ -linear form
+
+Let $E$ be a vector space over $\mathbb{K}$, let $n$ be a positive integer, and let
+
+$$\Phi : E^n \rightarrow \mathbb{K}, \qquad (u_1, \ldots, u_n) \longmapsto \Phi(u_1, \ldots, u_n)$$
+
+be a map which, starting from $n$ vectors in $E$, produces a scalar.
+
+1. We say that $\Phi$ is a /n-linear form/ if it is linear in each of its variables: whenever one fixes an $i \in \{1, \ldots, k\}$ and vectors
+
+   $$u_1, \ldots, u_{i-1}, u_{i+1}, \ldots, u_n \in E,$$
+
+   the map
+
+   $$E \rightarrow \mathbb{K}, \qquad v \longmapsto \Phi(u_1, \ldots, u_{i-1}, v, u_{i+1}, \ldots, u_n)$$
+
+   is linear.
+
+2. We say that $\Phi$ is /alternating/ if, whenever two of the vectors among $(u_1, \ldots, u_n)$ are identical, then
+
+   $$\Phi(u_1, \ldots, u_n) = 0.$$
+
+** Questions
+
+* Corollary   4.18:  Determinant is an alternating $n$ -linear form
+
+The map
+
+$$(u_1, \ldots, u_n) \longmapsto \det(u_1, \ldots, u_n)$$
+
+is an alternating $n$ -linear form on the space $E = \mathbb{K}^n$.
+
+It is easy to check that if $\Phi_1$ and $\Phi_2$ are two alternating $n$ -linear forms on a $\mathbb{K}$ vector space $E$, and if $\lambda_1, \lambda_2$ are two scalars in $\mathbb{K}$, then the map
+
+$$\lambda_1 \Phi_1 + \lambda_2 \Phi_2$$
+
+is an alternating $n$ -linear form. Thus the set of alternating $n$ -linear forms on $E$ also contains the zero map. It is therefore a vector subspace of $\mathcal{F}(E^n, \mathbb{K})$, and it is traditionally denoted by $\Lambda^n(E)$.
+
+The following theorem may appear abstract, but the most concrete properties of the determinant that we have proven earlier follow from it. We will not detail its proof.
+
+** Questions
+
+* Theorem     4.19:  All alternating $n$ -linear forms on an $n$ -dimensional space are proportional
+
+Let $E$ be a finite-dimensional vector space, and let $n$ denote the dimension of $E$. Then the space $\Lambda^n(E)$ has dimension 1. Consequently, if $\Phi$ is an alternating $n$ -linear form on $\mathbb{K}^n$, then there exists a scalar $\lambda \in \mathbb{K}$ such that
+
+$$\Phi = \lambda \det$$
+
+As an example of application, we next prove /Lemma 4.12/ about $\det(AB) = \det(A) \det(B)$ using the more axiomatic properties of multilinear forms.
+
+#+begin_proof
+Alternative proof of /Lemma 4.12/. Let $A, B \in \mathbb{K}^{n \times n}$, and write the columns of $B$ as
+
+$$B = (b_1 \mid b_2 \mid \cdots \mid b_n),$$
+
+where $b_1, \ldots, b_n \in \mathbb{K}^n$. Then the columns of $AB$ are $Ab_1, \ldots, Ab_n$, so
+
+$$AB = (Ab_1 \mid Ab_2 \mid \cdots \mid Ab_n).$$
+
+Define a map
+
+$$\omega : (\mathbb{K}^n)^n \rightarrow \mathbb{K}$$
+
+by
+
+$$\omega(v_1, \ldots, v_n) = \det(Av_1, \ldots, Av_n).$$
+
+Since the map $v \mapsto Av$ is linear and the determinant is $n$ -linear in the columns, the map $\omega$ is $n$ -linear. Moreover, if $v_i = v_j$ for some $i \ne j$, then
+
+$$Av_i = Av_j,$$
+
+so the matrix $(Av_1, \ldots, Av_n)$ has two equal columns. Hence,
+
+$$\omega(v_1, \ldots, v_n) = 0.$$
+
+Therefore, $\omega$ is an alternating $n$ -linear form on $\mathbb{K}^n$. By the /Theorem 4.19/ for alternating $n$ -linear forms on $E = \mathbb{K}^n$, there exists a scalar $c \in \mathbb{K}$ such that
+
+$$\omega(v_1, \ldots, v_n) = \lambda \det(v_1, \ldots, v_n)$$
+
+for all $v_1, \ldots, v_n \in \mathbb{K}^n$. To determine $\lambda$, evaluate at the standard basis vectors $e_1, \ldots, e_n$:
+
+$$\lambda = \lambda \det(e_1, \ldots, e_n) = \omega(e_1, \ldots, e_n).$$
+
+Since
+
+$$\det(e_1, \ldots, e_n) = 1,$$
+
+we obtain
+
+$$\lambda = \omega(e_1, \ldots, e_n) = \det(Ae_1, \ldots, Ae_n).$$
+
+But $Ae_1, \ldots, Ae_n$ are exactly the columns of $A$. Therefore,
+
+$$\lambda = \det(A).$$
+
+Hence, for all $v_1, \ldots, v_n \in \mathbb{K}^n$,
+
+$$\det(Av_1, \ldots, Av_n) = \det(A) \det(v_1, \ldots, v_n).$$
+
+Now apply this to the columns $b_1, \ldots, b_n$ of $B$:
+
+$$\det(AB) = \det(Ab_1, \ldots, Ab_n) = \det(A) \det(b_1, \ldots, b_n) = \det(A) \det(B).$$
+#+end_proof
+
+** Questions
