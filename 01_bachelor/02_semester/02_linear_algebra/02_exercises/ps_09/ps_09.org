@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-14>
-#+lastmod: <2026-05-18 14:18>
+#+lastmod: <2026-05-18 14:39>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -86,10 +86,73 @@ We call a bilinear $\alpha : \mathbb{E} \times \mathbb{E} \to \mathbb{K}$ skew-s
 #+begin_quote
 Calculate the determinants of the following matrices using Gaussian eliminations:
 
-$$a = \begin{pmatrix} 1 & 1 & 1 & 0 & 0 \\ 0 & 1 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 1 & 0 \\ 0 & 0 & 1 & 1 & 1 \end{pmatrix}, \quad b = \begin{pmatrix} 1 & 3 & 1 \\ 0 & 2 & h \\ -1 & h & 2 \end{pmatrix}, \quad c = \begin{pmatrix} 0 & 0 & 0 & 0 & 1 \\ 0 & 0 & 0 & 2 & 2 \\ 0 & 0 & 3 & 3 & 3 \\ 0 & 4 & 4 & 4 & 4 \\ 5 & 5 & 5 & 5 & 5 \end{pmatrix}, \quad d = \begin{pmatrix} -1 & -1 & -1 \\ 4 & 5 & -3 \\ -1 & -6 & 3 \end{pmatrix}$$
+\begin{align*}
+a = \begin{pmatrix}
+1 & 1 & 1 & 0 & 0 \\
+0 & 1 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 1 & 0 \\
+0 & 0 & 1 & 1 & 1 \\
+\end{pmatrix}, \quad
+b = \begin{pmatrix}
+1 & 3 & 1 \\
+0 & 2 & h \\
+-1 & h & 2 \\
+\end{pmatrix}, \\
+c = \begin{pmatrix}
+0 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 2 & 2 \\
+0 & 0 & 3 & 3 & 3 \\
+0 & 4 & 4 & 4 & 4 \\
+5 & 5 & 5 & 5 & 5 \\
+\end{pmatrix}, \quad
+d = \begin{pmatrix}
+-1 & -1 & -1 \\
+4 & 5 & -3 \\
+-1 & -6 & 3 \\
+\end{pmatrix} \\
+\end{align*}
 #+end_quote
 
 ** Solution
+
+*Matrix $a$.* Apply $R_4 \leftarrow R_4 - R_3$ and $R_5 \leftarrow R_5 - R_3$, then $R_5 \leftarrow R_5 - R_4$ (preserves $\det$ by /Corollary 4.08/ point 1):
+
+$$\begin{pmatrix} 1 & 1 & 1 & 0 & 0 \\ 0 & 1 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 & 1 \end{pmatrix}$$
+
+By /Proposition 4.04/:
+
+$$\det(a) = 1$$
+
+*Matrix $b$.* Apply $R_3 \leftarrow R_3 + R_1$ (preserves $\det$ by /Corollary 4.08/ point 1):
+
+$$\begin{pmatrix} 1 & 3 & 1 \\ 0 & 2 & h \\ 0 & h+3 & 3 \end{pmatrix}$$
+
+Then $R_3 \leftarrow R_3 - \frac{h+3}{2} R_2$:
+
+$$\begin{pmatrix} 1 & 3 & 1 \\ 0 & 2 & h \\ 0 & 0 & 3 - \frac{h(h+3)}{2} \end{pmatrix}$$
+
+By /Proposition 4.04/:
+
+$$\det(b) = 1 \cdot 2 \cdot \left( 3 - \frac{h(h+3)}{2} \right) = 6 - h^2 - 3h$$
+
+*Matrix $c$.* Anti-diagonal structure. Reverse the row order: swap $R_1 \leftrightarrow R_5$ and $R_2 \leftrightarrow R_4$. That is two swaps, each contributing a factor $(-1)$ by /Corollary 4.08/ point 4:
+
+$$\det(c) = (-1)^2 \det \begin{pmatrix} 5 & 5 & 5 & 5 & 5 \\ 0 & 4 & 4 & 4 & 4 \\ 0 & 0 & 3 & 3 & 3 \\ 0 & 0 & 0 & 2 & 2 \\ 0 & 0 & 0 & 0 & 1 \end{pmatrix} = 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1 = 120$$
+
+*Matrix $d$.* Apply $R_2 \leftarrow R_2 + 4 R_1$ and $R_3 \leftarrow R_3 - R_1$:
+
+$$\begin{pmatrix} -1 & -1 & -1 \\ 0 & 1 & -7 \\ 0 & -5 & 4 \end{pmatrix}$$
+
+Then $R_3 \leftarrow R_3 + 5 R_2$:
+
+$$\begin{pmatrix} -1 & -1 & -1 \\ 0 & 1 & -7 \\ 0 & 0 & -31 \end{pmatrix}$$
+
+By /Proposition 4.04/:
+
+$$\det(d) = (-1) \cdot 1 \cdot (-31) = 31$$
+
+$\square$
 
 * Problem 4.5 :determinant:matrix:
 
