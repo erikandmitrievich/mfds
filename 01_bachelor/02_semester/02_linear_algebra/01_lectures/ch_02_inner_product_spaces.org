@@ -120,8 +120,7 @@ Let $E$ be an $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\math
 
 is a norm on $E$ which is called the norm induced by the inner product.
 
-*Proof.*
-
+#+begin_proof
 We have to prove that the mapping defined in Eq. (2.1) satisfies all the properties of a norm. The only nontrivial point is the triangle inequality. For this, we let $x, y \in E$ and write
 
 \begin{align*}
@@ -135,6 +134,7 @@ We have to prove that the mapping defined in Eq. (2.1) satisfies all the propert
 By the Cauchy-Schwarz inequality,
 
 $$\|x + y\|^2 \le \|x\|^2 + 2\|x\| \|y\| + \|y\|^2 = (\|x\| + \|y\|)^2$$
+#+end_proof
 
 ** Questions
 
@@ -159,8 +159,7 @@ $$|\langle x, y \rangle_E| \le \|x\|_E \|y\|_E,$$
 
 and equality holds if and only if $x$ and $y$ are linearly dependent.
 
-*Proof.*
-
+#+begin_proof
 We first start with the real case $\mathbb{K} = \mathbb{R}$. Let us define the map $p : \lambda \in \mathbb{R} \mapsto \|x + \lambda y\|^2$, which is nonnegative for every $\lambda \in \mathbb{R}$. Then
 
 $$p(\lambda) = \|x + \lambda y\|^2 = \langle x + \lambda y, x + \lambda y \rangle = \|x\|^2 + 2\lambda \langle x, y \rangle + \lambda^2 \|y\|^2$$
@@ -182,6 +181,7 @@ p(\lambda) &:= \|x' + \lambda y\|^2 \\
 \end{align*}
 
 From Eq. (2.3), it follows that $p$ is a real-valued polynomial in $\lambda$. In addition, from Eq. (2.2) we have that $p(\lambda) \ge 0$ due to the nonnegativity of the inner product (see point 3 in /Definition 2.1/). Therefore, the discriminant of $p$ is nonpositive, and we conclude following the same lines as for the real case.
+#+end_proof
 
 ** Questions
 
@@ -225,14 +225,14 @@ Let $(E, \langle \cdot, \cdot \rangle_E)$ be a $\mathbb{K}$ inner-product vector
 
 $$\|x + y\|^2 + \|x - y\|^2 = 2(\|x\|^2 + \|y\|^2), \quad \forall x, y \in E$$
 
-*Proof.*
-
+#+begin_proof
 \begin{align*}
 \|x + y\|^2 + \|x - y\|^2 &= \langle x + y, x + y \rangle + \langle x - y, x - y \rangle \\
 &= \langle x,x\rangle + \langle x,y\rangle + \langle y,x\rangle + \langle y,y\rangle + \langle x,x\rangle - \langle x,y\rangle - \langle y,x\rangle + \langle y,y\rangle \\
 &= 2\langle x,x\rangle + 2\langle y,y\rangle \\
 &= 2(|x|^2 + |y|^2). \qquad\blacksquare \\
 \end{align*}
+#+end_proof
 
 * Lemma       2.07:  Polarization identity
 
@@ -250,8 +250,7 @@ Then:
 
 2. $\langle \cdot, \cdot \rangle$ is the only inner-product that induces the norm $\|\cdot\|_E$.
 
-*Proof.*
-
+#+begin_proof
 We give the proof for the real case:
 
 (i) It is easy to see that $\langle \cdot, \cdot \rangle$ is symmetric and positive, we proceed by checking the additivity and homogeneity.
@@ -357,6 +356,7 @@ $$\|x + y\|^2 - \|x - y\|^2 = 4\omega(x, y) \quad \iff \quad \omega(x, y) = \fra
 We have thus proven that any inner product on $E$ that satisfies the property (2.16) is necessarily equal to $\langle \cdot, \cdot \rangle$. Or in other words, $\langle \cdot, \cdot \rangle$ is the unique inner product that has said property.
 
 For the case where $\mathbb{K} = \mathbb{C}$, the lemma can be proved in analogous manner, although with more complex (no pun intended) calculations.
+#+end_proof
 
 * Theorem     2.08:  Jordan von-Neumann
 
@@ -364,9 +364,9 @@ Let $\|\cdot\|$ be a norm on a $\mathbb{K}$ vector space $E$. Then we have the e
 
 $$\|\cdot\| \text{ is induced by an inner product} \iff \|\cdot\| \text{ satisfies the parallelogram identity}$$
 
-*Proof.*
-
+#+begin_proof
 The direction $\Leftarrow$ holds thanks to the parallelogram identity. The direction $\Rightarrow$ holds by the polarization identity, which gives us an explicit construction of the inner-product inducing the given norm.
+#+end_proof
 
 * Definition  2.09:  Angle between 2 vectors
 
@@ -444,9 +444,9 @@ Let $E$ be a Euclidean space and $\mathcal{E}_n = \{e_1, \ldots, e_n\}$ an ortho
 
 $$x = \sum_{i=1}^{n} \langle x, e_i \rangle e_i, \quad \text{and} \quad \|x\|^2 = \sum_{i=1}^{n} |\langle x, e_i \rangle|^2.$$
 
-*Proof.*
-
+#+begin_proof
 Since $\mathcal{E}_n$ is a basis, there exist $(c_1, \ldots, c_n) \in \mathbb{R}^n$ such that $x = \sum_{i=1}^{n} c_i e_i$. Taking the inner product with $e_j$ yields $c_j = \langle x, e_j \rangle$ for all $1 \le j \le n$. To prove the formula with the norm, we simply write $\|x\|^2 = \langle x, x \rangle$ and develop the sum using that $x = \sum_{i=1}^{n} \langle x, e_i \rangle e_i$.
+#+end_proof
 
 ** Questions
 
@@ -466,8 +466,7 @@ Yes. You expand $\|x\|^2 = \langle x, x \rangle$ using $x = \sum_i \langle x, e_
 
 Any euclidean space $E$ has an orthonormal basis.
 
-*Proof.*
-
+#+begin_proof
 Let $\mathcal{X} = \{x_1, \ldots, x_n\}$ be a basis of $E$. We define by induction the following vectors,
 
 \begin{align*}
@@ -491,6 +490,7 @@ For any $1 \le k < i$,
 \end{align*}
 
 This allows us to conclude that $\mathcal{E}_n$ is an orthonormal set. To show that $\mathcal{E}_n$ is a basis of $E$, it suffices to show that it is a linearly independent family. Let $\lambda_1, \ldots, \lambda_n \in \mathbb{K}$ be such that $\lambda_1 e_1 + \lambda_n e_n = 0$. Multiplying scalarly by $e_i$ and using that $\mathcal{E}_n$ is an orthonormal set, we deduce that $\lambda_i = 0$ for $1 \le i \le n$. Thus $\mathcal{E}_n$ is linearly independent, and therefore a basis of $E$.
+#+end_proof
 
 * Definition  2.14:  Orthogonal complement
 
@@ -522,8 +522,7 @@ Let $F$ be a subspace of a euclidean space $E$. Then:
 
 4. $(F^\perp)^\perp = F$.
 
-*Proof.*
-
+#+begin_proof
 1. To prove that $E^\perp = \{0\}$, we remark that if $x \in E^\perp$, then $\|x\| = 0$, thus $x = 0$.
 
 2. $F^\perp$ is non empty since $0 \in F^\perp$. The fact that $F^\perp$ is a subspace can easily be verified and is left as an exercise.
@@ -535,6 +534,7 @@ Let $F$ be a subspace of a euclidean space $E$. Then:
    We thus conclude that $F = F \oplus F^\perp$ and $\dim(E) = \dim(F) + \dim(F^\perp)$.
 
 4. We start by observing that $\dim((F^\perp)^\perp) = \dim(E) - \dim(F^\perp)$. Then, we easily verify that $F \subseteq (F^\perp)^\perp$, which leads to the conclusion that $(F^\perp)^\perp = F$.
+#+end_proof
 
 * Definition  2.16:  Orthogonal projection
 
@@ -667,8 +667,7 @@ Let $(E, \omega)$ with $\dim E = n$ be a finite dimensional inner product space 
 
 $$[P_F(u)]^{\mathcal{F}} = [\omega]_{\mathcal{F}\mathcal{F}}^{-1}\, q, \quad \text{with} \quad q = (\omega(u, f_i))_{i=1}^{p}.$$
 
-*Proof.*
-
+#+begin_proof
 Let $u \in E$. The orthogonal projection of $u$ onto $F$ can be written as
 
 $$P_F(u) = \sum_{i=1}^{p} [P_F(u)]_i^{\mathcal{F}} f_i.$$
@@ -682,6 +681,7 @@ Inserting Eq. (2.21) into Eq. (2.22), and rearranging, we are lead to the system
 $$[\omega]_{\mathcal{F}\mathcal{F}}\, \lambda = q.$$
 
 Since the $f_i$ are linearly independent, then $[\omega]_{\mathcal{F}\mathcal{F}}$ is invertible, and this leads to Eq. (2.20).
+#+end_proof
 
 * Definition  2.20:  The supervised learning problem
 
@@ -715,8 +715,7 @@ We say that $u$ is the /Riesz representer/ of $\ell$ in $(E, \langle \cdot, \cdo
 
 Importantly, for complex inner-product spaces, $u$ is always located in the antilinear coordinate of the inner-product.
 
-*Proof.*
-
+#+begin_proof
 If $\ell = 0$, then $u = 0$ works and is unique, and $\|\ell\|_{op} = 0 = \|u\|_E$. Assume henceforth that $\ell \ne 0$.
 
 Let $K := \ker \ell = \{x \in E : \ell(x) = 0\}$. Then $K$ is a subspace of $E$ and, since $\ell \ne 0$, we have $K \ne E$. In a finite-dimensional inner-product space,
@@ -750,6 +749,7 @@ Taking the supremum over $x \ne 0$ yields $\|\ell\|_{op} \le \|u\|_E$. Conversel
 $$\|\ell\|_{op} \ge \frac{|\ell(u)|}{\|u\|_E} = \frac{|\langle u, u \rangle_E|}{\|u\|_E} = \|u\|_E.$$
 
 Therefore $\|\ell\|_{op} = \|u\|_E$, and concludes the proof.
+#+end_proof
 
 * Theorem     2.22:  Adjoint Operator
 
@@ -759,8 +759,7 @@ $$\langle T(x), y \rangle_F = \langle x, T^*(y) \rangle_E \qquad \text{for all }
 
 Furthermore, it holds that $\|T\|_{op} = \|T^*\|_{op}$.
 
-*Proof.*
-
+#+begin_proof
 Fix $y \in F$, and define the linear functional $f_y(x) := \langle T(x), y \rangle_F$ for all $x \in E$. Since $T$ is a bounded linear operator, by the Cauchy-Schwarz inequality we have
 
 $$|f_y(x)| = |\langle T(x), y \rangle_F| \le \|T(x)\|_F \|y\|_F \le \underbrace{\|T\|_{op} \|y\|_F}_{=C<+\infty} \|x\|_E,$$
@@ -770,6 +769,7 @@ which shows that $f_y : E \rightarrow \mathbb{K}$ is bounded. Therefore, $f_y \i
 $$\langle x, T^*(y) \rangle_E = \langle T(x), y \rangle_F, \quad \forall x \in E, y \in F.$$
 
 The uniqueness of $T^*$ follows again from the /Riesz representation theorem/. Suppose that there exists $T_1^*, T_2^* : F \rightarrow E$ with the adjoint property (2.27). This implies that $\langle (T_1^* - T_2^*)(x), y \rangle_F = 0$ for all $x, y$ which, in turn, implies that $T_1^* - T_2^* = 0$.
+#+end_proof
 
 * Lemma       2.23:  Matrix representation
 
@@ -785,8 +785,7 @@ are the so-called Gram-matrices of the vectors of $\mathcal{E}$ and $\mathcal{F}
 
 $$[T^*]_{\mathcal{F}}^{\mathcal{E}} = ([T]_{\mathcal{E}}^{\mathcal{F}})^H \in \mathbb{K}^{p \times n}.$$
 
-*Proof.*
-
+#+begin_proof
 We will prove the claim only for the cases when $\mathcal{E}$ and $\mathcal{F}$ are orthonormal bases. In this case, by /Proposition 2.12/, we have that
 
 $$T(e_i) = \sum_{j=1}^n \langle T(e_i), f_j \rangle f_j, \quad 1 \le i \le p$$
@@ -806,6 +805,7 @@ and
 &= \left(\overline{\langle T(e_j), f_i \rangle_F}\right)_{\substack{1 \le i \le n \\ 1 \le j \le p}} \quad \text{(by Eq. (2.27))} \\
 &= ([T]_{\mathcal{E}}^{\mathcal{F}})^H.
 \end{align*}
+#+end_proof
 
 * Theorem     2.24:  Unitary operators
 
@@ -827,8 +827,7 @@ Let $T \in \mathcal{B}(E, E)$. Then the following properties are equivalent:
 
 If one of these properties hold, we say that $T$ is a /unitary operator/ ($\mathbb{K} = \mathbb{C}$) or /orthogonal operator/ ($\mathbb{K} = \mathbb{R}$).
 
-*Proof.*
-
+#+begin_proof
 - ($1 \Rightarrow 2$) Suppose $x \ne 0 \in \ker(T)$. Then $T^*T(x) = 0_E$ which implies that $x = 0_E$. This is a contradiction which implies that $\ker(T) = \{0_E\}$. Therefore $T$ is injective.
 
   We now show that $T$ is surjective. Let $y \in E$, and choose $x = T^*(y)$. We then have $T(x) = (TT^*)(y) = y$ which shows that $T$ is surjective.
@@ -852,6 +851,7 @@ If one of these properties hold, we say that $T$ is a /unitary operator/ ($\math
   $$\langle T(x), T(y) \rangle = \frac{1}{4}\left(\|T(x) + T(y)\|_E^2 - \|T(x) - T(y)\|_E^2\right) = \frac{1}{4}\left(\|x + y\|_E^2 - \|x - y\|_E^2\right) = \langle x, y \rangle_E.$$
 
 - ($1 \Leftrightarrow 5$) To prove this equivalence, we essentially need to use that $[T^*]_{\mathcal{E}}^{\mathcal{E}} = ([T]_{\mathcal{E}}^{\mathcal{E}})^H$.
+#+end_proof
 
 * Typos
 
