@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-11>
-#+lastmod: <2026-05-11 14:14>
+#+lastmod: <2026-05-18 13:23>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -43,6 +43,24 @@ Respectively.
 *** DONE If sesquiential mapping would also be positive-definite, would it be an inner product?
 
 Close. It would also need to be conjugate symmetric.
+
+*** DONE I find the definition confusing as it just mixes sesquilinear and bilinear forms. Don't you think so as well? Could you define both of them separately?
+
+Yes, the combined form is confusing: it saves a few lines at the cost of forcing the reader to mentally branch on "(resp. ...)" everywhere. The second equation as written is only the sesquilinear case; the bilinear case is left implicit. Separated:
+
+*Bilinear form.* Let $E$ be a $\mathbb{K}$ vector space. A mapping $b : E \times E \rightarrow \mathbb{K}$ is bilinear if it is linear in both variables. For all $x, y, z \in E$ and $\lambda, \mu \in \mathbb{K}$:
+
+$$b(\lambda x + \mu y, z) = \lambda b(x, z) + \mu b(y, z)$$
+
+$$b(x, \lambda y + \mu z) = \lambda b(x, y) + \mu b(x, z)$$
+
+*Sesquilinear form.* Let $E$ be a $\mathbb{C}$ vector space. A mapping $s : E \times E \rightarrow \mathbb{C}$ is sesquilinear if it is linear in the first variable and conjugate-linear in the second. For all $x, y, z \in E$ and $\lambda, \mu \in \mathbb{C}$:
+
+$$s(\lambda x + \mu y, z) = \lambda s(x, z) + \mu s(y, z)$$
+
+$$s(x, \lambda y + \mu z) = \bar{\lambda} s(x, y) + \bar{\mu} s(x, z)$$
+
+Field caveat: the bilinear definition works over any field. The sesquilinear definition genuinely requires $\mathbb{C}$ (or some field with a non-trivial involution) — over $\mathbb{R}$ conjugation is the identity, so the two collapse. The source's blanket "$\mathbb{K}$ vector space" obscures this.
 
 * Definition  3.02:  Spaces of bilinear and sesquilinear maps
 
