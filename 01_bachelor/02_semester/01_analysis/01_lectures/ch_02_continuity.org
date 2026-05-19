@@ -1,8 +1,8 @@
-#+title: Ch 11 Continuity
+#+title: Ch 02 Continuity
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-20>
-#+lastmod: <2026-04-13 17:28>
+#+lastmod: <2026-05-19 13:11>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -25,6 +25,7 @@ Let $X$ and $Y$ be metric spaces. If $X$ is path-connected and $f : X \rightarro
 
 #+begin_proof
 Let $a_1, a_2 \in f(X)$ be arbitrary. Then there are $x_1, x_2 \in X$ such that $f(x_1) = a_1$ and $f(x_2) = a_2$. Since $X$ is connected, there is a continuous function $\gamma : \left[ 0,1 \right] \rightarrow X$ such that $\gamma(0) = x_1$ and $\gamma(1) = x_2$. The function $f \circ \gamma : \left[ 0,1 \right] \rightarrow f(X)$ is also continuous, because $f$ is assumed to be continuous. It satisfies $f \circ \gamma(0) = f(x_1) = a_1$ and $f \circ \gamma(1) = f(x_2) = a_2$.
+#+end_proof
 
 ** Q&A
 
@@ -35,7 +36,6 @@ Let $a_1, a_2 \in f(X)$ be arbitrary. Then there are $x_1, x_2 \in X$ such that 
 - A_01
 
   The lemma states that $f(X)$ is path-connected rather than $Y$ because $f$ need not be surjective, there may be points in $Y$ that no element of $X$ maps to, so we can't say anything about connecting arbitrary points of $Y$ with paths. What the lemma captures is that continuous maps preserve path-connectedness of the image: any two points in $f(X)$ come from points in $X$, which can be joined by a path in $X$ (since $X$ is path-connected), and applying $f$ to that path gives a path in $f(X)$ joining their images.
-#+end_proof
 
 * Theorem    11.1.13: Path-connectedness in $\mathbb{R}$ is equivalent to being an interval
 
@@ -140,6 +140,7 @@ To derive the bound on the approximation error, we send $m \rightarrow \infty$ i
 $$d(x_n, x) \le \frac{q^n}{1 - q} \, d(x_1, x_0),$$
 
 which in particular implies $x_n \rightarrow x$. $\square$
+#+end_proof
 
 ** Q&A
 
@@ -150,5 +151,3 @@ which in particular implies $x_n \rightarrow x$. $\square$
 - A_01
 
   - [[https://www.youtube.com/watch?v=qHnXE_h5c2M][Banach Fixed Point Theorem - Intuition]]
-#+end_proof
-

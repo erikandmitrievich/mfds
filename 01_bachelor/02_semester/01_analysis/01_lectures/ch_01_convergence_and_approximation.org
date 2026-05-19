@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-04-13 17:28>
+#+lastmod: <2026-05-19 13:25>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -15,7 +15,7 @@
 #+property: header-args :eval never-export
 #+startup: overview latexpreview inlineimages
 
-* Definition  10.1.1:  Metric space
+* Definition  10.1.01:  Metric space
 
 Given a set $X \neq \emptyset$, we say that a mapping $d_X : X \times X \rightarrow \left[ 0, \infty \right)$ is a metric if the following three properties are satisfied:
 
@@ -33,11 +33,11 @@ Given a set $X \neq \emptyset$, we say that a mapping $d_X : X \times X \rightar
 
 If $d_X$ is a metric on $X$, then $(X, d_{X})$ is called a metric space.
 
-* Definition  10.1.2:  Sequence
+* Definition  10.1.02:  Sequence
 
 Let $X \neq \emptyset$ be an arbitrary set. A map $x : \mathbb{N} \rightarrow X$ is called a sequence in $X$ and we denote $x_n := x(n)$, for $n \in \mathbb{N}$. The sequence is also written as $(x_n)_{n\in\mathbb{N}} \subseteq X$.
 
-* Definition  10.1.3:  Convergence
+* Definition  10.1.03:  Convergence
 
 Let $(X, d_X)$ be a metric space. A sequence $(x_n)_{n\in\mathbb{N}} \subseteq X$ is said to converge to $x \in X$ if
 
@@ -45,7 +45,7 @@ $$\forall \epsilon > 0 \quad \exists N \in \mathbb{N} \quad \forall n \ge N \qua
 
 In this case, we write $\lim_{n \rightarrow \infty} x_n = x$ or simply $x_n \rightarrow x$ as $n \rightarrow \infty$.
 
-* Theorem     10.1.5:  Uniqueness of limits
+* Theorem     10.1.05:  Uniqueness of limits
 
 Let $(X, d_X)$ be a metric space. If $x_n \rightarrow x$ and $x_n \rightarrow x'$, then $x = x'$.
 
@@ -64,7 +64,7 @@ $$d_X(x, x') \le d_X(x, x_N) + d_X(x_N, x') \le 2\epsilon = \frac{2}{3} d_X(x, x
 which is impossible unless $d_X(x, x') = 0$. This contradicts the assumption $x \neq x'$. $\square$
 #+end_proof
 
-* Definition  10.1.6:  Convergence order
+* Definition  10.1.06:  Convergence order
 
 Let $(X, d)$ be a metric space and suppose that $(x_k)_{k\in\mathbb{N}} \subseteq X$ converges to $x \in X$. Then we say that the convergence is
 
@@ -80,13 +80,13 @@ Let $(X, d)$ be a metric space and suppose that $(x_k)_{k\in\mathbb{N}} \subsete
 
    $$\limsup_{k \rightarrow \infty} (d(x_k, x))^{\frac{1}{k}} = 1$$
 
-* Definition  10.1.9:  Isometry
+* Definition  10.1.09:  Isometry
 
 Let $(X, d_X)$ and $(Y, d_Y)$ be metric spaces and $f : X \rightarrow Y$. Then $f$ is called an isometry if
 
 $$d_Y(f(x), f(x')) = d_X(x, x'), \quad \forall x, x' \in X$$
 
-* Definition  10.1.10: Bounded sequence
+* Definition  10.1.10:  Bounded sequence
 
 Let $(X, d_X)$ be a metric space. A sequence $(x_n)_{n\in\mathbb{N}} \subseteq X$ is called bounded if there exists $x \in X$ and $C > 0$ such that
 
@@ -96,7 +96,7 @@ Analogously, we call a subset $S \subseteq X$ bounded if there exists $x \in X$ 
 
 $$d_X(s, x) \le C, \quad \forall s \in S$$
 
-* Lemma       10.1.11: Convergent sequences are bounded
+* Lemma       10.1.11:  Convergent sequences are bounded
 
 Let $(X, d)$ be a metric space. Every convergent sequence $(x_n)_{n\in\mathbb{N}} \subseteq X$ is bounded.
 
@@ -110,17 +110,31 @@ Hence
 $$d(x_n, x) \le \max\{d(x_1, x), \ldots, d(x_{N-1}, x), 1\} \quad \text{for all } n \in \mathbb{N}$$
 #+end_proof
 
-* Definition  10.2.1:  Cauchy sequence
+* Definition  10.2.01:  Cauchy sequence
 
 Let $(X, d_X)$ be a metric space. A sequence $(a_n)_{n\in\mathbb{N}} \subseteq X$ is called Cauchy sequence if
 
 $$\forall \epsilon>0, \exists N \in \mathbb{N} : \forall n, m \ge N, d_X(a_n, a_m) \le \epsilon$$
 
-* Definition  10.2.5:  Completeness
+** Questions
+
+*** DONE How should I simply remember this definition in one sentence?
+
+"A sequence is Cauchy if its terms eventually get arbitrarily close to each other."
+
+- "eventually" = $\exists N$, from index $N$ onward
+- "arbitrarily close" = $\forall \epsilon > 0$, distance $\le \epsilon$
+- "to each other" = between any two terms $a_n$, $a_m$ (not to a fixed limit)
+
+Pay attention to the last point. A convergent sequence's terms get close to a limit; a Cauchy sequence's terms get close to each other.
+
+That distinction is the entire reason the concept exists — it lets you talk about convergence-like behavior without naming a limit, which matters when the limit might not live in your space ($\mathbb{Q}$ vs $\mathbb{R}$ being the canonical example).
+
+* Definition  10.2.05:  Completeness
 
 A metric space $X$ is called complete if every Cauchy sequence in $X$ is convergent in $X$.
 
-* Definition  10.3.1:  Compactness
+* Definition  10.3.01:  Compactness
 
 A metric space $X$ is called compact if every sequence $(x_n)_{n\in\mathbb{N}} \in X$ has a convergent subsequence $(x_{n_j})_{j \in \mathbb{N}}$ (with limit in $X$).
 
@@ -150,7 +164,7 @@ A metric space $X$ is called compact if every sequence $(x_n)_{n\in\mathbb{N}} \
 
   The only interesting case compactness handles is when the full sequence does not converge at all. Imagine a sequence that oscilates from $0$ to $1$, its subsequence, consisting only of $1$'s is convergent.
 
-* Lemma       10.3.2:  Compactness implies completeness
+* Lemma       10.3.02:  Compactness implies completeness
 
 Every compact metric space is complete.
 
@@ -169,7 +183,7 @@ $$d_X(x_n,x) \le d_X(x_n, x_{n_N}) + d_X(x_{n_N}, x) \le \frac{\epsilon}{2} + \f
 Thus, $x_n \rightarrow x$.
 #+end_proof
 
-* Definition  10.3.3:  Open and closed subsets
+* Definition  10.3.03:  Open and closed subsets
 
 Let $X$ be a metric space and $x \in X$.
 
@@ -198,7 +212,7 @@ Let $X$ be a metric space and $x \in X$.
 
   The two formulations define exactly the same concept of openness because fitting a closed ball of radius $\epsilon$ inside a set implies you can fit an open ball of the same radius (it's smaller), and fitting an open ball of radius $\epsilon$ implies you can fit a closed ball of radius $\frac{\epsilon}{2}$ inside it. Your lecturer chose the closed ball version, but it's purely a matter of convention — the resulting notion of "open set" is identical either way.
 
-* Lemma       10.3.6:  Sequential closure
+* Lemma       10.3.06:  Sequential closure
 
 Let $X$ be a metric space and $S \subseteq X$ a nonempty subset. Then $S$ is closed iff all sequences $(x_n)_{n\in\mathbb{N}} \subseteq S$ with $x_n \rightarrow x \in X$ satisfy $x \in S$.
 
@@ -229,7 +243,7 @@ Let $X$ be a metric space and $S \subseteq X$ a nonempty subset. Then $S$ is clo
   Closedness says "limits that exist stay inside," while compactness says "convergent subsequences are guaranteed to exist and their limits stay inside." Closedness is the weaker condition — it doesn't prevent sequences from diverging to infinity, it only controls where limits land when convergence does occur. Compactness implies closedness, but not the other way around; you additionally need boundedness (in $\mathbb{R}^{n}$) to upgrade closedness to compactness.
 #+end_proof
 
-* Lemma       10.3.7:  Compactness implies boundedness and closure
+* Lemma       10.3.07:  Compactness implies boundedness and closure
 
 Let $X$ be a metric space. If $S \subseteq X$ is compact, then $S$ is bounded and closed.
 
@@ -255,7 +269,7 @@ which is unbounded as $k \rightarrow \infty$. This is a contradiction. Therefore
 To verify that $S$ is closed, let $(x_n)_{n\in\mathbb{N}} \subseteq S$ satisfy $x_n \rightarrow x \in X$. We aim to show that $x$ is contained in $S$, so that /Lemma 10.3.6/ then yields that $S$ is closed. Since $S$ is compact, there is a subsequence $(x_{n_j})_{j\in\mathbb{N}}$ that converges to some $y \in S$. Since $(x_{n_j})_{j\in\mathbb{N}}$ is a subsequence of a sequence converging to $x$, it must also converge to $x$. By uniqueness of limits, $x = y \in S$.
 #+end_proof
 
-* Theorem     10.3.11: Heine-Borel theorem in $\mathbb{R}$
+* Theorem     10.3.11:  Heine-Borel theorem in $\mathbb{R}$
 
 Suppose that $\mathbb{R}$ is equipped with the standard metric. A set $K \subseteq \mathbb{R}$ is compact if and only if it is closed and bounded.
 
@@ -267,7 +281,7 @@ Suppose that $\mathbb{R}$ is equipped with the standard metric. A set $K \subset
 - ($\Leftarrow$) Conversely, if $K$ is closed and bounded, then every sequence in $K$ is bounded and hence admits a convergent subsequence by Bolzano-Weierstraß. Closedness ensures that the limit lies in $K$, so $K$ is compact.
 #+end_proof
 
-* Lemma       10.3.12: Truncating the metric preserves convergence properties
+* Lemma       10.3.12:  Truncating the metric preserves convergence properties
 
 Let $(X, d)$ be a metric space and define
 

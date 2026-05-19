@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-20>
-#+lastmod: <2026-05-16 15:44>
+#+lastmod: <2026-05-19 13:30>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -111,7 +111,17 @@ $$\|f\|_{\mathrm{op}} := \sup_{0 \neq v \in V} \frac{\|fv\|}{\|v\|}.$$
 
 Yes.
 
-* Lemma       6.1.09:  Completeness of the operator space
+*** DONE Do I understand right that as $f$ is linear, we can choose $\|v\| = 1$, and get $\|f\|_{\mathrm{op}} = \sup \|fv\|$?
+
+Yes. By linearity and positive homogeneity of the norm, for any $v \neq 0$,
+
+$$\frac{\|fv\|}{\|v\|} = \|f(\frac{v}{\|v\|})\|$$
+
+and $\dfrac{v}{\|v\|}$ ranges over the unit sphere $\{u \in V : \|u\| = 1\}$ as $v$ ranges over $V \setminus \{0\}$. Hence,
+
+$$\|f\|_{\mathrm{op}} = \sup_{\|v\| = 1} \|fv\|$$
+
+* Lemma       6.1.09:  Compatible norm on $\mathcal{L}(V, W)$ is Banach when $W$ is Banach
 
 If $W$ is a Banach space, then every compatible norm on $\mathcal{L}(V, W)$ makes it a Banach space.
 
@@ -146,6 +156,14 @@ We have shown that every Cauchy sequence in $\mathcal{L}(V, W)$ converges in $\m
 #+end_proof
 
 ** Questions
+
+*** DONE What is a Banach space?
+
+A Banach space is a complete normed vector space - a normed space $(V, \|\cdot\|)$ such that every Cauchy sequence in $V$ congerges to a limit in $V$.
+
+*** DONE I do not understand the logic of lemma. If something_1 is something_1, then something_2 make it something_1 - its absurd.
+
+No. The lemma says if $W$ is a Banach space, then every compatible norm on $\mathcal{L}(V,W)$ makes $\mathcal{L}(V,W)$ a Banach space.
 
 * Theorem     6.1.10:  Von Neumann series
 
