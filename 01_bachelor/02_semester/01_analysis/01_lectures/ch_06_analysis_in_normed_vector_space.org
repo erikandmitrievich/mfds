@@ -23,8 +23,7 @@ $$d_X(x, y) = \| x - y \|$$
 
 defines a metric on $X$, so that $(X, d_X)$ is also a metric space.
 
-*Proof.*
-
+#+begin_proof
 Symmetry is obvious due to
 
 $$d(x, y) = \| x - y \| = \| y - x \| = d_X(y, x).$$
@@ -32,6 +31,7 @@ $$d(x, y) = \| x - y \| = \| y - x \| = d_X(y, x).$$
 The conditions of the norm imply that $d_X(x, y) = 0$ if and only if $x = y$. The triangle inequality for the metric follows from the triangle inequality of the norm, i.e.,
 
 $$d_X(x, y) = \| x - y \| \le \| x - z \| + \| z - y \| = d_X(x, z) + d_X(z, y).$$
+#+end_proof
 
 * Theorem     6.1.03:  Distinctive features in finite dimensions
 
@@ -45,8 +45,7 @@ Let $V$ be a finite-dimensional normed vector space. Then the following statemen
 
 3. Let $W$ be another normed vector space. If $f : V \rightarrow W$ is linear, then $f$ is continuous.
 
-*Proof.*
-
+#+begin_proof
 (ii) Linear Algebra Course.
 
 (i) Fix a basis $B = \{ b_1, \ldots, b_n \}$ of $V$ and recall the coordinate map $\chi_B : \mathbb{R}^n \rightarrow V$ given by $\chi_B(x) = \sum_{i=1}^{n} x_i b_i$. Define the coordinate norm
@@ -68,6 +67,7 @@ By (ii), $\| v \|_B \le C_1 \| v \|$ for some $C_1 > 0$, hence
 $$\| f(v_n - v) \| \le C C_1 \| v_n - v \| \rightarrow 0,$$
 
 which proves continuity of $f$.
+#+end_proof
 
 * Theorem     6.1.06:  Boundedness and continuity of linear maps
 
@@ -81,8 +81,7 @@ Let $V$ and $W$ be normed vector spaces and let $f : V \rightarrow W$ be linear.
 
    $$\|fv\| \le C\|v\| \quad \text{for all } v \in V.$$
 
-*Proof.*
-
+#+begin_proof
 (i)$\Rightarrow$(ii) is clear.
 
 (ii)$\Rightarrow$(iii) Let $\varepsilon = 1$. By continuity at $0$ there exists $\delta > 0$ such that $\|v\| < \delta$ implies $\|fv\| < 1$. For $v \neq 0$ set $w := \frac{\delta}{2\|v\|}v$, so that $\|w\| = \delta/2 < \delta$ and hence $\|fw\| < 1$. By linearity,
@@ -96,6 +95,7 @@ Thus (iii) holds with $C = 2/\delta$.
 $$\|fv - fu\| = \|f(v - u)\| \le C\|v - u\|.$$
 
 Thus, $v \rightarrow u$ implies $fv \rightarrow fu$ and $f$ is continuous.
+#+end_proof
 
 ** Questions
 
@@ -115,8 +115,7 @@ Yes.
 
 If $W$ is a Banach space, then every compatible norm on $\mathcal{L}(V, W)$ makes it a Banach space.
 
-*Proof.*
-
+#+begin_proof
 Let $(f_n)_{n\in\mathbb{N}} \subseteq \mathcal{L}(V, W)$ be a Cauchy sequence.
 
 Step 1: Pointwise limits. Fix $x \in V$. For all $n, m \in \mathbb{N}$ we have
@@ -144,6 +143,7 @@ $$\|f_n - f\| \le \limsup_{m \rightarrow \infty} \|f_n - f_m\|.$$
 Since $(f_n)$ is Cauchy, the right-hand side tends to $0$ as $n \rightarrow \infty$. Therefore $\|f_n - f\| \rightarrow 0$ and $f_n \rightarrow f$ in $\mathcal{L}(V, W)$.
 
 We have shown that every Cauchy sequence in $\mathcal{L}(V, W)$ converges in $\mathcal{L}(V, W)$. Hence $\mathcal{L}(V, W)$ is complete.
+#+end_proof
 
 ** Questions
 
@@ -204,8 +204,7 @@ $$|\dot{\gamma}|(t) = \|\gamma'(t)\|_2$$
 
 In particular, $|\dot{\gamma}|$ is continuous on $\left[ 0, 1 \right]$.
 
-*Proof.*
-
+#+begin_proof
 Differentiability leads to
 
 $$\frac{\|\gamma(t + h) - \gamma(t)\|_2}{|h|} = \left( \sum_{i=1}^{n} \frac{|\gamma_i(t + h) - \gamma_i(t)|^2}{|h|^2} \right)^{1/2} = \left( \sum_{i=1}^{n} \left| \frac{\gamma_i(t + h) - \gamma_i(t)}{h} \right|^2 \right)^{1/2} \rightarrow \left( \sum_{i=1}^{n} |\gamma_i'(t)|^2 \right)^{1/2} = \|\gamma'(t)\|_2$$
@@ -223,8 +222,7 @@ $$|\gamma_i(s) - \gamma_i(t)| \le C |s - t|$$
 Since $d_2 \le \sqrt{n} \, d_\infty$, we deduce
 
 $$\|\gamma(s) - \gamma(t)\|_2 \le \underbrace{\sqrt{n} \, C}_{L} |s - t|$$
-
-$\square$
+#+end_proof
 
 * Theorem     6.2.06:  Arc length of smooth curves
 
@@ -232,8 +230,7 @@ Let $\gamma : \left[ 0, 1 \right] \rightarrow \mathbb{R}^d$ be continuously diff
 
 $$\ell(\gamma) = \int_0^1 \sqrt{|\gamma_1'(t)|^2 + \cdots + |\gamma_n'(t)|^2} \, dt = \int_0^1 \|\gamma'(t)\|_2 \, dt$$
 
-*Proof.*
-
+#+begin_proof
 The function $t \mapsto \|\gamma'(t)\|_2$ is continuous on $\left[ 0, 1 \right]$.
 
 *Step 1:* $\ell(\gamma) \le \int_0^1 g(t) \, dt$. Let $\mathcal{P} = \{t_0, \ldots, t_m\}$ be a partition of $\left[ 0, 1 \right]$. For each $j$ and each component, the mean value theorem gives
@@ -279,8 +276,7 @@ $$\ell(\gamma) \ge \int_0^1 g(t) \, dt$$
 Combining both inequalities proves
 
 $$\ell(\gamma) = \int_0^1 \sqrt{|\gamma_1'(t)|^2 + \cdots + |\gamma_n'(t)|^2} \, dt$$
-
-$\square$
+#+end_proof
 
 * Lemma       6.2.08:  Reparametrisation invariance of arc length
 
@@ -288,8 +284,7 @@ Let $f : \left[ a, b \right] \rightarrow \mathbb{R}^n$ be a continuously differe
 
 $$\int_a^b \sqrt{|f_1'(x)|^2 + \cdots + |f_n'(x)|^2} \, dx = \int_0^1 \sqrt{|\gamma_1'(t)|^2 + \cdots + |\gamma_n'(t)|^2} \, dt$$
 
-*Proof.*
-
+#+begin_proof
 The function $\phi$ is either strictly increasing or decreasing. Assume it is increasing, so that $\phi'(t) \ge 0$ with $\phi(0) = a$ and $\pi(1) = b$. Substituting $x = \phi(t)$ yields
 
 \begin{align*}
@@ -299,6 +294,7 @@ The function $\phi$ is either strictly increasing or decreasing. Assume it is in
 \end{align*}
 
 The case that $\phi$ is decreasing is analogous. $\square$
+#+end_proof
 
 * Definition  6.3.01:  Frechet differentiability
 
@@ -362,8 +358,7 @@ $$(g \circ f)'(x) = g'(f(x)) \, f'(x)$$
 
 Here $f'(x) : V \rightarrow W$ and $g'(f(x)) : W \rightarrow W'$ are continuous linear maps, and their composition is again a continuous linear map from $V$ to $W'$.
 
-*Proof.*
-
+#+begin_proof
 Define $\varphi(h)$ by
 
 $$g(f(x + h)) = g(f(x)) + g'(f(x)) \, f'(x) h + \varphi(h)$$
@@ -393,6 +388,7 @@ Since $f'(x)$ is continuous, $\varepsilon_h \rightarrow 0$ as $h \rightarrow 0$,
 $$\frac{\|\varepsilon_h\|}{\|h\|} \le \|f'(x)\| + \frac{\|\psi(h)\|}{\|h\|}$$
 
 which is bounded for small $h$. Hence $\varphi(h) / \|h\| \rightarrow 0$, proving the claim. $\square$
+#+end_proof
 
 * Lemma       6.3.07:  Directional derivative
 
@@ -400,8 +396,7 @@ If $f : V \rightarrow W$ is Fréchet differentiable at $x$, then
 
 $$f'(x)u = \lim_{\lambda \rightarrow 0} \frac{f(x + \lambda u) - f(x)}{\lambda}, \quad u \in V.$$
 
-*Proof.*
-
+#+begin_proof
 Let $u \in V$ and set $h = \lambda u$. If $u = 0$, the claim is trivial. For $u \ne 0$, Fréchet differentiability gives
 
 $$\lim_{\lambda \rightarrow 0} \frac{f(x + \lambda u) - f(x) - f'(x)(\lambda u)}{\| \lambda u \|} = 0.$$
@@ -411,6 +406,7 @@ Since $\| \lambda u \| = |\lambda| \, \| u \|$ and $f'(x)$ is linear, multiplyin
 $$\lim_{\lambda \rightarrow 0} \frac{f(x + \lambda u) - f(x) - \lambda f'(x) u}{\lambda} = 0.$$
 
 This can be rewritten as $\lim_{\lambda \rightarrow 0} \frac{f(x + \lambda u) - f(x)}{\lambda} = f'(x)u$.
+#+end_proof
 
 * Lemma       6.3.10:  Frechet derivative of least-squares composition
 
@@ -422,8 +418,7 @@ is Fréchet differentiable and
 
 $$(g \circ f)'(x) = 2 \langle A^*(Ax - b), \cdot \rangle.$$
 
-*Proof.*
-
+#+begin_proof
 We notice that $g'(x) = 2 \langle x, \cdot \rangle$ and $f'(x) = A$. The chain rule leads to
 
 \begin{align*}
@@ -432,6 +427,7 @@ We notice that $g'(x) = 2 \langle x, \cdot \rangle$ and $f'(x) = A$. The chain r
 &= 2 \langle f(x), A \cdot \rangle \\
 &= 2 \langle A^* f(x), \cdot \rangle.
 \end{align*}
+#+end_proof
 
 * Definition  6.4.01:  Local extrema
 
@@ -463,8 +459,7 @@ $$f'(x_0) v = 0 \quad \text{for all } v \in V.$$
 
 The proof reduces the infinite-dimensional problem to a one-dimensional calculus argument by restricting $f$ to lines through $x_0$.
 
-*Proof.*
-
+#+begin_proof
 Let $x_0 \in U$ be a local extremum. Since $U$ is open, there exists $\varepsilon > 0$ such that
 
 $$x_0 + tu \in U \quad \text{for all } u \in V \text{ with } \| u \| = 1 \text{ and all } |t| < \varepsilon.$$
@@ -482,6 +477,7 @@ Since $f$ has a local extremum at $x_0$, the function $\varphi : \mathbb{R} \rig
 $$f'(x_0) u = 0 \quad \text{for all } u \in V,$$
 
 and hence $f'(x_0) = 0$.
+#+end_proof
 
 * Definition  6.4.06:  Critical point and saddle point
 
@@ -501,8 +497,7 @@ Let $f : V \rightarrow \mathbb{R}$ be Fréchet differentiable. Then $f$ is conve
 
 $$f(x) - f(y) \le f'(x)(x - y), \quad x, y \in V.$$
 
-*Proof.*
-
+#+begin_proof
 - ($\Rightarrow$) Assume $f$ is convex. For fixed $x, y \in V$, convexity implies
 
   $$f((x + t(y - x)) \le (1 - t)f(x) + tf(y).$$
@@ -524,6 +519,7 @@ $$f(x) - f(y) \le f'(x)(x - y), \quad x, y \in V.$$
   $$f(z) \le tf(x) + (1 - t)f(y).$$
 
   The definition $z = tx + (1 - t)y$ yields convexity.
+#+end_proof
 
 * Theorem     6.4.12:  Local minima of convex functions are global
 
@@ -533,8 +529,7 @@ Let $f : V \rightarrow \mathbb{R}$ be convex.
 
 2. Let $f$ be Fréchet differentiable. Then $x_0 \in V$ is a global minimum if and only if $f'(x_0) = 0$.
 
-*Proof.*
-
+#+begin_proof
 (i) Assume $x_0$ is a local minimizer. Then there exists $\delta > 0$ such that
 
 $$f(x_0) \le f(x) \quad \text{for all } x \in B_\delta(x_0).$$
@@ -550,3 +545,5 @@ $$f(x_0) \le f(z_t) \le (1 - t)f(x_0) + tf(y).$$
 Thus, we must have $0 \le t(f(y) - f(x_0))$. Since $t > 0$, we conclude $f(y) \ge f(x_0)$.
 
 (ii) If $x_0$ is a global minimum, then it is also local and by /Theorem 6.4.3/ we have $f'(x_0) = 0$. Now assume that $f'(x_0) = 0$. /Lemma 6.4.9/ yields $f(y) \ge f(x_0)$, for all $y \in V$, which leads to a global minimum.
+#+end_proof
+

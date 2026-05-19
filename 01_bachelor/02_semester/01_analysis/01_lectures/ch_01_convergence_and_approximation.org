@@ -49,8 +49,7 @@ In this case, we write $\lim_{n \rightarrow \infty} x_n = x$ or simply $x_n \rig
 
 Let $(X, d_X)$ be a metric space. If $x_n \rightarrow x$ and $x_n \rightarrow x'$, then $x = x'$.
 
-*Proof.*
-
+#+begin_proof
 Assume $x \neq x'$. Then $\epsilon := d_X(x, x') / 3 > 0$. There exist $N_x, N_{x'} \in \mathbb{N}$ such that
 
 \begin{align*}
@@ -63,6 +62,7 @@ Hence, for $N = \max\{N_x, N_{x'}\}$, we have
 $$d_X(x, x') \le d_X(x, x_N) + d_X(x_N, x') \le 2\epsilon = \frac{2}{3} d_X(x, x')$$
 
 which is impossible unless $d_X(x, x') = 0$. This contradicts the assumption $x \neq x'$. $\square$
+#+end_proof
 
 * Definition  10.1.6:  Convergence order
 
@@ -100,8 +100,7 @@ $$d_X(s, x) \le C, \quad \forall s \in S$$
 
 Let $(X, d)$ be a metric space. Every convergent sequence $(x_n)_{n\in\mathbb{N}} \subseteq X$ is bounded.
 
-*Proof.*
-
+#+begin_proof
 Assume $(x_n)_{n\in\mathbb{N}}$ converges to some $x \in X$. Then there exists $N \in \mathbb{N}$ such that
 
 $$d(x_n, x) < 1 \quad \text{for all } n \ge N$$
@@ -109,8 +108,7 @@ $$d(x_n, x) < 1 \quad \text{for all } n \ge N$$
 Hence
 
 $$d(x_n, x) \le \max\{d(x_1, x), \ldots, d(x_{N-1}, x), 1\} \quad \text{for all } n \in \mathbb{N}$$
-
-$\square$
+#+end_proof
 
 * Definition  10.2.1:  Cauchy sequence
 
@@ -156,8 +154,7 @@ A metric space $X$ is called compact if every sequence $(x_n)_{n\in\mathbb{N}} \
 
 Every compact metric space is complete.
 
-*Proof.*
-
+#+begin_proof
 Let $(x_n)_{n\in\mathbb{N}} \in X$ be a Cauchy sequence. Since $X$ is compact, it has a convergent subsequence $x_j \rightarrow x \in X$ for $j \rightarrow \infty$. Given $\epsilon > 0$, there are $N_1, N_2 \in \mathbb{N}$ such that
 
 \begin{align*}
@@ -170,6 +167,7 @@ Let $N := max(N_1, N_2)$. Then for all $n \ge N$ we have $n_N \ge N_1$ and
 $$d_X(x_n,x) \le d_X(x_n, x_{n_N}) + d_X(x_{n_N}, x) \le \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon$$
 
 Thus, $x_n \rightarrow x$.
+#+end_proof
 
 * Definition  10.3.3:  Open and closed subsets
 
@@ -206,8 +204,7 @@ Let $X$ be a metric space and $S \subseteq X$ a nonempty subset. Then $S$ is clo
 
 /In other words, $S$ is closed iff it contains all limits of its converging sequences./
 
-*Proof.*
-
+#+begin_proof
 - ($\Rightarrow$) Let $S$ be closed. Proof by contradiction, so assume that $(x_n)_{n\in\mathbb{N}} \subseteq S$ and $x_n \rightarrow x \in X \setminus S$. Since $X \setminus S$ is open, there is $\epsilon > 0$ such that $B_{\epsilon}(x) \subseteq X \setminus S$. By convergence, there is $N \in \mathbb{N}$ such that
 
   $$d_{X}(x_n, x) < \epsilon \quad \forall n \ge N$$
@@ -230,13 +227,13 @@ Let $X$ be a metric space and $S \subseteq X$ a nonempty subset. Then $S$ is clo
 - A_01
 
   Closedness says "limits that exist stay inside," while compactness says "convergent subsequences are guaranteed to exist and their limits stay inside." Closedness is the weaker condition — it doesn't prevent sequences from diverging to infinity, it only controls where limits land when convergence does occur. Compactness implies closedness, but not the other way around; you additionally need boundedness (in $\mathbb{R}^{n}$) to upgrade closedness to compactness.
+#+end_proof
 
 * Lemma       10.3.7:  Compactness implies boundedness and closure
 
 Let $X$ be a metric space. If $S \subseteq X$ is compact, then $S$ is bounded and closed.
 
-*Proof.*
-
+#+begin_proof
 Assume that $S$ is unbounded. Fix $x_0 \in X$. Then for every $n \in \mathbb{N}$ there exists $x_n \in S$ such that
 
 $$d(x_n, x_0) \ge n.$$
@@ -256,18 +253,19 @@ $$d(x_{n_k}, x_0) \ge n_k \ge k,$$
 which is unbounded as $k \rightarrow \infty$. This is a contradiction. Therefore, $S$ must be bounded.
 
 To verify that $S$ is closed, let $(x_n)_{n\in\mathbb{N}} \subseteq S$ satisfy $x_n \rightarrow x \in X$. We aim to show that $x$ is contained in $S$, so that /Lemma 10.3.6/ then yields that $S$ is closed. Since $S$ is compact, there is a subsequence $(x_{n_j})_{j\in\mathbb{N}}$ that converges to some $y \in S$. Since $(x_{n_j})_{j\in\mathbb{N}}$ is a subsequence of a sequence converging to $x$, it must also converge to $x$. By uniqueness of limits, $x = y \in S$.
+#+end_proof
 
 * Theorem     10.3.11: Heine-Borel theorem in $\mathbb{R}$
 
 Suppose that $\mathbb{R}$ is equipped with the standard metric. A set $K \subseteq \mathbb{R}$ is compact if and only if it is closed and bounded.
 
-*Proof.*
-
+#+begin_proof
 - ($\Rightarrow$) Suppose that $K \subseteq \mathbb{R}$ is compact but unbounded. Thus, there is a sequence $(x_n)_{n\in\mathbb{N}} \subseteq K$ such that $|x_n| > n$, for $n \in \mathbb{N}$. This sequence must have a monotone subsequence in $K$ that is also unbounded. However, every subsequence of this subsequence must also be unbounded, hence, cannot converge. This violates compactness since every sequence must have a convergent subsequence. Hence, $K$ must be bounded.
 
   Now suppose that $K \subseteq \mathbb{R}$ is compact but not closed. Thus, the complement is not open and there must be some $x \in \mathbb{R} \setminus K$ such that $B_\epsilon(x) \not\subseteq \mathbb{R} \setminus K$ for all $\epsilon > 0$. In particular, for all $\epsilon = \frac{1}{n+1}$ for $n \in \mathbb{N}$. Therefore, there is $x_n \in B_{\frac{1}{n+1}}(x) \cap K$. This sequence $(x_n)_{n\in\mathbb{N}} \subseteq K$ converges towards $x \notin K$. Hence, none of its subsequences can converge in $K$. Hence, $K$ must be closed.
 
 - ($\Leftarrow$) Conversely, if $K$ is closed and bounded, then every sequence in $K$ is bounded and hence admits a convergent subsequence by Bolzano-Weierstraß. Closedness ensures that the limit lies in $K$, so $K$ is compact.
+#+end_proof
 
 * Lemma       10.3.12: Truncating the metric preserves convergence properties
 
@@ -285,8 +283,7 @@ Then the following hold:
 
 3. $K \subseteq X$ is compact with respect to $d$ if and only if $K$ is compact with respect to $d_1$.
 
-*Proof.*
-
+#+begin_proof
 (i) To verify that $d_1$ is a metric, we first observe that (M1) and (M3) are obviously satisfied. For the triangle inequality (M2), we compute
 
 $$\min\{1, d(x, z)\} \le \min\{1, d(x, y) + d(y, z)\} \le \min\{1, d(x, y)\} + \min\{1, d(y, z)\}$$
@@ -294,3 +291,5 @@ $$\min\{1, d(x, z)\} \le \min\{1, d(x, y) + d(y, z)\} \le \min\{1, d(x, y)\} + \
 so that $d_1$ is a metric.
 
 (ii,iii) The convergence claim is obvious because $d_1(x_n, x) \rightarrow 0$ if and only if $d(x_n, x) \rightarrow 0$. Compactness is defined via converging subsequences. $\square$
+#+end_proof
+

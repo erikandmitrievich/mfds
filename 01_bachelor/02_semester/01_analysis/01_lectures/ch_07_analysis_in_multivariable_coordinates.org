@@ -27,11 +27,11 @@ $$f'(v) = \chi_{B_W} \, F'(x) \, \chi_{B_V}^{-1}.$$
 
 In contrast to linear algebra, we do not restrict to linear maps: if $f$ is nonlinear, then its coordinate representation $F : \mathbb{R}^n \rightarrow \mathbb{R}^m$ is nonlinear as well. Fréchet differentiable maps from $\mathbb{R}^n$ to $\mathbb{R}^m$ are often simply called /differentiable/.
 
-*Proof.*
-
+#+begin_proof
 Since the coordinate maps $\chi_{B_V}$ and $\chi_{B_W}$ are linear, their derivatives coincide with the maps themselves. Applying the chain rule, we obtain for $v \in V$ with $x = \chi_{B_V}^{-1} v$,
 
 $$f'(v) = \chi_{B_W} \, F'(x) \, \chi_{B_V}^{-1}.$$
+#+end_proof
 
 ** Questions
 
@@ -93,8 +93,7 @@ $$f'(x) = \operatorname{grad} f(x).$$
 
 In particular, $f'(x) e_j = \partial_j f(x)$, for $j = 1, \ldots, n$.
 
-*Proof.*
-
+#+begin_proof
 Since $f$ is differentiable at $x$,
 
 $$f(x + h) = f(x) + f'(x) h + o(\|h\|) \quad (h \rightarrow 0).$$
@@ -108,6 +107,7 @@ Hence the limit exists and equals $f'(x) e_j$, i.e.
 $$\operatorname{grad} f(x) e_j = \partial_j f(x) = \lim_{t \rightarrow 0} \frac{f(x + t e_j) - f(x)}{t} = f'(x) e_j.$$
 
 Thus, the two linear maps $\operatorname{grad} f(x)$ and $f'(x)$ coincide, because they are equal on the basis $\{e_1, \ldots, e_n\}$.
+#+end_proof
 
 ** Questions
 
@@ -152,8 +152,7 @@ Let $U \subseteq \mathbb{R}^n$ be open and let $f : U \rightarrow \mathbb{R}$. I
 
 $$f'(x) = \operatorname{grad} f(x).$$
 
-*Proof.*
-
+#+begin_proof
 Let $x \in U$ and $h = (h_1, \ldots, h_n) \in \mathbb{R}^n$ with $x + h \in U$. Define points
 
 $$x^{(j)} := x + \sum_{i=1}^{j} h_i e_i, \quad j = 0, \ldots, n.$$
@@ -206,6 +205,7 @@ $$\partial_j f(x^{(j-1)} + \theta_j h_j e_j) \rightarrow \partial_j f(x).$$
 This leads to $\varphi(h) / \|h\| \rightarrow 0$ and hence $f$ is differentiable in $x$ with
 
 $$f(x + h) = f(x) + \sum_{j=1}^{n} \partial_j f(x) h_j + \varphi(h) = f(x) + \operatorname{grad} f(x) h + \varphi(h).$$
+#+end_proof
 
 * Lemma       7.1.09:  Mixed partial derivatives commute
 
@@ -213,8 +213,7 @@ Let $U \subseteq \mathbb{R}^n$ be open and let $f : U \rightarrow \mathbb{R}$ be
 
 $$\partial_i \partial_j f(x) = \partial_j \partial_i f(x).$$
 
-*Proof.*
-
+#+begin_proof
 Fix $x \in U$ and indices $i, j$. Since $U$ is open, there exists $\epsilon > 0$ such that
 
 $$x + s e_i + t e_j \in U \quad \text{for all } |s|, |t| < \epsilon.$$
@@ -254,6 +253,7 @@ $$\partial_1 \partial_2 \varphi(\xi_s, \xi_t) = \partial_2 \partial_1 \varphi(\e
 The limit $(s, t) \rightarrow 0$ implies $(\xi_s, \xi_t), (\eta_s, \eta_t) \rightarrow 0$. The continuity of $\partial_i \partial_j f$ and $\partial_j \partial_i f$ yields continuity of $\partial_1 \partial_2 \varphi$ and $\partial_2 \partial_1 \varphi$ in 0, so that we arrive at
 
 $$\partial_1 \partial_2 \varphi(0, 0) = \partial_2 \partial_1 \varphi(0, 0).$$
+#+end_proof
 
 * Definition  7.1.10:  Hessian matrix
 
@@ -298,8 +298,7 @@ provides a polynomial approximation of $f$ near $x_0$.
 
 *Remark 7.2.2* (Local approximation). /In data analysis, Taylor expansions are used to approximate complex models locally by simpler ones./
 
-*Proof.*
-
+#+begin_proof
 Set $h := x - x_0$ and assume $\|h\|$ is small enough so that the line segment $\{x_0 + t h : t \in [0, 1]\} \subseteq U$. Define the one-dimensional function
 
 $$g : [0, 1] \rightarrow \mathbb{R}, \quad g(t) := f(x_0 + t h).$$
@@ -351,6 +350,7 @@ Since each $\partial^\alpha f$ with $|\alpha| = k$ is continuous at $x_0$, the f
 $$\omega(h) := \sup_{t \in [0, 1]} \max_{|\alpha| = k} \left| (\partial^\alpha f)(x_0 + t h) - (\partial^\alpha f)(x_0) \right| \rightarrow 0$$
 
 as $h \rightarrow 0$. Hence $R(h) = o(\|h\|^k)$.
+#+end_proof
 
 * Theorem     7.2.05:  Second-order sufficient conditions for extrema
 
@@ -366,8 +366,7 @@ Let $f : \mathbb{R}^n \rightarrow \mathbb{R}$ be twice continuously differentiab
 
 *Remark 7.2.7* (Local extrema). /In data-driven models, local extrema correspond to locally optimal parameter values where small changes do not improve the objective function./
 
-*Proof.*
-
+#+begin_proof
 Since $f$ is twice continuously differentiable, Taylor's formula of second order yields, for $h$ sufficiently small,
 
 $$f(x_0 + h) = f(x_0) + \operatorname{grad} f(x_0) \cdot h + \frac{1}{2} h^\top H_f(x_0) h + o(\|h\|^2).$$
@@ -411,6 +410,7 @@ where $\varphi(h) / \|h\|^2 \rightarrow 0$ for $h \rightarrow 0$.
    $$u^\top H_f(x_0) u > 0 \quad \text{and} \quad v^\top H_f(x_0) v < 0.$$
 
    Choosing $x = x_0 + t u$ and $x = x_0 + t v$ with $t$ sufficiently small and using the Taylor expansion shows that $f(x) - f(x_0)$ takes both positive and negative values arbitrarily close to $x_0$. Hence $x_0$ is a saddle point.
+#+end_proof
 
 * Lemma       7.2.10:  Second-order characterization of convexity
 
@@ -422,8 +422,7 @@ Let $f : \mathbb{R}^n \rightarrow \mathbb{R}$ be convex and $m \in \mathbb{N}$ w
 
 $$f(\sum_{i=1}^{m} \lambda_i x_i) \le \sum_{i=1}^{m} \lambda_i f(x_i), \quad x_i \in \mathbb{R}^n, \quad \lambda_i \in \left[ 0, 1 \right], \quad \sum_{i=1}^{m} \lambda_i = 1.$$
 
-*Proof.*
-
+#+begin_proof
 The case $m = 1$ is obvious and $m = 2$ is the definition of convexity. Assume that the claim holds for $m$. To verify the inequality for $m + 1$, we consider $\lambda_i \in \left[ 0, 1 \right]$ and $\sum_{i=1}^{m+1} \lambda_i = 1$. There must be one index $i$ such $\lambda_i \ne 0$. Without loss of generality, we may assume that $i = m + 1$, otherwise we may reorder. For $\lambda_{m+1} \ne 0$, we obtain
 
 \begin{align*}
@@ -441,6 +440,7 @@ because $\sum_{i=1}^{m} \frac{\lambda_i}{1 - \lambda_{m+1}} = \frac{1}{1 - \lamb
 f(\sum_{i=1}^{m+1} \lambda_i x_i) &\le (1 - \lambda_{m+1}) \sum_{i=1}^{m} \frac{\lambda_i}{1 - \lambda_{m+1}} f(x_i) + \lambda_{m+1} f(x_{m+1}) \\
 &= \sum_{i=1}^{m+1} \lambda_i f(x_i).
 \end{align*}
+#+end_proof
 
 * Theorem     7.3.02:  Gradient descent
 
@@ -466,8 +466,7 @@ $$|f(\bar{x}_N) - f(x^*)| \le N^{-\frac{1}{2}} \, C \| x_0 - x^* \|.$$
 
 Thus, the error is bounded by $|f(\bar{x}_N) - f(x^*)|$ decays as $N^{-1/2}$.
 
-*Proof.*
-
+#+begin_proof
 Let $e_k := x_k - x^*$. Expanding the update gives
 
 \begin{align*}
@@ -497,6 +496,7 @@ Summing from $k = 0$ to $N - 1$ telescopes:
 \end{align*}
 
 Divide by $2 \eta N$ and use convexity (Jensen) $f(\bar{x}_N) \le \frac{1}{N} \sum_{k=0}^{N-1} f(x_k)$ to conclude the claim.
+#+end_proof
 
 * Theorem     7.3.03:  Stochastic gradient descent for finite-sum problems
 
@@ -571,8 +571,7 @@ Let $f : \mathbb{R}^d \rightarrow \mathbb{R}$ be differentiable and suppose that
 
 $$f(y) - f(x) \le \nabla f(x)^\top (y - x) + \frac{L}{2} \| y - x \|^2, \quad \forall x, y \in \mathbb{R}^d.$$
 
-*Proof.*
-
+#+begin_proof
 Define the path $\phi : \left[ 0, 1 \right] \rightarrow \mathbb{R}$ by
 
 $$\phi(t) = f(x + t(y - x)).$$
@@ -592,6 +591,7 @@ f(y) - f(x) &= \int_0^1 \phi'(t) \, dt \\
 &= \nabla f(x)^\top (y - x) + L \| y - x \|^2 \int_0^1 t \, dt \\
 &= \nabla f(x)^\top (y - x) + \frac{L}{2} \| y - x \|^2.
 \end{align*}
+#+end_proof
 
 * Theorem     7.3.06:  Gradient descent with Lipschitz gradient
 
@@ -603,8 +603,7 @@ satisfies
 
 $$\nabla f(x_k) \rightarrow 0.$$
 
-*Proof.*
-
+#+begin_proof
 By /Lemma 7.3.5/,
 
 $$f(x_{k+1}) - f(x_k) \le \nabla f(x_k)^\top (x_{k+1} - x_k) + \frac{L}{2} \| x_{k+1} - x_k \|^2.$$
@@ -626,3 +625,5 @@ Since this inequality holds for all $N \in \mathbb{N}$, we deduce that the serie
 $$c \sum_{k=0}^{\infty} \| \nabla f(x_k) \|^2 \le f(x_0) - r_0.$$
 
 This implies that $\| \nabla f(x_k) \|^2 \rightarrow 0$.
+#+end_proof
+
