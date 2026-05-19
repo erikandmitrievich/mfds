@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-16>
-#+lastmod: <2026-05-19 14:07>
+#+lastmod: <2026-05-19 19:11>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -145,17 +145,63 @@ Connections between geometric sum and von Neumann series:
 
 (a) Implement the geometric sum $\sum_{k=0}^n x^k$ in Julia as a function ~myGeometricSum(x,n)~ by simply calling the Julia function ~myNeumann~ from the lecture notes. Do you see the connections?
 
-(b) Let $B$ be a Banach space. Prove by induction over $n$: if $g \in L(B)$ is such that $\mathrm{id}_B - g$ is invertible in $L(B)$, then
+(b) Let $B$ be a Banach space. Prove by induction over $n$: if $g \in \mathcal{L}(B)$ is such that $\mathrm{id}_B - g$ is invertible in $\mathcal{L}(B)$, then
 $$\sum_{k=0}^n g^k = (\mathrm{id}_B - g^{n+1})(\mathrm{id}_B - g)^{-1}$$
 #+end_quote
 
 ** Solution
 *** (a)
 
-#+begin_src julia :results value :exports both :tangle julia/p_2a.jl
+#+begin_src julia :results output :exports both :tangle julia/p_2a.jl
+using LinearAlgebra, Test
+
+function my_neumann(f, n=20)
+    (opnorm(I-f) < 1) || throw(ArgumentError("assumption theta < 1 not satisfied"))
+    sum((I-f)^k for k in 0:n)
+end
+
+function my_geometric_sum(x, n=20)
+    my_neumann([1 - x;;], n)[1, 1]
+end
+
+@testset "matches closed form" begin
+    for x in (0.5, -0.5, 0.9, -0.9, 0.1, 0.0)
+        for n in (0, 1, 5, 20)
+            @test my_geometric_sum(x, n) ≈ (1 - x^(n + 1)) / (1 - x)
+        end
+    end
+end
 #+end_src
 
+#+RESULTS:
+: my_neumann (generic function with 2 methods)
+: my_geometric_sum (generic function with 2 methods)
+: Test Summary:       | Pass  Total  Time
+: matches closed form |   24     24  0.0s
+
 *** (b)
+
+*Proposition.* Let $g \in \mathcal{L}(B)$ be such that $\mathrm{id}_B - g$ is invertible in $\mathcal{L}(B)$. Then for all $n \in \mathbb{N}_0$,
+
+$$\sum_{k=0}^n g^k = (\mathrm{id}_B - g^{n+1})(\mathrm{id}_B - g)^{-1}.$$
+
+*Base case* ($n = 0$).
+
+\begin{align*}
+\sum_{k=0}^0 g^k = \mathrm{id}_B = (\mathrm{id}_B - g)(\mathrm{id}_B - g)^{-1} = (\mathrm{id}_B - g^{0+1})(\mathrm{id}_B - g)^{-1}.
+\end{align*}
+
+*Inductive step.* Assume $\sum_{k=0}^n g^k = (\mathrm{id}_B - g^{n+1})(\mathrm{id}_B - g)^{-1}$. Then
+
+\begin{align*}
+\sum_{k=0}^{n+1} g^k &= \sum_{k=0}^{n} g^k + g^{n+1} \\
+                    &= (\mathrm{id}_B - g^{n+1})(\mathrm{id}_B - g)^{-1} + g^{n+1}(\mathrm{id}_B - g)(\mathrm{id}_B - g)^{-1} \\
+                    &= \left((\mathrm{id}_B - g^{n+1}) + g^{n+1}(\mathrm{id}_B - g)\right)(\mathrm{id}_B - g)^{-1} \\
+                    &= (\mathrm{id}_B - g^{n+1} + g^{n+1} - g^{n+2})(\mathrm{id}_B - g)^{-1} \\
+                    &= (\mathrm{id}_B - g^{(n+1)+1})(\mathrm{id}_B - g)^{-1}.
+\end{align*}
+
+*Conclusion.* By induction, the identity holds for all $n \in \mathbb{N}_0$. $\square$
 
 * Problem 3 :matrix:inverse:von_neumann_series:
 ** Task
