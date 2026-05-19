@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-16>
-#+lastmod: <2026-05-17 18:25>
+#+lastmod: <2026-05-19 14:07>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -44,8 +44,8 @@ $$\sup_{\|x\|_1 = 1} \|Ax\|_1 = \max_{j=1, \ldots, n} \sum_{i=1}^{m} |a_{ij}|$$
   Choose $x \in \mathbb{R}^n : \|x\|_1 = 1$ ($\sum_{j=1}^n |x_j| = 1$).
 
   \begin{align*}
-  &\|Ax\|_1 = \|\sum_{j=1}^n x_j a_{\cdot j}\|_1 \le \sum_{j=1}^n |x_{j}| \cdot \|a_{\cdot j}\|_1 \le \sum_{j=1}^n |x_{j}| \cdot \max_j \|a_{\cdot j}\|_1 = \max_j \|a_{\cdot j}\|_1 \\
-  &\implies \sup_{\|x\|_1 = 1} \|Ax\|_1 \le \max_{j=1, \ldots, n} \sum_{i=1}^{m} |a_{ij}| \\
+  \|Ax\|_1 = \|\sum_{j=1}^n x_j a_{\cdot j}\|_1 \le \sum_{j=1}^n |x_{j}| \cdot \|a_{\cdot j}\|_1 &\le \sum_{j=1}^n |x_{j}| \cdot \max_j \|a_{\cdot j}\|_1 = \max_j \|a_{\cdot j}\|_1 \\
+  \sup_{\|x\|_1 = 1} \|Ax\|_1 &\le \max_{j=1, \ldots, n} \sum_{i=1}^{m} |a_{ij}| \\
   \end{align*}
 
 - $\ge$
@@ -53,8 +53,8 @@ $$\sup_{\|x\|_1 = 1} \|Ax\|_1 = \max_{j=1, \ldots, n} \sum_{i=1}^{m} |a_{ij}|$$
   Let $j^{*} := \arg \max_{j=1, \ldots, n} \sum_{i=1}^m |a_{ij}|$. Choose $x = e_{j^{*}}$. Then $\|e_{j^{*}}\|_1 = 1$ and
 
   \begin{align*}
-  &\|Ae_{j^{*}}\|_1 = \|a_{\cdot j^{*}}\|_1 = \sum_{i=1}^m |a_{ij^{*}}| = \max_{j=1, \ldots, n} \sum_{i=1}^{m} |a_{ij}| \\
-  &\implies \sup_{\|x\|_1 = 1} \|Ax\|_1 \ge \max_{j=1, \ldots, n} \sum_{i=1}^{m} |a_{ij}| \\
+  \|Ae_{j^{*}}\|_1 = \|a_{\cdot j^{*}}\|_1 &= \sum_{i=1}^m |a_{ij^{*}}| = \max_{j=1, \ldots, n} \sum_{i=1}^{m} |a_{ij}| \\
+  \sup_{\|x\|_1 = 1} \|Ax\|_1 &\ge \max_{j=1, \ldots, n} \sum_{i=1}^{m} |a_{ij}| \\
   \end{align*}
 
 Thus,
@@ -80,6 +80,27 @@ $$\sup_{\|x\|_{\infty} = 1} \|Ax\|_{\infty} = \max_{i=1, \ldots, m} \sum_{j = 1}
 
 - $\ge$
 
+  Let $i^{*} = \arg \max_{i = 1, \ldots, m} \sum_{j=1}^n |a_{ij}|$. Choose $x \in \mathbb{R}^n$, by
+
+  $$x_j = \sgn(a_{i^{*}j}), j = 1, \ldots, n$$
+
+  with the convention $\sgn(0) = 1$. Then, $|x_j| \le 1$ for all $j$ and $|x_j| = 1$ whenever $a_{i^{*}j} \neq 0$, so $\|x\|_{\infty} = 1$.
+
+  The $i^{*}$ th component of $Ax$ is:
+
+  $$(Ax)_{i^{*}} = \sum_{j=0}^{n} a_{i^{*}j}x_{j} = \sum_{j=0}^{n} a_{i^{*}j} \sgn(a_{i^{*}j})=\sum_{j=0}^{n}|a_{i^{*}j}|$$
+
+  Therefore,
+
+  \begin{align*}
+  \|Ax\|{\infty} = \max_{i=1, \ldots, m} \|(Ax)i\| &\ge |(Ax){i^{}}| = \sum_{j=1}^n |a_{i^{}j}| = \max_{i=1, \ldots, m} \sum_{j=1}^n |a_{ij}| \\
+  \|Ax\|_{\infty} &\ge \max_{i = 1, \ldots, m} \sum_{j}^n |a_{ij}| \\
+  \end{align*}
+
+Thus,
+
+$$\sup_{\|x\|_{\infty} = 1} \|Ax\|_{\infty} = \max_{i=1, \ldots, m} \sum_{j = 1}^n |a_{ij}|$$
+
 *** (c)
 
 - $\|A\|_1 = \|A\|_\infty$: $A = I_2 = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}. \quad \|A\|_1 = 1 = \|A\|_\infty$.
@@ -87,6 +108,35 @@ $$\sup_{\|x\|_{\infty} = 1} \|Ax\|_{\infty} = \max_{i=1, \ldots, m} \sum_{j = 1}
 - $\|A\|_1 > \|A\|_\infty$: $A = \begin{pmatrix} 1 \\ 1 \end{pmatrix}. \quad \|A\|_1 = 2, \|A\|_\infty = 1$.
 
 - $\|A\|_1 < \|A\|_\infty$: $A = \begin{pmatrix} 1 & 1 \end{pmatrix}. \quad \|A\|_1 = 1, \|A\|_\infty = 2$.
+
+#+begin_src julia :results output
+using LinearAlgebra, Test
+
+A_eq = [1 0; 0 1]
+A_ge = [1 0; 1 0]
+A_le = [1 1; 0 0]
+
+@testset "Operator norms of A" begin
+    @test opnorm(A_eq, 1) == opnorm(A_eq, Inf)
+    @test opnorm(A_ge, 1) >  opnorm(A_ge, Inf)
+    @test opnorm(A_le, 1) <  opnorm(A_le, Inf)
+end
+#+end_src
+
+#+RESULTS:
+#+begin_example
+2×2 Matrix{Int64}:
+ 1  0
+ 0  1
+2×2 Matrix{Int64}:
+ 1  0
+ 1  0
+2×2 Matrix{Int64}:
+ 1  1
+ 0  0
+Test Summary:       | Pass  Total  Time
+Operator norms of A |    3      3  0.1s
+#+end_example
 
 * Problem 2 :von_neumann_series:banach_space:induction:
 ** Task
