@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-13>
-#+lastmod: <2026-05-13 18:57>
+#+lastmod: <2026-05-20 13:49>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -30,6 +30,78 @@ Write the TREE-PREDECESSOR procedure for a binary search tree.
 #+end_quote
 
 ** Solution
+
+#+begin_src julia :results output
+using Test
+
+mutable struct Node{T}
+    data::T
+    left::Union{Node{T}, Nothing}
+    right::Union{Node{T}, Nothing}
+    parent::Union{Node{T}, Nothing}
+end
+
+function Node(data::T, left::Union{Node{T}, Nothing}=nothing, right::Union{Node{T}, Nothing}=nothing) where T
+    node = Node{T}(data, left, right, nothing)
+    if left !== nothing
+        left.parent = node
+    end
+    if right !== nothing
+        right.parent = node
+    end
+    return node
+end
+
+mutable struct BinaryTree{T}
+    root::Union{Node{T}, Nothing}
+    BinaryTree{T}() where T = new(nothing)
+end
+
+function tree_maximum(x::Node)
+    while x.right !== nothing
+        x = x.right
+    end
+    return x
+end
+
+function tree_predecessor(n::Node{T}) where T
+    if n.left !== nothing
+        return tree_maximum(n.left)
+    end
+    y = n.parent
+    while y !== nothing && n === y.left
+        n = y
+        y = y.parent
+    end
+    return y
+end
+
+@testset "tree_predecessor" begin
+    #      4
+    #     / \
+    #    2   5
+    #   / \
+    #  1   3
+    n1 = Node(1)
+    n3 = Node(3)
+    n5 = Node(5)
+    n2 = Node(2, n1, n3)
+    n4 = Node(4, n2, n5)
+
+    @test tree_predecessor(n5) === n4
+    @test tree_predecessor(n4) === n3
+    @test tree_predecessor(n3) === n2
+    @test tree_predecessor(n2) === n1
+    @test tree_predecessor(n1) === nothing
+end
+#+end_src
+
+#+RESULTS:
+: Node
+: tree_maximum (generic function with 1 method)
+: tree_predecessor (generic function with 1 method)
+: Test Summary:    | Pass  Total  Time
+: tree_predecessor |    5      5  0.0s
 
 * Problem 64 :binary_search_tree:counterexample:
 ** Task
@@ -106,6 +178,7 @@ The newly inserted node in RB-INSERT is set to the color red, which causes the p
 ** Solution
 
 * Time Estimates
+
 - Problem 62: ~10 min~
 - Problem 63: ~10 min~
 - Problem 64: ~15 min~
