@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-20>
-#+lastmod: <2026-05-19 13:30>
+#+lastmod: <2026-05-19 20:57>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -171,13 +171,33 @@ Let $B$ be a Banach space. If $f \in \mathcal{L}(B)$ such that there is $\theta 
 
 $$\|\mathrm{id}_B - f\|_{\mathrm{op}} \le \theta,$$
 
-then $f$ is invertible, $\|f^{-1}\|_{\mathrm{op}} \le \frac{1}{1 - \theta}$ and
+then $f$ is invertible, $\|f^{-1}\|_{\mathrm{op}} \le \dfrac{1}{1 - \theta}$ and
 
 $$f^{-1} = \sum_{k=0}^{\infty} (\mathrm{id}_B - f)^k.$$
 
 Note that $f^0 = \mathrm{id}_B$ by definition.
 
 ** Questions
+
+*** DONE What exaclty is $\mathrm{id}_{B}$?
+
+It is an identity map on $B$.
+
+$$\mathrm{id}_{B} : B \rightarrow B, \mathrm{id}_{B}(x) = x$$
+
+It is linear, continuous, and $\|\mathrm{id}_B\|_{\mathrm{op}} = 1$.
+
+*** DONE Do I understand right that what it does is fixes the deviation of $f$ from $\mathrm{id}_B$ (strictly less), and states, it is invertable with inverse being kind of complementary of $f$? (the bigger $\|f\|_{\mathrm{op}}$, the less $\|f^{-1}\|_{\mathrm{op}}$)
+
+First part — yes. Second part — no.
+
+The controlling quantity is $\theta = \|\mathrm{id}_B - f\|_{\mathrm{op}}$, not $\|f\|_{\mathrm{op}}$. The bound says: if $f$ stays within distance $\theta < 1$ from $\mathrm{id}_B$, then $f^{-1}$ stays within a controlled distance from $\mathrm{id}_B$ too.
+
+
+*** DONE How would you generalise theorem in one sentence?
+
+Any continuous linear operator on a Banach space that is close enough to the identity (within $< 1$) is invertable, with inverse given by the geometric series in $\mathrm{id}_{B}-f$
+
 * Definition  6.2.01:  Length of a curve in a metric space
 
 Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a curve. For a partition

@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-16>
-#+lastmod: <2026-05-19 19:46>
+#+lastmod: <2026-05-19 21:01>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -82,13 +82,13 @@ $$\sup_{\|x\|_{\infty} = 1} \|Ax\|_{\infty} = \max_{i=1, \ldots, m} \sum_{j = 1}
 
   Let $i^{*} = \arg \max_{i = 1, \ldots, m} \sum_{j=1}^n |a_{ij}|$. Choose $x \in \mathbb{R}^n$, by
 
-  $$x_j = \sgn(a_{i^{*}j}), j = 1, \ldots, n$$
+  $$x_j = \mathrm{sgn}(a_{i^{*}j}), j = 1, \ldots, n$$
 
-  with the convention $\sgn(0) = 1$. Then, $|x_j| \le 1$ for all $j$ and $|x_j| = 1$ whenever $a_{i^{*}j} \neq 0$, so $\|x\|_{\infty} = 1$.
+  with the convention $\mathrm{sgn}(0) = 1$. Then, $|x_j| \le 1$ for all $j$ and $|x_j| = 1$ whenever $a_{i^{*}j} \neq 0$, so $\|x\|_{\infty} = 1$.
 
   The $i^{*}$ th component of $Ax$ is:
 
-  $$(Ax)_{i^{*}} = \sum_{j=0}^{n} a_{i^{*}j}x_{j} = \sum_{j=0}^{n} a_{i^{*}j} \sgn(a_{i^{*}j})=\sum_{j=0}^{n}|a_{i^{*}j}|$$
+  $$(Ax)_{i^{*}} = \sum_{j=0}^{n} a_{i^{*}j}x_{j} = \sum_{j=0}^{n} a_{i^{*}j} \mathrm{sgn}(a_{i^{*}j})=\sum_{j=0}^{n}|a_{i^{*}j}|$$
 
   Therefore,
 
@@ -338,14 +338,18 @@ Rational{BigInt} deviation < 1e-100 |    1      1  0.9s
 ** Task
 #+begin_quote
 Consider the space
+
 $$C([0, 1]) := \{f : [0, 1] \to \mathbb{R} : f \text{ continuous}\}$$
 
 (a) Prove that $C([0, 1])$ is a normed, linear vector space with norm
 $$\|f\| := \int_0^1 |f(x)|\, dx$$
+
 (You may assume that this is a norm...)
 
 (b) Show that the map $S : C([0, 1]) \to \mathbb{R}$,
+
 $$S(f) = f(0)$$
+
 is linear but not continuous.
 
 (c) Is there an alternative norm on $C([0, 1])$ such that $S$ is continuous?
@@ -353,6 +357,30 @@ is linear but not continuous.
 
 ** Solution
 *** (a)
+
+Let $F([0,1]) := \{f : [0,1] \rightarrow \mathbb{R}\}$, which is a real vector space under pointwise operations
+
+$$(f+g)(x) := f(x) + g(x), \quad (\alpha f)(x) = \alpha f(x)$$
+
+The vector space axioms hold because they hold pointwise in $\mathbb{R}$. To show $C([0,1])$ is a vector space, its sufficient to prove its linear subspace of $F([0,1])$.
+
+#+begin_proof
+1. *Zero function.* The map $\mathbf{0}(x) = 0$ satisfies $|\mathbf{0}(x) - \mathbf{0}(x_0)| = 0 < \epsilon$ for all $\epsilon > 0$, hence $\mathbf{0} \in C([0,1])$.
+
+2. *Closure under addition.* Let $f, g \in C([0,1])$, fix $x_0 \in [0,1]$ and $\epsilon > 0$. By continuity, $\exists \delta_1, \delta_2 > 0$ such that
+
+   $$|x - x_0| < \delta_1 \Rightarrow |f(x) - f(x_0)| < \epsilon/2, \quad |x - x_0| < \delta_2 \Rightarrow |g(x) - g(x_0)| < \epsilon/2.$$
+
+   For $\delta := \min(\delta_1, \delta_2)$ and $|x - x_0| < \delta$,
+
+   $$|(f+g)(x) - (f+g)(x_0)| \le |f(x) - f(x_0)| + |g(x) - g(x_0)| < \epsilon.$$
+
+3. *Closure under scalar multiplication.* Let $\alpha \in \mathbb{R}$, $f \in C([0,1])$. If $\alpha = 0$, then $\alpha f = \mathbf{0}$, covered by (i). If $\alpha \neq 0$, fix $x_0$ and $\epsilon > 0$. By continuity of $f$, $\exists \delta > 0$ such that $|x - x_0| < \delta \Rightarrow |f(x) - f(x_0)| < \epsilon / |\alpha|$. Then
+
+   $$|\alpha f(x) - \alpha f(x_0)| = |\alpha| \, |f(x) - f(x_0)| < \epsilon.$$
+#+end_proof
+
+Hence $C([0,1])$ is a linear subspace of $F([0,1])$, hence a real vector space. The norm axioms for $\|f\| = \int_0^1 |f(x)| \, dx$ are assumed.
 
 *** (b)
 
