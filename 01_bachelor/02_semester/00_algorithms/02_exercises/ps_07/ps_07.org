@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-13>
-#+lastmod: <2026-05-20 19:30>
+#+lastmod: <2026-05-20 19:37>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -218,6 +218,31 @@ Is the operation of deletion "commutative" in the sense that deleting $x$ and th
 #+end_quote
 
 ** Solution
+
+No, the operation of deletion in a binary search tree is not commutative.
+
+Consider a binary search tree $T$ with the following structure:
+#+begin_example
+    2
+   / \
+  1   4
+     /
+    3
+#+end_example
+
+- Case 1: Delete $1$, then $2$
+
+  Deleting $1$ (a leaf) replaces it with =NIL=.
+  Node $2$ now has only a right child ($4$). Deleting $2$ elevates $4$ to replace $2$.
+  The resulting tree has root $4$ with a left child $3$.
+
+- Case 2: Delete $2$, then $1$
+
+  Node $2$ has two children. Its successor is $3$ (the minimum of its right subtree). Node $3$ replaces node $2$, with $1$ becoming its left child and $4$ becoming its right child.
+  Deleting $1$ (a leaf) replaces it with =NIL=.
+  The resulting tree has root $3$ with a right child $4$.
+
+The final trees have different structures (root $4$ vs. root $3$). Therefore, deletion is not commutative. $\qed$
 
 * Problem 68 :red_black_tree:black_height:
 ** Task
