@@ -1,0 +1,213 @@
+#+title: Ch 12 Binary Search Trees
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-20>
+#+lastmod: <2026-05-20 13:13>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* 12.1 What is a binary search tree?
+
+** Representation
+- A *binary search tree* is organized as a binary tree, representable with a linked data structure (see §10.3).
+- Each node object contains a $key$, satellite data, and pointer attributes $left$, $right$, $p$ → left child, right child, parent. A missing child or parent → the attribute is NIL.
+- The tree has an attribute $root$ pointing to the root node, or NIL if the tree is empty.
+- $T.root$ is the only node in tree $T$ whose parent is NIL.
+
+[FIGURE 12.1: two BSTs on the same 6-key set — (a) height 2, (b) height 4; each shown both conceptually and with $left$, $right$, $p$ pointers per node. Worst-case running time for most search-tree operations is proportional to tree height.]
+
+** Binary search tree property
+- *Binary search tree property*: let $x$ be a node. If $y$ is in the left subtree of $x$, then $y.key \leq x.key$; if $y$ is in the right subtree of $x$, then $y.key \geq x.key$.
+- The property holds at *every* node, not just the root — e.g. in Figure 12.1(a) a subtree root with key 5 has a left-subtree key 2 ($\leq 5$) and a right-subtree key 5 ($\geq 5$).
+
+** Tree walks
+- The BST property lets all keys be printed in sorted order by a recursive *inorder tree walk*, =INORDER-TREE-WALK=, so named because it prints a subtree root's key *between* the keys of its left and right subtrees.
+- *Preorder tree walk*: prints the root before either subtree. *Postorder tree walk*: prints the root after both subtrees.
+- To print all elements of tree $T$: call =INORDER-TREE-WALK(T.root)=.
+- Correctness follows by induction directly from the BST property.
+#+begin_example
+INORDER-TREE-WALK(x)
+1  if x != NIL
+2      INORDER-TREE-WALK(x.left)
+3      print x.key
+4      INORDER-TREE-WALK(x.right)
+#+end_example
+- Informally $\Theta(n)$ on an $n$ node tree: after the initial call, the procedure calls itself exactly twice per node — once per child.
+
+*** Theorem 12.1 — inorder walk runs in linear time
+- *Theorem 12.1:* if $x$ is the root of an $n$ node subtree, then =INORDER-TREE-WALK(x)= takes $\Theta(n)$ time.
+- *Proof.* Let $T(n)$ be the time on an $n$ node subtree.
+  - *Lower bound:* =INORDER-TREE-WALK= visits all $n$ nodes, so $T(n) = \Omega(n)$. It remains to show $T(n) = O(n)$.
+  - *Base case* of the recurrence: on an empty subtree the only work is the test $x \neq \text{NIL}$ → $T(0) = c$ for some constant $c > 0$.
+  - *Recurrence:* for $n > 0$, if $x$ has $k$ nodes in its left subtree and $n - k - 1$ in its right,
+    \[ T(n) \leq T(k) + T(n - k - 1) + d \]
+    where $d > 0$ bounds the body's cost exclusive of recursive calls.
+  - *Substitution method*, claim $T(n) \leq (c + d)n + c$:
+    - Base: $n = 0$ gives $(c + d) \cdot 0 + c = c = T(0)$ ✓.
+    - Inductive step: substitute the hypothesis for $T(k)$ and $T(n - k - 1)$:
+      \[ T(n) \leq ((c+d)k + c) + ((c+d)(n-k-1) + c) + d \]
+      \[ = (c+d)n + c - (c+d) + c + d = (c+d)n + c \]
+      The $k$ dependence cancels: the two $(c+d)$ terms combine to $(c+d)n$, and $-(c+d) + c + d = 0$ collapses the leftover constants down to a single $+c$.
+  - So $T(n) \leq (c+d)n + c = O(n)$. Combined with $T(n) = \Omega(n)$: $T(n) = \Theta(n)$. ∎
+
+* 12.2 Querying a binary search tree
+
+- Binary search trees support =MINIMUM=, =MAXIMUM=, =SUCCESSOR=, =PREDECESSOR=, and =SEARCH=, each in $O(h)$ time on a tree of height $h$.
+
+** Searching
+- =TREE-SEARCH(x, k)= takes a pointer $x$ to a subtree root and a key $k$; returns a pointer to a node with key $k$ if one exists in the subtree, else NIL. Search the whole tree $T$ with =TREE-SEARCH(T.root, k)=.
+#+begin_example
+TREE-SEARCH(x, k)
+1  if x == NIL or k == x.key
+2      return x
+3  if k < x.key
+4      return TREE-SEARCH(x.left, k)
+5  else return TREE-SEARCH(x.right, k)
+#+end_example
+- Begins at the root, traces a simple path downward. At each node $x$, compare $k$ with $x.key$: equal → terminate; $k < x.key$ → recurse left (the BST property rules out $k$ in the right subtree); $k > x.key$ → recurse right.
+- The encountered nodes form a simple downward path → running time $O(h)$.
+
+[FIGURE 12.2: queries on a BST, query paths in blue — (a) search for key 13 via $15 \to 6 \to 7 \to 13$; (b) minimum 2 via left pointers, maximum 20 via right pointers; (c) successor of 15 is 17, the minimum of 15's right subtree; (d) node 13 has no right subtree, so its successor 15 is its lowest ancestor whose left child is also an ancestor.]
+
+- Since =TREE-SEARCH= recurses on only one subtree, the recursion can be unrolled into a =while= loop — =ITERATIVE-TREE-SEARCH= is more efficient on most computers.
+#+begin_example
+ITERATIVE-TREE-SEARCH(x, k)
+1  while x != NIL and k != x.key
+2      if k < x.key
+3          x = x.left
+4      else x = x.right
+5  return x
+#+end_example
+
+** Minimum and maximum
+- =TREE-MINIMUM(x)= returns a pointer to the minimum element of the subtree rooted at $x$ (assumed non-NIL); follow $left$ pointers until NIL.
+- =TREE-MAXIMUM(x)= is symmetric; follow $right$ pointers until NIL.
+#+begin_example
+TREE-MINIMUM(x)
+1  while x.left != NIL
+2      x = x.left
+3  return x
+
+TREE-MAXIMUM(x)
+1  while x.right != NIL
+2      x = x.right
+3  return x
+#+end_example
+- *Correctness* of =TREE-MINIMUM= from the BST property: if $x$ has no left subtree, every right-subtree key is $\geq x.key$, so $x.key$ is the subtree minimum. If $x$ has a left subtree, no right-subtree key is smaller than $x.key$ and no left-subtree key exceeds $x.key$, so the minimum lies in the subtree rooted at $x.left$.
+- Both run in $O(h)$: the encountered nodes form a simple downward path from $x$.
+
+** Successor and predecessor
+- The *successor* of a node is the next node visited in an inorder tree walk. With distinct keys, it is the node with the smallest key greater than $x.key$; the definition holds regardless. =TREE-SUCCESSOR(x)= returns it, or NIL if $x$ is the last node of an inorder walk. The structure alone determines the successor — no key comparisons needed.
+#+begin_example
+TREE-SUCCESSOR(x)
+1  if x.right != NIL
+2      return TREE-MINIMUM(x.right)   // leftmost node in right subtree
+3  else // find the lowest ancestor of x whose left child is an ancestor of x
+4      y = x.p
+5      while y != NIL and x == y.right
+6          x = y
+7          y = y.p
+8      return y
+#+end_example
+- *Case 1 — right subtree nonempty:* the successor is the leftmost node of $x$'s right subtree, found by =TREE-MINIMUM(x.right)= (line 2). E.g. successor of key 15 in Figure 12.2(c) is key 17.
+- *Case 2 — right subtree empty:* if $x$ has a successor $y$, then $y$ is the lowest ancestor of $x$ whose left child is also an ancestor of $x$ (Exercise 12.2-6). Lines 4–8: ascend from $x$ until reaching either the root or a node that is the left child of its parent. E.g. successor of key 13 in Figure 12.2(d) is key 15.
+- *Running time:* $O(h)$ — =TREE-SUCCESSOR= follows either a simple path down (case 1) or a simple path up (case 2). =TREE-PREDECESSOR= is symmetric, also $O(h)$.
+
+** Theorem 12.2
+- *Theorem 12.2:* the dynamic-set operations =SEARCH=, =MINIMUM=, =MAXIMUM=, =SUCCESSOR=, =PREDECESSOR= can be implemented to run in $O(h)$ time on a BST of height $h$. ∎
+
+* 12.3 Insertion and deletion
+
+- Insertion and deletion change the dynamic set represented by a BST. The structure must be modified to reflect the change while preserving the BST property. Insertion is straightforward; deletion is more complicated.
+
+** Insertion
+- =TREE-INSERT(T, z)= takes a BST $T$ and a node $z$ with $z.key$ pre-filled and $z.left = z.right = \text{NIL}$. It modifies $T$ and some attributes of $z$ to place $z$ in an appropriate position.
+#+begin_example
+TREE-INSERT(T, z)
+1   x = T.root              // node being compared with z
+2   y = NIL                 // y will be parent of z
+3   while x != NIL          // descend until reaching a leaf
+4       y = x
+5       if z.key < x.key
+6           x = x.left
+7       else x = x.right
+8   z.p = y                 // found the location — insert z with parent y
+9   if y == NIL
+10      T.root = z          // tree T was empty
+11  elseif z.key < y.key
+12      y.left = z
+13  else y.right = z
+#+end_example
+- Like =TREE-SEARCH=, begins at the root; pointer $x$ traces a simple downward path looking for the NIL to replace with $z$. The *trailing pointer* $y$ is kept as the parent of $x$.
+- Lines 3–7: $x$ and $y$ descend, going left or right by comparing $z.key$ with $x.key$, until $x$ becomes NIL. That NIL position is where $z$ goes — either a $left$/$right$ attribute of $z$'s eventual parent, or $T.root$ if the tree was empty.
+- $y$ is needed as a trailing pointer because once $x$ reaches the NIL, the search has gone one step past the node that must be modified. Lines 8–13 set the pointers that insert $z$.
+- Running time $O(h)$ on a tree of height $h$.
+
+[FIGURE 12.3: inserting key 13 — downward path from root in blue, the new node and its parent link in orange.]
+
+** Deletion
+- The overall strategy for deleting node $z$ from BST $T$ has three basic cases:
+  - $z$ has *no children*: remove it by modifying its parent to replace $z$ with NIL.
+  - $z$ has *one child*: elevate that child into $z$'s position by modifying $z$'s parent to replace $z$ by the child.
+  - $z$ has *two children*: find $z$'s successor $y$ (which must lie in $z$'s right subtree) and move $y$ into $z$'s position. The rest of $z$'s right subtree becomes $y$'s new right subtree; $z$'s left subtree becomes $y$'s new left subtree. Since $y$ is the successor it has no left child; $y$'s original right child moves into $y$'s old position. This is the tricky case — it matters whether $y$ is $z$'s right child.
+
+*** Four-case organization
+- The actual procedure reorganizes into four cases (Figure 12.4):
+  - $z$ has *no left child*: replace $z$ by its right child (which may or may not be NIL). When the right child is also NIL this covers the no-children case; when non-NIL it covers the single-(right-)child case.
+  - $z$ has *just one child, a left child*: replace $z$ by its left child.
+  - $z$ has *two children*: find successor $y$ in $z$'s right subtree ($y$ has no left child, Exercise 12.2-5), splice $y$ out, and replace $z$ by $y$. The handling splits:
+    - $y$ *is* $z$'s right child: replace $z$ by $y$, leaving $y$'s right child alone.
+    - $y$ is *not* $z$'s right child: $y$ lies within $z$'s right subtree but deeper. First replace $y$ by its own right child, then replace $z$ by $y$.
+
+[FIGURE 12.4: deleting node $z$ (blue), replacement node (orange) — (a) $z$ has no left child, replace by right child $r$; (b) $z$ has left child $l$ only, replace by $l$; (c) $z$ has two children, successor $y$ is $z$'s right child, replace $z$ by $y$ and give $y$ left child $l$; (d) $z$ has two children, successor $y \neq r$ lies in $r$'s subtree — first replace $y$ by its right child $x$, then replace $z$ by $y$.]
+
+*** TRANSPLANT subroutine
+- Deletion moves subtrees around. =TRANSPLANT(T, u, v)= replaces the subtree rooted at $u$, as a child of $u$'s parent, with the subtree rooted at $v$: $u$'s parent becomes $v$'s parent, and $u$'s parent gets $v$ as its appropriate child. $v$ may be NIL.
+#+begin_example
+TRANSPLANT(T, u, v)
+1  if u.p == NIL
+2      T.root = v
+3  elseif u == u.p.left
+4      u.p.left = v
+5  else u.p.right = v
+6  if v != NIL
+7      v.p = u.p
+#+end_example
+- Lines 1–2: $u$ is the root of $T$. Otherwise $u$ is a left or right child — lines 3–4 update $u.p.left$ if $u$ is a left child, line 5 updates $u.p.right$ if a right child.
+- Lines 6–7: update $v.p$ only when $v$ is non-NIL.
+- =TRANSPLANT= does *not* update $v.left$ or $v.right$ — that is the caller's responsibility.
+
+*** TREE-DELETE
+- =TREE-DELETE(T, z)= uses =TRANSPLANT= to delete $z$ from $T$.
+#+begin_example
+TREE-DELETE(T, z)
+1   if z.left == NIL
+2       TRANSPLANT(T, z, z.right)      // replace z by its right child
+3   elseif z.right == NIL
+4       TRANSPLANT(T, z, z.left)       // replace z by its left child
+5   else y = TREE-MINIMUM(z.right)     // y is z's successor
+6       if y != z.right                // is y farther down the tree?
+7           TRANSPLANT(T, y, y.right)  // replace y by its right child
+8           y.right = z.right          // z's right child becomes
+9           y.right.p = y              //     y's right child
+10      TRANSPLANT(T, z, y)            // replace z by its successor y
+11      y.left = z.left                // and give z's left child to y,
+12      y.left.p = y                   //     which had no left child
+#+end_example
+- Lines 1–2: $z$ has no left child (covers no-children when $z.right$ is also NIL). Lines 3–4: $z$ has a left child but no right child.
+- Lines 5–12: $z$ has two children. Line 5 sets $y$ = =TREE-MINIMUM(z.right)=, the successor; because $z$'s right subtree is nonempty the successor is its smallest-key node. $y$ has no left child. The procedure splices $y$ out and replaces $z$ by $y$.
+  - *Case — $y$ is $z$'s right child* (Figure 12.4(c)): lines 10–12 replace $z$ by $y$ and set $y$'s left child to $z$'s left child. $y$ keeps its existing right child, so $y.right$ is untouched.
+  - *Case — $y$ is not $z$'s right child* (Figure 12.4(d)): two nodes move. Lines 7–9 replace $y$ by its right child and make $z$'s right child become $y$'s right child. Then lines 10–12 replace $z$ by $y$ and set $y$'s left child to $z$'s left child.
+- *Running time:* every line, including the =TRANSPLANT= calls, is constant time except =TREE-MINIMUM= in line 5. So =TREE-DELETE= runs in $O(h)$.
+
+** Theorem 12.3
+- *Theorem 12.3:* the dynamic-set operations =INSERT= and =DELETE= can be implemented to run in $O(h)$ time on a BST of height $h$. ∎
