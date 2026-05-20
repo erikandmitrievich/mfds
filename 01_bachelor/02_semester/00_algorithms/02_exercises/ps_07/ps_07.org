@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-13>
-#+lastmod: <2026-05-20 13:49>
+#+lastmod: <2026-05-20 18:11>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -22,6 +22,12 @@ Argue that since sorting $n$ elements takes $\Omega(n \lg n)$ time in the worst 
 #+end_quote
 
 ** Solution
+
+In-order traversal of a binary search tree on $n$ elements yields the elements in sorted order in $O(n)$ time using *no key comparisons* — only pointer-following: =INORDER-TREE-WALK= branches solely on the nil-check $x \neq \text{NIL}$, never on $x.key$ (CLRS treats inorder order as determined by tree structure alone, §12.2).
+
+So if a comparison-based algorithm builds a BST in $T(n)$ time, then "build, then traverse in-order" is a comparison-based sort running in $T(n) + O(n)$. Comparison sorting is $\Omega(n \lg n)$, hence
+
+$$T(n) + O(n) = \Omega(n \lg n) \;\Longrightarrow\; T(n) = \Omega(n \lg n)$$
 
 * Problem 63 :binary_search_tree:predecessor:pseudocode:
 ** Task
@@ -43,12 +49,8 @@ end
 
 function Node(data::T, left::Union{Node{T}, Nothing}=nothing, right::Union{Node{T}, Nothing}=nothing) where T
     node = Node{T}(data, left, right, nothing)
-    if left !== nothing
-        left.parent = node
-    end
-    if right !== nothing
-        right.parent = node
-    end
+    (left !== nothing) && (left.parent = node)
+    (right !== nothing) && (right.parent = node)
     return node
 end
 
