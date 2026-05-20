@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-13>
-#+lastmod: <2026-05-20 18:34>
+#+lastmod: <2026-05-20 18:58>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -136,6 +136,28 @@ Let $T$ be a binary search tree whose keys are distinct, let $x$ be a leaf node,
 #+end_quote
 
 ** Solution
+
+$x$ is a child of $y$, so it is either the left or right child.
+
+- Case 1: $\mathrm{left}(y) = x$.
+
+  By the BST property, $x.key < y.key$.
+
+  Suppose some $z$ has $x.key < z.key < y.key$.
+  - $z.key < y.key \Rightarrow z$ is in $y$'s left subtree.
+  - $z.key > x.key \Rightarrow z$ is in $x$'s right subtree.
+
+  But $x$ is a leaf, so it has no right subtree. Contradiction. Hence $y.key$ is the smallest key larger than $x.key$.
+
+- Case 2: $\mathrm{right}(y) = x$.
+
+  By the BST property, $x.key > y.key$.
+
+  Suppose some $z$ has $y.key < z.key < x.key$.
+  - $z.key > y.key \Rightarrow z$ is in $y$'s right subtree.
+  - $z.key < x.key \Rightarrow z$ is in $x$'s left subtree.
+
+  But $x$ is a leaf, so it has no left subtree. Contradiction. Hence $y.key$ is the largest key smaller than $x.key$. $\qed$
 
 * Problem 66 :binary_search_tree:deletion:
 ** Task
