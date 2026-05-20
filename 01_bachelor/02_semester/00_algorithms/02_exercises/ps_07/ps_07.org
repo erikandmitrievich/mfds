@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-13>
-#+lastmod: <2026-05-20 18:11>
+#+lastmod: <2026-05-20 18:34>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -112,6 +112,22 @@ Professor Kilmer claims to have discovered a remarkable property of binary searc
 #+end_quote
 
 ** Solution
+
+Search for any key $k > 3$ in the following BST:
+
+#+begin_example
+    1
+     \
+      3
+     /
+    2
+#+end_example
+
+- $B$ (Keys on path): $\{1, 3\}$
+- $A$ (Keys left of path): $\{2\}$
+- $C$ (Keys right of path): $\emptyset$
+
+The claim asserts $a \leq b$ for all $a \in A$ and $b \in B$. Choosing $a = 2 \in A$ and $b = 1 \in B$ yields $2 \not\leq 1$. Therefore, the claim is false.
 
 * Problem 65 :binary_search_tree:predecessor:successor:
 ** Task
