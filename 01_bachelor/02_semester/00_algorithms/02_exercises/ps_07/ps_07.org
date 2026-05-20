@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-13>
-#+lastmod: <2026-05-20 18:58>
+#+lastmod: <2026-05-20 19:30>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -166,6 +166,50 @@ When TREE-DELETE calls TRANSPLANT, under what circumstances can the parameter $v
 #+end_quote
 
 ** Solution
+
+In =TREE-DELETE(T, z)=, the subroutine =TRANSPLANT(T, u, v)= is called four times. We evaluate when the replacement node parameter $v$ can evaluate to =NIL=.
+
+#+begin_example
+TREE-DELETE(T, z)
+1   if z.left == NIL
+2       TRANSPLANT(T, z, z.right)      // replace z by its right child
+3   elseif z.right == NIL
+4       TRANSPLANT(T, z, z.left)       // replace z by its left child
+5   else y = TREE-MINIMUM(z.right)     // y is z's successor
+6       if y != z.right                // is y farther down the tree?
+7           TRANSPLANT(T, y, y.right)  // replace y by its right child
+8           y.right = z.right          // z's right child becomes
+9           y.right.p = y              //     y's right child
+10      TRANSPLANT(T, z, y)            // replace z by its successor y
+11      y.left = z.left                // and give z's left child to y,
+12      y.left.p = y                   //     which had no left child
+#+end_example
+
+1. =TRANSPLANT(T, z, z.right)=
+   - Condition: Called when $z.left == NIL$.
+   - Evaluation of $v$: If $z$ is a leaf node, $z.right$ is also =NIL=.
+   - Result: $v$ *can* be =NIL=.
+
+2. =TRANSPLANT(T, z, z.left)=
+   - Condition: Called when $z.left \neq NIL$ and $z.right == NIL$.
+   - Evaluation of $v$: The prerequisite guarantees $z.left$ exists.
+   - Result: $v$ *cannot* be =NIL=.
+
+3. =TRANSPLANT(T, y, y.right)=
+   - Condition: Called when $z$ has two children, and successor $y \neq z.right$.
+   - Evaluation of $v$: $y$ is guaranteed to have no left child, but may also lack a right child. If $y$ is a leaf, $y.right == NIL$.
+   - Result: $v$ *can* be =NIL=.
+
+4. =TRANSPLANT(T, z, y)=
+   - Condition: Called when replacing $z$ with its successor $y$.
+   - Evaluation of $v$: $y$ is derived via =TREE-MINIMUM(z.right)=. Since $z.right \neq NIL$ in this branch, a valid successor $y$ always exists.
+   - Result: $v$ *cannot* be =NIL=.
+
+Conclusion:
+
+The parameter $v$ is =NIL= under exactly two circumstances:
+1. Node $z$ (the node being deleted) has *no children*.
+2. Node $y$ (the successor of $z$) has *no right child*.
 
 * Problem 67 :binary_search_tree:deletion:commutativity:
 ** Task
