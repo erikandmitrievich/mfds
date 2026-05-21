@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-13>
-#+lastmod: <2026-05-21 16:54>
+#+lastmod: <2026-05-21 17:29>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -419,6 +419,16 @@ The newly inserted node in RB-INSERT is set to the color red, which causes the p
 #+end_quote
 
 ** Solution
+
+1. Every node is either red or black.
+2. The root is black.
+3. Every leaf (NIL) is black.
+4. If a node is red, then both its children are black.
+5. For each node, all simple paths from the node to descendant leaves contain the same number of black nodes.
+
+A black insertion violates property 5: it raises the black-height of every path through the new node by $1$, leaving other paths unchanged. This happens on every non-trivial insertion.
+
+A red insertion violates property 2 only when the tree was empty, and property 4 only when the parent is red — often neither. Both are local: RB-INSERT-FIXUP repairs them by recoloring and rotating along one path in $O(\lg n)$. Property 5 is global and has no comparably cheap repair. Red is chosen because its violations are local and sometimes absent; black guarantees a global one.
 
 * Time Estimates
 
