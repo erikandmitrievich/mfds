@@ -1,0 +1,448 @@
+#+title: Ch 13 Red Black Trees
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-21>
+#+lastmod: <2026-05-21 18:12>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* 13.1 Properties of red-black trees
+
+** Definition
+
+- A *red-black tree* is a binary search tree with one extra bit per node: its *color*, either RED or BLACK.
+- Constraining colors along any root-to-leaf path ensures no path is more than twice as long as any other → the tree is approximately *balanced*.
+- Height of a red-black tree with $n$ keys is at most $2 \lg(n + 1) = O(\lg n)$.
+- Each node carries attributes $color$, $key$, $left$, $right$, $p$. A missing child or parent is represented by NIL.
+- NILs are viewed as *leaves* (external nodes); the normal key-bearing nodes are *internal nodes*.
+
+** Red-black properties
+
+- A red-black tree is a BST satisfying the *red-black properties*:
+  1. Every node is either red or black.
+  2. The root is black.
+  3. Every leaf (NIL) is black.
+  4. If a node is red, then both its children are black.
+  5. For each node, all simple paths from the node to descendant leaves contain the same number of black nodes.
+
+[FIGURE 13.1: a red-black tree shown three ways — (a) explicit NIL leaves, each non-NIL node marked with its black-height; (b) all NILs replaced by the single sentinel $T.nil$; (c) leaves and root's parent omitted, the drawing style used for the rest of the chapter]
+
+** The sentinel $T.nil$
+
+- For boundary conditions in red-black code, a single *sentinel* $T.nil$ represents NIL.
+- $T.nil$ is an object with the same attributes as an ordinary node; its $color$ is BLACK, and $p$, $left$, $right$, $key$ may hold arbitrary values.
+- All pointers to NIL are replaced by pointers to $T.nil$.
+- Purpose: lets a NIL child of node $x$ be treated as an ordinary node whose parent is $x$.
+- One sentinel suffices for all NILs — all leaves and the root's parent. A distinct sentinel per NIL would needlessly waste space.
+- Drawing convention: the chapter generally confines interest to internal nodes (they hold the keys) and omits leaves in drawings hereafter (see Figure 13.1(c)).
+
+** Black-height
+
+- *Black-height* of a node $x$, denoted $\text{bh}(x)$: the number of black nodes on any simple path from $x$ (not including $x$) down to a leaf.
+- Well defined by property 5 — all descending simple paths from $x$ have the same black-node count.
+- The black-height of a red-black tree is the black-height of its root.
+
+** Lemma 13.1 — height bound
+
+- *Lemma 13.1:* a red-black tree with $n$ internal nodes has height at most $2 \lg(n + 1)$.
+
+*** Subclaim — internal node count
+
+- *Subclaim:* the subtree rooted at any node $x$ contains at least $2^{\text{bh}(x)} - 1$ internal nodes.
+- *Proof* by induction on the height of $x$.
+  - *Base case:* height of $x$ is 0 → $x$ is a leaf ($T.nil$). The subtree has at least $2^{\text{bh}(x)} - 1 = 2^0 - 1 = 0$ internal nodes.
+  - *Inductive step:* let $x$ have positive height and be internal, so it has two children (either may be a leaf).
+    - A black child contributes 1 to $x$'s black-height but not to its own; a red child contributes to neither. So each child has black-height $\text{bh}(x) - 1$ (if black) or $\text{bh}(x)$ (if red).
+    - A child has height less than $x$, so the inductive hypothesis applies → each child roots a subtree with at least $2^{\text{bh}(x)-1} - 1$ internal nodes.
+    - The subtree at $x$ therefore has at least $(2^{\text{bh}(x)-1} - 1) + (2^{\text{bh}(x)-1} - 1) + 1 = 2^{\text{bh}(x)} - 1$ internal nodes (two child subtrees plus $x$ itself).
+
+*** Completing the lemma
+
+- Let $h$ be the height of the tree.
+- By property 4, at least half the nodes on any simple root-to-leaf path, excluding the root, are black → the root's black-height is at least $h/2$.
+- Applying the subclaim to the root:
+  \[ n \geq 2^{h/2} - 1 \]
+- Move the 1 to the left and take logarithms:
+  \[ \lg(n + 1) \geq h/2 \quad\Rightarrow\quad h \leq 2 \lg(n + 1) \]
+
+** Consequence — dynamic-set operations
+
+- Each of SEARCH, MINIMUM, MAXIMUM, SUCCESSOR, PREDECESSOR runs in $O(\lg n)$ on a red-black tree: each runs in $O(h)$ on a BST of height $h$ (Chapter 12), and a red-black tree on $n$ nodes is a BST with height $O(\lg n)$.
+- References to NIL in the Chapter 12 algorithms must be replaced by $T.nil$.
+- Caveat: =TREE-INSERT= and =TREE-DELETE= from Chapter 12 run in $O(\lg n)$ on a red-black tree, but cannot directly implement INSERT and DELETE — they do not necessarily maintain the red-black properties, so the result may not be a legal red-black tree. The rest of the chapter shows how to insert and delete in $O(\lg n)$ while preserving the properties.
+
+* 13.2 Rotations
+
+** Why rotations
+
+- =TREE-INSERT= and =TREE-DELETE= run in $O(\lg n)$ on a red-black tree with $n$ keys, but modify the tree → the result may violate the red-black properties (§13.1).
+- To restore the properties, colors and pointers within nodes must change.
+- Pointer structure changes through *rotation*: a local operation in a search tree that preserves the binary-search-tree property.
+- Two kinds: left rotations and right rotations.
+
+** The left rotation
+
+- A left rotation on node $x$ requires $x$ to have a right child $y$ that is not $T.nil$.
+- It "twists" the link between $x$ and $y$ to the left: $y$ becomes the new subtree root, $x$ becomes $y$'s left child, and $y$'s original left child ($\beta$ in the figure) becomes $x$'s right child.
+- =RIGHT-ROTATE= is the symmetric inverse.
+- BST property preserved: keys in $\alpha$ precede $x.key$, which precedes keys in $\beta$, which precede $y.key$, which precedes keys in $\gamma$.
+
+[FIGURE 13.2: =LEFT-ROTATE(T, x)= and =RIGHT-ROTATE(T, y)= as inverse transformations between two two-node configurations; $\alpha, \beta, \gamma$ are arbitrary subtrees]
+
+** =LEFT-ROTATE= pseudocode
+
+- Assumes $x.right \neq T.nil$ and that the root's parent is $T.nil$.
+- Only pointers change; all other node attributes stay the same. Runs in $O(1)$.
+#+begin_example
+LEFT-ROTATE(T, x)
+1   y = x.right
+2   x.right = y.left          // turn y's left subtree into x's right subtree
+3   if y.left != T.nil        // if y's left subtree is not empty ...
+4       y.left.p = x          // ... then x becomes the parent of the subtree's root
+5   y.p = x.p                 // x's parent becomes y's parent
+6   if x.p == T.nil           // if x was the root ...
+7       T.root = y            // ... then y becomes the root
+8   elseif x == x.p.left      // otherwise, if x was a left child ...
+9       x.p.left = y          // ... then y becomes a left child
+10  else x.p.right = y        // otherwise, x was a right child, and now y is
+11  y.left = x                // make x become y's left child
+12  x.p = y
+#+end_example
+- =RIGHT-ROTATE= is symmetric.
+
+[FIGURE 13.3: example of how =LEFT-ROTATE= modifies a binary search tree]
+
+* 13.3 Insertion
+
+** =RB-INSERT=
+
+- Inserts a node into a red-black tree with $n$ internal nodes in $O(\lg n)$ time while maintaining the red-black properties — a slight modification of =TREE-INSERT=.
+- Strategy: insert $z$ as in an ordinary BST, color $z$ red, then call =RB-INSERT-FIXUP= to recolor and rotate.
+- The call =RB-INSERT(T, z)= assumes $z.key$ is already filled in.
+#+begin_example
+RB-INSERT(T, z)
+1   x = T.root                 // node being compared with z
+2   y = T.nil                  // y will be parent of z
+3   while x != T.nil           // descend until reaching the sentinel
+4       y = x
+5       if z.key < x.key
+6           x = x.left
+7       else x = x.right
+8   z.p = y                    // found the location—insert z with parent y
+9   if y == T.nil
+10      T.root = z             // tree T was empty
+11  elseif z.key < y.key
+12      y.left = z
+13  else y.right = z
+14  z.left = T.nil             // both of z's children are the sentinel
+15  z.right = T.nil
+16  z.color = RED              // the new node starts out red
+17  RB-INSERT-FIXUP(T, z)      // correct any violations of red-black properties
+#+end_example
+- Differences from =TREE-INSERT=: (1) all NIL replaced by $T.nil$; (2) lines 14–15 explicitly set $z.left$, $z.right$ to $T.nil$; (3) line 16 colors $z$ red; (4) line 17 calls =RB-INSERT-FIXUP= since coloring $z$ red may violate a property.
+
+** =RB-INSERT-FIXUP=
+
+- Recolors nodes and performs rotations to restore the red-black properties after a red node $z$ is inserted.
+- *uncle*: the sibling of a node's parent.
+#+begin_example
+RB-INSERT-FIXUP(T, z)
+1   while z.p.color == RED
+2       if z.p == z.p.p.left            // is z's parent a left child?
+3           y = z.p.p.right             // y is z's uncle
+4           if y.color == RED           // are z's parent and uncle both red?
+5               z.p.color = BLACK       \
+6               y.color = BLACK          | case 1
+7               z.p.p.color = RED        |
+8               z = z.p.p               /
+9           else
+10              if z == z.p.right       \
+11                  z = z.p              | case 2
+12                  LEFT-ROTATE(T, z)   /
+13              z.p.color = BLACK       \
+14              z.p.p.color = RED        | case 3
+15              RIGHT-ROTATE(T, z.p.p)  /
+16      else // same as lines 3–15, but with "right" and "left" exchanged
+17          y = z.p.p.left
+18          if y.color == RED
+19              z.p.color = BLACK
+20              y.color = BLACK
+21              z.p.p.color = RED
+22              z = z.p.p
+23          else
+24              if z == z.p.left
+25                  z = z.p
+26                  RIGHT-ROTATE(T, z)
+27              z.p.color = BLACK
+28              z.p.p.color = RED
+29              LEFT-ROTATE(T, z.p.p)
+30  T.root.color = BLACK
+#+end_example
+- The **while** loop of lines 1–29 has two symmetric halves: lines 3–15 when $z.p$ is a left child of $z.p.p$, lines 17–29 when $z.p$ is a right child. The proof focuses on lines 3–15; lines 17–29 are symmetric.
+- Case 2 falls through into case 3 — the two are not mutually exclusive.
+
+[FIGURE 13.4: =RB-INSERT-FIXUP= operating on a sample tree — (a) node $z$ after insertion, property 4 violated, uncle $y$ red → case 1; (b) result after case 1 moves $z$ up two levels, uncle now black, $z$ a right child → case 2; (c) result after the left rotation of case 2, $z$ now a left child → case 3; (d) result after case 3's recolor and right rotation, a legal red-black tree]
+
+** Violations on entry to =RB-INSERT-FIXUP=
+
+- Properties 1 and 3 continue to hold: both children of the new red node $z$ are the sentinel $T.nil$.
+- Property 5 holds: $z$ replaces a black sentinel, and $z$ is red with sentinel children → black-counts on all paths unchanged.
+- Only properties 2 and 4 might be violated, both because $z$ is red:
+  - Property 2 (root must be black) is violated iff $z$ is the root.
+  - Property 4 (a red node cannot have a red child) is violated iff $z$'s parent is red.
+
+** Loop invariant
+
+- At the start of each iteration of the **while** loop:
+  - a. Node $z$ is red.
+  - b. If $z.p$ is the root, then $z.p$ is black.
+  - c. If the tree violates any red-black property, it violates at most one — either property 2 (because $z$ is the root and red) or property 4 (because both $z$ and $z.p$ are red), not both.
+- Part (c) is the central claim for showing =RB-INSERT-FIXUP= restores the properties; (a) and (b) are supporting facts. Part (b) is used to show $z$'s grandparent $z.p.p$ exists when referenced in lines 2, 3, 7, 8, 14, 15.
+
+*** Initialization
+
+- Before =RB-INSERT= is called the tree has no violations; =RB-INSERT= adds red node $z$ and calls =RB-INSERT-FIXUP=.
+- a. When =RB-INSERT-FIXUP= is called, $z$ is the red node just added.
+- b. If $z.p$ is the root, it started out black and did not change before the call.
+- c. Properties 1, 3, 5 hold on the call.
+  - If property 2 is violated, the red root must be $z$ — the only internal node. Its parent and both children are the black sentinel → property 4 not also violated. So the property 2 violation is the only one.
+  - If property 4 is violated, then because $z$'s children are black sentinels and the tree had no prior violations, the violation is that both $z$ and $z.p$ are red — and no other property is violated.
+
+*** Maintenance
+
+- Six cases in the loop; only the three in lines 3–15 are examined ($z.p$ a left child of $z.p.p$). Lines 17–29 are symmetric.
+- $z.p.p$ exists: by invariant (b), if $z.p$ were the root it would be black, but the loop is entered only when $z.p$ is red → $z.p$ is not the root → $z.p.p$ exists.
+- Case selection: line 3 sets $y$ to $z$'s uncle $z.p.p.right$; line 4 tests $y$'s color. $y$ red → case 1; otherwise → cases 2 and 3. In all three, $z.p.p$ is black (since $z.p$ is red and property 4 is violated only between $z$ and $z.p$).
+
+**** Case 1 — $z$'s uncle $y$ is red
+
+- Lines 5–8. Occurs when both $z.p$ and $y$ are red.
+- Since $z$'s grandparent $z.p.p$ is black, transfer its blackness down to both $z.p$ and $y$ → fixes $z$ and $z.p$ both being red. The grandparent becomes red → property 5 maintained.
+- The loop repeats with $z.p.p$ as the new $z$ → pointer $z$ moves up two levels.
+- *Invariant maintenance.* Let $z$ be the current node, $z' = z.p.p$ the node called $z$ next iteration.
+  - a. This iteration colors $z.p.p$ red → $z'$ is red at the start of the next iteration.
+  - b. $z'.p$ is $z.p.p.p$ this iteration, whose color does not change. If that node is the root, it was black before and stays black.
+  - c. Case 1 maintains property 5 and introduces no violation of properties 1 or 3.
+    - If $z'$ is the root next iteration: case 1 corrected the lone property 4 violation; since $z'$ is red and the root, property 2 becomes the only violation, due to $z'$.
+    - If $z'$ is not the root: case 1 created no property 2 violation. It corrected the prior property 4 violation, made $z'$ red, and left $z'.p$ alone. If $z'.p$ was black, no property 4 violation; if $z'.p$ was red, coloring $z'$ red created one property 4 violation, between $z'$ and $z'.p$.
+
+[FIGURE 13.5: case 1 of =RB-INSERT-FIXUP= — both $z$ and $z.p$ red; uncle $y$ red; same action whether (a) $z$ is a right child or (b) a left child; grandparent's blackness moves down to $z$'s parent and uncle, and the loop continues with $z.p.p$ as the new $z$]
+
+**** Cases 2 and 3 — $z$'s uncle $y$ is black
+
+- *Case 2:* $z$'s uncle $y$ is black and $z$ is a right child.
+- *Case 3:* $z$'s uncle $y$ is black and $z$ is a left child.
+- Both assume $z.p$ is red and a left child; they differ by whether $z$ is a right or left child of $z.p$.
+- *Case 2* (lines 11–12): $z$ is a right child. A left rotation immediately transforms the situation into case 3, in which $z$ is a left child. Because both $z$ and $z.p$ are red, the rotation affects neither black-heights nor property 5.
+- *Case 3* (lines 13–15): performs color changes and a right rotation, which preserve property 5. Afterward there are no longer two red nodes in a row; the **while** loop terminates on the next test in line 1, since $z.p$ is now black.
+- Whether case 3 runs directly or through case 2, $z$'s uncle $y$ is black (otherwise case 1 would have run), and $z.p.p$ exists.
+- *Invariant maintenance* (cases 2 and 3, given that $z.p$ will be black on the next test so the loop body will not execute again):
+  - a. Case 2 makes $z$ point to $z.p$, which is red. No further change to $z$ or its color occurs in cases 2 and 3.
+  - b. Case 3 makes $z.p$ black, so if $z.p$ is the root at the start of the next iteration, it is black.
+  - c. Properties 1, 3, 5 are maintained. Since $z$ is not the root in cases 2 and 3, property 2 is not violated; cases 2 and 3 introduce no property 2 violation, since the only node made red becomes a child of a black node by the rotation in case 3. Cases 2 and 3 correct the lone property 4 violation and introduce no other violation.
+
+[FIGURE 13.6: cases 2 and 3 of =RB-INSERT-FIXUP= — property 4 violated since $z$ and $z.p$ both red; subtrees $\alpha, \beta, \gamma, \delta$ each have black roots and equal black-heights; case 2 transforms into case 3 by a left rotation; case 3 applies color changes and a right rotation; both preserve property 5, and the loop then terminates]
+
+*** Termination
+
+- If only case 1 occurs, $z$ moves toward the root each iteration → eventually $z.p$ is black (if $z$ is the root, $z.p$ is the black sentinel $T.nil$).
+- If case 2 or 3 occurs, the loop terminates (shown above).
+- The loop terminates because $z.p$ is black → the tree does not violate property 4 at termination.
+- By the loop invariant, the only property that might fail is property 2. Line 30 restores it by coloring the root black → all red-black properties hold when =RB-INSERT-FIXUP= terminates.
+
+** Analysis
+
+- =RB-INSERT=: the height of a red-black tree on $n$ nodes is $O(\lg n)$, so lines 1–16 take $O(\lg n)$.
+- In =RB-INSERT-FIXUP=, the **while** loop repeats only if case 1 occurs, and then $z$ moves two levels up the tree → the loop executes $O(\lg n)$ times.
+- Total: =RB-INSERT= takes $O(\lg n)$ time.
+- It never performs more than two rotations, since the **while** loop terminates if case 2 or case 3 is executed.
+
+* 13.4 Deletion
+
+** Overview
+
+- Deletion from an $n$-node red-black tree takes $O(\lg n)$ time, but is more complicated than insertion.
+- Based on =TREE-DELETE=. Two auxiliary procedures are needed: a customized transplant (=RB-TRANSPLANT=) and a fixup (=RB-DELETE-FIXUP=).
+
+** =RB-TRANSPLANT=
+
+- Replaces the subtree rooted at $u$ by the subtree rooted at $v$.
+#+begin_example
+RB-TRANSPLANT(T, u, v)
+1   if u.p == T.nil
+2       T.root = v
+3   elseif u == u.p.left
+4       u.p.left = v
+5   else u.p.right = v
+6   v.p = u.p
+#+end_example
+- Differences from =TRANSPLANT=: (1) line 1 references $T.nil$ instead of NIL; (2) the assignment $v.p = u.p$ in line 6 is unconditional — it executes even when $v$ is the sentinel, which =RB-DELETE= relies on.
+
+** =RB-DELETE=
+
+- Like =TREE-DELETE= but with extra lines handling nodes $x$ and $y$ that may be involved in red-black violations.
+- *Node $y$*: the node either removed from the tree or moved within it.
+  - If $z$ has at most one child, $y$ is $z$ itself.
+  - If $z$ has two children, $y$ is $z$'s successor, which has no left child, moves into $z$'s position, and takes $z$'s color.
+- *Node $x$*: the node that moves into $y$'s original position; $x$ is $T.nil$ if $y$ has no children.
+- *y-original-color*: stores $y$'s color before any change, since $y$'s color might change. Set in lines 2 and 10, immediately after assignments to $y$.
+- Every line of =TREE-DELETE= appears in =RB-DELETE= (with NIL → $T.nil$ and =TRANSPLANT= → =RB-TRANSPLANT=), executed under the same conditions.
+#+begin_example
+RB-DELETE(T, z)
+1   y = z
+2   y-original-color = y.color
+3   if z.left == T.nil
+4       x = z.right
+5       RB-TRANSPLANT(T, z, z.right)         // replace z by its right child
+6   elseif z.right == T.nil
+7       x = z.left
+8       RB-TRANSPLANT(T, z, z.left)          // replace z by its left child
+9   else y = TREE-MINIMUM(z.right)           // y is z's successor
+10      y-original-color = y.color
+11      x = y.right
+12      if y != z.right                      // is y farther down the tree?
+13          RB-TRANSPLANT(T, y, y.right)     // replace y by its right child
+14          y.right = z.right                // z's right child becomes
+15          y.right.p = y                    //     y's right child
+16      else x.p = y                         // in case x is T.nil
+17      RB-TRANSPLANT(T, z, y)               // replace z by its successor y
+18      y.left = z.left                      // and give z's left child to y,
+19      y.left.p = y                         //     which had no left child
+20      y.color = z.color
+21  if y-original-color == BLACK             // if any red-black violations occurred,
+22      RB-DELETE-FIXUP(T, x)                //     correct them
+#+end_example
+
+*** Details of =RB-DELETE=
+
+- Lines 1 and 9 set $y$: line 1 when $z$ has at most one child, line 9 when $z$ has two.
+- When $z$ has two children, $y$ and $z$ are distinct. Line 17 moves $y$ into $z$'s original position, and line 20 gives $y$ the color of $z$.
+- Tracking $x$: assignments in lines 4, 7, 11 set $x$ to $y$'s only child, or to $T.nil$ if $y$ has no children.
+- Setting $x.p$ correctly:
+  - If $z$ has two children and $y$ is $z$'s right child, $y$ just moves into $z$'s position with $x$ remaining $y$'s child. Line 12 detects this; line 16 sets $x.p = y$ explicitly — even when $x$ is $T.nil$ — because =RB-DELETE-FIXUP= relies on $x.p$ being $y$. (Line 16 is necessary when $y$'s right child is $T.nil$; otherwise it changes nothing.)
+  - Otherwise $z$ is the same as $y$, or a proper ancestor of $y$'s original parent; here the =RB-TRANSPLANT= calls in lines 5, 8, 13 set $x.p$ correctly via line 6 of =RB-TRANSPLANT= (third parameter passed equals $x$).
+
+*** Violations when $y$ was red
+
+- If $y$ was red, the red-black properties still hold after $y$ is removed or moved:
+  1. No black-heights changed.
+  2. No red nodes made adjacent. If $z$ had at most one child, $y = z$; the removed node was red, so neither its parent nor children were red → moving a child up cannot create adjacent reds. If $z$ had two children, $y$ takes $z$'s place with $z$'s color → no adjacent reds at $y$'s new position; and if $y$ was not $z$'s right child, $y$'s original right child $x$ replaces $y$, and since $y$ is red, $x$ must be black.
+  3. $y$ could not have been the root if red → root stays black.
+
+*** Violations when $y$ was black — the extra black
+
+- Three problems arise if $y$ was black:
+  - If $y$ was the root and a red child of $y$ became the new root → property 2 violated.
+  - If $x$ and its new parent are both red → property 4 violated.
+  - Moving $y$ removes one black node from any path that contained $y$ → property 5 violated by any ancestor of $y$.
+- *Fix for property 5*: transfer $y$'s blackness to the node $x$ that moves into $y$'s position, giving $x$ an *extra black*. Adding 1 to the black count of any path containing $x$ restores property 5.
+- New problem: $x$ is now neither red nor black → property 1 violated. Instead $x$ is *doubly black* (contributes 2) or *red-and-black* (contributes 1). The $color$ attribute of $x$ stays RED (if red-and-black) or BLACK (if doubly black) — the extra black is reflected in the pointer $x$, not in $color$.
+- =RB-DELETE-FIXUP= (called in line 22 only when $y$ was black) restores properties 1, 2, 4.
+
+** =RB-DELETE-FIXUP=
+
+- Restores properties 1, 2, 4 (the source defers 2 and 4 to exercises and focuses on property 1).
+- Goal of the **while** loop (lines 1–43): move the extra black up the tree until one of:
+  1. $x$ points to a red-and-black node → line 44 colors $x$ singly black;
+  2. $x$ points to the root → the extra black simply vanishes;
+  3. suitable rotations and recolorings are done and the loop exits.
+#+begin_example
+RB-DELETE-FIXUP(T, x)
+1   while x != T.root and x.color == BLACK
+2       if x == x.p.left                              // is x a left child?
+3           w = x.p.right                             // w is x's sibling
+4           if w.color == RED
+5               w.color = BLACK                       \
+6               x.p.color = RED                        | case 1
+7               LEFT-ROTATE(T, x.p)                    |
+8               w = x.p.right                         /
+9           if w.left.color == BLACK and w.right.color == BLACK
+10              w.color = RED                         \ case 2
+11              x = x.p                               /
+12          else
+13              if w.right.color == BLACK
+14                  w.left.color = BLACK              \
+15                  w.color = RED                      | case 3
+16                  RIGHT-ROTATE(T, w)                 |
+17                  w = x.p.right                     /
+18              w.color = x.p.color                   \
+19              x.p.color = BLACK                      | case 4
+20              w.right.color = BLACK                  |
+21              LEFT-ROTATE(T, x.p)                    |
+22              x = T.root                            /
+23      else // same as lines 3–22, but with "right" and "left" exchanged
+24          w = x.p.left
+25          if w.color == RED
+26              w.color = BLACK
+27              x.p.color = RED
+28              RIGHT-ROTATE(T, x.p)
+29              w = x.p.left
+30          if w.right.color == BLACK and w.left.color == BLACK
+31              w.color = RED
+32              x = x.p
+33          else
+34              if w.left.color == BLACK
+35                  w.right.color = BLACK
+36                  w.color = RED
+37                  LEFT-ROTATE(T, w)
+38                  w = x.p.left
+39              w.color = x.p.color
+40              x.p.color = BLACK
+41              w.left.color = BLACK
+42              RIGHT-ROTATE(T, x.p)
+43              x = T.root
+44  x.color = BLACK
+#+end_example
+- Two symmetric halves: lines 3–22 when $x$ is a left child, lines 24–43 when $x$ is a right child. The proof focuses on lines 3–22.
+- Within the loop, $x$ always points to a nonroot doubly black node.
+- *Sibling $w$*: cannot be $T.nil$ — if it were, the path from $x.p$ to that singly black leaf would carry fewer blacks than the path from $x.p$ to $x$.
+- =RB-DELETE= always assigns to $x.p$ before calling the fixup (via =RB-TRANSPLANT= in line 13 or the assignment in line 16), even when $x = T.nil$, because the fixup references $x.p$.
+
+*** Property 5 preservation across cases
+
+- Key idea: each case's transformation preserves the number of black nodes (including $x$'s extra black) from the root of the shown subtree to the roots of each subtree $\alpha, \beta, \ldots, \zeta$. So if property 5 held before, it holds after.
+- Example, Figure 13.7(a) (case 1): the count from the root to the root of $\alpha$ or $\beta$ is 3, before and after; to any of $\gamma, \delta, \epsilon, \zeta$ it is 2, before and after.
+- Figure 13.7(b): the counting involves the value $c$ of the subtree root's $color$. With $\text{count}(\text{RED}) = 0$, $\text{count}(\text{BLACK}) = 1$, the count from the root to $\alpha$ is $2 + \text{count}(c)$, before and after. After the transformation the new $x$ has $color$ attribute $c$, but is really red-and-black (if $c = \text{RED}$) or doubly black (if $c = \text{BLACK}$).
+
+[FIGURE 13.7: the four cases of =RB-DELETE-FIXUP= when $x$ is a left child — brown nodes have $color$ $c$ or $c'$ (either red or black); a node pointed to by $x$ has an extra black; only case 2 repeats the loop; (a) case 1 → case 2/3/4 via color swap of $B, D$ and a left rotation; (b) case 2 moves the extra black up by coloring $D$ red and setting $x$ to $B$; (c) case 3 → case 4 via color swap of $C, D$ and a right rotation; (d) case 4 removes the extra black via color changes and a left rotation, then the loop terminates]
+
+*** Case 1 — $x$'s sibling $w$ is red
+
+- Lines 5–8. Since $w$ is red, it must have black children.
+- Switches the colors of $w$ and $x.p$, then left-rotates on $x.p$, without violating any red-black property.
+- The new sibling of $x$ — one of $w$'s children before the rotation — is now black → case 1 converts into case 2, 3, or 4.
+
+*** Cases 2, 3, 4 — $w$ is black
+
+- All three occur when $w$ is black; distinguished by the colors of $w$'s children.
+
+**** Case 2 — $w$ black, both of $w$'s children black
+
+- Lines 10–11. Removes one black from both $x$ and $w$, leaving $x$ with one black and $w$ red.
+- To compensate, $x$'s parent $x.p$ takes on an extra black: line 11 moves $x$ up one level so the loop repeats with $x.p$ as the new $x$.
+- If case 2 was entered through case 1, the new $x$ is red-and-black (the original $x.p$ was red) → $c = \text{RED}$, so the loop terminates on the next condition test, and line 44 colors the new $x$ singly black.
+
+**** Case 3 — $w$ black, $w$'s left child red, $w$'s right child black
+
+- Lines 14–17. Switches the colors of $w$ and its left child $w.left$, then right-rotates on $w$, without violating any property.
+- The new sibling $w$ is now black with a red right child → case 3 falls through into case 4.
+
+**** Case 4 — $w$ black, $w$'s right child red
+
+- Lines 18–22. Color changes and a left rotation on $x.p$ let the extra black on $x$ vanish, making $x$ singly black, without violating any property.
+- Line 22 sets $x = T.root$ → the **while** loop terminates on the next condition test.
+
+** Analysis
+
+- The procedure without the fixup call takes $O(\lg n)$ (height is $O(\lg n)$).
+- In =RB-DELETE-FIXUP=, cases 1, 3, 4 each lead to termination after a constant number of color changes and at most three rotations total. Case 2 is the only case that repeats the loop, moving $x$ up the tree at most $O(\lg n)$ times with no rotations.
+- =RB-DELETE-FIXUP= runs in $O(\lg n)$ and performs at most three rotations → overall =RB-DELETE= is $O(\lg n)$.
