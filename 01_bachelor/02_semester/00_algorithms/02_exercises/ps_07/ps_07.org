@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-13>
-#+lastmod: <2026-05-20 19:37>
+#+lastmod: <2026-05-21 16:13>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -251,6 +251,24 @@ What is the largest possible number of internal nodes in a red-black tree with b
 #+end_quote
 
 ** Solution
+
+Let $T$ be a red-black tree with $\mathrm{bh}(\text{root}) = k$.
+
+- Smallest
+
+  Every path from the root to a leaf contains exactly $k$ black nodes. The shortest such tree has no red nodes, so every node is black and the tree is a complete binary tree of height $k$:
+
+  $$n_{\min} = 2^k - 1.$$
+
+- Largest
+
+  A red node has only black children, so on any root-to-leaf path red and black nodes alternate at best — at most one red node between consecutive black nodes. With $k$ black nodes per path, this gives height at most $2k$. The largest tree is the complete binary tree of that height:
+
+  $$n_{\max} = 2^{2k} - 1 = 4^k - 1.$$
+
+Thus,
+
+$$2^k - 1 \le n \le 4^k - 1.$$
 
 * Problem 69 :red_black_tree:node_ratio:
 ** Task
