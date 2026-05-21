@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-13>
-#+lastmod: <2026-05-21 16:13>
+#+lastmod: <2026-05-21 16:41>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -277,6 +277,28 @@ Describe a red-black tree on $n$ keys that realizes the largest possible ratio o
 #+end_quote
 
 ** Solution
+
+- Largest ratio
+
+  To maximize red internal nodes, alternate the colors by level. The root is black; a red node cannot have a red child, so levels must go black, red, black, red, etc. Take a complete tree whose deepest internal level is red.
+
+  With levels $0,1,\dots,2j-1$ (level $i$ has $2^i$ nodes), black levels are the even-indexed ones and red levels the odd-indexed ones:
+
+  $$\text{black} = \sum_{m=0}^{j-1} 2^{2m},\qquad \text{red} = \sum_{m=0}^{j-1} 2^{2m+1} = 2\sum_{m=0}^{j-1} 2^{2m}.$$
+
+  Each red level holds exactly twice the nodes of the black level above it, so the ratio is exactly
+
+  $$\frac{\text{red}}{\text{black}} = 2.$$
+
+  The largest possible ratio is $2:1$.
+
+- Smallest ratio
+
+  A tree with no red internal nodes — every node black — is a valid red-black tree when $n = 2^k - 1$. Its ratio is
+
+  $$\frac{0}{n} = 0.$$
+
+  The smallest possible ratio is $0$.
 
 * Problem 70 :binary_search_tree:rotation:pseudocode:
 ** Task
