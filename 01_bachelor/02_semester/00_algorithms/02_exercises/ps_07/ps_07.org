@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-13>
-#+lastmod: <2026-05-21 17:29>
+#+lastmod: <2026-05-22 14:26>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -23,11 +23,38 @@ Argue that since sorting $n$ elements takes $\Omega(n \lg n)$ time in the worst 
 
 ** Solution
 
-In-order traversal of a binary search tree on $n$ elements yields the elements in sorted order in $O(n)$ time using *no key comparisons* — only pointer-following: =INORDER-TREE-WALK= branches solely on the nil-check $x \neq \text{NIL}$, never on $x.key$ (CLRS treats inorder order as determined by tree structure alone, §12.2).
+*Claim.* Every comparison-based algorithm that constructs a BST from an arbitrary $n$-element list has worst-case running time $\Omega(n \lg n)$.
 
-So if a comparison-based algorithm builds a BST in $T(n)$ time, then "build, then traverse in-order" is a comparison-based sort running in $T(n) + O(n)$. Comparison sorting is $\Omega(n \lg n)$, hence
+*Given.*
+- G1 :: Every comparison-based sorting algorithm has worst-case running time $\Omega(n \lg n)$. (Decision-tree lower bound.)
 
-$$T(n) + O(n) = \Omega(n \lg n) \;\Longrightarrow\; T(n) = \Omega(n \lg n)$$
+*Lemma* (in-order walk is free in the comparison model). =INORDER-TREE-WALK= on an $n$-node BST outputs its keys in sorted order, performs *0 key comparisons*, and runs in $O(n)$.
+
+#+begin_quote
+/Proof./ Its only branch is the test $x \neq \text{NIL}$ — a nil check, not a key comparison. Each node is visited once $\Rightarrow O(n)$. Sorted output follows from the BST property alone, i.e. from tree structure, not from any comparison performed at walk time. $\qquad\blacksquare$
+#+end_quote
+
+*Proof of Claim.*
+
+1. Let $A$ be an arbitrary comparison-based BST builder; let $T(n)$ be its worst-case running time. /(Hypothesis: $A$ is unspecified, so the conclusion will hold for all such $A$.)/
+
+2. Define $S :=$ "run $A$ on the input list; then run =INORDER-TREE-WALK= on the tree $A$ returns."
+
+3. $S$ maps an arbitrary $n$-element list to that same list in sorted order. /(Lemma: the walk emits sorted keys.)/ $\Rightarrow S$ is a sorting algorithm.
+
+4. $S$ is comparison-based: $A$ is, by (1); the walk contributes no key comparisons, by the Lemma. $\Rightarrow$ every key comparison performed by $S$ is performed by $A$.
+
+5. Worst-case time of $S = T(n) + O(n)$. /(A's worst case, then the walk; the Lemma bounds the walk by $O(n)$.)/
+
+6. Apply G1 to $S$ — legitimate, since (3) + (4) establish that $S$ is a comparison sort:
+
+   $$T(n) + O(n) = \Omega(n \lg n).$$
+
+7. $O(n) = o(n \lg n)$, so the additive term cannot absorb the bound:
+
+   $$T(n) = \Omega(n \lg n). \qquad\blacksquare$$
+
+Lines 3 and 4 are the only non-mechanical steps: (3) makes $S$ a /sort/, so the theorem is applicable at all; (4) makes $S$ a /comparison/ sort, so the theorem applies /here/. Everything else is composition and arithmetic.
 
 * Problem 63 :binary_search_tree:predecessor:pseudocode:
 ** Task
@@ -59,14 +86,14 @@ mutable struct BinaryTree{T}
     BinaryTree{T}() where T = new(nothing)
 end
 
-function tree_maximum(x::Node)
-    while x.right !== nothing
-        x = x.right
+function tree_maximum(n::Node)
+    while n.right !== nothing
+        n = n.right
     end
-    return x
+    return n
 end
 
-function tree_predecessor(n::Node{T}) where T
+function tree_predecessor(n::Node)
     if n.left !== nothing
         return tree_maximum(n.left)
     end
@@ -113,21 +140,23 @@ Professor Kilmer claims to have discovered a remarkable property of binary searc
 
 ** Solution
 
-Search for any key $k > 3$ in the following BST:
+Search for key $k = 4.5$ in the following BST:
 
 #+begin_example
     1
      \
-      3
-     /
-    2
+      4
+     / \
+    2   5
+         \
+          6
 #+end_example
 
-- $B$ (Keys on path): $\{1, 3\}$
+- $B$ (Keys on path): $\{1, 4, 5\}$
 - $A$ (Keys left of path): $\{2\}$
-- $C$ (Keys right of path): $\emptyset$
+- $C$ (Keys right of path): $\{6\}$
 
-The claim asserts $a \leq b$ for all $a \in A$ and $b \in B$. Choosing $a = 2 \in A$ and $b = 1 \in B$ yields $2 \not\leq 1$. Therefore, the claim is false.
+The claim asserts $a \leq b \leq c$ for all $a \in A$, $b \in B$, and $c \in C$. Choosing $a = 2 \in A$, $b = 1 \in B$, and $c = 6 \in C$ yields $2 \not\leq 1 \leq 6$. By ensuring no set is $\emptyset$, this avoids any vacuous truth loopholes. Therefore, the claim is definitively false.
 
 * Problem 65 :binary_search_tree:predecessor:successor:
 ** Task
@@ -139,25 +168,16 @@ Let $T$ be a binary search tree whose keys are distinct, let $x$ be a leaf node,
 
 $x$ is a child of $y$, so it is either the left or right child.
 
-- Case 1: $\mathrm{left}(y) = x$.
+Assume, without loss of generality, that $\mathrm{left}(y) = x$.
+By the BST property, $x.key < y.key$.
 
-  By the BST property, $x.key < y.key$.
+Suppose some $z$ has $x.key < z.key < y.key$.
+- $z.key < y.key \Rightarrow z$ is in $y$'s left subtree.
+- $z.key > x.key \Rightarrow z$ is in $x$'s right subtree.
 
-  Suppose some $z$ has $x.key < z.key < y.key$.
-  - $z.key < y.key \Rightarrow z$ is in $y$'s left subtree.
-  - $z.key > x.key \Rightarrow z$ is in $x$'s right subtree.
+But $x$ is a leaf, so it has no right subtree. Contradiction. Hence $y.key$ is the smallest key larger than $x.key$.
 
-  But $x$ is a leaf, so it has no right subtree. Contradiction. Hence $y.key$ is the smallest key larger than $x.key$.
-
-- Case 2: $\mathrm{right}(y) = x$.
-
-  By the BST property, $x.key > y.key$.
-
-  Suppose some $z$ has $y.key < z.key < x.key$.
-  - $z.key > y.key \Rightarrow z$ is in $y$'s right subtree.
-  - $z.key < x.key \Rightarrow z$ is in $x$'s left subtree.
-
-  But $x$ is a leaf, so it has no left subtree. Contradiction. Hence $y.key$ is the largest key smaller than $x.key$. $\qed$
+By symmetry, if $\mathrm{right}(y) = x$, an identical argument establishes that $y.key$ is the largest key smaller than $x.key$. $\qed$
 
 * Problem 66 :binary_search_tree:deletion:
 ** Task
@@ -167,9 +187,9 @@ When TREE-DELETE calls TRANSPLANT, under what circumstances can the parameter $v
 
 ** Solution
 
-In =TREE-DELETE(T, z)=, the subroutine =TRANSPLANT(T, u, v)= is called four times. We evaluate when the replacement node parameter $v$ can evaluate to =NIL=.
-
 #+begin_example
+signature: TRANSPLANT(T, u, v)
+
 TREE-DELETE(T, z)
 1   if z.left == NIL
 2       TRANSPLANT(T, z, z.right)      // replace z by its right child
@@ -185,22 +205,22 @@ TREE-DELETE(T, z)
 12      y.left.p = y                   //     which had no left child
 #+end_example
 
-1. =TRANSPLANT(T, z, z.right)=
+1. Line 2: =TRANSPLANT(T, z, z.right)=
    - Condition: Called when $z.left == NIL$.
    - Evaluation of $v$: If $z$ is a leaf node, $z.right$ is also =NIL=.
    - Result: $v$ *can* be =NIL=.
 
-2. =TRANSPLANT(T, z, z.left)=
+2. Line 4: =TRANSPLANT(T, z, z.left)=
    - Condition: Called when $z.left \neq NIL$ and $z.right == NIL$.
    - Evaluation of $v$: The prerequisite guarantees $z.left$ exists.
    - Result: $v$ *cannot* be =NIL=.
 
-3. =TRANSPLANT(T, y, y.right)=
+3. Line 7: =TRANSPLANT(T, y, y.right)=
    - Condition: Called when $z$ has two children, and successor $y \neq z.right$.
    - Evaluation of $v$: $y$ is guaranteed to have no left child, but may also lack a right child. If $y$ is a leaf, $y.right == NIL$.
    - Result: $v$ *can* be =NIL=.
 
-4. =TRANSPLANT(T, z, y)=
+4. Line 10: =TRANSPLANT(T, z, y)=
    - Condition: Called when replacing $z$ with its successor $y$.
    - Evaluation of $v$: $y$ is derived via =TREE-MINIMUM(z.right)=. Since $z.right \neq NIL$ in this branch, a valid successor $y$ always exists.
    - Result: $v$ *cannot* be =NIL=.
@@ -331,44 +351,44 @@ mutable struct BinaryTree{T}
     BinaryTree{T}() where T = new{T}(nothing)
 end
 
-function left_rotate(t::BinaryTree, x::Node)
-    y = x.right                              # y is x's right child
-    x.right = y.left                         # y's left subtree becomes x's right subtree
-    (y.left !== nothing) && (y.left.parent = x)
-    y.parent = x.parent                      # x's parent becomes y's parent
-    if x.parent === nothing                  # x was the root
+function left_rotate(t::BinaryTree, n::Node)
+    y = n.right                              # y is n's right child
+    n.right = y.left                         # y's left subtree becomes n's right subtree
+    (y.left !== nothing) && (y.left.parent = n)
+    y.parent = n.parent                      # n's parent becomes y's parent
+    if n.parent === nothing                  # n was the root
         t.root = y
-    elseif x === x.parent.left               # x was a left child
-        x.parent.left = y
-    else                                     # x was a right child
-        x.parent.right = y
+    elseif n === n.parent.left               # n was a left child
+        n.parent.left = y
+    else                                     # n was a right child
+        n.parent.right = y
     end
-    y.left = x                               # x becomes y's left child
-    x.parent = y
+    y.left = n                               # n becomes y's left child
+    n.parent = y
     return t
 end
 
-function right_rotate(t::BinaryTree, x::Node)
-    y = x.left                               # y is x's left child
-    x.left = y.right                         # y's right subtree becomes x's left subtree
-    (y.right !== nothing) && (y.right.parent = x)
-    y.parent = x.parent                      # x's parent becomes y's parent
-    if x.parent === nothing                  # x was the root
+function right_rotate(t::BinaryTree, n::Node)
+    y = n.left                               # y is n's left child
+    n.left = y.right                         # y's right subtree becomes n's left subtree
+    (y.right !== nothing) && (y.right.parent = n)
+    y.parent = n.parent                      # n's parent becomes y's parent
+    if n.parent === nothing                  # n was the root
         t.root = y
-    elseif x === x.parent.right              # x was a right child
-        x.parent.right = y
-    else                                     # x was a left child
-        x.parent.left = y
+    elseif n === n.parent.right              # n was a right child
+        n.parent.right = y
+    else                                     # n was a left child
+        n.parent.left = y
     end
-    y.right = x                              # x becomes y's right child
-    x.parent = y
+    y.right = n                              # n becomes y's right child
+    n.parent = y
     return t
 end
 
 @testset "right_rotate" begin
     #      4              2
     #     / \            / \
-    #    2   5    -->   1   4
+    #    2   5   -->    1   4
     #   / \                / \
     #  1   3              3   5
     n1 = Node(1)
@@ -376,22 +396,21 @@ end
     n5 = Node(5)
     n2 = Node(2, n1, n3)
     n4 = Node(4, n2, n5)
+
     t = BinaryTree{Int}()
     t.root = n4
 
     right_rotate(t, n4)
     @test t.root === n2
     @test n2.parent === nothing
-    @test n2.left === n1 && n2.right === n4
+    @test n2.left === n1
+    @test n2.right === n4
+    @test n1.parent === n2
     @test n4.parent === n2
-    @test n4.left === n3 && n4.right === n5
+    @test n4.left === n3
+    @test n4.right === n5
     @test n3.parent === n4
-
-    left_rotate(t, n2)
-    @test t.root === n4
-    @test n4.left === n2 && n4.right === n5
-    @test n2.left === n1 && n2.right === n3
-    @test n1.parent === n2 && n3.parent === n2
+    @test n5.parent === n4
 end
 #+end_src
 
@@ -426,9 +445,11 @@ The newly inserted node in RB-INSERT is set to the color red, which causes the p
 4. If a node is red, then both its children are black.
 5. For each node, all simple paths from the node to descendant leaves contain the same number of black nodes.
 
-A black insertion violates property 5: it raises the black-height of every path through the new node by $1$, leaving other paths unchanged. This happens on every non-trivial insertion.
+Inserting a *black* node immediately and unavoidably violates Property 5. It increases the black-height of every path passing through the new node by 1, leaving all other paths unbalanced. Because black-height is a *global* structural property, repairing this imbalance is highly complex and cannot be done cheaply.
 
-A red insertion violates property 2 only when the tree was empty, and property 4 only when the parent is red — often neither. Both are local: RB-INSERT-FIXUP repairs them by recoloring and rotating along one path in $O(\lg n)$. Property 5 is global and has no comparably cheap repair. Red is chosen because its violations are local and sometimes absent; black guarantees a global one.
+Conversely, inserting a *red* node preserves Property 5 perfectly. It only potentially violates Property 2 (if the tree is empty and it becomes the root) or Property 4 (if its parent is also red). Because these are *local* violations, =RB-INSERT-FIXUP= can efficiently repair them in $O(\lg n)$ time using localized recoloring and rotations.
+
+In short: a red insertion creates occasional, cheap-to-fix local problems, whereas a black insertion guarantees an expensive-to-fix global problem.
 
 * Time Estimates
 
