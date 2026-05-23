@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-11>
-#+lastmod: <2026-05-14 14:39>
+#+lastmod: <2026-05-22 15:23>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -1090,7 +1090,7 @@ Since $\gcd(m', h') = 1$, this forces $m' \mid i$. The smallest positive such $i
 
 $$\frac{m}{d} \cdot h_2(k) = \frac{m}{d} \cdot d h' = m h' \equiv 0 \mod m$$
 
-Therefore the probe sequence visits exactly $\frac{m}{d}$ distinct slots — one $d$-th of the table — before returning to $h_1(k)$. $\blacksquare$
+Therefore the probe sequence visits exactly $\frac{m}{d}$ distinct slots — one $d$ -th of the table — before returning to $h_1(k)$. $\blacksquare$
 
 *Corollary.*
 
