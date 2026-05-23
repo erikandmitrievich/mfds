@@ -1,0 +1,101 @@
+#+title: Ps 10
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-23>
+#+lastmod: <2026-05-23 10:57>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Problem 1 :newton_method:nonlinear_system:jacobian:
+** Task
+#+begin_quote
+Given $f : \mathbb{R}^2 \to \mathbb{R}^2$ by
+$$f(x, y) = \begin{pmatrix} x^2 + y^2 - 1 \\ x - y \end{pmatrix}$$
+
+(a) Determine all $(x, y)^\top \in \mathbb{R}^2$ such that $f(x, y) = 0$.
+
+(b) By using the initial vector $X_0 = (1, \frac{1}{2})^\top \in \mathbb{R}^2$, apply the Newton iteration twice by hand to compute $X_2$. How big is the error?
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+* Problem 2 :newton_method:numerical_methods:linear_system:
+** Task
+#+begin_quote
+Implement Newton's method numerically (use Julia's Linear Algebra package to solve a system of linear equations $Ax = b$ needed in each iteration by $A \backslash b$). Test your code for a few meaningful examples, in particular, solve the exercises above using your implementation.
+#+end_quote
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_2.jl
+#+end_src
+
+* Problem 3 :newton_method:nonlinear_system:jacobian:
+** Task
+#+begin_quote
+Consider $f : \mathbb{R}^2 \to \mathbb{R}^2$ given by
+$$f(x, y) = \begin{pmatrix} x^2 - y \\ y^2 - x \end{pmatrix}$$
+
+(a) Find all solutions of $f(x, y) = 0$.
+
+(b) Determine all points where the Jacobian of $f$ is not invertible and visualize those points in Julia.
+
+(c) Investigate in Julia what happens when Newton's method is initialized near a point for which the Jacobian is not invertible.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+#+begin_src julia :results value :exports both :tangle julia/p_3b.jl
+#+end_src
+
+*** (c)
+#+begin_src julia :results value :exports both :tangle julia/p_3c.jl
+#+end_src
+
+* Problem 4 :newton_method:convergence:gradient:
+** Task
+#+begin_quote
+Answer the following questions:
+
+1. What does the Newton iterations do for the linear system of equations $Ax - b = 0$, where $A \in \mathbb{R}^{n\times n}$ and $b \in \mathbb{R}^n$?
+
+2. Find a sequence $(x_k)_{k\in\mathbb{N}} \subset \mathbb{R}^n$ that converges linearly towards some $x^* \in \mathbb{R}^n$ but not quadratically.
+
+3. Find a sequence $(x_k)_{k\in\mathbb{N}} \subset \mathbb{R}^n$ that converges quadratically towards some $x^* \in \mathbb{R}^n$.
+
+4. Visualize the two aforementioned sequence in Julia by using suitable plots with logarithmic axis labels.
+
+5. Compute the gradient of $f(x) = \|Ax - b\|^2$ for $A \in \mathbb{R}^{n\times n}$ and $b \in \mathbb{R}^n$. Apply the Newton method to the gradient of $f$. What do you observe?
+#+end_quote
+
+** Solution
+*** 1.
+
+*** 2.
+
+*** 3.
+
+*** 4.
+#+begin_src julia :results value :exports both :tangle julia/p_4_4.jl
+#+end_src
+
+*** 5.
+
+* Time Estimates
+- Problem 1: ~30 min~
+- Problem 2: ~45 min~
+- Problem 3: ~40 min~
+- Problem 4: ~50 min~
