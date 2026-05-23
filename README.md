@@ -1,25 +1,7 @@
-# MFDS
+# MFDS — Mathematical Foundations of Data Science
 
-Bachelor of Mathematical Foundations of Data Science, University of Vienna.
-
-## Contents
-
-- Lecture notes
-- Problem sets and solutions
-- Mock exams and summaries
-- Embedded Julia, Python, and C++
-- LLM rulesets
-
-## Stack
-
-Doom Emacs, Org-mode, LaTeX, git. Code is executed in place; math is rendered from source. Everything is plain text.
-
-## Scope
-
-Semester 2 of 6. In progress.
+Personal study workspace. Public for convenience; not intended for use by anyone else.
 
 ## License
 
 Code: MIT. Prose: CC BY-NC-SA 4.0. See [`LICENSE`](LICENSE).
-
-Not affiliated with UniVie.
