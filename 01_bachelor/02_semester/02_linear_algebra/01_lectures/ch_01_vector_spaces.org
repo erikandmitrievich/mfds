@@ -12,10 +12,15 @@
 #+latex_header: \usepackage{amsthm}
 #+latex_header: \usepackage[margin=1in]{geometry}
 #+options: num:t tags:nil
+#+columns: %45ITEM(Item) %14LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
 #+property: header-args :eval never-export
 #+startup: overview latexpreview inlineimages
 
-* Definition  1.01:  Binary operation $+$ on a set $E$
+* Definition:  Binary operation $+$ on a set $E$
+:PROPERTIES:
+:CUSTOM_ID: def:binary-operation
+:LECTURE_REF: 1.1
+:END:
 
 A binary operation on set $E$ is a mapping
 
@@ -48,7 +53,11 @@ It stands for "maps to". Its specifies the rule of the function, where each indi
 
 This definition defines what it means to be a *binary operation*, not $+$ (addition) specifically, it can be any other binary operation, such as multiplication, union, or function composition.
 
-* Definition  1.03:  (Commutative) Group
+* Definition:  (Commutative) Group
+:PROPERTIES:
+:CUSTOM_ID: def:commutative-group
+:LECTURE_REF: 1.3
+:END:
 
 We say that $(E, +)$ is a group when $E$ is a set, and $+$ is a binary operation on $E$ satisfying:
 
@@ -72,7 +81,11 @@ From Latin, "commutare" means "to exchange". Thats it.
 
 In any group, $a + x = b$ has a unique $x = -a + b$ solution. Existence comes from the identity, uniqueness comes from inverses. All four axioms are precisely what is needed to guaranty this.
 
-* Definition  1.05:  Scalar multiplication
+* Definition:  Scalar multiplication
+:PROPERTIES:
+:CUSTOM_ID: def:scalar-multiplication
+:LECTURE_REF: 1.5
+:END:
 
 Scalar multiplication on $E$ over the field $\mathbb{K}$ is a map
 
@@ -111,7 +124,11 @@ Note that $\cdot$ is a *third operation*. Its essentially a *bridge*, connecting
 | $\times$ (scalar mult.) | $\mathbb{K} \times E \rightarrow E$                   | bridge       |
 |-------------------------+-------------------------------------------------------+--------------|
 
-* Definition  1.06:  Compatibility between $\cdot$ and $+$
+* Definition:  Compatibility between $\cdot$ and $+$
+:PROPERTIES:
+:CUSTOM_ID: def:scalar-addition-compatibility
+:LECTURE_REF: 1.6
+:END:
 
 We say that $\cdot$ is compatible with $+$ if and only if for all $x, y \in E$ and all $\lambda, \mu \in \mathbb{K}$:
 
@@ -163,7 +180,11 @@ The compatability axioms are exactly what is needed so that the field structure 
 
 Both actually. Look for axioms 3 and 4.
 
-* Definition  1.07:  Vector space
+* Definition:  Vector space
+:PROPERTIES:
+:CUSTOM_ID: def:vector-space
+:LECTURE_REF: 1.7
+:END:
 
 Given a field $\mathbb{K}$, a set $E$, a binary operation $+ : E \times E \rightarrow E$ and a scalar multiplication $\cdot : \mathbb{K} \times E \rightarrow E$. We call the triplet $(E, +, \cdot)$ a $\mathbb{K}$ vector space if and only if $(E, +)$ is a commutative group, and $\cdot$ is compatible with the binary operation $+$. That is, for all $x, y, z \in E$ and all $\lambda, \mu \in \mathbb{K}$:
 
@@ -193,7 +214,11 @@ Because the structure of $E$ hugely depends on the choice of $\mathbb{K}$. The s
 
 Good point. This is actually a slightly imprecise shorthand, since axioms 5-8 involves two different addition operations: $+_{E}, +_{\mathbb{K}}$.
 
-* Definition  1.10:  $\mathbb{K}[X]$ and degree of a polynomial
+* Definition:  $\mathbb{K}[X]$ and degree of a polynomial
+:PROPERTIES:
+:CUSTOM_ID: def:polynomial-ring-degree
+:LECTURE_REF: 1.10
+:END:
 
 The set of polynomials over $\mathbb{K}$ is defined as
 
@@ -225,7 +250,11 @@ Imagine $\mathbb{R}^3$, thats $\mathbb{R}_2[X]$, just in other form.
 
 Convention.
 
-* Definition  1.13:  Linear combination
+* Definition:  Linear combination
+:PROPERTIES:
+:CUSTOM_ID: def:linear-combination
+:LECTURE_REF: 1.13
+:END:
 
 Let $E$ be a $\mathbb{K}$ vector space. Given vectors $x_1, \ldots, x_n \in E$, a /linear combination/ of these vectors is any vector of the form
 
@@ -239,7 +268,11 @@ Over an infinite field ($\mathbb{R}$, $\mathbb{C}$, $\mathbb{Q}$, etc) - infinit
 
 Over a finite field $\mathbb{F}_q : |V| = q^n$ for dimension $n$ - finite.
 
-* Definition  1.14:  Generating set (Spanning set)
+* Definition:  Generating set (Spanning set)
+:PROPERTIES:
+:CUSTOM_ID: def:generating-set
+:LECTURE_REF: 1.14
+:END:
 
 Let $\mathcal{X} = \{x_1, \ldots x_n\}$ be a finite subset of vectors of $E$ with $n \in \mathbb{N}$. We say that $\mathcal{X}$ a /generating set/ (or /spanning set/) of $E$ if any element of $E$ can be expressed as a linear combination of the elements of $\mathcal{X}$:
 
@@ -255,13 +288,21 @@ $$E = \text{span}\{x_i\}_{i=1}^{n}.$$
 
 Purely conventional.
 
-* Definition  1.15:  Linearly independent set (Free family)
+* Definition:  Linearly independent set (Free family)
+:PROPERTIES:
+:CUSTOM_ID: def:linearly-independent-set
+:LECTURE_REF: 1.15
+:END:
 
 Let $\mathcal{X} = \{x_1, \ldots x_n\}$ be a finite subset of vectors of $E$ with $n \in \mathbb{N}$. We say that $X$ is a linearly independent set (or a free family) if the only linear combination that gives the zero vector is the trivial one:
 
 $$\lambda_1 x_1 + \cdots + \lambda_n x_n = 0 \;\text{for some}\; \lambda_1, \ldots, \lambda_n \in \mathbb{K} \quad \Rightarrow \quad \lambda_1 = \cdots = \lambda_n = 0.$$
 
-* Definition  1.16:  Basis
+* Definition:  Basis
+:PROPERTIES:
+:CUSTOM_ID: def:basis
+:LECTURE_REF: 1.16
+:END:
 
 A set of vectors $\mathcal{B} = \{x_1, \ldots x_n\} \subset E$ is a /basis/ of $E$ if it is both generating and linearly independent.
 
@@ -276,7 +317,11 @@ No. $\mathcal{B} \neq E$, because:
 3. $1_{\mathbb{K}} \cdot 0_E = 0_E$ holds.
 4. This contradicts the definition of linear independence.
 
-* Proposition 1.17:  Coordinate of a vector on a given basis
+* Proposition: Coordinate of a vector on a given basis
+:PROPERTIES:
+:CUSTOM_ID: prop:basis-coordinates
+:LECTURE_REF: 1.17
+:END:
 
 Let $\mathcal{B} = \{x_1, \ldots x_n\} \subset E$ be a basis of $E$. Then for any vector $x \in E$ there exist unique scalars $\lambda_1, \ldots, \lambda_n \in \mathbb{K}$ such that
 
@@ -319,7 +364,11 @@ Purely educational reason. $\mathrm{Vec}(x) = [x]^{\mathcal{B}}$ holds.
 
 To choose one basis and commit to it for the duration of the work.
 
-* Proposition 1.18:  Linearity of coordinate representation
+* Proposition: Linearity of coordinate representation
+:PROPERTIES:
+:CUSTOM_ID: prop:coordinate-linearity
+:LECTURE_REF: 1.18
+:END:
 
 Let $x, y \in E$. Then
 
@@ -329,7 +378,11 @@ $$[\alpha x + \beta y]^{\mathcal{E}} = \alpha [x]^{\mathcal{E}} + \beta [y]^{\ma
 We simply use the definition of the coordinate representation and the fact that $\mathbb{R}^n$ is a vector space. $\square$
 #+end_proof
 
-* Definition  1.19:  Subspace
+* Definition:  Subspace
+:PROPERTIES:
+:CUSTOM_ID: def:subspace
+:LECTURE_REF: 1.19
+:END:
 
 Let $(E, +, \cdot)$ be a $\mathbb{K}$ vector space, and let $F \subset E$ be a subset of $E$. We say that $F$ is a subspace of $E$ if and only if $F$ is nonempty and stable by linear combinations:
 
@@ -345,7 +398,11 @@ Let $(E, +, \cdot)$ be a $\mathbb{K}$ vector space, and let $F \subset E$ be a s
 
 Specifically the phrase "stable by" comes from French mathematics "stable par" which means "closed under". Hence, it meant $F$ is closed under linear combinations, which implies axioms 2 and 3.
 
-* Proposition 1.20:  Subspace characterization via closure under linear combinations
+* Proposition: Subspace characterization via closure under linear combinations
+:PROPERTIES:
+:CUSTOM_ID: prop:subspace-linear-combination
+:LECTURE_REF: 1.20
+:END:
 
 $F \subset E$ is a subspace of $E$ if and only if:
 
@@ -359,7 +416,11 @@ $F \subset E$ is a subspace of $E$ if and only if:
 
 Yes, it just packs axioms 2 and 3 of *Definition 1.19* into one. Axioms 1 in both *Proposition 1.20* and *Definition 1.19* are equivalent as well.
 
-* Proposition 1.22:  Subspace intersection, union, and sum
+* Proposition: Subspace intersection, union, and sum
+:PROPERTIES:
+:CUSTOM_ID: prop:subspace-intersection-union-sum
+:LECTURE_REF: 1.22
+:END:
 
 Let $F$ and $G$ be two subspaces of a vector space $E$. Then:
 
@@ -385,7 +446,11 @@ True, lecture notes misses the proof of that points.
 3. $F + G$ is a subspace: $0_E = 0_E + 0_E \in F + G$. If $x_1 + y_1, x_2 + y_2 \in F + G$, with $x_i \in F, y_i \in G$, then $\lambda(x_1 + y_1) + \mu(x_2 + y_2) = (\lambda x_1 + \lambda y_1) + (\mu x_2 + \mu y_2) \in F + G$.
 #+end_proof
 
-* Definition  1.23:  Direct sum
+* Definition:  Direct sum
+:PROPERTIES:
+:CUSTOM_ID: def:direct-sum
+:LECTURE_REF: 1.23
+:END:
 
 The sum of two subspaces $F$, $G$ of a vector space $E$ is said to be direct, and is written $F + G = F \oplus G$, when for any $x \in E$ there exists a unique decomposition
 
@@ -407,7 +472,11 @@ Yes, that is a non-standard definition. The standard approach separates two thin
 
 - *Complementary*: $F$ and $G$ are complementary iff $F \oplus G = E$, i.e. the direct sum exhausts the whole vector space.
 
-* Definition  1.24:  Linear map
+* Definition:  Linear map
+:PROPERTIES:
+:CUSTOM_ID: def:linear-map
+:LECTURE_REF: 1.24
+:END:
 
 Let $E$ and $F$ be two $\mathbb{K}$ vector spaces. The mapping $f : E \rightarrow F$ is linear if and only if
 
@@ -423,7 +492,11 @@ A linear map preserves addition and scaling. Map is fully determined by what it 
 
 If the map is not linear, you loose all of that, $f(x + y) \neq f(x) + f(y)$. You wouldn't be able to use the entire machinery of linear algebra: rank, kernel, eigenvalues, etc.
 
-* Proposition 1.25:  Subspace and kernel/image structure of linear maps
+* Proposition: Subspace and kernel/image structure of linear maps
+:PROPERTIES:
+:CUSTOM_ID: prop:linear-map-kernel-image
+:LECTURE_REF: 1.25
+:END:
 
 Let $E$ and $F$ be two $\mathbb{K}$ vector spaces, and $f \in \mathcal{L}(E, F)$. Then:
 
@@ -451,7 +524,11 @@ $\mathcal{F}(E, F)$ is a set of *all* functions from $E$ to $F$, not only the li
 
 Thats a typo.
 
-* Definition  1.27:  Linear form, dual space
+* Definition:  Linear form, dual space
+:PROPERTIES:
+:CUSTOM_ID: def:linear-form-dual-space
+:LECTURE_REF: 1.27
+:END:
 
 Let $E$ be a $\mathbb{K}$ vector space. The dual space of $E$ is the set $E^* := \mathcal{L}(E, \mathbb{K})$. Every $f \in E^*$ is called a linear functional.
 
@@ -463,7 +540,11 @@ Let $E$ be a $\mathbb{K}$ vector space. The dual space of $E$ is the set $E^* :=
 
 Yes.
 
-* Theorem     1.29:  Existence of dual basis
+* Theorem:     Existence of dual basis
+:PROPERTIES:
+:CUSTOM_ID: thm:dual-basis-existence
+:LECTURE_REF: 1.29
+:END:
 
 Let $E$ be a $\mathbb{K}$ vector space of finite dimension $n \in \mathbb{N}$, and let $\mathcal{E} = \{e_1, \ldots, e_n\}$ be a basis of $E$. For every $1 \le i \le n$, we define
 
@@ -481,7 +562,7 @@ is a basis of $E^*$, which is called the dual basis of $\mathcal{E}$. Furthermor
 $$e_i^{*}(e_j) = \delta_{i,j}, \quad \forall \; 1 \le i, j \le n$$
 
 #+begin_proof
-The mapping $e_i^*$ is linear by /Proposition 1.18/, and the fact that component extraction is also a linear application. We next prove that $\mathcal{B}^*$ is a basis of $E^*$ by showing that it is both a linearly independent and generating set.
+The mapping $e_i^*$ is linear by [[#prop:coordinate-linearity][Proposition 1.18]], and the fact that component extraction is also a linear application. We next prove that $\mathcal{B}^*$ is a basis of $E^*$ by showing that it is both a linearly independent and generating set.
 
 - Linear Independence: Let $\lambda_1, \ldots, \lambda_n \in \mathbb{K}$ such that $\lambda_1 e_1^* + \cdots + \lambda_n e_n^* = 0$. Then, $(\lambda_1 e_1^* + \cdots + \lambda_n e_n^*)(e_i) = \lambda_i = 0$ for all $1 \le i \le n$, which shows that $\mathcal{B}^*$ is a linearly independent set.
 
@@ -506,11 +587,19 @@ Look closely, you are working with $e_j$, which is already an element of basis, 
 
 Nothing to do with matrices. $i$ is responsible for elements of dual basis, while $j$ for regular basis.
 
-* Corollary   1.30:  Dimension of dual space
+* Corollary:   Dimension of dual space
+:PROPERTIES:
+:CUSTOM_ID: cor:dual-space-dimension
+:LECTURE_REF: 1.30
+:END:
 
 If $E$ is finite-dimensional, then $\dim(E) = \dim(E^*)$.
 
-* Definition  1.31:  Annihilator
+* Definition:  Annihilator
+:PROPERTIES:
+:CUSTOM_ID: def:annihilator
+:LECTURE_REF: 1.31
+:END:
 
 Let $E$ be a $\mathbb{K}$ vector space of dimension $n$, and let $W$ be a subspace of $E$. The annihilator $W^{\circ}$ of $W$ is the set of linear functionals that vanish on $W$.
 
@@ -526,7 +615,11 @@ $$W^{\circ} := \{\varphi \in E^* : \varphi(x) = 0, \; \forall x \in W\}$$
 
 Most probably a chapter conventionally. For example the next Theorem 1.33.
 
-* Theorem     1.33:  Dimension of annihilator
+* Theorem:     Dimension of annihilator
+:PROPERTIES:
+:CUSTOM_ID: thm:annihilator-dimension
+:LECTURE_REF: 1.33
+:END:
 
 Let $E$ be a $\mathbb{K}$ vector space of dimension $n$, and let $W$ be a subspace of $E$. Then
 
@@ -542,7 +635,11 @@ Suppose that $1 \le \dim(W) = k < n$, and let $(e_1, \ldots, e_k)$ be a basis of
 
 Yes, intuition is right.
 
-* Lemma       1.34:  Matrix representation of a linear map
+* Lemma:       Matrix representation of a linear map
+:PROPERTIES:
+:CUSTOM_ID: lem:matrix-representation
+:LECTURE_REF: 1.34
+:END:
 
 Let:
 
@@ -580,17 +677,25 @@ Its there implicitly. Each column $[f(e_p)]^{\mathcal{F}}$ is the coordinate vec
 
 A pure typographical convention to label columns.
 
-* Proposition 1.36:  Evaluation equals matrix vector product
+* Proposition: Evaluation equals matrix vector product
+:PROPERTIES:
+:CUSTOM_ID: prop:evaluation-matrix-product
+:LECTURE_REF: 1.36
+:END:
 
 Let $f \in \mathcal{L}(E, F)$ and let $\mathcal{E}$ and $\mathcal{F}$ be two bases of $E$ and $F$ respectively. Then
 
 $$[f(x)]^{\mathcal{F}} = [f]^{\mathcal{F}}_{\mathcal{E}} [x]^{\mathcal{E}}, \quad \forall x \in E.$$
 
 #+begin_proof
-Let $x \in E$, and denote $[x]^{\mathcal{E}} = (c_1, \ldots, c_n)^\top$ its coordinate representation in the basis $\mathcal{E}$. Then $f(x) = \sum_{j=1}^n c_j f(e_j)$, and by /Proposition 1.18/, $[f(x)]^{\mathcal{F}} = \sum_{j=1}^n c_j [f(e_j)]^{\mathcal{F}} = [f]^{\mathcal{F}}_{\mathcal{E}} [x]^{\mathcal{E}}$. To obtain the last equality, we have used the definition of $[f]^{\mathcal{F}}_{\mathcal{E}}$ from Eq. (1.2), and we have observed that the linear combination can be expressed as a matrix-vector product.
+Let $x \in E$, and denote $[x]^{\mathcal{E}} = (c_1, \ldots, c_n)^\top$ its coordinate representation in the basis $\mathcal{E}$. Then $f(x) = \sum_{j=1}^n c_j f(e_j)$, and by [[#prop:coordinate-linearity][Proposition 1.18]], $[f(x)]^{\mathcal{F}} = \sum_{j=1}^n c_j [f(e_j)]^{\mathcal{F}} = [f]^{\mathcal{F}}_{\mathcal{E}} [x]^{\mathcal{E}}$. To obtain the last equality, we have used the definition of $[f]^{\mathcal{F}}_{\mathcal{E}}$ from Eq. (1.2), and we have observed that the linear combination can be expressed as a matrix-vector product.
 #+end_proof
 
-* Proposition 1.37:  Matrix of linear combination equals linear combination of matrices
+* Proposition: Matrix of linear combination equals linear combination of matrices
+:PROPERTIES:
+:CUSTOM_ID: prop:matrix-linear-combination
+:LECTURE_REF: 1.37
+:END:
 
 Let $E, F$ be two finite $\mathbb{K}$ dimensional spaces, $f, g \in \mathcal{L}(E, F)$, $\alpha, \beta \in \mathbb{K}$, and $\mathcal{E}, \mathcal{F}$ bases of $E$ and $F$ respectively. It holds that
 
@@ -600,18 +705,22 @@ $$[\alpha f + \beta g]^{\mathcal{F}}_{\mathcal{E}} = \alpha [f]^{\mathcal{F}}_{\
 It suffices to use the definition of $\operatorname{Mat}(\alpha f + \beta g) = [\alpha f + \beta g]^{\mathcal{F}}_{\mathcal{E}}$ in terms of matrices, and use linearity of the space of matrices.
 #+end_proof
 
-* Proposition 1.38:  Matrix of composition equals matrix product
+* Proposition: Matrix of composition equals matrix product
+:PROPERTIES:
+:CUSTOM_ID: prop:matrix-composition-product
+:LECTURE_REF: 1.38
+:END:
 
 Let $E, F, G$ be three finite-dimensional $\mathbb{K}$ vector spaces, $f \in \mathcal{L}(E, F)$ and $g \in \mathcal{L}(F, G)$, and $\mathcal{E}, \mathcal{F}, \mathcal{G}$ bases of $E, F, G$. It holds that
 
 $$[g \circ f]^{\mathcal{G}}_{\mathcal{E}} = [g]^{\mathcal{G}}_{\mathcal{F}} [f]^{\mathcal{F}}_{\mathcal{E}}.$$
 
 #+begin_proof
-Let $x \in E$. On the one hand, by /Proposition 1.36/, we have that
+Let $x \in E$. On the one hand, by [[#prop:evaluation-matrix-product][Proposition 1.36]], we have that
 
 $$[(g \circ f)(x)]^{\mathcal{G}} = [g \circ f]^{\mathcal{G}}_{\mathcal{E}} [x]^{\mathcal{E}}.$$
 
-On the other hand, using the nested structure of the composition, and again using /Proposition 1.36/, we also have that
+On the other hand, using the nested structure of the composition, and again using [[#prop:evaluation-matrix-product][Proposition 1.36]], we also have that
 
 \begin{align*}
 [(g \circ f)(x)]^{\mathcal{G}} &= [g(f(x))]^{\mathcal{G}} = [g]^{\mathcal{G}}_{\mathcal{F}} [f(x)]^{\mathcal{F}} = [g]^{\mathcal{G}}_{\mathcal{F}} [f]^{\mathcal{F}}_{\mathcal{E}} [x]^{\mathcal{E}}.
@@ -630,7 +739,11 @@ which leads to the desired equality.
 
 Yes, and Lemma 1.34 already said that.
 
-* Proposition 1.39:  Matrix representation of inverse application
+* Proposition: Matrix representation of inverse application
+:PROPERTIES:
+:CUSTOM_ID: prop:matrix-inverse
+:LECTURE_REF: 1.39
+:END:
 
 Let $\mathcal{E}$ and $\mathcal{F}$ be bases of vector spaces $E$ and $F$, respectively, and let $f : E \rightarrow F$ be an invertible linear application. Then the inverse application $f^{-1} : F \rightarrow E$ has the following matrix representation:
 
@@ -650,7 +763,11 @@ $$MM^{-1} = M^{-1}M = I_n$$
 
 *** TODO What is the proof?
 
-* Definition  1.40:  Matrix of change of basis
+* Definition:  Matrix of change of basis
+:PROPERTIES:
+:CUSTOM_ID: def:change-of-basis-matrix
+:LECTURE_REF: 1.40
+:END:
 
 Let $E$ be an $n$ dimensional vector space, and let an input and an output basis $\mathcal{E} = \{e_1, \ldots, e_n\}$ and $\mathcal{F} = \{f_1, \ldots, f_n\}$. The matrix of change of basis from $\mathcal{E}$ to $\mathcal{F}$ is the invertible matrix $[\operatorname{Id}]^{\mathcal{F}}_{\mathcal{E}}$. Its columns are the vectors of $\mathcal{E}$ written in the basis $\mathcal{F}$. The matrix converts coordinate vectors expressed in the basis $\mathcal{E}$ to coordinate vectors in $\mathcal{F}$.
 
@@ -668,14 +785,18 @@ $$\mathrm{Id} : E \rightarrow E, \quad \mathrm{Id}(x) = x$$
 
 Yes. Definition 1.40 is special case of Proposition 1.36.
 
-* Proposition 1.41:  Change of basis representation of endomorphisms
+* Proposition: Change of basis representation of endomorphisms
+:PROPERTIES:
+:CUSTOM_ID: prop:change-of-basis-endomorphism
+:LECTURE_REF: 1.41
+:END:
 
 Let $E$ be an $n$ dimensional vector space, let $\mathcal{E} = \{e_1, \ldots, e_n\}$ and $\mathcal{F} = \{f_1, \ldots, f_n\}$ be two bases, and let $T \in \mathcal{L}(E)$. Then
 
 $$[T]^{\mathcal{F}}_{\mathcal{F}} = [\operatorname{Id}]^{\mathcal{F}}_{\mathcal{E}} \, [T]^{\mathcal{E}}_{\mathcal{E}} \, [\operatorname{Id}]^{\mathcal{E}}_{\mathcal{F}}.$$
 
 #+begin_proof
-Let $f_j$ be the $j$ th basis element of $\mathcal{F}$. By /Proposition 1.36/, it holds that
+Let $f_j$ be the $j$ th basis element of $\mathcal{F}$. By [[#prop:evaluation-matrix-product][Proposition 1.36]], it holds that
 
 $$[T(f_j)]^{\mathcal{E}}_{\mathcal{E}} = [T]^{\mathcal{E}}_{\mathcal{E}} [f_j]^{\mathcal{E}}.$$
 
@@ -694,7 +815,11 @@ In addition, by Eq. (1.5), we have that $[T(f_j)]^{\mathcal{E}} = [\operatorname
 
 Yes, thats structurally correct, but thats not the only point of Proposition.
 
-* Definition  1.42:  Projection mapping
+* Definition:  Projection mapping
+:PROPERTIES:
+:CUSTOM_ID: def:projection-mapping
+:LECTURE_REF: 1.42
+:END:
 
 Let $E$ be a vector space. A linear map $P : E \rightarrow E$ is called a projection mapping if and only if $P^2 = P$.
 
@@ -714,7 +839,11 @@ Given $E = W \oplus W'$, define $P : E \rightarrow E$ by $P(w + w') = w : w \in 
 
 Yes, they are equivalent.
 
-* Definition  1.45:  Projection onto a subspace
+* Definition:  Projection onto a subspace
+:PROPERTIES:
+:CUSTOM_ID: def:projection-subspace
+:LECTURE_REF: 1.45
+:END:
 
 Let $E$ be a vector space with subspaces $F, G \subseteq E$ such that $F \oplus G = E$. The projection on $F$ associated to the direct sum $F \oplus G$ is the linear application
 
@@ -731,7 +860,11 @@ where, for every $x \in E$, we use the unique decomposition $x = x_F + x_G$ with
 
 Yes, the Definition 1.45 is the subspace based definition I wrote in answer for question in Definition 1.42.
 
-* Definition  1.46:  Symmetry with respect to a subspace
+* Definition:  Symmetry with respect to a subspace
+:PROPERTIES:
+:CUSTOM_ID: def:symmetry-subspace
+:LECTURE_REF: 1.46
+:END:
 
 Let $E$ be a vector space with subspaces $F, G \subseteq E$ such that $F \oplus G = E$. The symmetry with respect to $F$ associated to the direct sum $F \oplus G$ is the linear application
 
@@ -768,7 +901,11 @@ No. Projection satisfies $P^{2} = P$, while symmetry satisfies $S^{2} = \mathrm{
 - Projection: $x_{G} \mapsto 0$ (kills it)
 - Symmetry: $x_{G} \mapsto -x_{G}$ (negate it)
 
-* Proposition 1.48:  Kernel and image of projection and symmetry
+* Proposition: Kernel and image of projection and symmetry
+:PROPERTIES:
+:CUSTOM_ID: prop:projection-symmetry-kernel-image
+:LECTURE_REF: 1.48
+:END:
 
 Let $P_{F \oplus G}$, $S_{F \oplus G}$ be projection and symmetric mappings onto/with respect to $F$ associated to the direct sum $E = F \oplus G$. Then:
 
@@ -802,7 +939,11 @@ $P$ projects onto $F$, meaning $F$ is what survives, $G$ is killed:
 - $\mathrm{im}(P) = F$: the output is always $F$
 - $\mathrm{ker}(P) = G$: the input that maps to $0$ is $G$
 
-* Definition  1.49:  Distance function
+* Definition:  Distance function
+:PROPERTIES:
+:CUSTOM_ID: def:distance-function
+:LECTURE_REF: 1.49
+:END:
 
 Let $E$ be a nonempty set. A function $d : E \times E \rightarrow \mathbb{R}$ is called a distance on $E$ if and only if:
 
@@ -834,11 +975,19 @@ First, $E$ here is a nonempty set, not a vector space.
 
 Second, distance in $\mathbb{R}$ because its canonical total order.
 
-* Definition  1.50:  Metric space
+* Definition:  Metric space
+:PROPERTIES:
+:CUSTOM_ID: def:metric-space
+:LECTURE_REF: 1.50
+:END:
 
 A metric space $(E, d)$ is a pair of a set $E$ and a distance function $d : E \times E \rightarrow \mathbb{R}$.
 
-* Definition  1.52:  Norm and normed vector space
+* Definition:  Norm and normed vector space
+:PROPERTIES:
+:CUSTOM_ID: def:norm-normed-space
+:LECTURE_REF: 1.52
+:END:
 
 Let $(E, +, \cdot)$ be a $\mathbb{K}$ vector space. A norm is a mapping $\|\cdot\|_E : E \rightarrow \mathbb{R}$ satisfying:
 
@@ -874,7 +1023,11 @@ Norm requires more structure than distance:
 
 - Distance is between pair of points with no distinguished origin. Norm measures the size relative to $0_{E}$.
 
-* Proposition 1.53:  Norm induced metric
+* Proposition: Norm induced metric
+:PROPERTIES:
+:CUSTOM_ID: prop:norm-induced-metric
+:LECTURE_REF: 1.53
+:END:
 
 Let $(E, \|\cdot\|_E)$ be a normed vector space. Define the function
 
@@ -901,7 +1054,11 @@ Norm and distance measure different things. Norm measures the size of one vector
 
 Both of them are related by construction. If you have a norm, you could build a distance by $d(x,y) = \|x - y\|$. A reverse does not always work. Norm is a stronger concept, which requires more structure.
 
-* Lemma       1.54:  Examples of normed vector spaces
+* Lemma:       Examples of normed vector spaces
+:PROPERTIES:
+:CUSTOM_ID: lem:normed-space-examples
+:LECTURE_REF: 1.54
+:END:
 
 The following vector spaces can be endowed with norms and be seen as normed vector spaces:
 
@@ -945,7 +1102,11 @@ A norm on $\mathbb{R}^{n}$ measures the size of the vector. A norm on $\mathcal{
 
 - $\|f\|_{2} = \left( \int_0^1 |f(x)|^{2} dx \right)^{1/2}$: penalizes large values more than $\|\cdot\|_1$, but does not fixate on peak like $\|\cdot\|_{\infty}$
 
-* Definition  1.55:  Norm equivalence
+* Definition:  Norm equivalence
+:PROPERTIES:
+:CUSTOM_ID: def:norm-equivalence
+:LECTURE_REF: 1.55
+:END:
 
 Let $E$ be a $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$, and let $\|\cdot\|_{\alpha}$ and $\|\cdot\|_{\beta}$ be two norms on $E$. We say that $\|\cdot\|_{\alpha}$ and $\|\cdot\|_{\beta}$ are equivalent if there exists two constants $0 < \underline{c} \le \overline{c}$ such that
 
@@ -965,7 +1126,11 @@ $$\|x\|_{\infty} \le \|x\|_2 \le \sqrt{n} \|x\|_{\infty}$$
 
 Those are called p-norms, and yes, they are not the only ones. One example of other norm is an operator norm in Theorem 1.60.
 
-* Theorem     1.56:  All norms are equivalent in finite dimension
+* Theorem:     All norms are equivalent in finite dimension
+:PROPERTIES:
+:CUSTOM_ID: thm:finite-dimension-norm-equivalence
+:LECTURE_REF: 1.56
+:END:
 
 Let $E$ be a $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$. Then:
 
@@ -973,7 +1138,11 @@ Let $E$ be a $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\mathb
 
 2. If $E$ is infinite dimensional, then there always exists norms that are not equivalent.
 
-* Definition  1.57:  Bounded linear mappings
+* Definition:  Bounded linear mappings
+:PROPERTIES:
+:CUSTOM_ID: def:bounded-linear-maps
+:LECTURE_REF: 1.57
+:END:
 
 Let $(E, \|\cdot\|_E)$ and $(F, \|\cdot\|_F)$ be two normed vector spaces. A linear mapping $T \in \mathcal{L}(E, F)$ is called bounded if there exists a constant $C > 0$ such that
 
@@ -999,7 +1168,11 @@ $\|T(x)\|_F \le C \|x\|_E$: the output is never more than $C$ times the input.
 
 No, $\mathcal{B}$ stands for "bounded".
 
-* Lemma       1.58:  Bounded mappings contained in linear mappings
+* Lemma:       Bounded mappings contained in linear mappings
+:PROPERTIES:
+:CUSTOM_ID: lem:bounded-contained-linear
+:LECTURE_REF: 1.58
+:END:
 
 It holds that
 
@@ -1013,7 +1186,11 @@ and: with infinite-dimensional spaces the inclusion is strict, and when $E$ and 
 
 Yes, that was an error.
 
-* Theorem     1.60:  Operator norm on bounded linear mappings
+* Theorem:     Operator norm on bounded linear mappings
+:PROPERTIES:
+:CUSTOM_ID: thm:operator-norm
+:LECTURE_REF: 1.60
+:END:
 
 The space $\mathcal{B}(E, F)$ endowed with the operator norm
 
@@ -1098,7 +1275,11 @@ $\|T\|_{\mathrm{op}}$ is a maximum stretching factor of $T$. You feed in every u
 
 Yes, $\mathcal{B}(E, F)$ is a vector space of a bounded linear maps (functions), and $\|\cdot\|_{\mathrm{op}} : \mathcal{B}(E, F) \rightarrow \mathbb{R}$.
 
-* Lemma       1.61:  Boundedness and continuity
+* Lemma:       Boundedness and continuity
+:PROPERTIES:
+:CUSTOM_ID: lem:bounded-continuous
+:LECTURE_REF: 1.61
+:END:
 
 For linear mappings between normed spaces $(E, \|\cdot\|_E)$ and $(F, \|\cdot\|_F)$ the following are equivalent:
 
@@ -1122,7 +1303,11 @@ Therefore
 
 Not really, This belongs to the proof section. It should be $\delta = \dfrac{\epsilon}{\|T\|_{\mathrm{op}}}$.
 
-* Definition  1.62:  Algebraic vs topological dual
+* Definition:  Algebraic vs topological dual
+:PROPERTIES:
+:CUSTOM_ID: def:algebraic-topological-dual
+:LECTURE_REF: 1.62
+:END:
 
 For a normed $\mathbb{K}$ vector space $(E, \|\cdot\|_E)$, there are two notions of dual spaces:
 
@@ -1130,13 +1315,13 @@ For a normed $\mathbb{K}$ vector space $(E, \|\cdot\|_E)$, there are two notions
 
   $$E^* := \mathcal{L}(E, \mathbb{K}) = \{\ell : E \rightarrow \mathbb{K} : \ell \text{ is linear}\}$$
 
-  as already defined in /Definition 1.27/.
+  as already defined in [[#def:linear-form-dual-space][Definition 1.27]].
 
 - The topological or continuous dual is the space of bounded linear functionals,
 
   $$E' := \mathcal{B}(E, \mathbb{K}) = \{\ell \in E^* : \|\ell\|_{\mathrm{op}} < +\infty\} \subseteq E^*.$$
 
-  By /Theorem 1.60/, it is a normed vector space when endowed with the operator norm Eq. (1.11), which is often called the dual norm.
+  By [[#thm:operator-norm][Theorem 1.60]], it is a normed vector space when endowed with the operator norm Eq. (1.11), which is often called the dual norm.
 
 ** Questions
 

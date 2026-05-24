@@ -12,10 +12,15 @@
 #+latex_header: \usepackage{amsthm}
 #+latex_header: \usepackage[margin=1in]{geometry}
 #+options: num:t tags:nil
+#+columns: %45ITEM(Item) %14LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
 #+property: header-args :eval never-export
 #+startup: overview latexpreview inlineimages
 
-* Definition  4.01:  Leibniz Formula of the determinant
+* Definition:  Leibniz Formula of the determinant
+:PROPERTIES:
+:CUSTOM_ID: def:leibniz-determinant
+:LECTURE_REF: 4.1
+:END:
 
 For any $A \in \mathbb{K}^{n \times n}$, its determinant is defined as
 
@@ -27,7 +32,11 @@ For any $A \in \mathbb{K}^{n \times n}$, its determinant is defined as
 
 ** Questions
 
-* Lemma       4.02:  Laplace expansion
+* Lemma:       Laplace expansion
+:PROPERTIES:
+:CUSTOM_ID: lem:laplace-expansion
+:LECTURE_REF: 4.2
+:END:
 
 The determinant of a matrix $A \in \mathbb{K}^{n \times n}$ is given by
 
@@ -43,7 +52,11 @@ We omit it for brevity.
 
 ** Questions
 
-* Proposition 4.04:  Determinant of upper and lower triangular matrices
+* Proposition: Determinant of upper and lower triangular matrices
+:PROPERTIES:
+:CUSTOM_ID: prop:triangular-matrix-determinant
+:LECTURE_REF: 4.4
+:END:
 
 For any lower or upper triangular matrix $A \in \mathbb{K}^{n \times n}$,
 
@@ -59,7 +72,11 @@ We use the Laplace expansion and proceed by induction. Left as an exercise.
 
 ** Questions
 
-* Lemma       4.05:  Determinant of the transpose
+* Lemma:       Determinant of the transpose
+:PROPERTIES:
+:CUSTOM_ID: lem:determinant-transpose
+:LECTURE_REF: 4.5
+:END:
 
 $$\det(A^\top) = \det(A).$$
 
@@ -87,7 +104,11 @@ $$\det(A^\top) = \sum_{\tau \in \mathcal{S}_n} \varepsilon(\tau) \prod_{j=1}^{n}
 
 ** Questions
 
-* Proposition 4.06:  Determinant of $A + tB$ is a polynomial of degree at most $n$
+* Proposition: Determinant of $A + tB$ is a polynomial of degree at most $n$
+:PROPERTIES:
+:CUSTOM_ID: prop:determinant-linear-perturbation
+:LECTURE_REF: 4.6
+:END:
 
 Let $A, B \in \mathbb{K}^{n \times n}$. The mapping
 
@@ -101,7 +122,11 @@ This follows immediately by applying formula (4.1) to $A + tB$.
 
 ** Questions
 
-* Lemma       4.07:  Linearity in each column, vanishing on repeated columns
+* Lemma:       Linearity in each column, vanishing on repeated columns
+:PROPERTIES:
+:CUSTOM_ID: lem:determinant-multilinearity
+:LECTURE_REF: 4.7
+:END:
 
 1. Linearity with respect to each column: Let $j_0 \in \{1, \ldots, n\}$, and let $v, w \in \mathbb{K}^n$ and $\lambda, \mu \in \mathbb{K}$. Then
 
@@ -138,7 +163,11 @@ Summing over all permutations leads to the conclusion that $\det(A) = 0$.
 #+end_proof
 
 ** Questions
-* Corollary   4.08:  Elementary operations and the determinant
+* Corollary:   Elementary operations and the determinant
+:PROPERTIES:
+:CUSTOM_ID: cor:elementary-operations-determinant
+:LECTURE_REF: 4.8
+:END:
 
 1. Adding a multiple of a column or a row to another: If $i$ and $j$ are two integers in $\{1, \ldots, n\}$ with $j \ne i$, and if $\alpha$ is any scalar, then
 
@@ -173,12 +202,16 @@ Summing over all permutations leads to the conclusion that $\det(A) = 0$.
 5. The determinant of linearly dependent vectors is zero: If $u_1, \ldots, u_n \in \mathbb{K}^n$ is a linearly dependent set, then $\det(u_1, \ldots, u_n) = 0$.
 
 #+begin_proof
-These are direct consequences of /Lemma 4.7/. Left as an exercise.
+These are direct consequences of [[#lem:determinant-multilinearity][Lemma 4.7]]. Left as an exercise.
 #+end_proof
 
 ** Questions
 
-* Lemma       4.10:  We can compute the determinant by the pivot method
+* Lemma:       We can compute the determinant by the pivot method
+:PROPERTIES:
+:CUSTOM_ID: lem:determinant-pivot
+:LECTURE_REF: 4.10
+:END:
 
 We will give the statement in a narrated way, and in a more mathematical way:
 
@@ -187,14 +220,18 @@ We will give the statement in a narrated way, and in a more mathematical way:
 - It holds that $\det(A) = (-1)^s \prod_{i=1}^{n} u_{i,i}$ where $U$ is the upper triangular matrix from the $PLU$ decomposition of $A$ and $s$ is the number of row swaps in the permutation matrix $P$.
 
 #+begin_proof
-$$\begin{align*} \det(A) &= \det(PLU) \\ &= \det(P) \det(L) \det(U) \quad \text{(by /Lemma 4.12/ stated just below)} \\ &= (-1)^s \prod_{i=1}^{n} u_{i,i}, \end{align*}$$
+$$\begin{align*} \det(A) &= \det(PLU) \\ &= \det(P) \det(L) \det(U) \quad \text{(by [[#lem:determinant-product][Lemma 4.12]] stated just below)} \\ &= (-1)^s \prod_{i=1}^{n} u_{i,i}, \end{align*}$$
 
 where in the last line we have used that $\det(P) = (-1)^s$, that $L$ is a lower triangular matrix with unity diagonal (hence $\det(L) = 1$), and that $U$ is a triangular matrix.
 #+end_proof
 
 ** Questions
 
-* Lemma       4.12:  Determinant of the matrix product
+* Lemma:       Determinant of the matrix product
+:PROPERTIES:
+:CUSTOM_ID: lem:determinant-product
+:LECTURE_REF: 4.12
+:END:
 
 Let $A, B \in \mathbb{K}^{n \times n}$. It holds that
 
@@ -250,7 +287,11 @@ The remaining sum is exactly $\det(A)$. Therefore $\det(AB) = \det(A) \det(B)$.
 
 ** Questions
 
-* Corollary   4.13:  Determinant and invertibility
+* Corollary:   Determinant and invertibility
+:PROPERTIES:
+:CUSTOM_ID: cor:determinant-invertibility
+:LECTURE_REF: 4.13
+:END:
 
 A matrix $A \in \mathbb{K}^{n \times n}$ is invertible if and only if
 
@@ -278,7 +319,11 @@ $$\det(A^{-1}) = \frac{1}{\det(A)}.$$
 
 ** Questions
 
-* Definition  4.14:  Similar matrices
+* Definition:  Similar matrices
+:PROPERTIES:
+:CUSTOM_ID: def:similar-matrices
+:LECTURE_REF: 4.14
+:END:
 
 Two square matrices $A$ and $B \in \mathbb{K}^{n \times n}$ are similar if and only if there exists an invertible matrix $P \in \mathbb{K}^{n \times n}$ such that
 
@@ -286,7 +331,11 @@ $$A = PBP^{-1}.$$
 
 ** Questions
 
-* Corollary   4.15:  Similar matrices have the same determinant
+* Corollary:   Similar matrices have the same determinant
+:PROPERTIES:
+:CUSTOM_ID: cor:similar-matrices-determinant
+:LECTURE_REF: 4.15
+:END:
 
 If $A$ and $B$ are two similar matrices, then
 
@@ -314,7 +363,11 @@ is just a product of real numbers, so it is of course equal to $\det(B)$.
 
 ** Questions
 
-* Definition  4.16:  Determinant of an endomorphism
+* Definition:  Determinant of an endomorphism
+:PROPERTIES:
+:CUSTOM_ID: def:endomorphism-determinant
+:LECTURE_REF: 4.16
+:END:
 
 Let $E$ be an $n$ -dimensional $\mathbb{K}$ vector space and let $f : E \rightarrow E$ be an endomorphism of $E$ ($f \in \mathcal{L}(E)$). We define the determinant of $f$ as the determinant of its matrix representation $[f]_{\mathcal{E}}^{\mathcal{E}}$ on a basis $\mathcal{E}$ of $E$. The determinant is independent to the choice of the basis,
 
@@ -322,7 +375,11 @@ $$\det(f) := \det([f]_{\mathcal{E}}^{\mathcal{E}}), \quad \forall \mathcal{E} \t
 
 ** Questions
 
-* Definition  4.17:  Alternating $n$ -linear form
+* Definition:  Alternating $n$ -linear form
+:PROPERTIES:
+:CUSTOM_ID: def:alternating-multilinear-form
+:LECTURE_REF: 4.17
+:END:
 
 Let $E$ be a vector space over $\mathbb{K}$, let $n$ be a positive integer, and let
 
@@ -346,7 +403,11 @@ be a map which, starting from $n$ vectors in $E$, produces a scalar.
 
 ** Questions
 
-* Corollary   4.18:  Determinant is an alternating $n$ -linear form
+* Corollary:   Determinant is an alternating $n$ -linear form
+:PROPERTIES:
+:CUSTOM_ID: cor:determinant-alternating-form
+:LECTURE_REF: 4.18
+:END:
 
 The map
 
@@ -364,16 +425,20 @@ The following theorem may appear abstract, but the most concrete properties of t
 
 ** Questions
 
-* Theorem     4.19:  All alternating $n$ -linear forms on an $n$ -dimensional space are proportional
+* Theorem:     All alternating $n$ -linear forms on an $n$ -dimensional space are proportional
+:PROPERTIES:
+:CUSTOM_ID: thm:alternating-forms-proportional
+:LECTURE_REF: 4.19
+:END:
 
 Let $E$ be a finite-dimensional vector space, and let $n$ denote the dimension of $E$. Then the space $\Lambda^n(E)$ has dimension 1. Consequently, if $\Phi$ is an alternating $n$ -linear form on $\mathbb{K}^n$, then there exists a scalar $\lambda \in \mathbb{K}$ such that
 
 $$\Phi = \lambda \det$$
 
-As an example of application, we next prove /Lemma 4.12/ about $\det(AB) = \det(A) \det(B)$ using the more axiomatic properties of multilinear forms.
+As an example of application, we next prove [[#lem:determinant-product][Lemma 4.12]] about $\det(AB) = \det(A) \det(B)$ using the more axiomatic properties of multilinear forms.
 
 #+begin_proof
-Alternative proof of /Lemma 4.12/. Let $A, B \in \mathbb{K}^{n \times n}$, and write the columns of $B$ as
+Alternative proof of [[#lem:determinant-product][Lemma 4.12]]. Let $A, B \in \mathbb{K}^{n \times n}$, and write the columns of $B$ as
 
 $$B = (b_1 \mid b_2 \mid \cdots \mid b_n),$$
 
@@ -397,7 +462,7 @@ so the matrix $(Av_1, \ldots, Av_n)$ has two equal columns. Hence,
 
 $$\omega(v_1, \ldots, v_n) = 0.$$
 
-Therefore, $\omega$ is an alternating $n$ -linear form on $\mathbb{K}^n$. By the /Theorem 4.19/ for alternating $n$ -linear forms on $E = \mathbb{K}^n$, there exists a scalar $c \in \mathbb{K}$ such that
+Therefore, $\omega$ is an alternating $n$ -linear form on $\mathbb{K}^n$. By the [[#thm:alternating-forms-proportional][Theorem 4.19]] for alternating $n$ -linear forms on $E = \mathbb{K}^n$, there exists a scalar $c \in \mathbb{K}$ such that
 
 $$\omega(v_1, \ldots, v_n) = \lambda \det(v_1, \ldots, v_n)$$
 

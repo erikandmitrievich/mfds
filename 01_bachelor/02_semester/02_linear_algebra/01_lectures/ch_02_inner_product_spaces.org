@@ -12,10 +12,15 @@
 #+latex_header: \usepackage{amsthm}
 #+latex_header: \usepackage[margin=1in]{geometry}
 #+options: num:t tags:nil
+#+columns: %45ITEM(Item) %14LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
 #+property: header-args :eval never-export
 #+startup: overview hideblocks latexpreview inlineimages
 
-* Definition  2.01:  Inner product (aka. scalar product)
+* Definition:  Inner product (aka. scalar product)
+:PROPERTIES:
+:CUSTOM_ID: def:inner-product
+:LECTURE_REF: 2.1
+:END:
 
 Let $E$ be an $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$. An inner product on $E$ is a map $\langle \cdot, \cdot \rangle_E : E \times E \rightarrow \mathbb{K}$ satisfying for all $x, y, z \in E$ and $\lambda \in \mathbb{K}$:
 
@@ -88,7 +93,7 @@ Not because they are trivial. Two reasons:
 
    The combined name names the combined property.
 
-2. *They are tightly coupled in use.* You almost never invoke nonnegativity without also invoking definiteness — e.g. defining the induced norm $\|x\|_E := \langle x, x \rangle_E^{1/2}$ in /Lemma 2.02/ needs nonnegativity (so the square root is real) /and/ definiteness (so $\|x\|_E = 0 \iff x = 0_E$, which is the norm axiom). Both clauses participate in essentially every downstream argument.
+2. *They are tightly coupled in use.* You almost never invoke nonnegativity without also invoking definiteness — e.g. defining the induced norm $\|x\|_E := \langle x, x \rangle_E^{1/2}$ in [[#lem:inner-product-induced-norm][Lemma 2.2]] needs nonnegativity (so the square root is real) /and/ definiteness (so $\|x\|_E = 0 \iff x = 0_E$, which is the norm axiom). Both clauses participate in essentially every downstream argument.
 
 Calling them trivial is a separate (and weaker) claim. Nonnegativity is structural; definiteness is what kills the degenerate cases and is precisely what fails for /semi/-inner products and seminorms.
 
@@ -110,7 +115,11 @@ where $\theta$ is the angle between $x$ and $y$. From this, one reads off what i
 
 4. Projects: the component of $x$ along the unit vector $u$ is $\langle x,u \rangle_E$
 
-* Lemma       2.02:  Norm induced by an inner product
+* Lemma:       Norm induced by an inner product
+:PROPERTIES:
+:CUSTOM_ID: lem:inner-product-induced-norm
+:LECTURE_REF: 2.2
+:END:
 
 Let $E$ be an $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$ and $\langle \cdot, \cdot \rangle_E$ be an inner product over $E$. The map
 
@@ -151,7 +160,11 @@ Intuition: An inner product gives lenght, angle and orthogonality. A norm gives 
 
 Historical context: Historically, the abstract notion of norm (Banach 1922) and abstract inner product (Hilbert 1906, von Neumann 1929) emerged in different context and were unified only later.
 
-* Lemma       2.03:  Cauchy-Schwarz inequality
+* Lemma:       Cauchy-Schwarz inequality
+:PROPERTIES:
+:CUSTOM_ID: lem:cauchy-schwarz
+:LECTURE_REF: 2.3
+:END:
 
 Let $E$ be an $\mathbb{K}$ vector space with $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$ and let $\langle \cdot, \cdot \rangle_E$ be defined as in Eq. (2.1). Then
 
@@ -180,7 +193,7 @@ p(\lambda) &:= \|x' + \lambda y\|^2 \\
 &= \|x\|^2 + \lambda^2 \|y\|^2 + 2\rho \lambda \tag{2.3} \\
 \end{align*}
 
-From Eq. (2.3), it follows that $p$ is a real-valued polynomial in $\lambda$. In addition, from Eq. (2.2) we have that $p(\lambda) \ge 0$ due to the nonnegativity of the inner product (see point 3 in /Definition 2.1/). Therefore, the discriminant of $p$ is nonpositive, and we conclude following the same lines as for the real case.
+From Eq. (2.3), it follows that $p$ is a real-valued polynomial in $\lambda$. In addition, from Eq. (2.2) we have that $p(\lambda) \ge 0$ due to the nonnegativity of the inner product (see point 3 in [[#def:inner-product][Definition 2.1]]). Therefore, the discriminant of $p$ is nonpositive, and we conclude following the same lines as for the real case.
 #+end_proof
 
 ** Questions
@@ -194,7 +207,11 @@ A real quadratic $a \lambda^2 + b \lambda + c = 0$ that is everywhere nonneg has
 &\implies 4\langle x,y \rangle \le 4 \|x\|^2\|y\|^2  \\
 \end{align*}
 
-* Definition  2.04:  Inner-Product, Hilbert and Euclidean Spaces
+* Definition:  Inner-Product, Hilbert and Euclidean Spaces
+:PROPERTIES:
+:CUSTOM_ID: def:hilbert-euclidean-space
+:LECTURE_REF: 2.4
+:END:
 
 1. inner-product space: An inner-product space is a normed space $(E, \|\cdot\|_E)$ where the norm is induced by an inner product $\langle \cdot, \cdot \rangle_E$. We usually denote it as $(E, \langle \cdot, \cdot \rangle_E)$.
 
@@ -219,7 +236,11 @@ Because the inner product $\langle \cdot,\cdot \rangle$ is a primary structure, 
 &\subseteq \text{Metric sp. } d(\cdot, \cdot) \\
 \end{align*}
 
-* Proposition 2.06:  Parallelogram Identity
+* Proposition: Parallelogram Identity
+:PROPERTIES:
+:CUSTOM_ID: prop:parallelogram-identity
+:LECTURE_REF: 2.6
+:END:
 
 Let $(E, \langle \cdot, \cdot \rangle_E)$ be a $\mathbb{K}$ inner-product vector space, and let $\|\cdot\|$ be its induced norm. Then
 
@@ -234,7 +255,11 @@ $$\|x + y\|^2 + \|x - y\|^2 = 2(\|x\|^2 + \|y\|^2), \quad \forall x, y \in E$$
 \end{align*}
 #+end_proof
 
-* Lemma       2.07:  Polarization identity
+* Lemma:       Polarization identity
+:PROPERTIES:
+:CUSTOM_ID: lem:polarization-identity
+:LECTURE_REF: 2.7
+:END:
 
 Let $(E, \|\cdot\|)$ be a $\mathbb{K}$ vector space that satisfies the parallelogram identity. For a real vector space, define
 
@@ -358,7 +383,11 @@ We have thus proven that any inner product on $E$ that satisfies the property (2
 For the case where $\mathbb{K} = \mathbb{C}$, the lemma can be proved in analogous manner, although with more complex (no pun intended) calculations.
 #+end_proof
 
-* Theorem     2.08:  Jordan von-Neumann
+* Theorem:     Jordan von-Neumann
+:PROPERTIES:
+:CUSTOM_ID: thm:jordan-von-neumann
+:LECTURE_REF: 2.8
+:END:
 
 Let $\|\cdot\|$ be a norm on a $\mathbb{K}$ vector space $E$. Then we have the equivalence:
 
@@ -368,7 +397,11 @@ $$\|\cdot\| \text{ is induced by an inner product} \iff \|\cdot\| \text{ satisfi
 The direction $\Leftarrow$ holds thanks to the parallelogram identity. The direction $\Rightarrow$ holds by the polarization identity, which gives us an explicit construction of the inner-product inducing the given norm.
 #+end_proof
 
-* Definition  2.09:  Angle between 2 vectors
+* Definition:  Angle between 2 vectors
+:PROPERTIES:
+:CUSTOM_ID: def:angle-vectors
+:LECTURE_REF: 2.9
+:END:
 
 The angle $\alpha \in \left[ 0, \pi \right]$ between two vectors $x, y \in E$ is defined through its cosine as
 
@@ -384,7 +417,11 @@ Interesting things happen when the vectors 'become perpendicular' in the sense t
 
 Yes, $\cos : [0,\pi] \rightarrow [-1,1]$ is a mere bijection. Angle becomes more abstract concept.
 
-* Definition  2.10:  Orthogonality and Orthonormality
+* Definition:  Orthogonality and Orthonormality
+:PROPERTIES:
+:CUSTOM_ID: def:orthogonality-orthonormality
+:LECTURE_REF: 2.10
+:END:
 
 Let $(E, \langle \cdot, \cdot \rangle_E)$ be a $\mathbb{K}$ inner-product vector space with $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$, and let $W$ and $T$ be two subspaces of $E$.
 
@@ -416,7 +453,11 @@ It packs two conditions into one formula:
 
 So "orthonormal" = "mutually orthogonal" + "each of length 1." The standard basis $\{(1,0,0), (0,1,0), (0,0,1)\}$ in $\mathbb{R}^3$ is the canonical example.
 
-* Definition  2.11:  Orthogonal and orthonormal basis
+* Definition:  Orthogonal and orthonormal basis
+:PROPERTIES:
+:CUSTOM_ID: def:orthonormal-basis
+:LECTURE_REF: 2.11
+:END:
 
 Let $E$ be an $n$ -dimensional Euclidean space and $X = \{e_1, \ldots, e_n\}$ be a basis of $E$. We say that $X$ is an orthogonal basis if
 
@@ -438,7 +479,11 @@ The orthogonal definition uses $\forall i \neq j$, which says nothing about self
 
 Yes. Orthogonal basis: all pairs perpendicular, but each vector can have arbitrary nonzero length. Orthonormal basis: all pairs perpendicular *and* each vector has unit length.
 
-* Proposition 2.12:  Coordinates in an orthonormal basis
+* Proposition: Coordinates in an orthonormal basis
+:PROPERTIES:
+:CUSTOM_ID: prop:orthonormal-basis-coordinates
+:LECTURE_REF: 2.12
+:END:
 
 Let $E$ be a Euclidean space and $\mathcal{E}_n = \{e_1, \ldots, e_n\}$ an orthonormal basis of $E$. Then
 
@@ -462,7 +507,11 @@ It shows that in an orthonormal basis, the coefficient $c_i$ equals $\langle x, 
 
 Yes. You expand $\|x\|^2 = \langle x, x \rangle$ using $x = \sum_i \langle x, e_i \rangle e_i$. Orthonormality ($\langle e_i, e_j \rangle = \delta_{ij}$) kills cross terms and turns each diagonal term into $|\langle x, e_i \rangle|^2 \cdot 1$. The basis vectors collapse out, leaving only the squared coefficients.
 
-* Theorem     2.13:  Gram-Schmidt orthonormalization
+* Theorem:     Gram-Schmidt orthonormalization
+:PROPERTIES:
+:CUSTOM_ID: thm:gram-schmidt
+:LECTURE_REF: 2.13
+:END:
 
 Any euclidean space $E$ has an orthonormal basis.
 
@@ -492,7 +541,11 @@ For any $1 \le k < i$,
 This allows us to conclude that $\mathcal{E}_n$ is an orthonormal set. To show that $\mathcal{E}_n$ is a basis of $E$, it suffices to show that it is a linearly independent family. Let $\lambda_1, \ldots, \lambda_n \in \mathbb{K}$ be such that $\lambda_1 e_1 + \lambda_n e_n = 0$. Multiplying scalarly by $e_i$ and using that $\mathcal{E}_n$ is an orthonormal set, we deduce that $\lambda_i = 0$ for $1 \le i \le n$. Thus $\mathcal{E}_n$ is linearly independent, and therefore a basis of $E$.
 #+end_proof
 
-* Definition  2.14:  Orthogonal complement
+* Definition:  Orthogonal complement
+:PROPERTIES:
+:CUSTOM_ID: def:orthogonal-complement
+:LECTURE_REF: 2.14
+:END:
 
 Let $E$ be an inner-product space and $F \subseteq E$ a subspace of $E$. We denote
 
@@ -510,7 +563,11 @@ Take $E = \mathbb{R}^2$, $F = \mathrm{span}((1,0))$. Then $G_1 = \mathrm{span}((
 
 So: $F^{\perp}$ is one specific complement among many, not a "subset of a complement."
 
-* Proposition 2.15:  Properties of the orthogonal complement
+* Proposition: Properties of the orthogonal complement
+:PROPERTIES:
+:CUSTOM_ID: prop:orthogonal-complement-properties
+:LECTURE_REF: 2.15
+:END:
 
 Let $F$ be a subspace of a euclidean space $E$. Then:
 
@@ -536,7 +593,11 @@ Let $F$ be a subspace of a euclidean space $E$. Then:
 4. We start by observing that $\dim((F^\perp)^\perp) = \dim(E) - \dim(F^\perp)$. Then, we easily verify that $F \subseteq (F^\perp)^\perp$, which leads to the conclusion that $(F^\perp)^\perp = F$.
 #+end_proof
 
-* Definition  2.16:  Orthogonal projection
+* Definition:  Orthogonal projection
+:PROPERTIES:
+:CUSTOM_ID: def:orthogonal-projection
+:LECTURE_REF: 2.16
+:END:
 
 Let $E = F \oplus F^\perp$ for a subspace $F \subseteq E$. The mapping
 
@@ -559,7 +620,11 @@ Yes, $P_{F}$ keeps the $F$ compnent and kills the $F^{\bot}$ component:
 
 - $P_F^2 = P_F$
 
-* Proposition 2.18:  Properties of the orthogonal projection
+* Proposition: Properties of the orthogonal projection
+:PROPERTIES:
+:CUSTOM_ID: prop:orthogonal-projection-properties
+:LECTURE_REF: 2.18
+:END:
 
 Let $F$ be a subspace of a euclidean vector space $E$. Then:
 
@@ -661,7 +726,11 @@ The split works because $x - P_F(x) \in F^\perp$ (point 2) while $P_F(x) - f \in
 
 Reframed: the optimisation problem $\min_{f \in F} \|x - f\|$ — which a priori needs calculus or search — has a closed-form linear-algebraic answer, $f^* = P_F(x)$. That collapse is the practical content of orthogonality.
 
-* Proposition 2.19:  Coordinates of the orthogonal projection
+* Proposition: Coordinates of the orthogonal projection
+:PROPERTIES:
+:CUSTOM_ID: prop:orthogonal-projection-coordinates
+:LECTURE_REF: 2.19
+:END:
 
 Let $(E, \omega)$ with $\dim E = n$ be a finite dimensional inner product space with inner product $\omega$. Let $F \subseteq E$ be a subspace of $E$ spanned by a basis $\mathcal{F} = \{f_1, \ldots, f_p\}$. Then the coordinates of the orthogonal projection $P_F : E \rightarrow F$ in $\mathcal{F}$ are given by
 
@@ -683,7 +752,11 @@ $$[\omega]_{\mathcal{F}\mathcal{F}}\, \lambda = q.$$
 Since the $f_i$ are linearly independent, then $[\omega]_{\mathcal{F}\mathcal{F}}$ is invertible, and this leads to Eq. (2.20).
 #+end_proof
 
-* Definition  2.20:  The supervised learning problem
+* Definition:  The supervised learning problem
+:PROPERTIES:
+:CUSTOM_ID: def:supervised-learning-problem
+:LECTURE_REF: 2.20
+:END:
 
 Given an unknown function $f : X \rightarrow Y$ between spaces $X$ and $Y$, find a good approximation of $f$ using only a dataset of $N$ samples:
 
@@ -701,7 +774,11 @@ The general approach to solving this problem consists of three main steps.
 
    $$w^* = \arg\min_{w \in W} \sum_{i=1}^N \ell(F(x_i; w), y_i). \qquad (2.23)$$
 
-* Theorem     2.21:  Riesz Theorem
+* Theorem:     Riesz Theorem
+:PROPERTIES:
+:CUSTOM_ID: thm:riesz
+:LECTURE_REF: 2.21
+:END:
 
 Let $(E, \langle \cdot, \cdot \rangle_E)$ be a Hilbert space in $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$. For every $\ell \in E'$, there exists exactly one vector $u$ such that
 
@@ -751,7 +828,11 @@ $$\|\ell\|_{op} \ge \frac{|\ell(u)|}{\|u\|_E} = \frac{|\langle u, u \rangle_E|}{
 Therefore $\|\ell\|_{op} = \|u\|_E$, and concludes the proof.
 #+end_proof
 
-* Theorem     2.22:  Adjoint Operator
+* Theorem:     Adjoint Operator
+:PROPERTIES:
+:CUSTOM_ID: thm:adjoint-operator
+:LECTURE_REF: 2.22
+:END:
 
 Let $(E, \langle \cdot, \cdot \rangle_E)$ and $(F, \langle \cdot, \cdot \rangle_F)$ be inner-product spaces over $\mathbb{K} = \mathbb{R}$ or $\mathbb{C}$, and let $T \in \mathcal{B}(E, F)$ be a /bounded/ linear map. There exists a unique bounded linear map $T^* : F \rightarrow E$, called the /adjoint operator/ of $T$, which is such that
 
@@ -771,7 +852,11 @@ $$\langle x, T^*(y) \rangle_E = \langle T(x), y \rangle_F, \quad \forall x \in E
 The uniqueness of $T^*$ follows again from the /Riesz representation theorem/. Suppose that there exists $T_1^*, T_2^* : F \rightarrow E$ with the adjoint property (2.27). This implies that $\langle (T_1^* - T_2^*)(x), y \rangle_F = 0$ for all $x, y$ which, in turn, implies that $T_1^* - T_2^* = 0$.
 #+end_proof
 
-* Lemma       2.23:  Matrix representation
+* Lemma:       Matrix representation
+:PROPERTIES:
+:CUSTOM_ID: lem:matrix-representation
+:LECTURE_REF: 2.23
+:END:
 
 Let $(E, \langle \cdot, \cdot \rangle_E)$ and $(F, \langle \cdot, \cdot \rangle_F)$ be two inner-product spaces of finite dimension $p$ and $n \in \mathbb{N}$ respectively. Let $\mathcal{E}$ and $\mathcal{F}$ be bases of $E$ and $F$, and let $T \in \mathcal{L}(E, F)$ be a linear map. Then,
 
@@ -786,7 +871,7 @@ are the so-called Gram-matrices of the vectors of $\mathcal{E}$ and $\mathcal{F}
 $$[T^*]_{\mathcal{F}}^{\mathcal{E}} = ([T]_{\mathcal{E}}^{\mathcal{F}})^H \in \mathbb{K}^{p \times n}.$$
 
 #+begin_proof
-We will prove the claim only for the cases when $\mathcal{E}$ and $\mathcal{F}$ are orthonormal bases. In this case, by /Proposition 2.12/, we have that
+We will prove the claim only for the cases when $\mathcal{E}$ and $\mathcal{F}$ are orthonormal bases. In this case, by [[#prop:orthonormal-basis-coordinates][Proposition 2.12]], we have that
 
 $$T(e_i) = \sum_{j=1}^n \langle T(e_i), f_j \rangle f_j, \quad 1 \le i \le p$$
 
@@ -807,7 +892,11 @@ and
 \end{align*}
 #+end_proof
 
-* Theorem     2.24:  Unitary operators
+* Theorem:     Unitary operators
+:PROPERTIES:
+:CUSTOM_ID: thm:unitary-operators
+:LECTURE_REF: 2.24
+:END:
 
 Let $T \in \mathcal{B}(E, E)$. Then the following properties are equivalent:
 

@@ -12,10 +12,15 @@
 #+latex_header: \usepackage{amsthm}
 #+latex_header: \usepackage[margin=1in]{geometry}
 #+options: num:t tags:nil
+#+columns: %45ITEM(Item) %14LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
 #+property: header-args :eval never-export
 #+startup: overview latexpreview inlineimages
 
-* Definition  3.01:  Sesquilinear/Bilinear form
+* Definition:  Sesquilinear/Bilinear form
+:PROPERTIES:
+:CUSTOM_ID: def:sesquilinear-bilinear-form
+:LECTURE_REF: 3.1
+:END:
 
 Let $E$ be a $\mathbb{K}$ vector space. We say that a mapping $a : E \times E \rightarrow \mathbb{K}$ is sesquilinear (resp. bilinear) if it is:
 
@@ -62,7 +67,11 @@ $$s(x, \lambda y + \mu z) = \bar{\lambda} s(x, y) + \bar{\mu} s(x, z)$$
 
 Field caveat: the bilinear definition works over any field. The sesquilinear definition genuinely requires $\mathbb{C}$ (or some field with a non-trivial involution) — over $\mathbb{R}$ conjugation is the identity, so the two collapse. The source's blanket "$\mathbb{K}$ vector space" obscures this.
 
-* Definition  3.02:  Spaces of bilinear and sesquilinear maps
+* Definition:  Spaces of bilinear and sesquilinear maps
+:PROPERTIES:
+:CUSTOM_ID: def:bilinear-sesquilinear-spaces
+:LECTURE_REF: 3.2
+:END:
 
 Let $E$ be a $\mathbb{K}$ vector space. We denote by
 
@@ -75,7 +84,11 @@ the sets of bilinear and sesquilinear maps.
 
 ** Questions
 
-* Lemma       3.03:  Bil and Sesq are linear subspaces
+* Lemma:       Bil and Sesq are linear subspaces
+:PROPERTIES:
+:CUSTOM_ID: lem:bil-sesq-subspaces
+:LECTURE_REF: 3.3
+:END:
 
 $\mathrm{Bil}(E)$ and $\mathrm{Sesq}(E)$ are linear subspaces of $\mathcal{F}(E \times E, \mathbb{K})$.
 
@@ -83,7 +96,11 @@ $\mathrm{Bil}(E)$ and $\mathrm{Sesq}(E)$ are linear subspaces of $\mathcal{F}(E 
 Left as an exercise.
 #+end_proof
 
-* Lemma       3.05:  Matrix representation in finite dimensional spaces
+* Lemma:       Matrix representation in finite dimensional spaces
+:PROPERTIES:
+:CUSTOM_ID: lem:bilinear-matrix-representation
+:LECTURE_REF: 3.5
+:END:
 
 Let $E$ be $n$ -dimensional $\mathbb{K}$ vector space, $\mathcal{E} = \{ e_1, \ldots, e_p \}$ be a basis, and $b \in \mathrm{Bil}(E)$ and $s \in \mathrm{Sesq}(E)$. It holds that
 
@@ -101,7 +118,11 @@ Let $s \in \mathrm{Sesq}(E)$, and $x, y \in E$. It holds that
 $$s(x, y) = \sum_{1 \le i, j \le n} ([x]_{\mathcal{E}})_i \overline{([y]_{\mathcal{E}})_j} s(e_i, e_j) = ([x]^{\mathcal{E}})^{\top} [s]_{\mathcal{E}\mathcal{E}} \overline{[y]^{\mathcal{E}}}$$
 #+end_proof
 
-* Lemma       3.06:  Uniqueness of matrix representation
+* Lemma:       Uniqueness of matrix representation
+:PROPERTIES:
+:CUSTOM_ID: lem:bilinear-matrix-uniqueness
+:LECTURE_REF: 3.6
+:END:
 
 Let $E$ be $n$ -dimensional $\mathbb{K}$ vector space and $\mathcal{E} = \{ e_1, \ldots, e_p \}$ be a basis. The mappings
 
@@ -129,7 +150,11 @@ The proof for the sesquilinear case follows the same lines, with due care for co
 *Linearity:* Trivial.
 #+end_proof
 
-* Lemma       3.07:  Matrix representation under change of basis
+* Lemma:       Matrix representation under change of basis
+:PROPERTIES:
+:CUSTOM_ID: lem:bilinear-matrix-change-of-basis
+:LECTURE_REF: 3.7
+:END:
 
 Let $E$ be $n$ -dimensional $\mathbb{K}$ vector space, and $b \in \mathrm{Bil}(E)$ and $s \in \mathrm{Sesq}(E)$. Then the matrix representation of $b$ and $s$ for two different bases $\mathcal{E}$ and $\mathcal{U}$ of $E$ are connected as
 
@@ -150,7 +175,11 @@ $$b(x, y) = ([x]^{\mathcal{U}})^{\top} [b]_{\mathcal{U}\mathcal{U}} [y]^{\mathca
 Therefore, $[b]_{\mathcal{U}\mathcal{U}} = ([\mathrm{Id}]_{\mathcal{U}}^{\mathcal{E}})^{\top} [b]_{\mathcal{E}\mathcal{E}} [\mathrm{Id}]_{\mathcal{U}}^{\mathcal{E}}$. We proceed similarly to prove the claim for $s \in \mathrm{Sesq}(E)$.
 #+end_proof
 
-* Definition  3.08:  Tensor product: axioms
+* Definition:  Tensor product: axioms
+:PROPERTIES:
+:CUSTOM_ID: def:tensor-product-axioms
+:LECTURE_REF: 3.8
+:END:
 
 The tensor product operation $\otimes$ maps a pair of vectors $(x, y) \in E \times E$ to an object called the tensor product $x \otimes y$. We can add tensors and scale them. The product satisfies the following properties:
 
@@ -171,13 +200,21 @@ The tensor product operation $\otimes$ maps a pair of vectors $(x, y) \in E \tim
 
    then either $x = 0$ or $y = 0$.
 
-* Definition  3.11:  Tensor product space
+* Definition:  Tensor product space
+:PROPERTIES:
+:CUSTOM_ID: def:tensor-product-space
+:LECTURE_REF: 3.11
+:END:
 
 Let $E$ be a $\mathbb{K}$ vector space. We define its tensor product space as
 
 $$E \otimes E := \left\{ \sum_{i=1}^{r} \alpha_i x_i \otimes y_i \ : \ r \in \mathbb{N}, \alpha_i \in \mathbb{K}, x_i, y_i \in E \ \text{ for } \ 1 \le i \le r \right\}$$
 
-* Lemma       3.12:  Tensor product space is a vector space
+* Lemma:       Tensor product space is a vector space
+:PROPERTIES:
+:CUSTOM_ID: lem:tensor-product-vector-space
+:LECTURE_REF: 3.12
+:END:
 
 $E \otimes E$ is a $\mathbb{K}$ vector space with neutral element $0_{E \otimes E} = 0_E \otimes 0_E$.
 
@@ -185,7 +222,11 @@ $E \otimes E$ is a $\mathbb{K}$ vector space with neutral element $0_{E \otimes 
 It holds that $0_{E \otimes E}$ is indeed the neutral element, and that for all $\lambda_1, \lambda_2 \in \mathbb{K}$ and $T_1, T_2 \in E \otimes E$, $\lambda_1 T_1 + \lambda_2 T_2 \in E \otimes E$.
 #+end_proof
 
-* Definition  3.13:  Tensor product space as algebraic dual
+* Definition:  Tensor product space as algebraic dual
+:PROPERTIES:
+:CUSTOM_ID: def:tensor-product-algebraic-dual
+:LECTURE_REF: 3.13
+:END:
 
 Let $E$ be a vector space. The tensor product space $E \otimes E$ is the algebraic dual of the space of bilinear forms $\mathrm{Bil}(E)$.
 
