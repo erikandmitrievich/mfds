@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-26>
-#+lastmod: <2026-05-10 20:48>
+#+lastmod: <2026-05-24 14:28>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -12,10 +12,15 @@
 #+latex_header: \usepackage{amsthm}
 #+latex_header: \usepackage[margin=1in]{geometry}
 #+options: num:t tags:nil
+#+columns: %45ITEM(Item) %14LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
 #+property: header-args :eval never-export
 #+startup: overview latexpreview inlineimages
 
-* Theorem     7.1.01:  Reduction to coordinates
+* Theorem:     Reduction to coordinates
+:PROPERTIES:
+:CUSTOM_ID: thm:reduction-coordinates
+:LECTURE_REF: 7.1.1
+:END:
 
 Let $\dim V = n$, $\dim W = m$, and $f : V \rightarrow W$. Choose bases $B_V \subseteq V$, $B_W \subseteq W$ and define $F : \mathbb{R}^n \rightarrow \mathbb{R}^m$ by
 
@@ -55,7 +60,11 @@ Theorem says these are equivalent:
 
 2. The conjugation formula $f'(v) = \chi_{B_W} F'(v) \chi_{B_V}^{-1}$ - the derivative of the abstract map is determined by the derivative of the coordinate map (and reverse).
 
-* Definition  7.1.02:  Partial derivatives
+* Definition:  Partial derivatives
+:PROPERTIES:
+:CUSTOM_ID: def:partial-derivatives
+:LECTURE_REF: 7.1.2
+:END:
 
 The function $f : \mathbb{R}^n \rightarrow \mathbb{R}$ is called partially differentiable at $x \in \mathbb{R}^n$ if, for each $j = 1, \ldots, n$, the limit
 
@@ -85,7 +94,11 @@ No. It has a deeper meaning. Both of them live in a different vector spaces.
 
 Both of them are indistinguishable /only under the standard basis and standard inner product/ on $\mathbb{R}^n$. Under these defaults, $(\mathbb{R}^n)^*$ is canonically identified with $\mathbb{R}^n$ via transpose.
 
-* Theorem     7.1.05:  Derivative and gradient in $\mathbb{R}^n$
+* Theorem:     Derivative and gradient in $\mathbb{R}^n$
+:PROPERTIES:
+:CUSTOM_ID: thm:derivative-gradient-rn
+:LECTURE_REF: 7.1.5
+:END:
 
 Let $f : \mathbb{R}^n \rightarrow \mathbb{R}$ be differentiable at $x \in \mathbb{R}^n$. Then $f$ is partially differentiable at $x$ and
 
@@ -146,7 +159,11 @@ f(x,y) =
 | Lives in                     | $(\mathbb{R}^n)^* \cong \mathbb{R}^{1 \times n}$ | $\mathbb{R}^n$                                           |
 | Requires                     | a basis (for the row form)                       | an inner product                                         |
 
-* Theorem     7.1.07:  Continuity of partials implies differentiability
+* Theorem:     Continuity of partials implies differentiability
+:PROPERTIES:
+:CUSTOM_ID: thm:continuity-partials-differentiability
+:LECTURE_REF: 7.1.7
+:END:
 
 Let $U \subseteq \mathbb{R}^n$ be open and let $f : U \rightarrow \mathbb{R}$. If $f$ is partially differentiable in $U$ and all partial derivatives $\partial_1 f, \ldots, \partial_n f$ are continuous at $x \in U$, then $f$ is differentiable at $x$ and
 
@@ -207,7 +224,11 @@ This leads to $\varphi(h) / \|h\| \rightarrow 0$ and hence $f$ is differentiable
 $$f(x + h) = f(x) + \sum_{j=1}^{n} \partial_j f(x) h_j + \varphi(h) = f(x) + \operatorname{grad} f(x) h + \varphi(h).$$
 #+end_proof
 
-* Lemma       7.1.09:  Mixed partial derivatives commute
+* Lemma:       Mixed partial derivatives commute
+:PROPERTIES:
+:CUSTOM_ID: lem:mixed-partials-commute
+:LECTURE_REF: 7.1.9
+:END:
 
 Let $U \subseteq \mathbb{R}^n$ be open and let $f : U \rightarrow \mathbb{R}$ be twice continuously partially differentiable. Then for all $i, j \in \{1, \ldots, n\}$ and all $x \in U$,
 
@@ -255,7 +276,11 @@ The limit $(s, t) \rightarrow 0$ implies $(\xi_s, \xi_t), (\eta_s, \eta_t) \righ
 $$\partial_1 \partial_2 \varphi(0, 0) = \partial_2 \partial_1 \varphi(0, 0).$$
 #+end_proof
 
-* Definition  7.1.10:  Hessian matrix
+* Definition:  Hessian matrix
+:PROPERTIES:
+:CUSTOM_ID: def:hessian
+:LECTURE_REF: 7.1.10
+:END:
 
 Let $U \subseteq \mathbb{R}^n$ be open and suppose that $f : U \rightarrow \mathbb{R}$ is twice continuously differentiable. The Hessian matrix of $f$ at $x \in U$ is defined by
 
@@ -284,7 +309,11 @@ Its meaning is unlocked by subsequent results that use it:
 
 The matrix shape is chosen to anticipate its appearance as a quadratic form $h^\top H_f(x) h$ in Taylor expansions.
 
-* Theorem     7.2.01:  Taylor formula in $\mathbb{R}^n$
+* Theorem:     Taylor formula in $\mathbb{R}^n$
+:PROPERTIES:
+:CUSTOM_ID: thm:taylor-rn
+:LECTURE_REF: 7.2.1
+:END:
 
 Let $U \subseteq \mathbb{R}^n$ be open, $k \in \mathbb{N}$, and let $f : U \rightarrow \mathbb{R}$ be $k$ times continuously differentiable. Then for every $x_0 \in U$,
 
@@ -352,7 +381,11 @@ $$\omega(h) := \sup_{t \in [0, 1]} \max_{|\alpha| = k} \left| (\partial^\alpha f
 as $h \rightarrow 0$. Hence $R(h) = o(\|h\|^k)$.
 #+end_proof
 
-* Theorem     7.2.05:  Second-order sufficient conditions for extrema
+* Theorem:     Second-order sufficient conditions for extrema
+:PROPERTIES:
+:CUSTOM_ID: thm:second-order-sufficient-extrema
+:LECTURE_REF: 7.2.5
+:END:
 
 Let $f : \mathbb{R}^n \rightarrow \mathbb{R}$ be twice continuously differentiable and let $x_0 \in \mathbb{R}^n$ be a critical point, i.e. $\operatorname{grad} f(x_0) = 0$.
 
@@ -412,11 +445,19 @@ where $\varphi(h) / \|h\|^2 \rightarrow 0$ for $h \rightarrow 0$.
    Choosing $x = x_0 + t u$ and $x = x_0 + t v$ with $t$ sufficiently small and using the Taylor expansion shows that $f(x) - f(x_0)$ takes both positive and negative values arbitrarily close to $x_0$. Hence $x_0$ is a saddle point.
 #+end_proof
 
-* Lemma       7.2.10:  Second-order characterization of convexity
+* Lemma:       Second-order characterization of convexity
+:PROPERTIES:
+:CUSTOM_ID: lem:second-order-convexity
+:LECTURE_REF: 7.2.10
+:END:
 
 Let $f \in \mathcal{C}^2(\mathbb{R}^n)$. Then $f$ is convex if and only if $H_f(x)$ is positive semi-definite for all $x \in \mathbb{R}^n$.
 
-* Lemma       7.3.01:  Jensen's inequality
+* Lemma:       Jensen's inequality
+:PROPERTIES:
+:CUSTOM_ID: lem:jensen-inequality
+:LECTURE_REF: 7.3.1
+:END:
 
 Let $f : \mathbb{R}^n \rightarrow \mathbb{R}$ be convex and $m \in \mathbb{N}$ with $m \ge 1$. Then
 
@@ -442,7 +483,11 @@ f(\sum_{i=1}^{m+1} \lambda_i x_i) &\le (1 - \lambda_{m+1}) \sum_{i=1}^{m} \frac{
 \end{align*}
 #+end_proof
 
-* Theorem     7.3.02:  Gradient descent
+* Theorem:     Gradient descent
+:PROPERTIES:
+:CUSTOM_ID: thm:gradient-descent
+:LECTURE_REF: 7.3.2
+:END:
 
 Let $f : \mathbb{R}^d \rightarrow \mathbb{R}$ be convex and differentiable and assume that
 
@@ -479,7 +524,7 @@ and rearranging terms leads to
 
 $$2 \eta \langle \nabla f(x_k), e_k \rangle = \| e_k \|^2 - \| e_{k+1} \|^2 + \eta^2 \| \nabla f(x_k) \|^2.$$
 
-The first-order characterization of convexity in /Lemma 6.4.9/ yields
+The first-order characterization of convexity in [[file:ch_06_analysis_in_normed_vector_space_new.org::#lem:first-order-convexity][Lemma 6.4.9]] yields
 
 $$f(x_k) - f(x^*) \le \text{grad} \, f(x_k) \, (x_k - x^*) = \langle \nabla f(x_k), e_k \rangle.$$
 
@@ -498,7 +543,11 @@ Summing from $k = 0$ to $N - 1$ telescopes:
 Divide by $2 \eta N$ and use convexity (Jensen) $f(\bar{x}_N) \le \frac{1}{N} \sum_{k=0}^{N-1} f(x_k)$ to conclude the claim.
 #+end_proof
 
-* Theorem     7.3.03:  Stochastic gradient descent for finite-sum problems
+* Theorem:     Stochastic gradient descent for finite-sum problems
+:PROPERTIES:
+:CUSTOM_ID: thm:stochastic-gradient-descent
+:LECTURE_REF: 7.3.3
+:END:
 
 Let $f_1, \ldots, f_n : \mathbb{R}^d \rightarrow \mathbb{R}$ be convex and differentiable, and define
 
@@ -532,7 +581,11 @@ $$\mathbb{E}_{i_k}[\nabla f_{i_k}(x)] = \frac{1}{N} \sum_{i=1}^{N} \nabla f_i(x)
 
 We now follow the proof of gradient descent and use the expectation at the appropriate locations. We omit the details.
 
-* Definition  7.3.04:  L-Lipschitz continuous
+* Definition:  L-Lipschitz continuous
+:PROPERTIES:
+:CUSTOM_ID: def:lipschitz-continuous
+:LECTURE_REF: 7.3.4
+:END:
 
 A function $g : \mathbb{R}^d \rightarrow \mathbb{R}$ is called L-Lipschitz continuous if there exists a constant $L > 0$ such that
 
@@ -565,7 +618,11 @@ Most continuous functions are /not/ Lipschitz:
 
 For differentiable $g$: $L$ -Lipschitz $\Leftrightarrow$ $\|\nabla g(x)\| \leq L$ everywhere. The operational payoff (gradient-descent convergence, ODE existence, error bounds) belongs to downstream theorems.
 
-* Lemma       7.3.05:  Descent lemma
+* Lemma:       Descent lemma
+:PROPERTIES:
+:CUSTOM_ID: lem:descent-lemma
+:LECTURE_REF: 7.3.5
+:END:
 
 Let $f : \mathbb{R}^d \rightarrow \mathbb{R}$ be differentiable and suppose that $\nabla f$ is L-Lipschitz continuous. Then
 
@@ -593,7 +650,11 @@ f(y) - f(x) &= \int_0^1 \phi'(t) \, dt \\
 \end{align*}
 #+end_proof
 
-* Theorem     7.3.06:  Gradient descent with Lipschitz gradient
+* Theorem:     Gradient descent with Lipschitz gradient
+:PROPERTIES:
+:CUSTOM_ID: thm:gradient-descent-lipschitz
+:LECTURE_REF: 7.3.6
+:END:
 
 Let $f : \mathbb{R}^d \rightarrow \mathbb{R}$ be differentiable, bounded from below, so that $f(x) \ge r_0$ for all $x \in \mathbb{R}^d$. Suppose that $\nabla f$ is L-Lipschitz continuous. Then gradient descent
 
@@ -604,7 +665,7 @@ satisfies
 $$\nabla f(x_k) \rightarrow 0.$$
 
 #+begin_proof
-By /Lemma 7.3.5/,
+By [[#lem:descent-lemma][Lemma 7.3.5]],
 
 $$f(x_{k+1}) - f(x_k) \le \nabla f(x_k)^\top (x_{k+1} - x_k) + \frac{L}{2} \| x_{k+1} - x_k \|^2.$$
 
@@ -626,4 +687,3 @@ $$c \sum_{k=0}^{\infty} \| \nabla f(x_k) \|^2 \le f(x_0) - r_0.$$
 
 This implies that $\| \nabla f(x_k) \|^2 \rightarrow 0$.
 #+end_proof
-

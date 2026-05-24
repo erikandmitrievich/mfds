@@ -1,8 +1,8 @@
-#+title: Ch 10
+#+title: Ch 1
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-05-19 13:25>
+#+lastmod: <2026-05-24 14:17>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -12,10 +12,15 @@
 #+latex_header: \usepackage{amsthm}
 #+latex_header: \usepackage[margin=1in]{geometry}
 #+options: num:t tags:nil
+#+columns: %45ITEM(Item) %14LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
 #+property: header-args :eval never-export
 #+startup: overview latexpreview inlineimages
 
-* Definition  10.1.01:  Metric space
+* Definition:  Metric space
+:PROPERTIES:
+:CUSTOM_ID: def:metric-space
+:LECTURE_REF: 1.1.1
+:END:
 
 Given a set $X \neq \emptyset$, we say that a mapping $d_X : X \times X \rightarrow \left[ 0, \infty \right)$ is a metric if the following three properties are satisfied:
 
@@ -33,11 +38,19 @@ Given a set $X \neq \emptyset$, we say that a mapping $d_X : X \times X \rightar
 
 If $d_X$ is a metric on $X$, then $(X, d_{X})$ is called a metric space.
 
-* Definition  10.1.02:  Sequence
+* Definition:  Sequence
+:PROPERTIES:
+:CUSTOM_ID: def:sequence
+:LECTURE_REF: 1.1.2
+:END:
 
 Let $X \neq \emptyset$ be an arbitrary set. A map $x : \mathbb{N} \rightarrow X$ is called a sequence in $X$ and we denote $x_n := x(n)$, for $n \in \mathbb{N}$. The sequence is also written as $(x_n)_{n\in\mathbb{N}} \subseteq X$.
 
-* Definition  10.1.03:  Convergence
+* Definition:  Convergence
+:PROPERTIES:
+:CUSTOM_ID: def:convergence
+:LECTURE_REF: 1.1.3
+:END:
 
 Let $(X, d_X)$ be a metric space. A sequence $(x_n)_{n\in\mathbb{N}} \subseteq X$ is said to converge to $x \in X$ if
 
@@ -45,7 +58,11 @@ $$\forall \epsilon > 0 \quad \exists N \in \mathbb{N} \quad \forall n \ge N \qua
 
 In this case, we write $\lim_{n \rightarrow \infty} x_n = x$ or simply $x_n \rightarrow x$ as $n \rightarrow \infty$.
 
-* Theorem     10.1.05:  Uniqueness of limits
+* Theorem:     Uniqueness of limits
+:PROPERTIES:
+:CUSTOM_ID: thm:uniqueness-limits
+:LECTURE_REF: 1.1.6
+:END:
 
 Let $(X, d_X)$ be a metric space. If $x_n \rightarrow x$ and $x_n \rightarrow x'$, then $x = x'$.
 
@@ -64,7 +81,11 @@ $$d_X(x, x') \le d_X(x, x_N) + d_X(x_N, x') \le 2\epsilon = \frac{2}{3} d_X(x, x
 which is impossible unless $d_X(x, x') = 0$. This contradicts the assumption $x \neq x'$. $\square$
 #+end_proof
 
-* Definition  10.1.06:  Convergence order
+* Definition:  Convergence order
+:PROPERTIES:
+:CUSTOM_ID: def:convergence-order
+:LECTURE_REF: 1.1.7
+:END:
 
 Let $(X, d)$ be a metric space and suppose that $(x_k)_{k\in\mathbb{N}} \subseteq X$ converges to $x \in X$. Then we say that the convergence is
 
@@ -80,13 +101,21 @@ Let $(X, d)$ be a metric space and suppose that $(x_k)_{k\in\mathbb{N}} \subsete
 
    $$\limsup_{k \rightarrow \infty} (d(x_k, x))^{\frac{1}{k}} = 1$$
 
-* Definition  10.1.09:  Isometry
+* Definition:  Isometry
+:PROPERTIES:
+:CUSTOM_ID: def:isometry
+:LECTURE_REF: 1.1.10
+:END:
 
 Let $(X, d_X)$ and $(Y, d_Y)$ be metric spaces and $f : X \rightarrow Y$. Then $f$ is called an isometry if
 
 $$d_Y(f(x), f(x')) = d_X(x, x'), \quad \forall x, x' \in X$$
 
-* Definition  10.1.10:  Bounded sequence
+* Definition:  Bounded sequence
+:PROPERTIES:
+:CUSTOM_ID: def:bounded-sequence
+:LECTURE_REF: 1.1.11
+:END:
 
 Let $(X, d_X)$ be a metric space. A sequence $(x_n)_{n\in\mathbb{N}} \subseteq X$ is called bounded if there exists $x \in X$ and $C > 0$ such that
 
@@ -96,7 +125,11 @@ Analogously, we call a subset $S \subseteq X$ bounded if there exists $x \in X$ 
 
 $$d_X(s, x) \le C, \quad \forall s \in S$$
 
-* Lemma       10.1.11:  Convergent sequences are bounded
+* Lemma:       Convergent sequences are bounded
+:PROPERTIES:
+:CUSTOM_ID: lem:convergent-bounded
+:LECTURE_REF: 1.1.12
+:END:
 
 Let $(X, d)$ be a metric space. Every convergent sequence $(x_n)_{n\in\mathbb{N}} \subseteq X$ is bounded.
 
@@ -110,7 +143,113 @@ Hence
 $$d(x_n, x) \le \max\{d(x_1, x), \ldots, d(x_{N-1}, x), 1\} \quad \text{for all } n \in \mathbb{N}$$
 #+end_proof
 
-* Definition  10.2.01:  Cauchy sequence
+* Lemma:       Bounded monotone implies convergence
+:PROPERTIES:
+:CUSTOM_ID: lem:bounded-monotone-convergence
+:LECTURE_REF: 1.1.15
+:END:
+
+If $(a_n)_{n\in\mathbb{N}} \subseteq \mathbb{R}$ is monotonically increasing and bounded from above, then it is convergent.
+
+#+begin_proof
+The order completeness of $\mathbb{R}$ ensures that $a := \sup_{n\in\mathbb{N}} a_n$ exists. Assume that $a_n \not\rightarrow a$. Then
+
+$$\exists \varepsilon > 0 \quad \forall N \in \mathbb{N} \quad \exists n_N \ge N \quad |a_{n_N} - a| > \varepsilon.$$
+
+The monotonicity implies that
+
+$$a - a_N > a - a_{n_N} > \varepsilon \quad \forall N \in \mathbb{N},$$
+
+and hence $a - \varepsilon > a_N$ for all $N \in \mathbb{N}$. This contradicts the property of the supremum to be the smallest upper bound.
+#+end_proof
+
+** Questions
+
+* Lemma:       Sequence in upper bounded set converging to supremum
+:PROPERTIES:
+:CUSTOM_ID: lem:sequence-converges-to-sup
+:LECTURE_REF: 1.1.16
+:END:
+
+Let $S \subseteq \mathbb{R}$ be upper bounded. Then there exists a sequence $(x_n)_{n\in\mathbb{N}} \subseteq S$ such that
+
+$$x_n \rightarrow \sup S.$$
+
+#+begin_proof
+The order completeness of $\mathbb{R}$ ensures that $s := \sup S \in \mathbb{R}$ exists. For all positive $n \in \mathbb{N}$, there is $x_n \in S$ such that
+
+$$x_n \ge s - \frac{1}{n}.$$
+
+Otherwise $s$ were not the smallest upper bound. We further deduce $\frac{1}{n} \ge s - x_n \ge 0$, which implies $x_n \rightarrow s$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Density of rationals in reals
+:PROPERTIES:
+:CUSTOM_ID: thm:rationals-dense-in-reals
+:LECTURE_REF: 1.1.17
+:END:
+
+For every $x \in \mathbb{R}$ there is a sequence $(x_n)_{n\in\mathbb{N}} \subseteq \mathbb{Q}$ such that $x_n \rightarrow x$.
+
+We also say that $\mathbb{Q}$ is dense in $\mathbb{R}$.
+
+#+begin_proof
+Theorem ?? states that between every pair of real numbers there is a rational number. We apply this to $x$ and $x + \frac{1}{n+1}$. Thus, there is $x_n \in \mathbb{Q}$ such that $x < x_n < x + \frac{1}{n+1}$. We derive
+
+$$|x_n - x| = x_n - x \le \frac{1}{n+1} \rightarrow 0, \quad \text{for } n \rightarrow \infty,$$
+
+which means that $(x_n)_{n\in\mathbb{N}}$ converges towards $x$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Convergence respects non-negativity
+:PROPERTIES:
+:CUSTOM_ID: thm:convergence-respects-non-negativity
+:LECTURE_REF: 1.1.18
+:END:
+
+Suppose that $X = \mathbb{R}$ and $(a_n)_{n\in\mathbb{N}} \subseteq \mathbb{R}$ satisfies $a_n \rightarrow a$. Then
+
+$$\forall n \in \mathbb{N} : a_n \ge 0 \quad \Rightarrow \quad a \ge 0.$$
+
+#+begin_proof
+Assume $a < 0$. Choose $\epsilon := -a/2 > 0$. Then there exists $N \in \mathbb{N}$ such that $|a_N - a| \le \epsilon = -a/2$. Hence
+
+$$a_N - a = |a_N - a| \le -\frac{a}{2},$$
+
+so $a_N \le a/2 < 0$. This contradicts $a_N \ge 0$.
+#+end_proof
+
+** Questions
+
+* Corollary:   Convergence respects inequalities
+:PROPERTIES:
+:CUSTOM_ID: cor:convergence-respects-inequalities
+:LECTURE_REF: 1.1.19
+:END:
+
+Suppose that $X = \mathbb{R}$. If $(a_n)_{n\in\mathbb{N}}$ and $(b_n)_{n\in\mathbb{N}}$ converge to $a$ and $b$ respectively, and if
+
+$$\forall n \in \mathbb{N} : a_n \le b_n,$$
+
+then
+
+$$a \le b.$$
+
+#+begin_proof
+Apply /Theorem 1.1.18/ to $c_n := b_n - a_n$ and $c := b - a$.
+#+end_proof
+
+** Questions
+
+* Definition:  Cauchy sequence
+:PROPERTIES:
+:CUSTOM_ID: def:cauchy-sequence
+:LECTURE_REF: 1.2.1
+:END:
 
 Let $(X, d_X)$ be a metric space. A sequence $(a_n)_{n\in\mathbb{N}} \subseteq X$ is called Cauchy sequence if
 
@@ -130,11 +269,173 @@ Pay attention to the last point. A convergent sequence's terms get close to a li
 
 That distinction is the entire reason the concept exists — it lets you talk about convergence-like behavior without naming a limit, which matters when the limit might not live in your space ($\mathbb{Q}$ vs $\mathbb{R}$ being the canonical example).
 
-* Definition  10.2.05:  Completeness
+* Definition:  Completeness
+:PROPERTIES:
+:CUSTOM_ID: def:completeness
+:LECTURE_REF: 1.2.5
+:END:
 
 A metric space $X$ is called complete if every Cauchy sequence in $X$ is convergent in $X$.
 
-* Definition  10.3.01:  Compactness
+* Lemma:       Rationals are not complete
+:PROPERTIES:
+:CUSTOM_ID: lem:rationals-not-complete
+:LECTURE_REF: 1.2.6
+:END:
+
+The rational numbers $\mathbb{Q}$ are not complete.
+
+#+begin_proof
+Define a sequence $(x_n)_{n\in\mathbb{N}} \subseteq \mathbb{Q}$ inductively by $x_0 = 1$ and
+
+$$x_{n+1} = \frac{1}{2}\left(x_n + \frac{2}{x_n}\right), \quad n \in \mathbb{N}.$$
+
+A direct computation shows
+
+$$x_{n+1} - \sqrt{2} = \frac{(x_n - \sqrt{2})^2}{2x_n} > 0.$$
+
+Iterating this inequality yields
+
+$$x_n - \sqrt{2} \le (x_{n-1} - \sqrt{2})^2 \le (x_{n-2} - \sqrt{2})^4 \le \cdots \le (x_0 - \sqrt{2})^{2^n}.$$
+
+Another computation gives
+
+$$\frac{x_{n+1}}{x_n} = \frac{1}{2}\left(1 + \frac{2}{x_n^2}\right) \le 1,$$
+
+so the sequence is decreasing and bounded below by $\sqrt{2}$. In particular, $x_n \ge \sqrt{2}$ for all $n \ge 1$. Given $\epsilon > 0$, choose $N$ such that $(x_0 - \sqrt{2})^{2^N} < \epsilon$ (this is possible since $|x_0 - \sqrt{2}| < 1$). For $m \ge n \ge N$,
+
+$$|x_m - x_n| = x_n - x_m < x_n - \sqrt{2} \le (x_0 - \sqrt{2})^{2^n} \le \epsilon.$$
+
+Thus $(x_n)$ is a Cauchy sequence in $\mathbb{Q}$, but it converges to $\sqrt{2} \notin \mathbb{Q}$. Therefore, $\mathbb{Q}$ is not complete.
+#+end_proof
+
+** Questions
+
+* Theorem:     Real numbers are complete
+:PROPERTIES:
+:CUSTOM_ID: thm:reals-complete
+:LECTURE_REF: 1.2.7
+:END:
+
+The real numbers $\mathbb{R}$ are complete.
+
+We know by Theorem ?? that $\mathbb{R}$ is order-complete, meaning that every bounded set has an infimum and a supremum in $\mathbb{R}$. This is used to construct the limit for a Cauchy sequence.
+
+#+begin_proof
+Let $(x_n)_{n\in\mathbb{N}}$ be Cauchy. For $\varepsilon = 1$ there exists $N$ such that $|x_m - x_n| \le 1$ for all $m, n \ge N$. Hence for $n \ge N$,
+
+$$|x_n| \le |x_n - x_N| + |x_N| \le 1 + |x_N|,$$
+
+so $(x_n)_{n\in\mathbb{N}}$ is bounded.
+
+For each $n$ set $A_n := \{x_k : n \le k\}$. Then $A_n$ is nonempty and bounded, hence
+
+$$a_n := \inf A_n \in \mathbb{R}, \quad b_n := \sup A_n \in \mathbb{R}$$
+
+exist by order completeness. We have $a_n \le x_k \le b_n$ for all $k \ge n$, $(a_n)_{n\in\mathbb{N}}$ is increasing, $(b_n)_{n\in\mathbb{N}}$ is decreasing, and $a_n \le b_n$.
+
+Fix $\varepsilon > 0$ and choose $N$ such that $|x_m - x_k| < \varepsilon$ for all $m, k \ge N$. Then all elements of $A_N$ lie in an interval of length $\varepsilon$, hence $b_N - a_N \le \varepsilon$. Since $b_n$ decreases and $a_n$ increases,
+
+$$0 \le b_n - a_n \le b_N - a_N \le \varepsilon \quad \forall n \ge N,$$
+
+so $b_n - a_n \rightarrow 0$. This also implies
+
+$$0 \le x_n - a_n \le b_n - a_n \rightarrow 0.$$
+
+Define $a := \sup_{n\in\mathbb{N}} a_n$ and $b = \inf_{n\in\mathbb{N}} b_n$. Then we have $a \le b$ and $b_n - a_n \rightarrow 0$ yields $a = b =: \gamma$. Since $a_n \le \gamma \le b_n$, we deduce
+
+$$0 \le \gamma - a_n \le b_n - a_n \rightarrow 0,$$
+
+so that $a_n \rightarrow \gamma$. Finally, we have
+
+$$|x_n - a| \le |x_n - a_n| + |a_n - a| \rightarrow 0.$$
+#+end_proof
+
+** Questions
+
+* Theorem:     Complex numbers are complete
+:PROPERTIES:
+:CUSTOM_ID: thm:complex-complete
+:LECTURE_REF: 1.2.8
+:END:
+
+The complex numbers $\mathbb{C}$ are complete.
+
+#+begin_proof
+Given a Cauchy sequence $(z_n)_{n\in\mathbb{N}} \subseteq \mathbb{C}$, we may write $z_n = x_n + \mathrm{i} y_n$, where $x_n, y_n \in \mathbb{R}$. We directly compute
+
+\begin{align*}
+|z_n - z_m|^2 &= |x_n - x_m + \mathrm{i}(y_n - y_m)|^2 \\
+&= |x_n - x_m|^2 + |y_n - y_m|^2.
+\end{align*}
+
+This implies that both $(x_n)_{n\in\mathbb{N}}$ and $(y_n)_{n\in\mathbb{N}}$ are Cauchy sequences in $\mathbb{R}$. Since $\mathbb{R}$ is complete, there are $x, y \in \mathbb{R}$ such that $x_n \rightarrow x$ and $y_n \rightarrow y$. We again obtain
+
+$$|z_n - (x + \mathrm{i} y)|^2 = |x_n - x + \mathrm{i}(y_n - y)|^2 = |x_n - x|^2 + |y_n - y|^2.$$
+
+Therefore, $|z_n - (x + \mathrm{i} y)| \rightarrow 0$.
+#+end_proof
+
+** Questions
+
+* Definition:  Subsequences
+:PROPERTIES:
+:CUSTOM_ID: def:subsequences
+:LECTURE_REF: 1.2.10
+:END:
+
+A subsequence $(a_{n_j})_{j\in\mathbb{N}}$ of a sequence $(a_n)_{n\in\mathbb{N}}$ is formed by selecting terms with strictly increasing indices,
+
+$$n_0 < n_1 < \cdots < n_j < \cdots$$
+
+** Questions
+
+* Lemma:       Subsequences respect convergence
+:PROPERTIES:
+:CUSTOM_ID: lem:subsequences-respect-convergence
+:LECTURE_REF: 1.2.11
+:END:
+
+If $(a_n)_{n\in\mathbb{N}}$ converges to $a$, then every subsequence also converges to $a$.
+
+#+begin_proof
+Indeed, for $\epsilon > 0$ choose $N$ such that $d_X(a_n, a) \le \epsilon$ for all $n \ge N$. Since $n_j \ge j$, we obtain $d_X(a_{n_j}, a) \le \epsilon$ for all $j \ge N$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Bolzano–Weierstraß
+:PROPERTIES:
+:CUSTOM_ID: thm:bolzano-weierstrass
+:LECTURE_REF: 1.2.13
+:END:
+
+If $(a_n)_{n\in\mathbb{N}} \subseteq \mathbb{R}$ is bounded, then it contains a convergent subsequence.
+
+#+begin_proof
+Choose $A_0, B_0 \in \mathbb{R}$ such that $A_0 \le a_n \le B_0$ for all $n \in \mathbb{N}$. If we divide the interval $I_0 := \left[ A_0, B_0 \right]$ in the center, then either the right or the left half must contain infinitely many elements of the sequence $(a_n)_{n\in\mathbb{N}}$. We define $I_1$ to be the closed half that contains infinitely many elements.
+
+Repeating this step with $I_1$ and so on leads to a nested family of closed intervals $(I_k)_{k\in\mathbb{N}}$,
+
+$$I_k = \left[ A_k, B_k \right] \subseteq I_{k-1}, \quad B_k - A_k = 2^{-k}(B_0 - A_0),$$
+
+such that each $I_k$ contains infinitely many terms of the sequence $(a_n)_{n\in\mathbb{N}}$.
+
+Next, we construct a subsequence $(a_{n_k})_{k\in\mathbb{N}}$ such that $a_{n_k} \in I_k$ by induction. We start by $k = 0$ and choose $n_0$ with $a_{n_0} \in I_0$. Now we assume that we have found $a_{n_k} \in I_k$. Since $I_{k+1}$ contains infinitely many elements of the original sequence, there must exist $n_{k+1} > n_k$ with $a_{n_{k+1}} \in I_{k+1}$. Hence, we have constructed a subsequence $(a_{n_k})_{k\in\mathbb{N}}$ such that $a_{n_k} \in I_k$ for all $k \in \mathbb{N}$.
+
+Given $\epsilon > 0$, choose $N$ with $2^{-N}(B_0 - A_0) \le \epsilon$. For $k, l \ge N$, both $a_{n_k}$ and $a_{n_l}$ lie in $I_N$, hence
+
+$$|a_{n_k} - a_{n_l}| \le 2^{-N}(B_0 - A_0) \le \epsilon.$$
+
+Thus $(a_{n_k})_{k\in\mathbb{N}}$ is Cauchy and therefore convergent because $\mathbb{R}$ is complete.
+#+end_proof
+
+** Questions
+* Definition:  Compactness
+:PROPERTIES:
+:CUSTOM_ID: def:compactness
+:LECTURE_REF: 1.3.1
+:END:
 
 A metric space $X$ is called compact if every sequence $(x_n)_{n\in\mathbb{N}} \in X$ has a convergent subsequence $(x_{n_j})_{j \in \mathbb{N}}$ (with limit in $X$).
 
@@ -164,7 +465,11 @@ A metric space $X$ is called compact if every sequence $(x_n)_{n\in\mathbb{N}} \
 
   The only interesting case compactness handles is when the full sequence does not converge at all. Imagine a sequence that oscilates from $0$ to $1$, its subsequence, consisting only of $1$'s is convergent.
 
-* Lemma       10.3.02:  Compactness implies completeness
+* Lemma:       Compactness implies completeness
+:PROPERTIES:
+:CUSTOM_ID: lem:compactness-completeness
+:LECTURE_REF: 1.3.2
+:END:
 
 Every compact metric space is complete.
 
@@ -183,7 +488,11 @@ $$d_X(x_n,x) \le d_X(x_n, x_{n_N}) + d_X(x_{n_N}, x) \le \frac{\epsilon}{2} + \f
 Thus, $x_n \rightarrow x$.
 #+end_proof
 
-* Definition  10.3.03:  Open and closed subsets
+* Definition:  Open and closed subsets
+:PROPERTIES:
+:CUSTOM_ID: def:open-closed-subsets
+:LECTURE_REF: 1.3.3
+:END:
 
 Let $X$ be a metric space and $x \in X$.
 
@@ -212,7 +521,11 @@ Let $X$ be a metric space and $x \in X$.
 
   The two formulations define exactly the same concept of openness because fitting a closed ball of radius $\epsilon$ inside a set implies you can fit an open ball of the same radius (it's smaller), and fitting an open ball of radius $\epsilon$ implies you can fit a closed ball of radius $\frac{\epsilon}{2}$ inside it. Your lecturer chose the closed ball version, but it's purely a matter of convention — the resulting notion of "open set" is identical either way.
 
-* Lemma       10.3.06:  Sequential closure
+* Lemma:       Sequential closure
+:PROPERTIES:
+:CUSTOM_ID: lem:sequential-closure
+:LECTURE_REF: 1.3.6
+:END:
 
 Let $X$ be a metric space and $S \subseteq X$ a nonempty subset. Then $S$ is closed iff all sequences $(x_n)_{n\in\mathbb{N}} \subseteq S$ with $x_n \rightarrow x \in X$ satisfy $x \in S$.
 
@@ -243,7 +556,11 @@ Let $X$ be a metric space and $S \subseteq X$ a nonempty subset. Then $S$ is clo
   Closedness says "limits that exist stay inside," while compactness says "convergent subsequences are guaranteed to exist and their limits stay inside." Closedness is the weaker condition — it doesn't prevent sequences from diverging to infinity, it only controls where limits land when convergence does occur. Compactness implies closedness, but not the other way around; you additionally need boundedness (in $\mathbb{R}^{n}$) to upgrade closedness to compactness.
 #+end_proof
 
-* Lemma       10.3.07:  Compactness implies boundedness and closure
+* Lemma:       Compactness implies boundedness and closure
+:PROPERTIES:
+:CUSTOM_ID: lem:compactness-bounded-closed
+:LECTURE_REF: 1.3.7
+:END:
 
 Let $X$ be a metric space. If $S \subseteq X$ is compact, then $S$ is bounded and closed.
 
@@ -256,7 +573,7 @@ Thus we obtain a sequence $(x_n)_{n\in\mathbb{N}} \subseteq S$.
 
 Due to compactness, there exists a subsequence $(x_{n_k})_{k\in\mathbb{N}}$ that converges to some $x \in S$.
 
-Every convergent sequence in a metric space is bounded by /Lemma 10.1.11/, hence there exists $M > 0$ such that
+Every convergent sequence in a metric space is bounded by [[#lem:convergent-bounded][Lemma 10.1.11]], hence there exists $M > 0$ such that
 
 $$d(x_{n_k}, x_0) \le M \quad \forall k \in \mathbb{N}.$$
 
@@ -266,10 +583,14 @@ $$d(x_{n_k}, x_0) \ge n_k \ge k,$$
 
 which is unbounded as $k \rightarrow \infty$. This is a contradiction. Therefore, $S$ must be bounded.
 
-To verify that $S$ is closed, let $(x_n)_{n\in\mathbb{N}} \subseteq S$ satisfy $x_n \rightarrow x \in X$. We aim to show that $x$ is contained in $S$, so that /Lemma 10.3.6/ then yields that $S$ is closed. Since $S$ is compact, there is a subsequence $(x_{n_j})_{j\in\mathbb{N}}$ that converges to some $y \in S$. Since $(x_{n_j})_{j\in\mathbb{N}}$ is a subsequence of a sequence converging to $x$, it must also converge to $x$. By uniqueness of limits, $x = y \in S$.
+To verify that $S$ is closed, let $(x_n)_{n\in\mathbb{N}} \subseteq S$ satisfy $x_n \rightarrow x \in X$. We aim to show that $x$ is contained in $S$, so that [[#lem:sequential-closure][Lemma 10.3.6]] then yields that $S$ is closed. Since $S$ is compact, there is a subsequence $(x_{n_j})_{j\in\mathbb{N}}$ that converges to some $y \in S$. Since $(x_{n_j})_{j\in\mathbb{N}}$ is a subsequence of a sequence converging to $x$, it must also converge to $x$. By uniqueness of limits, $x = y \in S$.
 #+end_proof
 
-* Theorem     10.3.11:  Heine-Borel theorem in $\mathbb{R}$
+* Theorem:     Heine-Borel theorem in $\mathbb{R}$
+:PROPERTIES:
+:CUSTOM_ID: thm:heine-borel
+:LECTURE_REF: 1.3.11
+:END:
 
 Suppose that $\mathbb{R}$ is equipped with the standard metric. A set $K \subseteq \mathbb{R}$ is compact if and only if it is closed and bounded.
 
@@ -281,7 +602,11 @@ Suppose that $\mathbb{R}$ is equipped with the standard metric. A set $K \subset
 - ($\Leftarrow$) Conversely, if $K$ is closed and bounded, then every sequence in $K$ is bounded and hence admits a convergent subsequence by Bolzano-Weierstraß. Closedness ensures that the limit lies in $K$, so $K$ is compact.
 #+end_proof
 
-* Lemma       10.3.12:  Truncating the metric preserves convergence properties
+* Lemma:       Truncating the metric preserves convergence properties
+:PROPERTIES:
+:CUSTOM_ID: lem:truncated-metric-convergence
+:LECTURE_REF: 1.3.12
+:END:
 
 Let $(X, d)$ be a metric space and define
 

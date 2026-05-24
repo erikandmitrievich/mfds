@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-20>
-#+lastmod: <2026-05-19 20:57>
+#+lastmod: <2026-05-24 13:16>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -12,10 +12,15 @@
 #+latex_header: \usepackage{amsthm}
 #+latex_header: \usepackage[margin=1in]{geometry}
 #+options: num:t tags:nil
+#+columns: %45ITEM(Item) %14LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
 #+property: header-args :eval never-export
 #+startup: overview latexpreview inlineimages
 
-* Lemma       6.1.01:  Norm induced metric
+* Lemma:       Norm induced metric
+:PROPERTIES:
+:CUSTOM_ID: lem:norm-induced-metric
+:LECTURE_REF: 6.1.1
+:END:
 
 If $(X, \| \cdot \|)$ is a normed space, then $d_X : X \times X \rightarrow \left[ 0, \infty \right)$,
 
@@ -33,7 +38,11 @@ The conditions of the norm imply that $d_X(x, y) = 0$ if and only if $x = y$. Th
 $$d_X(x, y) = \| x - y \| \le \| x - z \| + \| z - y \| = d_X(x, z) + d_X(z, y).$$
 #+end_proof
 
-* Theorem     6.1.03:  Distinctive features in finite dimensions
+* Theorem:     Distinctive features in finite dimensions
+:PROPERTIES:
+:CUSTOM_ID: thm:finite-dimensions-distinctive
+:LECTURE_REF: 6.1.3
+:END:
 
 Let $V$ be a finite-dimensional normed vector space. Then the following statements hold:
 
@@ -69,7 +78,11 @@ $$\| f(v_n - v) \| \le C C_1 \| v_n - v \| \rightarrow 0,$$
 which proves continuity of $f$.
 #+end_proof
 
-* Theorem     6.1.06:  Boundedness and continuity of linear maps
+* Theorem:     Boundedness and continuity of linear maps
+:PROPERTIES:
+:CUSTOM_ID: thm:boundedness-continuity-linear-maps
+:LECTURE_REF: 6.1.6
+:END:
 
 Let $V$ and $W$ be normed vector spaces and let $f : V \rightarrow W$ be linear. The following are equivalent:
 
@@ -99,7 +112,11 @@ Thus, $v \rightarrow u$ implies $fv \rightarrow fu$ and $f$ is continuous.
 
 ** Questions
 
-* Definition  6.1.07:  Operator norm
+* Definition:  Operator norm
+:PROPERTIES:
+:CUSTOM_ID: def:operator-norm
+:LECTURE_REF: 6.1.7
+:END:
 
 Let $V$ and $W$ be normed vector spaces and let $f : V \rightarrow W$ be linear and continuous. Then the operator norm of $f$ is
 
@@ -121,7 +138,11 @@ and $\dfrac{v}{\|v\|}$ ranges over the unit sphere $\{u \in V : \|u\| = 1\}$ as 
 
 $$\|f\|_{\mathrm{op}} = \sup_{\|v\| = 1} \|fv\|$$
 
-* Lemma       6.1.09:  Compatible norm on $\mathcal{L}(V, W)$ is Banach when $W$ is Banach
+* Lemma:       Compatible norm on $\mathcal{L}(V, W)$ is Banach when $W$ is Banach
+:PROPERTIES:
+:CUSTOM_ID: lem:operator-norm-banach
+:LECTURE_REF: 6.1.9
+:END:
 
 If $W$ is a Banach space, then every compatible norm on $\mathcal{L}(V, W)$ makes it a Banach space.
 
@@ -165,7 +186,11 @@ A Banach space is a complete normed vector space - a normed space $(V, \|\cdot\|
 
 No. The lemma says if $W$ is a Banach space, then every compatible norm on $\mathcal{L}(V,W)$ makes $\mathcal{L}(V,W)$ a Banach space.
 
-* Theorem     6.1.10:  Von Neumann series
+* Theorem:     Von Neumann series
+:PROPERTIES:
+:CUSTOM_ID: thm:von-neumann-series
+:LECTURE_REF: 6.1.10
+:END:
 
 Let $B$ be a Banach space. If $f \in \mathcal{L}(B)$ such that there is $\theta < 1$ and
 
@@ -198,7 +223,11 @@ The controlling quantity is $\theta = \|\mathrm{id}_B - f\|_{\mathrm{op}}$, not 
 
 Any continuous linear operator on a Banach space that is close enough to the identity (within $< 1$) is invertable, with inverse given by the geometric series in $\mathrm{id}_{B}-f$
 
-* Definition  6.2.01:  Length of a curve in a metric space
+* Definition:  Length of a curve in a metric space
+:PROPERTIES:
+:CUSTOM_ID: def:curve-length
+:LECTURE_REF: 6.2.1
+:END:
 
 Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a curve. For a partition
 
@@ -214,7 +243,11 @@ $$\ell(\gamma) := \sup_{\mathcal{P}} \ell(\gamma, \mathcal{P}),$$
 
 where the supremum is taken over all partitions $\mathcal{P}$ of $\left[ 0, 1 \right]$. The curve $\gamma$ is called rectifiable if $\ell(\gamma) < \infty$.
 
-* Definition  6.2.02:  Metric derivative
+* Definition:  Metric derivative
+:PROPERTIES:
+:CUSTOM_ID: def:metric-derivative
+:LECTURE_REF: 6.2.2
+:END:
 
 Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a curve. If the limit exists,
 
@@ -222,19 +255,31 @@ $$|\dot{\gamma}|(t) = \lim_{h \rightarrow 0} \frac{d(\gamma(t + h), \gamma(t))}{
 
 then $|\dot{\gamma}|(t)$ is called the metric derivative of $\gamma$ in $t$.
 
-* Definition  6.2.03:  Lipschitz continuous curve
+* Definition:  Lipschitz continuous curve
+:PROPERTIES:
+:CUSTOM_ID: def:lipschitz-curve
+:LECTURE_REF: 6.2.3
+:END:
 
 Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a curve. We say that $\gamma$ is Lipschitz continuous if there is a constant $L > 0$ such that
 
 $$d(\gamma(t), \gamma(s)) \le L |t - s|, \qquad t, s \in \left[ 0, 1 \right].$$
 
-* Theorem     6.2.04:  Arc length via metric derivative
+* Theorem:     Arc length via metric derivative
+:PROPERTIES:
+:CUSTOM_ID: thm:arc-length-metric-derivative
+:LECTURE_REF: 6.2.4
+:END:
 
 Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a Lipschitz continuous curve. If its metric derivative exists on $\left[ 0, 1 \right]$ and is integrable, then
 
 $$\ell(\gamma) = \int_0^1 |\dot{\gamma}|(t) \, dt$$
 
-* Lemma       6.2.05:  Metric derivative of smooth curves
+* Lemma:       Metric derivative of smooth curves
+:PROPERTIES:
+:CUSTOM_ID: lem:metric-derivative-smooth
+:LECTURE_REF: 6.2.5
+:END:
 
 If the curve $\gamma : \left[ 0, 1 \right] \rightarrow \mathbb{R}^n$ is continuously differentiable, then it is Lipschitz continuous and its metric derivative $|\dot{\gamma}|$ satisfies
 
@@ -262,7 +307,11 @@ Since $d_2 \le \sqrt{n} \, d_\infty$, we deduce
 $$\|\gamma(s) - \gamma(t)\|_2 \le \underbrace{\sqrt{n} \, C}_{L} |s - t|$$
 #+end_proof
 
-* Theorem     6.2.06:  Arc length of smooth curves
+* Theorem:     Arc length of smooth curves
+:PROPERTIES:
+:CUSTOM_ID: thm:arc-length-smooth
+:LECTURE_REF: 6.2.6
+:END:
 
 Let $\gamma : \left[ 0, 1 \right] \rightarrow \mathbb{R}^d$ be continuously differentiable. Then
 
@@ -316,7 +365,11 @@ Combining both inequalities proves
 $$\ell(\gamma) = \int_0^1 \sqrt{|\gamma_1'(t)|^2 + \cdots + |\gamma_n'(t)|^2} \, dt$$
 #+end_proof
 
-* Lemma       6.2.08:  Reparametrisation invariance of arc length
+* Lemma:       Reparametrisation invariance of arc length
+:PROPERTIES:
+:CUSTOM_ID: lem:reparametrisation-invariance
+:LECTURE_REF: 6.2.8
+:END:
 
 Let $f : \left[ a, b \right] \rightarrow \mathbb{R}^n$ be a continuously differentiable function and let $\phi : \left[ 0, 1 \right] \rightarrow \left[ a, b \right]$ be bijective and continuously differentiable. Then $\gamma := f \circ \phi : \left[ 0, 1 \right] \rightarrow \mathbb{R}^n$ satisfies
 
@@ -334,7 +387,11 @@ The function $\phi$ is either strictly increasing or decreasing. Assume it is in
 The case that $\phi$ is decreasing is analogous. $\square$
 #+end_proof
 
-* Definition  6.3.01:  Frechet differentiability
+* Definition:  Frechet differentiability
+:PROPERTIES:
+:CUSTOM_ID: def:frechet-differentiability
+:LECTURE_REF: 6.3.1
+:END:
 
 Let $V$ and $W$ be normed vector spaces. A function $f : V \rightarrow W$ is called Frechet differentiable at $x \in V$ if there exists a continuous linear map $f'(x) : V \rightarrow W$ such that
 
@@ -388,7 +445,11 @@ So $Dv = 0$ for every $v \neq 0$, and trivially for $v = 0$. Therefore $D = 0$ a
 
 The map $f'(x)$ in the definition is therefore unique whenever it exists, which justifies calling it /the/ derivative and writing $f'(x)$ rather than "some $f'$".
 
-* Theorem     6.3.05:  Chain rule
+* Theorem:     Chain rule
+:PROPERTIES:
+:CUSTOM_ID: thm:chain-rule
+:LECTURE_REF: 6.3.5
+:END:
 
 Let $V, W, W'$ be normed vector spaces. If $f : V \rightarrow W$ and $g : W \rightarrow W'$ are Fréchet differentiable, then the composition $g \circ f : V \rightarrow W'$ is Fréchet differentiable and
 
@@ -428,7 +489,11 @@ $$\frac{\|\varepsilon_h\|}{\|h\|} \le \|f'(x)\| + \frac{\|\psi(h)\|}{\|h\|}$$
 which is bounded for small $h$. Hence $\varphi(h) / \|h\| \rightarrow 0$, proving the claim. $\square$
 #+end_proof
 
-* Lemma       6.3.07:  Directional derivative
+* Lemma:       Directional derivative
+:PROPERTIES:
+:CUSTOM_ID: lem:directional-derivative
+:LECTURE_REF: 6.3.7
+:END:
 
 If $f : V \rightarrow W$ is Fréchet differentiable at $x$, then
 
@@ -446,7 +511,11 @@ $$\lim_{\lambda \rightarrow 0} \frac{f(x + \lambda u) - f(x) - \lambda f'(x) u}{
 This can be rewritten as $\lim_{\lambda \rightarrow 0} \frac{f(x + \lambda u) - f(x)}{\lambda} = f'(x)u$.
 #+end_proof
 
-* Lemma       6.3.10:  Frechet derivative of least-squares composition
+* Lemma:       Frechet derivative of least-squares composition
+:PROPERTIES:
+:CUSTOM_ID: lem:frechet-derivative-least-squares
+:LECTURE_REF: 6.3.10
+:END:
 
 For Hilbert spaces $H_0$ and $H$, let $g : H \rightarrow \mathbb{R}$, $g(x) = \| x \|^2$ and $f : H_0 \rightarrow H$ given by $f(x) = Ax - b$, for $A : H_0 \rightarrow H$ linear continuous and $b \in H$ fixed. Then the map
 
@@ -467,7 +536,11 @@ We notice that $g'(x) = 2 \langle x, \cdot \rangle$ and $f'(x) = A$. The chain r
 \end{align*}
 #+end_proof
 
-* Definition  6.4.01:  Local extrema
+* Definition:  Local extrema
+:PROPERTIES:
+:CUSTOM_ID: def:local-extrema
+:LECTURE_REF: 6.4.1
+:END:
 
 Let $U \subseteq V$ be open and let $f : U \rightarrow \mathbb{R}$. A point $x_0 \in U$ is called
 
@@ -485,7 +558,11 @@ Let $U \subseteq V$ be open and let $f : U \rightarrow \mathbb{R}$. A point $x_0
 
 If $x_0$ is either a (strict) local minimum or a (strict) local maximum, it is called a (strict) local extremum.
 
-* Theorem     6.4.03:  Necessary conditions of local extrema
+* Theorem:     Necessary conditions of local extrema
+:PROPERTIES:
+:CUSTOM_ID: thm:necessary-conditions-local-extrema
+:LECTURE_REF: 6.4.3
+:END:
 
 Let $V$ be a normed vector space, $U \subseteq V$ an open subset, and let $f : U \rightarrow \mathbb{R}$ be Fréchet differentiable in $x_0 \in U$. If $x_0 \in U$ is a local extremum of $f$, then
 
@@ -517,19 +594,31 @@ $$f'(x_0) u = 0 \quad \text{for all } u \in V,$$
 and hence $f'(x_0) = 0$.
 #+end_proof
 
-* Definition  6.4.06:  Critical point and saddle point
+* Definition:  Critical point and saddle point
+:PROPERTIES:
+:CUSTOM_ID: def:critical-saddle-point
+:LECTURE_REF: 6.4.6
+:END:
 
 Points satisfying $f'(x_0) = 0$ are called critical points. A critical point is a saddle point if for all $\varepsilon > 0$ there are $x_1, x_2 \in B_\varepsilon(x_0)$ such that
 
 $$f(x_0) > f(x_1) \quad \text{and} \quad f(x_0) < f(x_2).$$
 
-* Definition  6.4.08:  Convex function
+* Definition:  Convex function
+:PROPERTIES:
+:CUSTOM_ID: def:convex-function
+:LECTURE_REF: 6.4.8
+:END:
 
 A function $f : V \rightarrow \mathbb{R}$ is called convex if for all $x, y \in V$ and all $t \in \left[ 0, 1 \right]$,
 
 $$f(tx + (1 - t)y) \le tf(x) + (1 - t)f(y).$$
 
-* Lemma       6.4.09:  First-order characterization of convexity
+* Lemma:       First-order characterization of convexity
+:PROPERTIES:
+:CUSTOM_ID: lem:first-order-convexity
+:LECTURE_REF: 6.4.9
+:END:
 
 Let $f : V \rightarrow \mathbb{R}$ be Fréchet differentiable. Then $f$ is convex if and only if
 
@@ -559,7 +648,11 @@ $$f(x) - f(y) \le f'(x)(x - y), \quad x, y \in V.$$
   The definition $z = tx + (1 - t)y$ yields convexity.
 #+end_proof
 
-* Theorem     6.4.12:  Local minima of convex functions are global
+* Theorem:     Local minima of convex functions are global
+:PROPERTIES:
+:CUSTOM_ID: thm:convex-local-global
+:LECTURE_REF: 6.4.12
+:END:
 
 Let $f : V \rightarrow \mathbb{R}$ be convex.
 
@@ -582,6 +675,7 @@ $$f(x_0) \le f(z_t) \le (1 - t)f(x_0) + tf(y).$$
 
 Thus, we must have $0 \le t(f(y) - f(x_0))$. Since $t > 0$, we conclude $f(y) \ge f(x_0)$.
 
-(ii) If $x_0$ is a global minimum, then it is also local and by /Theorem 6.4.3/ we have $f'(x_0) = 0$. Now assume that $f'(x_0) = 0$. /Lemma 6.4.9/ yields $f(y) \ge f(x_0)$, for all $y \in V$, which leads to a global minimum.
+(ii) If $x_0$ is a global minimum, then it is also local and by [[#thm:necessary-conditions-local-extrema][Theorem 6.4.3]] we have $f'(x_0) = 0$. Now assume that $f'(x_0) = 0$. [[#lem:first-order-convexity][Lemma 6.4.9]] yields $f(y) \ge f(x_0)$, for all $y \in V$, which leads to a global minimum.
 #+end_proof
+
 
