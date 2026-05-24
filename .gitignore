@@ -30,3 +30,6 @@ _archive/
 
 # assets (images, figures — keep local only)
 assets/
+
+# exams (sensitive content)
+03_exam/
