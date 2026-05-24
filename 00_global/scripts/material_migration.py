@@ -65,8 +65,11 @@ def migrate(text, table):
         cid, map_kind, _ = table[key]
         if map_kind != kind:
             warnings.append(f"kind mismatch at {num}: file={kind} map={map_kind}")
+
+        # Padded to exactly 12 characters (the length of "Proposition:")
+        # to ensure exactly 1 space follows the longest word.
         out += [
-            f"* {kind}: {name}\n",
+            f"* {kind + ':':<12} {name}\n",
             ":PROPERTIES:\n",
             f":CUSTOM_ID: {cid}\n",
             f":LECTURE_REF: {key}\n",
