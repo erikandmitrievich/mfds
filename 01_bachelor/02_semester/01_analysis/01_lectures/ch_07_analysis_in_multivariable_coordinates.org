@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-26>
-#+lastmod: <2026-05-25 14:07>
+#+lastmod: <2026-05-25 15:47>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -558,6 +558,16 @@ where $\varphi(h) / \|h\|^2 \rightarrow 0$ for $h \rightarrow 0$.
    Choosing $x = x_0 + t u$ and $x = x_0 + t v$ with $t$ sufficiently small and using the Taylor expansion shows that $f(x) - f(x_0)$ takes both positive and negative values arbitrarily close to $x_0$. Hence $x_0$ is a saddle point.
 #+end_proof
 
+** Questions
+
+*** DONE How do we know whether Hessian is positive, negative or indefinite? (I know there are many ways, but what way is taught in this course)
+
+Right now the course did not cover that topic fully, so we are mostly working with $2 \times 2$ Hessian matrices and check the signs of eigen values:
+
+- $\text{all diagonal entries} > 0$ $\implies$ all eigenvalues positive $\implies$ positive definite $\implies$ local min
+- $\text{all diagonal entries} < 0$ $\implies$ all eigenvalues negative $\implies$ negative definite $\implies$ local max
+- $\text{mixed signs}$ $\implies$ indefinite $\implies$ saddle
+
 * Lemma:       Second-order characterization of convexity
 :PROPERTIES:
 :CUSTOM_ID: lem:second-order-convexity
@@ -565,6 +575,34 @@ where $\varphi(h) / \|h\|^2 \rightarrow 0$ for $h \rightarrow 0$.
 :END:
 
 Let $f \in \mathcal{C}^2(\mathbb{R}^n)$. Then $f$ is convex if and only if $H_f(x)$ is positive semi-definite for all $x \in \mathbb{R}^n$.
+
+** Questions
+
+*** DONE I read $f \in \mathcal{C}^2(\mathbb{R}^n)$ as, $f$ is a continuous function with domain of $\mathbb{R}^n$, but I do not get the power of two in $\mathcal{C}$. What is it?
+
+$f \in \mathcal{C}^2(\mathbb{R}^n)$ means $f$ is twice continuously differentiable.
+
+Hierarchy:
+
+- $\mathcal{C}^0(\mathbb{R}^n)$: continuous
+- $\mathcal{C}^1(\mathbb{R}^n)$: continuous + all $\partial_j f$ continuous
+- $\mathcal{C}^2(\mathbb{R}^n)$: $\mathcal{C}$ + all $\partial_i\partial_j f$ continuous
+
+etc.
+
+$\mathcal{C}^2$ is exaclty the hypothesis needed here: [[#lem:mixed-partials-commute][Lemma 7.1.9]] requires it, and the Hessian needs to be well defined and continuous to state the condition $H_f(x) \succeq 0 \, \forall x$.
+
+*** DONE What exaclty is positive semi-definite matrix?
+
+A matrix $A$ is positive semi-definite if:
+
+$$h^{\top} Ah \ge 0 \, \forall h \in \mathbb{R}^n$$
+
+- Positive definite from [[#thm:second-order-sufficient-extrema][Theorem 7.2.5]] is the strict version: $h^{\top} Ah > 0 \, \forall h \in \mathbb{R}^n \setminus \{0\}$
+
+- Via eigenvalues: $A$ is positive semidefinite iff all eigenvalues $\lambda_i \ge 0$, positife definite iff all $\lambda_i > 0$
+
+- The connection to convexity: $H_f(x) \succeq 0$ means the function curves upward (or flat) in every direction at $x$
 
 * Lemma:       Jensen's inequality
 :PROPERTIES:
@@ -712,24 +750,19 @@ No, purely notational.
 
 *** DONE I also do not quite see the point of the definition. Its either super trivial, or I do not see what is going on.
 
-The inequality itself is simple — the substance is in what it excludes.
+The inequality is simple — the point is what it rules out.
 
-Lipschitz is a /quantitative/ strengthening of continuity: a global linear bound $L$ on rate of change with explicit constant, rather than the qualitative $\varepsilon\delta$ relation.
+Lipschitz says: the rate of change of $g$ is capped by a fixed constant $L$ everywhere. Continuity alone gives no such cap.
 
-Strict hierarchy:
+What it excludes — functions whose slope is unbounded:
 
-\begin{align*}
-\{C^1 \text{ bounded derivative}\} &\subsetneq \{\text{Lipschitz}\} \\
-&\subsetneq \{\text{uniformly continuous}\} \\
-&\subsetneq \{\text{continuous}\} \\
-\end{align*}
+- $x^2$ on $\mathbb{R}$: slope $2x$ grows without bound, not Lipschitz.
 
-Most continuous functions are /not/ Lipschitz:
+- $\sqrt{x}$ on $[0,1]$: slope blows up near $0$, not Lipschitz.
 
-- $x^2$ fails on $\mathbb{R}$ (unbounded slope)
-- $\sqrt{x}$ fails on $[0,1]$ (slope blows up at $0$)
+Both are continuous. So Lipschitz is strictly stronger than continuity.
 
-For differentiable $g$: $L$ -Lipschitz $\Leftrightarrow$ $\|\nabla g(x)\| \leq L$ everywhere. The operational payoff (gradient-descent convergence, ODE existence, error bounds) belongs to downstream theorems.
+For differentiable $g$: $g$ is $L$ -Lipschitz $\iff \|\nabla g(x)\| \le L$ everywhere. The actual usefulness (gradient-descent convergence, ODE existence, error bounds) comes from later theorems that need this bound.
 
 * Lemma:       Descent lemma
 :PROPERTIES:
