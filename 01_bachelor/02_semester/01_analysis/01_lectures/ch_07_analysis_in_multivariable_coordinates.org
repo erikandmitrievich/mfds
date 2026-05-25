@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-26>
-#+lastmod: <2026-05-25 10:47>
+#+lastmod: <2026-05-25 13:34>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -39,6 +39,12 @@ $$f'(v) = \chi_{B_W} \, F'(x) \, \chi_{B_V}^{-1}.$$
 #+end_proof
 
 ** Questions
+
+*** DONE What is a "must know" about Euclidian space? What a small "Euclidian space anki card" should I learn?
+
+$\mathbb{R}^n$ with standard inner product $\langle x, y \rangle = \sum_{i} x_iy_i$, which induces a Euclidian norm $\|x\|_2 = \sqrt{\sum_i x_i^2}$, which induces the Euclidian metric $d(x, y) = \|x - y\|_2$.
+
+Everything else follows from that triple $(\mathbb{R}^n, \langle \cdot, \cdot \rangle, \| \cdot \|_2)$.
 
 *** DONE What is $\chi$?
 
@@ -224,6 +230,17 @@ This leads to $\varphi(h) / \|h\| \rightarrow 0$ and hence $f$ is differentiable
 $$f(x + h) = f(x) + \sum_{j=1}^{n} \partial_j f(x) h_j + \varphi(h) = f(x) + \operatorname{grad} f(x) h + \varphi(h).$$
 #+end_proof
 
+** Questions
+
+*** DONE So this Theorem completes the logic of the previous [[#thm:derivative-gradient-rn][Theorem 7.1.5]], making it "if and only if"?
+
+Not quite. The two theorems don't combine into a clean iff.
+
+[[#thm:derivative-gradient-rn][Theorem 7.1.5]]: Frechet differentiable $\implies$ partially differentiable, and $f'(x) = \mathrm{grad}(x)$.
+[[#thm:continuity-partials-differentiability][Theorem 7.1.7]]: Partials exist in $U$ and are continuous at $x$ $\implies$ Frechet differentiable at $x$.
+
+The "iff" you are sensing exists only if you add continuity of partials as the hypothesis, but then it is not symmetric: continuous partials $\implies$ Frechet diff, but Frechet diff does not require continuous partials.
+
 * Lemma:       Mixed partial derivatives commute
 :PROPERTIES:
 :CUSTOM_ID: lem:mixed-partials-commute
@@ -275,6 +292,48 @@ The limit $(s, t) \rightarrow 0$ implies $(\xi_s, \xi_t), (\eta_s, \eta_t) \righ
 
 $$\partial_1 \partial_2 \varphi(0, 0) = \partial_2 \partial_1 \varphi(0, 0).$$
 #+end_proof
+
+** Questions
+
+*** DONE What are the cases when $\partial_i \partial_j f(x) \neq \partial_j \partial_i f(x)$?
+
+"twice continuously partially differentiable" - is doing a real work, drop continuity of the second partials and commutativity can fail.
+
+\begin{align*}
+f(x,y) =
+\begin{cases}
+xy \frac{x^2 - y^2}{x^2 + y^2} & \text{if } (x, y) \neq (0, 0) \\
+0 & \text{if } (x, y) = (0, 0) \\
+\end{cases} \\
+\end{align*}
+
+Both $\partial_x f$ and $\partial_y f$ exist everywhere. Computing from the definition:
+
+$$\partial_x f(0,0) = \lim_{h \to 0} \frac{f(h,0) - f(0,0)}{h} = \lim_{h \to 0} \frac{0}{h} = 0$$
+
+$$\partial_y f(0,0) = \lim_{h \to 0} \frac{f(0,h) - f(0,0)}{h} = \lim_{h \to 0} \frac{0}{h} = 0$$
+
+For $(x,y) \neq (0,0)$, differentiating directly:
+
+$$\partial_x f(x,y) = y \cdot \frac{x^4 + 4x^2y^2 - y^4}{(x^2+y^2)^2}$$
+
+Then:
+
+$$\partial_y \partial_x f(0,0) = \lim_{h \to 0} \frac{\partial_x f(0,h) - \partial_x f(0,0)}{h} = \lim_{h \to 0} \frac{h \cdot \frac{-h^4}{h^4} - 0}{h} = \lim_{h \to 0} \frac{-h}{h} = -1$$
+
+$f$ is antisymmetric under $x \leftrightarrow y$, i.e. $f(x,y) = -f(y,x)$, so by symmetry:
+
+$$\partial_x \partial_y f(0,0) = +1$$
+
+Hence $\partial_x \partial_y f(0,0) = 1 \neq -1 = \partial_y \partial_x f(0,0)$.
+
+What fails: the second partials exist at $(0,0)$ but are not continuous there — exactly the hypothesis the lemma requires.
+
+| Condition                                   | Commutativity |
+|---------------------------------------------+---------------|
+| Second partials exist, continuous at $x$    | guaranteed    |
+| Second partials exist, discontinuous at $x$ | may fail      |
+| Second partials don't all exist             | undefined     |
 
 * Definition:  Hessian matrix
 :PROPERTIES:
@@ -380,6 +439,60 @@ $$\omega(h) := \sup_{t \in [0, 1]} \max_{|\alpha| = k} \left| (\partial^\alpha f
 
 as $h \rightarrow 0$. Hence $R(h) = o(\|h\|^k)$.
 #+end_proof
+
+** Questions
+
+*** DONE Would it be more accurate to write $k \in \mathbb{N}^{+}$? Otherwise it does not make sense.
+
+Yes, but flagging $k \ge 1$ would be a cleaner choice.
+
+*** DONE What is this stange $|\alpha| \le k$ under the sum?
+
+$\alpha$ is a multi-index: $\alpha = (\alpha_1, \ldots, \alpha_n) \in \mathbb{N}^n$, and $|\alpha| = a_1 + \ldots + a_n$.
+
+It encodes mixed partial detivatives compactly:
+
+\begin{align*}
+\partial^{\alpha} f &= \partial_1^{\alpha_1} \ldots \partial_n^{\alpha_n}f \\
+h^{\alpha} &= h^{\alpha_1} \ldots h^{\alpha_n} \\
+\alpha! &= \alpha_1! \ldots \alpha_n! \\
+\end{align*}
+
+So $\sum_{|\alpha| \le k}$ means sum over all combinations of differentiation orders that total at most $k$. In $\mathbb{R}^2$ with $k=2$:
+
+\begin{align*}
+|\alpha| &= 0 : (0, 0) \rightarrow f \\
+|\alpha| &= 1 : (1, 0), (0, 1) \rightarrow \partial_x f, \, \partial_y f \\
+|\alpha| &= 2 : (2, 0), (1, 1), (0, 2) \rightarrow \partial_x^2 f, \, \partial_x \partial_y f, \, \partial_y^2 f \\
+\end{align*}
+
+*** DONE In $\mathbb{R}^2$, write out the second-order Taylor approximation explicitly and identify the Jacobian and Hessian terms.
+
+Let $h = (\Delta x, \Delta y)^{\top} \in \mathbb{R}^2$ be the displacement vector. The second-order Taylor approximation is:
+
+\begin{align*}
+T(x, y) = &f(x, y) \\
+&+ (\partial_x f(x, y) \Delta x + \partial_y f(x, y) \Delta y) \\
+&+ \frac{1}{2}(\partial_x^2 f(x, y) \Delta x^2 + 2\partial_x \partial_y f(x, y) \Delta x \Delta y + \partial_y^2 f(x, y) \Delta y^2) \\
+\end{align*}
+
+where the first-order term is the Jacobian acting on $h$:
+
+\begin{align*}
+\partial_x f(x, y) \Delta x + \partial_y f(x, y) \Delta y &=
+\begin{bmatrix} \partial_x f(x, y) & \partial_y f(x, y) \end{bmatrix} \begin{bmatrix} \Delta x \\ \Delta y \end{bmatrix} \\
+&= J_f \, h
+\end{align*}
+
+and the second-order term is the Hessian quadratic form in $h$:
+
+\begin{align*}
+\frac{1}{2}(\partial_x^2 f \, \Delta x^2 + 2 \partial_{xy} f \, \Delta x \Delta y + \partial_y^2 f \, \Delta y^2) &= \frac{1}{2}
+\begin{bmatrix} \Delta x & \Delta y \end{bmatrix}
+\begin{bmatrix} \partial_x^2 f & \partial_{xy} f \\ \partial_{yx} f & \partial_y^2 f \end{bmatrix}
+\begin{bmatrix} \Delta x \\ \Delta y \end{bmatrix} \\
+&= \frac{1}{2} h^{\top} H_f \, h
+\end{align*}
 
 * Theorem:     Second-order sufficient conditions for extrema
 :PROPERTIES:
