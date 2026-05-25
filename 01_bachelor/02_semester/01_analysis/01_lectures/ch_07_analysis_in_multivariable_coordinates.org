@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-26>
-#+lastmod: <2026-05-25 13:34>
+#+lastmod: <2026-05-25 14:07>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -800,3 +800,85 @@ $$c \sum_{k=0}^{\infty} \| \nabla f(x_k) \|^2 \le f(x_0) - r_0.$$
 
 This implies that $\| \nabla f(x_k) \|^2 \rightarrow 0$.
 #+end_proof
+
+* Lemma:       Continuously differentiable implies Lipschitz on closed ball
+:PROPERTIES:
+:CUSTOM_ID: lem:c1-implies-lipschitz-closed-ball
+:LECTURE_REF: 7.4.1
+:END:
+
+Suppose $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ is continuously differentiable and $B_r \subseteq \mathbb{R}^n$ a closed ball. Then $f$ is $L$ Lipschitz continuous on $B_r$ with Lipschitz constant
+
+$$L = \sup_{z \in B_r} \| f'(z) \|$$
+
+#+begin_proof
+For $x, y \in B_r$, define $g : \left[ 0, 1 \right] \rightarrow \mathbb{R}^m$ by $g(t) = f(y + t(x - y))$. The chain rule yields
+
+$$g'(t) = f'(y + t(x - y))(x - y).$$
+
+The fundamental theorem of calculus implies
+
+$$f(x) - f(y) = g(1) - g(0) = \int_0^1 f'(y + t(x - y))(x - y) \, dt.$$
+
+Taking norms on both sides leads to
+
+$$\| f(x) - f(y) \| \le \int_0^1 \| f'(y + t(x - y)) \| \| (x - y) \| \, dt \le L \| x - y \|.$$
+#+end_proof
+
+** Questions
+
+* Theorem:     Quadratic convergence of Newton's method
+:PROPERTIES:
+:CUSTOM_ID: thm:newton-quadratic-convergence
+:LECTURE_REF: 7.4.2
+:END:
+
+Suppose $f : \mathbb{R}^n \rightarrow \mathbb{R}^n$ is twice continuously differentiable and $x^* \in \mathbb{R}^n$ such that $f(x^*) = 0$ and $f'(x^*)$ is invertible. Then there is $r > 0$ such that for all $x_0 \in B_r(x^*)$ the iterative sequence
+
+$$x_{k+1} = x_k - f'(x_k)^{-1} f(x_k)$$
+
+converges towards $x^*$ and there is $C > 0$ such that
+
+$$\| x_{k+1} - x^* \| \le C \| x_k - x^* \|^2.$$
+
+#+begin_proof
+There is a radius $r > 0$ and a constant $M > 0$ such that
+
+$$\| f'(x)^{-1} \| \le M, \qquad \forall x \in B_r(x^*).$$
+
+(This will still be properly verified later.)
+
+Put $e_k := x_k - x^*$ and again observe
+
+$$\int_0^1 f'(x^* + t e_k) e_k \, dt = f(x_k) - f(x^*) = f(x_k).$$
+
+We may add and subtract $f'(x_k) e_k$ to obtain
+
+$$f(x_k) = f'(x_k) e_k + \int_0^1 (f'(x^* + t e_k) - f'(x_k)) e_k \, dt.$$
+
+By subtracting $x^*$ from both sides of Newton's iteration, we get
+
+\begin{align*}
+e_{k+1} &= e_k - f'(x_k)^{-1} \left( f'(x_k) e_k + \int_0^1 (f'(x^* + t e_k) - f'(x_k)) e_k \, dt \right) \\
+&= - f'(x_k)^{-1} \int_0^1 (f'(x^* + t e_k) - f'(x_k)) e_k \, dt.
+\end{align*}
+
+We may take norms on both sides and the triangle inequality still holds for the integration (as a limit of summations),
+
+\begin{align*}
+\| e_{k+1} \| &\le \| f'(x_k)^{-1} \| \int_0^1 \| f'(x^* + t e_k) - f'(x_k) \| \| e_k \| \, dt \\
+&\le \| f'(x_k)^{-1} \| \int_0^1 L \| x^* + t e_k - x_k \| \| e_k \| \, dt \\
+&= \| f'(x_k)^{-1} \| L \int_0^1 \| (t - 1) e_k \| \| e_k \| \, dt \\
+&= \| f'(x_k)^{-1} \| L \| e_k \|^2 \int_0^1 (1 - t) \, dt \\
+&= \| f'(x_k)^{-1} \| L \| e_k \|^2 \frac{1}{2} \\
+&\le \frac{ML}{2} \| e_k \|^2.
+\end{align*}
+
+This is the quadratic error estimate with $C := \frac{ML}{2}$. To check for convergence, we decrease the radius of the ball centered at $x^*$. Choose a radius $\rho > 0$ such that $\rho \le r$ and $C\rho \le \theta < 1$. For $x_0 \in B_\rho(x^*)$, we have $\| e_0 \| \le \rho < 1$ and induction yields $\| e_k \| \le \rho$, so that the chain of inequalities leads to
+
+$$\| e_{k+1} \| \le C \| e_k \|^2 \le C\rho \| e_k \| = \theta \| e_k \| \le \ldots \theta^{k+1} \| e_0 \| \rightarrow 0.$$
+
+Thus, $x_k \rightarrow x^*$.
+#+end_proof
+
+** Questions
