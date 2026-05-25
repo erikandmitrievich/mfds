@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-26>
-#+lastmod: <2026-05-24 14:28>
+#+lastmod: <2026-05-25 10:47>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -524,7 +524,7 @@ and rearranging terms leads to
 
 $$2 \eta \langle \nabla f(x_k), e_k \rangle = \| e_k \|^2 - \| e_{k+1} \|^2 + \eta^2 \| \nabla f(x_k) \|^2.$$
 
-The first-order characterization of convexity in [[file:ch_06_analysis_in_normed_vector_space_new.org::#lem:first-order-convexity][Lemma 6.4.9]] yields
+The first-order characterization of convexity in [[file:ch_06_analysis_in_normed_vector_space.org::#lem:first-order-convexity][Lemma 6.4.9]] yields
 
 $$f(x_k) - f(x^*) \le \text{grad} \, f(x_k) \, (x_k - x^*) = \langle \nabla f(x_k), e_k \rangle.$$
 
