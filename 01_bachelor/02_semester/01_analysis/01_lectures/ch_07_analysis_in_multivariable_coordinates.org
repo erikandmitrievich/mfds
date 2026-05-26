@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-26>
-#+lastmod: <2026-05-25 15:47>
+#+lastmod: <2026-05-26 11:36>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -915,3 +915,24 @@ Thus, $x_k \rightarrow x^*$.
 #+end_proof
 
 ** Questions
+
+*** DONE Is there any point behind $*$ in $x^{*}$? Or is it just to mark it?
+
+Just a marker for a fixed point. Standard convention.
+
+*** DONE "such that $f(x^{*}) = 0$" - is this a typo? Should it be "$f'(x^{*}) = 0$"?
+
+No typo. $x^{*}$ is the root of $f$, and Newton's method in this case is directed on root finding.
+
+| Problem      | Goal        | Apply Newton to                  |
+|--------------+-------------+----------------------------------|
+| Root-finding | $f(x) = 0$  | $f$ directly                     |
+| Optimization | $\min g(x)$ | $g' = 0$, i.e. root-find on $g'$ |
+
+*** DONE I do not quite understand the phrasing "and $f'(x^{*})$ is invertable". Wouldn't it be more logical to say "and $f(x^{*})$ is invertable" instead?
+
+No. $f(x^{*}) = 0 \in \mathbb{R}^n$ is a vector, $f'(x^{*}) \in \mathbb{R}^{n \times n}$ is a matrix (the Jacobian).
+
+*** DONE What is the point of the $\| x_{k+1} - x^* \| \le C \| x_k - x^* \|^2$?
+
+It shows how fast the error shrinks per iteration. The exponent 2 is the key: if $\|x_{k} - x^{*}\| = 10^{-3}$, then $\|x_{k+1} - x^{*}\| \le C \cdot 10^{-6}$.
