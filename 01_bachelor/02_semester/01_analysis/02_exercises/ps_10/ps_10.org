@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-23>
-#+lastmod: <2026-05-23 10:57>
+#+lastmod: <2026-05-26 12:04>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -19,6 +19,7 @@
 ** Task
 #+begin_quote
 Given $f : \mathbb{R}^2 \to \mathbb{R}^2$ by
+
 $$f(x, y) = \begin{pmatrix} x^2 + y^2 - 1 \\ x - y \end{pmatrix}$$
 
 (a) Determine all $(x, y)^\top \in \mathbb{R}^2$ such that $f(x, y) = 0$.
@@ -29,7 +30,45 @@ $$f(x, y) = \begin{pmatrix} x^2 + y^2 - 1 \\ x - y \end{pmatrix}$$
 ** Solution
 *** (a)
 
+Setting $f(x, y) = 0$ gives $x^2 + y^2 = 1$ and $x = y$. Substituting:
+
+$$2x^2 = 1 \implies x = \pm\frac{1}{\sqrt{2}}$$
+
+So the solutions are $\left(\frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}\right)^\top$ and $\left(-\frac{1}{\sqrt{2}}, -\frac{1}{\sqrt{2}}\right)^\top$.
+
 *** (b)
+
+$$J_f(x, y) = \begin{pmatrix} 2x & 2y \\ 1 & -1 \end{pmatrix}$$
+
+**Iteration 1:**
+
+\begin{align*}
+X_0 &= \begin{pmatrix} 1 \\ 1/2 \end{pmatrix} \\
+f(X_0) &= \begin{pmatrix} 1/4 \\ 1/2 \end{pmatrix} \\
+J_f(X_0) &= \begin{pmatrix} 2 & 1 \\ 1 & -1 \end{pmatrix} \\
+[J_f(X_0)]^{-1} &= -\frac{1}{3} \begin{pmatrix} -1 & -1 \\ -1 & 2 \end{pmatrix} \\
+X_1 &= X_0 - [J_f(X_0)]^{-1} f(X_0) \\
+&= \begin{pmatrix} 1 \\ 1/2 \end{pmatrix} - \left[ -\frac{1}{3} \begin{pmatrix} -1 & -1 \\ -1 & 2 \end{pmatrix} \right] \begin{pmatrix} 1/4 \\ 1/2 \end{pmatrix} \\
+&= \begin{pmatrix} 3/4 \\ 3/4 \end{pmatrix}
+\end{align*}
+
+**Iteration 2:**
+
+\begin{align*}
+f(X_1) &= \begin{pmatrix} 1/8 \\ 0 \end{pmatrix} \\
+J_f(X_1) &= \begin{pmatrix} 3/2 & 3/2 \\ 1 & -1 \end{pmatrix} \\
+[J_f(X_1)]^{-1} &= -\frac{1}{3} \begin{pmatrix} -1 & -3/2 \\ -1 & 3/2 \end{pmatrix} = \begin{pmatrix} 1/3 & 1/2 \\ 1/3 & -1/2 \end{pmatrix} \\
+X_2 &= X_1 - [J_f(X_1)]^{-1} f(X_1) \\
+&= \begin{pmatrix} 3/4 \\ 3/4 \end{pmatrix} - \begin{pmatrix} 1/3 & 1/2 \\ 1/3 & -1/2 \end{pmatrix} \begin{pmatrix} 1/8 \\ 0 \end{pmatrix} \\
+&= \begin{pmatrix} 17/24 \\ 17/24 \end{pmatrix}
+\end{align*}
+
+**Error:**
+
+\begin{align*}
+\|X_2 - X^*_1\|_\infty &= \left| \frac{17}{24} - \frac{1}{\sqrt{2}} \right| \approx 0.00122 \\
+\|X_2 - X^*_1\|_2 &= \frac{17\sqrt{2}}{24} - 1 \approx 0.00173
+\end{align*}
 
 * Problem 2 :newton_method:numerical_methods:linear_system:
 ** Task
