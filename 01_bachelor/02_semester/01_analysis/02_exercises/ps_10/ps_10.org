@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-23>
-#+lastmod: <2026-05-26 12:04>
+#+lastmod: <2026-05-26 12:46>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -77,8 +77,35 @@ Implement Newton's method numerically (use Julia's Linear Algebra package to sol
 #+end_quote
 
 ** Solution
-#+begin_src julia :results value :exports both :tangle julia/p_2.jl
+#+begin_src julia :results output :exports both :tangle julia/p_2.jl
+using LinearAlgebra, Test
+
+function newton(f, df, x_0, tol=1e-6, maxiter=50)
+    x_k = x_0
+    x_k1 = x_0
+    for i in 1:maxiter
+        x_k1 = x_k - (df(x_k) \ f(x_k))
+        if norm(x_k1 - x_k) < tol
+            return x_k1
+        end
+        x_k = x_k1
+    end
+    return x_k1
+end
+
+@testset "Problem 1" begin
+    f(v) = [v[1]^2 + v[2]^2 - 1, v[1] - v[2]]
+    J_f(v) = [2v[1] 2v[2]; 1 -1]
+    x_0 = [1.0, 0.5]
+    @test newton(f, J_f, x_0, 1e-6, 1) ≈ [0.75, 0.75]
+    @test newton(f, J_f, x_0, 1e-6, 2) ≈ [17/24, 17/24]
+end
 #+end_src
+
+#+RESULTS:
+: newton (generic function with 3 methods)
+: Test Summary: | Pass  Total  Time
+: Problem 1     |    2      2  0.3s
 
 * Problem 3 :newton_method:nonlinear_system:jacobian:
 ** Task
