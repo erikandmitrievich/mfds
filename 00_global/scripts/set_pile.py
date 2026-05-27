@@ -2,7 +2,7 @@ import os
 import shutil
 
 # --- CONFIGURATION ---
-ROOT_DIRECTORY = r'/Users/ziro2173/personal/university/01_bachelor/01_semester/02_linear_algebra/02_exercises'
+ROOT_DIRECTORY = r'/Users/ziro2173/personal/university/01_coursework/01_semester/02_linear_algebra/02_problems'
 # ---------------------
 
 def collect_org_files():

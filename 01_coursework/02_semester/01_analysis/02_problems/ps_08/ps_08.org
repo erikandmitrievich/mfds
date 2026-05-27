@@ -1,0 +1,400 @@
+#+title: Ps 08
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-09>
+#+lastmod: <2026-05-11 07:11>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Problem 1 :critical_point:classification:
+** Task
+#+begin_quote
+Consider $f: \mathbb{R}^2 \to \mathbb{R}$ given by
+
+\[
+f(x, y) = \sqrt{1 + x^2 + y^2}.
+\]
+
+Determine all critical points and classify them into local minima, maxima, and saddle points.
+#+end_quote
+
+** Solution
+
+\begin{align*}
+\nabla f(x,y) &=
+\begin{pmatrix}
+\dfrac{x}{\sqrt{1 + x^2 + y^2}} \\
+\dfrac{y}{\sqrt{1 + x^2 + y^2}} \\
+\end{pmatrix} \\
+\nabla f(x,y) &= 0 \iff x = 0 \text{ and } y = 0 \\
+\end{align*}
+
+\begin{align*}
+\partial_1 f &= \dfrac{x}{\sqrt{1 + x^2 + y^2}}
+& \partial_2 f &= \dfrac{y}{\sqrt{1 + x^2 + y^2}} \\
+\end{align*}
+
+\begin{align*}
+\partial_{11} f
+  &= \dfrac{\sqrt{1+x^2+y^2} \;-\; x \cdot \dfrac{x}{\sqrt{1+x^2+y^2}}}{1 + x^2 + y^2}
+   = \dfrac{(1+x^2+y^2) - x^2}{(1+x^2+y^2)^{3/2}}
+   = \dfrac{1 + y^2}{(1 + x^2 + y^2)^{3/2}} \\
+\partial_{22} f
+  &= \dfrac{\sqrt{1+x^2+y^2} \;-\; y \cdot \dfrac{y}{\sqrt{1+x^2+y^2}}}{1 + x^2 + y^2}
+   = \dfrac{(1+x^2+y^2) - y^2}{(1+x^2+y^2)^{3/2}}
+   = \dfrac{1 + x^2}{(1 + x^2 + y^2)^{3/2}} \\
+\partial_{12} f
+  &= x \cdot \left(-\tfrac{1}{2}\right)(1+x^2+y^2)^{-3/2} \cdot 2y
+   = \dfrac{-xy}{(1 + x^2 + y^2)^{3/2}} \\
+\partial_{21} f &= \partial_{12} f \quad \text{(Schwarz)} \\
+\end{align*}
+
+\begin{align*}
+H_f(x,y) &=
+\begin{pmatrix}
+\dfrac{1 + y^2}{(1 + x^2 + y^2)^{3/2}} & \dfrac{-xy}{(1 + x^2 + y^2)^{3/2}} \\
+\dfrac{-xy}{(1 + x^2 + y^2)^{3/2}} & \dfrac{1 + x^2}{(1 + x^2 + y^2)^{3/2}} \\
+\end{pmatrix} \\
+H_f(0,0) &=
+\begin{pmatrix}
+\dfrac{1 + 0^2}{(1 + 0^2 + 0^2)^{3/2}} & \dfrac{-0}{(1 + 0^2 + 0^2)^{3/2}} \\
+\dfrac{-0}{(1 + 0^2 + 0^2)^{3/2}} & \dfrac{1 + 0^2}{(1 + 0^2 + 0^2)^{3/2}} \\
+\end{pmatrix}
+=
+\begin{pmatrix}
+1 & 0 \\
+0 & 1 \\
+\end{pmatrix} \\
+\end{align*}
+
+\begin{align*}
+\begin{pmatrix}
+x_1 & x_2 \\
+\end{pmatrix}
+\begin{pmatrix}
+1 & 0 \\
+0 & 1 \\
+\end{pmatrix}
+\begin{pmatrix}
+x_1 \\
+x_2 \\
+\end{pmatrix}
+&=
+\begin{pmatrix}
+x_1 & x_2 \\
+\end{pmatrix}
+\begin{pmatrix}
+x_1 \\
+x_2 \\
+\end{pmatrix} \\
+&= x_1^2 + x_2^2 > 0 \\
+&\implies (0,0) \text{ is a strict local minimum.}
+\end{align*}
+
+#+begin_src julia :results value
+using Plots
+
+f(x, y) = (1 + x^2 + y^2)^(1/2)
+xs = ys = -2:0.05:2
+heatmap(xs, ys, f, c=:viridis, aspect_ratio=1, size=(800, 800))
+
+savefig(joinpath(mkpath("./assets"), "p_01.png"))
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_08/assets/p_01.png
+
+* Problem 2 :critical_point:lipschitz:gradient_descent:
+** Task
+#+begin_quote
+Consider the function $f: \mathbb{R}^2 \to \mathbb{R}$ given by
+
+\[
+f(x, y) = \sin x + \cos y.
+\]
+
+(a) Determine all critical points and classify them as local minima, maxima, and saddle points.
+
+(b) Show that $\nabla f$ is $L$ -Lipschitz continuous.
+
+(c) Compute all critical points within $[0, 2\pi] \times [-\frac{\pi}{2}, \frac{3}{2}\pi]$ in Julia via gradient descent by selecting suitable initial vectors $(x_0, y_0)$.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+\begin{align*}
+\nabla f(x,y) &=
+\begin{pmatrix}
+\cos(x) \\
+-\sin(y) \\
+\end{pmatrix} \\
+\nabla f(x,y) &= 0 \iff x = \dfrac{\pi}{2} + n\pi \text{ and } y = m\pi, \quad \forall n,m \in \mathbb{Z} \\
+\end{align*}
+
+\begin{align*}
+\partial_1 f &= \cos(x)
+& \partial_2 f &= -\sin(y) \\
+\end{align*}
+
+\begin{align*}
+\partial_{11} f &= -\sin(x)
+& \partial_{22} f &= -\cos(y) \\
+\partial_{12} f &= 0
+& \partial_{21} f &= \partial_{12} f \quad \text{(Schwarz)} \\
+\end{align*}
+
+\begin{align*}
+H_f(x,y) &=
+\begin{pmatrix}
+-\sin(x) & 0 \\
+0 & -\cos(y) \\
+\end{pmatrix} \\
+H_f\!\left(\tfrac{\pi}{2} + n\pi,\; m\pi\right) &=
+\begin{pmatrix}
+-\sin\!\left(\tfrac{\pi}{2} + n\pi\right) & 0 \\
+0 & -\cos(m\pi) \\
+\end{pmatrix}
+=
+\begin{pmatrix}
+(-1)^{n+1} & 0 \\
+0 & (-1)^{m+1} \\
+\end{pmatrix} \\
+\end{align*}
+
+\begin{align*}
+\begin{pmatrix}
+x_1 & x_2 \\
+\end{pmatrix}
+\begin{pmatrix}
+(-1)^{n+1} & 0 \\
+0 & (-1)^{m+1} \\
+\end{pmatrix}
+\begin{pmatrix}
+x_1 \\
+x_2 \\
+\end{pmatrix}
+&= (-1)^{n+1} x_1^2 + (-1)^{m+1} x_2^2 \\
+\end{align*}
+
+Case analysis on the parities of $n$ and $m$:
+\begin{align*}
+
+n \text{ odd},\; m \text{ odd}:\quad
+& x_1^2 + x_2^2 > 0
+&&\implies \left(\tfrac{\pi}{2} + n\pi,\; m\pi\right) \text{ is a strict local minimum.} \\
+n \text{ even},\; m \text{ even}:\quad
+& -x_1^2 - x_2^2 < 0
+&&\implies \left(\tfrac{\pi}{2} + n\pi,\; m\pi\right) \text{ is a strict local maximum.} \\
+n \text{ odd},\; m \text{ even}:\quad
+& x_1^2 - x_2^2 \text{ indefinite}
+&&\implies \left(\tfrac{\pi}{2} + n\pi,\; m\pi\right) \text{ is a saddle point.} \\
+n \text{ even},\; m \text{ odd}:\quad
+& -x_1^2 + x_2^2 \text{ indefinite}
+&&\implies \left(\tfrac{\pi}{2} + n\pi,\; m\pi\right) \text{ is a saddle point.} \\
+\end{align*}
+
+#+begin_src julia :results value
+using Plots
+
+f(x, y) = sin(x) + cos(y)
+xs = ys = -2π:0.05:2π
+
+ticks = (-2π:π/2:2π, ["-2π", "-3π/2", "-π", "-π/2", "0", "π/2", "π", "3π/2", "2π"])
+
+heatmap(xs, ys, f, c=:viridis, aspect_ratio=1, size=(800, 800), xticks=ticks, yticks=ticks)
+
+savefig(joinpath(mkpath("./assets"), "p_02_a.png"))
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_08/assets/p_02_a.png
+
+*** (b)
+
+\begin{align*}
+\nabla f(x,y) - \nabla f(\tilde{x}, \tilde{y}) &=
+\begin{pmatrix}
+\cos(x) - \cos(\tilde{x}) \\
+-\sin(y) + \sin(\tilde{y}) \\
+\end{pmatrix}
+\end{align*}
+
+By the mean value theorem applied to $\sin$ and $\cos$ on $\mathbb{R}$, together with $|\sin'| = |\cos| \leq 1$ and $|\cos'| = |\sin| \leq 1$:
+
+\begin{align*}
+|\cos(x) - \cos(\tilde{x})| &\leq |x - \tilde{x}| \\
+|\sin(y) - \sin(\tilde{y})| &\leq |y - \tilde{y}|
+\end{align*}
+
+Hence
+
+\begin{align*}
+\|\nabla f(x,y) - \nabla f(\tilde{x}, \tilde{y})\|^2
+&= (\cos(x) - \cos(\tilde{x}))^2 + (\sin(y) - \sin(\tilde{y}))^2 \\
+&\leq (x - \tilde{x})^2 + (y - \tilde{y})^2 \\
+&= \|(x,y) - (\tilde{x}, \tilde{y})\|^2.
+\end{align*}
+
+Therefore $\nabla f$ is $L$ -Lipschitz with $L = 1$. $\blacksquare$
+
+*** (c)
+
+#+begin_src julia :results output :exports both :tangle julia/p_02.jl
+let
+    ∇f(x, y) = (cos(x), -sin(y))
+
+    function gd(∇F, x0, y0; η=1.0, tol=1e-10, maxiter=10_000)
+        x, y = x0, y0
+        for _ in 1:maxiter
+            gx, gy = ∇F(x, y)
+            x -= η * gx
+            y -= η * gy
+            hypot(gx, gy) < tol && break
+        end
+        (x, y)
+    end
+
+    ∇f_neg(x, y) = .-∇f(x, y)
+    ∇f_xmin_ymax(x, y) = (cos(x),  sin(y))   # min in x, max in y
+    ∇f_xmax_ymin(x, y) = (-cos(x), -sin(y))  # max in x, min in y
+
+    println("min:    ", gd(∇f,           4.0, 3.0))   # → (3π/2, π)
+    println("max:    ", gd(∇f_neg,       2.0, 0.5))   # → (π/2, 0)
+    println("saddle: ", gd(∇f_xmin_ymax, 4.0, 0.5))   # → (3π/2, 0)
+    println("saddle: ", gd(∇f_xmax_ymin, 2.0, 3.0))   # → (π/2, π)
+end
+#+end_src
+
+#+RESULTS:
+: min:    (4.71238898038469, 3.141592653589793)
+: max:    (1.5707963267948966, 0.0)
+: saddle: (4.71238898038469, 0.0)
+: saddle: (1.5707963267948966, 3.141592653589793)
+
+* Problem 3 :newton_method:linearization:
+** Task
+#+begin_quote
+Let $f: [a, b] \to \mathbb{R}$ be continuously differentiable. The Newton iteration is defined by
+\[
+x_{k+1} := x_k - \frac{f(x_k)}{f'(x_k)}, \quad k \in \mathbb{N},
+\]
+whenever $f'(x_k) \neq 0$.
+
+Justify the following interpretation of Newton's method:
+
+In the $k$ -th Newton iteration, the function $f$ is replaced by its affine linear approximation $F_k$ at $x_k$. The next iterate $x_{k+1}$ is then defined as the solution of the linearized equation $F_k(x) = 0$.
+
+More precisely:
+
+1. Determine the affine linear approximation $F_k$ of $f$ at $x_k$.
+2. Show that solving $F_k(x) = 0$ yields exactly the Newton iteration formula.
+#+end_quote
+
+** Solution
+
+*** 1. Affine linear approximation of $f$ at $x_k$
+
+The affine linear approximation (first-order Taylor polynomial) of $f$ at $x_k$ is
+
+\begin{align*}
+F_k(x) &:= f(x_k) + f'(x_k)(x - x_k).
+\end{align*}
+
+*** 2. Solving $F_k(x) = 0$
+
+Assume $f'(x_k) \neq 0$. Then
+
+\begin{align*}
+F_k(x) = 0
+&\iff f(x_k) + f'(x_k)(x - x_k) = 0 \\
+&\iff f'(x_k)(x - x_k) = -f(x_k) \\
+&\iff x - x_k = -\dfrac{f(x_k)}{f'(x_k)} \\
+&\iff x = x_k - \dfrac{f(x_k)}{f'(x_k)}.
+\end{align*}
+
+Defining $x_{k+1} := x$ recovers the Newton iteration. $\blacksquare$
+
+* Problem 4 :newton_method:convergence:julia:
+** Task
+#+begin_quote
+Write a Julia function
+
+=myNewton(f, x0, tol, maxiter)=
+
+that performs Newton's method for a function $f$, starting from the initial value $x_0$. The iteration should terminate when either
+
+$$|x_{k+1} - x_k| < \text{tol}$$
+
+or when the maximal number of iterations maxiter is reached. Your function should return:
+- the final approximation,
+- the number of iterations used,
+- and a vector containing all iterates.
+
+Test your implementation on the equations $x^2 - 2 = 0$ and $\cos(x) - x = 0$. Experiment with different initial values $x_0$. What do you observe? Plot the convergence history $k \mapsto |x_k - x^*|$ for one suitable example, where $x^*$ denotes the computed root.
+#+end_quote
+
+** Solution
+
+#+begin_src julia :results output :exports both :tangle julia/p_04.jl
+using Plots
+
+function myNewton(f, df, x0, tol, maxiter)
+    xs = [float(x0)]
+    for k in 1:maxiter
+        x = xs[end]
+        x_new = x - f(x) / df(x)
+        push!(xs, x_new)
+        abs(x_new - x) < tol && return (x_new, k, xs)
+    end
+    (xs[end], maxiter, xs)
+end
+
+# --- Test 1: x^2 - 2 = 0, roots ±√2 ---
+f1(x)  = x^2 - 2
+df1(x) = 2x
+
+for x0 in (2.0, -2.0, 0.5, 100.0)
+    x★, k, _ = myNewton(f1, df1, x0, 1e-14, 100)
+    println("f1, x0=$x0:  x★=$x★, iters=$k")
+end
+
+# --- Test 2: cos(x) - x = 0, root ≈ 0.739085 ---
+f2(x)  = cos(x) - x
+df2(x) = -sin(x) - 1
+
+for x0 in (0.0, 1.0, -5.0, 10.0)
+    x★, k, _ = myNewton(f2, df2, x0, 1e-14, 100)
+    println("f2, x0=$x0:  x★=$x★, iters=$k")
+end
+
+# --- Convergence history for f1, x0 = 2.0 ---
+x★, k, xs = myNewton(f1, df1, 2.0, 1e-14, 100)
+errs = abs.(xs .- x★)
+plot(0:k, errs, yscale=:log10, marker=:circle,
+     xlabel="k", ylabel="|x_k - x★|",
+     title="Newton convergence: x² - 2, x₀ = 2", legend=false)
+savefig(joinpath(mkpath("./assets"), "p_04.png"))
+#+end_src
+
+*** Observations
+
+- *Quadratic convergence.* For both equations, the error roughly squares each step: $|x_{k+1} - x^*| \approx C \, |x_k - x^*|^2$. On a log plot the error drops with doubling slope until machine precision saturates around $10^{-16}$.
+
+- *Sign of $x_0$ selects the root for $f_1$.* Newton on $x^2 - 2$ converges to $\sqrt{2}$ for $x_0 > 0$ and to $-\sqrt{2}$ for $x_0 < 0$. The iteration $x_{k+1} = (x_k + 2/x_k)/2$ preserves sign and is a contraction toward the same-sign root.
+
+- *Failure at $x_0 = 0$ for $f_1$.* $f_1'(0) = 0$, so the update divides by zero. The course problem doesn't ask to handle this, but it's worth noting since the instructions only guarantee the iteration "whenever $f'(x_k) \neq 0$".
+
+- *Robustness for $f_2$.* $f_2'(x) = -\sin(x) - 1 \in [-2, 0]$, vanishing only at $x = \pi/2 + 2\pi n$. Away from those points Newton converges to the unique root $x^* \approx 0.739085$ from essentially any reasonable $x_0$. Starting *at* one of those points triggers division by zero.
+
+- *Far-from-root behavior.* For $x_0 = 100$ on $f_1$, Newton spends several iterations roughly halving $x_k$ (the linearization is poor far from the root) before entering the quadratic regime. This is generic: quadratic convergence is a *local* phenomenon; the first few steps can be slow.

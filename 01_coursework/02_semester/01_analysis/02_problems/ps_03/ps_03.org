@@ -1,0 +1,277 @@
+#+title: Ps 03
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-03-20>
+#+lastmod: <2026-04-13 17:28>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Problem 1 :DONE:
+** Task
+#+begin_quote
+Consider the curve $f : [0, 1] \to \mathbb{R}^2$ given by
+
+$$f(t) = \begin{pmatrix} t \\ \frac{2}{3} t^{3/2} \end{pmatrix}$$
+
+Determine the length of $f$.
+#+end_quote
+
+** Solution
+We have
+
+$$f'(t) = \begin{pmatrix} 1 \\ t^{1/2} \end{pmatrix}$$
+
+Both components are continuous on $[0,1]$, so $f$ is $C^1$.
+
+By Theorem 16.4.7:
+
+\begin{align*}
+\ell(f) &= \int_0^1 \sqrt{|f_1'(t)|^2 + |f_2'(t)|^2} \, dt \\
+        &= \int_0^1 \sqrt{1 + t} \, dt \\
+        &= \left[ \frac{2}{3}(1+t)^{3/2} \right]_0^1 \\
+        &= \frac{2}{3}\bigl(2\sqrt{2} - 1\bigr).
+\end{align*}
+
+* Problem 2 :DONE:
+** Task
+#+begin_quote
+Write Julia code to approximate the length of a curve $f : [0, 1] \to \mathbb{R}^2$ by implementing two approaches:
+
+(a) Given a partition $P$ of $[0, 1]$, determine the polygonal length of $f$ along $P$.
+
+(b) Approximate the length integral by the mid-point rule.
+
+(c) Test and compare your code for several illustrative curves.
+#+end_quote
+
+** Solution
+
+*** (a) + (b) + (c)
+#+begin_src julia :results output :exports both :tangle julia/p_02_a.jl
+using Plots
+
+# distance
+d(x, y) = sqrt((x[1] - y[1])^2 + (x[2] - y[2])^2)
+
+# a
+function approach_a(f, P = range(0, 1, length=1000))
+    l = 0.0
+    for i in 1:(length(P) - 1)
+        l += d(f(P[i]), f(P[i+1]))
+    end
+    return l
+end
+
+# b
+function approach_b(f′, n=1000)
+    h = 1.0 / n
+    s = 0.0
+    for i in 0:(n-1)
+        mid = (i + 0.5) * h
+        v = f′(mid)
+        s += sqrt(v[1]^2 + v[2]^2) * h
+    end
+    return s
+end
+
+# curves
+f_1(t) = (cos(2π*t), sin(2π*t))
+f_2(t) = (t*cos(4π*t), t*sin(4π*t))
+f_3(t) = (t^2, t^3)
+f_4(t) = (t*cos(6π*t), t*sin(6π*t))
+
+# derivatives
+f_1′(t) = (-2π*sin(2π*t), 2π*cos(2π*t))
+f_2′(t) = (cos(4π*t) - 4π*t*sin(4π*t), sin(4π*t) + 4π*t*cos(4π*t))
+f_3′(t) = (2t, 3t^2)
+f_4′(t) = (cos(6π*t) - 6π*t*sin(6π*t), sin(6π*t) + 6π*t*cos(6π*t))
+
+function main()
+    curves = [(f_1, f_1′, "Unit circle"),
+              (f_2, f_2′, "Spiral 1"),
+              (f_3, f_3′, "Cusp curve"),
+              (f_4, f_4′, "Spiral 2")]
+
+    # print comparison
+    for (f, f′, name) in curves
+        a = approach_a(f)
+        b = approach_b(f′)
+        println("$name: polygonal = $a, midpoint = $b")
+    end
+
+    # plot each curve
+    ts = range(0, 1, length=500)
+    p = plot(layout=(2, 2), size=(900, 900), legend=false)
+    for (i, (f, _, name)) in enumerate(curves)
+        xs = [f(t)[1] for t in ts]
+        ys = [f(t)[2] for t in ts]
+        plot!(p[i], xs, ys, title=name, aspect_ratio=:equal)
+    end
+    savefig("./assets/p_02.png")
+end
+
+main()
+
+#+end_src
+
+#+RESULTS:
+#+begin_example
+d (generic function with 1 method)
+approach_a (generic function with 2 methods)
+approach_b (generic function with 2 methods)
+f_1 (generic function with 1 method)
+f_2 (generic function with 1 method)
+f_3 (generic function with 1 method)
+f_4 (generic function with 1 method)
+f_1′ (generic function with 1 method)
+f_2′ (generic function with 1 method)
+f_3′ (generic function with 1 method)
+f_4′ (generic function with 1 method)
+main (generic function with 1 method)
+Unit circle: polygonal = 6.283174951057152, midpoint = 6.283185307179473
+Spiral 1: polygonal = 6.431350516692413, midpoint = 6.43139630404216
+Cusp curve: polygonal = 1.4397098361890286, midpoint = 1.4397097024672785
+Spiral 2: polygonal = 9.534181365684656, midpoint = 9.534328513260087
+"/Users/ziro2173/personal/university/01_coursework/02_semester/01_analysis/02_problems/set_03/assets/p_02.png"
+#+end_example
+
+file:./assets/p_02.png
+
+* Problem 3 :DONE:
+** Task
+#+begin_quote
+Consider the curve $f : [0, 1] \to \mathbb{R}^2$ given by
+
+$$f(t) = \begin{pmatrix} t \cos(6\pi t) \\ t \sin(6\pi t) \end{pmatrix}$$
+
+(a) Determine the length of $f$ by your best effort (how many digits are you able to determine accurately?).
+
+(b) Write a Julia function, whose input is a curve $\gamma : [0, 1] \to \mathbb{R}^2$ and a point $t_0 \in [0, 1]$ that returns an (affine) linear function that approximates $\gamma$ in a neighborhood of $t_0$.
+
+(c) Visualize the affine linear approximation for $f$ and for several other different curves.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+Using previous code - 15 digits.
+
+$\ell(f) = 9.53418136568465 \ldots$
+
+*** (b) + (c)
+
+#+begin_src julia :results value :exports both :tangle julia/p_03.jl
+using Plots
+
+# tangent line approximation
+function tangent_line(γ, t₀, h=1e-7)
+    γ′ = (γ(t₀ + h) .- γ(t₀ - h)) ./ (2h)
+    p = γ(t₀)
+    return t -> (p[1] + γ′[1] * (t - t₀), p[2] + γ′[2] * (t - t₀))
+end
+
+# curves
+f_1(t) = (cos(2π*t), sin(2π*t))
+f_2(t) = (t*cos(4π*t), t*sin(4π*t))
+f_3(t) = (t^2, t^3)
+f_4(t) = (t*cos(6π*t), t*sin(6π*t))
+
+function main()
+    curves = [(f_1, "Unit circle"),
+              (f_2, "Spiral 1"),
+              (f_3, "Cusp curve"),
+              (f_4, "Spiral 2")]
+
+    t_points = [0.2, 0.5, 0.8]
+    ts = range(0, 1, length=500)
+    p = plot(layout=(2, 2), size=(900, 900), legend=false)
+
+    for (i, (γ, name)) in enumerate(curves)
+
+        # plot the curve
+        xs = [γ(t)[1] for t in ts]
+        ys = [γ(t)[2] for t in ts]
+        plot!(p[i], xs, ys, color=:blue, lw=2, title=name, aspect_ratio=:equal)
+
+        # plot tangent lines at selected points
+        for t₀ in t_points
+            pt = γ(t₀)
+            scatter!(p[i], [pt[1]], [pt[2]], color=:red, ms=5)
+            L = tangent_line(γ, t₀)
+            δ = 0.05
+            t_local = range(t₀ - δ, t₀ + δ, length=50)
+            lx = [L(t)[1] for t in t_local]
+            ly = [L(t)[2] for t in t_local]
+            plot!(p[i], lx, ly, color=:red, lw=1.5, linestyle=:dash)
+        end
+    end
+
+    savefig("./assets/p_03.png")
+end
+
+main()
+
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/university/01_coursework/02_semester/01_analysis/02_problems/set_03/assets/p_03.png
+
+file:./assets/p_03.png
+
+* Problem 4 :DONE:
+** Task
+#+begin_quote
+Consider the upper semicircle
+
+$$f : [0, \pi] \to \mathbb{R}^2, \qquad f(x) = \begin{pmatrix} \cos x \\ \sin x \end{pmatrix}$$
+
+and $\varphi : [0, 1] \to [0, \pi]$ given by $\varphi(t) = \pi t^2$. Let
+
+$$\gamma := f \circ \varphi$$
+
+(a) Determine the metric derivative of $\gamma$.
+
+(b) Compute the length of $\gamma$.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+\begin{align*}
+\gamma(t) &= \begin{pmatrix} \cos(\pi t^2) \\ \sin(\pi t^2)  \end{pmatrix} \\
+\gamma'(t) &= \begin{pmatrix} -\sin(\pi t^2) \cdot 2 \pi t \\ \cos(\pi t^2) \cdot 2 \pi t \end{pmatrix} \\
+\end{align*}
+
+*** (b)
+
+The length is the integral of the metric derivative:
+
+$$\ell(\gamma) = \int_0^1 \|\gamma'(t)\| \, dt$$
+
+Computing the norm:
+
+\begin{align*}
+\|\gamma'(t)\| &= \sqrt{(-\sin(\pi t^2) \cdot 2\pi t)^2 + (\cos(\pi t^2) \cdot 2\pi t)^2} \\
+&= \sqrt{4\pi^2 t^2 \sin^2(\pi t^2) + 4\pi^2 t^2 \cos^2(\pi t^2)} \\
+&= \sqrt{4\pi^2 t^2 \left(\sin^2(\pi t^2) + \cos^2(\pi t^2)\right)} \\
+&= \sqrt{4\pi^2 t^2} = 2\pi t
+\end{align*}
+
+since $t \geq 0$ on $[0,1]$. So the length is:
+
+\begin{align*}
+\ell(\gamma) = \int_0^1 2\pi t \, dt = 2\pi \cdot \frac{t^2}{2} \Big|_0^1 = \pi
+\end{align*}
+
+This is expected: $\gamma$ is a reparametrization of the upper semicircle $f$, which has length $\pi$. Reparametrization preserves length.

@@ -1,0 +1,454 @@
+#+title: Ps 07
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-03>
+#+lastmod: <2026-05-04 08:37>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Problem 1 :taylor_polynomial:multivariable_calculus:
+** Task
+#+begin_quote
+Let $f : (-\frac{1}{2}, \infty) \times (-\frac{1}{2}, \infty) \to \mathbb{R}$ be defined by
+
+\[ f(x, y) = \log(1 + x + y) \]
+
+(a) Determine the Taylor polynomial of order 3 of $f$ at $(0, 0)$.
+(b) Use your result to approximate $f(0.1, 0.1)$.
+(c) Plot heatmaps of $f$, of the Taylor polynomial of order 3, and of the difference of the two in $[0, 1]^2$.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+\begin{align*}
+f(x) &= \sum_{|\alpha| \le K} \frac{\partial^{\alpha} f(x_0)}{\alpha!} (x - x_0)^{\alpha} + o(\|x - x_0\|^{K})
+\end{align*}
+
+Since $f(x,y) = \log(1 + x + y)$ depends on $(x,y)$ only through $s = x + y$, all partials of equal total order coincide:
+
+\begin{align*}
+\partial_1 f &= \partial_2 f = \dfrac{1}{1 + x + y} \\
+\partial_1^2 f &= \partial_1 \partial_2 f = \partial_2^2 f = -\dfrac{1}{(1 + x + y)^2} \\
+\partial_1^3 f &= \partial_1^2 \partial_2 f = \partial_1 \partial_2^2 f = \partial_2^3 f = \dfrac{2}{(1 + x + y)^3} \\
+\end{align*}
+
+Evaluated at $(0,0)$:
+
+\begin{align*}
+f(0,0) &= 0 \\
+\partial_1 f(0,0) &= 1 \\
+\partial_1^2 f(0,0) &= -1 \\
+\partial_1^3 f(0,0) &= 2 \\
+\end{align*}
+
+Each term of $P_3$ has the form
+
+$$\mathrm{term}_{\alpha} = \dfrac{\partial^{\alpha} f(0,0)}{\alpha!} x^{\alpha_1} y^{\alpha_2}.$$
+
+Order $0$: $\alpha = (0,0)$, term $= 0$.
+
+Order $1$:
+
+- $\alpha = (1,0)$: $\dfrac{1}{1!\,0!}\, x = x$
+- $\alpha = (0,1)$: $\dfrac{1}{0!\,1!}\, y = y$
+
+Sum: $x + y$.
+
+Order $2$:
+
+- $\alpha = (2,0)$: $\dfrac{-1}{2!\,0!}\, x^2 = -\dfrac{1}{2}x^2$
+- $\alpha = (1,1)$: $\dfrac{-1}{1!\,1!}\, xy = -xy$
+- $\alpha = (0,2)$: $\dfrac{-1}{0!\,2!}\, y^2 = -\dfrac{1}{2}y^2$
+
+Sum: $-\dfrac{1}{2}x^2 - xy - \dfrac{1}{2}y^2 = -\dfrac{1}{2}(x+y)^2$.
+
+Order $3$:
+
+- $\alpha = (3,0)$: $\dfrac{2}{3!\,0!}\, x^3 = \dfrac{1}{3}x^3$
+- $\alpha = (2,1)$: $\dfrac{2}{2!\,1!}\, x^2 y = x^2 y$
+- $\alpha = (1,2)$: $\dfrac{2}{1!\,2!}\, x y^2 = x y^2$
+- $\alpha = (0,3)$: $\dfrac{2}{0!\,3!}\, y^3 = \dfrac{1}{3}y^3$
+
+Sum: $\dfrac{1}{3}x^3 + x^2 y + x y^2 + \dfrac{1}{3}y^3 = \dfrac{1}{3}(x+y)^3$.
+
+Hence,
+
+\begin{align*}
+P_3(x,y) &= (x + y) - \dfrac{1}{2}(x+y)^2 + \dfrac{1}{3}(x+y)^3.
+\end{align*}
+
+*** (b)
+
+\begin{align*}
+P_3(0.1, 0.1) &= (0.1+0.1) - \frac{1}{2}(0.1+0.1)^2 + \frac{1}{3}(0.1+0.1)^3 \\
+&= (0.2) - \frac{1}{2}(0.2)^2 + \frac{1}{3}(0.2)^3 \\
+&= 0.182\dot{6} \\
+\log(1.2) &\approx 0.18232 \\
+\end{align*}
+
+*** (c)
+
+#+begin_src julia :results value
+using Plots
+
+f(x, y) = log(1 + x + y)
+P3(x, y) = (x + y) - 1/2 * (x + y)^2 + 1/3 * (x + y)^3
+err(x, y) = f(x, y) - P3(x, y)
+
+xs = 0:0.01:1
+ys = 0:0.01:1
+
+cl = (0, P3(1, 1))
+
+p1 = heatmap(xs, ys, f,
+             title="f",
+             clim=cl,
+             aspect_ratio=1,
+             c=:viridis)
+
+p2 = heatmap(xs, ys, P3,
+             title="P3",
+             clim=cl,
+             aspect_ratio=1,
+             c=:viridis)
+
+p3 = heatmap(xs, ys, err,
+             title="f - P3",
+             aspect_ratio=1,
+             c=cgrad(:reds, rev=true))
+
+p4 = surface(xs, ys, f,
+             title="f vs P3",
+             c=:viridis,
+             alpha=0.7)
+
+surface!(p4, xs, ys, P3,
+         c=:viridis,
+         alpha=0.7)
+
+plot(p1, p2, p3, p4, layout=(2,2), size=(1200, 1200))
+
+mkpath("./assets")
+savefig("./assets/p_01_c.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_07/assets/p_01_c.png
+
+* Problem 2 :critical_points:hessian:gradient_descent:
+** Task
+#+begin_quote
+Consider the function $f : \mathbb{R}^2 \to \mathbb{R}$ defined by
+
+\[ f(x, y) = x^4 + y^4 - 2x^2 - 2y^2 \]
+
+(a) Compute the gradient $\nabla f(x, y)$.
+(b) Determine all critical points of $f$ and classify them as local minima, local maxima, or saddle points via the Hessian matrix.
+(c) Implement gradient descent for $f$ in Julia. Experiment with several starting values and describe which critical points the algorithm converges to.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+$$\nabla f(x,y) &= \begin{pmatrix} 4x^3 - 4x \\ 4y^3 - 4y \end{pmatrix}$$
+*** (b)
+
+\begin{align*}
+\nabla f(x,y) &= \begin{pmatrix} 4x(x^2 - 1) \\ 4y(y^2 - 1) \end{pmatrix}
+              = \begin{pmatrix} 4x(x + 1)(x - 1) \\ 4y(y + 1)(y - 1) \end{pmatrix} \\
+\nabla f(x,y) &= 0 \iff x \in \{-1, 0, 1\} \text{ and } y \in \{-1, 0, 1\}.
+\end{align*}
+
+Hence, 9 critical points:
+
+\begin{align*}
+P = \{-1, 0, 1\} \times \{-1, 0, 1\} = \left\{
+\begin{array}{ccc}
+(-1,-1), & (0,-1), & (1,-1) \\
+(-1, 0), & (0, 0), & (1, 0) \\
+(-1, 1), & (0, 1), & (1, 1)
+\end{array}
+\right\}.
+\end{align*}
+
+\begin{align*}
+\partial_1 f    &= 4x^3 - 4x   &  \partial_2 f    &= 4y^3 - 4y \\
+\partial_{11} f &= 12x^2 - 4   &  \partial_{22} f &= 12y^2 - 4 \\
+\partial_{21} f &= 0           &  \partial_{12} f &= 0
+\end{align*}
+
+\begin{align*}
+H_f (x,y) &=
+\begin{pmatrix}
+12x^2 - 4 & 0 \\
+0 & 12y^2 - 4 \\
+\end{pmatrix}
+\end{align*}
+
+Hence,
+
+\begin{align*}
+H_f(\pm 1, \pm 1) &= \begin{pmatrix} 8 & 0 \\ 0 & 8 \end{pmatrix} \quad \text{(local min)} \\
+H_f(0, 0) &= \begin{pmatrix} -4 & 0 \\ 0 & -4 \end{pmatrix} \quad \text{(local max)} \\
+H_f(\pm 1, 0) &= \begin{pmatrix} 8 & 0 \\ 0 & -4 \end{pmatrix} \quad \text{(saddle)} \\
+H_f(0, \pm 1) &= \begin{pmatrix} -4 & 0 \\ 0 & 8 \end{pmatrix} \quad \text{(saddle)}
+\end{align*}
+
+*** (c)
+
+#+begin_src julia :results value :exports both :tangle julia/p_2.jl
+using Plots
+
+f(x, y) = x^4 + y^4 - 2x^2 - 2y^2
+∇f(x, y) = [4x^3 - 4x, 4y^3 - 4y]
+
+function gd(x0; η=0.01, N=1000)
+    path = zeros(2, N);
+    path[:, 1] = x0
+    for k in 1:N-1
+        path[:, k+1] = path[:, k] .- η .* ∇f(path[1, k], path[2, k])
+    end
+    return path
+end
+
+starts = [[ 1.5,  1.7],
+          [-1.5,  1.7],
+          [-1.5, -1.7],
+          [ 1.5, -1.7],
+          [ 1.2,  0.05],
+          [-0.05, -1.2],
+          [ 1.5,  0.0]]
+
+xs = -2:0.05:2
+ys = xs
+
+contour(xs, ys, f, levels=50, c=:viridis, aspect_ratio=1, colorbar=false, size=(800, 800))
+
+for s in starts
+    p = gd(s)
+    plot!(p[1,:], p[2,:], lw=2, label=false)
+    scatter!([p[1,1]],   [p[2,1]],   c=:black, label=false)
+    scatter!([p[1,end]], [p[2,end]], c=:black, label=false)
+end
+
+mkpath("./assets")
+savefig("./assets/p_02_c.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_07/assets/p_02_c.png
+
+* Problem 3 :convex_function:normed_space:
+** Task
+#+begin_quote
+Let $V$ and $W$ be normed spaces and let $f_1, \ldots, f_n : V \to \mathbb{R}$ be convex. Prove that the following functions are also convex.
+
+(a) $\sum_{i=1}^{n} \alpha_i f_i$ for $\alpha_1, \ldots, \alpha_n \geq 0$.
+(b) $g : V \to \mathbb{R}$ given by $g(x) = \max_{i=1,\ldots,n} f_i(x)$.
+(c) If $A : W \to V$ is linear and $b \in V$, then $g : W \to \mathbb{R}$ given by
+
+\[ g(x) = f_1(Ax - b) \]
+
+is also convex.
+#+end_quote
+
+** Solution
+
+#+begin_quote
+*Definition 4.3.19* (convex function). A function $f : \mathbb{R} \rightarrow \mathbb{R}$ is called a convex if for all $x, y \in \mathbb{R}$ and all $t \in [0,1]$,
+
+$$f(tx + (1-t)y) \le tf(x) + (1-t)f(y)$$
+#+end_quote
+
+*** (a)
+
+Let $h = \sum_{i=1}^{n} \alpha_i f_i$ for $\alpha_1, \ldots, \alpha_n \ge 0$.
+
+By convexity of each $f_i$:
+
+$$f_i(tx + (1 - t)y) \le tf_i(x) + (1 - t)f_i(y)$$
+
+Since $\alpha_i \ge 0$, multiplying preserves the inequality:
+
+\begin{align*}
+\sum_{i=1}^n \alpha_i f_i(tx + (1 - t)y) &\le \sum_{i=1}^n \alpha_i t f_i(x) + \sum_{i=1}^n \alpha_i (1 - t) f_i(y) \\
+\sum_{i=1}^n \alpha_i f_i(tx + (1 - t)y) &\le t \sum_{i=1}^n \alpha_i f_i(x) + (1 - t) \sum_{i=1}^n \alpha_i f_i(y) \\
+h(tx + (1 - t)y) &\le t h(x) + (1 - t) h(y) \\
+\end{align*}
+
+*** (b)
+
+Let $g(x) = \max_{i=1}^n f_i(x)$.
+
+By definition of $g$, $\forall i$:
+
+$$f_i(x) \le g(x), \qquad f_i(y) \le g(y)$$
+
+Since $t, (1-t) \ge 0$, inequality preserves:
+
+$$tf_i(x) + (1-t)f_i(y) \le tg(x) + (1-t)g(y)$$
+
+Chaining with the convexity of $f_i$:
+
+\begin{align*}
+f_i(tx + (1-t)y) &\le tf_i(x) + (1-t)f_i(y) \\
+&\le tg(x) + (1-t)g(y) \\
+\end{align*}
+
+This holds $\forall i \in \{1, \ldots, n\}$, and the right-hand side is independent of $i$. Taking the max over $i$ on the left:
+
+$$g(tx + (1-t)y) = \max_{i=1,\ldots,n} f_i(tx + (1-t)y) \le tg(x) + (1-t)g(y)$$
+
+*** (c)
+
+Let $g : W \to \mathbb{R}$, $g(x) = f_1(Ax - b)$, with $A : W \to V$ linear and $b \in V$.
+
+For $x, y \in W$ and $t \in [0,1]$, using linearity of $A$:
+
+\begin{align*}
+A(tx + (1-t)y) - b &= tAx + (1-t)Ay - b \\
+                   &= tAx + (1-t)Ay - tb - (1-t)b \\
+                   &= t(Ax - b) + (1-t)(Ay - b) \\
+\end{align*}
+
+So $A(\cdot) - b$ preserves convex combinations. Applying convexity of $f_1$:
+
+\begin{align*}
+g(tx + (1-t)y) &= f_1\bigl(A(tx + (1-t)y) - b\bigr) \\
+               &= f_1\bigl(t(Ax - b) + (1-t)(Ay - b)\bigr) \\
+               &\le tf_1(Ax - b) + (1-t)f_1(Ay - b) \\
+               &= tg(x) + (1-t)g(y) \\
+\end{align*}
+
+* Problem 4 :gradient_descent:stochastic_gradient_descent:least_squares:
+** Task
+#+begin_quote
+Let $n = 1000$, $d = 3$, and define
+
+\[ a_i = \begin{pmatrix} 1 \\ t_i \\ t_i^2 \end{pmatrix}, \quad t_i = \frac{i}{n}, \quad x_{\text{true}} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} \]
+
+Set $b_i = a_i^\top x_{\text{true}}$ and consider
+
+\[ f(x) = \frac{1}{n} \sum_{i=1}^{n} (a_i^\top x - b_i)^2 \]
+
+(a) Show that
+
+\[ \nabla f(x) = \frac{2}{n} \sum_{i=1}^{n} (a_i^\top x - b_i) a_i \]
+
+(b) Implement the following three methods with
+
+\[ x_0 = 0, \quad \eta = 0.01, \quad N = 50000, \quad m = 8 \]
+
+\[ x_{k+1}^{\text{GD}} = x_k - \eta \nabla f(x_k) \tag{1} \]
+
+\[ x_{k+1}^{\text{SGD}} = x_k - \eta \, 2(a_{i_k}^T x_k - b_{ik}}) a_{i_k}, \quad i_k = 1 + (k \bmod n) \tag{2} \]
+
+\[ x_{k+1}^{\text{MB}} = x_k - \eta \, \frac{1}{m} \sum_{i \in B_k} 2(a_i^T x_k - b_i) a_i \tag{3} \]
+
+where
+
+\[ B_k = \{1 + (km + j \bmod n) : j = 0, \ldots, m-1\} \]
+
+(c) Plot $f(x_k)$ for all three methods.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+\begin{align*}
+\nabla f(x)
+&= \frac{1}{n} \sum_{i=1}^{n} \nabla (a_i^\top x - b_i)^2
+   && \text{(linearity)} \\
+&= \frac{1}{n} \sum_{i=1}^{n} 2(a_i^\top x - b_i)\, \nabla(a_i^\top x - b_i)
+   && \text{(chain rule)} \\
+&= \frac{2}{n} \sum_{i=1}^{n} (a_i^\top x - b_i)\, a_i,
+\end{align*}
+
+*** (b) + (c)
+
+#+begin_src julia :results value
+# (b)
+n = 1000
+d = 3
+eta = 0.01
+N = 50_000
+m = 8
+
+t = [i/n for i in 1:n]
+A = hcat(ones(n), t, t.^2)
+x_true = [1.0, 2.0, 3.0]
+b = A * x_true
+
+f(x) = sum((A*x - b).^2) / n
+
+function run_gd()
+    x = zeros(d)
+    hist = [f(x)]
+    for k in 1:N
+        grad = (2/n) * sum((A[i,:]'*x - b[i]) * A[i,:] for i in 1:n)
+        x = x - eta * grad
+        push!(hist, f(x))
+    end
+    hist
+end
+
+function run_sgd()
+    x = zeros(d)
+    hist = [f(x)]
+    for k in 1:N
+        i = 1 + (k % n)
+        a_i = A[i, :]
+        grad = 2 * (a_i' * x - b[i]) * a_i
+        x = x - eta * grad
+        push!(hist, f(x))
+    end
+    hist
+end
+
+function run_mb()
+    x = zeros(d)
+    hist = [f(x)]
+    for k in 1:N
+        indices = [1 + ((k*m + j) % n) for j in 0:m-1]
+        A_batch = A[indices, :]
+        b_batch = b[indices]
+        grad = (2/m) * A_batch' * (A_batch*x - b_batch)
+        x = x - eta * grad
+        push!(hist, f(x))
+    end
+    hist
+end
+
+hist_gd  = run_gd()
+hist_sgd = run_sgd()
+hist_mb  = run_mb()
+
+# (c)
+using Plots
+plot(0:N, hist_gd,  label="GD",  xlabel="iteration k", ylabel="f(x_k)",
+     yscale=:log10, lw=2)
+plot!(0:N, hist_sgd, label="SGD", lw=2)
+plot!(0:N, hist_mb,  label="MB (m=8)", lw=2)
+
+savefig("./assets/p_04_c.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_07/assets/p_04_c.png
+
+* Errors/Typos
+- Problem 3: "be a normed spaces" → "be normed spaces" (number disagreement)
+- Problem 4: equations (2) and (3) reference $y_{i_k}$ and $y_i$, but the variable defined in the setup is $b_i = a_i^\top x_{\text{true}}$ — should be $b_{i_k}$ and $b_i$ respectively

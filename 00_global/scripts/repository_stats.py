@@ -118,17 +118,17 @@ class RepoStats:
         except ValueError:
             return None, None
         parts = rel.parts
-        if len(parts) >= 3 and parts[0] == '01_bachelor':
+        if len(parts) >= 3 and parts[0] == '01_coursework':
             return parts[1], parts[2]
         return None, None
 
     def _is_lecture_file(self, filepath):
-        return '01_lectures' in str(filepath) or 'lecture_notes' in str(filepath)
+        return '01_material' in str(filepath) or 'lecture_notes' in str(filepath)
 
     def _exercise_set(self, filepath):
         parts = Path(filepath).parts
         for i, p in enumerate(parts):
-            if p == '02_exercises' and i + 1 < len(parts):
+            if p == '02_problems' and i + 1 < len(parts):
                 return parts[i + 1]
         return None
 

@@ -1,0 +1,235 @@
+#+title: Ps 06
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-04-26>
+#+lastmod: <2026-04-26 21:59>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Problem 1 :taylor_formula:multi_index:chain_rule:
+** Task
+#+begin_quote
+( ... used in the proof of the Taylor formula)
+
+(a) Suppose that $\alpha \in \mathbb{N}^n$ and $h \in \mathbb{R}^n$ such that $\|h\|_\infty \leq 1$. Prove that
+\[ |h^\alpha| \leq \|h\|_{\infty}^{|\alpha|} \]
+
+(b) Let $k \in \mathbb{N}$ and suppose that $f : \mathbb{R}^n \to \mathbb{R}$ is $k$ times continuously differentiable. For $x, x_0 \in \mathbb{R}^n$ and $h = x - x_0$, define
+
+\[ g : [-1, 1] \to \mathbb{R}, \quad g(t) := f(x_0 + th) \]
+
+For $j \in \{0, \ldots, k\}$ prove that $g$ is $k$ times continuously differentiable and
+
+\[ g^{(j)}(t) = \sum_{\substack{\alpha \in \mathbb{N}^n \\ |\alpha| = j}} \frac{j!}{\alpha!} (\partial^\alpha f)(x_0 + th)\, h^\alpha, \quad t \in [-1, 1] \]
+
+(hint: induction and chain rule)
+#+end_quote
+
+** Solution
+
+*** (a)
+
+Define
+
+$$|h^{\alpha}| = \prod_{i=1}^n |h_i|^{\alpha_i}, \quad \|h\|_\infty^{|\alpha|} = \prod_{i=1}^n \|h\|_{\infty}^{\alpha_i}$$
+
+As, $|h_i| \le \|h\|_{\infty}$,
+
+$$|h^{\alpha}| = \prod_{i=1}^n |h_i|^{\alpha_i} \le \prod_{i=1}^n \|h\|_{\infty}^{\alpha_i} = \|h\|_\infty^{|\alpha|}$$
+
+*** (b)
+
+*Setup.* For $k \in \mathbb{N}$, $f : \mathbb{R}^n \rightarrow \mathbb{R}, \, f \in C^k$. Let $x, x_0 \in \mathbb{R}^n, \, h = x - x_0$. Define $g : \left[ -1, 1 \right] \rightarrow \mathbb{R}, \, g(t) := f(x_0 + th)$.
+
+*Proposition.* for $j \in \{ 0, \ldots , k \}$:
+
+1. $g \in C^k$
+2. For such $j$, $g^{(j)}(t) = \sum_{|\alpha| = j} \frac{j!}{\alpha!} (\partial^\alpha f)(x_0 + th)\, h^\alpha$
+
+*Base case.* $j = 0$, only $\alpha = 0 \in \mathbb{N}^n$ contributes.
+
+\begin{align*}
+g^{(0)}(t) &= \sum_{|\alpha| = 0} \frac{0!}{0! \ldots 0!} (\partial_1^0 \ldots \partial_n^0 f)(x_0 + th) h_1^0 \ldots h_n^0 \\
+&= \frac{1}{1} f(x_0 + th) \cdot 1 \\
+&= f(x_0 + th) \\
+\end{align*}
+
+Holds.
+
+*Inductive hypothesis.*
+
+* Problem 2 :taylor_formula:hessian:gradient:
+** Task
+#+begin_quote
+Suppose $f : \mathbb{R}^n \to \mathbb{R}$ is twice continuously differentiable.
+
+(a) Prove that the Taylor formula centered at $x_0 \in \mathbb{R}^n$ of order 2 is
+\[ f(x) = f(x_0) + (\nabla f(x_0))^\top (x - x_0) + \frac{1}{2}(x - x_0)^\top H_f(x_0)(x - x_0) + o(\|x - x_0\|^2) \]
+
+(b) Implement and plot the Taylor approximation of $f$ of order 2 by a heatmap for the function
+\[ f : \mathbb{R}^2 \to \mathbb{R}, \quad f(x, y) = x^4 + y^4 + x^2 + y^2 \]
+#+end_quote
+
+** Solution
+
+*** (a)
+
+$$f(x) = \sum_{|\alpha| \le 2} \frac{\partial^\alpha f(x_0)}{\alpha!} (x - x_0)^\alpha + o(\|x - x_0\|^2) \quad (x \rightarrow x_0)$$
+
+* Problem 3 :local_extrema:gradient:
+** Task
+#+begin_quote
+Consider the function $f : \mathbb{R}^2 \to \mathbb{R}$,
+\[ f(x, y) = x^2 + y^2 + 2x + 4y \]
+
+(a) Determine all local extrema of $f$.
+
+(b) Plot $f$ in Julia by a heatmap to check your calculations in Part (a).
+#+end_quote
+
+** Solution
+
+*** (a)
+
+The function $f$ is twice continuously differentiable on $\mathbb{R}^2$. Compute the partial derivatives:
+
+$$\partial_1 f(x, y) = 2x + 2, \quad \partial_2 f(x, y) = 2y + 4.$$
+
+A critical point satisfies $\operatorname{grad} f(x, y) = 0$, i.e.
+
+\begin{align*}
+2x + 2 &= 0 \implies x = -1, \\
+2y + 4 &= 0 \implies y = -2.
+\end{align*}
+
+Hence $f$ has the unique critical point $x_0 = (-1, -2)$.
+
+The second-order partial derivatives are
+
+$$\partial_1 \partial_1 f = 2, \quad \partial_2 \partial_2 f = 2, \quad \partial_1 \partial_2 f = \partial_2 \partial_1 f = 0,$$
+
+so the Hessian matrix at $x_0$ is
+
+$$H_f(x_0) = \begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix}.$$
+
+For any $h = (h_1, h_2) \in \mathbb{R}^2 \setminus \{0\}$,
+
+$$h^\top H_f(x_0) h = 2 h_1^2 + 2 h_2^2 > 0,$$
+
+so $H_f(x_0)$ is positive definite. By Theorem 7.2.5(1), $x_0 = (-1, -2)$ is a strict local minimum, with
+
+$$f(-1, -2) = (-1)^2 + (-2)^2 + 2(-1) + 4(-2) = -5.$$
+
+Since $x_0$ is the only critical point and $H_f$ is positive definite on all of $\mathbb{R}^2$, $f$ has no other local extrema.
+
+*** (b)
+
+#+begin_src julia :results value :exports both :tangle julia/p_03.jl
+using Plots
+
+f(x, y) = x^2 + y^2 + 2x + 4y
+
+xs = range(-5, 3, length=200)
+ys = range(-6, 2, length=200)
+
+heatmap(xs, ys, (x, y) -> f(x, y), aspect_ratio=1,
+        xlabel="x", ylabel="y", title="f(x,y) = x² + y² + 2x + 4y")
+
+scatter!([-1], [-2], color=:red, label="min (-1,-2)")
+
+mkpath("./assets")
+savefig("./assets/p_03_b.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_06/assets/p_03_b.png
+
+* Problem 4 :local_extrema:quadratic_form:hessian:
+** Task
+#+begin_quote
+Consider the function $f : \mathbb{R}^2 \to \mathbb{R}$,
+
+\[ f(x, y) = x^2 + 3y^2 + 2xy \]
+
+(a) Determine all local extrema of $f$.
+
+(b) Plot $f$ in Julia by a heatmap to check your calculations in Part (a).
+#+end_quote
+
+** Solution
+
+*** (a)
+
+The function $f$ is twice continuously differentiable on $\mathbb{R}^2$. Compute the partial derivatives:
+
+$$\partial_1 f(x, y) = 2x + 2y, \quad \partial_2 f(x, y) = 6y + 2x.$$
+
+A critical point satisfies $\operatorname{grad} f(x, y) = 0$, i.e.
+
+From the system:
+
+\begin{align*}
+2x + 2y &= 0 \implies x = -y, \\
+6y + 2x &= 0 \implies x = -3y.
+\end{align*}
+
+Combining gives $-y = -3y$, hence $y = 0$ and $x = 0$. Thus $f$ has the unique critical point $x_0 = (0, 0)$.
+
+The second-order partial derivatives are
+
+$$\partial_1 \partial_1 f = 2, \quad \partial_2 \partial_2 f = 6, \quad \partial_1 \partial_2 f = \partial_2 \partial_1 f = 2,$$
+
+so the Hessian matrix at $x_0$ is
+
+$$H_f(x_0) = \begin{pmatrix} 2 & 2 \\ 2 & 6 \end{pmatrix}.$$
+
+For any $h = (h_1, h_2) \in \mathbb{R}^2 \setminus \{0\}$,
+
+\begin{align*}
+h^\top H_f(x_0) h &= 2 h_1^2 + 4 h_1 h_2 + 6 h_2^2 \\
+&= 2(h_1^2 + 2 h_1 h_2 + h_2^2) + 4 h_2^2 \\
+&= 2(h_1 + h_2)^2 + 4 h_2^2 > 0,
+\end{align*}
+
+since the sum vanishes only if $h_2 = 0$ and $h_1 + h_2 = 0$, i.e. $h = 0$. Hence $H_f(x_0)$ is positive definite. By Theorem 7.2.5(1), $x_0 = (0, 0)$ is a strict local minimum, with
+
+$$f(0, 0) = 0.$$
+
+Since $x_0$ is the only critical point and $H_f$ is constant and positive definite on all of $\mathbb{R}^2$, $f$ has no other local extrema.
+
+*** (b)
+
+#+begin_src julia :results value :exports both :tangle julia/p_04.jl
+using Plots
+
+f(x, y) = x^2 + 3y^2 + 2x*y
+
+xs = range(-4, 4, length=200)
+ys = range(-4, 4, length=200)
+
+heatmap(xs, ys, (x, y) -> f(x, y), aspect_ratio=1,
+        xlabel="x", ylabel="y", title="f(x,y) = x² + 3y² + 2xy")
+
+scatter!([0], [0], color=:red, label="min (0,0)")
+
+mkpath("./assets")
+savefig("./assets/p_04_b.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_06/assets/p_04_b.png
+
+* Errors/Typos
+- Problem 1(a): "$\|h\|^{|\alpha|}$" → "$\|h\|_\infty^{|\alpha|}$" (missing $\infty$ subscript on RHS; the natural bound from $|h_i| \leq \|h\|_\infty$ is in $\|h\|_\infty$)
+- Problem 1(b): "$x, x_0 \in \mathbb{R}$" → "$x, x_0 \in \mathbb{R}^n$" (required since $h = x - x_0 \in \mathbb{R}^n$)
+- Problem 2(a): "$x_0 \in \mathbb{R}$" → "$x_0 \in \mathbb{R}^n$"
+- Problem 2(a): "$(\nabla f(x_0))^\top (x - x_0)^\alpha$" → "$(\nabla f(x_0))^\top (x - x_0)$" (extraneous $\alpha$ exponent; no multi-index $\alpha$ is defined in this problem)

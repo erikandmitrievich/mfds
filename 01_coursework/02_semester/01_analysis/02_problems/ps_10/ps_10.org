@@ -1,0 +1,327 @@
+#+title: Ps 10
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-23>
+#+lastmod: <2026-05-26 19:15>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Problem 1 :newton_method:nonlinear_system:jacobian:
+** Task
+#+begin_quote
+Given $f : \mathbb{R}^2 \to \mathbb{R}^2$ by
+
+$$f(x, y) = \begin{pmatrix} x^2 + y^2 - 1 \\ x - y \end{pmatrix}$$
+
+(a) Determine all $(x, y)^\top \in \mathbb{R}^2$ such that $f(x, y) = 0$.
+
+(b) By using the initial vector $X_0 = (1, \frac{1}{2})^\top \in \mathbb{R}^2$, apply the Newton iteration twice by hand to compute $X_2$. How big is the error?
+#+end_quote
+
+** Solution
+*** (a)
+
+Setting $f(x, y) = 0$ gives $x^2 + y^2 = 1$ and $x = y$. Substituting:
+
+$$2x^2 = 1 \implies x = \pm\frac{1}{\sqrt{2}}$$
+
+So the solutions are $\left(\frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}\right)^\top$ and $\left(-\frac{1}{\sqrt{2}}, -\frac{1}{\sqrt{2}}\right)^\top$.
+
+*** (b)
+
+$$J_f(x, y) = \begin{pmatrix} 2x & 2y \\ 1 & -1 \end{pmatrix}$$
+
+**Iteration 1:**
+
+\begin{align*}
+X_0 &= \begin{pmatrix} 1 \\ 1/2 \end{pmatrix} \\
+f(X_0) &= \begin{pmatrix} 1/4 \\ 1/2 \end{pmatrix} \\
+J_f(X_0) &= \begin{pmatrix} 2 & 1 \\ 1 & -1 \end{pmatrix} \\
+[J_f(X_0)]^{-1} &= -\frac{1}{3} \begin{pmatrix} -1 & -1 \\ -1 & 2 \end{pmatrix} \\
+X_1 &= X_0 - [J_f(X_0)]^{-1} f(X_0) \\
+&= \begin{pmatrix} 1 \\ 1/2 \end{pmatrix} - \left[ -\frac{1}{3} \begin{pmatrix} -1 & -1 \\ -1 & 2 \end{pmatrix} \right] \begin{pmatrix} 1/4 \\ 1/2 \end{pmatrix} \\
+&= \begin{pmatrix} 3/4 \\ 3/4 \end{pmatrix}
+\end{align*}
+
+**Iteration 2:**
+
+\begin{align*}
+f(X_1) &= \begin{pmatrix} 1/8 \\ 0 \end{pmatrix} \\
+J_f(X_1) &= \begin{pmatrix} 3/2 & 3/2 \\ 1 & -1 \end{pmatrix} \\
+[J_f(X_1)]^{-1} &= -\frac{1}{3} \begin{pmatrix} -1 & -3/2 \\ -1 & 3/2 \end{pmatrix} = \begin{pmatrix} 1/3 & 1/2 \\ 1/3 & -1/2 \end{pmatrix} \\
+X_2 &= X_1 - [J_f(X_1)]^{-1} f(X_1) \\
+&= \begin{pmatrix} 3/4 \\ 3/4 \end{pmatrix} - \begin{pmatrix} 1/3 & 1/2 \\ 1/3 & -1/2 \end{pmatrix} \begin{pmatrix} 1/8 \\ 0 \end{pmatrix} \\
+&= \begin{pmatrix} 17/24 \\ 17/24 \end{pmatrix}
+\end{align*}
+
+**Error:**
+
+\begin{align*}
+\|X_2 - X^*_1\|_\infty &= \left| \frac{17}{24} - \frac{1}{\sqrt{2}} \right| \approx 0.00122 \\
+\|X_2 - X^*_1\|_2 &= \frac{17\sqrt{2}}{24} - 1 \approx 0.00173
+\end{align*}
+
+* Problem 2 :newton_method:numerical_methods:linear_system:
+** Task
+#+begin_quote
+Implement Newton's method numerically (use Julia's Linear Algebra package to solve a system of linear equations $Ax = b$ needed in each iteration by $A \backslash b$). Test your code for a few meaningful examples, in particular, solve the exercises above using your implementation.
+#+end_quote
+
+** Solution
+#+begin_src julia :results output :exports both :tangle julia/p_2.jl
+using LinearAlgebra, Test
+
+function newton(f, df, x_0, tol=1e-6, maxiter=50)
+    x_k = x_0
+    x_k1 = x_0
+    for i in 1:maxiter
+        x_k1 = x_k - (df(x_k) \ f(x_k))
+        if norm(x_k1 - x_k) < tol
+            return x_k1
+        end
+        x_k = x_k1
+    end
+    return x_k1
+end
+
+@testset "Problem 1" begin
+    f(v) = [v[1]^2 + v[2]^2 - 1, v[1] - v[2]]
+    J_f(v) = [2v[1] 2v[2]; 1 -1]
+    x_0 = [1.0, 0.5]
+    @test newton(f, J_f, x_0, 1e-6, 1) ≈ [0.75, 0.75]
+    @test newton(f, J_f, x_0, 1e-6, 2) ≈ [17/24, 17/24]
+end
+#+end_src
+
+#+RESULTS:
+: newton (generic function with 3 methods)
+: Test Summary: | Pass  Total  Time
+: Problem 1     |    2      2  0.3s
+
+* Problem 3 :newton_method:nonlinear_system:jacobian:
+** Task
+#+begin_quote
+Consider $f : \mathbb{R}^2 \to \mathbb{R}^2$ given by
+
+$$f(x, y) = \begin{pmatrix} x^2 - y \\ y^2 - x \end{pmatrix}$$
+
+(a) Find all solutions of $f(x, y) = 0$.
+
+(b) Determine all points where the Jacobian of $f$ is not invertible and visualize those points in Julia.
+
+(c) Investigate in Julia what happens when Newton's method is initialized near a point for which the Jacobian is not invertible.
+#+end_quote
+
+** Solution
+*** (a)
+
+Setting $f(x,y) = 0$ gives $x^2 = y$ and $y^2 = x$. Substituting $y = x^2$:
+
+$$x^4 - x = 0 \implies x(x-1)(x^2+x+1) = 0$$
+
+The only real roots are $x \in \{0, 1\}$. The corresponding $y = x^2$ yields the solutions:
+
+$$f(x,y) = 0 \iff (x,y)^\top \in \left\{ (0,0)^\top,\ (1,1)^\top \right\}$$
+
+*** (b)
+
+The Jacobian is:
+
+The Jacobian is
+
+$$J_f(x,y) = \begin{pmatrix} 2x & -1 \\ -1 & 2y \end{pmatrix}$$
+
+A $2 \times 2$ matrix is invertible iff its kernel is trivial. So $J_f(x,y)$ is not invertible iff there is $v = (a,b)^\top \neq 0$ with $J_f(x,y)\,v = 0$:
+
+\begin{align*}
+2x\,a - b &= 0 \\
+-a + 2y\,b &= 0
+\end{align*}
+
+Row 1 gives $b = 2x\,a$. Substituting into row 2:
+
+$$-a + 2y(2x\,a) = a(4xy - 1) = 0$$
+
+If $a = 0$, then $b = 2x \cdot 0 = 0$, so $v = 0$. A nonzero kernel vector therefore exists iff $4xy - 1 = 0$.
+
+$$J_f(x,y) \text{ not invertible} \iff 4xy = 1$$
+
+$J_f$ is not invertible on the hyperbola $4xy = 1$.
+
+#+begin_src julia :results value :exports both :tangle julia/p_3b.jl
+using Plots
+
+xs_pos = 0.01:0.001:5
+xs_neg = -5:0.001:-0.01
+
+p = plot(xs_pos, x -> 1/(4x),
+         label="4xy = 1",
+         color=:blue,
+         legend=:topright,
+         xlabel="x", ylabel="y",
+         title="Non-invertibility locus of J_f")
+
+plot!(p, xs_neg, x -> 1/(4x),
+      label="",
+      color=:blue)
+
+savefig(joinpath(mkpath("./assets"), "p_03_b.png"))
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_10/assets/p_03_b.png
+
+*** (c)
+
+On the diagonal $x = y$ Newton's iteration stays on the diagonal and reduces to scalar Newton for $g(x) = x^2 - x$. The singular point $x = 1/2$ is exactly the basin boundary:
+
+$$x_0 < 1/2 \implies x_k \to 0, \qquad x_0 > 1/2 \implies x_k \to 1$$
+
+A displacement across it flips the limit; started on the locus, the linear solve fails.
+
+#+begin_src julia :results output :exports both :tangle julia/p_3c.jl
+using LinearAlgebra, Printf
+
+function newton(f, df, x0, tol=1e-6, maxiter=100)
+    x = x0
+    for i in 1:maxiter
+        x_new = x - (df(x) \ f(x))
+        norm(x_new - x) < tol && return x_new
+        x = x_new
+    end
+    return x
+end
+
+f(v)  = [v[1]^2 - v[2], v[2]^2 - v[1]]
+Jf(v) = [2v[1] -1; -1 2v[2]]
+
+for d in (1e-1, 1e-2, 1e-3, 1e-4), s in (-1, 1)
+    x0 = [0.5 + s*d, 0.5 + s*d]
+    r  = round.(newton(f, Jf, x0), digits=6)
+    @printf("d=%-8g s=%+d  ->  [%6.3f, %6.3f]\n", d, s, r[1], r[2])
+end
+
+try
+    newton(f, Jf, [0.5, 0.5])
+catch e
+    println("on locus: ", e)
+end
+#+end_src
+
+#+RESULTS:
+#+begin_example
+newton (generic function with 3 methods)
+f (generic function with 1 method)
+Jf (generic function with 1 method)
+d=0.1      s=-1  ->  [-0.000, -0.000]
+d=0.1      s=+1  ->  [ 1.000,  1.000]
+d=0.01     s=-1  ->  [-0.000, -0.000]
+d=0.01     s=+1  ->  [ 1.000,  1.000]
+d=0.001    s=-1  ->  [-0.000, -0.000]
+d=0.001    s=+1  ->  [ 1.000,  1.000]
+d=0.0001   s=-1  ->  [-0.000, -0.000]
+d=0.0001   s=+1  ->  [ 1.000,  1.000]
+on locus: SingularException(2)
+#+end_example
+
+* Problem 4 :newton_method:convergence:gradient:
+** Task
+#+begin_quote
+Answer the following questions:
+
+1. What does the Newton iterations do for the linear system of equations $Ax - b = 0$, where $A \in \mathbb{R}^{n\times n}$ and $b \in \mathbb{R}^n$?
+
+2. Find a sequence $(x_k)_{k\in\mathbb{N}} \subset \mathbb{R}^n$ that converges linearly towards some $x^* \in \mathbb{R}^n$ but not quadratically.
+
+3. Find a sequence $(x_k)_{k\in\mathbb{N}} \subset \mathbb{R}^n$ that converges quadratically towards some $x^* \in \mathbb{R}^n$.
+
+4. Visualize the two aforementioned sequence in Julia by using suitable plots with logarithmic axis labels.
+
+5. Compute the gradient of $f(x) = \|Ax - b\|^2$ for $A \in \mathbb{R}^{n\times n}$ and $b \in \mathbb{R}^n$. Apply the Newton method to the gradient of $f$. What do you observe?
+#+end_quote
+
+** Solution
+*** 1.
+
+For $f(x) = Ax - b = 0$ with $A \in \mathbb{R}^{n \times n}$ invertible, the Jacobian is constant, $J_f(x) = A$. The Newton iteration is
+
+\begin{align*}
+x_{k+1} &= x_k - A^{-1}(Ax_k - b) \\
+        &= x_k - A^{-1}Ax_k + A^{-1}b \\
+        &= A^{-1}b
+\end{align*}
+
+So from any $x_0$, already $x_1 = A^{-1}b$: Newton converges in one step.
+
+*** 2.
+
+A sequence converges linearly to $x^*$ if $\|x_{k+1} - x^*\| \le C\|x_k - x^*\|$ for some fixed $C \in (0,1)$. Take $x_k = c^k \to 0$ for any $c \in (0,1)$:
+
+$$\|x_{k+1} - x^*\| = c^{k+1} = c \cdot c^k = C\|x_k - x^*\|$$
+
+*** 3.
+
+A sequence converges quadratically to $x^*$ if $\|x_{k+1} - x^*\| \le C\|x_k - x^*\|^2$ for some fixed $C > 0$. Take $x_k = c^{2^k} \to 0$ for any $c \in (0,1)$:
+
+$$\|x_{k+1} - x^*\| = c^{2^{k+1}} = \left(c^{2^k}\right)^2 = \|x_k - x^*\|^2$$
+
+*** 4.
+
+#+begin_src julia :results value :exports both :tangle julia/p_4_4.jl
+using Plots
+
+c  = 0.8
+ks = 0:20
+
+x_linear    = c .^ ks
+x_quadratic = filter(>(0), c .^ (2 .^ ks))
+
+p = plot(ks, x_linear,
+         label="linear: c^k",
+         xlabel="k", ylabel="x_k",
+         yscale=:log10,
+         marker=:circle)
+
+plot!(p, 0:length(x_quadratic)-1, x_quadratic,
+      label="quadratic: c^(2^k)",
+      marker=:circle)
+
+savefig(joinpath(mkpath("./assets"), "p_04_4.png"))
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_10/assets/p_04_4.png
+
+*** 5.
+
+\begin{align*}
+f(x) &= \|Ax - b\|^2 \\
+&= x^{\top} A^{\top} A x - 2b^{\top} Ax + \|b\|^2 \\
+\nabla f(x) &= 2A^{\top}Ax - 2A^{\top}b \\
+&= 2A^{\top}(Ax - b)
+\end{align*}
+
+Applying Newton to $g(x) = \nabla f(x)$, whose Jacobian is $J_g = 2A^{\top}A$:
+
+\begin{align*}
+x_{k+1} &= x_k - (2A^{\top}A)^{-1} \cdot 2A^{\top}(Ax_k - b) \\
+&= x_k - (A^{\top}A)^{-1}A^{\top}Ax_k + (A^{\top}A)^{-1}A^{\top}b \\
+&= (A^{\top}A)^{-1}A^{\top}b
+\end{align*}
+
+Newton converges in one step to $(A^{\top}A)^{-1}A^{\top}b$. If $A$ is invertible, $(A^{\top}A)^{-1}A^{\top} = A^{-1}$ and this reduces to $A^{-1}b$.
+
+* Time Estimates
+- Problem 1: ~30 min~
+- Problem 2: ~45 min~
+- Problem 3: ~40 min~
+- Problem 4: ~50 min~

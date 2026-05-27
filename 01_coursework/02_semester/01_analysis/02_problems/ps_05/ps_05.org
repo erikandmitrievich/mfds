@@ -1,0 +1,293 @@
+#+title: Ps 05
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-04-18>
+#+lastmod: <2026-04-19 19:28>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Problem 1 :extrema:saddle_point:gradient:
+** Task
+#+begin_quote
+Let $f : \mathbb{R}^{2n} \to \mathbb{R}$ be defined by $f(x, y) = \|x\|^2 - \|y\|^2$ for $x, y \in \mathbb{R}^n$ and $\|\cdot\|$ the standard norm in $\mathbb{R}^n$.
+
+(a) Determine all local extrema and all saddle points.
+
+(b) Visualize $f$ and $\nabla f$ in Julia for $n = 1$.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+Let $f : \mathbb{R}^{2n} \rightarrow \mathbb{R}, \quad f(x, y) = \|x\|^2 - \|y\|^2$ for $x, y \in \mathbb{R}^n$ and $\|\cdot\|$ the standard norm in $\mathbb{R}^n$.
+
+Hence,
+
+$$\nabla f(x, y) = (2x, -2y) = 0 \iff (x, y) = (0, 0)$$
+
+So $p = (0, 0) \in \mathbb{R}^{2n}$ is the unique critical point; $f(p) = 0$.
+
+Definitions:
+1. $p$ is a *local minimum* iff: $\exists \delta > 0 : \forall q \in B_{\delta}(p), f(q) \ge f(p)$.
+2. $p$ is a *local maximum* iff: $\exists \delta > 0 : \forall q \in B_{\delta}(p), f(q) \le f(p)$.
+3. $p$ is a *saddle* iff: $p$ is a critical point and neither (1) nor (2) holds.
+
+Thus,
+
+Fix $\delta > 0$. Choose $h \in \mathbb{R}^n : 0 < \|h\| < \delta$.
+
+Let $q := (h, 0_{\mathbb{R}^n}) \in \mathbb{R}^{2n}$. Hence, $\|q - p\| = \sqrt{\|h\|^2 + \|0\|^2} = \|h\| < \delta$, so $q \in B_{\delta}(p)$. $f(q) = \|h\|^2 - \|0\|^2 = \|h\|^2 > 0 = f(p)$. Thus, $p$ is not a local maximum.
+
+Let $q' := (0_{\mathbb{R}^n}, h) \in \mathbb{R}^{2n}$. Hence, $\|q' - p\| = \sqrt{\|h\|^2 + \|0\|^2} = \|h\| < \delta$, so $q' \in B_{\delta}(p)$. $f(q') = \|0\|^2 - \|h\|^2 = - \|h\|^2 < 0 = f(p)$. Thus, $p$ is not a local minimum.
+
+Hence, $p$ is a saddle. Since it is the unique critical point, $f$ has no local extrema, and $(0, 0)$ is the unique saddle point.
+
+*** (b)
+
+#+begin_src julia :results value :exports both :tangle julia/p_01.jl
+using Plots
+
+# f and ∇f ----------------------------
+f(x, y)     = x^2 - y^2
+gradf(x, y) = (2x, -2y)
+
+# p1 ----------------------------------
+xs = -10:0.05:10
+p1 = heatmap(xs, xs, f;
+             c = :RdBu,
+             aspect_ratio = 1,
+             xlims = (-10, 10), ylims = (-10, 10),
+             xlabel = "x", ylabel = "y",
+             title  = "Level sets and ∇f")
+
+xq   = -10:1:10
+pts  = [(x, y) for x in xq, y in xq]
+X    = vec([p[1] for p in pts])
+Y    = vec([p[2] for p in pts])
+UV   = [gradf(p...) for p in pts]
+U, V = vec(first.(UV)), vec(last.(UV))
+s    = 0.9 * step(xq) / maximum(hypot.(U, V))
+
+quiver!(p1, X, Y; quiver = (s .* U, s .* V), color = :black, linewidth = 1)
+scatter!(p1, [0], [0]; color = :black, ms = 5, msw = 0, label = false)
+
+# p2 ----------------------------------
+p2 = surface(xs, xs, f;
+             alpha  = 0.99,
+             color  = :RdBu,
+             camera = (30, 30),
+             xlabel = "x", ylabel = "y", zlabel = "z",
+             title  = "Graph of f")
+
+ts = range(-10, 10, length = 200)
+plot3d!(p2, ts, zeros(length(ts)),  ts.^2;  color = :red,  lw = 3, label = "f(t,0) = t²")
+plot3d!(p2, zeros(length(ts)), ts, -ts.^2;  color = :blue, lw = 3, label = "f(0,t) = -t²")
+scatter!(p2, [0], [0], [0];
+         color = :black, markerstrokecolor = :white, markerstrokewidth = 1.5,
+         ms = 6, label = "saddle")
+
+# plot --------------------------------
+plot(p1, p2; layout = (1, 2), size = (1200, 600))
+savefig("./assets/p_01_b.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/university/01_coursework/02_semester/01_analysis/02_problems/set_05/assets/p_01_b.png
+
+* Problem 2 :frechet_derivative:least_squares:normal_equations:
+** Task
+#+begin_quote
+Let $A \in \mathbb{R}^{m \times n}$ and $b \in \mathbb{R}^m$. We consider the loss function
+\[
+L : \mathbb{R}^n \to \mathbb{R}, \quad x \mapsto \|Ax - b\|^2
+\]
+
+(a) Compute the Fréchet derivative of $L$.
+
+(b) Show that $x \in \mathbb{R}^n$ is a global minimum if and only if
+\[
+A^* A x = A^{*}b
+\]
+
+(c) Implement the (affine) local approximation of $L$ in Julia.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+For $x, h \in \mathbb{R}^n$:
+
+$$L(x + h) = \|A(x + h) - b \|^2 = \|(Ax - b) + Ah \|^2$$
+
+Expanding via $\|u + v\|^2 = \|u\|^2 + 2\langle u, v \rangle + \|v\|^2$:
+
+$$L(x + h) = \|Ax - b\|^2 + 2\langle Ax - b, Ah \rangle + \|Ah\|^2$$
+
+Using the disjoint identity $\langle Ax - b, Ah \rangle = \langle A^{*}(Ax - b), h \rangle$:
+
+$$L(x + h) - L(x) = 2\langle A^{*}(Ax - b), h \rangle + \|Ah\|^2$$
+
+The map $h \rightarrow 2\langle A^{*}(Ax - b)$ is linear and bounded. The remainder satisfies:
+
+$$\frac{\|Ah\|^2}{\|h\|} \le \|A\|_{\mathrm{op}}^2 \|h\| \xrightarrow{h \rightarrow 0} 0$$
+
+So $\|Ah\|^2 = o(\|h\|)$ by Definition of Frechet derivative,
+
+$$\boxed{\,DL(x)[h] = 2\langle A^*(Ax - b),\, h\rangle, \qquad \nabla L(x) = 2A^*(Ax - b).\,}$$
+
+*** (b)
+
+Setting $y = x + h$ in the expansion of (a):
+
+$$L(y) - L(x) = 2\langle A^{*}(Ax - b), y - x \rangle + \|A(y - x)\|^2 \qquad (\star)$$
+
+$(\Leftarrow)$ Assume $A^{*}Ax = A^{*}b$, i.e. $A^{*}(Ax - b) = 0$. Then $(\star)$ gives
+
+$$L(y) - L(x) = \|A(y - x)\|^2 \ge 0 \quad \text{for all } y \in \mathbb{R}^n,$$
+
+so $x$ is a global minimum.
+
+$(\Rightarrow)$ Assume $x$ is a global minimum. Since $L$ is Fréchet differentiable, $DL(x) = 0$, hence
+
+$$\langle A^{*}(Ax - b), h \rangle = 0 \quad \text{for all } h \in \mathbb{R}^n.$$
+
+Taking $h = A^{*}(Ax - b)$ gives $\|A^{*}(Ax - b)\|^2 = 0$, so $A^{*}(Ax - b) = 0$, i.e. $A^{*}Ax = A^{*}b$. $\blacksquare$
+
+*** (c)
+
+The first-order Taylor approximation of $L$ at $x_0$ is
+
+$$\widehat{L}_{x_0}(x) = L(x_0) + DL(x_0)[x - x_0] = \|Ax_0 - b\|^2 + 2\langle A^{*}(Ax_0 - b), x - x_0 \rangle.$$
+
+#+begin_src julia :results output
+using LinearAlgebra, Random
+
+let
+    function affine_approx(A, b, x0, x)
+        r0 = A*x0 - b
+        g  = 2 * (A' * r0)
+        return dot(r0, r0) + dot(g, x - x0)
+    end
+
+    Random.seed!(42)
+    A  = randn(20, 3)
+    b  = randn(20)
+    x0 = randn(3)
+
+    L(x) = sum(abs2, A*x - b)
+
+    println(L(x0))
+    println(affine_approx(A, b, x0, x0))
+
+    dx = 1e-3 * randn(3)
+    println(L(x0 + dx) - affine_approx(A, b, x0, x0 + dx))
+    println(sum(abs2, A*dx))
+end
+#+end_src
+
+#+RESULTS:
+: 86.7136805598037
+: 86.7136805598037
+: 6.09536959785828e-5
+: 6.095369601422723e-5
+
+* Problem 3 :chain_rule:jacobian:composition:
+** Task
+#+begin_quote
+Consider the functions $f : \mathbb{R}^2 \to \mathbb{R}^2$ and $g : \mathbb{R}^2 \to \mathbb{R}$ given by
+\[
+f(x, y) = \begin{pmatrix} x^2 \\ y^2 \end{pmatrix}, \quad g(u, v) = u - v
+\]
+Compute $(g \circ f)'(x, y)$.
+#+end_quote
+
+** Solution
+
+\begin{align*}
+f'(x, y) &= \begin{pmatrix} 2x & 0 \\ 0 & 2y \end{pmatrix} \\
+g'(u, v) &= (1, -1) \\
+(g \circ f)'(x, y) &= (1, -1) \begin{pmatrix} 2x & 0 \\ 0 & 2y \end{pmatrix} \\
+&= (2x, -2y) \\
+\end{align*}
+
+* Problem 4 :jacobian:linear_approximation:
+** Task
+#+begin_quote
+Let $f : \mathbb{R}^2 \to \mathbb{R}^2$ be defined by
+\[
+f(x, y) = \begin{pmatrix} x y \\ x^2 + y^3 \end{pmatrix}
+\]
+
+(a) Compute the Jacobi matrix $J_f(x, y)$.
+
+(b) Evaluate $J_f(1, 1)$.
+
+(c) Determine the (affine) linear approximation of $f$ near the point $(1, 1)$.
+
+(d) Use this approximation to estimate $f(1.01, 0.98)$.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+Define $f_1(x, y) = xy, f_2(x, y) = x^2 + y^3$. Hence,
+
+\begin{align*}
+f(x, y) &= \begin{pmatrix} f_1 \\ f_2 \end{pmatrix} \\
+\implies J_f(x, y) &=
+\begin{pmatrix}
+\partial_x f_1  & \partial_y f_1 \\
+\partial_x f_2  & \partial_y f_2 \\
+\end{pmatrix} \\
+&= \begin{pmatrix} y & x \\ 2x & 3y^2 \end{pmatrix} \\
+\end{align*}
+
+*** (b)
+
+\begin{align*}
+J_f(x, y) &= \begin{pmatrix} y & x \\ 2x & 3y^2 \end{pmatrix} \\
+J_f(1, 1) &= \begin{pmatrix} 1 & 1 \\ 2 & 3 \end{pmatrix} \\
+\end{align*}
+
+*** (c)
+
+Linear approximation of $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ at $x_0$ is
+
+$$L_f(x) = f(x_0) + J_f(x_0) (x - x_0)$$
+
+Define $x_0 = (1, 1)$. Thus,
+
+\begin{align*}
+L_{f}(x, y) &=
+\begin{pmatrix} 1 \\ 2 \end{pmatrix} +
+\begin{pmatrix} 1 & 1 \\ 2 & 3 \end{pmatrix}
+\begin{pmatrix} x - 1 \\ y - 1 \end{pmatrix} \\
+\end{align*}
+
+*** (d)
+
+\begin{align*}
+L_{f}(x, y) &=
+\begin{pmatrix} 1 \\ 2 \end{pmatrix} +
+\begin{pmatrix} x - 1 + y - 1 \\ 2x - 2 + 3y - 3 \end{pmatrix} \\
+&=
+\begin{pmatrix} 1 \\ 2 \end{pmatrix} +
+\begin{pmatrix} x + y - 2 \\ 2x + 3y - 5 \end{pmatrix} \\
+&=
+\begin{pmatrix} x + y - 1 \\ 2x + 3y - 3 \end{pmatrix} \\
+L_{f}(1.01, 0.98) &= \begin{pmatrix} 1.01 + 0.98 - 1 \\ 2(1.01) + 3(0.98) - 3 \end{pmatrix} \\
+&= \begin{pmatrix} 0.99 \\ 1.96 \end{pmatrix} \\
+\end{align*}
+
