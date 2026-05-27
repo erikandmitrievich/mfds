@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-22>
-#+lastmod: <2026-05-22 18:12>
+#+lastmod: <2026-05-27 15:39>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -22,6 +22,169 @@ Draw the red-black trees that result after successively inserting the keys 41, 3
 #+end_quote
 
 ** Solution
+
+#+begin_src julia :results output
+mutable struct Node{T}
+    data::T
+    color::Symbol
+    left::Union{Node{T}, Nothing}
+    right::Union{Node{T}, Nothing}
+    parent::Union{Node{T}, Nothing}
+end
+
+mutable struct BinaryTree{T}
+    root::Union{Node{T}, Nothing}
+    BinaryTree{T}() where T = new{T}(nothing)
+end
+
+isred(n) = n !== nothing && n.color == :red
+
+function left_rotate(t::BinaryTree, n::Node)
+    y = n.right
+    n.right = y.left
+    (y.left !== nothing) && (y.left.parent = n)
+    y.parent = n.parent
+    if n.parent === nothing
+        t.root = y
+    elseif n === n.parent.left
+        n.parent.left = y
+    else
+        n.parent.right = y
+    end
+    y.left = n
+    n.parent = y
+end
+
+function right_rotate(t::BinaryTree, n::Node)
+    y = n.left
+    n.left = y.right
+    (y.right !== nothing) && (y.right.parent = n)
+    y.parent = n.parent
+    if n.parent === nothing
+        t.root = y
+    elseif n === n.parent.right
+        n.parent.right = y
+    else
+        n.parent.left = y
+    end
+    y.right = n
+    n.parent = y
+end
+
+function rb_insert_fixup!(t::BinaryTree, z::Node)
+    while isred(z.parent)
+        if z.parent === z.parent.parent.left
+            y = z.parent.parent.right
+            if isred(y)                        # case 1
+                z.parent.color = :black
+                y.color = :black
+                z.parent.parent.color = :red
+                z = z.parent.parent
+            else
+                if z === z.parent.right        # case 2
+                    z = z.parent
+                    left_rotate(t, z)
+                end
+                z.parent.color = :black        # case 3
+                z.parent.parent.color = :red
+                right_rotate(t, z.parent.parent)
+            end
+        else
+            y = z.parent.parent.left
+            if isred(y)                        # case 1
+                z.parent.color = :black
+                y.color = :black
+                z.parent.parent.color = :red
+                z = z.parent.parent
+            else
+                if z === z.parent.left         # case 2
+                    z = z.parent
+                    right_rotate(t, z)
+                end
+                z.parent.color = :black        # case 3
+                z.parent.parent.color = :red
+                left_rotate(t, z.parent.parent)
+            end
+        end
+    end
+    t.root.color = :black
+end
+
+function rb_insert!(t::BinaryTree{T}, key::T) where T
+    z = Node{T}(key, :red, nothing, nothing, nothing)
+    y, x = nothing, t.root
+    while x !== nothing
+        y = x
+        x = z.data < x.data ? x.left : x.right
+    end
+    z.parent = y
+    if y === nothing
+        t.root = z
+    elseif z.data < y.data
+        y.left = z
+    else
+        y.right = z
+    end
+    rb_insert_fixup!(t, z)
+    return t
+end
+
+function show_tree(n, prefix="", is_left=true)
+    n === nothing && return
+    if n.right !== nothing
+        show_tree(n.right, prefix * (is_left ? "│   " : "    "), false)
+    end
+    println(prefix * (is_left ? "└── " : "┌── ") *
+            "$(n.data)$(n.color == :red ? "R" : "B")")
+    if n.left !== nothing
+        show_tree(n.left, prefix * (is_left ? "    " : "│   "), true)
+    end
+end
+
+keys = [41, 38, 31, 12, 19, 8]
+t = BinaryTree{Int}()
+for k in keys
+    rb_insert!(t, k)
+    println("\n=== after inserting $k ===")
+    show_tree(t.root)
+end
+#+end_src
+
+#+RESULTS:
+#+begin_example
+=== after inserting 41 ===
+└── 41B
+
+=== after inserting 38 ===
+└── 41B
+    └── 38R
+
+=== after inserting 31 ===
+│   ┌── 41R
+└── 38B
+    └── 31R
+
+=== after inserting 12 ===
+│   ┌── 41B
+└── 38B
+    └── 31B
+        └── 12R
+
+=== after inserting 19 ===
+│   ┌── 41B
+└── 38B
+    │   ┌── 31R
+    └── 19B
+        └── 12R
+
+=== after inserting 8 ===
+│   ┌── 41B
+└── 38B
+    │   ┌── 31B
+    └── 19R
+        └── 12B
+            └── 8R
+#+end_example
 
 * Problem 74 :red_black_tree:tree_insertion:proof:
 ** Task
