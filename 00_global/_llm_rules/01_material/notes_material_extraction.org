@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-15>
-#+lastmod: <2026-05-24 14:04>
+#+lastmod: <2026-05-27 14:03>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -64,20 +64,27 @@ For EVERY item identified in the source, you must generate, in order: exactly on
 
 * EXTRACTION RULES (STRICT)
 
-** 1. Heading and Property Drawer
-The heading is exactly ~* <Type>: <Title>~ — the marker ~* ~, the type keyword (~Definition~, ~Proposition~, ~Lemma~, ~Corollary~, ~Theorem~), a colon, one space, the title. No padding, and **no number in the heading** — the number lives in the property drawer.
+** 1. Heading, Alignment, and Property Drawer
+The heading must consist of the marker ~* ~, the type keyword (~Definition~, ~Proposition~, ~Lemma~, ~Corollary~, ~Theorem~), a colon, padding spaces, and the title. There must be **no number in the heading** — the number lives in the property drawer.
+
+**Alignment Constraint**: Headers must be aligned with each other. Format the heading as the type of material, a colon, and then pad with spaces so the title name begins at a uniform column. Pad the space after the colon (e.g., using up to 13 spaces depending on the length of the material type) so the names align perfectly across different items.
+
+#+begin_example
+* Definition:  Leibniz Formula of the determinant
+* Lemma:       Laplace expansion
+#+end_example
 
 Immediately below the heading, with no blank line, comes a property drawer whose lines start at column 0:
 
 #+begin_example
-* Lemma: Compactness implies completeness
+* Lemma:       Compactness implies completeness
 :PROPERTIES:
 :CUSTOM_ID: lem:compactness-implies-completeness
 :LECTURE_REF: 10.3.2
 :END:
 #+end_example
 
-The drawer carries the item's identity (Rule 3). One blank line separates ~:END:~ from the body.
+The drawer carries the item's identity. One blank line separates ~:END:~ from the body.
 
 ** 2. Heading: Title
 Every heading must include a concise descriptive name after the colon. **This is critical.** If the source provides an explicit name, use it; otherwise invent a short, accurate one. Never leave the title blank, never use generic labels like "Result" or "Important lemma". Names should read as a table-of-contents entry that tells you at a glance what the item is about. The title is also the basis for the ~CUSTOM_ID~ slug (Rule 3), so it must describe the item's concept precisely.
