@@ -1,0 +1,142 @@
+#+title: Structure
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-27>
+#+lastmod: <2026-05-27 11:05>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Purpose
+
+Single source of truth for directory layout and file naming in this repository.
+
+- =tree.org= is a generated snapshot — the territory, not the rules.
+- This file records *what* the structure is *now* (the spec).
+- =00_global/_llm_rules/= holds task instructions for LLM-assisted work; it
+  references this file for naming and must not restate it.
+
+When this file and =scripts/validate_structure.py= disagree, one of them is
+wrong — fix it. They must not drift.
+
+* Naming rules — apply everywhere
+
+- Lowercase =snake_case=. ASCII only.
+- No spaces, no =&=, no quotes. Every name must survive shell globbing unquoted.
+- Numeric prefixes (=NN_=) pin sort order. They denote *parallel categories*,
+  not a sequence — =01_material= is not "before" =02_problems= in any real sense.
+- Zero-pad numbers to width two: =ps_01=, =lecture_07=, =p_03.png= — never
+  =ps_1= or =p_9.png=.
+- Leading =_= marks non-content: machinery directories and raw upstream files.
+  It sorts them to the top.
+- The =_source= suffix marks upstream, unedited input: =analysis_source.pdf=,
+  =ps_01_source.pdf=.
+
+* Top level
+
+#+begin_example
+00_global/        repo machinery — not course content
+01_coursework/    all study material
+                  (02_thesis/ reserved if a thesis ever needs its own tree)
+README.md         overview; links to this file
+LICENSE
+STRUCTURE.org     this file
+tree.org          generated snapshot — do not edit by hand
+#+end_example
+
+* 00_global/
+
+#+begin_example
+_archive/      repo meta-docs: history, rationale, reorganisation log
+_llm_rules/    task instructions for LLM-assisted work;
+               mirrors the course facet taxonomy below
+books/         reference textbooks, grouped by subject (NN_subject/)
+scripts/       repo tooling
+#+end_example
+
+* 01_coursework/
+
+Layout:
+
+#+begin_example
+01_coursework/NN_semester/NN_course/<facet>/
+#+end_example
+
+Semesters are =NN_semester=. Courses are =NN_course=
+(=00_steop=, =01_analysis=, =02_linear_algebra=, ...).
+
+** Course facets — the contract
+
+Every course directory contains exactly these facets:
+
+- =01_material/= — required
+- =02_problems/= — required
+- =03_exams/=    — present once the course has had exams
+
+No other directories at the course level.
+
+** 01_material/
+
+Flat. *No subdirectories.*
+
+- =ch_NN_slug.org=  — chapter-aligned notes, or
+- =slug.org=        — topic-aligned notes (e.g. =induction.org=)
+- =theorems.org=    — consolidated theorem index, if the course warrants one
+- =_<subject>_source.pdf= — the single upstream source document
+
+The semester-2 shape is canonical. The =lecture_org/= + =lecture_pdf/= format
+split and the =lecture_notes/= nesting are *deprecated* — retrofit older
+courses to the flat shape.
+
+** 02_problems/
+
+One directory per problem set:
+
+#+begin_example
+02_problems/ps_NN/
+    ps_NN.org           worked solutions (required)
+    ps_NN_source.pdf    the original problem sheet
+    ps_NN.ipynb         code — only when a problem needs it
+    assets/             images used by ps_NN.org; named p_NN[_x].png
+#+end_example
+
+Every problem set is a =ps_NN/= directory, even if it would hold a single
+file — the uniform shape is the point.
+
+** 03_exams/   [PROVISIONAL — ratify after the semester-2 exam period]
+
+Recommended shape per exam:
+
+#+begin_example
+03_exams/
+    00_resources/     past papers, official material, raw photos
+    01_plan/          preparation plan
+    02_preparation/   worked preparation material
+    03_revision/      final condensed revision
+#+end_example
+
+If a course has multiple distinct exams, split one level up:
+=03_exams/0N_<exam-name>/...= (cf. semester-1 STEOP's lecture/exercise exams).
+
+* Source vs derived files   [DECIDE]
+
+- =.org= and =.ipynb= are *source* — always tracked.
+- =_source.*= files are upstream input — always tracked.
+- =X.pdf= exported from =X.org= is *derived*. Recommendation: gitignore it and
+  rebuild on demand. If you instead choose to commit exports, commit them for
+  *every* =.org= — no partial coverage, which is the current inconsistent state.
+
+* Enforcement
+
+=scripts/validate_structure.py= checks the rules above. This file is the
+human-readable spec; the validator is the executable one. A change to the
+convention is not done until both are updated.
