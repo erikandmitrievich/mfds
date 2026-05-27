@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-27>
-#+lastmod: <2026-05-18 12:59>
+#+lastmod: <2026-05-27 13:31>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -612,7 +612,7 @@ is called the orthogonal projector onto $F$, and $x_F$ is called the orthogonal 
 
 *** DONE So orthogonal projection is a function such that loses $x_{F^{\bot}}$ component of domain $E$, and outputs in $F$?
 
-Yes, $P_{F}$ keeps the $F$ compnent and kills the $F^{\bot}$ component:
+Yes, $P_{F}$ keeps the $F$ component and kills the $F^{\bot}$ component:
 
 - $\mathrm{im}(P_F) = F$
 
@@ -751,6 +751,28 @@ $$[\omega]_{\mathcal{F}\mathcal{F}}\, \lambda = q.$$
 
 Since the $f_i$ are linearly independent, then $[\omega]_{\mathcal{F}\mathcal{F}}$ is invertible, and this leads to Eq. (2.20).
 #+end_proof
+
+** Questions
+
+*** DONE What is $[\omega]_{\mathcal{F}\mathcal{F}}^{-1}$?
+
+The Gram matrix of $\mathcal{F}$, inverted.
+
+$$[\omega]_{\mathcal{F}\mathcal{F}} = (\omega(f_i, f_j))_{i,j=1}^{p} \in \mathbb{R}^{p \times p}.$$
+
+Entry $(i,j)$ is the inner product of the $i$ -th and $j$ -th basis vectors of $F$.
+
+Why it appears: the projection condition $u - P_F(u) \perp F$ means
+
+$$\omega(u - P_F(u), f_i) = 0, \quad 1 \le i \le p.$$
+
+Expanding $P_F(u) = \sum_j \lambda_j f_j$:
+
+$$\omega(u, f_i) = \omega(P_F(u), f_i) = \omega\Bigl(\sum_j \lambda_j f_j,\, f_i\Bigr) = \sum_j \lambda_j\, \omega(f_j, f_i).$$
+
+Left side is $q_i$, right side is row $i$ of $[\omega]_{\mathcal{F}\mathcal{F}}$ times $\lambda$. Stacking all $p$ equations gives $[\omega]_{\mathcal{F}\mathcal{F}}\, \lambda = q$, hence $\lambda = [\omega]_{\mathcal{F}\mathcal{F}}^{-1}\, q$.
+
+Invertible because $\{f_1, \ldots, f_p\}$ are linearly independent. If $\mathcal{F}$ is orthonormal, $[\omega]_{\mathcal{F}\mathcal{F}} = I_p$ and the formula reduces to $\lambda_i = \omega(u, f_i)$.
 
 * Definition:  The supervised learning problem
 :PROPERTIES:
