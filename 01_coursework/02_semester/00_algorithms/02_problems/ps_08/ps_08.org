@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-22>
-#+lastmod: <2026-05-27 15:39>
+#+lastmod: <2026-05-27 15:51>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -193,6 +193,17 @@ Consider a red-black tree formed by inserting $n$ nodes with RB-INSERT. Argue th
 #+end_quote
 
 ** Solution
+
+- =RB-INSERT= colors every inserted node *red*, then =RB-INSERT-FIXUP= restores the red-black properties.
+- Suppose, for contradiction, the final tree has *no* red node — every node is black.
+  - By property 5, all root-to-NIL paths carry the same number of black nodes; with every node black, this count equals the path length.
+  - Hence every root-to-NIL path has identical length, so the tree is a *perfect* binary tree of some height $h$, giving $n = 2^h - 1$.
+- Track the last node inserted, $z$:
+  - $z$ enters the tree colored red, as a leaf.
+  - Since $n > 1$, the root was inserted before $z$, so $z$ is not the root.
+  - =RB-INSERT-FIXUP= recolors nodes only in its loop; Case 1 propagates redness *upward* (never destroys it), Cases 2–3 terminate with $z$ still red and $z.p$ black. The only post-loop action blackens *the root*.
+- So a red node can be eliminated only by the final root-blackening, which touches *one* node. Since $z \neq \text{root}$ and $z$ is red, the final tree retains at least one red node — contradicting the assumption.
+- Therefore any tree built by =RB-INSERT= with $n > 1$ has at least one red node. $\blacksquare$
 
 * Problem 75 :red_black_tree:tree_deletion:proof:
 ** Task
