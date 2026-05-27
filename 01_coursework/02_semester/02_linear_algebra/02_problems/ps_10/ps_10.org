@@ -1,0 +1,136 @@
+#+title: Ps 10
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-27>
+#+lastmod: <2026-05-27 11:53>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 3.17 :inner_product:orthonormal_basis:gram_schmidt:projection:
+** Task
+#+begin_quote
+(Application of orthogonal projection for a minimization problem) Our goal in this exercise is to approximate a cubic polynomial in a given interval using only polynomials of degree less or equal to 2. Specifically, we wish to find the polynomial $Q(x) = ax^2 + bx + c$ such that the value
+
+$$J[Q(x)] = \int_{-1}^{1} [x^3 - Q(x)]^2 \, dx$$
+
+attains the minimum.
+
+[GRAPHIC: Two side-by-side plots over the interval $[-1, 1]$. Left plot shows $x^3$ and $Q(x) = \frac{1}{10}(3x^2 + 6x + 4)$ with the area between them shaded. Right plot shows $x^3$ and $Q(x) = x$ with the area between them shaded. Caption: "Figure 3.1: The geometric interpretation of minimizing $J[Q(X)]$ is to find the appropriate $Q(x)$ such that the shaded area between $Q(x)$ and $x^3$ within the interval $x \in [-1, 1]$ is 'as small as possible'."]
+
+At a glance, this may seem to be an analysis exercise that involves very messy calculations, but we will see that we can use concepts such as inner product and orthogonality to convert it into a simple geometric exercise.
+
+(i) Let $\mathbb{E} = \mathbb{R}_3[X]$ be the real polynomials with degree less or equal to 3. We define the inner product
+
+$$\omega(f, g) = \int_{-1}^{1} p(x)q(x) \, dx.$$
+
+Give the matrix representation $[\omega]_{\mathcal{E}\mathcal{E}}$, where $\mathcal{E} = \{1, x, x^2, x^3\}$ is the standard basis on $\mathbb{E}$.
+
+(ii) Let $R(x) = x^3$, express $J[Q(x)]$ in terms of the norm $\|\cdot\|$ induced by the inner product.
+
+(iii) By definition we know that the polynomial $Q(x)$ belongs to the subspace $\mathbb{F} = \mathbb{R}_2[x]$ of real polynomials of degree less or equal to 2. Let $\mathcal{F} = \{1, x, x^2\}$ be the standard basis of $\mathbb{F}$, find an orthonormal basis $\mathcal{U}$ in $\mathbb{F}$ with respect to the inner product $\omega(\cdot, \cdot)$ by applying Gram-Schmidt orthogonalization on the basis $\mathcal{E}$.
+
+(iv) With the orthogonal basis $\mathcal{U}$, apply the result from ex. 2.14 to obtain the projection of $R(x)$ onto the subspace $\mathbb{F}$. Is this polynomial the one that minimizes $J[Q(x)]$?
+#+end_quote
+
+** Solution
+*** (i)
+
+*** (ii)
+
+*** (iii)
+
+*** (iv)
+
+* Problem 4.7 :determinant:matrix:polynomial:
+** Task
+#+begin_quote
+(Vandermonde Matrix and Vandermonde Polynomial) Let $n, m \in \mathbb{N}$ and $x = (x_0, x_1, \ldots, x_m) \in \mathbb{K}^{m+1}$, we define the /Vandermonde matrix/ as the $\mathbb{K}^{(m+1)\times(n+1)}$ matrix
+
+$$V(x) = \begin{pmatrix} 1 & x_0 & x_0^2 & \ldots & x_0^n \\ 1 & x_1 & x_1^2 & \ldots & x_1^n \\ 1 & x_2 & x_2^2 & \ldots & x_2^n \\ \vdots & \vdots & \vdots & \ddots & \vdots \\ 1 & x_m & x_m^2 & \ldots & x_m^n \end{pmatrix},$$
+
+where $x_j^k$ denotes the $k$ -th power of the scalar $x_j$.
+
+In the following parts we let $n = m$.
+
+(i) Prove that $\det V(x) = 0$ if and only if $x_i = x_j$ for some $i \neq j$.
+
+(ii) Using the previous result, show that $\det V(x)$ is divisible by $x_i - x_j$ for all $0 \leq i < j \leq n$. (**Indication:** the *Factor Theorem* states that if $f(x, y)$ and $g(y)$ are two polynomials, then $x - g(y)$ is a factor of $f(x, y)$ if and only if $f(g(y), y)$ is the zero polynomial.)
+
+(iii) Using the previous result and by comparing the degree of $\prod_{0 \leq i < j \leq m}(x_i - x_j)$ and $\det V(x)$, arrive at the result
+
+$$\det V(x) = C \cdot \prod_{0 \leq i < j \leq m} (x_i - x_j),$$
+
+where $C \in \mathbb{K}$ is some scalar.
+
+(iv) Conclude that $C = 1$, thus
+
+$$\det V(x) = \prod_{0 \leq i < j \leq m} (x_i - x_j).$$
+#+end_quote
+
+** Solution
+*** (i)
+
+*** (ii)
+
+*** (iii)
+
+*** (iv)
+
+* Problem 5.1 :eigenvalue:diagonalization:matrix:
+** Task
+#+begin_quote
+Let
+
+$$A = \begin{pmatrix} 3 & 0 & -1 \\ 2 & 4 & 2 \\ -1 & 0 & 3 \end{pmatrix} \quad \text{and} \quad B = \begin{pmatrix} 0 & 0 & -8 \\ 0 & 2 & 0 \\ 4 & 0 & 12 \end{pmatrix}.$$
+
+(i) Compute the characteristic polynomial of $A$ and $B$, and find their eigenvalues.
+
+(ii) Find the eigensubspaces associated to each eigenvalue.
+
+(iii) Are the matrices diagonalizable?
+
+(iv) Compute $A^n$ and $B^n$ for $n \in \mathbb{N}$.
+#+end_quote
+
+** Solution
+*** (i)
+
+*** (ii)
+
+*** (iii)
+
+*** (iv)
+
+* Problem 5.2 :eigenvalue:diagonalization:matrix:
+** Task
+#+begin_quote
+(Spectrm of a particular complex matrix I) For $n \in \mathbb{N}$, $\mathbb{K} = \mathbb{C}$, determine the eigenvalues and eigenspaces of $A \in \mathbb{C}^{2\times2}$:
+
+$$A = \begin{pmatrix} i & i & 0 & 0 & \ldots & 0 & 0 \\ 0 & i & i & 0 & \ldots & 0 & 0 \\ 0 & 0 & i & i & \ldots & 0 & 0 \\ 0 & 0 & 0 & i & \ddots & 0 & 0 \\ \vdots & \vdots & \vdots & \vdots & \ddots & \ddots & \vdots \\ 0 & 0 & 0 & 0 & \ldots & i & i \\ 0 & 0 & 0 & 0 & \ldots & 0 & i \end{pmatrix},$$
+
+where $i = \sqrt{-1}$.
+
+For which value(s) of $n$ is $A$ diagonalizable?
+#+end_quote
+
+** Solution
+
+* Errors/Typos
+- Problem 5.2: "Spectrm" → "Spectrum"
+- Problem 5.2: "$A \in \mathbb{C}^{2\times2}$" — the matrix is described as $n\times n$ by context, not $2\times2$
+
+* Time Estimates
+- Problem 3.17: ~60 min~
+- Problem 4.7: ~50 min~
+- Problem 5.1: ~45 min~
+- Problem 5.2: ~30 min~
