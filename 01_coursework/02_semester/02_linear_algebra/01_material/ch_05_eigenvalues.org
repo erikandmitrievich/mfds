@@ -1,0 +1,444 @@
+#+title: Ch 05 Eigenvalues
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-27>
+#+lastmod: <2026-05-27 14:15>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Definition:  Eigenvalue and eigenvector of an endomorphism
+:PROPERTIES:
+:CUSTOM_ID: def:eigenpair-endomorphism
+:LECTURE_REF: 5.1
+:END:
+
+Let $E$ be a $\mathbb{K}$ vector space and $f \in \mathcal{L}(E)$ be an endomorphism. We say that $(\lambda, x) \in \mathbb{K} \times E$ with $x \neq 0$ is an eigenpair of $f$ if and only if
+
+$$f(x) = \lambda x.$$
+
+The scalar $\lambda$ is called an eigenvalue and $x \neq 0$ is an eigenvector.
+
+** Questions
+
+* Proposition: Eigenpair characterization via matrix representation
+:PROPERTIES:
+:CUSTOM_ID: prop:eigenpair-matrix-repr
+:LECTURE_REF: 5.2
+:END:
+
+Let $E$ be a finite dimensional space, and $f \in \mathcal{L}(E)$. Then $(\lambda, x) \in \mathbb{K} \times E$ with $x \neq 0$ is an eigenpair of $f$ if and only if
+
+$$[f]_{\mathcal{E}}^{\mathcal{E}} [x]^{\mathcal{E}} = \lambda \, [x]^{\mathcal{E}}, \qquad \text{for any basis } \mathcal{E} \text{ of } E.$$
+
+#+begin_proof
+- ($\Rightarrow$) The result is simply due to the fact that the matrix representation of $f(x) = \lambda x$ is $[f(x)]^{\mathcal{E}} = [\lambda x]^{\mathcal{E}}$ and therefore $[f]_{\mathcal{E}}^{\mathcal{E}} [x]^{\mathcal{E}} = \lambda [x]^{\mathcal{E}}$.
+
+- ($\Leftarrow$) We have that $[f(x)]_{\mathcal{E}}^{\mathcal{E}} = [f]_{\mathcal{E}}^{\mathcal{E}} [x]^{\mathcal{E}} = \lambda [x]^{\mathcal{E}} = [\lambda x]^{\mathcal{E}}$. Therefore, since the coordinates are in bijection with the underlying elements (see /Proposition 1.17/), we deduce that $f(x) = \lambda x$.
+#+end_proof
+
+** Questions
+
+* Definition:  Eigenvalue and eigenvector of a matrix
+:PROPERTIES:
+:CUSTOM_ID: def:eigenpair-matrix
+:LECTURE_REF: 5.3
+:END:
+
+Given a matrix $A \in \mathbb{K}^{n \times n}$, we say that $(\lambda, x) \in \mathbb{K} \times \mathbb{K}^n$ with $x \neq 0$ is an eigenpair of $A$ if and only if
+
+$$Ax = \lambda x.$$
+
+If we fix a basis $\mathcal{E}$ of $E$, this is equivalent to saying that $(\lambda, \mathrm{Vec}_{\mathcal{E}}^{-1}(x)) \in \mathbb{K} \times E$ is an eigenpair of the associated endomorphism $f_A = \mathrm{Mat}_{\mathcal{E}}^{-1}(A)$ on a vector space $E$.
+
+** Questions
+
+* Corollary:   Similar matrices share eigenvalues with related eigenvectors
+:PROPERTIES:
+:CUSTOM_ID: cor:similar-matrices-eigenpairs
+:LECTURE_REF: 5.4
+:END:
+
+Let $A$ and $B \in \mathbb{K}^{n \times n}$ be two similar matrices such that $B = PAP^{-1}$ for an invertible matrix $P \in \mathbb{K}^{n \times n}$. Then, if $(\lambda, x) \in \mathbb{K} \times (\mathbb{K}^n \setminus \{0\})$ is an eigenpair of $A$, then $(\lambda, Px)$ is an eigenpair of $B$.
+
+#+begin_proof
+$Ax = \lambda x \iff PAx = \lambda Px \iff PAP^{-1}y = \lambda y$ for $y = Px$.
+#+end_proof
+
+** Questions
+
+* Definition:  Spectrum of an endomorphism and a matrix
+:PROPERTIES:
+:CUSTOM_ID: def:spectrum
+:LECTURE_REF: 5.5
+:END:
+
+The set of eigenvalues of an endomorphism $f \in \mathcal{L}(E)$ is called the spectrum and it is defined as
+
+$$\sigma(f) := \{\lambda \in \mathbb{K} \mid \det(f - \lambda \, \mathrm{Id}_E) = 0\}.$$
+
+Similarly, the spectrum of a matrix $A \in \mathbb{K}^{n \times n}$ is
+
+$$\sigma(A) := \{\lambda \in \mathbb{K} \mid \det(A - \lambda \, \mathrm{Id}_{\mathbb{K}^n}) = 0\}.$$
+
+** Questions
+
+* Lemma:       Characterizations of eigenvalues and vectors
+:PROPERTIES:
+:CUSTOM_ID: lem:eigenpair-characterizations
+:LECTURE_REF: 5.7
+:END:
+
+At the level of endomorphisms, the following are equivalent:
+
+\begin{align*}
+&(\lambda, x) \in \mathbb{K} \times (E \setminus \{0_E\}) \text{ is an eigenpair of } f \in \mathcal{L}(E) \\
+\iff\quad & (f - \lambda \, \mathrm{Id}_E) \text{ is not injective} \\
+\iff\quad & \ker(f - \lambda \, \mathrm{Id}_E) \neq \{0_E\} \\
+\iff\quad & \det(f - \lambda \, \mathrm{Id}_E) = 0
+\end{align*}
+
+The subspace
+
+$$V_\lambda^f := \ker(f - \lambda \, \mathrm{Id}_E) \subset E$$
+
+is called the eigensubspace of $f$ associated to the eigenvalue $\lambda$.
+
+The same holds at the level of matrices:
+
+\begin{align*}
+&(\lambda, x) \in \mathbb{K} \times (\mathbb{K}^n \setminus \{0_{\mathbb{K}^n}\}) \text{ is an eigenpair of } A \in \mathbb{K}^{n \times n} \\
+\iff\quad & (A - \lambda \, \mathrm{Id}_{\mathbb{K}^n}) \text{ is not injective} \\
+\iff\quad & \ker(A - \lambda \, \mathrm{Id}_{\mathbb{K}^n}) \neq \{0_{\mathbb{K}^n}\} \\
+\iff\quad & \det(A - \lambda \, \mathrm{Id}_{\mathbb{K}^n}) = 0
+\end{align*}
+
+The subspace
+
+$$V_\lambda^A := \ker(A - \lambda \, \mathrm{Id}_{\mathbb{K}^n}) \subset \mathbb{K}^n$$
+
+is called the eigensubspace of $A$ associated to the eigenvalue $\lambda$.
+
+** Questions
+
+* Lemma:       Characteristic polynomial and its properties
+:PROPERTIES:
+:CUSTOM_ID: lem:characteristic-polynomial
+:LECTURE_REF: 5.9
+:END:
+
+Let $E$ be an $n$ dimensional $\mathbb{K}$ vector space, $\mathcal{E}$ be a basis of $E$ and $f \in \mathcal{L}(E)$. The function
+
+$$p_f : \mathbb{K} \rightarrow \mathbb{K}$$
+
+$$t \mapsto p_f(t) := \det(f - t \, \mathrm{Id}_E) = \det([f]_{\mathcal{E}}^{\mathcal{E}} - t \, \mathrm{Id}_{\mathbb{K}^n})$$
+
+is a polynomial of degree $n$, called the characteristic polynomial of $f$. It has the following properties:
+
+1. $p_f$ is independent of the basis $\mathcal{E}$,
+
+2. The coefficients relative to $t^0$, $t^{n-1}$ and $t^n$ are $\det(f)$, $(-1)^{n-1} \mathrm{Tr}(f)$ and $(-1)^n$.
+
+3. It holds that
+
+   $$p_f(\lambda) = 0 \iff \lambda \text{ is an eigenvalue of } f.$$
+
+One can define in the same way the characteristic polynomial of a matrix $A \in \mathbb{K}^{n \times n}$, and it will have the same properties.
+
+#+begin_proof
+1. The mapping $p_f$ is a polynomial by direct application of /Proposition 4.6/. In addition, by /Definition 4.16/, $\det(f - t \, \mathrm{Id}_E) = \det([f]_{\mathcal{E}}^{\mathcal{E}} - t \, \mathrm{Id}_{\mathbb{K}^n})$ and the fact that this holds for any basis $\mathcal{E}$ was proven below /Definition 4.16/ (the argument was that for any two bases $\mathcal{E}$ and $\mathcal{F}$, $[f]_{\mathcal{E}}^{\mathcal{E}}$ and $[f]_{\mathcal{F}}^{\mathcal{F}}$ are similar matrices, and the determinant of such matrices has the same value).
+
+2. To derive the coefficient in front of $t^0$, observe that $p_f(0) = \det(f)$, which is the coefficient associated to $t^0$. To derive the coefficient in front of $t^{n-1}$, we develop
+
+   \begin{align*}
+   &\sum_{i=1}^{n} \det(-te_1 | \ldots | -te_{i-1} | a_i | -te_{i+1} | \ldots | -te_n) \\
+   =\;& (-t)^{n-1} \sum_{i=1}^{n} \det(e_1 | \ldots | e_{i-1} | a_i | e_{i+1} | \ldots | e_n) \\
+   =\;& (-t)^{n-1} \sum_{i=1}^{n} \det\!\left(e_1 | \ldots | e_{i-1} \Big| \sum_{k=1}^{n} a_{k,i} e_k \Big| e_{i+1} | \ldots | e_n\right) \\
+   =\;& (-t)^{n-1} \sum_{i=1}^{n} \sum_{k=1}^{n} a_{k,i} \det(e_1 | \ldots | e_{i-1} | e_k | e_{i+1} | \ldots | e_n) \\
+   =\;& (-t)^{n-1} \sum_{i=1}^{n} a_{i,i} \det(e_1 | \ldots | e_{i-1} | e_i | e_{i+1} | \ldots | e_n) \quad \text{(two identical columns make the det zero)} \\
+   =\;& \mathrm{Tr}(A)(-t)^{n-1}
+   \end{align*}
+
+3. The fact that eigenvalues are the roots of the characteristic polynomial holds directly by the definition (or by characterization Eq. (5.3)).
+#+end_proof
+
+** Questions
+
+* Corollary:   Characteristic polynomial for $n = 2$
+:PROPERTIES:
+:CUSTOM_ID: cor:char-poly-dim-two
+:LECTURE_REF: 5.10
+:END:
+
+For $n = 2$, $p_f(x) = x^2 - \mathrm{Tr}(f) x + \det(f)$.
+
+** Questions
+
+* Definition:  Diagonalizability of an endomorphism and a matrix
+:PROPERTIES:
+:CUSTOM_ID: def:diagonalizable
+:LECTURE_REF: 5.12
+:END:
+
+1. Let $E$ be an $n$ dimensional $\mathbb{K}$ vector space, and $f \in \mathcal{L}(E)$. We say that $f$ is diagonalizable if and only if there exists a basis $\mathcal{E}$ of $E$ made of eigenvectors of $f$.
+
+2. We say that a matrix $A \in \mathbb{K}^{n \times n}$ is diagonalizable if and only if there exists a basis $\mathcal{E}$ of $\mathbb{K}^n$ made of eigenvectors of $A$.
+
+** Questions
+
+* Lemma:       Diagonalizability via similarity to a diagonal matrix
+:PROPERTIES:
+:CUSTOM_ID: lem:diagonalizable-similar-diagonal
+:LECTURE_REF: 5.13
+:END:
+
+Let $\mathcal{B}$ be any basis of $E$:
+
+1. $f$ is diagonalizable if and only if $[f]_{\mathcal{B}}^{\mathcal{B}}$ is similar to a diagonal matrix.
+
+2. $A$ is diagonalizable if and only if it is similar to a diagonal matrix, namely, there exists an invertible matrix $P$ and a diagonal matrix $D \in \mathbb{K}^{n \times n}$ such that
+
+   $$A = PDP^{-1}$$
+
+#+begin_proof
+- ($\Rightarrow$) Suppose $f \in \mathcal{L}(E)$ is diagonalizable. Then there exists a basis $\mathcal{E}$ of $E$ made of eigenvectors of $f$. On that basis, $[f]_{\mathcal{E}}^{\mathcal{E}}$ is diagonal. By the change of basis formula, $[f]_{\mathcal{B}}^{\mathcal{B}} = [\mathrm{Id}]_{\mathcal{E}}^{\mathcal{B}} [f]_{\mathcal{E}}^{\mathcal{E}} [\mathrm{Id}]_{\mathcal{B}}^{\mathcal{E}}$, which means that $[f]_{\mathcal{E}}^{\mathcal{E}}$ and $[f]_{\mathcal{B}}^{\mathcal{B}}$ are similar.
+
+- ($\Leftarrow$) Suppose that $[f]_{\mathcal{B}}^{\mathcal{B}}$ is similar to a diagonal matrix. Then, there exists an invertible matrix $P$ and a diagonal matrix $D \in \mathbb{K}^{n \times n}$ such that $[f]_{\mathcal{B}}^{\mathcal{B}} = PDP^{-1}$. We define the set of vectors $\{e_1, \ldots, e_n\}$ of $E$ where $e_j$ is the vector whose coordinate representation in $\mathcal{E}$ is the $j$ th column of $P$. In other words, $e_j = \sum_{i=1}^{n} p_{i,j} b_i$ for all $1 \le j \le n$, and $[\mathrm{Id}]_{\mathcal{E}}^{\mathcal{B}} = P$. The set of vectors $\mathcal{E}$ is linearly independent since $P$ is invertible. They are therefore a basis of $E$. In addition, we have that $[f]_{\mathcal{B}}^{\mathcal{B}} = [\mathrm{Id}]_{\mathcal{E}}^{\mathcal{B}} D \, [\mathrm{Id}]_{\mathcal{B}}^{\mathcal{E}}$. Therefore $D = [\mathrm{Id}]_{\mathcal{B}}^{\mathcal{E}} [f]_{\mathcal{B}}^{\mathcal{B}} [\mathrm{Id}]_{\mathcal{E}}^{\mathcal{B}} = [f]_{\mathcal{E}}^{\mathcal{E}}$. From this equality, it follows that $f(e_i) = d_{i,i} e_i$ so the $e_i$ are eigenvectors of $f$ with eigenvalues $\lambda_i = d_{i,i}$. We have thus proven that there exists a basis $\mathcal{E}$ of $E$ made of eigenvectors of $f$, so $f$ is diagonalizable.
+#+end_proof
+
+** Questions
+
+* Definition:  Algebraic and geometric multiplicity
+:PROPERTIES:
+:CUSTOM_ID: def:algebraic-geometric-multiplicity
+:LECTURE_REF: 5.14
+:END:
+
+Let $\lambda$ be an eigenvalue of $f \in \mathcal{L}(E)$:
+
+1. The algebraic multiplicity of $\lambda$, denoted $m_\lambda$, is its multiplicity as a root of the characteristic polynomial $p_f$. It is the largest value $m$ such that $(X - \lambda)^m$ divides $p_f$.
+
+2. The geometric multiplicity of $\lambda$ is defined as the dimension of its eigenspace, $d_\lambda := \dim(V_\lambda^f)$.
+
+** Questions
+
+* Definition:  Stable subspace
+:PROPERTIES:
+:CUSTOM_ID: def:stable-subspace
+:LECTURE_REF: 5.15
+:END:
+
+Let $E$ be a vector space, $F$ be a subspace of $E$, and $f \in \mathcal{L}(E)$. We say that $F$ is stable under $f$ if and only if $f(F) \subset F$.
+
+** Questions
+* Theorem:     Stable subspace and characteristic polynomial divisibility
+:PROPERTIES:
+:CUSTOM_ID: thm:stable-subspace-char-poly-divisibility
+:LECTURE_REF: 5.16
+:END:
+
+If $F$ is a stable subspace of $f \in \mathcal{L}(E)$, then the characteristic polynomial $p_{f|_F}$ of the restriction $f|_F : F \rightarrow F$ divides the characteristic polynomial $p_f$ of $f$.
+
+#+begin_proof
+We take a basis $\mathcal{E} = \{e_1, \ldots, e_m, e_{m+1}, \ldots, e_n\}$ of $E$, with $\mathcal{F} = \{e_1, \ldots, e_m\}$ being a basis of the subspace $F$. Since $F$ is stable under $f$, for $1 \le j \le m$, $f(e_j)$ must be a linear combination of the vectors $\{e_1, \ldots, e_m\}$. Thus
+
+$$[f]_{\mathcal{E}}^{\mathcal{E}} = \begin{pmatrix} A & B \\ 0_{(n-m) \times m} & C \end{pmatrix}, \quad A \in \mathbb{K}^{m \times m},\ B \in \mathbb{K}^{m \times (n-m)},\ C \in \mathbb{K}^{(n-m) \times (n-m)}.$$
+
+Computing by blocks the characteristic polynomial $p_f(t) = \det([f]_{\mathcal{E}}^{\mathcal{E}} - t \, \mathrm{Id}_n)$ (see ex. 4.9), it follows that
+
+$$p_f(t) = \det([f]_{\mathcal{E}}^{\mathcal{E}} - t \, \mathrm{Id}_n) = \det(A - t \, \mathrm{Id}_m) \det(C - t \, \mathrm{Id}_{(n-m)}).$$
+
+However $A = [f|_F]_{\mathcal{F}}^{\mathcal{F}}$ since it is the matrix of the restriction of $f$ to $F$. Therefore $\det(A - t \, \mathrm{Id}_m) = p_{f|_F}(t)$, which implies that
+
+$$p_f(t) = p_{f|_F}(t) \det(C - t \, \mathrm{Id}_{(n-m)}).$$
+
+This shows that $p_{f|_F}$ divides $p_f$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Geometric multiplicity bounded by algebraic multiplicity
+:PROPERTIES:
+:CUSTOM_ID: thm:geometric-le-algebraic-multiplicity
+:LECTURE_REF: 5.17
+:END:
+
+For every eigenvalue $\lambda \in \mathbb{K}$ of an endomorphism $f \in \mathcal{L}(E)$, $d_\lambda \le m_\lambda$.
+
+#+begin_proof
+We apply /Theorem 5.16/ to the stable subspace $V_\lambda^f$ whose dimension is, by definition, the geometric multiplicity $d_\lambda$. Denoting $f_\lambda : V_\lambda^f \rightarrow V_\lambda^f$ the restriction of $f$ to $V_\lambda^f$, we observe that its characteristic polynomial is $p_{f_\lambda}(x) = (x - \lambda)^{d_\lambda}$. By /Theorem 5.16/, there exists $r \in \mathbb{P}[\mathbb{K}]$ such that $p_f(x) = p_{f_\lambda}(x) r(x)$. Now, the definition of the algebraic multiplicity of $\lambda$ is that it is the largest value $m_\lambda$ such that $(x - \lambda)^{m_\lambda}$ divides $p_f$. Therefore $d_\lambda \le m_\lambda$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Direct sum of eigenspaces for distinct eigenvalues
+:PROPERTIES:
+:CUSTOM_ID: thm:eigenspaces-direct-sum
+:LECTURE_REF: 5.18
+:END:
+
+Let $\{\lambda_1, \ldots, \lambda_k\}$ be a subset of distinct eigenvalues of $f \in \mathcal{L}(E)$, namely $\lambda_i \neq \lambda_j$, $1 \le i \neq j \le k$. Then $V_{\lambda_1}^f + \cdots + V_{\lambda_k}^f$ is in direct sum. As a consequence, if $x_1, \ldots, x_k$ are eigenvectors associated to $\lambda_1, \ldots, \lambda_k$ respectively, then they are linearly independent.
+
+#+begin_proof
+We proceed by induction. The base case $k = 1$ is trivially true.
+
+For $k > 1$, we assume that $V_{\lambda_1} + \cdots + V_{\lambda_{k-1}}$ is in direct sum. Our goal is to show that this implies that $V_{\lambda_1} + \cdots + V_{\lambda_k}$ is also in direct sum. For this, we will use point 2 of /Theorem 1.24/, and prove that if $0 = x_1 + \cdots + x_k$ with $x_i \in V_{\lambda_i}^f$ for $1 \le i \le n$, then $x_i = 0$. So let $x_i \in V_{\lambda_i}^f$ be such that $0 = x_1 + \cdots + x_k$. Then $x_k = -x_1 - \cdots - x_{k-1}$. Applying $f$ to this equality, and using that $f(x_k) = \lambda_k x_k$, we deduce that $\lambda_k x_k = -\lambda_1 x_1 - \cdots - \lambda_k x_{k-1}$. Since we also have that $f(x_i) = \lambda_i x_i$ for $1 \le i < k$, we also have that $\lambda_k x_k = -\lambda_k x_1 - \cdots - \lambda_{k-1} x_{k-1} = -\lambda_1 x_1 - \cdots - \lambda_{k-1} x_{k-1}$. Therefore
+
+$$(\lambda_1 - \lambda_k) x_1 + \cdots + (\lambda_{k-1} - \lambda_k) x_{k-1} = 0.$$
+
+By our induction hypothesis, $(\lambda_1 - \lambda_k) x_1, \ldots, (\lambda_{k-1} - \lambda_k) x_{k-1}$ are in direct sum. Therefore $(\lambda_i - \lambda_k) x_i = 0$ for $1 \le i \le k - 1$. Since the eigenvalues are all distinct, it follows that $x_1 = \cdots = x_{k-1} = 0$, and from one of the previous equalities this implies that $x_k = 0$ as well. This shows that $V_{\lambda_1} + \cdots + V_{\lambda_k}$ is in direct sum and we write $V_{\lambda_1} \oplus \cdots \oplus V_{\lambda_{k-1}}$.
+
+From our derivation, we directly obtain that if $x_1, \ldots, x_k$ are eigenvectors associated to $\lambda_1, \ldots, \lambda_k$ respectively, then they are linearly independent. Indeed, suppose that $c_1, \ldots c_k \in \mathbb{K}$ are such that $c_1 x_1 + \cdots + c_k x_k = 0$. Since the eigensubspaces are in direct sum, then $c_i x_i = 0$ for all $1 \le i \le k$, and since the $x_i \neq 0$ (because they are eigenvalues, and by definition they are nonzero), this implies that $c_i = 0$, thus proving linear independence.
+#+end_proof
+
+** Questions
+
+* Lemma:       Distinct eigenvalues imply diagonalizability
+:PROPERTIES:
+:CUSTOM_ID: lem:distinct-eigenvalues-diagonalizable
+:LECTURE_REF: 5.19
+:END:
+
+Let $f \in \mathcal{L}(E)$ be an endomorphism of an $n$ dimensional space. If $f$ has $n$ distinct eigenvalues $\lambda_1 \neq \lambda_2 \neq \ldots \neq \lambda_n$, then $f$ is diagonalizable.
+
+#+begin_proof
+This is the topic of ex. 5.14.
+#+end_proof
+
+** Questions
+
+* Theorem:     Diagonalization of an endomorphism
+:PROPERTIES:
+:CUSTOM_ID: thm:diagonalization-endomorphism
+:LECTURE_REF: 5.20
+:END:
+
+Let $f \in \mathcal{L}(E)$ be an endomorphism in an $n$ dimensional $\mathbb{K}$ vector space $E$ with characteristic polynomial $p_f \in \mathbb{P}_n[\mathbb{K}]$, and with $\sigma(f) = \{\lambda_1, \ldots, \lambda_k\}$ being the set of its eigenvalues. The following statements are equivalent:
+
+1. $f$ is diagonalizable, that is, there exists a basis $\mathcal{E}$ of eigenvalues of $f$ in which $[f]_{\mathcal{E}}^{\mathcal{E}}$ is diagonal.
+
+2. The characteristic polynomial can be written as
+
+   $$p_f(t) = (-1)^n (t - \lambda_1)^{m_{\lambda_1}} \cdots (t - \lambda_k)^{m_{\lambda_k}},$$
+
+   and the geometric multiplicity $m_{\lambda_i}$ is equal to the algebraic multiplicity $d_i = \dim(V_{\lambda_i}^f)$.
+
+3. $E$ can be expressed as a direct sum of eigenspaces, $E = V_{\lambda_1}^f \oplus \cdots \oplus V_{\lambda_k}^f$.
+
+#+begin_proof
+We will prove that $1 \Rightarrow 2 \Rightarrow 3 \Rightarrow 1$.
+
+$1 \Rightarrow 2$: We assume that there exists a basis $\mathcal{E}$ such that $[f]_{\mathcal{E}}^{\mathcal{E}}$ is diagonal. Up to re-indexing the basis elements, we cluster the identical eigenvectors in such a way that
+
+$$[f]_{\mathcal{E}}^{\mathcal{E}} = \mathrm{diag}(\underbrace{\lambda_1, \ldots, \lambda_1}_{m_{\lambda_1}\ \text{times}}, \ldots, \underbrace{\lambda_k, \ldots, \lambda_k}_{m_{\lambda_k}\ \text{times}}).$$
+
+We then directly obtain the factorized formula of the characteristic polynomial
+
+$$p_f(t) = \det([f]_{\mathcal{E}}^{\mathcal{E}} - t \, \mathrm{Id}) = (-1)^n \prod_{i=1}^{k} (t - \lambda_i)^{m_{\lambda_i}}.$$
+
+We next show that $d_{\lambda_i} = m_{\lambda_i}$ for $1 \le i \le k$. Since we know that $p_f$ is a polynomial of degree $n$, it holds that $n = m_{\lambda_1} + \cdots + m_{\lambda_k}$. Furthermore, we observe that the rank of the matrix $[f]_{\mathcal{E}}^{\mathcal{E}} - \lambda_i \, \mathrm{Id}$ is $n - m_{\lambda_i}$ since this matrix has exactly $m_{\lambda_i}$ zero columns. Therefore,
+
+$$d_{\lambda_i} = \dim(\ker(f - \lambda_i \, \mathrm{Id})) = \dim(E) - \mathrm{rank}(f - \lambda_i \, \mathrm{Id}) = n - (n - m_{\lambda_i}) = m_{\lambda_i}.$$
+
+$2 \Rightarrow 3$: We assume that point 2 holds. The factorization of $p_f$ gives us the roots $\lambda_1, \ldots, \lambda_k$ which, by /Lemma 5.9/, are eigenvalues of $f$. Since these roots have distinct values, /Lemma 5.19/ gives us the direct sum of eigenspaces $V_{\lambda_1}^f \oplus \cdots \oplus V_{\lambda_k}^f$. In addition,
+
+$$\dim(V_{\lambda_1}^f \oplus \cdots \oplus V_{\lambda_k}^f) = \dim(V_{\lambda_1}^f) + \cdots + \dim(V_{\lambda_k}^f) = d_{\lambda_1} + \cdots + d_{\lambda_k} = m_{\lambda_1} + \cdots + m_{\lambda_k} = n = \dim(E).$$
+
+Therefore $E = V_{\lambda_1}^f \oplus \cdots \oplus V_{\lambda_k}^f$.
+
+$3 \Rightarrow 1$: For every eigenspace $V_{\lambda_i}$, we can extract a basis of $d_{\lambda_i}$ linearly independent eigenvectors of $f$ associated to the eigenvalue $\lambda_i$. We call $\mathcal{E}_i = \{e_{i,1}, \ldots, e_{i,d_{\lambda_i}}\}$ the set of these eigenvectors. We then consider the union of all the eigenvectors, obtaining $\mathcal{E} = \cup_{i=1}^{k} \mathcal{E}_i$. This set has exactly $n$ vectors since $m_{\lambda_i} = d_{\lambda_i}$ for $1 \le i \le k$. Therefore, it forms a basis of $E$, and $[f]_{\mathcal{E}}^{\mathcal{E}}$ is diagonal.
+#+end_proof
+
+** Questions
+* Theorem:     Cayley-Hamilton
+:PROPERTIES:
+:CUSTOM_ID: thm:cayley-hamilton
+:LECTURE_REF: 5.21
+:END:
+
+Let $f \in \mathcal{L}(E)$. Then
+
+$$p_f(f) = 0_E, \qquad \text{and} \qquad p_f([f]_{\mathcal{E}}^{\mathcal{E}}) = 0_{\mathbb{K}^{n \times n}} \quad \text{for any basis } \mathcal{E} \text{ of } E.$$
+
+** Questions
+
+* Lemma:       Companion matrix and its characteristic polynomial
+:PROPERTIES:
+:CUSTOM_ID: lem:companion-matrix
+:LECTURE_REF: 5.22
+:END:
+
+The companion matrix to a monic polynomial
+
+$$p(X) = c_0 + c_1 X + \cdots + c_{n-1} X^{n-1} + X^n$$
+
+is the square $n \times n$ matrix
+
+$$C = \begin{pmatrix} 0 & 0 & 0 & \cdots & 0 & 0 & -c_0 \\ 1 & 0 & 0 & \cdots & 0 & 0 & -c_1 \\ 0 & 1 & 0 & \cdots & 0 & 0 & -c_2 \\ \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\ 0 & 0 & 0 & \cdots & 1 & 0 & -c_{n-2} \\ 0 & 0 & 0 & \cdots & 0 & 1 & -c_{n-1} \end{pmatrix}.$$
+
+This matrix is such that $p_C(X) = (-1)^n p(x)$.
+
+#+begin_proof
+Left as an exercise.
+#+end_proof
+
+** Questions
+
+* Lemma:       Cyclic subspaces
+:PROPERTIES:
+:CUSTOM_ID: lem:cyclic-subspaces
+:LECTURE_REF: 5.23
+:END:
+
+Let $E$ be an $n$ dimensional space, and let:
+
+1. $f \in \mathcal{L}(E)$, and $v \in E$.
+
+2. $1 \le k \le n$ be the smallest integer such that $\{v, f(v), f^2(v), \ldots, f^{k-1}(v)\}$ is a linearly independent set.
+
+3. $c_0, \ldots, c_{k-1} \in \mathbb{K}$ be such that
+
+   $$f^k(v) = -c_0 f^0(v) - c_1 f^1(v) - c_2 f^2(v) - \cdots - c_{k-1} f^{k-1}(v).$$
+
+The space
+
+$$Z(v, f) := \mathrm{span}\{f^0(v), f^1(v), f^2(v), \ldots, f^{k-1}(v)\}$$
+
+is called the cyclic subspace generated by $v$ and $f$, and
+
+$$m_v(X) := c_0 + c_1 X + \cdots + c_{k-1} X^{k-1} + X^k$$
+
+is a polynomial of degree $k$ called the $f$ annihilator of $v$. The following properties hold:
+
+1. $\dim(Z(v, f)) = k$ and $\mathcal{B} = \{f^0(v), f^1(v), f^2(v), \ldots, f^{k-1}(v)\}$ is a basis of $Z(v, f)$,
+
+2. $Z(v, f)$ is a stable subspace of $f$,
+
+3. $m_v(f)(v) = 0_E$.
+
+4. Let $f_v : Z(v, f) \rightarrow Z(v, f)$ be the restriction of $f$ onto $Z(v, f)$. Its matrix representation in $\mathcal{B}$ is the companion matrix of $m_v$, namely
+
+   $$[f_v]_{\mathcal{B}}^{\mathcal{B}} = \begin{pmatrix} 0 & 0 & 0 & \cdots & 0 & 0 & -c_0 \\ 1 & 0 & 0 & \cdots & 0 & 0 & -c_1 \\ 0 & 1 & 0 & \cdots & 0 & 0 & -c_2 \\ \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\ 0 & 0 & 0 & \cdots & 1 & 0 & -c_{k-2} \\ 0 & 0 & 0 & \cdots & 0 & 1 & -c_{k-1} \end{pmatrix} \quad \text{and} \quad p_{f_v}(X) = (-1)^k m_v(X).$$
+
+#+begin_proof
+1. The vectors $\{v, f(v), f^2(v), \ldots, f^{k-1}(v)\}$ are linearly independent since $k$ is the smallest integer for which we start having linear dependence. Therefore $\dim(Z(v, f)) = k$ and $\mathcal{B}$ is a basis of $Z(v, f)$.
+
+2. For every $z = \sum_{i=0}^{k-1} \alpha_i f^i(v) \in Z(v, f)$, we have that $f(z) = \sum_{i=1}^{k} \alpha_i f^i(v)$. Since $f^k(v) = \sum_{i=0}^{k-1} -c_i f^i(v)$, we have that $f(z) \in Z(v, f)$. This proves that $Z(v, f)$ is stable under $f$.
+
+3. We have that $m_v(f) := c_0 \, \mathrm{Id}_E + c_1 f + \cdots + c_{k-1} f^{k-1} + f^k$ and therefore $m_v(f)(v) := c_0 v + c_1 f(v) + \cdots + c_{k-1} f^{k-1}(v) + f^k(v) = 0_E$ thanks to Eq. (5.6).
+
+4. By definition of the matrix representation of $f_v$ in $\mathcal{B}$,
+
+   $$[f_v]_{\mathcal{B}}^{\mathcal{B}} = \left([f_v(v)]^{\mathcal{B}} \mid \ldots \mid [f_v(f^{k-1}(v))]^{\mathcal{B}}\right) = \left([f(v)]^{\mathcal{B}} \mid \ldots \mid [f^k(v)]^{\mathcal{B}}\right) = \begin{pmatrix} 0 & 0 & 0 & \cdots & 0 & 0 & -c_0 \\ 1 & 0 & 0 & \cdots & 0 & 0 & -c_1 \\ 0 & 1 & 0 & \cdots & 0 & 0 & -c_2 \\ \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots \\ 0 & 0 & 0 & \cdots & 1 & 0 & -c_{k-2} \\ 0 & 0 & 0 & \cdots & 0 & 1 & -c_{k-1} \end{pmatrix}.$$
+#+end_proof
+
+** Questions
