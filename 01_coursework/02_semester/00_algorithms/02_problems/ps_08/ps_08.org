@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-22>
-#+lastmod: <2026-05-29 15:38>
+#+lastmod: <2026-05-29 15:56>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -425,6 +425,288 @@ A node $x$ is inserted into a red-black tree with RB-INSERT and then is immediat
 #+end_quote
 
 ** Solution
+
+#+begin_src julia :results output
+mutable struct Node{T}
+    data::T
+    color::Symbol
+    left::Union{Node{T}, Nothing}
+    right::Union{Node{T}, Nothing}
+    parent::Union{Node{T}, Nothing}
+end
+
+mutable struct BinaryTree{T}
+    root::Union{Node{T}, Nothing}
+    BinaryTree{T}() where T = new{T}(nothing)
+end
+
+isred(n) = n !== nothing && n.color == :red
+
+function left_rotate(t::BinaryTree, n::Node)
+    y = n.right
+    n.right = y.left
+    (y.left !== nothing) && (y.left.parent = n)
+    y.parent = n.parent
+    if n.parent === nothing
+        t.root = y
+    elseif n === n.parent.left
+        n.parent.left = y
+    else
+        n.parent.right = y
+    end
+    y.left = n
+    n.parent = y
+end
+
+function right_rotate(t::BinaryTree, n::Node)
+    y = n.left
+    n.left = y.right
+    (y.right !== nothing) && (y.right.parent = n)
+    y.parent = n.parent
+    if n.parent === nothing
+        t.root = y
+    elseif n === n.parent.right
+        n.parent.right = y
+    else
+        n.parent.left = y
+    end
+    y.right = n
+    n.parent = y
+end
+
+function rb_insert_fixup!(t::BinaryTree, z::Node)
+    while isred(z.parent)
+        if z.parent === z.parent.parent.left
+            y = z.parent.parent.right
+            if isred(y)                        # case 1
+                z.parent.color = :black
+                y.color = :black
+                z.parent.parent.color = :red
+                z = z.parent.parent
+            else
+                if z === z.parent.right        # case 2
+                    z = z.parent
+                    left_rotate(t, z)
+                end
+                z.parent.color = :black        # case 3
+                z.parent.parent.color = :red
+                right_rotate(t, z.parent.parent)
+            end
+        else
+            y = z.parent.parent.left
+            if isred(y)                        # case 1
+                z.parent.color = :black
+                y.color = :black
+                z.parent.parent.color = :red
+                z = z.parent.parent
+            else
+                if z === z.parent.left         # case 2
+                    z = z.parent
+                    right_rotate(t, z)
+                end
+                z.parent.color = :black        # case 3
+                z.parent.parent.color = :red
+                left_rotate(t, z.parent.parent)
+            end
+        end
+    end
+    t.root.color = :black
+end
+
+function rb_insert!(t::BinaryTree{T}, key::T) where T
+    z = Node{T}(key, :red, nothing, nothing, nothing)
+    y, x = nothing, t.root
+    while x !== nothing
+        y = x
+        x = z.data < x.data ? x.left : x.right
+    end
+    z.parent = y
+    if y === nothing
+        t.root = z
+    elseif z.data < y.data
+        y.left = z
+    else
+        y.right = z
+    end
+    rb_insert_fixup!(t, z)
+    return t
+end
+
+function tree_minimum(n::Node)
+    while n.left !== nothing
+        n = n.left
+    end
+    return n
+end
+
+function rb_transplant!(t::BinaryTree, u::Node, v::Union{Node, Nothing})
+    if u.parent === nothing
+        t.root = v
+    elseif u === u.parent.left
+        u.parent.left = v
+    else
+        u.parent.right = v
+    end
+    if v !== nothing
+        v.parent = u.parent
+    end
+end
+
+function rb_delete_fixup!(t::BinaryTree, x::Union{Node, Nothing}, x_parent::Union{Node, Nothing})
+    while x !== t.root && !isred(x)
+        if x === x_parent.left
+            w = x_parent.right
+            if isred(w)
+                w.color = :black
+                x_parent.color = :red
+                left_rotate(t, x_parent)
+                w = x_parent.right
+            end
+            if !isred(w.left) && !isred(w.right)
+                w.color = :red
+                x = x_parent
+                x_parent = x.parent
+            else
+                if !isred(w.right)
+                    if w.left !== nothing; w.left.color = :black; end
+                    w.color = :red
+                    right_rotate(t, w)
+                    w = x_parent.right
+                end
+                w.color = x_parent.color
+                x_parent.color = :black
+                if w.right !== nothing; w.right.color = :black; end
+                left_rotate(t, x_parent)
+                x = t.root
+                x_parent = nothing
+            end
+        else
+            w = x_parent.left
+            if isred(w)
+                w.color = :black
+                x_parent.color = :red
+                right_rotate(t, x_parent)
+                w = x_parent.left
+            end
+            if !isred(w.right) && !isred(w.left)
+                w.color = :red
+                x = x_parent
+                x_parent = x.parent
+            else
+                if !isred(w.left)
+                    if w.right !== nothing; w.right.color = :black; end
+                    w.color = :red
+                    left_rotate(t, w)
+                    w = x_parent.left
+                end
+                w.color = x_parent.color
+                x_parent.color = :black
+                if w.left !== nothing; w.left.color = :black; end
+                right_rotate(t, x_parent)
+                x = t.root
+                x_parent = nothing
+            end
+        end
+    end
+    if x !== nothing
+        x.color = :black
+    end
+end
+
+function rb_delete!(t::BinaryTree, z::Node)
+    y = z
+    y_original_color = y.color
+    x = nothing
+    x_parent = nothing
+
+    if z.left === nothing
+        x = z.right
+        x_parent = z.parent # x might be nothing, track parent manually
+        rb_transplant!(t, z, z.right)
+    elseif z.right === nothing
+        x = z.left
+        x_parent = z.parent
+        rb_transplant!(t, z, z.left)
+    else
+        y = tree_minimum(z.right)
+        y_original_color = y.color
+        x = y.right
+        if y.parent === z
+            x_parent = y
+        else
+            x_parent = y.parent
+            rb_transplant!(t, y, y.right)
+            y.right = z.right
+            y.right.parent = y
+        end
+        rb_transplant!(t, z, y)
+        y.left = z.left
+        y.left.parent = y
+        y.color = z.color
+    end
+
+    if y_original_color == :black
+        rb_delete_fixup!(t, x, x_parent)
+    end
+end
+
+function find_node(n::Union{Node, Nothing}, key)
+    while n !== nothing && n.data != key
+        n = key < n.data ? n.left : n.right
+    end
+    return n
+end
+
+function show_tree(n, prefix="", is_left=true)
+    n === nothing && return
+    if n.right !== nothing
+        show_tree(n.right, prefix * (is_left ? "│   " : "    "), false)
+    end
+    println(prefix * (is_left ? "└── " : "┌── ") *
+            "$(n.data)$(n.color == :red ? "R" : "B")")
+    if n.left !== nothing
+        show_tree(n.left, prefix * (is_left ? "    " : "│   "), true)
+    end
+end
+
+# --- Counterexample Execution ---
+t = BinaryTree{Int}()
+
+rb_insert!(t, 10)
+rb_insert!(t, 20)
+
+println("=== Initial Tree ===")
+show_tree(t.root)
+
+println("\n=== After inserting 30 (Triggers Left-Rotate) ===")
+rb_insert!(t, 30)
+show_tree(t.root)
+
+println("\n=== After immediately deleting 30 ===")
+z = find_node(t.root, 30)
+rb_delete!(t, z)
+show_tree(t.root)
+
+println("\nConclusion: The resulting tree is structurally altered.")
+#+end_src
+
+#+RESULTS:
+#+begin_example
+=== Initial Tree ===
+│   ┌── 20R
+└── 10B
+
+=== After inserting 30 (Triggers Left-Rotate) ===
+│   ┌── 30R
+└── 20B
+    └── 10R
+
+=== After immediately deleting 30 ===
+└── 20B
+    └── 10R
+
+Conclusion: The resulting tree is structurally altered.
+#+end_example
 
 * Problem 79 :red_black_tree:range_query:algorithm_design:
 ** Task
