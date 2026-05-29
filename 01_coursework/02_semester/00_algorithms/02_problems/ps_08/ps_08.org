@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-22>
-#+lastmod: <2026-05-27 15:51>
+#+lastmod: <2026-05-29 14:55>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -194,16 +194,9 @@ Consider a red-black tree formed by inserting $n$ nodes with RB-INSERT. Argue th
 
 ** Solution
 
-- =RB-INSERT= colors every inserted node *red*, then =RB-INSERT-FIXUP= restores the red-black properties.
-- Suppose, for contradiction, the final tree has *no* red node — every node is black.
-  - By property 5, all root-to-NIL paths carry the same number of black nodes; with every node black, this count equals the path length.
-  - Hence every root-to-NIL path has identical length, so the tree is a *perfect* binary tree of some height $h$, giving $n = 2^h - 1$.
-- Track the last node inserted, $z$:
-  - $z$ enters the tree colored red, as a leaf.
-  - Since $n > 1$, the root was inserted before $z$, so $z$ is not the root.
-  - =RB-INSERT-FIXUP= recolors nodes only in its loop; Case 1 propagates redness *upward* (never destroys it), Cases 2–3 terminate with $z$ still red and $z.p$ black. The only post-loop action blackens *the root*.
-- So a red node can be eliminated only by the final root-blackening, which touches *one* node. Since $z \neq \text{root}$ and $z$ is red, the final tree retains at least one red node — contradicting the assumption.
-- Therefore any tree built by =RB-INSERT= with $n > 1$ has at least one red node. $\blacksquare$
+1. $z$ enters red, $z \neq \text{root}$ ($n > 1$)
+2. Cases 2/3 exits with $z$ red. Case 1 recolors $z.p, z.\text{uncle}, z.p.p$, never $z$. The terminal root-blackening touches only the root.
+3. Therefore, $z$ is red in the final tree.
 
 * Problem 75 :red_black_tree:tree_deletion:proof:
 ** Task
@@ -212,6 +205,65 @@ Argue that after RB-DELETE-FIXUP executes, the root of the tree must be black.
 #+end_quote
 
 ** Solution
+
+*Invariant.* The root is black at every loop iteration.
+
+*Base.* Root is black on entry (precondition).
+
+*Step.* Cases 2 and 3 touch only $x.p$, $w$, or $w$'s children — never the root. Cases 1 and 4 are the only ones that can rotate $x.p$ out of the root position; in both, the new root after $\mathrm{LEFT-ROTATE}(T, x.p)$ is $w$, and $w$ is black at that moment:
+
+- *Case 1:* line 5 sets $w$ black before the rotation.
+- *Case 4:* line 18 sets $w$ to $x.p$'s color; if $x.p$ is the root, the invariant says $x.p$ is black, so $w$ is black.
+
+*Conclusion.* Line 44 unconditionally blackens $x$. If $x = \mathrm{root}$, this blackens the root. Otherwise, the invariant gives a black root, and line 44 doesn't touch it.
+
+#+begin_example
+RB-DELETE-FIXUP(T, x)
+1   while x != T.root and x.color == BLACK
+2       if x == x.p.left                              // is x a left child?
+3           w = x.p.right                             // w is x's sibling
+4           if w.color == RED
+5               w.color = BLACK                       \
+6               x.p.color = RED                        | case 1
+7               LEFT-ROTATE(T, x.p)                    |
+8               w = x.p.right                         /
+9           if w.left.color == BLACK and w.right.color == BLACK
+10              w.color = RED                         \ case 2
+11              x = x.p                               /
+12          else
+13              if w.right.color == BLACK
+14                  w.left.color = BLACK              \
+15                  w.color = RED                      | case 3
+16                  RIGHT-ROTATE(T, w)                 |
+17                  w = x.p.right                     /
+18              w.color = x.p.color                   \
+19              x.p.color = BLACK                      | case 4
+20              w.right.color = BLACK                  |
+21              LEFT-ROTATE(T, x.p)                    |
+22              x = T.root                            /
+23      else // same as lines 3–22, but with "right" and "left" exchanged
+24          w = x.p.left
+25          if w.color == RED
+26              w.color = BLACK
+27              x.p.color = RED
+28              RIGHT-ROTATE(T, x.p)
+29              w = x.p.left
+30          if w.right.color == BLACK and w.left.color == BLACK
+31              w.color = RED
+32              x = x.p
+33          else
+34              if w.left.color == BLACK
+35                  w.right.color = BLACK
+36                  w.color = RED
+37                  LEFT-ROTATE(T, w)
+38                  w = x.p.left
+39              w.color = x.p.color
+40              x.p.color = BLACK
+41              w.left.color = BLACK
+42              RIGHT-ROTATE(T, x.p)
+43              x = T.root
+44  x.color = BLACK
+#+end_example
 
 * Problem 76 :red_black_tree:tree_deletion:proof:
 ** Task

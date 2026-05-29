@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-21>
-#+lastmod: <2026-05-21 18:12>
+#+lastmod: <2026-05-29 14:39>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -270,7 +270,7 @@ RB-INSERT-FIXUP(T, z)
 
 ** Overview
 
-- Deletion from an $n$-node red-black tree takes $O(\lg n)$ time, but is more complicated than insertion.
+- Deletion from an $n$ -node red-black tree takes $O(\lg n)$ time, but is more complicated than insertion.
 - Based on =TREE-DELETE=. Two auxiliary procedures are needed: a customized transplant (=RB-TRANSPLANT=) and a fixup (=RB-DELETE-FIXUP=).
 
 ** =RB-TRANSPLANT=
