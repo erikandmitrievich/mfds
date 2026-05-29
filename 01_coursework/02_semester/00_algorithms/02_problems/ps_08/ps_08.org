@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-22>
-#+lastmod: <2026-05-29 15:17>
+#+lastmod: <2026-05-29 15:38>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -361,10 +361,62 @@ RB-DELETE-FIXUP(T, x)
 * Problem 77 :red_black_tree:tree_deletion:proof:
 ** Task
 #+begin_quote
-Professor Baron worries that at the start of case 1 of RB-DELETE-FIXUP, the node $x.p$ might not be black. If $x.p$ is not black, then lines 5--6 are wrong. Show that $x.p$ must be black at the start of case 1, so that the professor does not need not be concerned.
+Professor Baron worries that at the start of case 1 of RB-DELETE-FIXUP, the node $x.p$ might not be black. If $x.p$ is not black, then lines 5-6 are wrong. Show that $x.p$ must be black at the start of case 1, so that the professor does not need not be concerned.
 #+end_quote
 
 ** Solution
+
+- Inside the loop body, ~x.color == BLACK~ by the loop guard.
+- The fixup loop invariant permits only one kind of property 4 violation: ~x~ red with ~x.p~ red. Since ~x~ is black here, that violation is absent, and property 4 holds globally at the start of case 1.
+- Case 1's trigger is ~w.color == RED~. By property 4 applied to ~w~'s parent ~x.p~, a red child forces ~x.p~ black. $\blacksquare$
+
+#+begin_example RB-DELETE-FIXUP
+RB-DELETE-FIXUP(T, x)
+1   while x != T.root and x.color == BLACK
+2       if x == x.p.left                              // is x a left child?
+3           w = x.p.right                             // w is x's sibling
+4           if w.color == RED
+5               w.color = BLACK                       \
+6               x.p.color = RED                        | case 1
+7               LEFT-ROTATE(T, x.p)                    |
+8               w = x.p.right                         /
+9           if w.left.color == BLACK and w.right.color == BLACK
+10              w.color = RED                         \ case 2
+11              x = x.p                               /
+12          else
+13              if w.right.color == BLACK
+14                  w.left.color = BLACK              \
+15                  w.color = RED                      | case 3
+16                  RIGHT-ROTATE(T, w)                 |
+17                  w = x.p.right                     /
+18              w.color = x.p.color                   \
+19              x.p.color = BLACK                      | case 4
+20              w.right.color = BLACK                  |
+21              LEFT-ROTATE(T, x.p)                    |
+22              x = T.root                            /
+23      else // same as lines 3–22, but with "right" and "left" exchanged
+24          w = x.p.left
+25          if w.color == RED
+26              w.color = BLACK
+27              x.p.color = RED
+28              RIGHT-ROTATE(T, x.p)
+29              w = x.p.left
+30          if w.right.color == BLACK and w.left.color == BLACK
+31              w.color = RED
+32              x = x.p
+33          else
+34              if w.left.color == BLACK
+35                  w.right.color = BLACK
+36                  w.color = RED
+37                  LEFT-ROTATE(T, w)
+38                  w = x.p.left
+39              w.color = x.p.color
+40              x.p.color = BLACK
+41              w.left.color = BLACK
+42              RIGHT-ROTATE(T, x.p)
+43              x = T.root
+44  x.color = BLACK
+#+end_example
 
 * Problem 78 :red_black_tree:tree_insertion:tree_deletion:
 ** Task
