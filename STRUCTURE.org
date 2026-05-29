@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-27>
-#+lastmod: <2026-05-27 11:05>
+#+lastmod: <2026-05-29 17:21>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -47,16 +47,15 @@ wrong — fix it. They must not drift.
 00_global/        repo machinery — not course content
 01_coursework/    all study material
                   (02_thesis/ reserved if a thesis ever needs its own tree)
-README.md         overview; links to this file
+README.md         overview
 LICENSE
 STRUCTURE.org     this file
-tree.org          generated snapshot — do not edit by hand
 #+end_example
 
 * 00_global/
 
 #+begin_example
-_archive/      repo meta-docs: history, rationale, reorganisation log
+_archive/      repo meta-docs: history, rationale, reorganisation log, tree.org
 _llm_rules/    task instructions for LLM-assisted work;
                mirrors the course facet taxonomy below
 books/         reference textbooks, grouped by subject (NN_subject/)
