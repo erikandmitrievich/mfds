@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-22>
-#+lastmod: <2026-05-29 14:55>
+#+lastmod: <2026-05-29 15:17>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -272,6 +272,91 @@ Argue that if in RB-DELETE both $x$ and $x.p$ are red, then property 4 is restor
 #+end_quote
 
 ** Solution
+
+- ~x~ is red, so the loop guard ~x != T.root and x.color == BLACK~ fails immediately and the body never runs.
+- Line 44 executes unconditionally: ~x.color = BLACK~.
+- This eliminates the red–red edge $(x.p, x)$; no other node is touched, so no new violation is introduced. $\blacksquare$
+
+*RB-Tree properties:*
+1. Every node is either red or black.
+2. The root is black.
+3. Every leaf (NIL) is black.
+4. If a node is red, then both its children are black.
+5. For each node, all simple paths from the node to descendant leaves contain the same number of black nodes.
+
+#+begin_example RB-DELETE
+RB-DELETE(T, z)
+1   y = z
+2   y-original-color = y.color
+3   if z.left == T.nil
+4       x = z.right
+5       RB-TRANSPLANT(T, z, z.right)         // replace z by its right child
+6   elseif z.right == T.nil
+7       x = z.left
+8       RB-TRANSPLANT(T, z, z.left)          // replace z by its left child
+9   else y = TREE-MINIMUM(z.right)           // y is z's successor
+10      y-original-color = y.color
+11      x = y.right
+12      if y != z.right                      // is y farther down the tree?
+13          RB-TRANSPLANT(T, y, y.right)     // replace y by its right child
+14          y.right = z.right                // z's right child becomes
+15          y.right.p = y                    //     y's right child
+16      else x.p = y                         // in case x is T.nil
+17      RB-TRANSPLANT(T, z, y)               // replace z by its successor y
+18      y.left = z.left                      // and give z's left child to y,
+19      y.left.p = y                         //     which had no left child
+20      y.color = z.color
+21  if y-original-color == BLACK             // if any red-black violations occurred,
+22      RB-DELETE-FIXUP(T, x)                //     correct them
+#+end_example
+
+#+begin_example RB-DELETE-FIXUP
+RB-DELETE-FIXUP(T, x)
+1   while x != T.root and x.color == BLACK
+2       if x == x.p.left                              // is x a left child?
+3           w = x.p.right                             // w is x's sibling
+4           if w.color == RED
+5               w.color = BLACK                       \
+6               x.p.color = RED                        | case 1
+7               LEFT-ROTATE(T, x.p)                    |
+8               w = x.p.right                         /
+9           if w.left.color == BLACK and w.right.color == BLACK
+10              w.color = RED                         \ case 2
+11              x = x.p                               /
+12          else
+13              if w.right.color == BLACK
+14                  w.left.color = BLACK              \
+15                  w.color = RED                      | case 3
+16                  RIGHT-ROTATE(T, w)                 |
+17                  w = x.p.right                     /
+18              w.color = x.p.color                   \
+19              x.p.color = BLACK                      | case 4
+20              w.right.color = BLACK                  |
+21              LEFT-ROTATE(T, x.p)                    |
+22              x = T.root                            /
+23      else // same as lines 3–22, but with "right" and "left" exchanged
+24          w = x.p.left
+25          if w.color == RED
+26              w.color = BLACK
+27              x.p.color = RED
+28              RIGHT-ROTATE(T, x.p)
+29              w = x.p.left
+30          if w.right.color == BLACK and w.left.color == BLACK
+31              w.color = RED
+32              x = x.p
+33          else
+34              if w.left.color == BLACK
+35                  w.right.color = BLACK
+36                  w.color = RED
+37                  LEFT-ROTATE(T, w)
+38                  w = x.p.left
+39              w.color = x.p.color
+40              x.p.color = BLACK
+41              w.left.color = BLACK
+42              RIGHT-ROTATE(T, x.p)
+43              x = T.root
+44  x.color = BLACK
+#+end_example
 
 * Problem 77 :red_black_tree:tree_deletion:proof:
 ** Task
