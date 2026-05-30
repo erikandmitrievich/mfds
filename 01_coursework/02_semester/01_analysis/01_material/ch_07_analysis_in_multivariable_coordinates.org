@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-26>
-#+lastmod: <2026-05-26 11:36>
+#+lastmod: <2026-05-30 12:08>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -936,3 +936,84 @@ No. $f(x^{*}) = 0 \in \mathbb{R}^n$ is a vector, $f'(x^{*}) \in \mathbb{R}^{n \t
 *** DONE What is the point of the $\| x_{k+1} - x^* \| \le C \| x_k - x^* \|^2$?
 
 It shows how fast the error shrinks per iteration. The exponent 2 is the key: if $\|x_{k} - x^{*}\| = 10^{-3}$, then $\|x_{k+1} - x^{*}\| \le C \cdot 10^{-6}$.
+* Theorem:     Implicit Function Theorem
+:PROPERTIES:
+:CUSTOM_ID: thm:implicit-function
+:LECTURE_REF: 7.5.1
+:END:
+
+Let $U_1 \subset \mathbb{R}^n$ and $U_2 \subset \mathbb{R}^m$ be open sets, and let
+
+$$f : U_1 \times U_2 \rightarrow \mathbb{R}^m, \qquad (x, y) \mapsto f(x, y),$$
+
+be continuously differentiable. Suppose that
+
+$$f(a, b) = 0$$
+
+for some $(a, b) \in U_1 \times U_2$, and that the Jacobian matrix
+
+$$\frac{\partial f}{\partial y}(a, b) = \begin{pmatrix} \frac{\partial f_1}{\partial y_1} & \cdots & \frac{\partial f_1}{\partial y_m} \\ \vdots & \ddots & \vdots \\ \frac{\partial f_m}{\partial y_1} & \cdots & \frac{\partial f_m}{\partial y_m} \end{pmatrix}$$
+
+is invertible. Then there exist neighborhoods $V_1 \subset U_1$ of $a$ and $V_2 \subset U_2$ of $b$, together with a continuously differentiable map
+
+$$g : V_1 \rightarrow V_2,$$
+
+such that
+
+1. $f(x, g(x)) = 0$ for all $x \in V_1$,
+
+2. Moreover, for all $(x, y) \in V_1 \times V_2$,
+
+   $$f(x, y) = 0 \iff y = g(x).$$
+
+** Questions
+
+* Theorem:     Inverse Function Theorem
+:PROPERTIES:
+:CUSTOM_ID: thm:inverse-function
+:LECTURE_REF: 7.5.2
+:END:
+
+Let $U \subset \mathbb{R}^n$ be open and let $f : U \rightarrow \mathbb{R}^n$ be continuously differentiable. Suppose that $a \in U$ and that $f'(a)$ is invertible. Then there exist neighborhoods $U_0 \subset U$ of $a$ and $V_0 \subset \mathbb{R}^n$ of $b = f(a)$ such that $f : U_0 \rightarrow V_0$ is bijective and $f^{-1} : V_0 \rightarrow U_0$ is continuously differentiable with
+
+$$(f^{-1})'(b) = (f'(a))^{-1}.$$
+
+#+begin_proof
+Define $F : \mathbb{R}^n \times U \rightarrow \mathbb{R}^n$ according to
+
+$$F(x, y) = x - f(y).$$
+
+Then $F(f(a), a) = 0$ and $\frac{\partial F}{\partial y}(x, y) = -f'(y)$. Since $Df(a)$ is invertible, so is $\frac{\partial F}{\partial y}(f(a), a)$. By the Implicit Function Theorem, there exist neighborhoods
+
+$$V_1 \ni f(a), \qquad V_2 \ni a,$$
+
+and a continuously differentiable map $g : V_1 \rightarrow V_2$ such that (according to Part (i))
+
+$$F(x, g(x)) = 0.$$
+
+Hence $x - f(g(x)) = 0$, so that $f(g(x)) = x$ for all $x \in V_1$. We use Part (ii) to see that $(x, y) \in V_1 \times V_2$ with $F(x, y) = 0$ implies $y = g(x)$. Since then $x = f(y)$, we obtain $y = g(f(y))$. Hence, $g$ is the inverse of $f$ on suitable neighborhoods contained in $V_1$ and $V_2$.
+#+end_proof
+
+** Questions
+
+* Definition:  Submanifolds
+:PROPERTIES:
+:CUSTOM_ID: def:submanifold
+:LECTURE_REF: 7.5.3
+:END:
+
+A subset $M \subset \mathbb{R}^n$ is called a $k$ dimensional submanifold if for every $x_0 \in M$, there exist
+
+- an open neighborhood $U \subset \mathbb{R}^n$ of $x_0$,
+
+- a continuously differentiable function $g : U \rightarrow \mathbb{R}^r$ with $r = n - k$,
+
+such that
+
+$$M \cap U = \{ x \in U : g(x) = 0 \},$$
+
+and
+
+$$\text{rank}\, g'(x) = r \qquad \forall x \in M \cap U.$$
+
+** Questions
