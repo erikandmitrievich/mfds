@@ -1,0 +1,107 @@
+#+title: Ps 11
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-30>
+#+lastmod: <2026-05-30 12:05>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 1 :implicit_function_theorem:
+** Task
+#+begin_quote
+Let $U \subset \mathbb{R}^2$ be open and define
+$$f(x, y) = x^3 + x - 2y$$
+
+(a) Use the Implicit function Theorem to argue that near every point $(a, b) \in \mathbb{R}^2$ with $f(a, b) = 0$, the equation
+$$f(x, y) = 0$$
+defines $y$ as a continuously differentiable function $y = g(x)$.
+
+(b) Next, determine $g$.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+* Problem 2 :inverse_function_theorem:jacobian:
+** Task
+#+begin_quote
+Let
+$$f : \mathbb{R}^2 \to \mathbb{R}^2, \quad f(x_1, x_2) = \begin{pmatrix} e^{x_1} \cos x_2 \\ e^{x_1} \sin x_2 \end{pmatrix}$$
+
+(a) Compute $f'(x)$.
+
+(b) Show that $f'(x)$ is invertible for every $x \in \mathbb{R}^2$.
+
+(c) Use the inverse function theorem to conclude that $f$ is locally invertible near every point $x \in \mathbb{R}^2$.
+
+(d) Is $f$ globally injective on $\mathbb{R}^2$.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+*** (d)
+
+* Problem 3 :submanifold:tangent_space:normal_space:
+** Task
+#+begin_quote
+Let
+$$M_n = \{x \in \mathbb{R}^d : \|x\|_2 = 1\}$$
+
+(a) Show that $M_n$ is a $n-1$ -dimensional submanifold of $\mathbb{R}^n$.
+
+(b) Determine the tangent space $T_x(M_n)$ and the normal space $N_x(M_n)$ for all $x \in M_n$.
+
+(c) Visualize $M_2$, $T_x(M_2)$, and $N_x(M_2)$ in Julia for the point $x = (1, 0)^\top$.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+#+begin_src julia :results value :exports both :tangle julia/p_3c.jl
+#+end_src
+
+* Problem 4 :submanifold:jacobian:
+** Task
+#+begin_quote
+Let
+$$M = \{x \in \mathbb{R}^3 : g_1(x) = 0, g_2(x) = 0\}, \quad g_1(x) = x_1^2 + x_2^2 - 1, \quad g_2(x) = x_3 - x_1$$
+
+(a) Compute the Jacobian $g'(x)$ for $g = (g_1, g_2)^\top$.
+
+(b) Show that $M$ is a 1-dimensional submanifold of $\mathbb{R}^3$.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+* Errors/Typos
+- Problem 2: "Is $f$ globally injective on $\mathbb{R}^2$." → "Is $f$ globally injective on $\mathbb{R}^2$?"
+- Problem 3: "$M_n = \{x \in \mathbb{R}^d : \|x\|_2 = 1\}$" → "$M_n = \{x \in \mathbb{R}^n : \|x\|_2 = 1\}$" (dimension symbol mismatch between $d$ in the definition and $n$ used throughout the rest of the problem)
+
+* Time Estimates
+- Problem 1: ~15 min~
+- Problem 2: ~25 min~
+- Problem 3: ~30 min~
+- Problem 4: ~20 min~
