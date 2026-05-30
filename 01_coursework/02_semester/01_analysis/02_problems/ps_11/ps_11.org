@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-30>
-#+lastmod: <2026-05-30 12:05>
+#+lastmod: <2026-05-30 15:33>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -20,10 +20,13 @@
 ** Task
 #+begin_quote
 Let $U \subset \mathbb{R}^2$ be open and define
+
 $$f(x, y) = x^3 + x - 2y$$
 
 (a) Use the Implicit function Theorem to argue that near every point $(a, b) \in \mathbb{R}^2$ with $f(a, b) = 0$, the equation
+
 $$f(x, y) = 0$$
+
 defines $y$ as a continuously differentiable function $y = g(x)$.
 
 (b) Next, determine $g$.
@@ -32,7 +35,19 @@ defines $y$ as a continuously differentiable function $y = g(x)$.
 ** Solution
 *** (a)
 
+1. $f(x,y) = x^3 + x - 2y$ is a polynomial, hence $\mathcal{C}^{\infty}$, hence $\mathcal{C}^{1}$.
+
+2. Here $n = m = 1$. $\frac{\partial f}{\partial y} = -2$ ($1 \times 1$ matrix)
+
+3. $-2 \neq 0$, so $\frac{\partial f}{\partial y}(a,b)$ is invertible at every point.
+
+4. Therefore [[file:../../01_material/ch_07_analysis_in_multivariable_coordinates.org::#thm:implicit-function][Theorem 7.5.1]] applies at each point $(a,b)$ with $f(a,b) = 0$. Locally $y = g(x)$ exists and is $\mathcal{C}^1$.
+
 *** (b)
+
+$$x^3 + x - 2y = 0 \implies g(x) = \frac{x^3 + x}{2}$$
+
+defined and $\mathcal{C}^1$ on all of $\mathbb{R}$ — global, exceeding the IFT's local guarantee.
 
 * Problem 2 :inverse_function_theorem:jacobian:
 ** Task
