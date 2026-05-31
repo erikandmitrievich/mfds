@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-30>
-#+lastmod: <2026-05-30 15:33>
+#+lastmod: <2026-05-31 20:19>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -67,11 +67,44 @@ $$f : \mathbb{R}^2 \to \mathbb{R}^2, \quad f(x_1, x_2) = \begin{pmatrix} e^{x_1}
 ** Solution
 *** (a)
 
+\begin{align*}
+f(x_1, x_2) &= \begin{pmatrix} e^{x_1} \cos x_2 \\ e^{x_1} \sin x_2 \end{pmatrix} \\
+f'(x_1, x_2) &=
+\begin{pmatrix}
+e^{x_1} \cos x_2 & - e^{x_1} \sin x_2 \\
+e^{x_1} \sin x_2 & e^{x_1} \cos x_2
+\end{pmatrix} \\
+\end{align*}
+
 *** (b)
+
+\begin{align*}
+\mathrm{det}(f'(x)) &= (e^{x_1} \cos x_2)(e^{x_1} \cos x_2) - (-e^{x_1} \sin x_2)(e^{x_1} \sin x_2) \\
+&= e^{2x_1} (\cos^2(x_2) + \sin^2(x_2)) \\
+&= e^{2x_1} \\
+\end{align*}
+
+Since $e^{2x_1} > 0 \, \forall x_1 \in \mathbb{R}$, the determinant is strictly positive, so $f'(x)$ is invertible $\forall x \in \mathbb{R}^2$.
 
 *** (c)
 
+The [[file:../../01_material/ch_07_analysis_in_multivariable_coordinates.org::#thm:implicit-function][Theorem 7.5.1]] hypotheses hold at every $x \in \mathbb{R}^2$:
+
+- domain $\mathbb{R}^2$ is open,
+
+- $f$ is continuously differentiable ($\mathcal{C}^{\infty}$),
+
+- $f'(x)$ is invertible (by (b), $\det f'(x) = e^{2x_1} > 0$).
+
+By the [[file:../../01_material/ch_07_analysis_in_multivariable_coordinates.org::#thm:implicit-function][Theorem 7.5.1]], $f$ restricts to a bijection on some neighborhood of every $x$ — i.e. $f$ is locally invertible near every point. The inverse is continuously differentiable with
+
+$$(f^{-1})'(f(x)) = (f'(x))^{-1}.$$
+
 *** (d)
+
+No, $f$ is not globally injective. $f$ is $2\pi$ -periodic in $x_2$:
+
+$$f(x_1, x_2 + 2\pi) = \begin{pmatrix} e^{x_1} \cos(x_2 + 2\pi) \\ e^{x_1} \sin(x_2 + 2\pi) \end{pmatrix} = \begin{pmatrix} e^{x_1} \cos x_2 \\ e^{x_1} \sin x_2 \end{pmatrix} = f(x_1, x_2).$$
 
 * Problem 3 :submanifold:tangent_space:normal_space:
 ** Task

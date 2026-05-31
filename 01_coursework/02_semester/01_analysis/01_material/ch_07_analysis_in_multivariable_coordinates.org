@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-26>
-#+lastmod: <2026-05-30 12:08>
+#+lastmod: <2026-05-31 19:56>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -967,6 +967,16 @@ such that
    $$f(x, y) = 0 \iff y = g(x).$$
 
 ** Questions
+
+*** DONE The theorem does not click for me. Could you please explain it intuitively?
+
+The question the [[#thm:implicit-function][Theorem 7.5.1]] answers: given an equation linking $x$ and $y$, can you rewrite it as $y = g(x)$?
+
+Take a $x^2 + y^2 = 1$ (the circle). This is an equation in $x$ and $y$. Is $y$ a function of $x$? No, for $x=0$ there are two $y$ values: $+1$ and $-1$ (fails vertical line test). So *globally* you can not write $y = g(x)$.
+
+But now zoom in on one point of the circle, take $(0,1)$. Look only at a round arc around it. That arc is a function $y = \sqrt{1 - x^2}$. One $y$ per $x$, so its true locally, but false globally.
+
+In addition, note that Jacobian matrix inversion assumption is basically *not vertical* test. If we look at point $(1, 0)$, no matter how close we zoom, there would be always to solutions in $(1,0)$ neighborhood. Vertical means $\frac{\partial f}{\partial y} = 0$.
 
 * Theorem:     Inverse Function Theorem
 :PROPERTIES:
