@@ -1,0 +1,95 @@
+#+title: Ps 11
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-05-31>
+#+lastmod: <2026-05-31 16:12>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 4.9 :determinant:matrix:block_matrix:
+** Task
+#+begin_quote
+(Product and Determinant of a matrices defined by blocks)
+
+Let $A, B \in \mathbb{K}^{n\times n}$ be two matrices and let $p \leq n$. The two matrices are defined by blocks as
+
+$$A = \begin{pmatrix} A_{1,1} & A_{1,2} \\ A_{2,1} & A_{2,2} \end{pmatrix} \quad B = \begin{pmatrix} B_{1,1} & B_{1,2} \\ B_{2,1} & B_{2,2} \end{pmatrix}$$
+
+with $A_{1,1} \in \mathbb{K}^{p\times p}$, $A_{1,2} \in \mathbb{K}^{p\times(n-p)}$, $A_{2,1} \in \mathbb{K}^{(n-p)\times p}$ and $A_{2,2} \in \mathbb{K}^{(n-p)\times(n-p)}$.
+
+1. Prove that
+
+$$AB = \begin{pmatrix} A_{1,1}B_{1,1} + A_{1,2}B_{2,1} & A_{1,1}B_{1,2} + A_{1,2}B_{2,2} \\ A_{2,1}B_{1,1} + A_{2,2}B_{2,1} & A_{2,1}B_{1,2} + A_{2,2}B_{2,2} \end{pmatrix}$$
+
+2. Show that $\det(A) = \det(A_{1,1})\det(A_{2,2}) - \det(A_{2,1})\det(A_{1,2})$.
+#+end_quote
+
+** Solution
+*** 1.
+
+*** 2.
+
+* Problem 4.13 :determinant:matrix:adjugate:cofactor:
+** Task
+#+begin_quote
+(Adjugate matrix)
+
+Let $A \in \mathbb{K}^{n\times n}$ with $n \in \mathbb{N}$ with elements $a_{ij}$, $1 \leq i,j \leq n$. For each pair of indices $(i,j)$, we define the cofactor $C_{ij}$ associated to the element $a_{ij}$ as
+
+$$C_{ij} = (-1)^{i+j} \det(A_{ij}^{\star})$$
+
+where $A_{ij}^{\star} \in \mathbb{K}^{(n-1)\times(n-1)}$ is the submatrix obtained by deleting the $i$ -th row and $j$ -column of $A$.
+
+We define the adjugate matrix $\mathrm{adj}(A)$ as the matrix whose $(i,j)$ -th element is $C_{ji}$ (⟵ the subscript here is not a mistake).
+
+(i) Let $P = A \cdot \mathrm{adj}(A)$. Write out the expression for the $i$ -th diagonal element $P_{ii}$ and prove that $P_{ii} = \det A$, $\forall i \in \{1, ..., n\}$.
+
+(ii) Write out the expression for $P_{ik}$ with $i \neq k$, and prove that $P_{ik} = 0 \ \forall i \neq k$. (*Indication:* the expression for the $P_{ik}$ should look like a Laplace expansion formula for the determinant of a matrix that is not invertible.)
+#+end_quote
+
+** Solution
+*** (i)
+
+*** (ii)
+
+* Problem 5.3 :diagonalization:eigenvalue:spectral_shift:
+** Task
+#+begin_quote
+(Shift of spectrum)
+
+Let $A \in \mathbb{K}^{n\times n}$ and $\alpha \in \mathbb{K}$, show that $\alpha \cdot \mathrm{Id}_n + A$ is diagonalizable if and only if $A$ is diagonalizable. What are the eigenvalues and associatedd eigenspaces of $\alpha \cdot \mathrm{Id}_n + A$?
+#+end_quote
+
+** Solution
+
+* Problem 5.5 :diagonalization:eigenvalue:matrix:
+** Task
+#+begin_quote
+Let $A$ be the $n \times n$ matrix defined by
+
+$$A = \begin{pmatrix} \alpha & 1 & 1 & 1 & \ldots & 1 \\ 1 & \alpha & 1 & 1 & \ldots & 1 \\ 1 & 1 & \alpha & 1 & \ldots & 1 \\ 1 & 1 & 1 & \alpha & \ldots & 1 \\ \vdots & \vdots & \vdots & \vdots & \ddots & 1 \\ 1 & 1 & 1 & 1 & \ldots & \alpha \end{pmatrix}$$
+
+Is $A$ diagonalizable over $\mathbb{R}$? If so, obtain the diagonalized form. (*Indication:* ex. 4.14 or ex. 5.3 may be of help.)
+#+end_quote
+
+** Solution
+
+* Errors/Typos
+- Problem 5.3: "associatedd" → "associated"
+- Problem 4.9: "Product and Determinant of a matrices defined by blocks" → "Product and Determinant of matrices defined by blocks"
+
+* Time Estimates
+- Problem 4.9: ~40 min~
+- Problem 4.13: ~35 min~
+- Problem 5.3: ~20 min~
+- Problem 5.5: ~25 min~
