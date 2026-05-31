@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-30>
-#+lastmod: <2026-05-31 20:19>
+#+lastmod: <2026-05-31 21:33>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -61,7 +61,7 @@ $$f : \mathbb{R}^2 \to \mathbb{R}^2, \quad f(x_1, x_2) = \begin{pmatrix} e^{x_1}
 
 (c) Use the inverse function theorem to conclude that $f$ is locally invertible near every point $x \in \mathbb{R}^2$.
 
-(d) Is $f$ globally injective on $\mathbb{R}^2$.
+(d) Is $f$ globally injective on $\mathbb{R}^2$?
 #+end_quote
 
 ** Solution
@@ -110,7 +110,8 @@ $$f(x_1, x_2 + 2\pi) = \begin{pmatrix} e^{x_1} \cos(x_2 + 2\pi) \\ e^{x_1} \sin(
 ** Task
 #+begin_quote
 Let
-$$M_n = \{x \in \mathbb{R}^d : \|x\|_2 = 1\}$$
+
+$$M_n = \{x \in \mathbb{R}^n : \|x\|_2 = 1\}$$
 
 (a) Show that $M_n$ is a $n-1$ -dimensional submanifold of $\mathbb{R}^n$.
 
@@ -122,10 +123,53 @@ $$M_n = \{x \in \mathbb{R}^d : \|x\|_2 = 1\}$$
 ** Solution
 *** (a)
 
+Let $g = f : \mathbb{R}^n \rightarrow \mathbb{R}$, $g(x) = \|x\|_2^2 - 1$, $g \in \mathcal{C}^{1}$. Here $k = n - 1$, so $r = n - k = 1$.
+
+Take $U = \mathbb{R}^n$. Then $M_n \cap U = \{ x : g(x) = 0 \} = M_n$.
+
+Gradient: $g'(x) = 2x^{\top}$. For $x \in M_n$, $\|x\| = 1$ so $x \neq 0$, hence $g'(x) \neq 0$ and $\operatorname{rank} g'(x) = 1 = r$.
+
+By [[file:../../01_material/ch_07_analysis_in_multivariable_coordinates.org::#def:submanifold][Definition 7.5.3]], $M_n$ is an $n - 1$ dimensional submanifold of $\mathbb{R}^n$.
+
 *** (b)
 
+Tangent space = kernel of the derivative:
+
+$$T_x(M_n) = \ker f'(x) = \{ v \in \mathbb{R}^n : \langle 2x, v \rangle = 0 \} = \{ v \in \mathbb{R}^n : \langle x, v \rangle = 0 \} = x^{\perp}.$$
+
+Hyperplane through the origin orthogonal to $x$. $\dim = n - 1$.
+
+Normal space = orthogonal complement:
+
+$$N_x(M_n) = (T_x M_n)^{\perp} = \operatorname{span}\{x\} = \{ \lambda x : \lambda \in \mathbb{R} \}.$$
+
+Spanned by the gradient direction. $\dim = 1$.
+
+Both are linear subspaces (through $0$). Drawn geometrically they attach at $x$ as affine lines.
+
 *** (c)
+
+At $x = (1, 0)^{\top}$: $T_x M_2 = \{ (0, t) \}$ (vertical), $N_x M_2 = \{ (s, 0) \}$ (the $x_1$ axis). Attached at $x$: tangent is the vertical line $x_1 = 1$, normal is the $x_1$ axis.
+
 #+begin_src julia :results value :exports both :tangle julia/p_3c.jl
+using Plots
+
+# M_2: unit circle
+θ = range(0, 2π; length = 400)
+
+x = [1.0, 0.0]                     # point on M_2
+tang_dir = [0.0, 1.0]              # spans T_x(M_2):  <x, v> = 0
+norm_dir = [1.0, 0.0]              # spans N_x(M_2):  span{x}
+s = range(-1.3, 1.3; length = 2)   # parameter for the lines
+
+plot(cos.(θ), sin.(θ);
+     label = "M₂", aspect_ratio = :equal, lw = 2, legend = :bottomleft)
+plot!(x[1] .+ s .* tang_dir[1], x[2] .+ s .* tang_dir[2];
+      label = "Tₓ(M₂)", lw = 2, ls = :dash)
+plot!(x[1] .+ s .* norm_dir[1], x[2] .+ s .* norm_dir[2];
+      label = "Nₓ(M₂)", lw = 2, ls = :dot)
+scatter!([x[1]], [x[2]]; label = "x = (1,0)", ms = 6)
+xlabel!("x₁"); ylabel!("x₂")
 #+end_src
 
 * Problem 4 :submanifold:jacobian:
