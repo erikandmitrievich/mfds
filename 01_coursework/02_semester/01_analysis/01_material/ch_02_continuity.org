@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-20>
-#+lastmod: <2026-05-24 14:27>
+#+lastmod: <2026-06-01 09:07>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -12,9 +12,9 @@
 #+latex_header: \usepackage{amsthm}
 #+latex_header: \usepackage[margin=1in]{geometry}
 #+options: num:t tags:nil
-#+columns: %45ITEM(Item) %14LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
 #+property: header-args :eval never-export
 #+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
 
 * Definition:  Path-connectedness
 :PROPERTIES:
