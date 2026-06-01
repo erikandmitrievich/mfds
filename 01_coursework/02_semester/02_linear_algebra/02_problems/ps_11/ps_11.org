@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-31>
-#+lastmod: <2026-05-31 16:12>
+#+lastmod: <2026-06-01 13:29>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -67,10 +67,22 @@ We define the adjugate matrix $\mathrm{adj}(A)$ as the matrix whose $(i,j)$ -th 
 #+begin_quote
 (Shift of spectrum)
 
-Let $A \in \mathbb{K}^{n\times n}$ and $\alpha \in \mathbb{K}$, show that $\alpha \cdot \mathrm{Id}_n + A$ is diagonalizable if and only if $A$ is diagonalizable. What are the eigenvalues and associatedd eigenspaces of $\alpha \cdot \mathrm{Id}_n + A$?
+Let $A \in \mathbb{K}^{n\times n}$ and $\alpha \in \mathbb{K}$, show that $\alpha \cdot \mathrm{Id}_n + A$ is diagonalizable if and only if $A$ is diagonalizable. What are the eigenvalues and associated eigenspaces of $\alpha \cdot \mathrm{Id}_n + A$?
 #+end_quote
 
 ** Solution
+
+For $x \neq 0$, $(\alpha \cdot \mathrm{Id}_n + A)x = (\alpha + \lambda)x \iff Ax = \lambda x$. So the eigenvectors of the two matrices coincide, and the eigenvalues of $\alpha \cdot \mathrm{Id}_n + A$ are the shifts $\alpha + \lambda$ of those of $A$.
+
+*Diagonalizability.* By [[file:../../01_material/ch_05_eigenvalues.org::#lem:diagonalizable-similar-diagonal][Lemma 5.13]], $A = PDP^{-1}$ with $D$ diagonal. Then
+
+$$\alpha \cdot \mathrm{Id}_n + A = P(\alpha \cdot \mathrm{Id}_n + D)P^{-1},$$
+
+and $\alpha \cdot \mathrm{Id}_n + D$ is diagonal, so $\alpha \cdot \mathrm{Id}_n + A$ is diagonalizable via the same $P$. Reversing: $\alpha \cdot \mathrm{Id}_n + A = PD'P^{-1}$ gives $A = P(D' - \alpha \cdot \mathrm{Id}_n)P^{-1}$. $\square$
+
+*Eigenvalues and eigenspaces.* If $\sigma(A) = \{\lambda_1, \ldots, \lambda_k\}$, then $\sigma(\alpha \cdot \mathrm{Id}_n + A) = \{\alpha + \lambda_1, \ldots, \alpha + \lambda_k\}$, and
+
+$$V_{\alpha+\lambda_i}^{\alpha \cdot \mathrm{Id}_n + A} = \ker\!\left((\alpha \cdot \mathrm{Id}_n + A) - (\alpha + \lambda_i)\,\mathrm{Id}_n\right) = \ker(A - \lambda_i \cdot \mathrm{Id}_n) = V_{\lambda_i}^{A}.$$
 
 * Problem 5.5 :diagonalization:eigenvalue:matrix:
 ** Task
