@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-27>
-#+lastmod: <2026-05-27 14:15>
+#+lastmod: <2026-06-01 13:56>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -29,6 +29,18 @@ $$f(x) = \lambda x.$$
 The scalar $\lambda$ is called an eigenvalue and $x \neq 0$ is an eigenvector.
 
 ** Questions
+
+*** DONE Can you please remind me what is an endomorhpism?
+
+Endomorphism is a mapping from object to itself that preserves the structure of that object.
+
+Choose $f \in \mathcal{L}(E, F)$ and let $E = F$, then $\mathcal{L}(E, F) = \mathcal{L}(E)$ (set of endomorphism notation).
+
+*** DONE The notation is a bit dense, could you please explain concept of eigenvalues and eigenvectors more intuitively?
+
+Eigenvectors are directions $f$ does not rotate, only stretches or flips, $\lambda$ is the scale factor.
+
+$x \neq 0$ because the zero vector satisfies $f(0) = \lambda \cdot 0 \, \forall \lambda \in \mathbb{K}$, no information about $f$.
 
 * Proposition: Eigenpair characterization via matrix representation
 :PROPERTIES:
@@ -92,6 +104,24 @@ $$\sigma(A) := \{\lambda \in \mathbb{K} \mid \det(A - \lambda \, \mathrm{Id}_{\m
 
 ** Questions
 
+*** DONE Are the eigenvalues the property of only endomorphisms?
+
+Yes, $f(x) = \lambda x$ requires the output to live in the same space as the input, otherwise $\lambda x$ is not comparable to $f(x)$.
+
+*** DONE Is this a common notation for eigenvalues (talking about $\sigma$) $\sigma(f)$?
+
+Yes, this is a standard notation. Comes from German "Spektrum" (Hilbert's terminology).
+
+*** DONE What is a spectrum in simple words?
+
+The set of all eigenvalues of $f$. Every $\lambda \in \sigma(f)$ is a scale factor for some nonzero direction in $E$.
+
+*** DONE Just to be sure, $|\sigma(f)| = \mathrm{dim}(E)$? Meaning there are infinite number of eigenvectors and eigenvalues (analogically to basis).
+
+No on both counts.
+
+$|\sigma(f)| \in \{0, \ldots, \dim(E)\}$. Example in $\mathbb{R}^2$: rotation by $90^{\circ}$ has $|\sigma| = 0$, scaling by $3$ has $|\sigma| = 1$, diagonal matrix with distinct entries has $|\sigma| = 2$.
+
 * Lemma:       Characterizations of eigenvalues and vectors
 :PROPERTIES:
 :CUSTOM_ID: lem:eigenpair-characterizations
@@ -129,6 +159,34 @@ $$V_\lambda^A := \ker(A - \lambda \, \mathrm{Id}_{\mathbb{K}^n}) \subset \mathbb
 is called the eigensubspace of $A$ associated to the eigenvalue $\lambda$.
 
 ** Questions
+
+*** DONE What does "at the level of endomorphisms" suppose to mean?
+
+Just "for endomorphisms specifically." Contrast with "at the level of matrices" below — same result, different object. No deep meaning.
+
+*** DONE $(\lambda, x) \in \mathbb{K}$ - is this a typo? How can a pair be an element of a field?
+
+No, you got it wrong.
+
+It should be read as:
+
+$$(\lambda, x) \in (\mathbb{K} \times (E \setminus \{0_E\}))$$
+
+not as:
+
+$$((\lambda, x) \in \mathbb{K}) \times (E \setminus \{0_E\})$$
+
+*** DONE $(E \setminus \{0_E\})$ - isn't it just a random vector? I thought it should be an eigenvector strictly.
+
+The lemma says: $(\lambda, x)$ is an eigenpair *if and only if* the four conditions hold. So $x$ starts as an arbitrary nonzero vector — the equivalence then characterizes exactly when it turns out to be an eigenvector.
+
+*** DONE How should I simply imagine a eigenspace/subspace?
+
+All eigenvectors sharing the same eigenvalue $\lambda$, plus $0_E$.
+
+In $\mathbb{R}^2$: if $f$ is a reflection across the $x$ -axis, then $V_1^f$ is the entire $x$ -axis — every vector on it is fixed by $f$.
+
+Operationally: $V_\lambda^f$ is the set of directions $f$ scales by exactly $\lambda$.
 
 * Lemma:       Characteristic polynomial and its properties
 :PROPERTIES:
@@ -194,6 +252,29 @@ For $n = 2$, $p_f(x) = x^2 - \mathrm{Tr}(f) x + \det(f)$.
 2. We say that a matrix $A \in \mathbb{K}^{n \times n}$ is diagonalizable if and only if there exists a basis $\mathcal{E}$ of $\mathbb{K}^n$ made of eigenvectors of $A$.
 
 ** Questions
+
+*** DONE Do I understand right that $|\sigma| = \mathrm{dim}(E)$ is just stretching vector on some basis (in this case eigenvecotrs)?
+
+Close but imprecise. $|\sigma| = \dim(E)$ means $f$ has $n$ distinct eigenvalues, which guarantees $n$ linearly independent eigenvectors — enough for a basis.
+
+In that basis, $f$ acts by stretching (or flipping) each basis vector independently. So yes, the action of $f$ decomposes into independent scalings along each basis direction.
+
+*** DONE In what way is it "diagonalizable" relate to "diagonal"?
+
+If you write $[f]_{\mathcal{E}}^{\mathcal{E}}$ in the eigenvector basis $\mathcal{E}$, the matrix is diagonal — eigenvalues on the diagonal, zeros everywhere else.
+
+Diagonalizable = "there exists a basis in which the matrix representation is diagonal".
+
+*** DONE Could you please provide an example for point 1?
+
+Take $E = \mathbb{R}^2$, $f(x, y) = (2x, 3y)$. Then:
+
+- $e_1 = (1, 0)$: $f(e_1) = 2e_1$, so $\lambda_1 = 2$.
+- $e_2 = (0, 1)$: $f(e_2) = 3e_2$, so $\lambda_2 = 3$.
+
+$\mathcal{E} = \{e_1, e_2\}$ is a basis of eigenvectors, so $f$ is diagonalizable, with
+
+$$[f]_{\mathcal{E}}^{\mathcal{E}} = \begin{pmatrix} 2 & 0 \\ 0 & 3 \end{pmatrix}.$$
 
 * Lemma:       Diagonalizability via similarity to a diagonal matrix
 :PROPERTIES:
