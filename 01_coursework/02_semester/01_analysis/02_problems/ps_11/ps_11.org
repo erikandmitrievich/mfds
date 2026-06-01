@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-30>
-#+lastmod: <2026-05-31 21:33>
+#+lastmod: <2026-06-01 06:52>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -176,6 +176,7 @@ xlabel!("x₁"); ylabel!("x₂")
 ** Task
 #+begin_quote
 Let
+
 $$M = \{x \in \mathbb{R}^3 : g_1(x) = 0, g_2(x) = 0\}, \quad g_1(x) = x_1^2 + x_2^2 - 1, \quad g_2(x) = x_3 - x_1$$
 
 (a) Compute the Jacobian $g'(x)$ for $g = (g_1, g_2)^\top$.
@@ -186,7 +187,28 @@ $$M = \{x \in \mathbb{R}^3 : g_1(x) = 0, g_2(x) = 0\}, \quad g_1(x) = x_1^2 + x_
 ** Solution
 *** (a)
 
+\begin{align*}
+g(x) &=
+\begin{pmatrix}
+x_1^2 + x_2^2 - 1 \\
+x_3 - x_1
+\end{pmatrix} \\
+J_g(x) &=
+\begin{pmatrix}
+2x_1 & 2x_2 & 0 \\
+-1 & 0 & 1
+\end{pmatrix} \\
+\end{align*}
+
 *** (b)
+
+$k = 1$, $n = 3 \implies r = n - k = 2$. Take $U = \mathbb{R}^3$; then $M \cap U = \{x : g(x) = 0\} = M$, and $g \in \mathcal{C}^{1}$.
+
+$$g'(x) = \begin{pmatrix} 2x_1 & 2x_2 & 0 \\ -1 & 0 & 1 \end{pmatrix}.$$
+
+For a two row matrix, $\operatorname{rank} = 2$ iff the rows are linearly independent. Row $2 = (-1, 0, 1) \neq 0$. If $\text{row}_1 = \lambda \cdot \text{row}_2$, column $3$ gives $0 = \lambda$, forcing $\text{row}_1 = 0$, i.e. $x_1 = x_2 = 0$. But on $M$, $g_1 = 0$ gives $x_1^2 + x_2^2 = 1$, so $x_1, x_2$ are never both zero.
+
+Hence the rows are independent and $\operatorname{rank} g'(x) = 2 = r$ for all $x \in M$. By [[file:../../01_material/ch_07_analysis_in_multivariable_coordinates.org::#def:submanifold][Definition 7.5.3]], $M$ is a $1$ dimensional submanifold of $\mathbb{R}^3$.
 
 * Errors/Typos
 - Problem 2: "Is $f$ globally injective on $\mathbb{R}^2$." → "Is $f$ globally injective on $\mathbb{R}^2$?"
