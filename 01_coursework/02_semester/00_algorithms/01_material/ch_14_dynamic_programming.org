@@ -1,0 +1,157 @@
+#+title: Ch 14 Dynamic Programming
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-06-02>
+#+lastmod: <2026-06-02 16:44>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* 14.1 Rod cutting
+
+** Problem setup
+- Serling Enterprises buys long steel rods, cuts them into integer-length pieces, sells. Each cut is free.
+- Price table $p_i$ gives revenue for a rod of length $i$ inches.
+- *Rod-cutting problem*: given rod of length $n$ and prices $p_i$ for $i = 1, 2, \dots, n$, find maximum revenue $r_n$ obtainable by cutting up the rod and selling the pieces. If $p_n$ is large enough, no cutting may be optimal.
+- A rod of length $n$ admits $2^{n-1}$ decompositions: each of the $n-1$ internal positions is independently cut or not.
+- Decomposition notation: $7 = 2 + 2 + 3$ means three pieces of lengths 2, 2, 3.
+- If optimal cuts into $k$ pieces $n = i_1 + i_2 + \dots + i_k$, then $r_n = p_{i_1} + p_{i_2} + \dots + p_{i_k}$.
+- [FIGURE 14.1: sample price table, lengths 1–10 with prices 1, 5, 8, 9, 10, 17, 17, 20, 24, 30]
+- [FIGURE 14.2: 8 decompositions of a length-4 rod; optimal is $2+2$ with value 10]
+- Sample optimal values by inspection:
+  - $r_1 = 1$ (1), $r_2 = 5$ (2), $r_3 = 8$ (3), $r_4 = 10$ ($2+2$), $r_5 = 13$ ($2+3$), $r_6 = 17$ (6), $r_7 = 18$ ($1+6$ or $2+2+3$), $r_8 = 22$ ($2+6$), $r_9 = 25$ ($3+6$), $r_{10} = 30$ (10).
+
+** Recurrences
+- General recurrence — split into two pieces and recurse on both:
+  \[ r_n = \max\{p_n,\ r_1 + r_{n-1},\ r_2 + r_{n-2},\ \dots,\ r_{n-1} + r_1\} \tag{14.1} \]
+  - First argument $p_n$: no cuts. Other $n-1$ arguments: initial cut into pieces $i$ and $n-i$, optimally subdivided.
+- *Optimal substructure*: optimal solutions to a problem incorporate optimal solutions to related subproblems, solvable independently.
+- Simpler recurrence — view decomposition as first piece of length $i$ + remainder of length $n-i$ (only remainder recurses):
+  \[ r_n = \max\{p_i + r_{n-i} : 1 \leq i \leq n\} \tag{14.2} \]
+  - Uncut case absorbed by $i = n$, $r_0 = 0$.
+  - Only *one* recursive subproblem instead of two.
+
+** Recursive top-down implementation
+- =CUT-ROD= implements (14.2) directly.
+#+begin_example
+CUT-ROD(p, n)
+1  if n == 0
+2      return 0
+3  q = -∞
+4  for i = 1 to n
+5      q = max {q, p[i] + CUT-ROD(p, n - i)}
+6  return q
+#+end_example
+- Correctness: simple induction on $n$ using (14.2).
+
+*** Why =CUT-ROD= is exponential
+- It solves the same subproblems repeatedly: =CUT-ROD(p,n)= calls =CUT-ROD(p,n-i)= for $i = 1, \dots, n$, equivalently =CUT-ROD(p,j)= for $j = 0, \dots, n-1$.
+- Let $T(n)$ = total number of calls to =CUT-ROD(p,n)= (= size of the subtree rooted at $n$ in the recursion tree). $T(0) = 1$, and
+  \[ T(n) = 1 + \sum_{j=0}^{n-1} T(j) \tag{14.3} \]
+  - The leading 1 counts the root call; $T(j)$ counts the subtree from the call =CUT-ROD(p, n-i)= where $j = n-i$.
+- Solution: $T(n) = 2^n$ (Exercise 14.1-1).
+- Combinatorial reason: $n-1$ potential cut points → $2^{n-1}$ subsets = $2^{n-1}$ ways to cut → recursion tree has $2^{n-1}$ leaves, $2^n$ nodes.
+- [FIGURE 14.3: recursion tree for =CUT-ROD(p,4)=; each node labeled with subproblem size; $2^n$ nodes, $2^{n-1}$ leaves]
+
+** Using dynamic programming for optimal rod cutting
+- Idea: arrange each subproblem to be solved *only once* by saving its solution the first time.
+- *Time–memory trade-off*: extra storage buys exponential → polynomial reduction (here $\Theta(2^n) \to \Theta(n^2)$).
+- DP runs in polynomial time when (a) number of distinct subproblems is polynomial in input size, and (b) each subproblem takes polynomial time.
+- Two equivalent implementations:
+  - *Top-down with memoization*: write the natural recursion, but cache results in an array/hash table. On entry, check the cache; if hit, return; otherwise compute and store. The recursive procedure is then *memoized*.
+  - *Bottom-up method*: depends on a notion of subproblem "size" such that any subproblem depends only on smaller ones. Solve in size order, smallest first; when a subproblem is encountered all its dependencies are already solved.
+- Same asymptotic running time (except in unusual cases where top-down doesn't recurse into all subproblems). Bottom-up usually has better constants (no call overhead).
+
+*** Memoized top-down
+#+begin_example
+MEMOIZED-CUT-ROD(p, n)
+1  let r[0:n] be a new array       // will remember solution values in r
+2  for i = 0 to n
+3      r[i] = -∞
+4  return MEMOIZED-CUT-ROD-AUX(p, n, r)
+
+MEMOIZED-CUT-ROD-AUX(p, n, r)
+1  if r[n] >= 0                    // already have a solution for length n?
+2      return r[n]
+3  if n == 0
+4      q = 0
+5  else q = -∞
+6      for i = 1 to n              // i is the position of the first cut
+7          q = max {q, p[i] + MEMOIZED-CUT-ROD-AUX(p, n - i, r)}
+8  r[n] = q                        // remember the solution value for length n
+9  return q
+#+end_example
+- Initialize cache to $-\infty$ (sentinel for "unknown" since true values are $\geq 0$).
+- =-AUX= checks cache (line 1), computes normally if miss (lines 3–7), stores (line 8), returns (line 9).
+
+*** Bottom-up
+#+begin_example
+BOTTOM-UP-CUT-ROD(p, n)
+1  let r[0:n] be a new array
+2  r[0] = 0
+3  for j = 1 to n                  // for increasing rod length j
+4      q = -∞
+5      for i = 1 to j              // i is the position of the first cut
+6          q = max {q, p[i] + r[j - i]}
+7      r[j] = q
+8  return r[n]
+#+end_example
+- Subproblem of size $i$ is "smaller" than size $j$ if $i < j$; solve $j = 0, 1, \dots, n$ in that order.
+- Line 6 reads $r[j-i]$ directly (no recursion) because it was filled in an earlier iteration of the outer loop.
+
+*** Running time
+- *Bottom-up*: $\Theta(n^2)$. Doubly nested loops; inner-loop iteration count $1 + 2 + \dots + n$ is arithmetic.
+- *Top-down memoized*: also $\Theta(n^2)$. Each subproblem solved once; the size-$n$ call iterates $n$ times in lines 6–7. Total iterations across all $n+1$ subproblems form an arithmetic series → $\Theta(n^2)$ (this is aggregate analysis; see §16.1).
+
+** Subproblem graphs
+- *Subproblem graph*: directed graph with one vertex per distinct subproblem; edge $x \to y$ iff determining an optimal solution for $x$ directly considers an optimal solution for $y$ (equivalently: top-down recursive solver for $x$ calls itself on $y$).
+- It is a "collapsed" recursion tree: all nodes for the same subproblem coalesce into one vertex; edges go parent → child.
+- [FIGURE 14.4: subproblem graph for rod cutting with $n=4$; vertices labeled 0–4; vertex $j$ has edges to $0, 1, \dots, j-1$]
+- *Bottom-up* DP visits vertices in *reverse topological sort* (topological sort of the transpose): every subproblem $y$ that $x$ depends on is solved before $x$.
+- *Top-down with memoization* corresponds to a *depth-first search* of the subproblem graph.
+- Running-time bound via $G = (V, E)$: each subproblem solved once; typical cost per subproblem $\propto$ out-degree of its vertex. So total time is typically linear in $|V| + |E|$.
+
+** Reconstructing a solution
+- =MEMOIZED-CUT-ROD= and =BOTTOM-UP-CUT-ROD= return only the optimal *value* $r_n$, not the list of piece sizes achieving it.
+- Extend DP to record, for each subproblem size $j$, the choice $s_j$ = optimal size of the first piece to cut off, alongside $r_j$.
+
+*** =EXTENDED-BOTTOM-UP-CUT-ROD=
+- Same skeleton as =BOTTOM-UP-CUT-ROD=, plus array $s[1:n]$, plus line tracking the argmax.
+#+begin_example
+EXTENDED-BOTTOM-UP-CUT-ROD(p, n)
+1  let r[0:n] and s[1:n] be new arrays
+2  r[0] = 0
+3  for j = 1 to n                  // for increasing rod length j
+4      q = -∞
+5      for i = 1 to j              // i is the position of the first cut
+6          if q < p[i] + r[j - i]
+7              q = p[i] + r[j - i]
+8              s[j] = i            // best cut location so far for length j
+9      r[j] = q                    // remember the solution value for length j
+10 return r and s
+#+end_example
+- For the Figure 14.1 prices and $n = 10$:
+  - $i$:    0  1  2  3  4   5   6   7   8   9  10
+  - $r[i]$: 0  1  5  8  10  13  17  18  22  25  30
+  - $s[i]$:    1  2  3  2   2   6   1   2   3   10
+
+*** =PRINT-CUT-ROD-SOLUTION=
+- Repeatedly print $s[n]$ and shrink the rod by the printed piece.
+#+begin_example
+PRINT-CUT-ROD-SOLUTION(p, n)
+1  (r, s) = EXTENDED-BOTTOM-UP-CUT-ROD(p, n)
+2  while n > 0
+3      print s[n]                  // cut location for length n
+4      n = n - s[n]                // length of the remainder of the rod
+#+end_example
+- =PRINT-CUT-ROD-SOLUTION(p, 10)= prints 10 (no cuts).
+- =PRINT-CUT-ROD-SOLUTION(p, 7)= prints 1 then 6 — matches the $r_7 = 1 + 6$ decomposition.
