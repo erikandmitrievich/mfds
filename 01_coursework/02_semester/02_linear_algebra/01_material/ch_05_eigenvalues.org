@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-27>
-#+lastmod: <2026-06-01 13:56>
+#+lastmod: <2026-06-01 14:52>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -121,6 +121,8 @@ The set of all eigenvalues of $f$. Every $\lambda \in \sigma(f)$ is a scale fact
 No on both counts.
 
 $|\sigma(f)| \in \{0, \ldots, \dim(E)\}$. Example in $\mathbb{R}^2$: rotation by $90^{\circ}$ has $|\sigma| = 0$, scaling by $3$ has $|\sigma| = 1$, diagonal matrix with distinct entries has $|\sigma| = 2$.
+
+*** TODO What does $\mathrm{det}(\cdot) = 0$ mean?
 
 * Lemma:       Characterizations of eigenvalues and vectors
 :PROPERTIES:
@@ -264,6 +266,8 @@ In that basis, $f$ acts by stretching (or flipping) each basis vector independen
 If you write $[f]_{\mathcal{E}}^{\mathcal{E}}$ in the eigenvector basis $\mathcal{E}$, the matrix is diagonal — eigenvalues on the diagonal, zeros everywhere else.
 
 Diagonalizable = "there exists a basis in which the matrix representation is diagonal".
+
+*** TODO Is the diagonalization through eigenvecotrs the only path?
 
 *** DONE Could you please provide an example for point 1?
 
