@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-30>
-#+lastmod: <2026-05-30 11:10>
+#+lastmod: <2026-06-03 11:28>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -19,10 +19,72 @@
 * Problem 81 :dynamic_programming:greedy:rod_cutting:
 ** Task
 #+begin_quote
-Show, by means of a counterexample, that the following “greedy” strategy does not always determine an optimal way to cut rods. Define the density of a rod of length $i$ to be $p_i/i$, that is, its value per inch. The greedy strategy for a rod of length $n$ cuts off a first piece of length $i$, where $1 \leq i \leq n$, having maximum density. It then continues by applying the greedy strategy to the remaining piece of length $n - i$.
+Show, by means of a counterexample, that the following “greedy” strategy does not always determine an optimal way to cut rods.
+
+Define the density of a rod of length $i$ to be $p_i/i$, that is, its value per inch. The greedy strategy for a rod of length $n$ cuts off a first piece of length $i$, where $1 \leq i \leq n$, having maximum density. It then continues by applying the greedy strategy to the remaining piece of length $n - i$.
 #+end_quote
 
 ** Solution
+
+#+begin_src  julia :results output
+using Test
+
+p = [2, 4, 6, 8, 10, 20, 17, 20, 24, 30]
+
+function cut_rod(p, n)
+    n == 0 && return 0
+    q = 0
+    for i in 1:n
+        q = max(q, p[i] + cut_rod(p, n - i))
+    end
+    q
+end
+
+function greedy_cut(p, n)
+    total = 0
+    while n > 0
+        best_i, best_d = 0, -Inf
+        for i in 1:n
+            d = p[i] / i
+            if d > best_d
+                best_d, best_i = d, i
+            end
+        end
+        total += p[best_i]
+        n -= best_i
+    end
+    total
+end
+
+
+@testset "rod cutting" begin
+    @testset "cut_rod base + small cases" begin
+        @test cut_rod(p, 0) == 0
+        @test cut_rod(p, 1) == 2
+        @test cut_rod(p, 2) == 4
+        @test cut_rod(p, 6) == 20
+        @test cut_rod(p, 10) == 30
+    end
+
+    @testset "greedy matches optimum on easy cases" begin
+        for n in 0:6
+            @test greedy_cut(p, n) == cut_rod(p, n)
+        end
+    end
+
+    @testset "greedy fails at n = 10 (counterexample)" begin
+        @test cut_rod(p, 10) == 30
+        @test greedy_cut(p, 10) == 28
+        @test greedy_cut(p, 10) < cut_rod(p, 10)
+    end
+end
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Test Summary: | Pass  Total  Time
+rod cutting   |   15     15  0.0s
+#+end_example
 
 * Problem 82 :dynamic_programming:rod_cutting:
 ** Task
