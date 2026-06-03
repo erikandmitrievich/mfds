@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-30>
-#+lastmod: <2026-06-03 18:41>
+#+lastmod: <2026-06-03 19:03>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -242,10 +242,97 @@ Count element calls (c):
 * Problem 84 :dynamic_programming:greedy:matrix_chain:
 ** Task
 #+begin_quote
-As stated, in dynamic programming, you first solve the subproblems and then choose which of them to use in an optimal solution to the problem. Professor Capulet claims that she does not always need to solve all the subproblems in order to find an optimal solution. She suggests that she can find an optimal solution to the matrix-chain multiplication problem by always choosing the matrix $A_k$ at which to split the subproduct $A_i A_{i+1} \cdots A_j$ (by selecting $k$ to minimize the quantity $p_{i-1} p_k p_j$) before solving the subproblems. Find an instance of the matrix-chain multiplication problem for which this greedy approach yields a suboptimal solution.
+As stated, in dynamic programming, you first solve the subproblems and then choose which of them to use in an optimal solution to the problem.
+
+Professor Capulet claims that she does not always need to solve all the subproblems in order to find an optimal solution. She suggests that she can find an optimal solution to the matrix-chain multiplication problem by always choosing the matrix $A_k$ at which to split the subproduct $A_i A_{i+1} \cdots A_j$ (by selecting $k$ to minimize the quantity $p_{i-1} p_k p_j$) before solving the subproblems. Find an instance of the matrix-chain multiplication problem for which this greedy approach yields a suboptimal solution.
 #+end_quote
 
 ** Solution
+
+#+begin_src julia :results output
+using Test
+
+function matrix_chain_order(p, n)
+    m = zeros(Int, n, n)
+    s = zeros(Int, n, n)
+    c = 0
+
+    for i in 1:n
+        m[i, i] = 0
+    end
+
+    for l in 2:n
+        for i in 1:(n - l + 1)
+            j = i + l - 1
+            m[i, j] = typemax(Int)
+            for k in i:(j-1)
+                q = m[i, k] + m[k+1, j] + p[i] * p[k+1] * p[j+1]
+                if q < m[i, j]
+                    m[i, j] = q
+                    s[i, j] = k
+                end
+                c += 2
+            end
+        end
+    end
+    return (m, s, c)
+end
+
+# for recursion
+function greedy_chain(p, i, j)
+    # base case: a single matrix needs 0 multiplications
+    if i == j
+        return 0
+    end
+
+    best_k = i
+    min_split_cost = typemax(Int)
+
+    for k in i:(j-1)
+        cost = p[i] * p[k+1] * p[j+1]
+        if cost < min_split_cost
+            min_split_cost = cost
+            best_k = k
+        end
+    end
+
+    # recursively solve the left and right subproblems
+    left_cost = greedy_chain(p, i, best_k)
+    right_cost = greedy_chain(p, best_k + 1, j)
+
+    # total cost is the cost of the subproblems plus the split we chose
+    return left_cost + right_cost + min_split_cost
+end
+
+# wrapper
+function up_bottom_matrix_chain_order(p, n)
+    return greedy_chain(p, 1, n)
+end
+
+@testset "comparing bottom-up and up-bottom" begin
+
+    @testset "suboptimal greedy choice" begin
+        p = [1, 2, 100, 10]
+        n = length(p) - 1
+
+        m, s, c = matrix_chain_order(p, n)
+        dp_cost = m[1, n]
+
+        greedy_cost = up_bottom_matrix_chain_order(p, n)
+
+        println("DP Optimal Cost: $dp_cost")
+        println("Greedy Cost:     $greedy_cost")
+        @test greedy_cost > dp_cost
+    end
+
+end
+#+end_src
+
+#+RESULTS:
+: DP Optimal Cost: 1200
+: Greedy Cost:     2020
+: Test Summary:                     | Pass  Total  Time
+: comparing bottom-up and up-bottom |    1      1  0.0s
 
 * Problem 85 :dynamic_programming:rod_cutting:optimal_substructure:
 ** Task
