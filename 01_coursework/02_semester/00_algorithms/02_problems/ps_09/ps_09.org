@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-30>
-#+lastmod: <2026-06-03 11:28>
+#+lastmod: <2026-06-03 12:22>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -93,6 +93,49 @@ Consider a modification of the rod-cutting problem in which, in addition to a pr
 #+end_quote
 
 ** Solution
+
+#+begin_src julia :results output
+using Test
+
+function bottom_up_cut_rod_cstm(p, n, c)
+    r = Vector{Int}(undef, n + 1)
+    r[1] = 0
+    for j in 1:n
+        q = p[j]
+        for i in 1:j-1
+            q = max(q, p[i] + r[j - i + 1] - c)
+        end
+        r[j + 1] = q
+    end
+    r[n + 1]
+end
+
+
+p = [1, 5, 8, 9, 10, 17, 17, 20, 24, 30]
+
+@testset "cut_rod_cost" begin
+    opt = [0, 1, 5, 8, 10, 13, 17, 18, 22, 25, 30]
+
+    # no cost
+    for n in 0:10
+        @test bottom_up_cut_rod_cstm(p, n, 0) == opt[n + 1]
+    end
+
+    # expensive cost
+    for n in 1:10
+        @test bottom_up_cut_rod_cstm(p, n, 10) == p[n]
+    end
+
+    @test bottom_up_cut_rod_cstm(p, 4, 1) == 9    # uncut
+    @test bottom_up_cut_rod_cstm(p, 5, 1) == 12   # 2+3: 5+8-1
+end
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Test Summary: | Pass  Total  Time
+cut_rod_cost  |   23     23  0.0s
+#+end_example
 
 * Problem 83 :dynamic_programming:matrix_chain:complexity:
 ** Task
