@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-02>
-#+lastmod: <2026-06-02 16:44>
+#+lastmod: <2026-06-03 16:11>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -155,3 +155,123 @@ PRINT-CUT-ROD-SOLUTION(p, n)
 #+end_example
 - =PRINT-CUT-ROD-SOLUTION(p, 10)= prints 10 (no cuts).
 - =PRINT-CUT-ROD-SOLUTION(p, 7)= prints 1 then 6 — matches the $r_7 = 1 + 6$ decomposition.
+
+* 14.2 Matrix-chain multiplication
+
+** Problem setup
+- Given a chain $\langle A_1, A_2, \dots, A_n \rangle$, compute the product $A_1 A_2 \cdots A_n$ using the standard rectangular-matrix multiplication subroutine, minimizing scalar multiplications.
+- Matrix multiplication is associative, so any parenthesization yields the same matrix; only cost differs.
+- A product of matrices is *fully parenthesized* if it is either a single matrix or the parenthesized product of two fully parenthesized subproducts.
+- For $\langle A_1, A_2, A_3, A_4 \rangle$ there are 5 distinct full parenthesizations:
+  \[ (A_1(A_2(A_3 A_4))),\ (A_1((A_2 A_3) A_4)),\ ((A_1 A_2)(A_3 A_4)),\ ((A_1(A_2 A_3)) A_4),\ (((A_1 A_2) A_3) A_4) \]
+
+** Cost of multiplying two rectangular matrices
+- =RECTANGULAR-MATRIX-MULTIPLY= computes $C = C + A \cdot B$ with $A$ of size $p \times q$, $B$ of size $q \times r$, $C$ of size $p \times r$.
+#+begin_example
+RECTANGULAR-MATRIX-MULTIPLY(A, B, C, p, q, r)
+  for i = 1 to p
+    for j = 1 to r
+      for k = 1 to q
+        c_ij = c_ij + a_ik * b_kj
+#+end_example
+- Dominant cost is line 4: $pqr$ scalar multiplications. Take "cost of a matrix multiplication" to mean number of scalar multiplications.
+
+** Why parenthesization matters — example
+- Chain $\langle A_1, A_2, A_3 \rangle$ with dimensions $10 \times 100$, $100 \times 5$, $5 \times 50$.
+- $((A_1 A_2) A_3)$: $10 \cdot 100 \cdot 5 = 5000$ to form $A_1 A_2$ (which is $10 \times 5$), then $10 \cdot 5 \cdot 50 = 2500$. Total 7500.
+- $(A_1 (A_2 A_3))$: $100 \cdot 5 \cdot 50 = 25{,}000$ to form $A_2 A_3$ (which is $100 \times 50$), then $10 \cdot 100 \cdot 50 = 50{,}000$. Total 75,000.
+- First parenthesization is 10 times faster.
+
+** Problem statement
+- *Matrix-chain multiplication problem*: given $\langle A_1, \dots, A_n \rangle$ with $A_i$ of dimension $p_{i-1} \times p_i$, find a full parenthesization of $A_1 A_2 \cdots A_n$ minimizing scalar multiplications. Input is the dimension sequence $\langle p_0, p_1, \dots, p_n \rangle$.
+- The problem does not perform the multiplications; it only chooses the order. Planning cost is normally repaid many times over.
+
+** Counting the number of parenthesizations
+- Let $P(n)$ be the number of full parenthesizations of $n$ matrices. Splitting between the $k$ th and $(k+1)$ st matrices gives:
+  \[ P(n) = \begin{cases} 1 & \text{if } n = 1 \\ \sum_{k=1}^{n-1} P(k) P(n-k) & \text{if } n \geq 2 \end{cases} \quad (14.6) \]
+- Solution: *Catalan numbers*, growing as $\Omega(4^n / n^{3/2})$; a simpler bound is $\Omega(2^n)$. Brute-force exhaustive search is therefore impractical.
+
+** Applying dynamic programming — four steps
+1. Characterize the structure of an optimal solution.
+2. Recursively define the value of an optimal solution.
+3. Compute the value of an optimal solution.
+4. Construct an optimal solution from the computed information.
+
+** Step 1: Structure of an optimal parenthesization
+
+- Notation: $A_{i:j}$ denotes the matrix from evaluating $A_i A_{i+1} \cdots A_j$ (defined for $i \leq j$).
+- For $i < j$, any parenthesization splits the product between $A_k$ and $A_{k+1}$ for some $i \leq k < j$: first compute $A_{i:k}$ and $A_{k+1:j}$, then multiply.
+- Cost of this split = cost of $A_{i:k}$ + cost of $A_{k+1:j}$ + cost of multiplying the two results.
+
+*** Optimal substructure
+- *Claim:* if splitting between $A_k$ and $A_{k+1}$ is optimal for $A_i A_{i+1} \cdots A_j$, then the induced parenthesization of $A_i \cdots A_k$ is optimal for that subchain (likewise for $A_{k+1} \cdots A_j$).
+- *Proof by contradiction:* if a cheaper parenthesization of $A_i \cdots A_k$ existed, substituting it into the optimal parenthesization of $A_i \cdots A_j$ would yield a strictly cheaper parenthesization of $A_i \cdots A_j$ — contradicting optimality.
+- Therefore an optimal solution is built by choosing the best split $k$, then attaching optimal solutions of the two subchains. To be sure of the best split, all $j - i$ candidates must be tried.
+
+** Step 2: A recursive solution
+
+- $m[i,j]$ = minimum number of scalar multiplications to compute $A_{i:j}$. Final answer is $m[1,n]$.
+- Base case: $m[i,i] = 0$ (single matrix needs no multiplications).
+- For $i < j$, splitting between $A_k$ and $A_{k+1}$ contributes:
+  \[ m[i,k] + m[k+1, j] + p_{i-1} p_k p_j \]
+  because $A_{i:k}$ is $p_{i-1} \times p_k$ and $A_{k+1:j}$ is $p_k \times p_j$, so their product costs $p_{i-1} p_k p_j$.
+- Trying all valid split points yields the recurrence:
+  \[ m[i,j] = \begin{cases} 0 & \text{if } i = j \\ \min \{ m[i,k] + m[k+1, j] + p_{i-1} p_k p_j : i \leq k < j \} & \text{if } i < j \end{cases} \quad (14.7) \]
+- $s[i,j]$ = a value of $k$ achieving the minimum in (14.7); used later to reconstruct an optimal parenthesization.
+
+** Step 3: Computing the optimal costs
+
+- A direct recursive evaluation of (14.7) takes exponential time (analogous to naive rod cutting; see §14.3).
+- But distinct subproblems are few: one per pair $(i,j)$ with $1 \leq i \leq j \leq n$, giving $\binom{n}{2} + n = \Theta(n^2)$.
+- *Overlapping subproblems* (the same $(i,j)$ recurs across many branches of the recursion tree) is the second hallmark of dynamic programming, alongside optimal substructure.
+- Bottom-up table fill in =MATRIX-CHAIN-ORDER=. Auxiliary tables: $m[1{:}n, 1{:}n]$ for costs, $s[1{:}n-1, 2{:}n]$ for split indices.
+
+#+begin_example
+MATRIX-CHAIN-ORDER(p, n)
+  let m[1:n, 1:n] and s[1:n-1, 2:n] be new tables
+  for i = 1 to n                   // chain length 1
+    m[i, i] = 0
+  for l = 2 to n                   // l is the chain length
+    for i = 1 to n - l + 1         // chain begins at A_i
+      j = i + l - 1                // chain ends at A_j
+      m[i, j] = ∞
+      for k = i to j - 1           // try A_{i:k} A_{k+1:j}
+        q = m[i, k] + m[k+1, j] + p_{i-1} * p_k * p_j
+        if q < m[i, j]
+          m[i, j] = q              // remember this cost
+          s[i, j] = k              // remember this index
+  return m and s
+#+end_example
+
+*** Fill order
+- $m[i,j]$ depends on $m[i,k]$ and $m[k+1, j]$ for $k = i, \dots, j-1$. Both subchains have length $< j - i + 1$, so the natural subproblem size is the chain length $l = j - i + 1$.
+- Lines 2–3 handle $l = 1$. The outer loop on $l$ (lines 4–12) processes increasing chain lengths: iteration $l$ computes $m[i, i+l-1]$ for $i = 1, \dots, n-l+1$. Final iteration $l = n$ computes $m[1, n]$.
+- When line 9 fires, both $m[i,k]$ and $m[k+1, j]$ correspond to strictly shorter chains and were already written.
+
+*** Running time and space
+- Three nested loops, each index in a range of size at most $n - 1$: $O(n^3)$.
+- Matching lower bound $\Omega(n^3)$ (Exercise 14.2-5), so the algorithm is $\Theta(n^3)$.
+- Space: $\Theta(n^2)$ for the $m$ and $s$ tables.
+- Vastly better than the $\Omega(2^n)$ brute-force enumeration.
+
+*** Worked example
+- [FIGURE 14.5: rotated $m$ and $s$ tables for $n = 6$ with dimensions $30 \times 35, 35 \times 15, 15 \times 5, 5 \times 10, 10 \times 20, 20 \times 25$; main diagonal runs horizontally, $m[1,6] = 15{,}125$]
+- Sample computation $m[2,5]$ via (14.7) over $k \in \{2,3,4\}$:
+  \[ m[2,5] = \min \begin{cases} m[2,2] + m[3,5] + p_1 p_2 p_5 = 0 + 2500 + 35 \cdot 15 \cdot 20 = 13{,}000 \\ m[2,3] + m[4,5] + p_1 p_3 p_5 = 2625 + 1000 + 35 \cdot 5 \cdot 20 = 7{,}125 \\ m[2,4] + m[5,5] + p_1 p_4 p_5 = 4375 + 0 + 35 \cdot 10 \cdot 20 = 11{,}375 \end{cases} = 7{,}125 \]
+
+** Step 4: Constructing an optimal solution
+
+- =MATRIX-CHAIN-ORDER= returns only the cost; $s$ supplies the actual parenthesization.
+- Each $s[i,j]$ records a $k$ such that an optimal parenthesization of $A_i \cdots A_j$ splits between $A_k$ and $A_{k+1}$. So the outermost multiplication for $A_{1:n}$ is $A_{1:s[1,n]} \cdot A_{s[1,n]+1:n}$, and recursion on $s$ recovers all inner splits.
+
+#+begin_example
+PRINT-OPTIMAL-PARENS(s, i, j)
+  if i == j
+    print "A"_i
+  else print "("
+    PRINT-OPTIMAL-PARENS(s, i, s[i, j])
+    PRINT-OPTIMAL-PARENS(s, s[i, j] + 1, j)
+    print ")"
+#+end_example
+
+- For the $n = 6$ example, =PRINT-OPTIMAL-PARENS(s, 1, 6)= prints $((A_1 (A_2 A_3))((A_4 A_5) A_6))$.
