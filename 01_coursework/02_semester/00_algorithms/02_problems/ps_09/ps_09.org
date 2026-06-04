@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-30>
-#+lastmod: <2026-06-03 19:03>
+#+lastmod: <2026-06-04 11:30>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -341,6 +341,20 @@ Suppose that the rod-cutting problem of Section 14.1 also had a limit $l_i$ on t
 #+end_quote
 
 ** Solution
+
+|--------+----+----+----+----+---|
+| length |  1 |  2 |  3 |  4 | 5 |
+|--------+----+----+----+----+---|
+| cost   |  1 |  2 |  3 |  4 | 7 |
+|--------+----+----+----+----+---|
+| limit  | 10 | 10 | 10 | 10 | 1 |
+|--------+----+----+----+----+---|
+
+Take $n = 10$. Independently, $r_5 = 7$ (one length-5 piece). The recursion would give $r_{10} \ge p_5 + r_5 = 14$ via $10 = 5+5$, but this uses two length-5 pieces and violates $l_5 = 1$.
+
+True optimum: $12$ — one length-5 piece (7) plus a length-5 remainder restricted to lengths $\le 4$ (value 5).
+
+The optimum on length 10 does not contain the optimum on length 5. State indexed by remaining length alone is insufficient; limits must be carried in the state.
 
 * Problem 86 :dynamic_programming:graph:dag:longest_path:
 ** Task
