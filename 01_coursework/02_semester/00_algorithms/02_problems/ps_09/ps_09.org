@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-30>
-#+lastmod: <2026-06-04 11:30>
+#+lastmod: <2026-06-05 14:11>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -369,10 +369,115 @@ You are given a directed acyclic graph $\Gamma = (V, E)$ with real-valued edge w
 * Problem 87 :dynamic_programming:string:subsequence:palindrome:
 ** Task
 #+begin_quote
-Longest palindrome subsequence: A palindrome is a nonempty string over some alphabet that reads the same forward and backward. Examples of palindromes are all strings of length 1, civic, racecar, and aibohphobia (fear of palindromes). Give an efficient algorithm to find the longest palindrome that is a subsequence of a given input string. For example, given the input character, your algorithm should return carac. What is the running time of your algorithm?
+Longest palindrome subsequence: A palindrome is a nonempty string over some alphabet that reads the same forward and backward. Examples of palindromes are all strings of length 1, civic, racecar, and aibohphobia (fear of palindromes).
+
+Give an efficient algorithm to find the longest palindrome that is a subsequence of a given input string. For example, given the input character, your algorithm should return carac. What is the running time of your algorithm?
 #+end_quote
 
 ** Solution
+
+Running time: $\Theta(n^2)$, space $\Theta(n^2)$, where $n = |s|$.
+
+Reduction is $\Theta(n)$ (reversing the string); LCS on two length-$n$ strings is $\Theta(n^2)$ via the table fill; reconstruction is $\Theta(n)$. Total $\Theta(n^2)$.
+
+#+begin_src julia :results output
+using Test
+
+function is_palindrome(s::AbstractString)
+    i, j = firstindex(s), lastindex(s)
+    while i < j
+        (s[i] == s[j]) || (return false)
+        i, j = nextind(s, i), prevind(s, j)
+    end
+    true
+end
+
+function lcs_length(X, Y)
+    m, n = length(X), length(Y)
+    c = zeros(Int, m+1, n+1)
+    b = Matrix{Char}(undef, m, n)
+    for i in 1:m, j in 1:n
+        if X[i] == Y[j]
+            c[i+1, j+1] = c[i, j] + 1
+            b[i, j] = '↖'
+        elseif c[i, j+1] ≥ c[i+1, j]
+            c[i+1, j+1] = c[i, j+1]
+            b[i, j] = '↑'
+        else
+            c[i+1, j+1] = c[i+1, j]
+            b[i, j] = '←'
+        end
+    end
+    c, b
+end
+
+function lcs_string(b, X, i=size(b,1), j=size(b,2))
+    chars = Char[]
+    while i > 0 && j > 0
+        if b[i, j] == '↖'
+            push!(chars, X[i])
+            i -= 1; j -= 1
+        elseif b[i, j] == '↑'
+            i -= 1
+        else
+            j -= 1
+        end
+    end
+    String(reverse!(chars))
+end
+
+function lps(s::AbstractString)
+    c, b = lcs_length(s, reverse(s))
+    return lcs_string(b, s)
+end
+
+@testset "longest palindrome" begin
+    @testset "is_palindrome" begin
+        for s in ("civic", "racecar", "abccba");  @test  is_palindrome(s); end
+        for s in ("apple", "banana", "pinapple"); @test !is_palindrome(s); end
+    end
+end
+
+@testset "longest palindrome subsequence" begin
+    function is_subseq(sub, s)
+        it = Iterators.Stateful(s)
+        all(c -> any(==(c), it), sub)
+    end
+
+    cases = [
+        ("",          0),
+        ("a",         1),
+        ("ab",        1),
+        ("aaaa",      4),
+        ("abcd",      1),
+        ("racecar",   7),
+        ("abcba",     5),
+        ("bbbab",     4),
+        ("cbbd",      2),
+        ("character", 5),
+        ("agbdba",    5),
+    ]
+
+    for (s, len) in cases
+        r = lps(s)
+        @test length(r) == len
+        @test is_palindrome(r)
+        @test is_subseq(r, s)
+    end
+end
+
+
+#+end_src
+
+#+RESULTS:
+#+begin_example
+lps (generic function with 1 method)
+Test Summary:      | Pass  Total  Time
+longest palindrome |    6      6  0.0s
+
+Test Summary:                  | Pass  Total  Time
+longest palindrome subsequence |   33     33  0.1s
+#+end_example
 
 * Problem 88 :dynamic_programming:optimization:inventory:
 ** Task
