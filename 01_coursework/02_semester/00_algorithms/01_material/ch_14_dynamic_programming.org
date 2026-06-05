@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-02>
-#+lastmod: <2026-06-03 16:11>
+#+lastmod: <2026-06-04 11:45>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -275,3 +275,119 @@ PRINT-OPTIMAL-PARENS(s, i, j)
 #+end_example
 
 - For the $n = 6$ example, =PRINT-OPTIMAL-PARENS(s, 1, 6)= prints $((A_1 (A_2 A_3))((A_4 A_5) A_6))$.
+
+* 14.4 Longest common subsequence
+
+** DNA motivation
+- A *strand of DNA* is a string over the 4-element alphabet $\{A, C, G, T\}$ of *bases* (adenine, cytosine, guanine, thymine).
+- Similarity between two strands $S_1, S_2$ admits several formalizations:
+  - One is a substring of the other (substring matching, Ch. 32).
+  - Few edits transform one to the other (edit distance, Problem 14-5).
+  - A long third strand $S_3$ appears as a subsequence in both — the longer, the more similar.
+- LCS formalizes the third notion.
+
+** Definitions
+- *Subsequence*: $Z = \langle z_1, \dots, z_k \rangle$ is a subsequence of $X = \langle x_1, \dots, x_m \rangle$ if there exists a strictly increasing index sequence $\langle i_1, \dots, i_k \rangle$ with $x_{i_j} = z_j$ for all $j$.
+- *Common subsequence*: $Z$ is a common subsequence of $X$ and $Y$ if $Z$ is a subsequence of each.
+- *Longest common subsequence (LCS)*: a maximum-length common subsequence of $X$ and $Y$ (need not be unique).
+- *Longest-common-subsequence problem*: given $X = \langle x_1, \dots, x_m \rangle$ and $Y = \langle y_1, \dots, y_n \rangle$, find an LCS.
+- Brute force: enumerate all $2^m$ subsequences of $X$ and test each against $Y$ → exponential, impractical.
+
+** Step 1: Characterizing a longest common subsequence
+
+- *Prefix*: the $i$ th prefix of $X = \langle x_1, \dots, x_m \rangle$ is $X_i = \langle x_1, \dots, x_i \rangle$ for $i = 0, 1, \dots, m$; $X_0$ is empty.
+- LCS subproblems correspond to pairs of prefixes of the two inputs.
+
+*** Theorem 14.1 (Optimal substructure of an LCS)
+- *Theorem 14.1:* let $X = \langle x_1, \dots, x_m \rangle$, $Y = \langle y_1, \dots, y_n \rangle$, and let $Z = \langle z_1, \dots, z_k \rangle$ be any LCS of $X$ and $Y$. Then:
+  1. If $x_m = y_n$, then $z_k = x_m = y_n$ and $Z_{k-1}$ is an LCS of $X_{m-1}$ and $Y_{n-1}$.
+  2. If $x_m \neq y_n$ and $z_k \neq x_m$, then $Z$ is an LCS of $X_{m-1}$ and $Y$.
+  3. If $x_m \neq y_n$ and $z_k \neq y_n$, then $Z$ is an LCS of $X$ and $Y_{n-1}$.
+
+- *Proof of (1) — last character must match.*
+  - *Last character of $Z$*: suppose $z_k \neq x_m$. Then append $x_m = y_n$ to $Z$ to form a length-$(k+1)$ common subsequence of $X$ and $Y$, contradicting maximality of $Z$. Hence $z_k = x_m = y_n$.
+  - *Prefix $Z_{k-1}$ is an LCS of $X_{m-1}, Y_{n-1}$.* $Z_{k-1}$ is clearly a length-$(k-1)$ common subsequence of $X_{m-1}, Y_{n-1}$.
+  - *Maximality of $Z_{k-1}$* — contradiction. Suppose some common subsequence $W$ of $X_{m-1}, Y_{n-1}$ has length $> k - 1$. Append $x_m = y_n$ to $W$: result is a common subsequence of $X, Y$ of length $> k$, contradicting that $Z$ is an LCS.
+
+- *Proof of (2) — drop $x_m$.* Since $z_k \neq x_m$, $Z$ is a common subsequence of $X_{m-1}$ and $Y$. If some common subsequence $W$ of $X_{m-1}, Y$ had length $> k$, then $W$ would also be a common subsequence of $X_m = X$ and $Y$, contradicting that $Z$ is an LCS of $X, Y$.
+
+- *Proof of (3).* Symmetric to (2). $\blacksquare$
+
+- *Consequence:* an LCS of $X, Y$ contains an LCS of appropriate prefixes — LCS problem has optimal substructure.
+
+** Step 2: A recursive solution
+
+- *Subproblem dispatch* (from Theorem 14.1):
+  - If $x_m = y_n$: solve one subproblem — LCS of $X_{m-1}, Y_{n-1}$ — then append $x_m$.
+  - If $x_m \neq y_n$: solve two subproblems — LCS of $X_{m-1}, Y$ and LCS of $X, Y_{n-1}$ — take the longer.
+
+- *Overlapping subproblems.* To compute LCS of $X, Y$ one may need LCS of $X, Y_{n-1}$ and of $X_{m-1}, Y$; both reduce further to LCS of $X_{m-1}, Y_{n-1}$. Many subproblems share subsubproblems.
+
+- *Note on conditional subproblem restriction.* Unlike rod cutting or matrix-chain multiplication, here the problem's own condition ($x_i = y_j$ vs. $x_i \neq y_j$) rules out certain subproblems. Edit distance (Problem 14-5) shares this trait.
+
+- *Recurrence (14.9)* — let $c[i, j]$ be the length of an LCS of $X_i, Y_j$:
+  \[ c[i, j] = \begin{cases} 0 & \text{if } i = 0 \text{ or } j = 0 \\ c[i-1, j-1] + 1 & \text{if } i, j > 0 \text{ and } x_i = y_j \\ \max\{c[i, j-1],\, c[i-1, j]\} & \text{if } i, j > 0 \text{ and } x_i \neq y_j \end{cases} \]
+
+** Step 3: Computing the length of an LCS
+
+- Naïve recursion on (14.9) is exponential, but there are only $\Theta(mn)$ distinct subproblems ($0 \leq i \leq m$, $0 \leq j \leq n$) → solve bottom up.
+- =LCS-LENGTH= stores $c[i, j]$ in table $c[0:m, 0:n]$, filled in *row-major* order (first row left to right, then second row, etc.).
+- An auxiliary table $b[1:m, 1:n]$ records which case of (14.9) was used at each $(i, j)$ — used later to reconstruct an LCS.
+- Returns $c[m, n]$ as LCS length plus both tables.
+
+#+begin_example
+LCS-LENGTH(X, Y, m, n)
+  let b[1:m, 1:n] and c[0:m, 0:n] be new tables
+  for i = 1 to m
+    c[i, 0] = 0
+  for j = 0 to n
+    c[0, j] = 0
+  for i = 1 to m              // compute table entries in row-major order
+    for j = 1 to n
+      if x_i == y_j
+        c[i, j] = c[i-1, j-1] + 1
+        b[i, j] = "↖"
+      elseif c[i-1, j] >= c[i, j-1]
+        c[i, j] = c[i-1, j]
+        b[i, j] = "↑"
+      else c[i, j] = c[i, j-1]
+        b[i, j] = "←"
+  return c and b
+#+end_example
+
+- *Running time:* $\Theta(mn)$ — each of $mn$ entries costs $\Theta(1)$.
+
+** Step 4: Constructing an LCS
+
+- Trace $b$ from $b[m, n]$:
+  - "$\nwarrow$" at $b[i, j]$ → $x_i = y_j$ is in the LCS; recurse on $(i-1, j-1)$.
+  - "$\uparrow$" → recurse on $(i-1, j)$.
+  - "$\leftarrow$" → recurse on $(i, j-1)$.
+- Recursion yields LCS elements in forward order via =PRINT-LCS=.
+
+#+begin_example
+PRINT-LCS(b, X, i, j)
+  if i == 0 or j == 0
+    return                       // the LCS has length 0
+  if b[i, j] == "↖"
+    PRINT-LCS(b, X, i-1, j-1)
+    print x_i                    // same as y_j
+  elseif b[i, j] == "↑"
+    PRINT-LCS(b, X, i-1, j)
+  else PRINT-LCS(b, X, i, j-1)
+#+end_example
+
+- Initial call: =PRINT-LCS(b, X, m, n)=.
+- *Running time:* $O(m + n)$ — each recursive call decrements $i$, $j$, or both.
+
+- [FIGURE 14.8: $c$ and $b$ tables for $X = \langle A, B, C, B, D, A, B \rangle$, $Y = \langle B, D, C, A, B, A \rangle$; $c[7, 6] = 4$ is the LCS length; the shaded "$\nwarrow$" trace recovers LCS $\langle B, C, B, A \rangle$, output $BCBA$.]
+
+** Improving the code
+
+- *Eliminate the $b$ table.* Given $c[i, j]$ and its three potential predecessors $c[i-1, j-1]$, $c[i-1, j]$, $c[i, j-1]$, one can decide in $O(1)$ which case of (14.9) produced it — no $b$ needed.
+  - Reconstruction by an analogous procedure still runs in $O(m + n)$ time.
+  - Saves $\Theta(mn)$ space, but $c$ still occupies $\Theta(mn)$, so the asymptotic space does not drop.
+
+- *Reduce $c$ to two rows (or slightly more than one).* =LCS-LENGTH= needs only the current row and the previous row → $\Theta(\min(m, n))$ space suffices to compute the length (Exercise 14.4-4: slightly more than one row).
+  - Works only if just the *length* is required.
+  - LCS *reconstruction* in $O(m + n)$ fails: the trimmed table lacks the information to retrace.
