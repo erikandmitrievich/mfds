@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-02>
-#+lastmod: <2026-06-04 11:45>
+#+lastmod: <2026-06-05 14:20>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -391,3 +391,108 @@ PRINT-LCS(b, X, i, j)
 - *Reduce $c$ to two rows (or slightly more than one).* =LCS-LENGTH= needs only the current row and the previous row → $\Theta(\min(m, n))$ space suffices to compute the length (Exercise 14.4-4: slightly more than one row).
   - Works only if just the *length* is required.
   - LCS *reconstruction* in $O(m + n)$ fails: the trimmed table lacks the information to retrace.
+
+* 14.5 Optimal binary search trees
+
+** Problem setup
+
+- *Motivation:* dictionary lookup where word frequencies are known and unbalanced. Balanced BSTs give $O(\lg n)$ per search but ignore frequency — a rare word can sit near the root while a common one sits deep. Goal: minimize *total* search cost given the frequencies.
+- Some queries may target values not in $K$ → represented by *dummy keys*.
+- *Formal input:* sequence $K = \langle k_1, k_2, \dots, k_n \rangle$ with $k_1 < k_2 < \dots < k_n$, probabilities $p_i$ that a search hits $k_i$, and $n+1$ dummy keys $d_0, d_1, \dots, d_n$ with probabilities $q_i$:
+  - $d_0$ covers all values $< k_1$.
+  - $d_n$ covers all values $> k_n$.
+  - $d_i$ (for $1 \leq i \leq n-1$) covers values strictly between $k_i$ and $k_{i+1}$.
+- Internal nodes = actual keys $k_i$; leaves = dummy keys $d_i$.
+- Every search is either successful (hits some $k_i$) or unsuccessful (hits some $d_i$), so
+  \[ \sum_{i=1}^{n} p_i + \sum_{i=0}^{n} q_i = 1 \tag{14.10} \]
+
+** Expected search cost
+
+- Actual cost of a search = number of nodes examined = depth of the found node + 1.
+- Expected cost in a tree $T$:
+  \[ E[\text{search cost in } T] = \sum_{i=1}^{n} (\mathrm{depth}_T(k_i) + 1) p_i + \sum_{i=0}^{n} (\mathrm{depth}_T(d_i) + 1) q_i \]
+  \[ = 1 + \sum_{i=1}^{n} \mathrm{depth}_T(k_i) \cdot p_i + \sum_{i=0}^{n} \mathrm{depth}_T(d_i) \cdot q_i \tag{14.11} \]
+  The second line uses (14.10) to absorb the $+1$ into a constant.
+- An *optimal binary search tree* for a given $(p, q)$ is one minimizing expected search cost.
+
+[FIGURE 14.9: two BSTs on $n=5$ keys with the same probabilities; tree (a) has expected cost 2.80, tree (b) has 2.75 and is optimal]
+
+- *Observations from Figure 14.9:*
+  - Optimal BST is *not* the tree of smallest height.
+  - The root of the optimal BST is *not* necessarily the highest-probability key. Here $k_5$ has the largest $p_i$, yet the optimal tree's root is $k_2$ (best tree with $k_5$ at the root costs 2.85).
+
+** Why exhaustive search fails
+
+- Labeling any $n$ node binary tree with $k_1, \dots, k_n$ in inorder + adding dummies as leaves yields a BST.
+- Number of $n$ node binary trees is $\Omega(4^n / n^{3/2})$ (Problem 12-4), so exhaustive checking is exponential. Use DP.
+
+** Step 1: optimal substructure
+
+- Any subtree of a BST contains a *contiguous* key range $k_i, \dots, k_j$ for some $1 \leq i \leq j \leq n$, and as leaves the dummy keys $d_{i-1}, \dots, d_j$.
+- *Optimal substructure:* if optimal BST $T$ contains a subtree $T'$ on keys $k_i, \dots, k_j$, then $T'$ is optimal for that subrange.
+  - *Cut and paste:* if some $T''$ on the same keys had lower expected cost, replace $T'$ with $T''$ in $T$ to get a cheaper tree, contradicting optimality of $T$.
+- *Construction:* pick a root $k_r$ with $i \leq r \leq j$, recursively build optimal BSTs on $k_i, \dots, k_{r-1}$ and $k_{r+1}, \dots, k_j$. Trying all candidate roots $r$ is guaranteed to find an optimum.
+
+*** Empty subtree convention
+- Picking $k_i$ as root makes the left subtree's actual key range $k_i, \dots, k_{i-1}$ (empty) — but it still contains the single dummy key $d_{i-1}$.
+- Symmetrically, picking $k_j$ as root: right subtree is empty of actual keys but contains $d_j$.
+- So "empty" subtrees in this DP always carry exactly one dummy.
+
+** Step 2: recursive solution
+
+- *Subproblem domain:* find an optimal BST on keys $k_i, \dots, k_j$ for $i \geq 1$, $j \leq n$, $j \geq i-1$. When $j = i-1$, the subtree is just the dummy $d_{i-1}$.
+- Let $e[i, j]$ be the expected search cost of an optimal BST on $k_i, \dots, k_j$. Goal: $e[1, n]$.
+- *Easy case* $j = i-1$: only dummy $d_{i-1}$, so $e[i, i-1] = q_{i-1}$.
+- *When $j \geq i$:* pick root $k_r$, recurse on left ($k_i, \dots, k_{r-1}$) and right ($k_{r+1}, \dots, k_j$).
+  - When a subtree becomes a subtree of a node, every node's depth increases by 1 → by (14.11), its expected cost rises by the sum of all probabilities in it. For the subtree on $k_i, \dots, k_j$ this sum is
+    \[ w(i, j) = \sum_{l=i}^{j} p_l + \sum_{l=i-1}^{j} q_l \tag{14.12} \]
+  - So with $k_r$ as root:
+    \[ e[i, j] = p_r + (e[i, r-1] + w(i, r-1)) + (e[r+1, j] + w(r+1, j)) \]
+  - Note $w(i, j) = w(i, r-1) + p_r + w(r+1, j)$, simplifying to
+    \[ e[i, j] = e[i, r-1] + e[r+1, j] + w(i, j) \tag{14.13} \]
+- Minimizing over root choice yields the final recurrence:
+  \[ e[i, j] = \begin{cases} q_{i-1} & \text{if } j = i-1 \\ \min\{ e[i, r-1] + e[r+1, j] + w(i, j) : i \leq r \leq j \} & \text{if } i \leq j \end{cases} \tag{14.14} \]
+- *root[i, j]:* index $r$ achieving the minimum, i.e. the root of the optimal subtree on $k_i, \dots, k_j$. Defined for $1 \leq i \leq j \leq n$. (Construction of the tree from $root$ deferred to Exercise 14.5-1.)
+
+** Step 3: computing the expected search cost
+
+- Direct recursion on (14.14) is as bad as recursive matrix-chain — overlapping subproblems on contiguous index ranges.
+- *Tables:*
+  - $e[1{:}n+1, 0{:}n]$: first index ranges to $n+1$ to store $e[n+1, n]$ (right dummy $d_n$ alone); second index starts at 0 to store $e[1, 0]$ (left dummy $d_0$ alone). Only entries with $j \geq i-1$ are filled.
+  - $root[1{:}n, 1{:}n]$.
+  - $w[1{:}n+1, 0{:}n]$: precomputed to avoid recomputing $w(i, j)$ from scratch (which would cost $\Theta(j-i)$ additions per access). Base: $w[i, i-1] = q_{i-1}$ for $1 \leq i \leq n+1$. For $j \geq i$:
+    \[ w[i, j] = w[i, j-1] + p_j + q_j \tag{14.15} \]
+  - All $\Theta(n^2)$ values of $w[i, j]$ are then filled in $\Theta(1)$ each.
+
+*** =OPTIMAL-BST= pseudocode
+
+#+begin_example
+OPTIMAL-BST(p, q, n)
+1  let e[1 : n+1, 0 : n], w[1 : n+1, 0 : n],
+       and root[1 : n, 1 : n] be new tables
+2  for i = 1 to n + 1                          // base cases
+3    e[i, i-1] = q[i-1]                        // equation (14.14)
+4    w[i, i-1] = q[i-1]
+5  for l = 1 to n
+6    for i = 1 to n - l + 1
+7      j = i + l - 1
+8      e[i, j] = infinity
+9      w[i, j] = w[i, j-1] + p[j] + q[j]       // equation (14.15)
+10     for r = i to j                          // try all possible roots r
+11       t = e[i, r-1] + e[r+1, j] + w[i, j]   // equation (14.14)
+12       if t < e[i, j]                        // new minimum?
+13         e[i, j] = t
+14         root[i, j] = r
+15 return e and root
+#+end_example
+
+- Lines 2–4 initialize $e[i, i-1]$ and $w[i, i-1]$ (the dummy-only base cases).
+- Outer loop $l = 1, 2, \dots, n$ controls subtree size: iteration $l$ computes $e[i, i+l-1]$ for $i = 1, \dots, n-l+1$ — same diagonal-by-diagonal pattern as =MATRIX-CHAIN-ORDER=.
+- Innermost loop over $r$ tries every candidate root, updating $e[i, j]$ and recording the winner in $root[i, j]$.
+
+*** Running time
+- Three nested =for= loops, each index taking at most $n$ values → $O(n^3)$.
+- Loop bounds differ from =MATRIX-CHAIN-ORDER= by at most 1 in every direction, so by the same argument =OPTIMAL-BST= is also $\Omega(n^3)$.
+- *Therefore* $\Theta(n^3)$.
+
+[FIGURE 14.10: tables $e[i,j]$, $w[i,j]$, $root[i,j]$ produced by =OPTIMAL-BST= on the distribution from Figure 14.9; rotated 45° so diagonals run horizontally; rows computed bottom-to-top, left-to-right within each row. Top of $e$ table reads 2.75 (= optimal cost $e[1,5]$); top of $root$ table reads 2 (= $k_2$ is the optimal root, matching Figure 14.9(b))]
