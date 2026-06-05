@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-30>
-#+lastmod: <2026-06-05 14:11>
+#+lastmod: <2026-06-05 19:17>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -482,7 +482,11 @@ longest palindrome subsequence |   33     33  0.1s
 * Problem 88 :dynamic_programming:optimization:inventory:
 ** Task
 #+begin_quote
-he Rinky Dink Company makes machines that resurface ice rinks. The demand for such products varies from month to month, and so the company needs to develop a strategy to plan its manufacturing given the fluctuating, but predictable, demand. The company wishes to design a plan for the next $n$ months. For each month $i$, the company knows the demand $d_i$, that is, the number of machines that it will sell. Let $D = \sum_{i=1}^{n} d_i$ be the total demand over the next $n$ months. The company keeps a full-time staff who provide labor to manufacture up to $m$ machines per month. If the company needs to make more than $m$ machines in a given month, it can hire additional, part-time labor, at a cost that works out to $c$ dollars per machine. Furthermore, if the company is holding any unsold machines at the end of a month, it must pay inventory costs. The company can hold up to $D$ machines, with the cost for holding $j$ machines given as a function $h(j)$ for $j = 1, 2, \ldots, D$ that monotonically increases with $j$. Give an algorithm that calculates a plan for the company that minimizes its costs while fulfilling all the demand. The running time should be polynomial in $n$ and $D$.
+The Rinky Dink Company makes machines that resurface ice rinks. The demand for such products varies from month to month, and so the company needs to develop a strategy to plan its manufacturing given the fluctuating, but predictable, demand.
+
+The company wishes to design a plan for the next $n$ months. For each month $i$, the company knows the demand $d_i$, that is, the number of machines that it will sell. Let $D = \sum_{i=1}^{n} d_i$ be the total demand over the next $n$ months. The company keeps a full-time staff who provide labor to manufacture up to $m$ machines per month. If the company needs to make more than $m$ machines in a given month, it can hire additional, part-time labor, at a cost that works out to $c$ dollars per machine. Furthermore, if the company is holding any unsold machines at the end of a month, it must pay inventory costs. The company can hold up to $D$ machines, with the cost for holding $j$ machines given as a function $h(j)$ for $j = 1, 2, \ldots, D$ that monotonically increases with $j$.
+
+Give an algorithm that calculates a plan for the company that minimizes its costs while fulfilling all the demand. The running time should be polynomial in $n$ and $D$.
 #+end_quote
 
 ** Solution
@@ -490,10 +494,71 @@ he Rinky Dink Company makes machines that resurface ice rinks. The demand for su
 * Problem 89 :dynamic_programming:string:optimal_partition:
 ** Task
 #+begin_quote
-A certain string-processing programming language allows you to break a string into two pieces. Because this operation copies the string, it costs $n$ time units to break a string of $n$ characters into two pieces. Suppose that you want to break a string into many pieces. The order in which the breaks occur can affect the total amount of time used. For example, suppose that you want to break a 20-character string after characters 2, 8, and 10 (numbering the characters in ascending order from the left-hand end, starting from 1). If you program the breaks to occur in left-to-right order, then the first break costs 20 time units, the second break costs 18 time units (breaking the string from characters 3 to 20 at character 8), and the third break costs 12 time units, totaling 50 time units. If you program the breaks to occur in right-to-left order, however, then the first break costs 20 time units, the second break costs 10 time units, and the third break costs 8 time units, totaling 38 time units. In yet another order, you could break first at 8 (costing 20), then break the left piece at 2 (costing another i8), and finally the right piece at 10 (costing 12), for a total cost of 40. Design an algorithm that, given the numbers of characters after which to break, determines a least-cost way to sequence those breaks. More formally, given an array $L[1 : m]$ containing the break points for a string of $n$ characters, compute the lowest cost for a sequence of breaks, along with a sequence of breaks that achieves this cost.
+A certain string-processing programming language allows you to break a string into two pieces. Because this operation copies the string, it costs $n$ time units to break a string of $n$ characters into two pieces.
+
+Suppose that you want to break a string into many pieces. The order in which the breaks occur can affect the total amount of time used. For example, suppose that you want to break a 20-character string after characters 2, 8, and 10 (numbering the characters in ascending order from the left-hand end, starting from 1).
+
+If you program the breaks to occur in left-to-right order, then the first break costs 20 time units, the second break costs 18 time units (breaking the string from characters 3 to 20 at character 8), and the third break costs 12 time units, totaling 50 time units.
+
+If you program the breaks to occur in right-to-left order, however, then the first break costs 20 time units, the second break costs 10 time units, and the third break costs 8 time units, totaling 38 time units.
+
+In yet another order, you could break first at 8 (costing 20), then break the left piece at 2 (costing another i8), and finally the right piece at 10 (costing 12), for a total cost of 40.
+
+Design an algorithm that, given the numbers of characters after which to break, determines a least-cost way to sequence those breaks. More formally, given an array $L[1 : m]$ containing the break points for a string of $n$ characters, compute the lowest cost for a sequence of breaks, along with a sequence of breaks that achieves this cost.
 #+end_quote
 
 ** Solution
+
+#+begin_src julia :results output
+using Test
+
+function min_cost_string_break(n, bp)
+    positions = [0; sort(bp); n]
+    p = length(positions)
+    cost = zeros(Int, p, p)
+    split = zeros(Int, p, p)
+    for len in 3:p
+        for i in 1:p-len+1
+            j = i + len - 1
+            best, best_k = typemax(Int), 0
+            for k in i+1:j-1
+                c = cost[i,k] + cost[k,j]
+                if c < best
+                    best, best_k = c, k
+                end
+            end
+            cost[i,j] = best + positions[j] - positions[i]
+            split[i,j] = best_k
+        end
+    end
+
+    sequence = Int[]
+    function emit(i, j)
+        j - i < 2 && return
+        k = split[i,j]
+        push!(sequence, positions[k])
+        emit(i, k)
+        emit(k, j)
+    end
+    emit(1, p)
+
+    return cost[1, p], sequence
+end
+
+@testset "min_cost_string_break" begin
+    @test min_cost_string_break(20, [2, 8, 10]) == (38, [10, 2, 8])
+    @test min_cost_string_break(20, [10, 2, 8]) == (38, [10, 2, 8])
+    @test min_cost_string_break(4,  [1, 2])     == (6,  [2, 1])
+    @test min_cost_string_break(10, Int[])      == (0,  Int[])
+    @test min_cost_string_break(15, [4])        == (15, [4])
+    @test min_cost_string_break(10, [2, 5, 8])  == (20, [5, 2, 8])
+end
+#+end_src
+
+#+RESULTS:
+: min_cost_string_break (generic function with 1 method)
+: Test Summary:         | Pass  Total  Time
+: min_cost_string_break |    6      6  0.1s
 
 * Errors/Typos
 - Problem 86: "dynamic-programmingr" → "dynamic-programming"
