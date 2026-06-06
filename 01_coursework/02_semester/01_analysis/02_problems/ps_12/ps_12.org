@@ -1,0 +1,107 @@
+#+title: Ps 12
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-06-06>
+#+lastmod: <2026-06-06 20:01>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 1 :constrained_optimization:lagrange_multipliers:
+** Task
+#+begin_quote
+Find the extrema of $f : \mathbb{R}^3 \to \mathbb{R}$,
+
+$$f(x, y, z) = xyz$$
+
+subject to the constraint
+
+$$x^2 + y^2 + z^2 = 12.$$
+#+end_quote
+
+** Solution
+
+* Problem 2 :constrained_optimization:lagrange_multipliers:ellipse:
+** Task
+#+begin_quote
+Consider the ellipse
+
+$$M = \{(x, y)^\top \in \mathbb{R}^2 : 4x^2 + y^2 = 16\}.$$
+
+(a) Determine the points that are closest to and farthest from the origin.
+
+(b) Visualize the problem in Julia.
+
+(c) Determine the points on the ellipse that are closest to and farthest from $(3, 0)^\top$.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+#+begin_src julia :results value :exports both :tangle julia/p_2b.jl
+#+end_src
+
+*** (c)
+
+* Problem 3 :constrained_optimization:lagrange_multipliers:
+** Task
+#+begin_quote
+Find the extrema of $f : \mathbb{R}^3 \to \mathbb{R}$,
+
+$$f(x, y, z) = x^2 + y^2 + z^2$$
+
+subject to the constraints
+
+$$x + y + z = 6, \qquad x - y = 2.$$
+#+end_quote
+
+** Solution
+
+* Problem 4 :constrained_optimization:lagrange_multipliers:parametrization:
+** Task
+#+begin_quote
+Consider the function $f : \mathbb{R}^2 \to \mathbb{R}$,
+
+$$f(x, y) = x^2 - y^2$$
+
+subject to the constraint
+
+$$x^2 + y^2 = 4.$$
+
+1. Generate a heatmap of $f$ on the square $[-3, 3]^2$ and draw the constraint curve on top of the heatmap.
+
+2. Parametrize the constraint by
+
+$$\gamma(t) = (2\cos t,\, 2\sin t), \qquad 0 \leq t \leq 2\pi.$$
+
+and plot the function $F(t) = f(\gamma(t))$ with $t$ on the horizontal axis.
+
+3. Make an educated guess of the exact maxima and minima based on this investigation. Then determine the exact constrained extrema using Corollary 5.4.7.
+#+end_quote
+
+** Solution
+*** 1.
+#+begin_src julia :results value :exports both :tangle julia/p_4_1.jl
+#+end_src
+
+*** 2.
+#+begin_src julia :results value :exports both :tangle julia/p_4_2.jl
+#+end_src
+
+*** 3.
+
+* Time Estimates
+- Problem 1: ~20 min~
+- Problem 2: ~30 min~
+- Problem 3: ~20 min~
+- Problem 4: ~35 min~
