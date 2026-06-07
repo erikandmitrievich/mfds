@@ -1,0 +1,1273 @@
+#+title: Ch 03 Differentiation And Integration
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-06-07>
+#+lastmod: <2026-06-07 17:44>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Definition:  Differentiability
+:PROPERTIES:
+:CUSTOM_ID: def:differentiability
+:LECTURE_REF: 3.1.1
+:END:
+
+Let $U \subseteq \mathbb{R}$ be an open interval and $f : U \rightarrow \mathbb{R}$. We say that $f$ is differentiable at $x \in U$ if the limit
+
+$$\lim_{y \rightarrow x} \frac{f(y) - f(x)}{y - x}$$
+
+exists. The value of this limit is denoted by $f'(x)$ and is called the derivative of $f$ at $x$. Equivalently, by writing $h = y - x$, the function $f$ is differentiable at $x$ if and only if
+
+$$\lim_{h \rightarrow 0} \frac{f(x + h) - f(x)}{h}$$
+
+exists.
+
+** Questions
+
+* Lemma:       Exponential is differentiable
+:PROPERTIES:
+:CUSTOM_ID: lem:exp-differentiable
+:LECTURE_REF: 3.1.5
+:END:
+
+The exponential function satisfies
+
+$$\exp' x = \exp x.$$
+
+#+begin_proof
+We compute the difference quotient by the functional equation,
+
+$$\frac{\exp(x + h) - \exp(x)}{h} = \exp(x) \frac{\exp(h) - 1}{h}.$$
+
+Using the expansion from /Theorem 2.2.2/ with $N = 1$, we have
+
+$$\exp(h) = 1 + h + R_2(h),$$
+
+where $|R_2(h)| \le |h|^2$ for $|h| \le 3/2$. Hence
+
+$$\frac{\exp(h) - 1}{h} = 1 + \frac{R_2(h)}{h},$$
+
+and since $|R_2(h)/h| \le |h| \rightarrow 0$ as $h \rightarrow 0$, we obtain
+
+$$\frac{\exp(x + h) - \exp(x)}{h} \rightarrow \exp(x).$$
+#+end_proof
+
+** Questions
+
+* Lemma:       Sine and cosine are differentiable
+:PROPERTIES:
+:CUSTOM_ID: lem:sine-cosine-differentiable
+:LECTURE_REF: 3.1.6
+:END:
+
+The trigonometric functions satisfy
+
+$$\sin' x = \cos x, \qquad \cos' x = -\sin x.$$
+
+#+begin_proof
+Using the addition formulas,
+
+$$\frac{\sin(x + h) - \sin x}{h} = \sin x \frac{\cos h - 1}{h} + \cos x \frac{\sin h}{h}.$$
+
+As $h \rightarrow 0$, we have $\frac{\cos h - 1}{h} \rightarrow 0$ and $\frac{\sin h}{h} \rightarrow 1$, see /Lemma 2.4.11/. Hence $\sin' x = \cos x$. Similarly,
+
+$$\frac{\cos(x + h) - \cos x}{h} = \cos x \frac{\cos h - 1}{h} - \sin x \frac{\sin h}{h},$$
+
+which converges to $-\sin x$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Differentiability as linear approximability
+:PROPERTIES:
+:CUSTOM_ID: thm:differentiability-linear-approximability
+:LECTURE_REF: 3.1.8
+:END:
+
+Let $f : U \rightarrow \mathbb{R}$ and $x_0 \in U$. The function $f$ is differentiable at $x_0$ if and only if there exist $c \in \mathbb{R}$ and a function $\varphi$ such that
+
+$$f(x) = f(x_0) + c(x - x_0) + \varphi(x),$$
+
+where
+
+$$\lim_{x \rightarrow x_0} \frac{\varphi(x)}{x - x_0} = 0.$$
+
+In this case, $c = f'(x_0)$.
+
+For a function $\varphi$ satisfying $\lim_{x \rightarrow x_0} \frac{\varphi(x)}{x - x_0} = 0$ we simply write $o(|x - x_0|)$. The linear approximability reads as
+
+$$f(x) = f(x_0) + c(x - x_0) + o(|x - x_0|).$$
+
+#+begin_proof
+If $f$ is differentiable at $x_0$, set $c := f'(x_0)$ and define
+
+$$\varphi(x) = f(x) - f(x_0) - c(x - x_0).$$
+
+Then
+
+$$\frac{\varphi(x)}{x - x_0} = \frac{f(x) - f(x_0)}{x - x_0} - f'(x_0) \xrightarrow{x \rightarrow x_0} 0.$$
+
+Conversely, if such a representation exists, then
+
+$$\frac{f(x) - f(x_0)}{x - x_0} = c + \frac{\varphi(x)}{x - x_0} \xrightarrow{x \rightarrow x_0} c,$$
+
+so $f$ is differentiable at $x_0$ with derivative $c$.
+#+end_proof
+
+The mapping
+
+$$x \mapsto f(x_0) + f'(x_0)(x - x_0)$$
+
+is a polynomial of degree 1 in $x$, hence, an affine linear map. It provides a good local approximation of $f$ near $x_0$, because the deviation is captured by $\varphi$ that quickly decays to zero in proximity to $x_0$.
+
+** Questions
+
+* Corollary:   Differentiability implies continuity
+:PROPERTIES:
+:CUSTOM_ID: cor:differentiability-implies-continuity
+:LECTURE_REF: 3.1.10
+:END:
+
+If $f$ is differentiable at $x_0$, then $f$ is continuous at $x_0$.
+
+#+begin_proof
+Using the linear approximation,
+
+$$f(x) = f(x_0) + \underbrace{f'(x_0)(x - x_0)}_{\rightarrow 0} + \underbrace{\varphi(x)}_{\rightarrow 0} \xrightarrow{x \rightarrow x_0} f(x_0).$$
+#+end_proof
+
+** Questions
+
+* Lemma:       Linearity of differentiation
+:PROPERTIES:
+:CUSTOM_ID: lem:linearity-differentiation
+:LECTURE_REF: 3.1.12
+:END:
+
+Let $f, g : U \rightarrow \mathbb{R}$ be differentiable at $x \in U$ and let $\alpha, \beta \in \mathbb{R}$. Then the function $\alpha f + \beta g$ is differentiable at $x$, and
+
+$$(\alpha f + \beta g)'(x) = \alpha f'(x) + \beta g'(x).$$
+
+#+begin_proof
+We compute the difference quotient:
+
+\begin{align*}
+\frac{(\alpha f + \beta g)(x + h) - (\alpha f + \beta g)(x)}{h} &= \frac{\alpha f(x + h) - \alpha f(x) + \beta g(x + h) - \beta g(x)}{h} \\
+&= \alpha \frac{f(x + h) - f(x)}{h} + \beta \frac{g(x + h) - g(x)}{h}.
+\end{align*}
+
+Taking the limit $h \rightarrow 0$ and using differentiability of $f$ and $g$ leads to $\alpha f'(x) + \beta g'(x)$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Product rule
+:PROPERTIES:
+:CUSTOM_ID: thm:product-rule
+:LECTURE_REF: 3.1.13
+:END:
+
+Let $f, g : U \rightarrow \mathbb{R}$ be differentiable at $x \in U$. Then the product $fg$ is differentiable at $x$, and
+
+$$(fg)'(x) = f'(x) g(x) + f(x) g'(x).$$
+
+#+begin_proof
+By subtracting and adding $f(x) g(x + h)$, we obtain
+
+\begin{align*}
+\frac{f(x + h) g(x + h) - f(x) g(x)}{h} &= \frac{f(x + h) g(x + h) - f(x) g(x + h)}{h} \\
+&\quad + \frac{f(x) g(x + h) - f(x) g(x)}{h} \\
+&= g(x + h) \frac{f(x + h) - f(x)}{h} + f(x) \frac{g(x + h) - g(x)}{h}.
+\end{align*}
+
+Since differentiability implies continuity, we have $g(x + h) \rightarrow g(x)$ as $h \rightarrow 0$. Taking the limit yields $g(x) f'(x) + f(x) g'(x)$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Chain rule
+:PROPERTIES:
+:CUSTOM_ID: thm:chain-rule
+:LECTURE_REF: 3.1.16
+:END:
+
+Let $f : U \rightarrow \mathbb{R}$ be differentiable at $x \in U$, and let $g : V \rightarrow \mathbb{R}$ be differentiable at $f(x)$, where $f(U) \subseteq V$. Then the composition $g \circ f$ is differentiable at $x$, and
+
+$$(g \circ f)'(x) = g'(f(x)) f'(x).$$
+
+#+begin_proof
+Provided that $f(x + h) \neq f(x)$, we may write
+
+$$\frac{g(f(x + h)) - g(f(x))}{h} = \frac{g(f(x + h)) - g(f(x))}{f(x + h) - f(x)} \cdot \frac{f(x + h) - f(x)}{h}.$$
+
+Since $f$ is differentiable at $x$, we have $f(x + h) \rightarrow f(x)$ as $h \rightarrow 0$. Thus, by differentiability of $g$ at $f(x)$,
+
+$$\frac{g(f(x + h)) - g(f(x))}{f(x + h) - f(x)} \rightarrow g'(f(x)).$$
+
+At the same time,
+
+$$\frac{f(x + h) - f(x)}{h} \rightarrow f'(x).$$
+
+Taking limits gives
+
+$$(g \circ f)'(x) = g'(f(x)) f'(x).$$
+
+For the case when $f(x + h) \neq f(x)$ is violated, we need to define an additional function. Fix $x \in U$. Since $g$ is differentiable at $f(x)$, we define $\eta : V \rightarrow \mathbb{R}$ by
+
+$$\eta(y) := \begin{cases} \dfrac{g(y) - g(f(x))}{y - f(x)} & y \neq f(x), \\ [?] & [?]. \end{cases}$$
+
+By the definition of the derivative, we have
+
+$$\lim_{y \rightarrow f(x)} \eta(y) = 0.$$
+
+Moreover, for every $y \in V$ we can rewrite
+
+$$g(y) - g(f(x)) = g'(f(x))(y - f(x)) + \eta(y)(y - f(x)).$$
+
+Since $f$ is differentiable at $x$, we have $f(x + h) \rightarrow f(x)$ as $h \rightarrow 0$. Hence, for $h$ sufficiently small, $f(x + h) \in V$ and thus
+
+$$(g \circ f)(x + h) - (g \circ f)(x) = g'(f(x))\big(f(x + h) - f(x)\big) + \eta\big(f(x + h)\big)\big(f(x + h) - f(x)\big).$$
+
+Dividing by $h \neq 0$ yields
+
+$$\frac{(g \circ f)(x + h) - (g \circ f)(x)}{h} = g'(f(x)) \frac{f(x + h) - f(x)}{h} + \eta\big(f(x + h)\big) \frac{f(x + h) - f(x)}{h}.$$
+
+Letting $h \rightarrow 0$, the first term converges to $g'(f(x)) f'(x)$. For the second term we use
+
+$$\eta\big(f(x + h)\big) \rightarrow 0 \quad \text{and} \quad \frac{f(x + h) - f(x)}{h} \rightarrow f'(x),$$
+
+so their product tends to 0. Therefore,
+
+$$\lim_{h \rightarrow 0} \frac{(g \circ f)(x + h) - (g \circ f)(x)}{h} = g'(f(x)) f'(x),$$
+
+and hence $g \circ f$ is differentiable at $x$ with $(g \circ f)'(x) = g'(f(x)) f'(x)$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Derivative of the inverse function
+:PROPERTIES:
+:CUSTOM_ID: thm:derivative-inverse-function
+:LECTURE_REF: 3.1.21
+:END:
+
+Let $f : \left[ a, b \right] \rightarrow \left[ A, B \right]$ be continuous and bijective. Moreover, assume that $f$ is differentiable at $x_0 \in \left( a, b \right)$ with
+
+$$f'(x_0) \neq 0.$$
+
+Then the inverse function $f^{-1} : \left[ A, B \right] \rightarrow \left[ a, b \right]$ is differentiable at $y_0 := f(x_0)$, and
+
+$$(f^{-1})'(y_0) = \frac{1}{f'(x_0)} = \frac{1}{f'(f^{-1}(y_0))}.$$
+
+#+begin_proof
+/Direct proof./ Let $y = f(x)$ and $x = f^{-1}(y)$. For $y \neq y_0$ we must have $f(x) \neq f(x_0)$, and we write
+
+\begin{align*}
+\frac{f^{-1}(y) - f^{-1}(y_0)}{y - y_0} &= \frac{x - x_0}{f(x) - f(x_0)} \\
+&= \left( \frac{f(x) - f(x_0)}{x - x_0} \right)^{-1}.
+\end{align*}
+
+Since $f$ is continuous and bijective, its inverse is also continuous by /Proposition 2.3.1/. Hence, $x \rightarrow x_0$ is equivalent to $y \rightarrow y_0$. The differentiability of $f$ and taking limits lead to
+
+$$\lim_{y \rightarrow y_0} \frac{f^{-1}(y) - f^{-1}(y_0)}{y - y_0} = \frac{1}{f'(x_0)}.$$
+
+Therefore $f^{-1}$ is differentiable at $y_0$ with the stated derivative.
+#+end_proof
+
+#+begin_proof
+/Proof via chain rule./ Suppose we know that $f^{-1}$ is differentiable in $y_0$. Since $(f^{-1} \circ f)(x) = x$ the derivative at $x_0$ is $(f^{-1} \circ f)'(x_0) = 1$, and the chain rule leads to
+
+$$1 = (f^{-1} \circ f)'(x_0) = (f^{-1})'(f(x_0)) f'(x_0).$$
+
+Division by $f'(x_0)$ yields the claim.
+#+end_proof
+
+** Questions
+
+* Corollary:   Logarithm is differentiable
+:PROPERTIES:
+:CUSTOM_ID: cor:log-differentiable
+:LECTURE_REF: 3.1.22
+:END:
+
+For all $y > 0$, the logarithm is differentiable and satisfies
+
+$$\log'(y) = \frac{1}{y}.$$
+
+#+begin_proof
+Let $y_0 > 0$ and set $x_0 := \log(y_0)$, so that $\exp(x_0) = y_0$. Since $\exp'(x_0) = \exp(x_0) = y_0 \neq 0$, /Theorem 3.1.21/ applies and yields
+
+$$\log'(y_0) = \frac{1}{\exp'(x_0)} = \frac{1}{y_0}.$$
+#+end_proof
+
+** Questions
+
+* Corollary:   Arcsin is differentiable
+:PROPERTIES:
+:CUSTOM_ID: cor:arcsin-differentiable
+:LECTURE_REF: 3.1.24
+:END:
+
+For all $y \in \left( -1, 1 \right)$,
+
+$$\arcsin'(y) = \frac{1}{\sqrt{1 - y^2}}.$$
+
+#+begin_proof
+Let $y \in \left( -1, 1 \right)$ and set $x := \arcsin(y)$, so that $\sin x = y$ and $x \in \left( -\frac{\pi}{2}, \frac{\pi}{2} \right)$. Since $\cos x > 0$ on this interval, we have $\sin'(x) = \cos x \neq 0$. By /Theorem 3.1.21/,
+
+$$\arcsin'(y) = \frac{1}{\cos x}.$$
+
+Using $\sin x = y$, $\cos^2 x = 1 - \sin^2 x$, and $\cos(x) \ge 0$, we obtain $\cos x = \sqrt{1 - y^2}$, and hence
+
+$$\arcsin'(y) = \frac{1}{\sqrt{1 - y^2}}.$$
+#+end_proof
+
+** Questions
+
+* Corollary:   Arccos is differentiable
+:PROPERTIES:
+:CUSTOM_ID: cor:arccos-differentiable
+:LECTURE_REF: 3.1.25
+:END:
+
+For all $y \in \left( -1, 1 \right)$,
+
+$$\arccos'(y) = -\frac{1}{\sqrt{1 - y^2}}.$$
+
+#+begin_proof
+Let $y \in \left( -1, 1 \right)$ and set $x := \arccos(y)$, so that $\cos x = y$ and $x \in \left( 0, \pi \right)$. Then $\sin x > 0$ and $\cos'(x) = -\sin x \neq 0$. By /Theorem 3.1.21/,
+
+$$\arccos'(y) = \frac{1}{-\sin x}.$$
+
+Since $\sin^2 x = 1 - \cos^2 x = 1 - y^2$ and the sine is positive in $\left( 0, \pi \right)$, we have $\sin x = \sqrt{1 - y^2}$, and thus $\arccos'(y) = -\frac{1}{\sqrt{1 - y^2}}$.
+#+end_proof
+
+** Questions
+
+* Lemma:       General exponential $a^x$ is differentiable
+:PROPERTIES:
+:CUSTOM_ID: lem:general-exponential-differentiable
+:LECTURE_REF: 3.1.26
+:END:
+
+Let $a > 0$. The function $f : \mathbb{R} \rightarrow \left( 0, \infty \right)$ defined by $f(x) = a^x$ is differentiable on $\mathbb{R}$, and
+
+$$f'(x) = a^x \log a.$$
+
+#+begin_proof
+Using the definition and the chain rule with $\exp' = \exp$, we compute
+
+\begin{align*}
+f'(x) &= \exp(x \log a) \cdot (\log a) \\
+&= a^x \log a.
+\end{align*}
+#+end_proof
+
+** Questions
+
+* Lemma:       Power function $x^a$ is differentiable
+:PROPERTIES:
+:CUSTOM_ID: lem:power-function-differentiable
+:LECTURE_REF: 3.1.28
+:END:
+
+Let $a \in \mathbb{R}$. The function $f : \left( 0, \infty \right) \rightarrow \mathbb{R}$ defined by $f(x) = x^a$ is differentiable on $\left( 0, \infty \right)$, and
+
+$$f'(x) = a x^{a - 1}.$$
+
+#+begin_proof
+Using the definition and the chain rule, we compute
+
+\begin{align*}
+f'(x) &= \exp(a \log x) \frac{a}{x} \\
+&= x^a \frac{a}{x} \\
+&= a x^{a - 1}.
+\end{align*}
+#+end_proof
+
+** Questions
+
+* Definition:  Local maximum and minimum
+:PROPERTIES:
+:CUSTOM_ID: def:local-maximum-minimum
+:LECTURE_REF: 3.2.1
+:END:
+
+Let $U \subseteq \mathbb{R}$ be an open interval, $f : U \rightarrow \mathbb{R}$, and let $x_0 \in U$.
+
+1. local maximum: $f$ has a local maximum at $x_0$ if there exists $\delta > 0$ such that
+
+   $$f(x) \le f(x_0) \quad \text{for all } x \in \left( x_0 - \delta, x_0 + \delta \right).$$
+
+   A strict local maximum refers to a strict inequality when $x \neq x_0$.
+
+2. local minimum: $f$ has a local minimum at $x_0$ if there exists $\delta > 0$ such that
+
+   $$f(x) \ge f(x_0) \quad \text{for all } x \in \left( x_0 - \delta, x_0 + \delta \right).$$
+
+   A strict local minimum refers to a strict inequality when $x \neq x_0$.
+
+If $x_0$ is either a (strict) local minimum or a (strict) local maximum, it is called a (strict) local extremum.
+
+** Questions
+
+* Theorem:     Local extrema have vanishing derivative
+:PROPERTIES:
+:CUSTOM_ID: thm:local-extrema-vanishing-derivative
+:LECTURE_REF: 3.2.2
+:END:
+
+Let $f : \left( a, b \right) \rightarrow \mathbb{R}$ be differentiable at $x_0 \in \left( a, b \right)$. If $f$ has a local extremum at $x_0$, then
+
+$$f'(x_0) = 0.$$
+
+#+begin_proof
+Assume that $x_0$ is a local maximum (the minimum case is analogous). Then there exists $\delta > 0$ such that
+
+$$f(x) \le f(x_0) \quad \text{for } |x - x_0| < \delta.$$
+
+For $h > 0$ sufficiently small,
+
+$$\frac{f(x_0 + h) - f(x_0)}{h} \le 0,$$
+
+while for $h < 0$ sufficiently small,
+
+$$\frac{f(x_0 + h) - f(x_0)}{h} \ge 0.$$
+
+Since $f$ is differentiable at $x_0$, both one-sided limits must coincide, hence
+
+$$f'(x_0) = 0.$$
+#+end_proof
+
+** Questions
+
+* Definition:  Global extremum
+:PROPERTIES:
+:CUSTOM_ID: def:global-extremum
+:LECTURE_REF: 3.2.5
+:END:
+
+A function $f : U \rightarrow \mathbb{R}$ has a global maximum at $x_0 \in U$ if
+
+$$f(x) \le f(x_0) \quad \text{for all } x \in U.$$
+
+Global minima are defined analogously.
+
+** Questions
+
+* Corollary:   Location of global extrema
+:PROPERTIES:
+:CUSTOM_ID: cor:global-extrema-location
+:LECTURE_REF: 3.2.6
+:END:
+
+If $f : \left[ a, b \right] \rightarrow \mathbb{R}$ is continuous and differentiable on $\left( a, b \right)$, then every global extremum of $f$ occurs either at a boundary point or at a point $x_0 \in \left( a, b \right)$ with $f'(x_0) = 0$.
+
+#+begin_proof
+By compactness of $\left[ a, b \right]$, the image $f(\left[ a, b \right])$ is compact in $\mathbb{R}$. Hence it is closed and bounded, and therefore contains its supremum and infimum. If an extremum occurs in $\left( a, b \right)$, then /Theorem 3.2.2/ implies the existence of $x_0 \in \left( a, b \right)$ such that $f'(x_0) = 0$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Theorem of Rolle
+:PROPERTIES:
+:CUSTOM_ID: thm:rolle
+:LECTURE_REF: 3.2.9
+:END:
+
+Assume that $f : \left[ a, b \right] \rightarrow \mathbb{R}$ is continuous and $f(a) = f(b)$. If $f$ is differentiable on $\left( a, b \right)$, then there is $\xi \in \left( a, b \right)$ such that $f'(\xi) = 0$.
+
+#+begin_proof
+The claim is true for constant $f$, so we may now assume that $f$ is not constant. Hence, there is $x_0 \in \left( a, b \right)$ such that $f(x_0) > f(a)$ or $f(x_0) < f(a)$. In the first case, the maximum of $f$ is attained in $\left( a, b \right)$. The second case corresponds to the minimum. In each case, /Theorem 3.2.2/ leads to $\xi \in \left( a, b \right)$ such that $f'(\xi) = 0$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Mean value theorem of differentiation
+:PROPERTIES:
+:CUSTOM_ID: thm:mean-value-differentiation
+:LECTURE_REF: 3.2.10
+:END:
+
+If $f : \left[ a, b \right] \rightarrow \mathbb{R}$ is continuous and differentiable on $\left( a, b \right)$, then there is $\xi \in \left( a, b \right)$ such that
+
+$$\frac{f(b) - f(a)}{b - a} = f'(\xi).$$
+
+#+begin_proof
+Let us define $F : \left[ a, b \right] \rightarrow \mathbb{R}$ by
+
+$$F(x) = f(x) - \frac{f(b) - f(a)}{b - a}(x - a),$$
+
+so that its derivative satisfies
+
+$$F'(x) = f'(x) - \frac{f(b) - f(a)}{b - a}.$$
+
+Moreover, $F(a) = f(a) = F(b)$, and the Theorem of Rolle implies that there is $\xi \in \left( a, b \right)$ such that $F'(\xi) = 0$.
+#+end_proof
+
+** Questions
+
+* Corollary:   Derivative below one implies local contraction
+:PROPERTIES:
+:CUSTOM_ID: cor:local-contraction-fixed-point
+:LECTURE_REF: 3.2.11
+:END:
+
+Let $f : \left[ a, b \right] \rightarrow \mathbb{R}$ be continuously differentiable and suppose that there is $x \in \left( a, b \right)$ such that $f(x) = x$. If $|f'(x)| < 1$, then there is $\varepsilon > 0$ such that $f : B_{\varepsilon}(x) \rightarrow B_{\varepsilon}(x)$ and $f$ is contractive on $B_{\varepsilon}(x)$.
+
+#+begin_proof
+Let $\delta := 1 - |f'(x)|$. Continuity of $f'$ implies that there is $\varepsilon > 0$ such that
+
+$$|f'(y)| \le 1 - \delta/2, \qquad \forall y \in B_{\varepsilon}(x).$$
+
+The mean value theorem of differentiation yields
+
+$$\frac{|f(y) - f(z)|}{|y - z|} \le (1 - \delta/2), \qquad \forall y, z \in B_{\varepsilon}(x).$$
+
+Hence, $f$ is contractive on $B_{\varepsilon}(x)$. To check that $f(B_{\varepsilon}(x)) \subseteq B_{\varepsilon}(x)$, we derive, for $y \in B_{\varepsilon}(x)$,
+
+$$|f(y) - x| = |f(y) - f(x)| \le (1 - \delta/2)|y - x|.$$
+
+Thus, $f : B_{\varepsilon}(x) \rightarrow B_{\varepsilon}(x)$.
+
+Banach's fixed point theorem (/Theorem 1.4.17/) then ensures that the iteration
+
+$$x_{n + 1} := f(x_n)$$
+
+converges linearly towards $x$ for all initial points $x_0 \in B_{\varepsilon}(x)$.
+#+end_proof
+
+** Questions
+
+* Lemma:       Monotonicity from the sign of the derivative
+:PROPERTIES:
+:CUSTOM_ID: lem:monotonicity
+:LECTURE_REF: 3.2.12
+:END:
+
+Let $f : \left( a, b \right) \rightarrow \mathbb{R}$ be differentiable.
+
+1. increasing: if $f' \ge 0$ on $\left( a, b \right)$, then $f$ is increasing.
+
+2. strictly increasing: if $f' > 0$ on $\left( a, b \right)$, then $f$ is strictly increasing.
+
+The analogous statements hold for $f' < 0$ or $f' \le 0$ and $f$ (strictly) decreasing.
+
+#+begin_proof
+For $x, y \in \left( a, b \right)$, such that $x < y$, the mean value theorem of differentiation yields that there is $\xi \in \left( x, y \right)$ such that
+
+$$\frac{f(y) - f(x)}{y - x} = f'(\xi).$$
+
+The conditions on $f'$ imply the respective claims.
+#+end_proof
+
+** Questions
+
+* Lemma:       First derivative test
+:PROPERTIES:
+:CUSTOM_ID: lem:first-derivative-test
+:LECTURE_REF: 3.2.13
+:END:
+
+Let $f : \left( a, b \right) \rightarrow \mathbb{R}$ be differentiable and let $x_0 \in \left( a, b \right)$ with $f'(x_0) = 0$.
+
+1. local minimum: if $f'$ is increasing in a neighborhood of $x_0$, then $f$ has a local minimum at $x_0$.
+
+2. strict local minimum: if $f'$ is strictly increasing in a neighborhood of $x_0$, then $f$ has a strict local minimum at $x_0$.
+
+The analogous statements hold for $f'$ (strictly) decreasing and (strict) local maxima.
+
+#+begin_proof
+We only prove Part 2. The other parts are verified analogously.
+
+Let $f'$ be strictly increasing in a neighborhood of $x_0$. Since $f'(x_0) = 0$, $f'$ is negative to the left of $x_0$ and positive to the right of $x_0$. /Lemma 3.2.12/ implies that $f$ is strictly decreasing to the left of $x_0$ and strictly increasing to the right of $x_0$. Hence, there is a strict local minimum in $x_0$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Second derivative test (pointwise)
+:PROPERTIES:
+:CUSTOM_ID: thm:second-derivative-test-pointwise
+:LECTURE_REF: 3.2.15
+:END:
+
+Let $f : \left( a, b \right) \rightarrow \mathbb{R}$ be twice continuously differentiable and let $x_0 \in \left( a, b \right)$ satisfy $f'(x_0) = 0$.
+
+1. strict local minimum: if $f''(x_0) > 0$, then $f$ has a strict local minimum at $x_0$.
+
+2. strict local maximum: if $f''(x_0) < 0$, then $f$ has a strict local maximum at $x_0$.
+
+#+begin_proof
+Assume $f''(x_0) > 0$. By continuity of $f''$, there exists $\delta > 0$ such that
+
+$$f''(x) > 0 \quad \text{for } |x - x_0| < \delta.$$
+
+Hence $f'$ is strictly increasing on $\left( x_0 - \delta, x_0 + \delta \right)$. Since $f'(x_0) = 0$, we obtain
+
+$$f'(x) < 0 \text{ for } x < x_0, \qquad f'(x) > 0 \text{ for } x > x_0,$$
+
+and the claim follows from the first derivative test. The maximum case is analogous.
+#+end_proof
+
+** Questions
+
+* Theorem:     Second derivative test (neighborhood)
+:PROPERTIES:
+:CUSTOM_ID: thm:second-derivative-test-neighborhood
+:LECTURE_REF: 3.2.17
+:END:
+
+Let $f : \left( a, b \right) \rightarrow \mathbb{R}$ be twice continuously differentiable and let $x_0 \in \left( a, b \right)$ satisfy $f'(x_0) = 0$.
+
+1. local minimum: if $f'' \ge 0$ in a neighborhood of $x_0$, then $f$ has a local minimum at $x_0$.
+
+2. local maximum: if $f'' \le 0$ in a neighborhood of $x_0$, then $f$ has a local maximum at $x_0$.
+
+#+begin_proof
+This is verified analogous to the proof of /Theorem 3.2.15/ by relying on /Lemma 3.2.13/ and /Lemma 3.2.12/.
+#+end_proof
+
+** Questions
+
+* Definition:  Convex function
+:PROPERTIES:
+:CUSTOM_ID: def:convex-function
+:LECTURE_REF: 3.2.19
+:END:
+
+A function $f : \mathbb{R} \rightarrow \mathbb{R}$ is called convex if for all $x, y \in \mathbb{R}$ and all $t \in \left[ 0, 1 \right]$,
+
+$$f(tx + (1 - t)y) \le t f(x) + (1 - t) f(y).$$
+
+** Questions
+
+* Lemma:       Convexity means increasing derivative
+:PROPERTIES:
+:CUSTOM_ID: lem:convexity-increasing-derivative
+:LECTURE_REF: 3.2.20
+:END:
+
+Let $f : \mathbb{R} \rightarrow \mathbb{R}$ be differentiable. Then $f$ is convex if and only if $f'$ is increasing.
+
+#+begin_proof
+- ($\Rightarrow$) Fix $x < u < y$. Set $t := \frac{u - x}{y - x} \in \left( 0, 1 \right)$, so $u = ty + (1 - t)x$. By convexity,
+
+  $$f(u) \le t f(y) + (1 - t) f(x).$$
+
+  According to $(1 - t) f(x) = f(x) - t f(x)$, we bring $f(x)$ to the left-hand side and use $t = \frac{u - x}{y - x}$ to obtain
+
+  $$\frac{f(u) - f(x)}{u - x} \le \frac{f(y) - f(x)}{y - x}.$$
+
+  Analogously, we can derive
+
+  $$\frac{f(y) - f(x)}{y - x} \le \frac{f(y) - f(u)}{y - u}.$$
+
+  Hence, for fixed $x$ and $y$, the functions
+
+  $$\phi_x(u) := \frac{f(u) - f(x)}{u - x}, \qquad \phi_y(u) := \frac{f(y) - f(u)}{y - u}, \qquad x < u < y,$$
+
+  satisfy the inequalities and identity
+
+  $$\phi_x(u) \le \phi_x(y) = \phi_y(x) \le \phi_y(u), \qquad x < u < y.$$
+
+  Taking limits yields
+
+  $$f'(x) = \lim_{u \rightarrow x} \phi_x(u) \le \phi_x(y) = \phi_y(x) \le \lim_{u \rightarrow y} \phi_y(u) = f'(y).$$
+
+  Hence $f'$ is increasing.
+
+- ($\Leftarrow$) For $x < y$ and $u = tx + (1 - t)y$, $t \in \left( 0, 1 \right)$, the mean value theorem yields that there exists $\xi_1 \in \left( x, u \right)$ and $\xi_2 \in \left( u, y \right)$ such that
+
+  $$\frac{f(u) - f(x)}{u - x} = f'(\xi_1) \le f'(\xi_2) = \frac{f(y) - f(u)}{y - u}.$$
+
+  The relations $u - x = (t - 1)x + (1 - t)y = (1 - t)(y - x)$ and $y - u = t(y - x)$ lead to
+
+  $$\frac{f(u) - f(x)}{(1 - t)} \le \frac{f(y) - f(u)}{t}.$$
+
+  This implies
+
+  $$f(u) \le t f(x) + (1 - t) f(y),$$
+
+  which is the definition of convexity.
+#+end_proof
+
+** Questions
+
+* Theorem:     Convexity means positive second derivative
+:PROPERTIES:
+:CUSTOM_ID: thm:convexity-positive-second-derivative
+:LECTURE_REF: 3.2.21
+:END:
+
+Let $f : \mathbb{R} \rightarrow \mathbb{R}$ be twice continuously differentiable. Then $f$ is convex if and only if
+
+$$f''(t) \ge 0 \quad \text{for all } t \in \mathbb{R}.$$
+
+#+begin_proof
+Since $f'$ is continuously differentiable, $f'$ is increasing if and only if $f'' \ge 0$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Stationary point of a convex function is a global minimizer
+:PROPERTIES:
+:CUSTOM_ID: thm:convex-stationary-global-minimizer
+:LECTURE_REF: 3.2.22
+:END:
+
+If $f : \mathbb{R} \rightarrow \mathbb{R}$ is convex and twice continuously differentiable, then $x_0$ is a global minimizer if and only if $f'(x_0) = 0$.
+
+Many loss functions in data science are convex, which ensures that optimization algorithms solve problems with globally optimal solutions.
+
+#+begin_proof
+If $x_0$ is a global minimum, then it is also a local minimum and hence $f'(x_0) = 0$ by /Theorem 3.2.2/.
+
+Now assume that $f'(x_0) = 0$. Since $f$ is convex, its second derivative satisfies $f'' \ge 0$. Hence, $f'$ is increasing. By /Lemma 3.2.13/, $x_0$ is a local minimum. Since $f'$ is increasing, there are no other local minima, hence, $x_0$ is a global minimizer.
+#+end_proof
+
+** Questions
+
+* Definition:  Partition
+:PROPERTIES:
+:CUSTOM_ID: def:partition
+:LECTURE_REF: 3.3.1
+:END:
+
+A partition of $\left[ a, b \right]$ is a finite set
+
+$$\mathcal{P} = \{x_0, x_1, \ldots, x_n\} \quad \text{with} \quad a = x_0 < x_1 < \cdots < x_n = b.$$
+
+** Questions
+
+* Definition:  Upper and lower Darboux sums
+:PROPERTIES:
+:CUSTOM_ID: def:darboux-sums
+:LECTURE_REF: 3.3.2
+:END:
+
+Let $f : \left[ a, b \right] \rightarrow \mathbb{R}$ be bounded and let $\mathcal{P} = \{x_0, \ldots, x_n\}$ be a partition. For $k = 1, \ldots, n$ define
+
+$$m_k := \inf_{x \in [x_{k-1}, x_k]} f(x), \qquad M_k := \sup_{x \in [x_{k-1}, x_k]} f(x).$$
+
+The lower and upper Darboux sums are
+
+$$L(f, \mathcal{P}) := \sum_{k=1}^{n} m_k (x_k - x_{k-1}), \qquad U(f, \mathcal{P}) := \sum_{k=1}^{n} M_k (x_k - x_{k-1}).$$
+
+The lower Darboux sum accumulates the area of rectangles of side lengths $m_k$ and $x_k - x_{k-1}$. The rectangles of the upper Darboux sum have side lengths $M_k$ and $x_k - x_{k-1}$.
+
+** Questions
+
+* Lemma:       Refinement monotonicity of Darboux sums
+:PROPERTIES:
+:CUSTOM_ID: lem:refinement-monotonicity
+:LECTURE_REF: 3.3.4
+:END:
+
+If $\mathcal{P}'$ is a refinement of $\mathcal{P}$, then
+
+$$L(f, \mathcal{P}) \le L(f, \mathcal{P}'), \qquad U(f, \mathcal{P}') \le U(f, \mathcal{P}).$$
+
+In particular, $L(f, \mathcal{P}) \le U(f, \mathcal{P})$.
+
+#+begin_proof
+It suffices to consider the case where $\mathcal{P}'$ is obtained from $\mathcal{P}$ by inserting a single point $y \in \left( x_{j-1}, x_j \right)$. On $\left[ x_{j-1}, x_j \right]$ we split into $\left[ x_{j-1}, y \right]$ and $\left[ y, x_j \right]$. Since both subintervals are contained in $\left[ x_{j-1}, x_j \right]$, we have
+
+$$\inf_{[x_{j-1}, y]} f \ge \inf_{[x_{j-1}, x_j]} f, \qquad \inf_{[y, x_j]} f \ge \inf_{[x_{j-1}, x_j]} f,$$
+
+and therefore the contribution to the lower sum does not decrease. The argument for upper sums follows analogously using suprema. Repeated insertion of points yields the general case.
+#+end_proof
+
+** Questions
+
+* Lemma:       Lower sum bounded by upper sum
+:PROPERTIES:
+:CUSTOM_ID: lem:lower-sum-le-upper-sum
+:LECTURE_REF: 3.3.5
+:END:
+
+If $f : \left[ a, b \right] \rightarrow \mathbb{R}$ is bounded and $\mathcal{P}$ and $\mathcal{Q}$ are partitions of $\left[ a, b \right]$, then
+
+$$L(f, \mathcal{P}) \le U(f, \mathcal{Q}).$$
+
+#+begin_proof
+Let $\mathcal{R}$ be a common refinement, i.e., $\mathcal{P}, \mathcal{Q} \subseteq \mathcal{R}$. By the first refinement lemma,
+
+$$L(f, \mathcal{P}) \le L(f, \mathcal{R}) \le U(f, \mathcal{R}) \le U(f, \mathcal{Q}).$$
+#+end_proof
+
+** Questions
+
+* Definition:  Upper and lower integral
+:PROPERTIES:
+:CUSTOM_ID: def:upper-lower-integral
+:LECTURE_REF: 3.3.6
+:END:
+
+Let $f : \left[ a, b \right] \rightarrow \mathbb{R}$ be bounded. Define
+
+$$\underline{\int}_a^b f(x)\, dx := \sup_{\mathcal{P}} L(f, \mathcal{P}), \qquad \overline{\int}_a^b f(x)\, dx := \inf_{\mathcal{P}} U(f, \mathcal{P}),$$
+
+where the supremum and infimum are taken over all partitions of $\left[ a, b \right]$.
+
+** Questions
+
+* Lemma:       Lower integral does not exceed upper integral
+:PROPERTIES:
+:CUSTOM_ID: lem:lower-integral-le-upper-integral
+:LECTURE_REF: 3.3.7
+:END:
+
+For every bounded function $f : \left[ a, b \right] \rightarrow \mathbb{R}$,
+
+$$\underline{\int}_a^b f(x)\, dx \le \overline{\int}_a^b f(x)\, dx.$$
+
+#+begin_proof
+The inequalities of the second refinement lemma are preserved by taking the supremum over $\mathcal{P}$ and the infimum over $\mathcal{Q}$.
+#+end_proof
+
+** Questions
+
+* Definition:  Integrability
+:PROPERTIES:
+:CUSTOM_ID: def:integrability
+:LECTURE_REF: 3.3.8
+:END:
+
+A bounded function $f : \left[ a, b \right] \rightarrow \mathbb{R}$ is called (Riemann-Darboux) integrable if
+
+$$\underline{\int}_a^b f(x)\, dx = \overline{\int}_a^b f(x)\, dx.$$
+
+The common value is denoted by $\int_a^b f(x)\, dx$.
+
+** Questions
+
+* Lemma:       Integrability criterion
+:PROPERTIES:
+:CUSTOM_ID: lem:integrability-criterion
+:LECTURE_REF: 3.3.11
+:END:
+
+A bounded function $f : \left[ a, b \right] \rightarrow \mathbb{R}$ is integrable if and only if
+
+$$\forall \varepsilon > 0 \; \exists \mathcal{P} : \quad U(f, \mathcal{P}) - L(f, \mathcal{P}) \le \varepsilon.$$
+
+#+begin_proof
+- ($\Rightarrow$) Let $I := \int_a^b f(x)\, dx$. Choose partitions $\mathcal{P}_1, \mathcal{P}_2$ such that
+
+  $$U(f, \mathcal{P}_1) \le I + \varepsilon/2, \qquad L(f, \mathcal{P}_2) \ge I - \varepsilon/2.$$
+
+  Let $\mathcal{P}$ be a common refinement. Then
+
+  $$U(f, \mathcal{P}) - L(f, \mathcal{P}) \le (I + \varepsilon/2) - (I - \varepsilon/2) = \varepsilon.$$
+
+- ($\Leftarrow$) Assume the condition holds. Then for every $\varepsilon > 0$,
+
+  $$0 \le \overline{\int}_a^b f(x)\, dx - \underline{\int}_a^b f(x)\, dx \le U(f, \mathcal{P}) - L(f, \mathcal{P}) < \varepsilon.$$
+
+  Hence upper and lower integrals coincide.
+#+end_proof
+
+** Questions
+
+* Theorem:     Continuous functions are integrable
+:PROPERTIES:
+:CUSTOM_ID: thm:continuous-integrable
+:LECTURE_REF: 3.3.12
+:END:
+
+Every continuous function $f : \left[ a, b \right] \rightarrow \mathbb{R}$ is integrable.
+
+#+begin_proof
+Since $\left[ a, b \right]$ is compact, $f$ is uniformly continuous. Given $\varepsilon > 0$, choose $\delta > 0$ such that
+
+$$|x - y| \le \delta \quad \Rightarrow \quad |f(x) - f(y)| \le \frac{\varepsilon}{b - a}.$$
+
+Let $\mathcal{P} = \{x_0, \ldots, x_n\}$ be a partition of $\left[ a, b \right]$ such that $x_k - x_{k-1} \le \delta$. Under the notation of /Definition 3.3.2/, on each subinterval $\left[ x_{k-1}, x_k \right]$ we have
+
+$$M_k - m_k \le \frac{\varepsilon}{b - a}.$$
+
+Hence, the upper and lower Darboux sums satisfy
+
+\begin{align*}
+U(f, \mathcal{P}) - L(f, \mathcal{P}) &\le \sum_{k=1}^{n} \frac{\varepsilon}{b - a}(x_k - x_{k-1}) \\
+&= \frac{\varepsilon}{b - a} \sum_{k=1}^{n}(x_k - x_{k-1}) \\
+&= \frac{\varepsilon}{b - a}(x_n - x_0) = \varepsilon,
+\end{align*}
+
+where $\sum_{k=1}^{n}(x_k - x_{k-1}) = x_n - x_0 = b - a$ is a telescope sum.
+#+end_proof
+
+** Questions
+
+* Lemma:       Linearity, monotonicity, and additivity of the integral
+:PROPERTIES:
+:CUSTOM_ID: lem:integral-linearity
+:LECTURE_REF: 3.3.13
+:END:
+
+Suppose that $f, g : \left[ a, b \right] \rightarrow \mathbb{R}$ are integrable.
+
+1. linear: for $\alpha, \beta \in \mathbb{R}$, the function $\alpha f + \beta g$ is integrable and
+
+   $$\int_a^b (\alpha f(x) + \beta g(x))\, dx = \alpha \int_a^b f(x)\, dx + \beta \int_a^b g(x)\, dx.$$
+
+2. monotone: if $f(x) \le g(x)$ for all $x \in \left[ a, b \right]$, then
+
+   $$\int_a^b f(x)\, dx \le \int_a^b g(x)\, dx.$$
+
+3. additive: for $q \in \left( a, b \right)$, $f$ is also integrable on $\left[ a, q \right]$ and $\left[ q, b \right]$ and we have
+
+   $$\int_a^b f(x)\, dx = \int_a^q f(x)\, dx + \int_q^b f(x)\, dx.$$
+
+#+begin_proof
+We omit the direct proof of 1 and 3.
+
+For 2: for every partition $\mathcal{P}$,
+
+$$L(f, \mathcal{P}) \le L(g, \mathcal{P}), \qquad U(f, \mathcal{P}) \le U(g, \mathcal{P}).$$
+
+Passing to supremum and infimum proves the statement.
+#+end_proof
+
+** Questions
+
+* Definition:  Degenerate integration domains
+:PROPERTIES:
+:CUSTOM_ID: def:degenerate-integration-domains
+:LECTURE_REF: 3.3.14
+:END:
+
+Consistent with the trivial partition of a single point, we define
+
+$$\int_a^a f(x)\, dx := 0,$$
+
+and, for $a \le b$, we put
+
+$$\int_b^a f(x)\, dx := -\int_a^b f(x)\, dx.$$
+
+** Questions
+
+* Theorem:     Mean value theorem of integration
+:PROPERTIES:
+:CUSTOM_ID: thm:mean-value-integration
+:LECTURE_REF: 3.3.15
+:END:
+
+Let $f : \left[ a, b \right] \rightarrow \mathbb{R}$ be continuous. Then there exists $\xi \in \left[ a, b \right]$ such that
+
+$$\frac{1}{b - a} \int_a^b f(x)\, dx = f(\xi).$$
+
+Moreover, if $\phi : \left[ a, b \right] \rightarrow \left[ 0, \infty \right)$ is integrable, then there exists $\xi \in \left[ a, b \right]$ such that
+
+$$\int_a^b f(x) \phi(x)\, dx = f(\xi) \int_a^b \phi(x)\, dx.$$
+
+#+begin_proof
+Since $f$ is continuous, it attains its minimum and maximum and the intermediate value theorem leads to $f(\left[ a, b \right]) = \left[ m, M \right]$, see /Theorem 1.4.14/. The monotonicity of the integral yields
+
+$$m \int_a^b \phi(x)\, dx = \int_a^b m \phi(x)\, dx \le \int_a^b f(x) \phi(x)\, dx \le \int_a^b M \phi(x)\, dx = M \int_a^b \phi(x)\, dx,$$
+
+so that
+
+$$\int_a^b f(x) \phi(x)\, dx \in \left[ m, M \right] \int_a^b \phi(x)\, dx = f(\left[ a, b \right]) \int_a^b \phi(x)\, dx.$$
+
+This means a pre-image $\xi \in \left[ a, b \right]$ exists.
+
+The first identity in the theorem follows from the choice $\phi \equiv 1$.
+#+end_proof
+
+** Questions
+
+* Lemma:       Derivative of the integral function
+:PROPERTIES:
+:CUSTOM_ID: lem:integral-function-derivative
+:LECTURE_REF: 3.3.16
+:END:
+
+Let $f : \left[ a, b \right] \rightarrow \mathbb{R}$ be continuous and define, for $x \in \left[ a, b \right]$,
+
+$$F(x) := \int_a^x f(t)\, dt.$$
+
+Then $F$ is differentiable and
+
+$$F'(x) = f(x), \qquad x \in \left[ a, b \right].$$
+
+This lemma is the fundamental link between integration and differentiation.
+
+#+begin_proof
+For $h \neq 0$ sufficiently small, so that $x + h \in \left[ a, b \right]$,
+
+$$\frac{F(x + h) - F(x)}{h} = \frac{1}{h} \int_x^{x+h} f(t)\, dt.$$
+
+The mean value theorem of integration implies that there exists $\xi_h \in \left[ x, x + h \right]$ such that
+
+$$\frac{1}{h} \int_x^{x+h} f(t)\, dt = f(\xi_h).$$
+
+For $h \rightarrow 0$, we have $\xi_h \rightarrow x$, so that continuity of $f$ yields
+
+$$F'(x) = \lim_{h \rightarrow 0} \frac{F(x + h) - F(x)}{h} = \lim_{\xi_h \rightarrow x} f(\xi_h) = f(x).$$
+#+end_proof
+
+** Questions
+
+* Theorem:     Fundamental Theorem of Calculus
+:PROPERTIES:
+:CUSTOM_ID: thm:fundamental-theorem-calculus
+:LECTURE_REF: 3.3.17
+:END:
+
+If $F : \left[ a, b \right] \rightarrow \mathbb{R}$ is differentiable with continuous derivative $F'$, then
+
+$$\int_a^b F'(x)\, dx = F(b) - F(a).$$
+
+If the primitive of the integrand is known, the FTC enables us to determine the value of the integral.
+
+#+begin_proof
+The function $G : \left[ a, b \right] \rightarrow \mathbb{R}$,
+
+$$G(x) := \int_a^x F'(t)\, dt$$
+
+satisfies $G(b) = \int_a^x F'(t)\, dt$ and $G(a) = 0$. /Lemma 3.3.16/ leads to $G'(x) = F'(x)$. Hence $F - G$ is constant on $\left[ a, b \right]$, say $F(x) = G(x) + c$ for all $x \in \left[ a, b \right]$. Evaluating at $a$ and $b$ yields
+
+$$F(b) - F(a) = G(b) + c - (G(a) + c) = G(b) = \int_a^b F'(t)\, dt.$$
+#+end_proof
+
+** Questions
+
+* Theorem:     Integration by parts
+:PROPERTIES:
+:CUSTOM_ID: thm:integration-by-parts
+:LECTURE_REF: 3.3.18
+:END:
+
+Suppose that $f, g : \left[ a, b \right] \rightarrow \mathbb{R}$ are continuously differentiable. Then we have
+
+$$\int_a^b f'(x) g(x)\, dx = f(b) g(b) - f(a) g(a) - \int_a^b f(x) g'(x)\, dx.$$
+
+#+begin_proof
+This is a direct consequence of the product rule
+
+$$\int_a^b \big( f'(x) g(x) + f(x) g'(x) \big)\, dx = f(b) g(b) - f(a) g(a)$$
+
+and the linearity of the integral.
+#+end_proof
+
+** Questions
+
+* Theorem:     Substitution rule
+:PROPERTIES:
+:CUSTOM_ID: thm:substitution-rule
+:LECTURE_REF: 3.3.21
+:END:
+
+Suppose that $u : \left[ a, b \right] \rightarrow \mathbb{R}$ is continuously differentiable with $u(a) \le u(b)$, and $f : u(\left[ a, b \right]) \rightarrow \mathbb{R}$ is continuous. Then we have
+
+$$\int_a^b f(u(x)) u'(x)\, dx = \int_{u(a)}^{u(b)} f(y)\, dy.$$
+
+#+begin_proof
+Suppose that $F$ is a primitive of $f$. According to the chain rule, the derivative of the composition $F \circ u$ is
+
+$$(F \circ u)'(x) = F'(u(x)) u'(x) = f(u(x)) u'(x).$$
+
+The FTC yields
+
+$$\int_a^b f(u(x)) u'(x)\, dx = F(u(b)) - F(u(a)) = \int_{u(a)}^{u(b)} f(y)\, dy.$$
+#+end_proof
+
+** Questions
+
+* Definition:  Improper integrals
+:PROPERTIES:
+:CUSTOM_ID: def:improper-integrals
+:LECTURE_REF: 3.3.25
+:END:
+
+Given $f : \left[ a, b \right) \rightarrow \mathbb{R}$ and suppose that for every sequence $(b_n)_{n\in\mathbb{N}} \subseteq \left( a, b \right)$ with $b_n \rightarrow b$ the function $f$ is integrable on $\left[ a, b_n \right]$. If the sequence of integrals $\left( \int_a^{b_n} f(x)\, dx \right)_{n\in\mathbb{N}}$ converges and the limit is independent of the chosen sequence $(b_n)_{n\in\mathbb{N}}$, then we define
+
+$$\int_a^b f(x)\, dx := \lim_{n \rightarrow \infty} \int_a^{b_n} f(x)\, dx = \lim_{\epsilon \searrow 0} \int_a^{b - \epsilon} f(x)\, dx.$$
+
+We extend this definition to $b = \infty$ and make the analogous conventions for the lower integration bound.
+
+** Questions
+
+* Theorem:     Comparing series to integrals
+:PROPERTIES:
+:CUSTOM_ID: thm:series-integral-comparison
+:LECTURE_REF: 3.3.28
+:END:
+
+Let $f : \left[ 0, \infty \right) \rightarrow \left[ 0, \infty \right)$ be monotonically decreasing and suppose that $\int_0^{\infty} f(x)\, dx$ exists. Then the series $\sum_{n=1}^{\infty} f(n)$ converges with
+
+$$\sum_{n=1}^{\infty} f(n) \le \int_0^{\infty} f(x)\, dx.$$
+
+#+begin_proof
+For $n \ge 1$, the monotonicity yields $f(n) \le \int_{n-1}^{n} f(x)\, dx$. We repeat this $N$ times to obtain
+
+\begin{align*}
+\sum_{n=1}^{N} f(n) &\le \sum_{n=1}^{N} \int_{n-1}^{n} f(x)\, dx \\
+&= \int_0^{N} f(x)\, dx \\
+&\le \int_0^{\infty} f(x)\, dx.
+\end{align*}
+#+end_proof
+
+** Questions
+
+* Theorem:     Taylor expansion
+:PROPERTIES:
+:CUSTOM_ID: thm:taylor-expansion
+:LECTURE_REF: 3.4.1
+:END:
+
+Assume $f : \left[ a, b \right] \rightarrow \mathbb{R}$ is $n + 1$ -times continuously differentiable and let $x_0 \in \left( a, b \right)$. Then we have, for all $x \in \left[ a, b \right]$,
+
+$$f(x) = \sum_{k=0}^{n} \frac{f^{(k)}(x_0)}{k!}(x - x_0)^k + R_{n+1}(x), \tag{3.1}$$
+
+where the remainder is
+
+$$R_{n+1}(x) = \frac{1}{n!} \int_{x_0}^{x} (x - t)^n f^{(n+1)}(t)\, dt. \tag{3.2}$$
+
+The mapping $x \mapsto \sum_{k=0}^{n} \frac{f^{(k)}(x_0)}{k!}(x - x_0)^k$ is a polynomial function of degree $n$, often referred to as the Taylor polynomial. It represents a local approximation of $f$ near $x_0$.
+
+#+begin_proof
+The proof is by induction. For $n = 0$, we have
+
+$$f(x) = f(x_0) + \int_{x_0}^{x} f'(t)\, dt,$$
+
+which follows from the FTC. The term $\int_{x_0}^{x} f'(t)\, dt$ coincides with $R_1(x)$ as in (3.2). We now assume the claim holds for $n - 1$ with $R_n$ in (3.2) and define $R_{n+1}$ by (3.5). We use the induction claim for $n - 1$ and obtain
+
+\begin{align*}
+R_{n+1}(x) &= f(x) - \sum_{k=0}^{n} \frac{f^{(k)}(x_0)}{k!}(x - x_0)^k \\
+&= \sum_{k=0}^{n-1} \frac{f^{(k)}(x_0)}{k!}(x - x_0)^k + R_n(x) - \sum_{k=0}^{n} \frac{f^{(k)}(x_0)}{k!}(x - x_0)^k \\
+&= R_n(x) - \frac{f^{(n)}(x_0)}{n!}(x - x_0)^n \\
+&= \frac{1}{(n-1)!} \int_{x_0}^{x} (x - t)^{n-1} f^{(n)}(t)\, dt - \frac{f^{(n)}(x_0)}{n!}(x - x_0)^n \\
+&= -\int_{x_0}^{x} f^{(n)}(t) \frac{d}{dt}\left( \frac{(x - t)^n}{n!} \right) dt - \frac{f^{(n)}(x_0)}{n!}(x - x_0)^n \\
+&= -f^{(n)}(t) \frac{(x - t)^n}{n!}\Big|_{t=x_0}^{t=x} + \int_{x_0}^{x} f^{(n+1)}(t) \frac{(x - t)^n}{n!}\, dt - \frac{f^{(n)}(x_0)}{n!}(x - x_0)^n \\
+&= \int_{x_0}^{x} f^{(n+1)}(t) \frac{(x - t)^n}{n!}\, dt.
+\end{align*}
+#+end_proof
+
+** Questions
+
+* Lemma:       Alternative form of the remainder
+:PROPERTIES:
+:CUSTOM_ID: lem:taylor-remainder-lagrange
+:LECTURE_REF: 3.4.4
+:END:
+
+Assume $f : \left[ a, b \right] \rightarrow \mathbb{R}$ is $n + 1$ -times continuously differentiable and let $x_0 \in \left( a, b \right)$. Then there is $\xi = \xi(x_0, x) \in \left[ x_0, x \right] \cup \left[ x, x_0 \right]$ such that
+
+$$R_{n+1}(x) = \frac{f^{(n+1)}(\xi)}{(n+1)!}(x - x_0)^{n+1}. \tag{3.4}$$
+
+#+begin_proof
+Without loss of generality, assume that $x > x_0$. According to the mean value theorem of integration there exists $\xi \in \left[ x_0, x \right]$ such that
+
+\begin{align*}
+R_{n+1}(x) &= \frac{1}{n!} \int_{x_0}^{x} (x - t)^n f^{(n+1)}(t)\, dt \\
+&= f^{(n+1)}(\xi) \frac{1}{n!} \int_{x_0}^{x} (x - t)^n\, dt \\
+&= f^{(n+1)}(\xi) \left[ \frac{-1}{(n+1)!}(x - t)^{n+1} \right]_{x_0}^{x} \\
+&= \frac{f^{(n+1)}(\xi)}{(n+1)!}(x - x_0)^{n+1}.
+\end{align*}
+#+end_proof
+
+** Questions
+
+* Theorem:     Taylor asymptotic
+:PROPERTIES:
+:CUSTOM_ID: thm:taylor-asymptotic
+:LECTURE_REF: 3.4.6
+:END:
+
+Assume $f : \left[ a, b \right] \rightarrow \mathbb{R}$ is $n$ -times continuously differentiable and let $x_0 \in \left( a, b \right)$. Then we have, for all $x \in \left[ a, b \right]$,
+
+$$f(x) = \sum_{k=0}^{n} \frac{f^{(k)}(x_0)}{k!}(x - x_0)^k + o(|x - x_0|^n). \tag{3.5}$$
+
+The symbol $o(|x - x_0|^n)$ stands for a function $\varphi$ such that
+
+$$\lim_{x \rightarrow x_0} \frac{\varphi(x)}{|x - x_0|^n} = 0.$$
+
+Thus, $\varphi$ must decay faster than $|x - x_0|^n$.
+
+#+begin_proof
+We use the alternative form of the remainder for the Taylor polynomial of order $n - 1$. This yields
+
+\begin{align*}
+f(x) - \sum_{k=0}^{n-1} \frac{f^{(k)}(x_0)}{k!}(x - x_0)^k &= R_n(x) \\
+&= \frac{f^{(n)}(\xi)}{n!}(x - x_0)^n \\
+&= \frac{f^{(n)}(x_0)}{n!}(x - x_0)^n + \frac{f^{(n)}(\xi) - f^{(n)}(x_0)}{n!}(x - x_0)^n.
+\end{align*}
+
+Reordering these terms leads to
+
+$$f(x) - \sum_{k=0}^{n} \frac{f^{(k)}(x_0)}{k!}(x - x_0)^k = \frac{f^{(n)}(\xi) - f^{(n)}(x_0)}{n!}(x - x_0)^n.$$
+
+Since $f^{(n)}$ is continuous and $x \rightarrow x_0$ enforces $\xi \rightarrow x_0$, we see that the right-hand side is $o(|x - x_0|^n)$.
+#+end_proof
+
+** Questions
+
+* Corollary:   Higher-order convergence of fixed point iteration
+:PROPERTIES:
+:CUSTOM_ID: cor:higher-order-iteration-convergence
+:LECTURE_REF: 3.4.7
+:END:
+
+Assume $f : \left[ a, b \right] \rightarrow \mathbb{R}$ is $n$ -times continuously differentiable and let $x \in \left( a, b \right)$ be such that $f(x) = x$. If $n \ge 2$ and
+
+$$0 = f^{(1)}(x) = \cdots = f^{(n-1)}(x),$$
+
+then the iteration $x_{k+1} = f(x_k)$ converges towards $x$ with order $n$ for all initial points $x_0$ in a neighborhood of $x$.
+
+Convergence of order $n$ means that there is $c > 0$ such that
+
+$$|x_{k+1} - x| \le c |x_k - x|^n, \qquad k \in \mathbb{N},$$
+
+see /Definition 1.1.7/.
+
+#+begin_proof
+Since $f'(x) = 0$, /Corollary 3.2.11/ implies contractivity in a neighborhood of $x$. The Banach fixed point theorem leads to linear convergence. To verify convergence order $n$, we consider the Taylor expansion
+
+$$f(x_k) = \sum_{i=0}^{n} \frac{f^{(i)}(x)}{i!}(x_k - x)^i + o(|x_k - x|^n).$$
+
+There is $\xi_k \in \mathbb{R}$ such that $\xi_k \rightarrow 0$ and
+
+$$x_{k+1} = f(x_k) = x + \frac{f^{(n)}(x)}{n!}(x_k - x)^n + \xi_k |x_k - x|^n.$$
+
+We bring $x$ to the left-hand side and estimate
+
+$$|x_{k+1} - x| \le \left( \left| \frac{f^{(n)}(x)}{n!} \right| + \xi_k \right) |x_k - x|^n.$$
+
+Since $\xi_k \rightarrow 0$ and hence bounded, the convergence is of order $n$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Newton's method
+:PROPERTIES:
+:CUSTOM_ID: thm:newton-method
+:LECTURE_REF: 3.4.8
+:END:
+
+Assume $f : \left[ a, b \right] \rightarrow \mathbb{R}$ is 2-times continuously differentiable and let $x \in \left( a, b \right)$ be such that $f(x) = 0$ and $f'(x) \neq 0$. Then the iteration
+
+$$x_{k+1} := x_k - \frac{f(x_k)}{f'(x_k)}$$
+
+converges towards $x$ with order 2 for all initial points $x_0$ in a neighborhood of $x$.
+
+#+begin_proof
+The derivative $f'$ is nonzero in a neighborhood of $x$, so that we may define $F(y) = y - \frac{f(y)}{f'(y)}$ in a neighborhood of $x$. Then $F(x) = x$ and
+
+$$F'(x) = 1 - \frac{(f'(x))^2 - f(x) f''(x)}{(f'(x))^2} = 0.$$
+
+/Corollary 3.4.7/ implies convergence order 2.
+#+end_proof
+
+** Questions
