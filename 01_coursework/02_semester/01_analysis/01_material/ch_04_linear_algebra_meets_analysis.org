@@ -1,8 +1,8 @@
-#+title: Ch 06 Analysis In Normed Vector Space
+#+title: Ch 04 Linear Algebra Meets Analysis
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-20>
-#+lastmod: <2026-06-07 19:09>
+#+lastmod: <2026-06-07 19:11>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}

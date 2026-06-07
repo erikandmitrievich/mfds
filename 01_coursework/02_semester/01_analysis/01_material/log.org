@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-07>
-#+lastmod: <2026-06-07 17:46>
+#+lastmod: <2026-06-07 19:10>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -21,3 +21,4 @@
 - [X] Renamed ch_02, will will it out later (not priority content).
 - [X] Done ch_03 from scratch.
 - [X] Renamed ch_06 to ch_04.
+- [X] Updated ch_04, thanks Martin, nice job messing everything up!!!
