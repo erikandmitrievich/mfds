@@ -1,0 +1,76 @@
+#+title: Ps 12
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-06-07>
+#+lastmod: <2026-06-07 13:17>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 5.6 :characteristic_polynomial:linear_map:isomorphism:
+** Task
+#+begin_quote
+Let $\mathbb{E}$ be a vector space, and let $L, M \in \mathcal{L}(E)$ with $L$ being an isomorphism. Prove that $L \circ M$ and $M \circ L$ have the same characteristic polynomial.
+#+end_quote
+
+** Solution
+
+* Problem 5.8 :eigenvalue:eigenvector:diagonalization:
+** Task
+#+begin_quote
+Let $p, q \in \mathbb{R}$ with $q \neq 0$. We consider the matrix
+
+$$A = \begin{pmatrix} p & -q \\ q & p \end{pmatrix}$$.
+
+Determine the eigenvalues and eigenvectors of $A$. Is $A$ diagonalizable over $\mathbb{R}$? and $\mathbb{C}$?
+#+end_quote
+
+** Solution
+
+* Problem 5.15 :orthogonal_matrix:diagonalization:
+** Task
+#+begin_quote
+(Diagonalizability of O(2))
+
+Let $A \in O(2) := \{A \in \mathbb{R}^{2\times2} \mid A \text{ is orthogonal}\}$. Prove that if $A$ is diagonalizable (over $\mathbb{K} = \mathbb{R}$), then either $A = \text{Id}$ or $A = -\text{Id}$.
+#+end_quote
+
+** Solution
+
+* Problem 5.19 :eigenvalue:spectrum:shift_operator:
+** Task
+#+begin_quote
+(Eigenvalues on an infinite dimensional space)
+
+Let $\mathbb{E} = \mathcal{F}(\mathbb{N}_0, \mathbb{C}) = \{(x_n)_{n=0}^\infty : x_n \in \mathbb{C}, \forall n \in \mathbb{N}\}$ be the space of all complex sequences. On $\mathbb{E}$ we define the left and right shift operators:
+
+$$L(x_0, x_1, x_2, \ldots) = (x_1, x_2, x_3, \ldots), \quad R(x_0, x_1, x_2, \ldots) = (0, x_0, x_1, x_2, \ldots)$$
+
+(i) Prove that $\sigma(L) = \mathbb{C}$ (i.e. any $\lambda \in \mathbb{C}$ is an eigenvalue of $L$). Determine for each $\lambda \in \mathbb{C}$ its associated eigenspace.
+
+(ii) Prove that $\sigma(R) = \emptyset$.
+#+end_quote
+
+** Solution
+*** (i)
+
+*** (ii)
+
+* Errors/Typos
+- Problem 5.6: "$\mathcal{L}(E)$" → "$\mathcal{L}(\mathbb{E})$" (the space is named $\mathbb{E}$, but the operator algebra is written over $E$)
+- Problem 5.19: "$\forall n \in \mathbb{N}$" → "$\forall n \in \mathbb{N}_0$" (index set is declared as $\mathbb{N}_0$, but the quantifier ranges over $\mathbb{N}$)
+
+* Time Estimates
+- Problem 5.6: ~15 min~
+- Problem 5.8: ~20 min~
+- Problem 5.15: ~25 min~
+- Problem 5.19: ~35 min~
