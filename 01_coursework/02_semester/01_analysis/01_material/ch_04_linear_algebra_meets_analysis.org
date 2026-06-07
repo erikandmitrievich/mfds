@@ -1,0 +1,1501 @@
+#+title: Ch 06 Analysis In Normed Vector Space
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-03-20>
+#+lastmod: <2026-06-07 19:09>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Theorem:     Finite-dimensional normed vector spaces
+:PROPERTIES:
+:CUSTOM_ID: thm:finite-dimensional-normed-spaces
+:LECTURE_REF: 4.1.1
+:END:
+
+Let $V$ be a finite-dimensional normed vector space. Then the following statements hold:
+
+1. $V$ is complete.
+
+2. If $\| \cdot \|_a$ and $\| \cdot \|_b$ are norms on $V$, then there exist constants $c, C > 0$ such that
+
+   $$c \|v\|_a \le \|v\|_b \le C \|v\|_a \quad \text{for all } v \in V.$$
+
+3. If $f : V \rightarrow V$ is linear, then $f$ is continuous.
+
+Part (iii) also holds for $f : V \rightarrow W$ for two normed linear spaces $V$ and $W$ as long as $V$ is finite-dimensional.
+
+#+begin_proof
+(ii) Fix a basis $B = \{b_1, \ldots, b_n\}$ of $V$ and recall the coordinate map $\chi_B : \mathbb{F}^n \rightarrow V$ given by $\chi_B(x) = \sum_{i=1}^n x_i b_i$. Define the coordinate norm
+
+$$\|v\|_{B,2} := \|\chi_B^{-1}(v)\|_2, \quad v \in V,$$
+
+where $\| \cdot \|_2$ denotes the Euclidean norm on $\mathbb{F}^n$.
+
+/Upper bound./ Let $M := \max_{1 \le i \le n} \|b_i\|_a$. For $v = \sum_{i=1}^n x_i b_i$ we obtain
+
+$$\|v\|_a \le \sum_{i=1}^n |x_i| \, \|b_i\|_a \le M \sum_{i=1}^n |x_i| \le M\sqrt{n} \, \|x\|_2 = M\sqrt{n} \, \|v\|_{B,2}.$$
+
+/Lower bound./ Let $\mathbb{S}^{n-1} := \{x \in \mathbb{F}^n : \|x\|_2 = 1\}$ and
+
+$$S_B := \{v \in V : \|v\|_{B,2} = 1\} = \chi_B(\mathbb{S}^{n-1}).$$
+
+The bound
+
+$$\|\chi_B(x)\|_a \le M\sqrt{n} \, \|x\|_2 \quad \text{for all } x \in \mathbb{F}^n,$$
+
+yields that $\chi_B$ is continuous as a map from $\mathbb{F}^n$ to $(V, \| \cdot \|_a)$. Since $\mathbb{S}^{n-1}$ is compact, the set $S_B$ is compact in $(V, \| \cdot \|_a)$. The function $v \mapsto \|v\|_a$ is continuous on $(V, \| \cdot \|_a)$ and strictly positive on $S_B$, hence attains a minimum $m > 0$. For $v \ne 0$ we write $v = \|v\|_{B,2} w$ with $w \in S_B$ and conclude
+
+$$\|v\|_a = \|w\|_a \, \|v\|_{B,2} \ge m \|v\|_{B,2}.$$
+
+Thus there exist $\alpha, \beta > 0$ such that
+
+$$\alpha \|v\|_B \le \|v\|_a \le \beta \|v\|_{B,2} \quad \text{for all } v \in V.$$
+
+Applying the same argument to $\| \cdot \|_b$ yields that there exist $\alpha', \beta' > 0$ such that
+
+$$\alpha' \|v\|_{B,2} \le \|v\|_b \le \beta' \|v\|_{B,2} \quad \text{for all } v \in V.$$
+
+We combine these inequalities and obtain
+
+$$\frac{\alpha'}{\beta} \|v\|_a \le \|v\|_b \le \frac{\beta'}{\alpha} \|v\|_a.$$
+
+(i) Fix a basis $B = \{b_1, \ldots, b_n\}$ of $V$ and recall the coordinate map $\chi_B : \mathbb{R}^n \rightarrow V$ given by $\chi_B(x) = \sum_{i=1}^n x_i b_i$. Define the coordinate norm
+
+$$\|v\|_{B,1} := \|\chi_B^{-1}(v)\|_1, \quad v \in V,$$
+
+where $\| \cdot \|_1$ denotes the Euclidean 1-norm on $\mathbb{R}^n$. Let $(v_k)_{k\in\mathbb{N}}$ be a Cauchy sequence in $V$. By (ii), $(v_k)_{k\in\mathbb{N}}$ is Cauchy with respect to $\| \cdot \|_{B,1}$. Setting $x_k = \chi_B^{-1}(v_k)$, we obtain a Cauchy sequence in $\mathbb{R}^n$, which converges since $\mathbb{R}^n$ is complete. Hence $v_k \rightarrow \chi_B(x) \in V$ with respect to $\| \cdot \|_{B,1}$, and therefore with respect to the original norm by (ii).
+
+(iii) Set
+
+$$C := \max_{1 \le i \le n} \|f b_i\|.$$
+
+For $v = \sum_{i=1}^n x_i b_i$ we have
+
+$$\|fv\| \le \sum_{i=1}^n |x_i| \, \|f b_i\| \le C \sum_{i=1}^n |x_i| = C \|v\|_{B,1}.$$
+
+By (ii), $\|v\|_{B,1} \le C_1 \|v\|$ for some $C_1 > 0$, hence
+
+$$\|f(v_n - v)\| \le C C_1 \|v_n - v\| \rightarrow 0,$$
+
+which proves continuity of $f$.
+#+end_proof
+
+** Questions
+* Theorem:     Boundedness and continuity of linear maps
+:PROPERTIES:
+:CUSTOM_ID: thm:boundedness-continuity-linear-maps
+:LECTURE_REF: 4.1.4
+:END:
+
+Let $V$ and $W$ be normed vector spaces and let $f : V \rightarrow W$ be linear. The following are equivalent:
+
+1. $f$ is continuous.
+
+2. $f$ is continuous at $0$.
+
+3. There exists $C \ge 0$ such that
+
+   $$\|fv\| \le C\|v\| \quad \text{for all } v \in V.$$
+
+#+begin_proof
+(i)$\Rightarrow$(ii) is clear.
+
+(ii)$\Rightarrow$(iii) Let $\varepsilon = 1$. By continuity at $0$ there exists $\delta > 0$ such that $\|v\| < \delta$ implies $\|fv\| < 1$. For $v \neq 0$ set $w := \frac{\delta}{2\|v\|}v$, so that $\|w\| = \delta/2 < \delta$ and hence $\|fw\| < 1$. By linearity,
+
+$$\|fv\| = \frac{2\|v\|}{\delta}\|fw\| \le \frac{2}{\delta}\|v\|.$$
+
+Thus (iii) holds with $C = 2/\delta$.
+
+(iii)$\Rightarrow$(i) If $\|fv\| \le C\|v\|$, then for $v, u \in V$,
+
+$$\|fv - fu\| = \|f(v - u)\| \le C\|v - u\|.$$
+
+Thus, $v \rightarrow u$ implies $fv \rightarrow fu$ and $f$ is continuous.
+#+end_proof
+
+** Questions
+
+* Definition:  Operator norm
+:PROPERTIES:
+:CUSTOM_ID: def:operator-norm
+:LECTURE_REF: 4.1.5
+:END:
+
+Let $V$ and $W$ be normed vector spaces and let $f : V \rightarrow W$ be linear and continuous. Then the operator norm of $f$ is
+
+$$\|f\|_{\mathrm{op}} := \sup_{0 \neq v \in V} \frac{\|fv\|}{\|v\|}.$$
+
+** Questions
+
+*** DONE Do I understand right, that the operator norm is a norm defined on the vector space of continuous linear maps $V \rightarrow W$, given by the supremum of $\dfrac{\|fv\|_W}{\|v\|_V}$ over all nonzero $v \in V$?
+
+Yes.
+
+*** DONE Do I understand right that as $f$ is linear, we can choose $\|v\| = 1$, and get $\|f\|_{\mathrm{op}} = \sup \|fv\|$?
+
+Yes. By linearity and positive homogeneity of the norm, for any $v \neq 0$,
+
+$$\frac{\|fv\|}{\|v\|} = \|f(\frac{v}{\|v\|})\|$$
+
+and $\dfrac{v}{\|v\|}$ ranges over the unit sphere $\{u \in V : \|u\| = 1\}$ as $v$ ranges over $V \setminus \{0\}$. Hence,
+
+$$\|f\|_{\mathrm{op}} = \sup_{\|v\| = 1} \|fv\|$$
+
+* Definition:  Spectrum and spectral radius
+:PROPERTIES:
+:CUSTOM_ID: def:spectrum-spectral-radius
+:LECTURE_REF: 4.1.7
+:END:
+
+The spectrum of $A \in \mathbb{C}^{n \times n}$ is
+
+$$\sigma(A) := \{\lambda \in \mathbb{C} : \lambda \text{ eigenvalue of } A\}.$$
+
+The spectral radius is
+
+$$\rho(A) := \max_{\lambda \in \sigma(A)} |\lambda|.$$
+
+** Questions
+
+* Lemma:       Operator norm of an inverse matrix
+:PROPERTIES:
+:CUSTOM_ID: lem:operator-norm-inverse
+:LECTURE_REF: 4.1.8
+:END:
+
+Let $A \in \mathbb{C}^{n \times n}$ be invertible. If $\| \cdot \|$ is a norm on $\mathbb{C}^n$, then the operator norm of $A^{-1}$ is
+
+$$\|A^{-1}\| = \frac{1}{\min_{\|x\|=1} \|Ax\|}.$$
+
+#+begin_proof
+In the following, the bijectivity allows us to substitute $y = Ax$ to derive
+
+$$\|A^{-1}\| = \max_{y \ne 0} \frac{\|A^{-1}y\|}{\|y\|} = \max_{x \ne 0} \frac{\|x\|}{\|Ax\|} = \max_{\|x\|=1} \frac{1}{\|Ax\|} = \frac{1}{\min_{\|x\|=1} \|Ax\|}.$$
+#+end_proof
+
+** Questions
+
+* Lemma:       Operator norm of a symmetric matrix equals spectral radius
+:PROPERTIES:
+:CUSTOM_ID: lem:operator-norm-symmetric-spectral-radius
+:LECTURE_REF: 4.1.9
+:END:
+
+For $A \in \mathbb{C}^{n \times n}_{sym}$, we have
+
+$$\|A\|_2 = \rho(A).$$
+
+#+begin_proof
+There is an orthonormal basis of eigenvectors $\{b_1, \ldots, b_n\}$. Pick $x \in \mathbb{C}^n$ with $\|A\|_2 = \|Ax\|_2$ and $\|x\|_2 = 1$. We derive
+
+$$\|Ax\|_2^2 = \left\| \sum_{j=1}^n \langle x, b_j \rangle \lambda_j b_j \right\|_2^2 = \sum_{j=1}^n |\langle x, b_j \rangle|^2 |\lambda_j|^2 \le \sum_{j=1}^n |\langle x, b_j \rangle|^2 \rho(A)^2 = \rho(A)^2.$$
+
+This implies $\|A\|_2 \le \rho(A)$. For the reverse inequality, select $\lambda \in \sigma(A)$ with $|\lambda| = \rho(A)$ and let $x$ be the associated eigenvector with $\|x\|_2 = 1$. Then we have
+
+$$\|A\|_2 = \max_{\|y\|_2 = 1} \|Ay\|_2 \ge \|Ax\|_2 = \|\lambda x\|_2 = \rho(A).$$
+#+end_proof
+
+** Questions
+
+* Lemma:       Compatible norm on $\mathcal{L}(V, W)$ is Banach when $W$ is Banach
+:PROPERTIES:
+:CUSTOM_ID: lem:operator-norm-banach
+:LECTURE_REF: 4.1.10
+:END:
+
+If $W$ is a Banach space, then every compatible norm on $\mathcal{L}(V, W)$ makes it a Banach space.
+
+#+begin_proof
+Let $(f_n)_{n\in\mathbb{N}} \subseteq \mathcal{L}(V, W)$ be a Cauchy sequence.
+
+Step 1: Pointwise limits. Fix $x \in V$. For all $n, m \in \mathbb{N}$ we have
+
+$$\|f_n(x) - f_m(x)\|_W \le \|f_n - f_m\| \, \|x\|_V.$$
+
+Since $(f_n)$ is Cauchy, the right-hand side tends to $0$ as $n, m \rightarrow \infty$. Hence $(f_n(x))_{n\in\mathbb{N}}$ is a Cauchy sequence in $W$. Because $W$ is complete, the limit exists. Define
+
+$$f(x) := \lim_{n \rightarrow \infty} f_n(x) \in W, \quad x \in V.$$
+
+This defines a map $f : V \rightarrow W$. Direct calculations reveal that $f$ is linear. To verify that $f$ is also bounded, we recall that every Cauchy sequence is bounded. Hence, there is $C > 0$ such that $\|f_n\| \le C$, and this implies that, for every $x \in V$,
+
+$$\|f(x)\|_W = \left\| \lim_{n \rightarrow \infty} f_n(x) \right\|_W = \lim_{n \rightarrow \infty} \|f_n(x)\|_W \le C\|x\|_V.$$
+
+Thus $f$ is bounded and $f \in \mathcal{L}(V, W)$.
+
+Step 4: Convergence in operator norm. Fix $n \in \mathbb{N}$ and let $x \in V$ with $\|x\|_V \le 1$. Then
+
+$$\|(f_n - f)(x)\|_W = \left\| f_n(x) - \lim_{m \rightarrow \infty} f_m(x) \right\|_W = \lim_{m \rightarrow \infty} \|(f_n - f_m)(x)\|_W \le \limsup_{m \rightarrow \infty} \|f_n - f_m\|.$$
+
+Taking the supremum over all $\|x\|_V \le 1$ yields
+
+$$\|f_n - f\| \le \limsup_{m \rightarrow \infty} \|f_n - f_m\|.$$
+
+Since $(f_n)$ is Cauchy, the right-hand side tends to $0$ as $n \rightarrow \infty$. Therefore $\|f_n - f\| \rightarrow 0$ and $f_n \rightarrow f$ in $\mathcal{L}(V, W)$.
+
+We have shown that every Cauchy sequence in $\mathcal{L}(V, W)$ converges in $\mathcal{L}(V, W)$. Hence $\mathcal{L}(V, W)$ is complete.
+#+end_proof
+
+** Questions
+
+*** DONE What is a Banach space?
+
+A Banach space is a complete normed vector space - a normed space $(V, \|\cdot\|)$ such that every Cauchy sequence in $V$ congerges to a limit in $V$.
+
+*** DONE I do not understand the logic of lemma. If something_1 is something_1, then something_2 make it something_1 - its absurd.
+
+No. The lemma says if $W$ is a Banach space, then every compatible norm on $\mathcal{L}(V,W)$ makes $\mathcal{L}(V,W)$ a Banach space.
+
+* Theorem:     Von Neumann series
+:PROPERTIES:
+:CUSTOM_ID: thm:von-neumann-series
+:LECTURE_REF: 4.1.11
+:END:
+
+Let $B$ be a Banach space. If $f \in \mathcal{L}(B)$ such that there is $\theta < 1$ and
+
+$$\|\mathrm{id}_B - f\|_{\mathrm{op}} \le \theta,$$
+
+then $f$ is invertible, $\|f^{-1}\|_{\mathrm{op}} \le \dfrac{1}{1 - \theta}$ and
+
+$$f^{-1} = \sum_{k=0}^{\infty} (\mathrm{id}_B - f)^k.$$
+
+Note that $f^0 = \mathrm{id}_B$ by definition.
+
+** Questions
+
+*** DONE What exaclty is $\mathrm{id}_{B}$?
+
+It is an identity map on $B$.
+
+$$\mathrm{id}_{B} : B \rightarrow B, \mathrm{id}_{B}(x) = x$$
+
+It is linear, continuous, and $\|\mathrm{id}_B\|_{\mathrm{op}} = 1$.
+
+*** DONE Do I understand right that what it does is fixes the deviation of $f$ from $\mathrm{id}_B$ (strictly less), and states, it is invertable with inverse being kind of complementary of $f$? (the bigger $\|f\|_{\mathrm{op}}$, the less $\|f^{-1}\|_{\mathrm{op}}$)
+
+First part — yes. Second part — no.
+
+The controlling quantity is $\theta = \|\mathrm{id}_B - f\|_{\mathrm{op}}$, not $\|f\|_{\mathrm{op}}$. The bound says: if $f$ stays within distance $\theta < 1$ from $\mathrm{id}_B$, then $f^{-1}$ stays within a controlled distance from $\mathrm{id}_B$ too.
+
+
+*** DONE How would you generalise theorem in one sentence?
+
+Any continuous linear operator on a Banach space that is close enough to the identity (within $< 1$) is invertable, with inverse given by the geometric series in $\mathrm{id}_{B}-f$
+
+* Theorem:     Completion of a metric space
+:PROPERTIES:
+:CUSTOM_ID: thm:metric-completion
+:LECTURE_REF: 4.2.1
+:END:
+
+Let $(X_0, d_0)$ be a metric space. Then there exist a complete metric space $(X, d)$ and an isometric embedding $J : X_0 \rightarrow X$ such that $J(X_0)$ is dense in $X$.
+
+Our focus lies on the structural ideas; technical details are deferred to the literature.
+
+#+begin_proof
+(1) /Define the metric space $(X, d)$./ Let $\mathrm{Cauchy}(X_0)$ be the set of all Cauchy sequences in $X_0$. Define
+
+$$(x_n)_{n\in\mathbb{N}} \sim (y_n)_{n\in\mathbb{N}} \quad :\iff \quad d_0(x_n, y_n) \rightarrow 0,$$
+
+and set $X := \mathrm{Cauchy}(X_0)/\sim$, with equivalence classes $[(x_n)_{n\in\mathbb{N}}]$. It turns out that we may define
+
+$$d\big([(x_n)_{n\in\mathbb{N}}], [(y_n)_{n\in\mathbb{N}}]\big) := \lim_{n \rightarrow \infty} d_0(x_n, y_n),$$
+
+because $d(x_n, y_n)$ indeed converges and is independent of the specific representatives. It is a metric by passing to the limit in the triangle inequality.
+
+(2) /Density./ Define $J : X_0 \rightarrow X$ by mapping $x$ onto its constant sequence $J(x) = [(x)_{n\in\mathbb{N}}]$. Then $d(J(x), J(y)) = d(x, y)$, so $J$ is an isometry. Moreover, if $a = [(x_n)_{n\in\mathbb{N}}] \in X$, then
+
+$$d(J(x_n), a) = \lim_{m \rightarrow \infty} d_0(x_n, x_m) \xrightarrow[n \rightarrow \infty]{} 0,$$
+
+so $J(X_0)$ is dense.
+
+(3) /Completeness./ To prove completeness, let $(a_k)_{k\in\mathbb{N}}$ be Cauchy in $X$. Choose a subsequence $(a_{k_j})_{j\in\mathbb{N}}$ with $d(a_{k_{j+1}}, a_{k_j}) \le 2^{-j}$. Pick representatives $a_{k_j} = [(x_n^{(j)})_{n\in\mathbb{N}}]$ and indices $n_j$ such that
+
+$$d_0\big(x_{n_j}^{(j)}, x_{n_{j+1}}^{(j+1)}\big) \le 2^{-j}.$$
+
+Set $z_j := x_{n_j}^{(j)} \in X_0$. Then $(z_j)_{j\in\mathbb{N}}$ is Cauchy in $X_0$ since for $m > j$
+
+$$d_0(z_j, z_m) \le \sum_{\ell = j}^{m-1} d_0(z_\ell, z_{\ell+1}) \le \sum_{\ell = j}^{m-1} 2^{-\ell} \le 2^{-(j-1)}.$$
+
+Let $a := [(z_j)_{j\in\mathbb{N}}] \in X$. For each $j$,
+
+$$d(a_{k_j}, a) \le \sum_{\ell = j}^{\infty} d(a_{k_\ell}, a_{k_{\ell+1}}) \le \sum_{\ell = j}^{\infty} 2^{-\ell} \rightarrow 0,$$
+
+hence $a_{k_j} \rightarrow a$. Since $(a_k)_{k\in\mathbb{N}}$ is Cauchy and has a convergent subsequence, it converges to the same limit $a$. Thus $X$ is complete.
+#+end_proof
+
+** Questions
+
+* Theorem:     Extension to the completion
+:PROPERTIES:
+:CUSTOM_ID: thm:extension-to-completion
+:LECTURE_REF: 4.2.2
+:END:
+
+Let $X_0$ and $Y_0$ be metric spaces and let $X$ and $Y$ be their completions. Let $f_0 : X_0 \rightarrow Y_0$ be a map. Then the following are equivalent:
+
+1. The map $f_0$ is uniformly continuous on $X_0$.
+
+2. There exists a unique uniformly continuous map $f : X \rightarrow Y$ such that $f|_{X_0} = f_0$.
+
+In this case, the extension $f$ is unique.
+
+#+begin_proof
+- ($1 \Rightarrow 2$) Assume that $f_0$ is uniformly continuous. For $x \in X$, choose a sequence $(x_n)_{n\in\mathbb{N}} \subseteq X_0$ with $x_n \rightarrow x$ in $X$ (which is possible since $X_0$ is dense in $X$). Since $(x_n)$ is Cauchy in $X_0$ and $f_0$ is uniformly continuous, the sequence $(f_0(x_n))$ is Cauchy in $Y_0$. As $Y$ is complete and $Y_0$ is dense in $Y$, the sequence $(f_0(x_n))$ converges in $Y$. Define
+
+  $$f(x) := \lim_{n \rightarrow \infty} f_0(x_n) \in Y.$$
+
+  /Well-definedness./ Let $(x_n)$ and $(x_n')$ be sequences in $X_0$ with $x_n \rightarrow x$ and $x_n' \rightarrow x$ in $X$. Then $d_X(x_n, x_n') \rightarrow 0$. By uniform continuity, for every $\eta > 0$ there exists $\delta > 0$ such that $d_X(u, v) < \delta$ implies $d_Y\big(f_0(u), f_0(v)\big) < \eta$ for all $u, v \in X_0$. Hence $d_Y\big(f_0(x_n), f_0(x_n')\big) \rightarrow 0$, so both sequences have the same limit in $Y$. Thus $f$ is well-defined.
+
+  /Uniform continuity of $f$./ Fix $x \in X$ and let $\eta > 0$. Choose $\delta > 0$ from uniform continuity of $f_0$ corresponding to $\eta/3$. Let $x_n \in X_0$ with $x_n \rightarrow x$. Then there exists $n_0$ such that $d_X(x, x_{n_0}) < \delta/3$ and $d_Y\big(f(x), f_0(x_{n_0})\big) < \eta/3$. If $x' \in X$ satisfies $d_X(x, x') < \delta/3$, choose $x_{n_0}' \in X_0$ with $d_X(x', x_{n_0}') < \delta/3$ and $d_Y\big(f(x'), f_0(x_{n_0}')\big) < \eta/3$. Then
+
+  $$d_X(x_{n_0}, x_{n_0}') \le d_X(x_{n_0}, x) + d_X(x, x') + d_X(x', x_{n_0}') < \delta,$$
+
+  so $d_Y\big(f_0(x_{n_0}), f_0(x_{n_0}')\big) < \eta/3$. By the triangle inequality,
+
+  $$d_Y\big(f(x), f(x')\big) \le d_Y\big(f(x), f_0(x_{n_0})\big) + d_Y\big(f_0(x_{n_0}), f_0(x_{n_0}')\big) + d_Y\big(f_0(x_{n_0}'), f(x')\big) < \eta.$$
+
+  Thus $f$ is continuous at $x$, and hence continuous on $X$. Since $\delta$ is derived from uniform continuity of $f_0$, it does not depend on $x$ and, hence, $f$ is uniformly continuous. Moreover, if $x \in X_0$ and we choose the constant sequence $x_n = x$, then $f(x) = \lim_n f_0(x) = f_0(x)$, so $f|_{X_0} = f_0$.
+
+- ($2 \Rightarrow 1$) Assume that there exists a uniformly continuous extension $f : X \rightarrow Y$ with $f|_{X_0} = f_0$. Let $\varepsilon > 0$. Since $f$ is uniformly continuous on $X$, there exists $\delta > 0$ such that
+
+  $$d_X(x, y) < \delta \quad \Longrightarrow \quad d_Y\big(f(x), f(y)\big) < \varepsilon$$
+
+  for all $x, y \in X$. In particular, for $u, v \in X_0$ with $d_X(u, v) < \delta$, we have
+
+  $$d_Y\big(f_0(u), f_0(v)\big) = d_Y\big(f(u), f(v)\big) < \varepsilon.$$
+
+  Hence $f_0$ is uniformly continuous on $X_0$.
+
+/Uniqueness./ If $g : X \rightarrow Y$ is another uniformly continuous extension with $g|_{X_0} = f_0$, then $f$ and $g$ agree on the dense subset $X_0 \subseteq X$. Let $x \in X$ and choose $(x_n) \subseteq X_0$ with $x_n \rightarrow x$. By continuity,
+
+$$f(x) = \lim_{n \rightarrow \infty} f(x_n) = \lim_{n \rightarrow \infty} g(x_n) = g(x).$$
+
+Thus $f = g$.
+#+end_proof
+
+** Questions
+
+* Corollary:   Completion of normed spaces
+:PROPERTIES:
+:CUSTOM_ID: cor:normed-completion
+:LECTURE_REF: 4.2.3
+:END:
+
+Let $(X_0, \| \cdot \|_0)$ be a normed space. Then there exist a Banach space $(X, \| \cdot \|)$ and a linear isometry $J : X_0 \rightarrow X$ with dense range.
+
+#+begin_proof
+Apply the metric completion in /Theorem 4.2.1/ to $d_0(x, y) := \|x - y\|_0$. Realize $X$ as Cauchy sequences in $X_0$ modulo $\sim$. Define $[(x_n)_{n\in\mathbb{N}}] + [(y_n)_{n\in\mathbb{N}}] := [(x_n + y_n)_{n\in\mathbb{N}}]$ and $\alpha [(x_n)_{n\in\mathbb{N}}] := [(\alpha x_n)_{n\in\mathbb{N}}]$; these are well-defined because $\| \cdot \|_0$ is subadditive and homogeneous. Then $X$ becomes a normed space with
+
+$$\|[(x_n)_{n\in\mathbb{N}}]\| := \lim_{n \rightarrow \infty} \|x_n\|_0,$$
+
+and completeness follows from completeness of the metric completion.
+#+end_proof
+
+** Questions
+
+* Theorem:     Extension of bounded linear maps to the completion
+:PROPERTIES:
+:CUSTOM_ID: thm:extension-bounded-linear
+:LECTURE_REF: 4.2.4
+:END:
+
+Let $X_0$ and $Y_0$ be normed vector spaces, and let $X$ and $Y$ be their completions. Let $f_0 : X_0 \rightarrow Y_0$ be bounded linear. Then there exists a unique bounded linear extension $f : X \rightarrow Y$ such that $f|_{X_0} = f_0$ and it satisfies $\|f\| = \|f_0\|$.
+
+#+begin_proof
+Assume that $f_0$ is bounded linear. For $x \in X$, choose a sequence $(x_n)_{n\in\mathbb{N}} \subseteq X_0$ with $x_n \rightarrow x$ in $X$ (possible since $X_0$ is dense). Then $(x_n)$ is Cauchy in $X_0$, hence
+
+$$\|f_0(x_n) - f_0(x_m)\| = \|f_0(x_n - x_m)\| \le \|f_0\| \, \|x_n - x_m\| \xrightarrow[n, m \rightarrow \infty]{} 0,$$
+
+so $(f_0(x_n))$ is Cauchy in $Y_0$ and therefore converges in the completion $Y$. Define
+
+$$f(x) := \lim_{n \rightarrow \infty} f_0(x_n) \in Y.$$
+
+/Well-definedness./ If $(x_n') \subseteq X_0$ is another sequence with $x_n' \rightarrow x$, then $x_n - x_n' \rightarrow 0$, and
+
+$$\|f_0(x_n) - f_0(x_n')\| = \|f_0(x_n - x_n')\| \le \|f_0\| \, \|x_n - x_n'\| \rightarrow 0,$$
+
+so both sequences have the same limit in $Y$. Hence $f$ is well-defined.
+
+/Linearity./ Let $x, y \in X$ and $\alpha, \beta \in \mathbb{K}$. Choose $x_n \rightarrow x$ and $y_n \rightarrow y$ in $X_0$. Then $\alpha x_n + \beta y_n \rightarrow \alpha x + \beta y$ and by linearity of $f_0$
+
+$$f(\alpha x + \beta y) = \lim_{n \rightarrow \infty} f_0(\alpha x_n + \beta y_n) = \alpha \lim_{n \rightarrow \infty} f_0(x_n) + \beta \lim_{n \rightarrow \infty} f_0(y_n) = \alpha f(x) + \beta f(y).$$
+
+/Boundedness and norm identity./ For $x \in X$, choose $x_n \rightarrow x$ in $X_0$. Then
+
+$$\|f(x)\| = \left\| \lim_{n \rightarrow \infty} f_0(x_n) \right\| = \lim_{n \rightarrow \infty} \|f_0(x_n)\| \le \|f_0\| \lim_{n \rightarrow \infty} \|x_n\| = \|f_0\| \, \|x\|.$$
+
+Thus $\|f\| \le \|f_0\|$. On the other hand, since $f|_{X_0} = f_0$ and $X_0 \subseteq X$,
+
+$$\|f_0\| = \sup_{x \in X_0 \setminus \{0\}} \frac{\|f(x)\|}{\|x\|} \le \|f\|.$$
+
+Hence $\|f\| = \|f_0\|$.
+
+Moreover, if $x \in X_0$ and $x_n = x$, then
+
+$$f(x) = \lim_{n \rightarrow \infty} f_0(x) = f_0(x),$$
+
+so $f|_{X_0} = f_0$.
+
+/Uniqueness./ Let $g : X \rightarrow Y$ be another bounded linear extension of $f_0$. For $x \in X$, choose $x_n \in X_0$ with $x_n \rightarrow x$. Since $f$ and $g$ are continuous and agree on $X_0$,
+
+$$g(x) = \lim_{n \rightarrow \infty} g(x_n) = \lim_{n \rightarrow \infty} f_0(x_n) = \lim_{n \rightarrow \infty} f(x_n) = f(x).$$
+
+Hence $g = f$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Completeness of $\ell^p$
+:PROPERTIES:
+:CUSTOM_ID: thm:lp-complete
+:LECTURE_REF: 4.2.5
+:END:
+
+For $1 \le p \le \infty$, the space $\ell^p(\mathbb{N})$ is complete.
+
+#+begin_proof
+Let $(x^{(k)})$ be a Cauchy sequence in $\ell^p(\mathbb{N})$, $x^{(k)} = (x_n^{(k)})_n$.
+
+We first assume $1 \le p < \infty$. For fixed $n$,
+
+$$|x_n^{(k)} - x_n^{(m)}| \le \|x^{(k)} - x^{(m)}\|_p,$$
+
+so $(x_n^{(k)})_k$ converges. Define $x_n := \lim_k x_n^{(k)}$ and $x = (x_n)_n$.
+
+Since $(x^{(k)})$ is Cauchy, it is bounded: $\|x^{(k)}\|_p \le M$. For each $N$,
+
+$$\sum_{n=1}^{N} |x_n|^p = \lim_{k \rightarrow \infty} \sum_{n=1}^{N} |x_n^{(k)}|^p \le M^p,$$
+
+hence $x \in \ell^p$.
+
+Letting $m \rightarrow \infty$ in $\|x^{(k)} - x^{(m)}\|_p < \varepsilon$ yields $\|x^{(k)} - x\|_p \le \varepsilon$ for $k$ large. Thus $x^{(k)} \rightarrow x$ in $\ell^p$.
+
+For the case $p = \infty$, we observe that, for each $n$,
+
+$$|x_n^{(k)} - x_n^{(m)}| \le \|x^{(k)} - x^{(m)}\|_{\infty},$$
+
+so $x_n^{(k)}$ converges; define $x_n = \lim_k x_n^{(k)}$.
+
+Since $(x^{(k)})$ is Cauchy, it is bounded: $\|x^{(k)}\|_{\infty} \le M$, hence $|x_n| \le M$ and $x \in \ell^{\infty}(\mathbb{N})$.
+
+Finally,
+
+$$\|x^{(k)} - x\|_{\infty} = \sup_n |x_n^{(k)} - x_n| \le \varepsilon$$
+
+for $k$ large, so $x^{(k)} \rightarrow x$ in $\ell^{\infty}(\mathbb{N})$.
+#+end_proof
+
+** Questions
+
+* Corollary:   Completion of inner product spaces
+:PROPERTIES:
+:CUSTOM_ID: cor:inner-product-completion
+:LECTURE_REF: 4.2.6
+:END:
+
+Let $(H_0, \langle \cdot, \cdot \rangle_0)$ be an inner product space. Then there exist a Hilbert space $(H, \langle \cdot, \cdot \rangle)$ and a linear isometry $J : H_0 \rightarrow H$ with dense range.
+
+#+begin_proof
+Apply the previous corollary to the induced norm $\|x\|_0 = \sqrt{\langle x, x \rangle_0}$. The resulting Banach space $H$ satisfies the parallelogram law (by continuity, since it holds on the dense subspace $J(H_0)$). Hence the polarization identity defines an inner product on $H$ that induces $\| \cdot \|$, making $H$ a Hilbert space, and $J$ preserves the inner product.
+#+end_proof
+
+** Questions
+* Corollary:   $\ell^2(\mathbb{N})$ is a Hilbert space
+:PROPERTIES:
+:CUSTOM_ID: cor:l2-hilbert
+:LECTURE_REF: 4.3.1
+:END:
+
+The space $\ell^2(\mathbb{N})$ is a Hilbert space.
+
+#+begin_proof
+We have seen that it is complete and straight-forward calculations reveal that
+
+$$\langle x, y \rangle = \sum_{n \in \mathbb{N}} x_n \overline{y_n}, \quad x, y \in \ell^2(\mathbb{N}),$$
+
+is an inner product.
+#+end_proof
+
+** Questions
+
+* Definition:  Orthonormal basis
+:PROPERTIES:
+:CUSTOM_ID: def:orthonormal-basis
+:LECTURE_REF: 4.3.2
+:END:
+
+Let $H$ be a Hilbert space. A family $(\phi_n)_{n\in\mathbb{N}} \subset H$ is called an orthonormal basis of $H$ if
+
+$$\langle \phi_i, \phi_j \rangle = \delta_{ij} \quad \text{for all } i, j \in I,$$
+
+and
+
+$$\overline{\operatorname{span}}\{\phi_n : n \in \mathbb{N}\} = H.$$
+
+** Questions
+
+* Theorem:     Expansion in an orthonormal basis
+:PROPERTIES:
+:CUSTOM_ID: thm:onb-expansion
+:LECTURE_REF: 4.3.3
+:END:
+
+Let $H$ be an infinite-dimensional Hilbert space and let $(\phi_n)_{n\in\mathbb{N}}$ be an orthonormal basis of $H$. Then for every $x \in H$ we have
+
+$$x = \sum_{n \in \mathbb{N}} \langle x, \phi_n \rangle \phi_n,$$
+
+where the series converges in the norm of $H$.
+
+#+begin_proof
+Fix $x \in H$ and define the partial sums
+
+$$s_N := \sum_{n=1}^{N} \langle x, \phi_n \rangle \phi_n \quad (N \in \mathbb{N}).$$
+
+For $m \le N$ we compute, using orthonormality,
+
+$$\langle x - s_N, \phi_m \rangle = \langle x, \phi_m \rangle - \sum_{n=1}^{N} \langle x, \phi_n \rangle \langle \phi_n, \phi_m \rangle = \langle x, \phi_m \rangle - \langle x, \phi_m \rangle = 0.$$
+
+Hence $x - s_N \perp \operatorname{span}\{\phi_1, \ldots, \phi_N\}$, and by the Pythagorean theorem,
+
+$$\|x\|^2 = \|x - s_N\|^2 + \|s_N\|^2. \tag{4.1}$$
+
+Moreover,
+
+$$\|s_N\|^2 = \left\langle \sum_{n=1}^{N} \langle x, \phi_n \rangle \phi_n, \sum_{m=1}^{N} \langle x, \phi_m \rangle \phi_m \right\rangle = \sum_{n=1}^{N} |\langle x, \phi_n \rangle|^2.$$
+
+Therefore (4.1) yields
+
+$$\|x - s_N\|^2 = \|x\|^2 - \sum_{n=1}^{N} |\langle x, \phi_n \rangle|^2 \ge 0. \tag{4.2}$$
+
+Since $(\phi_n)_{n\in\mathbb{N}}$ is an orthonormal basis, the subspace $\operatorname{span}\{\phi_n : n \in \mathbb{N}\}$ is dense in $H$. Thus for every $\varepsilon > 0$ there exists $y$ in this span with $\|x - y\| < \varepsilon$. Writing $y = \sum_{n=1}^{N} a_n \phi_n$ and using orthonormality, we get
+
+$$\|x - s_N\| \le \|x - y\| < \varepsilon,$$
+
+because $s_N$ is the orthogonal projection of $x$ onto $\operatorname{span}\{\phi_1, \ldots, \phi_N\}$ (equivalently, it is the unique element of that subspace minimizing the distance to $x$). Hence $\|x - s_N\| \rightarrow 0$ as $N \rightarrow \infty$, which proves
+
+$$x = \lim_{N \rightarrow \infty} s_N = \sum_{n=1}^{\infty} \langle x, \phi_n \rangle \phi_n.$$
+#+end_proof
+
+** Questions
+
+* Lemma:       Orthogonal decomposition
+:PROPERTIES:
+:CUSTOM_ID: lem:orthogonal-decomposition
+:LECTURE_REF: 4.3.5
+:END:
+
+Let $H$ be a Hilbert space and let $M \subseteq H$ be a closed linear subspace. Then
+
+$$H = M \oplus M^{\perp}.$$
+
+#+begin_proof
+Let $x \in H$ and set
+
+$$d := \inf_{m \in M} \|x - m\|.$$
+
+Choose $(m_n) \subseteq M$ with $\|x - m_n\| \rightarrow d$. By the parallelogram identity,
+
+$$\|m_n - m_k\|^2 = 2 \|x - m_n\|^2 + 2 \|x - m_k\|^2 - 4 \left\| x - \frac{m_n + m_k}{2} \right\|^2.$$
+
+Since $(m_n + m_k)/2 \in M$, we have
+
+$$\left\| x - \frac{m_n + m_k}{2} \right\| \ge d.$$
+
+Hence
+
+$$\|m_n - m_k\|^2 \le 2 \|x - m_n\|^2 + 2 \|x - m_k\|^2 - 4 d^2 \rightarrow 0.$$
+
+Thus $(m_n)$ is Cauchy. Since $M$ is closed in the Hilbert space $H$, there exists $m \in M$ with $m_n \rightarrow m$. By continuity of the norm,
+
+$$\|x - m\| = d.$$
+
+Set $u := x - m$. We show that $u \in M^{\perp}$. For $v \in M$ and $t \in \mathbb{R}$, the minimizing property of $m$ gives
+
+$$\|u\|^2 \le \|u - tv\|^2 = \|u\|^2 - 2t \langle u, v \rangle + t^2 \|v\|^2.$$
+
+Thus
+
+$$0 \le -2t \langle u, v \rangle + t^2 \|v\|^2 \quad \forall t \in \mathbb{R}.$$
+
+This implies $\langle u, v \rangle = 0$. Since $v \in M$ was arbitrary, $u \in M^{\perp}$. Therefore
+
+$$x = m + u \in M + M^{\perp}.$$
+
+Finally, if $x = m_1 + u_1 = m_2 + u_2$ with $m_i \in M$ and $u_i \in M^{\perp}$, then
+
+$$m_1 - m_2 = u_2 - u_1 \in M \cap M^{\perp}.$$
+
+But $M \cap M^{\perp} = \{0\}$, hence $m_1 = m_2$ and $u_1 = u_2$. Thus the decomposition is unique, and
+
+$$H = M \oplus M^{\perp}.$$
+#+end_proof
+
+** Questions
+
+* Theorem:     Riesz representation theorem (real Hilbert spaces)
+:PROPERTIES:
+:CUSTOM_ID: thm:riesz-representation-real
+:LECTURE_REF: 4.3.6
+:END:
+
+Let $H$ be a real Hilbert space. For every bounded linear functional $\varphi \in H^*$ there exists a unique $y \in H$ such that
+
+$$\varphi(x) = \langle x, y \rangle \quad \forall x \in H.$$
+
+Moreover, $\|\varphi\| = \|y\|$.
+
+#+begin_proof
+If $\varphi = 0$, take $y = 0$. Assume $\varphi \ne 0$ and set $M := \ker(\varphi)$. Then $M$ is a linear subspace. It is closed since $\varphi$ is continuous and $M = \varphi^{-1}(\{0\})$ with $\{0\}$ closed in $\mathbb{R}$. Since $M$ is a closed subspace of the Hilbert space $H$, we have the orthogonal decomposition
+
+$$H = M \oplus M^{\perp},$$
+
+i.e. each $x \in H$ can be written uniquely as $x = m + u$ with $m \in M$ and $u \in M^{\perp}$.
+
+We first show that $\dim(M^{\perp}) = 1$. Pick $u \in M^{\perp} \setminus \{0\}$. Then $\varphi(u) \ne 0$ (otherwise $u \in M \cap M^{\perp} = \{0\}$). Let $v \in M^{\perp}$ be arbitrary and set
+
+$$w := v - \frac{\varphi(v)}{\varphi(u)} u.$$
+
+Then $w \in M^{\perp}$ and $\varphi(w) = 0$, hence $w \in M$. Thus $w \in M \cap M^{\perp} = \{0\}$, so $v = \frac{\varphi(v)}{\varphi(u)} u$. Therefore $M^{\perp} = \operatorname{span}\{u\}$.
+
+Let $e := u/\|u\|$, so $\|e\| = 1$ and $M^{\perp} = \operatorname{span}\{e\}$. Given $x \in H$, write $x = m + \alpha e$ with $m \in M$. Then
+
+$$\alpha = \langle x, e \rangle \quad \text{since} \quad \langle x, e \rangle = \langle m, e \rangle + \alpha \langle e, e \rangle = 0 + \alpha,$$
+
+and hence
+
+$$\varphi(x) = \varphi(m) + \alpha \varphi(e) = \alpha \varphi(e) = \varphi(e) \langle x, e \rangle.$$
+
+Define $y := \varphi(e) e$. Then $\varphi(x) = \langle x, y \rangle$ for all $x$.
+
+/Uniqueness:/ if $\langle x, y \rangle = \langle x, z \rangle$ for all $x$, then $\langle x, y - z \rangle = 0$ for all $x$. Taking $x = y - z$ yields $\|y - z\|^2 = 0$, so $y = z$.
+
+Finally, by Cauchy–Schwarz,
+
+$$|\varphi(x)| = |\langle x, y \rangle| \le \|x\| \, \|y\| \quad \Rightarrow \quad \|\varphi\| \le \|y\|.$$
+
+If $y \ne 0$, choose $x = y/\|y\|$ to get $|\varphi(x)| = \|y\|$, hence $\|\varphi\| \ge \|y\|$. Therefore $\|\varphi\| = \|y\|$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Adjoint operator (real Hilbert spaces)
+:PROPERTIES:
+:CUSTOM_ID: thm:adjoint-operator-real
+:LECTURE_REF: 4.3.7
+:END:
+
+Let $H, K$ be real Hilbert spaces and let $A \in \mathcal{L}(H, K)$ be bounded and linear. Then there exists a unique bounded linear operator $A^* \in \mathcal{L}(K, H)$ such that
+
+$$\langle Ax, y \rangle_K = \langle x, A^* y \rangle_H \quad \forall x \in H, \forall y \in K.$$
+
+Moreover, $\|A^*\| = \|A\|$ and $(A^*)^* = A$.
+
+#+begin_proof
+/Step 1: definition via Riesz./ Fix $y \in K$ and define $\varphi_y \in H^*$ by $\varphi_y(x) := \langle Ax, y \rangle_K$. Then $\varphi_y$ is linear and bounded, since for all $x \in H$
+
+$$|\varphi_y(x)| \le \|Ax\|_K \, \|y\|_K \le \|A\| \, \|x\|_H \, \|y\|_K,$$
+
+hence $\|\varphi_y\| \le \|A\| \, \|y\|_K$. By /Theorem 4.3.6/, there exists a unique vector $z \in H$ such that
+
+$$\langle Ax, y \rangle_K = \varphi_y(x) = \langle x, z \rangle_H \quad \forall x \in H.$$
+
+Define $A^* y := z$. This gives the adjoint identity.
+
+/Step 2: linearity and boundedness./ For $\alpha, \beta \in \mathbb{R}$ and $y_1, y_2 \in K$ we have $\varphi_{\alpha y_1 + \beta y_2} = \alpha \varphi_{y_1} + \beta \varphi_{y_2}$. By uniqueness of the Riesz representative,
+
+$$A^*(\alpha y_1 + \beta y_2) = \alpha A^* y_1 + \beta A^* y_2,$$
+
+so $A^*$ is linear. Moreover, by /Theorem 4.3.6/,
+
+$$\|A^* y\|_H = \|\varphi_y\| \le \|A\| \, \|y\|_K,$$
+
+hence $A^*$ is bounded and $\|A^*\| \le \|A\|$.
+
+/Step 3: norm equality./ For $x \in H$
+
+$$\|Ax\|_K = \sup_{\|y\|_K = 1} \langle Ax, y \rangle_K$$
+
+(since $\|v\| = \sup_{\|y\|=1} \langle v, y \rangle$ in a real Hilbert space, with equality attained at $y = v/\|v\|$ if $v \ne 0$). Using the adjoint identity,
+
+$$\|Ax\|_K = \sup_{\|y\|_K = 1} \langle x, A^* y \rangle_H \le \sup_{\|y\|_K = 1} \|x\|_H \, \|A^* y\|_H \le \|x\|_H \, \|A^*\|.$$
+
+Taking the supremum over $\|x\|_H = 1$ gives $\|A\| \le \|A^*\|$. Together with $\|A^*\| \le \|A\|$, we obtain $\|A^*\| = \|A\|$.
+
+/Step 4: involution./ Fix $x \in H$ and define $\psi_x \in K^*$ by $\psi_x(y) := \langle Ax, y \rangle_K$. By /Theorem 4.3.6/ in $K$, the unique representing vector of $\psi_x$ is $Ax$, i.e.
+
+$$\psi_x(y) = \langle Ax, y \rangle_K \quad \forall y \in K.$$
+
+On the other hand, by the adjoint identity,
+
+$$\psi_x(y) = \langle x, A^* y \rangle_H \quad \forall y \in K.$$
+
+Applying /Theorem 4.3.6/ to the bounded functional $y \mapsto \langle x, A^* y \rangle_H$ on $K$ (i.e. applying the construction of the adjoint to $A^*$) shows that its representing vector is $(A^*)^* x$. By uniqueness of the Riesz representative in $K$, we must have $(A^*)^* x = Ax$ for all $x$, hence $(A^*)^* = A$.
+
+/Uniqueness/ of $A^*$ is immediate: if $B : K \rightarrow H$ also satisfies $\langle Ax, y \rangle_K = \langle x, By \rangle_H$ for all $x, y$, then for each $y$ we have $\langle x, (A^* - B)y \rangle_H = 0$ for all $x$, hence $(A^* - B)y = 0$, so $A^* = B$.
+#+end_proof
+
+** Questions
+
+* Definition:  Reproducing kernel Hilbert space
+:PROPERTIES:
+:CUSTOM_ID: def:rkhs
+:LECTURE_REF: 4.3.1
+:END:
+
+Given $\varnothing \ne X$, a Hilbert space $H(X)$ of $\mathbb{F}$ -valued functions on $X$, $f : X \rightarrow \mathbb{F}$, is called a reproducing kernel Hilbert space (RKHS) if there is $K : X \times X \rightarrow \mathbb{F}$ satisfying
+
+1. $K_x \in H(X)$, where $K_x : X \rightarrow \mathbb{F}, \quad y \mapsto K(x, y)$,
+
+2. $f(x) = \langle f, K_x \rangle_{H(X)}, \forall x \in X, f \in H(X)$.
+
+This $K$ is called the reproducing kernel of $H(X)$.
+
+Note that (2) implies
+
+$$K(x, y) = \langle K_x, K_y \rangle_{H(X)}, \quad x, y \in X.$$
+
+** Questions
+
+* Theorem:     Characterization of RKHS via continuous point evaluation
+:PROPERTIES:
+:CUSTOM_ID: thm:rkhs-characterization
+:LECTURE_REF: 4.3.3
+:END:
+
+Given $\varnothing \ne X$, let $H(X)$ be a Hilbert space of $\mathbb{F}$ -valued functions on $X$. Then we have
+
+$$H(X) \text{ is a RKHS} \iff \delta_x \text{ continuous } \forall x \in X.$$
+
+#+begin_proof
+- ($\Leftarrow$) If $\delta_x$ is continuous, then the Riesz representation theorem yields that there is a unique $K_x \in H(X)$ such that
+
+  $$f(x) = \delta_x(f) = \langle f, K_x \rangle_H.$$
+
+  Define now $K(x, y) := K_x(y)$.
+
+- ($\Rightarrow$) If $H(X)$ is a RKHS, then
+
+  $$|\delta_x(f)| = |\langle f, K_x \rangle_H| \le \|K_x\|_H \, \|f\|_H \quad \forall f \in H(X).$$
+#+end_proof
+
+** Questions
+
+* Proposition: Norm convergence in RKHS implies pointwise convergence
+:PROPERTIES:
+:CUSTOM_ID: prop:rkhs-pointwise-convergence
+:LECTURE_REF: 4.3.4
+:END:
+
+If $H(X)$ is a RKHS, then
+
+$$f_n \rightarrow f \quad \Rightarrow \quad f_n(x) \rightarrow f(x) \quad \forall x \in X.$$
+
+#+begin_proof
+For $f_n \rightarrow f$, we have $|f_n(x) - f(x)| = |\delta_x(f_n - f)| \le \|K_x\|_H \, \|f_n - f\|_H \rightarrow 0$.
+#+end_proof
+
+** Questions
+
+* Proposition: Properties of the reproducing kernel
+:PROPERTIES:
+:CUSTOM_ID: prop:rkhs-kernel-properties
+:LECTURE_REF: 4.3.5
+:END:
+
+If $H(X)$ is a RKHS, then
+
+1. its reproducing kernel $K$ is unique,
+
+2. $\operatorname{span}\{K_x : x \in X\} \subseteq H(X)$ is dense,
+
+3. the inner product satisfies
+
+   $$\left\langle \sum_{i=1}^n a_i K_{x_i}, \sum_{j=1}^m b_j K_{y_j} \right\rangle = \sum_{i=1}^n \sum_{j=1}^m a_i \overline{b_j} K(x_i, y_j). \tag{4.3}$$
+
+4. $K(x, y) = \overline{K(y, x)} \quad \forall x, y \in X$.
+
+5. for any $n \in \mathbb{N}$ and $(x_j)_{j=1}^n \subseteq X$,
+
+   $$\mathbb{K}^{n \times n} \ni (K(x_i, x_j))_{i,j=1}^n \succeq 0.$$
+
+#+begin_proof
+(a) Let $K$ and $L$ be reproducing kernels of $H(X)$. Then we have
+
+$$\|K_x - L_x\|^2 = \langle K_x - L_x, K_x - L_x \rangle = \langle K_x - L_x, K_x \rangle - \langle K_x - L_x, L_x \rangle$$
+$$= K(x, x) - L(x, x) - K(x, x) + L(x, x) = 0.$$
+
+From $K_x = L_x$ in $H(X)$, for all $x \in X$, we deduce
+
+$$K(x, y) = \delta_y(K_x) = \delta_y(L_x) = L(x, y), \quad \forall x, y \in X.$$
+
+(b) If $H(X) \ni f \perp K_x$, for all $x \in X$, then
+
+$$0 = \langle f, K_x \rangle = f(x), \quad \forall x \in X.$$
+
+(c) The identity (4.3) follows from $\langle K_{x_i}, K_{y_j} \rangle = K(x_i, y_j)$.
+
+(d) We have $K(x, y) = K_x(y) = \langle K_x, K_y \rangle = \overline{\langle K_y, K_x \rangle} = \overline{K_y(x)} = \overline{K(y, x)}$.
+
+(e) For $(c_i)_{i=1}^n \subset \mathbb{K}$ and $(x_i)_{i=1}^n \subset X$, we have
+
+$$\sum_{i,j=1}^n c_i \overline{c_j} K(x_i, x_j) = \sum_{i,j=1}^n c_i \overline{c_j} \langle K_{x_i}, K_{x_j} \rangle = \left\langle \sum_{i=1}^n c_i K_{x_i}, \sum_{j=1}^n c_j K_{x_j} \right\rangle$$
+$$= \left\| \sum_{i=1}^n c_i K_{x_i} \right\|^2 \ge 0.$$
+#+end_proof
+
+** Questions
+
+* Definition:  Positive semi-definite kernel
+:PROPERTIES:
+:CUSTOM_ID: def:positive-semidefinite-kernel
+:LECTURE_REF: 4.3.6
+:END:
+
+We call $K : X \times X \rightarrow \mathbb{F}$ a positive semi-definite kernel if
+
+- $K(x, y) = \overline{K(y, x)} \quad \forall x, y \in X$,
+
+- for any $n \in \mathbb{N}$ and $(x_j)_{j=1}^n \subset X$,
+
+  $$\mathbb{K}^{n \times n} \ni (K(x_i, x_j))_{i,j=1}^n \succeq 0.$$
+
+** Questions
+
+* Lemma:       Weak convergence on a dense subset implies strong convergence for Cauchy sequences
+:PROPERTIES:
+:CUSTOM_ID: lem:weak-dense-cauchy-strong
+:LECTURE_REF: 4.3.7
+:END:
+
+Let $H$ be an inner product space and $(f_n)_{n\in\mathbb{N}} \subseteq H$ a Cauchy sequence. If there is $f \in H$ such that $\langle f_n, g \rangle \rightarrow \langle f, g \rangle$ for all $g$ in a dense subset $H_0 \subseteq H$, then $f_n \rightarrow f \in H$.
+
+#+begin_proof
+We split the proof into two steps. We first verify that $f_n \rightarrow f$ weakly and then argue that Cauchy sequences that converge weakly also converge strongly.
+
+a) Any Cauchy sequence is bounded, so that there is $M > 0$ such that $\|f_n - f\| \le M$. Let $g \in H$ be arbitrary. There is $g_n \in H_0$ such that $\|g - g_n\| \le \frac{1}{n}$. Given $\varepsilon > 0$, choose $m$ such that $\frac{M}{m} \le \varepsilon/2$. We compute
+
+$$|\langle f_n - f, g \rangle| \le |\langle f_n - f, g - g_m \rangle| + |\langle f_n - f, g_m \rangle| \le \|f_n - f\| \, \|g - g_m\| + |\langle f_n - f, g_m \rangle|$$
+$$\le \frac{M}{m} + |\langle f_n - f, g_m \rangle|$$
+$$\le \varepsilon/2 + |\langle f_n - f, g_m \rangle|.$$
+
+We observe $\lim_{n \rightarrow \infty} |\langle f_n - f, g_m \rangle| = 0$, so that $|\langle f_n - f, g \rangle| \le \varepsilon$ for sufficiently large $n$.
+
+b) We now have a Cauchy sequence $(f_n)_{n\in\mathbb{N}} \subseteq H$ that converges weakly towards $f \in H$. Given $\varepsilon > 0$, $\|f_n - f_m\| \le \varepsilon$ for sufficiently large $n$ and $m$. We compute
+
+$$\|f_n - f\|^2 = \langle f_n - f, f_n - f \rangle$$
+$$\le |\langle f_n - f, f_n - f_m \rangle| + |\langle f_n - f, f_m - f \rangle|$$
+$$\le \|f_n - f\| \, \|f_n - f_m\| + |\langle f_n - f, f_m - f \rangle|$$
+$$\le M \|f_n - f_m\| + |\langle f_n - f, f_m - f \rangle|$$
+$$\le M \varepsilon + |\langle f_n - f, f_m - f \rangle|.$$
+
+This also holds for $m \rightarrow \infty$, so that $\lim_{m \rightarrow \infty} |\langle f_n - f, f_m - f \rangle| = 0$ implies
+
+$$\|f_n - f\|^2 \le M \varepsilon.$$
+
+This leads to $f_n \rightarrow f$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Construction of RKHS from a positive semi-definite kernel
+:PROPERTIES:
+:CUSTOM_ID: thm:rkhs-from-psd-kernel
+:LECTURE_REF: 4.3.8
+:END:
+
+If $K : X \times X \rightarrow \mathbb{F}$ is a positive semi-definite kernel, then there is a RKHS $H_K(X)$ such that $K$ is its reproducing kernel.
+
+Our assumptions here are slightly weaker than those in [?, Theorem 10.7] as we do not ask for definiteness but just semi-definiteness. Moreover, we define the space explicitly, in a way that does not require any abstract completion, nor equivalence classes.
+
+#+begin_proof
+The proof is split into three steps. We first construct a suitable pre-Hilbert space. The second step is to derive a completion by functions and not just any abstract completion. The third step is dedicated to verifying that the space defined in the second step is indeed complete.
+
+a) We define $H := \operatorname{span}\{K_x : x \in X\}$ with inner product
+
+$$\left\langle \sum_{i=1}^n a_i K_{x_i}, \sum_{j=1}^m b_j K_{y_j} \right\rangle_H := \sum_{i=1}^n \sum_{j=1}^m a_i \overline{b_j} K(x_i, y_j). \tag{4.4}$$
+
+We first check that (4.4) is well-defined. For $f = \sum_{i=1}^n a_i K_{x_i}$ and $g = \sum_{j=1}^m b_j K_{y_j}$, we observe
+
+$$\sum_{i=1}^n \sum_{j=1}^m a_i \overline{b_j} K(x_i, y_j) = \sum_{j=1}^m \overline{b_j} f(y_j),$$
+
+so that there is no dependency on the particular choice of $a_i$ and $x_i$ to represent $f$. The analogous fact holds for $g$ by observing
+
+$$\sum_{i=1}^n \sum_{j=1}^m a_i \overline{b_j} K(x_i, y_j) = \sum_{i=1}^n \sum_{j=1}^m \overline{a_i} b_j K(y_j, x_i) = \sum_{i=1}^n \overline{a_i} g(x_i) = \sum_{i=1}^n a_i \overline{g(x_i)}.$$
+
+Since $K$ is a positive semi-definite kernel, (4.4) is a positive semi-definite sesquilinear form. To check for definiteness, for $f = \sum_{i=1}^n a_i K_{x_i}$, assume
+
+$$0 = \langle f, f \rangle_H.$$
+
+We aim to verify $f(x) = 0 \, \forall x \in X$. The reproducing property holds in $H$ since
+
+$$\langle f, K_x \rangle_H = \sum_{i=1}^n a_i \langle K_{x_i}, K_x \rangle = \sum_{i=1}^n a_i K(x_i, x) = f(x).$$
+
+The Cauchy-Schwartz inequality also holds for positive semi-definite sesquilinear forms, so that
+
+$$|f(x)| = |\langle f, K_x \rangle_H| \le \|f\|_H \, \|K_x\|_H = 0.$$
+
+Thus, (4.4) is a positive definite sesquilinear form. We also observe that the point evaluation in $H$ is continuous.
+
+b) We now derive the completion of $H$ by functions on $X$. For $f = \sum_{i=1}^n a_i K_{x_i} \in H$, we observe
+
+$$\langle f, K_x \rangle_H = \sum_{i=1}^n a_i \langle K_{x_i}, K_x \rangle_H = \sum_{i=1}^n a_i K(x_i, x) = f(x).$$
+
+Let $(f_n)_{n\in\mathbb{N}} \subset H$ be a Cauchy sequence. Cauchy-Schwartz yields
+
+$$|f_n(x) - f_m(x)| = |\langle f_n, K_x \rangle_H - \langle f_m, K_x \rangle_H|$$
+$$= |\langle f_n - f_m, K_x \rangle_H|$$
+$$\le \|f_n - f_m\|_H \, \|K_x\|_H.$$
+
+Thus, $(f_n(x))_{n\in\mathbb{N}} \subset \mathbb{K}$ is Cauchy, so that there is $f : X \rightarrow \mathbb{K}$ with $f_n(x) \rightarrow f(x)$. We collect all such $f$ into
+
+$$H_K(X) := \{f : X \rightarrow \mathbb{K} \mid \exists (f_n)_{n\in\mathbb{N}} \subset H \text{ Cauchy sequence, } f_n(x) \rightarrow f(x) \, \forall x \in X\}.$$
+
+We observe $H \subseteq H_K(X)$ by taking the constant sequence $f_n = f \in H$. For $f, g \in H_K(X)$ we define
+
+$$\langle f, g \rangle := \lim_{n \rightarrow \infty} \langle f_n, g_n \rangle_H. \tag{4.5}$$
+
+Indeed, there is convergence in (4.5) since subtracting and adding $\langle f_n, g_m \rangle$ leads to
+
+$$|\langle f_n, g_n \rangle - \langle f_m, g_m \rangle| = |\langle f_n, g_n - g_m \rangle + \langle f_n - f_m, g_m \rangle|$$
+$$\le |\langle f_n, g_n - g_m \rangle| + |\langle f_n - f_m, g_m \rangle|$$
+$$\le \|f_n\| \, \|g_n - g_m\| + \|f_n - f_m\| \, \|g_m\|.$$
+
+The Cauchy property yields that $\|f_n\|$ and $\|g_m\|$ are bounded and $\|g_n - g_m\|, \|f_n - f_m\| \rightarrow 0$. To verify that (4.5) is independent of the particular choice of Cauchy sequences, we consider the associated norm. The statement for the inner product then follows from the polarization formula.
+
+Now let $f_n$ and $\tilde{f}_n$ be Cauchy in $H$, so that $f_n(x), \tilde{f}_n(x) \rightarrow f(x)$. This implies that the difference $g_n := f_n - \tilde{f}_n$ is Cauchy in $H$ and $g_n(x) \rightarrow 0$ for all $x \in X$. /Lemma 4.3.7/ implies that $g_n \rightarrow 0$. We derive
+
+$$\left| \|f_n\|_H - \|\tilde{f}_n\|_H \right| \le \|f_n - \tilde{f}_n\|_H \rightarrow 0,$$
+
+so that the limits of $\|f_n\|_H$ and $\|\tilde{f}_n\|_H$ coincide. Therefore, (4.5) is independent of the particular choice of Cauchy sequences.
+
+To check that (4.5) is positive definite, we start with $0 = \|f\| = \lim_{n \rightarrow \infty} \|f_n\|_H$, so that $f_n \rightarrow 0$ in $H$. Continuity of the point evaluation in $H$ yields
+
+$$|f(x)| = \lim_{n \rightarrow \infty} |f_n(x)| = 0, \quad x \in X,$$
+
+so that (4.5) is indeed positive definite and $H_K(X)$ is an inner product space. Note that (4.5) implies
+
+$$\|f - f_n\|^2 = \langle f - f_n, f - f_n \rangle = \|f\|^2 + \underbrace{\|f_n\|^2}_{\rightarrow \|f\|^2} - \underbrace{\langle f, f_n \rangle}_{\rightarrow \|f\|^2} - \underbrace{\langle f_n, f \rangle}_{\rightarrow \|f\|^2} \rightarrow 0,$$
+
+so that $H$ is dense in $H_K(X)$.
+
+The reproducing property for $f \in H_K(X)$ is also satisfied as
+
+$$\langle f, K_x \rangle = \lim_{n \rightarrow \infty} \langle f_n, K_x \rangle_H = \lim_{n \rightarrow \infty} f_n(x) = f(x).$$
+
+c) To check that $H_K(X)$ is complete, take a Cauchy sequence $(f_n)_{n\in\mathbb{N}} \subseteq H_K(X)$. Cauchy-Schwartz implies that $(f_n(x) = \langle f_n, K_x \rangle)_{n\in\mathbb{N}}$ is a Cauchy sequence in $\mathbb{K}$, hence, convergent towards some $f(x)$. For each $n$, there is a Cauchy sequence $(f_{n,m})_{m\in\mathbb{N}} \subseteq H$, such that $\lim_{m \rightarrow \infty} f_{n,m}(x) = f_n(x)$. Thus, $\langle f_{n,m} - f_n, g \rangle \rightarrow 0$ for $m \rightarrow \infty$ and all $g \in H$. Since $(f_{n,m})_{m\in\mathbb{N}}$ is a Cauchy sequence, it is bounded and the density of $H \subseteq H_K(X)$ leads to weak convergence of $f_{n,m} \rightarrow f_n$ in $H_K(X)$.
+
+By /Lemma 4.3.7/, applied to the Cauchy sequence $(f_{n,m})_m \subset H_K(X)$ with weak limit $f_n$, we obtain $f_{n,m} \rightarrow f_n$ strongly.
+
+For each $n \in \mathbb{N}$, there is $m_n$ such that $g_n := f_{n,m_r}$ satisfies $\|f_n - g_n\| \le \frac{1}{n}$. Obviously, $g_n \in H$ and
+
+$$\|g_n - g_m\| \le \|g_n - f_n\| + \|f_n - f_m\| + \|f_m - g_m\|,$$
+
+so that $(g_n)_{n\in\mathbb{N}}$ is a Cauchy sequence in $H$. To check that $g_n(x) \rightarrow f(x)$, we estimate
+
+$$|g_n(x) - f(x)| \le |g_n(x) - f_n(x)| + |f_n(x) - f(x)|$$
+$$\le |\langle g_n - f_n, K_x \rangle| + |f_n(x) - f(x)|$$
+$$\le \|g_n - f_n\| \, \|K_x\| + |f_n(x) - f(x)|$$
+$$\le \frac{1}{n} \|K_x\| + |f_n(x) - f(x)| \rightarrow 0.$$
+
+Therefore, we have verified that $f \in H_K(X)$. For every $g = \sum_{j=1}^m b_j K_{y_j} \in H$, the reproducing property yields
+
+$$\langle f_n - f, g \rangle = \sum_{j=1}^m \overline{b_j} \left( f_n(y_j) - f(y_j) \right) \rightarrow 0.$$
+
+Since $H$ is dense in $H_K(X)$, this is weak convergence on a dense subspace. Thus, /Lemma 4.3.7/ implies strong convergence $f_n \rightarrow f \in H_K(X)$.
+#+end_proof
+
+** Questions
+
+* Corollary:   RKHS embedding into bounded continuous functions
+:PROPERTIES:
+:CUSTOM_ID: cor:rkhs-embeds-bounded-continuous
+:LECTURE_REF: 4.3.9
+:END:
+
+If $K : X \times X \rightarrow \mathbb{F}$ is a continuous, positive semi-definite kernel such that
+
+$$\sup_{x \in X} K(x, x) < \infty,$$
+
+then $H_K(X) \hookrightarrow \mathcal{C}_b(X)$.
+
+#+begin_proof
+Let $H := \operatorname{span}\{K_x : x \in X\}$ be as in the proof of /Theorem 4.3.8/. For $f \in H_K(X)$ there is $f_n \in H \subseteq \mathcal{C}(X)$ with $\|f_n - f\| \rightarrow 0$. We obtain
+
+$$|f(x) - f_n(x)| = |\langle f - f_n, K_x \rangle| \le \|f - f_n\| \underbrace{\|K_x\|}_{\sqrt{K(x,x)}} \le \|f - f_n\| \sqrt{M},$$
+
+where $M = \sup_{x \in X} |K(x, x)|$. Uniform convergence implies $f \in \mathcal{C}(X)$. Analogously, we derive
+
+$$|f(x)| = |\langle f, K_x \rangle| \, \|f\| \sqrt{K(x, x)} \le \|f\| M.$$
+#+end_proof
+
+** Questions
+
+* Proposition: Feature map characterization of positive semi-definite kernels
+:PROPERTIES:
+:CUSTOM_ID: prop:feature-map-characterization
+:LECTURE_REF: 4.3.10
+:END:
+
+Given a Hilbert space $H$ and $F : X \rightarrow H$, then
+
+$$K(x, y) := \langle F(x), F(y) \rangle_H \tag{4.6}$$
+
+is a positive semi-definite kernel.
+
+If $K$ is a positive semi-definite kernel on $X$, then there is some Hilbert space $H$ and map $F : X \rightarrow H$ such that (4.6) holds.
+
+The function $F$ is the above proposition is often called feature map.
+
+#+begin_proof
+It is obvious that $K$ defined by (4.6) is a positive semi-definite kernel. For the reverse direction, we may define $F(x) := K_x$, so that /Theorem 4.3.8/ concludes the proof.
+#+end_proof
+
+** Questions
+
+* Lemma:       Orthogonal complement of kernel span and interpolation
+:PROPERTIES:
+:CUSTOM_ID: lem:kernel-span-complement-interpolation
+:LECTURE_REF: 4.3.11
+:END:
+
+If $K$ is a positive definite kernel on $\Omega$ and $\emptyset \ne X \subseteq \Omega$ and $\Pi_X := \operatorname{span}\{K_x : x \in X\}$, then the following holds:
+
+1. The orthogonal complement of $\Pi_X$ is given by
+
+   $$(\Pi_X)^{\perp} = \{f \in H_K(\Omega) : f(x) = 0 \quad \forall x \in X\}.$$
+
+2. The orthogonal projection $P_X f$ of $f$ onto $\Pi_X$ interpolates $f$, i.e.,
+
+   $$(P_X f)(x) = f(x), \quad \forall x \in X.$$
+
+#+begin_proof
+(a) If $f \in (\Pi_X)^{\perp}$, then, for all $x \in X$
+
+$$0 = \langle f, K_x \rangle = f(x).$$
+
+For the reverse inclusion, assume that $f \in H_K(\Omega)$ satisfies $f(x) = 0$ for all $x \in X$. We directly observe
+
+$$\langle f, K_x \rangle = f(x) = 0.$$
+
+Hence, $f$ is also orthogonal to each finite linear combinations and therefore $f \in \operatorname{span}\{K_x : x \in X\}^{\perp} = (\Pi_X)^{\perp}$.
+
+(b) The decomposition $H_K(\Omega) = \Pi_X \oplus (\Pi_X)^{\perp}$ yields that every $f \in H_K(\Omega)$ may be written as $f = P_X f + g$ with $g \in (\Pi_X)^{\perp}$. This implies
+
+$$f(x) = \langle f, K_x \rangle = \langle P_X f, K_x \rangle + \langle g, K_x \rangle = (P_X f)(x) + g(x) = (P_X f)(x), \quad \forall x \in X.$$
+#+end_proof
+
+** Questions
+
+* Theorem:     Convergence of kernel interpolation as covering radius vanishes
+:PROPERTIES:
+:CUSTOM_ID: thm:kernel-interpolation-convergence
+:LECTURE_REF: 4.3.12
+:END:
+
+Assume that $K$ is a continuous, positive definite kernel, and, for $n \in \mathbb{N}$, the closed subsets $X_n \subseteq \Omega$ satisfy $\lim_{n \rightarrow +\infty} \rho_{X_n} = 0$. Then
+
+$$\lim_{n \rightarrow \infty} \|f - P_{X_n} f\|_K = 0, \quad \forall f \in H_K(\Omega).$$
+
+#+begin_proof
+It is sufficient to verify the claim on a dense subset. Therefore, we choose $f = \sum_{j=1}^N c_j K_{y_j}$, for $y_j \in \Omega$. The definition of the covering radius ensures that $\operatorname{dist}(y_j, X_n) \le \rho_{X_n}$. Thus, there are $x_n^{(j)} \in X_n$ such that $\operatorname{dist}(y_j, x_n^{(j)}) \le \rho_{X_n}$. Since $g_n := \sum_{j=1}^N c_j K_{x_n^{(j)}} \in \Pi_{X_n}$ we derive
+
+$$\|f - P_{X_n} f\|_K \le \|f - g\|_K$$
+
+$$= \left\| \sum_{j=1}^N c_j (K_{y_j} - K_{x_n^{(j)}}) \right\|_K$$
+
+$$\le \sum_{j=1}^N |c_j| \, \|K_{y_j} - K_{x_n^{(j)}}\|_K.$$
+
+The continuity of $K$ and the convergence $\lim_{n \rightarrow \infty} x_n^{(j)} = y_j$ lead to $\|f - P_{X_n} f\|_K \rightarrow 0$.
+
+If $K$ additionally satisfies $\sup_{x \in \Omega} K(x, x) < \infty$, then /Corollary 4.3.9/ yields that convergence also holds in the supremum norm.
+#+end_proof
+
+** Questions
+* Definition:  Frechet differentiability
+:PROPERTIES:
+:CUSTOM_ID: def:frechet-differentiability
+:LECTURE_REF: 4.4.1
+:END:
+
+Let $V$ and $W$ be normed vector spaces. A function $f : V \rightarrow W$ is called Frechet differentiable at $x \in V$ if there exists a continuous linear map $f'(x) : V \rightarrow W$ such that
+
+$$f(x + h) = f(x) + f'(x) h + o(\|h\|), \quad h \in V$$
+
+Since $f'(x)$ is required to be continuous, every Frechet differentiable function is continuous.
+
+** Questions
+
+*** DONE So a function $f$ is called Frechet differentiable at some point $x$ if there exists some continuous funtion $f'$ (not a derivative, just some function) such that $f(x+h) = f(x) + f'(x)h + o(\|h\|), \, h \in V$? Isn't it strange? Can't I get some completely unrelated function for $f'$?
+
+No you can not. The thing is, the definition is more constrained than you think. Constraint hides in uniqeness of a function $f'$.
+
+Suppose $\exists f_1', f_2'$ such that satisfy the definition. Then
+
+\begin{align*}
+f(x + h) &= f(x) + f_1'(x)h + r_1(h) \\
+f(x + h) &= f(x) + f_2'(x)h + r_2(h) \\
+\end{align*}
+
+where $r_1, r_2 : V \rightarrow W$ are functions satisfying
+
+$$\lim_{h \to 0} \frac{\|r_i(h)\|}{\|h\|} = 0, \quad i = 1, 2.$$
+
+This is what the symbol $o(\|h\|)$ means — the *existence* of such a remainder function, not a fixed function. So when two different decompositions are written down, the remainders are *different* functions and must be named separately.
+
+Subtracting the second equation from the first:
+
+\begin{align*}
+0 &= (f_1'(x) - f_2'(x))h + (r_1(h) - r_2(h)) \\
+(f_2'(x) - f_1'(x))h &= r_1(h) - r_2(h) \quad (*) \\
+\end{align*}
+
+Let $D := f_2'(x) - f_1'(x)$. This is a continuous linear map $V \to W$ (difference of two such maps). The goal is to show $D = 0$.
+
+Fix arbitrary $v \in V$ with $v \neq 0$. For $t > 0$, set $h = tv$. By linearity of $D$:
+
+$$D(tv) = t \cdot Dv$$
+
+So $(*)$ becomes
+
+$$t \cdot Dv = r_1(tv) - r_2(tv)$$
+
+Take norms and divide by $\|h\| = t\|v\|$ (note $t > 0$, $v \neq 0$):
+
+$$\frac{\|Dv\|}{\|v\|} = \frac{\|r_1(tv) - r_2(tv)\|}{t\|v\|} \leq \frac{\|r_1(tv)\|}{\|tv\|} + \frac{\|r_2(tv)\|}{\|tv\|}$$
+
+As $t \to 0^+$, we have $tv \to 0$ in $V$, so both terms on the right tend to $0$ by the defining property of $r_1, r_2$. The left-hand side $\dfrac{\|Dv\|}{\|v\|}$ does not depend on $t$ — it is a fixed nonnegative real number. Hence it must equal $0$.
+
+So $Dv = 0$ for every $v \neq 0$, and trivially for $v = 0$. Therefore $D = 0$ as a map, i.e. $f_1'(x) = f_2'(x)$.
+
+The map $f'(x)$ in the definition is therefore unique whenever it exists, which justifies calling it /the/ derivative and writing $f'(x)$ rather than "some $f'$".
+
+* Theorem:     Chain rule
+:PROPERTIES:
+:CUSTOM_ID: thm:chain-rule
+:LECTURE_REF: 4.4.5
+:END:
+
+Let $V, W, W'$ be normed vector spaces. If $f : V \rightarrow W$ and $g : W \rightarrow W'$ are Fréchet differentiable, then the composition $g \circ f : V \rightarrow W'$ is Fréchet differentiable and
+
+$$(g \circ f)'(x) = g'(f(x)) \, f'(x)$$
+
+Here $f'(x) : V \rightarrow W$ and $g'(f(x)) : W \rightarrow W'$ are continuous linear maps, and their composition is again a continuous linear map from $V$ to $W'$.
+
+#+begin_proof
+Define $\varphi(h)$ by
+
+$$g(f(x + h)) = g(f(x)) + g'(f(x)) \, f'(x) h + \varphi(h)$$
+
+We must show that $\varphi(h) / \|h\| \rightarrow 0$ as $h \rightarrow 0$.
+
+Since $f$ is Fréchet differentiable at $x$, there exists a remainder $\psi(h)$ such that
+
+$$f(x + h) = f(x) + f'(x) h + \psi(h), \quad \frac{\|\psi(h)\|}{\|h\|} \rightarrow 0 \quad (h \rightarrow 0)$$
+
+Substituting into $g$ yields
+
+$$\frac{\varphi(h)}{\|h\|} = \frac{g(f(x) + f'(x) h + \psi(h)) - g(f(x)) - g'(f(x)) \, f'(x) h}{\|h\|}$$
+
+Set $\varepsilon_h := f'(x) h + \psi(h)$. Then
+
+$$\frac{\varphi(h)}{\|h\|} = \frac{g(f(x) + \varepsilon_h) - g(f(x)) - g'(f(x)) \, \varepsilon_h}{\|h\|} + \frac{g'(f(x)) \, \psi(h)}{\|h\|}$$
+
+The second term tends to zero since $g'(f(x))$ is continuous and $\psi(h) / \|h\| \rightarrow 0$.
+
+For the first term we write
+
+$$\frac{g(f(x) + \varepsilon_h) - g(f(x)) - g'(f(x)) \, \varepsilon_h}{\|h\|} = \frac{\|\varepsilon_h\|}{\|h\|} \cdot \frac{g(f(x) + \varepsilon_h) - g(f(x)) - g'(f(x)) \, \varepsilon_h}{\|\varepsilon_h\|}$$
+
+Since $f'(x)$ is continuous, $\varepsilon_h \rightarrow 0$ as $h \rightarrow 0$, and the second factor tends to zero by the Fréchet differentiability of $g$. Moreover,
+
+$$\frac{\|\varepsilon_h\|}{\|h\|} \le \|f'(x)\| + \frac{\|\psi(h)\|}{\|h\|}$$
+
+which is bounded for small $h$. Hence $\varphi(h) / \|h\| \rightarrow 0$, proving the claim. $\square$
+#+end_proof
+
+* Lemma:       Directional derivative
+:PROPERTIES:
+:CUSTOM_ID: lem:directional-derivative
+:LECTURE_REF: 4.4.7
+:END:
+
+If $f : V \rightarrow W$ is Fréchet differentiable at $x$, then
+
+$$f'(x)u = \lim_{\lambda \rightarrow 0} \frac{f(x + \lambda u) - f(x)}{\lambda}, \quad u \in V.$$
+
+#+begin_proof
+Let $u \in V$ and set $h = \lambda u$. If $u = 0$, the claim is trivial. For $u \ne 0$, Fréchet differentiability gives
+
+$$\lim_{\lambda \rightarrow 0} \frac{f(x + \lambda u) - f(x) - f'(x)(\lambda u)}{\| \lambda u \|} = 0.$$
+
+Since $\| \lambda u \| = |\lambda| \, \| u \|$ and $f'(x)$ is linear, multiplying by $\frac{|\lambda| \, \| u \|}{\lambda}$ (for $\lambda \ne 0$) yields
+
+$$\lim_{\lambda \rightarrow 0} \frac{f(x + \lambda u) - f(x) - \lambda f'(x) u}{\lambda} = 0.$$
+
+This can be rewritten as $\lim_{\lambda \rightarrow 0} \frac{f(x + \lambda u) - f(x)}{\lambda} = f'(x)u$.
+#+end_proof
+
+* Lemma:       Frechet derivative of least-squares composition
+:PROPERTIES:
+:CUSTOM_ID: lem:frechet-derivative-least-squares
+:LECTURE_REF: 4.4.10
+:END:
+
+For Hilbert spaces $H_0$ and $H$, let $g : H \rightarrow \mathbb{R}$, $g(x) = \| x \|^2$ and $f : H_0 \rightarrow H$ given by $f(x) = Ax - b$, for $A : H_0 \rightarrow H$ linear continuous and $b \in H$ fixed. Then the map
+
+$$g \circ f : H_0 \rightarrow \mathbb{R}, \quad (g \circ f)(x) = \| Ax - b \|^2$$
+
+is Fréchet differentiable and
+
+$$(g \circ f)'(x) = 2 \langle A^*(Ax - b), \cdot \rangle.$$
+
+#+begin_proof
+We notice that $g'(x) = 2 \langle x, \cdot \rangle$ and $f'(x) = A$. The chain rule leads to
+
+\begin{align*}
+(g \circ f)'(x) &= g'(f(x)) f'(x) \\
+&= 2 \langle f(x), f'(x) \cdot \rangle \\
+&= 2 \langle f(x), A \cdot \rangle \\
+&= 2 \langle A^* f(x), \cdot \rangle.
+\end{align*}
+#+end_proof
+
+* Lemma:       Mean value inequality for $C^1$ curves
+:PROPERTIES:
+:CUSTOM_ID: lem:mean-value-inequality
+:LECTURE_REF: 4.4.11
+:END:
+
+Let $X$ be a Banach space and let $g : \left[ 0, 1 \right] \rightarrow X$ be continuously Fréchet differentiable. If
+
+$$\|g'(t)\| \le M \quad \text{for all } t \in \left[ 0, 1 \right],$$
+
+then
+
+$$\|g(1) - g(0)\| \le M.$$
+
+#+begin_proof
+Since $g'$ is continuous on $\left[ 0, 1 \right]$, it is uniformly continuous. Fix $\varepsilon > 0$. Then there exists $\delta > 0$ such that
+
+$$|s - t| < \delta \implies \|g'(s) - g'(t)\| < \varepsilon.$$
+
+We first show a uniform first-order estimate. By differentiability of $g$ at each $t$, we have
+
+$$g(t + h) - g(t) = g'(t)h + r(t, h), \quad \text{with } \frac{\|r(t, h)\|}{|h|} \rightarrow 0 \ (h \rightarrow 0).$$
+
+Uniform continuity of $g'$ implies that this convergence is uniform for $|h| < \delta$. Hence, possibly shrinking $\delta$, we may assume
+
+$$\|g(t + h) - g(t) - g'(t)h\| \le \varepsilon |h| \quad \text{whenever } |h| < \delta. \quad (*)$$
+
+Now choose a partition
+
+$$0 = t_0 < t_1 < \cdots < t_N = 1$$
+
+with mesh size $t_{i+1} - t_i < \delta$. Applying $(*)$ with $t = t_i$ and $h = t_{i+1} - t_i$ gives
+
+$$g(t_{i+1}) - g(t_i) = g'(t_i)(t_{i+1} - t_i) + r_i, \quad \|r_i\| \le \varepsilon (t_{i+1} - t_i).$$
+
+Summing over $i$ yields
+
+$$g(1) - g(0) = \sum_{i=0}^{N-1} g'(t_i)(t_{i+1} - t_i) + \sum_{i=0}^{N-1} r_i.$$
+
+Taking norms and using $\|g'(t_i)\| \le M$ gives
+
+$$\|g(1) - g(0)\| \le M \sum_{i=0}^{N-1} (t_{i+1} - t_i) + \varepsilon \sum_{i=0}^{N-1} (t_{i+1} - t_i) = M + \varepsilon.$$
+
+Since $\varepsilon > 0$ was arbitrary, the result follows.
+#+end_proof
+
+** Questions
+
+* Theorem:     Local contraction at fixed point
+:PROPERTIES:
+:CUSTOM_ID: thm:local-contraction-fixed-point
+:LECTURE_REF: 4.4.12
+:END:
+
+Let $X$ be a Banach space and $\Omega \subseteq X$ be open. Assume that $f : \Omega \rightarrow X$ is continuously Fréchet differentiable. Suppose that there is $x \in \Omega$ such that
+
+$$f(x) = x, \quad \|f'(x)\| < 1.$$
+
+Then there is a neighborhood $B_\varepsilon(x) \subseteq \Omega$ such that $f : B_\varepsilon(x) \rightarrow B_\varepsilon(x)$ and $f$ is a contraction on $B_\varepsilon(x)$.
+
+#+begin_proof
+Let $\delta := 1 - \|f'(x)\|$. By continuity of $f' : \Omega \rightarrow \mathcal{L}(X)$, there is $\varepsilon > 0$ such that
+
+$$\|f'(y)\| \le 1 - \delta/2, \quad \forall y \in B_\varepsilon(x).$$
+
+Let $y, z \in B_\varepsilon(x)$ and define $g : \left[ 0, 1 \right] \rightarrow X$ by
+
+$$g(t) := f(z + t(y - z)).$$
+
+Since $B_\varepsilon(x)$ is convex, $z + t(y - z) \in B_\varepsilon(x)$ for all $t \in \left[ 0, 1 \right]$. By the chain rule,
+
+$$g'(t) = f'(z + t(y - z))(y - z),$$
+
+hence $\|g'(t)\| \le (1 - \delta/2) \|y - z\|$ for all $t \in \left[ 0, 1 \right]$. Applying /Lemma 4.4.11/ yields
+
+$$\|f(y) - f(z)\| = \|g(1) - g(0)\| \le (1 - \delta/2) \|y - z\|.$$
+
+Thus $f$ is a contraction on $B_\varepsilon(x)$ and for $z = x$, we observe that $f(B_\varepsilon(x)) \subseteq B_\varepsilon(f(x))$.
+#+end_proof
+
+** Questions
+* Definition:  Local extrema
+:PROPERTIES:
+:CUSTOM_ID: def:local-extrema
+:LECTURE_REF: 4.4.1
+:END:
+
+Let $U \subseteq V$ be open and let $f : U \rightarrow \mathbb{R}$. A point $x_0 \in U$ is called
+
+1. a local minimum if there exists $\varepsilon > 0$ such that
+
+   $$f(x_0) \le f(x) \quad \text{for all } x \in B_\varepsilon(x_0),$$
+
+   a strict local minimum refers to a strict inequality for $x \in B_\varepsilon(x_0) \setminus \{ x_0 \}$,
+
+2. a local maximum if there exists $\varepsilon > 0$ such that
+
+   $$f(x_0) \ge f(x) \quad \text{for all } x \in B_\varepsilon(x_0),$$
+
+   a strict local maximum refers to a strict inequality for $x \in B_\varepsilon(x_0) \setminus \{ x_0 \}$,
+
+If $x_0$ is either a (strict) local minimum or a (strict) local maximum, it is called a (strict) local extremum.
+
+* Theorem:     Necessary conditions of local extrema
+:PROPERTIES:
+:CUSTOM_ID: thm:necessary-conditions-local-extrema
+:LECTURE_REF: 4.4.3
+:END:
+
+Let $V$ be a normed vector space, $U \subseteq V$ an open subset, and let $f : U \rightarrow \mathbb{R}$ be Fréchet differentiable in $x_0 \in U$. If $x_0 \in U$ is a local extremum of $f$, then
+
+$$f'(x_0) = 0.$$
+
+Since $f'(x_0)$ is a linear map, the condition $f'(x_0) = 0$ means that
+
+$$f'(x_0) v = 0 \quad \text{for all } v \in V.$$
+
+The proof reduces the infinite-dimensional problem to a one-dimensional calculus argument by restricting $f$ to lines through $x_0$.
+
+#+begin_proof
+Let $x_0 \in U$ be a local extremum. Since $U$ is open, there exists $\varepsilon > 0$ such that
+
+$$x_0 + tu \in U \quad \text{for all } u \in V \text{ with } \| u \| = 1 \text{ and all } |t| < \varepsilon.$$
+
+Fix $u \in V$ and consider the function
+
+$$\varphi(t) := f(x_0 + tu), \quad |t| < \varepsilon.$$
+
+Since $f$ is Fréchet differentiable at $x_0$, the function $\varphi$ is differentiable at 0 by
+
+$$\varphi'(0) = \lim_{t \rightarrow 0} \frac{f(x_0 + tu) - f(x_0)}{t} = f'(x_0) u.$$
+
+Since $f$ has a local extremum at $x_0$, the function $\varphi : \mathbb{R} \rightarrow \mathbb{R}$ has a local extremum at $t = 0$. Thus, $\varphi'(0) = 0$ and this leads to $f'(x_0) u = 0$. Since $u \in V$ was arbitrary, we conclude that
+
+$$f'(x_0) u = 0 \quad \text{for all } u \in V,$$
+
+and hence $f'(x_0) = 0$.
+#+end_proof
+
+* Definition:  Critical point and saddle point
+:PROPERTIES:
+:CUSTOM_ID: def:critical-saddle-point
+:LECTURE_REF: 4.4.6
+:END:
+
+Points satisfying $f'(x_0) = 0$ are called critical points. A critical point is a saddle point if for all $\varepsilon > 0$ there are $x_1, x_2 \in B_\varepsilon(x_0)$ such that
+
+$$f(x_0) > f(x_1) \quad \text{and} \quad f(x_0) < f(x_2).$$
+
+* Definition:  Convex function
+:PROPERTIES:
+:CUSTOM_ID: def:convex-function
+:LECTURE_REF: 4.4.1
+:END:
+
+A function $f : V \rightarrow \mathbb{R}$ is called convex if for all $x, y \in V$ and all $t \in \left[ 0, 1 \right]$,
+
+$$f(tx + (1 - t)y) \le tf(x) + (1 - t)f(y).$$
+
+* Lemma:       First-order characterization of convexity
+:PROPERTIES:
+:CUSTOM_ID: lem:first-order-convexity
+:LECTURE_REF: 4.4.2
+:END:
+
+Let $f : V \rightarrow \mathbb{R}$ be Fréchet differentiable. Then $f$ is convex if and only if
+
+$$f(x) - f(y) \le f'(x)(x - y), \quad x, y \in V.$$
+
+#+begin_proof
+- ($\Rightarrow$) Assume $f$ is convex. For fixed $x, y \in V$, convexity implies
+
+  $$f((x + t(y - x)) \le (1 - t)f(x) + tf(y).$$
+
+  We bring $f(x)$ to the left-hand-side and divide by $t$ to obtain
+
+  $$\frac{f(x + t(y - x)) - f(x)}{t} \le f(y) - f(x) \quad t \in (0, 1].$$
+
+  Taking the limit $t \rightarrow 0$ and using Fréchet differentiability gives
+
+  $$f'(x)(y - x) \le f(y) - f(x).$$
+
+- ($\Leftarrow$) Let $z = tx + (1 - t)y$. Applying $f(u) \ge f(z) + f'(z)(u - z)$ with $u = x$ and $u = y$, multiplying by $t$ and $1 - t$, and adding gives
+
+  $$tf(x) + (1 - t)f(y) \ge f(z) + f'(z)(t(x - z) + (1 - t)(y - z)).$$
+
+  A brief calculation leads to $t(x - z) + (1 - t)(y - z) = 0$, so that we obtain
+
+  $$f(z) \le tf(x) + (1 - t)f(y).$$
+
+  The definition $z = tx + (1 - t)y$ yields convexity.
+#+end_proof
+
+* Theorem:     Local minima of convex functions are global
+:PROPERTIES:
+:CUSTOM_ID: thm:convex-local-global
+:LECTURE_REF: 4.4.5
+:END:
+
+Let $f : V \rightarrow \mathbb{R}$ be convex.
+
+1. Every local minimum is a global minimum.
+
+2. Let $f$ be Fréchet differentiable. Then $x_0 \in V$ is a global minimum if and only if $f'(x_0) = 0$.
+
+#+begin_proof
+(i) Assume $x_0$ is a local minimizer. Then there exists $\delta > 0$ such that
+
+$$f(x_0) \le f(x) \quad \text{for all } x \in B_\delta(x_0).$$
+
+Let $y \in V$ be arbitrary and for $t \in (0, 1)$ define
+
+$$z_t := (1 - t)x_0 + ty.$$
+
+For $t$ sufficiently small, $z_t \in B_\delta(x_0)$, hence $f(z_t) \ge f(x_0)$, and by convexity,
+
+$$f(x_0) \le f(z_t) \le (1 - t)f(x_0) + tf(y).$$
+
+Thus, we must have $0 \le t(f(y) - f(x_0))$. Since $t > 0$, we conclude $f(y) \ge f(x_0)$.
+
+(ii) If $x_0$ is a global minimum, then it is also local and by [[#thm:necessary-conditions-local-extrema][Theorem 6.4.3]] we have $f'(x_0) = 0$. Now assume that $f'(x_0) = 0$. [[#lem:first-order-convexity][Lemma 6.4.9]] yields $f(y) \ge f(x_0)$, for all $y \in V$, which leads to a global minimum.
+#+end_proof
+
+
+
+
+
+
+
