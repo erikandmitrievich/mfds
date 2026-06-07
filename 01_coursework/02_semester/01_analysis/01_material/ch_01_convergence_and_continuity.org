@@ -1,8 +1,8 @@
-#+title: Ch 1
+#+title: Ch 1 Convergence and Continuity
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-05>
-#+lastmod: <2026-06-07 17:10>
+#+lastmod: <2026-06-07 17:12>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
