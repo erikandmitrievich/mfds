@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-26>
-#+lastmod: <2026-06-01 09:06>
+#+lastmod: <2026-06-07 22:00>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -16,10 +16,314 @@
 #+startup: overview latexpreview inlineimages
 #+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
 
+* Definition:  Length of a curve in a metric space
+:PROPERTIES:
+:CUSTOM_ID: def:curve-length
+:LECTURE_REF: 5.0.1
+:END:
+
+Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a curve. For a partition
+
+$$\mathcal{P} = \{ 0 = t_0 < t_1 < \cdots < t_n = 1 \}$$
+
+of $\left[ 0, 1 \right]$, define the polygonal length of $\gamma$ along $\mathcal{P}$ by
+
+$$\ell(\gamma, \mathcal{P}) := \sum_{j=1}^{n} d\left( \gamma(t_{j-1}), \gamma(t_j) \right).$$
+
+The length of $\gamma$ is
+
+$$\ell(\gamma) := \sup_{\mathcal{P}} \ell(\gamma, \mathcal{P}),$$
+
+where the supremum is taken over all partitions $\mathcal{P}$ of $\left[ 0, 1 \right]$. The curve $\gamma$ is called rectifiable if $\ell(\gamma) < \infty$.
+
+* Definition:  Metric derivative
+:PROPERTIES:
+:CUSTOM_ID: def:metric-derivative
+:LECTURE_REF: 5.0.2
+:END:
+
+Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a curve. If the limit exists,
+
+$$|\dot{\gamma}|(t) = \lim_{h \rightarrow 0} \frac{d(\gamma(t + h), \gamma(t))}{|h|},$$
+
+then $|\dot{\gamma}|(t)$ is called the metric derivative of $\gamma$ in $t$.
+
+* Definition:  Lipschitz continuous curve
+:PROPERTIES:
+:CUSTOM_ID: def:lipschitz-curve
+:LECTURE_REF: 5.0.3
+:END:
+
+Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a curve. We say that $\gamma$ is Lipschitz continuous if there is a constant $L > 0$ such that
+
+$$d(\gamma(t), \gamma(s)) \le L |t - s|, \qquad t, s \in \left[ 0, 1 \right].$$
+
+* Lemma:       Metric derivative of smooth curves
+:PROPERTIES:
+:CUSTOM_ID: lem:metric-derivative-smooth
+:LECTURE_REF: 5.0.4
+:END:
+
+If the curve $\gamma : \left[ 0, 1 \right] \rightarrow \mathbb{R}^n$ is continuously differentiable, then it is Lipschitz continuous and its metric derivative $|\dot{\gamma}|$ satisfies
+
+$$|\dot{\gamma}|(t) = \|\gamma'(t)\|_2$$
+
+In particular, $|\dot{\gamma}|$ is continuous on $\left[ 0, 1 \right]$.
+
+#+begin_proof
+Differentiability leads to
+
+$$\frac{\|\gamma(t + h) - \gamma(t)\|_2}{|h|} = \left( \sum_{i=1}^{n} \frac{|\gamma_i(t + h) - \gamma_i(t)|^2}{|h|^2} \right)^{1/2} = \left( \sum_{i=1}^{n} \left| \frac{\gamma_i(t + h) - \gamma_i(t)}{h} \right|^2 \right)^{1/2} \rightarrow \left( \sum_{i=1}^{n} |\gamma_i'(t)|^2 \right)^{1/2} = \|\gamma'(t)\|_2$$
+
+where $h \rightarrow 0$. Thus, metric derivative satisfies $|\dot{\gamma}|(t) = \|\gamma'(t)\|_2$.
+
+To verify Lipschitz continuity, we first recall that $\left[ 0, 1 \right]$ is compact, hence $\gamma_i'(\left[ 0, 1 \right]) \subseteq \mathbb{R}$ is compact since $\gamma_i'$ is continuous. Taking the maximum over $i = 1, \ldots, n$, there is $C > 0$ such that
+
+$$|\gamma_i'(t)| \le C, \quad t \in \left[ 0, 1 \right], \quad i = 1, \ldots, n$$
+
+For $s, t \in \left[ 0, 1 \right]$ the mean value theorem ensures that
+
+$$|\gamma_i(s) - \gamma_i(t)| \le C |s - t|$$
+
+Since $d_2 \le \sqrt{n} \, d_\infty$, we deduce
+
+$$\|\gamma(s) - \gamma(t)\|_2 \le \underbrace{\sqrt{n} \, C}_{L} |s - t|$$
+#+end_proof
+
+* Theorem:     Arc length of smooth curves
+:PROPERTIES:
+:CUSTOM_ID: thm:arc-length-smooth
+:LECTURE_REF: 5.0.5
+:END:
+
+Let $\gamma : \left[ 0, 1 \right] \rightarrow \mathbb{R}^d$ be continuously differentiable. Then
+
+$$\ell(\gamma) = \int_0^1 \sqrt{|\gamma_1'(t)|^2 + \cdots + |\gamma_n'(t)|^2} \, dt = \int_0^1 \|\gamma'(t)\|_2 \, dt$$
+
+#+begin_proof
+The function $t \mapsto \|\gamma'(t)\|_2$ is continuous on $\left[ 0, 1 \right]$.
+
+*Step 1:* $\ell(\gamma) \le \int_0^1 g(t) \, dt$. Let $\mathcal{P} = \{t_0, \ldots, t_m\}$ be a partition of $\left[ 0, 1 \right]$. For each $j$ and each component, the mean value theorem gives
+
+$$\gamma_k(t_j) - \gamma_k(t_{j-1}) = \gamma_k'(\xi_{j,k})(t_j - t_{j-1})$$
+
+for some $\xi_{j,k} \in (t_{j-1}, t_j)$. Hence
+
+$$|\gamma_k(t_j) - \gamma_k(t_{j-1})| \le \sup_{t \in \left[ t_{j-1}, t_j \right]} |\gamma_k'(t)| \, (t_j - t_{j-1})$$
+
+Therefore
+
+$$\sqrt{\sum_{k=1}^{n} |\gamma_k(t_j) - \gamma_k(t_{j-1})|^2} \le \sup_{t \in \left[ t_{j-1}, t_j \right]} g(t) \, (t_j - t_{j-1})$$
+
+Summing over $j$ and taking the supremum over all partitions yields
+
+$$\ell(\gamma) \le \int_0^1 \|\gamma'(t)\|_2 \, dt$$
+
+*Step 2:* $\ell(\gamma) \ge \int_0^1 g(t) \, dt$. Since $g$ is continuous, it is uniformly continuous. Let $\varepsilon > 0$ and choose a partition $\mathcal{P}$ with mesh sufficiently small so that
+
+$$\sqrt{\sum_{k=1}^{n} |\gamma_k'(s) - \gamma_k'(t)|^2} < \varepsilon \quad \text{whenever } s, t \text{ lie in one subinterval}$$
+
+For each $j$, pick $\tau_j \in \left[ t_{j-1}, t_j \right]$. Using the mean value theorem componentwise as above, we obtain
+
+$$\left| \frac{\gamma_k(t_j) - \gamma_k(t_{j-1})}{t_j - t_{j-1}} - \gamma_k'(\tau_j) \right| \le \varepsilon \quad (k = 1, \ldots, n)$$
+
+Hence
+
+$$\sqrt{\sum_{k=1}^{n} \left| \frac{\gamma_k(t_j) - \gamma_k(t_{j-1})}{t_j - t_{j-1}} - \gamma_k'(\tau_j) \right|^2} \le \sqrt{n} \, \varepsilon$$
+
+Thus
+
+$$\sqrt{\sum_{k=1}^{n} |\gamma_k(t_j) - \gamma_k(t_{j-1})|^2} \ge (g(\tau_j) - \sqrt{n} \, \varepsilon)(t_j - t_{j-1})$$
+
+Summing gives
+
+$$\ell(\gamma, \mathcal{P}) \ge \sum_{j=1}^{m} g(\tau_j)(t_j - t_{j-1}) - \sqrt{n} \, \varepsilon$$
+
+Passing to the limit (Riemann sums) and using $\ell(\gamma) \ge \ell(\gamma, P)$,
+
+$$\ell(\gamma) \ge \int_0^1 g(t) \, dt$$
+
+Combining both inequalities proves
+
+$$\ell(\gamma) = \int_0^1 \sqrt{|\gamma_1'(t)|^2 + \cdots + |\gamma_n'(t)|^2} \, dt$$
+#+end_proof
+
+* Lemma:       Reparametrisation invariance of arc length
+:PROPERTIES:
+:CUSTOM_ID: lem:reparametrisation-invariance
+:LECTURE_REF: 5.0.7
+:END:
+
+Let $f : \left[ a, b \right] \rightarrow \mathbb{R}^n$ be a continuously differentiable function and let $\phi : \left[ 0, 1 \right] \rightarrow \left[ a, b \right]$ be bijective and continuously differentiable. Then $\gamma := f \circ \phi : \left[ 0, 1 \right] \rightarrow \mathbb{R}^n$ satisfies
+
+$$\int_a^b \sqrt{|f_1'(x)|^2 + \cdots + |f_n'(x)|^2} \, dx = \int_0^1 \sqrt{|\gamma_1'(t)|^2 + \cdots + |\gamma_n'(t)|^2} \, dt$$
+
+#+begin_proof
+The function $\phi$ is either strictly increasing or decreasing. Assume it is increasing, so that $\phi'(t) \ge 0$ with $\phi(0) = a$ and $\pi(1) = b$. Substituting $x = \phi(t)$ yields
+
+\begin{align*}
+\int_0^1 \sqrt{|\gamma_1'(t)|^2 + \cdots + |\gamma_n'(t)|^2} \, dt &= \int_0^1 \sqrt{|f_1'(\phi(t)) \phi'(t)|^2 + \cdots + |f_n'(\phi(t)) \phi'(t)|^2} \, dt \\
+&= \int_0^1 \sqrt{|f_1'(\phi(t))|^2 + \cdots + |f_n'(\phi(t))|^2} \, \phi'(t) \, dt \\
+&= \int_a^b \sqrt{|f_1'(x)|^2 + \cdots + |f_n'(x)|^2} \, dx
+\end{align*}
+
+The case that $\phi$ is decreasing is analogous. $\square$
+#+end_proof
+
+* Definition:  Dual frame pair
+:PROPERTIES:
+:CUSTOM_ID: def:dual-frame-pair
+:LECTURE_REF: 5.1.1
+:END:
+
+Let $H$ be a Hilbert space. We call $(\phi_n)_{n\in\mathbb{N}}, (\psi_n)_{n\in\mathbb{N}} \subseteq H$ a dual frame pair if both $\mathcal{D}_\phi, \mathcal{D}_\psi : H \rightarrow \ell^2(\mathbb{N})$ are bounded linear operators such that
+
+$$\mathcal{D}_\psi^* \mathcal{D}_\phi = \operatorname{id}_H.$$
+
+** Questions
+
+* Lemma:       Uniform boundedness and pointwise convergence of $Q_N$
+:PROPERTIES:
+:CUSTOM_ID: lem:q-bounded-pointwise
+:LECTURE_REF: 5.1.3
+:END:
+
+Let $H$ be a Hilbert space and let $(\phi_n)_{n\in\mathbb{N}}$ and $(\psi_n)_{n\in\mathbb{N}}$ be a pair of dual frames. Then $Q_N$ is uniformly bounded and converges pointwise to the identity,
+
+$$\|Q_N\| \le \|\mathcal{D}_\psi\| \|\mathcal{D}_\phi\|, \quad Q_N \rightarrow \operatorname{id}_H, \quad \text{pointwise}.$$
+
+#+begin_proof
+The pointwise convergence is just the dual frame expansion. The norm bound follows from $\|\mathcal{T}_N^* \circ \mathcal{T}_N\| \le 1$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Representation, truncation for continuous maps I
+:PROPERTIES:
+:CUSTOM_ID: thm:representation-truncation-i
+:LECTURE_REF: 5.1.4
+:END:
+
+Let $H$ be a Hilbert space and let $(\phi_n)_{n\in\mathbb{N}}$ and $(\psi_n)_{n\in\mathbb{N}}$ be a pair of dual frames. Suppose that $f : H \rightarrow H$ is continuous. Define its representation by
+
+\begin{align*}
+\tilde{f} &: \ell^2(\mathbb{N}) \rightarrow \ell^2(\mathbb{N}), & \tilde{f} &:= \mathcal{D}_\phi \circ f \circ \mathcal{D}_\psi^*, \\
+\tilde{f}_N &: \mathbb{R}^N \longrightarrow \mathbb{R}^N, & \tilde{f}_N &:= \mathcal{T}_N \circ \tilde{f} \circ \mathcal{T}_N^*.
+\end{align*}
+
+We define the truncated approximation of $f$ on $H$ by using the truncated representation,
+
+$$f_N : H \rightarrow \operatorname{span}\{\psi_n : n \le N\}, \quad f_N := \mathcal{D}_\psi^* \circ \mathcal{T}_N^* \circ \tilde{f}_N \circ \mathcal{T}_N \circ \mathcal{D}_\phi.$$
+
+Then the following hold.
+
+1. Coordinate-free vs. coordinates:
+
+   $$f = \mathcal{D}_\psi^* \circ \tilde{f} \circ \mathcal{D}_\phi, \quad \mathcal{D}_\phi \circ f = \tilde{f} \circ \mathcal{D}_\phi, \quad f \circ \mathcal{D}_\psi^* = \mathcal{D}_\psi^* \circ \tilde{f}.$$
+
+2. Truncated approximation: For every $N \in \mathbb{N}$,
+
+   $$f_N = Q_N \circ f \circ Q_N.$$
+
+3. Coordinate-free approximation:
+
+   $$f_N \rightarrow f \quad \text{pointwise for } N \rightarrow \infty.$$
+
+4. Approximation in coordinates:
+
+   $$\mathcal{T}_N^* \circ \tilde{f}_N \circ \mathcal{T}_N \rightarrow \tilde{f} \quad \text{pointwise for } N \rightarrow \infty.$$
+
+/We may consider $f_N$ as a finite-dimensional approximation of $f$./
+
+#+begin_proof
+(i) Since $(\phi_n)$ and $(\psi_n)$ are dual, $\mathcal{D}_\psi^* \mathcal{D}_\phi = \operatorname{id}_H$. Thus
+
+$$\mathcal{D}_\psi^* \circ \tilde{f} \circ \mathcal{D}_\phi = \mathcal{D}_\psi^* \circ \mathcal{D}_\phi \circ f \circ \mathcal{D}_\psi^* \circ \mathcal{D}_\phi = f,$$
+
+which gives the first identity. The other two follow from
+
+\begin{align*}
+\tilde{f} \circ \mathcal{D}_\phi &= \mathcal{D}_\phi \circ f \circ \mathcal{D}_\psi^* \circ \mathcal{D}_\phi = \mathcal{D}_\phi \circ f, \\
+\mathcal{D}_\psi^* \circ \tilde{f} &= \mathcal{D}_\psi^* \circ \mathcal{D}_\phi \circ f \circ \mathcal{D}_\psi^* = f \circ \mathcal{D}_\psi^*.
+\end{align*}
+
+(ii) Using $\tilde{f} = \mathcal{D}_\phi \circ f \circ \mathcal{D}_\psi^*$ and $Q_N = \mathcal{D}_\psi^* \circ \mathcal{T}_N^* \circ \mathcal{T}_N \circ \mathcal{D}_\phi$, we compute
+
+\begin{align*}
+f_N &= \mathcal{D}_\psi^* \circ \mathcal{T}_N^* \circ (\mathcal{T}_N \circ \tilde{f} \circ \mathcal{T}_N^*) \circ \mathcal{T}_N \circ \mathcal{D}_\phi \\
+&= \mathcal{D}_\psi^* \circ \mathcal{T}_N^* \circ \mathcal{T}_N \circ \mathcal{D}_\phi \circ f \circ \mathcal{D}_\psi^* \circ \mathcal{T}_N^* \circ \mathcal{T}_N \circ \mathcal{D}_\phi \\
+&= Q_N \circ f \circ Q_N.
+\end{align*}
+
+(iii) Fix $c \in H$ and estimate
+
+\begin{align*}
+\|Q_N \circ f \circ Q_N(c) - f(c)\| &\le \|Q_N \circ f \circ Q_N(c) - Q_N \circ f(c)\| + \|Q_N \circ f(c) - f(c)\| \\
+&\le \|Q_N\| \|f \circ Q_N(c) - f(c)\| + \|Q_N \circ f(c) - f(c)\|.
+\end{align*}
+
+Since $Q_N$ is uniformly bounded, $Q_N c \rightarrow c$ and $f$ is continuous, both terms tend to zero for $N \rightarrow \infty$.
+
+(iv) Let us now denote $P_N := \mathcal{T}_N^* \circ \mathcal{T}_N$, which simply keeps the first $N$ coordinates. According to
+
+$$\mathcal{T}_N^* \circ \tilde{f}_N \circ \mathcal{T}_N = P_N \circ \tilde{f} \circ P_N,$$
+
+we now estimate
+
+\begin{align*}
+\|P_N \circ \tilde{f} \circ P_N(c) - \tilde{f}(c)\| &\le \|P_N \circ \tilde{f} \circ P_N(c) - P_N \circ \tilde{f}(c)\| + \|P_N \circ \tilde{f}(c) - \tilde{f}(c)\| \\
+&\le \|\tilde{f} \circ \mathcal{T}_N^* \circ \mathcal{T}_N(c) - \tilde{f}(c)\| + \|P_N \circ \tilde{f}(c) - \tilde{f}(c)\|
+\end{align*}
+
+Since $P_N \rightarrow \operatorname{id}_{\ell^2(\mathbb{N})}$ pointwise and $\tilde{f}$ is continuous, both terms tend to zero.
+#+end_proof
+
+** Questions
+
+* Theorem:     Representation, truncation for continuous maps II
+:PROPERTIES:
+:CUSTOM_ID: thm:representation-truncation-ii
+:LECTURE_REF: 5.1.5
+:END:
+
+Let $H_1$ and $H_2$ be Hilbert spaces and suppose that $f : H_1 \rightarrow H_2$ is continuous. Let $(\phi_{i,n})_{n\in\mathbb{N}}$ and $(\psi_{i,n})_{n\in\mathbb{N}}$ be a pair of dual frames for the Hilbert space $H_i$, for $i = 1, 2$. Define its representation by
+
+\begin{align*}
+\tilde{f} &: \ell^2(\mathbb{N}) \rightarrow \ell^2(\mathbb{N}), & \tilde{f} &:= \mathcal{D}_{\phi_2} \circ f \circ \mathcal{D}_{\psi_1}^*, \\
+\tilde{f}_{N_1, N_2} &: \mathbb{R}^{N_1} \longrightarrow \mathbb{R}^{N_2}, & \tilde{f}_{N_1, N_2} &:= \mathcal{T}_{N_2} \circ \tilde{f} \circ \mathcal{T}_{N_1}^*.
+\end{align*}
+
+We define the truncated approximation of $f$ on $H$ by using the truncated representation,
+
+$$f_{N_1, N_2} : H \rightarrow \operatorname{span}\{\psi_n : n \le N_2\}, \quad f_{N_1, N_2} := \mathcal{D}_{\psi_2}^* \circ \mathcal{T}_{N_2}^* \circ \tilde{f}_{N_1, N_2} \circ \mathcal{T}_{N_1} \circ \mathcal{D}_{\phi_1}.$$
+
+Then the following hold.
+
+1. Coordinate-free vs. coordinates:
+
+   $$f = \mathcal{D}_{\psi_2}^* \circ \tilde{f} \circ \mathcal{D}_{\phi_1}, \quad \mathcal{D}_{\phi_2} \circ f = \tilde{f} \circ \mathcal{D}_{\phi_1}, \quad f \circ \mathcal{D}_{\psi_1}^* = \mathcal{D}_{\psi_2}^* \circ \tilde{f}.$$
+
+2. Truncated approximation: For every $N \in \mathbb{N}$,
+
+   $$f_{N_1, N_2} = Q_{2, N_2} \circ f \circ Q_{1, N_1}.$$
+
+3. Coordinate-free approximation:
+
+   $$f_{N_1, N_2} \rightarrow f \quad \text{pointwise for } N_1, N_2 \rightarrow \infty.$$
+
+4. Approximation in coordinates:
+
+   $$\mathcal{T}_{N_2}^* \circ \tilde{f}_{N_1, N_2} \circ \mathcal{T}_{N_1} \rightarrow \tilde{f} \quad \text{pointwise for } N_1, N_2 \rightarrow \infty.$$
+
+#+begin_proof
+This is analogous to the proof of /Theorem 5.1.4/, hence omitted.
+#+end_proof
+
+** Questions
 * Theorem:     Reduction to coordinates
 :PROPERTIES:
 :CUSTOM_ID: thm:reduction-coordinates
-:LECTURE_REF: 7.1.1
+:LECTURE_REF: 5.1.7
 :END:
 
 Let $\dim V = n$, $\dim W = m$, and $f : V \rightarrow W$. Choose bases $B_V \subseteq V$, $B_W \subseteq W$ and define $F : \mathbb{R}^n \rightarrow \mathbb{R}^m$ by
@@ -69,7 +373,7 @@ Theorem says these are equivalent:
 * Definition:  Partial derivatives
 :PROPERTIES:
 :CUSTOM_ID: def:partial-derivatives
-:LECTURE_REF: 7.1.2
+:LECTURE_REF: 5.1.8
 :END:
 
 The function $f : \mathbb{R}^n \rightarrow \mathbb{R}$ is called partially differentiable at $x \in \mathbb{R}^n$ if, for each $j = 1, \ldots, n$, the limit
@@ -103,7 +407,7 @@ Both of them are indistinguishable /only under the standard basis and standard i
 * Theorem:     Derivative and gradient in $\mathbb{R}^n$
 :PROPERTIES:
 :CUSTOM_ID: thm:derivative-gradient-rn
-:LECTURE_REF: 7.1.5
+:LECTURE_REF: 5.1.11
 :END:
 
 Let $f : \mathbb{R}^n \rightarrow \mathbb{R}$ be differentiable at $x \in \mathbb{R}^n$. Then $f$ is partially differentiable at $x$ and
@@ -168,7 +472,7 @@ f(x,y) =
 * Theorem:     Continuity of partials implies differentiability
 :PROPERTIES:
 :CUSTOM_ID: thm:continuity-partials-differentiability
-:LECTURE_REF: 7.1.7
+:LECTURE_REF: 5.1.13
 :END:
 
 Let $U \subseteq \mathbb{R}^n$ be open and let $f : U \rightarrow \mathbb{R}$. If $f$ is partially differentiable in $U$ and all partial derivatives $\partial_1 f, \ldots, \partial_n f$ are continuous at $x \in U$, then $f$ is differentiable at $x$ and
@@ -244,7 +548,7 @@ The "iff" you are sensing exists only if you add continuity of partials as the h
 * Lemma:       Mixed partial derivatives commute
 :PROPERTIES:
 :CUSTOM_ID: lem:mixed-partials-commute
-:LECTURE_REF: 7.1.9
+:LECTURE_REF: 5.1.15
 :END:
 
 Let $U \subseteq \mathbb{R}^n$ be open and let $f : U \rightarrow \mathbb{R}$ be twice continuously partially differentiable. Then for all $i, j \in \{1, \ldots, n\}$ and all $x \in U$,
@@ -338,7 +642,7 @@ What fails: the second partials exist at $(0,0)$ but are not continuous there â€
 * Definition:  Hessian matrix
 :PROPERTIES:
 :CUSTOM_ID: def:hessian
-:LECTURE_REF: 7.1.10
+:LECTURE_REF: 5.1.16
 :END:
 
 Let $U \subseteq \mathbb{R}^n$ be open and suppose that $f : U \rightarrow \mathbb{R}$ is twice continuously differentiable. The Hessian matrix of $f$ at $x \in U$ is defined by
@@ -371,7 +675,7 @@ The matrix shape is chosen to anticipate its appearance as a quadratic form $h^\
 * Theorem:     Taylor formula in $\mathbb{R}^n$
 :PROPERTIES:
 :CUSTOM_ID: thm:taylor-rn
-:LECTURE_REF: 7.2.1
+:LECTURE_REF: 5.2.1
 :END:
 
 Let $U \subseteq \mathbb{R}^n$ be open, $k \in \mathbb{N}$, and let $f : U \rightarrow \mathbb{R}$ be $k$ times continuously differentiable. Then for every $x_0 \in U$,
@@ -497,7 +801,7 @@ and the second-order term is the Hessian quadratic form in $h$:
 * Theorem:     Second-order sufficient conditions for extrema
 :PROPERTIES:
 :CUSTOM_ID: thm:second-order-sufficient-extrema
-:LECTURE_REF: 7.2.5
+:LECTURE_REF: 5.2.5
 :END:
 
 Let $f : \mathbb{R}^n \rightarrow \mathbb{R}$ be twice continuously differentiable and let $x_0 \in \mathbb{R}^n$ be a critical point, i.e. $\operatorname{grad} f(x_0) = 0$.
@@ -571,7 +875,7 @@ Right now the course did not cover that topic fully, so we are mostly working wi
 * Lemma:       Second-order characterization of convexity
 :PROPERTIES:
 :CUSTOM_ID: lem:second-order-convexity
-:LECTURE_REF: 7.2.10
+:LECTURE_REF: 5.2.1
 :END:
 
 Let $f \in \mathcal{C}^2(\mathbb{R}^n)$. Then $f$ is convex if and only if $H_f(x)$ is positive semi-definite for all $x \in \mathbb{R}^n$.
@@ -607,7 +911,7 @@ $$h^{\top} Ah \ge 0 \, \forall h \in \mathbb{R}^n$$
 * Lemma:       Jensen's inequality
 :PROPERTIES:
 :CUSTOM_ID: lem:jensen-inequality
-:LECTURE_REF: 7.3.1
+:LECTURE_REF: 5.2.2
 :END:
 
 Let $f : \mathbb{R}^n \rightarrow \mathbb{R}$ be convex and $m \in \mathbb{N}$ with $m \ge 1$. Then
@@ -637,7 +941,7 @@ f(\sum_{i=1}^{m+1} \lambda_i x_i) &\le (1 - \lambda_{m+1}) \sum_{i=1}^{m} \frac{
 * Theorem:     Gradient descent
 :PROPERTIES:
 :CUSTOM_ID: thm:gradient-descent
-:LECTURE_REF: 7.3.2
+:LECTURE_REF: 5.2.3
 :END:
 
 Let $f : \mathbb{R}^d \rightarrow \mathbb{R}$ be convex and differentiable and assume that
@@ -694,48 +998,10 @@ Summing from $k = 0$ to $N - 1$ telescopes:
 Divide by $2 \eta N$ and use convexity (Jensen) $f(\bar{x}_N) \le \frac{1}{N} \sum_{k=0}^{N-1} f(x_k)$ to conclude the claim.
 #+end_proof
 
-* Theorem:     Stochastic gradient descent for finite-sum problems
-:PROPERTIES:
-:CUSTOM_ID: thm:stochastic-gradient-descent
-:LECTURE_REF: 7.3.3
-:END:
-
-Let $f_1, \ldots, f_n : \mathbb{R}^d \rightarrow \mathbb{R}$ be convex and differentiable, and define
-
-$$F(x) := \frac{1}{n} \sum_{i=1}^{n} f_i(x).$$
-
-Let $x^*$ be a minimizer of $f$. Assume that
-
-$$\| \nabla f_i(x) \| \le C \quad \text{for all } x \in \mathbb{R}^d, \quad i = 1, \ldots, n,$$
-
-for some $C > 0$. Let $(i_k)_{k\in\mathbb{N}}$ be independent uniformly distributed on $\{ 1, \ldots, n \}$, and define
-
-$$x_{k+1} = x_k - \eta \, \nabla f_{i_k}(x_k),$$
-
-with step size $\eta > 0$. Then for $\bar{x}_N := \frac{1}{N} \sum_{k=0}^{N-1} x_k$,
-
-$$\mathbb{E}[F(\bar{x}_N)] - F(x^*) \le \frac{\| x_0 - x^* \|^2}{2 \eta N} + \frac{\eta C^2}{2}.$$
-
-In particular, choosing $\eta = \| x_0 - x^* \| / (C \sqrt{N})$ yields
-
-$$\mathbb{E}[F(\bar{x}_N)] - F(x^*) \le N^{-\frac{1}{2}} \, C \| x_0 - x^* \|.$$
-
-*Proof idea.*
-
-The only probabilistic input we use is the following elementary fact: if $i$ is independently, uniformly distributed on $\{ 1, \ldots, n \}$ and $\psi : \{ 1, \ldots, n \} \rightarrow \mathbb{R}^m$ is any function, then
-
-$$\mathbb{E}_i[\psi(i)] = \frac{1}{n} \sum_{j=1}^{n} \psi(j).$$
-
-In our setting, this implies
-
-$$\mathbb{E}_{i_k}[\nabla f_{i_k}(x)] = \frac{1}{N} \sum_{i=1}^{N} \nabla f_i(x) = \nabla F(x).$$
-
-We now follow the proof of gradient descent and use the expectation at the appropriate locations. We omit the details.
-
 * Definition:  L-Lipschitz continuous
 :PROPERTIES:
 :CUSTOM_ID: def:lipschitz-continuous
-:LECTURE_REF: 7.3.4
+:LECTURE_REF: 5.2.4
 :END:
 
 A function $g : \mathbb{R}^d \rightarrow \mathbb{R}$ is called L-Lipschitz continuous if there exists a constant $L > 0$ such that
@@ -767,7 +1033,7 @@ For differentiable $g$: $g$ is $L$ -Lipschitz $\iff \|\nabla g(x)\| \le L$ every
 * Lemma:       Descent lemma
 :PROPERTIES:
 :CUSTOM_ID: lem:descent-lemma
-:LECTURE_REF: 7.3.5
+:LECTURE_REF: 5.2.5
 :END:
 
 Let $f : \mathbb{R}^d \rightarrow \mathbb{R}$ be differentiable and suppose that $\nabla f$ is L-Lipschitz continuous. Then
@@ -799,7 +1065,7 @@ f(y) - f(x) &= \int_0^1 \phi'(t) \, dt \\
 * Theorem:     Gradient descent with Lipschitz gradient
 :PROPERTIES:
 :CUSTOM_ID: thm:gradient-descent-lipschitz
-:LECTURE_REF: 7.3.6
+:LECTURE_REF: 5.2.6
 :END:
 
 Let $f : \mathbb{R}^d \rightarrow \mathbb{R}$ be differentiable, bounded from below, so that $f(x) \ge r_0$ for all $x \in \mathbb{R}^d$. Suppose that $\nabla f$ is L-Lipschitz continuous. Then gradient descent
@@ -834,10 +1100,118 @@ $$c \sum_{k=0}^{\infty} \| \nabla f(x_k) \|^2 \le f(x_0) - r_0.$$
 This implies that $\| \nabla f(x_k) \|^2 \rightarrow 0$.
 #+end_proof
 
+* Theorem:     Stochastic gradient descent for finite-sum problems
+:PROPERTIES:
+:CUSTOM_ID: thm:stochastic-gradient-descent
+:LECTURE_REF: 5.2.8
+:END:
+
+Let $f_1, \ldots, f_n : \mathbb{R}^d \rightarrow \mathbb{R}$ be convex and differentiable, and define
+
+$$F(x) := \frac{1}{n} \sum_{i=1}^{n} f_i(x).$$
+
+Let $x^*$ be a minimizer of $f$. Assume that
+
+$$\| \nabla f_i(x) \| \le C \quad \text{for all } x \in \mathbb{R}^d, \quad i = 1, \ldots, n,$$
+
+for some $C > 0$. Let $(i_k)_{k\in\mathbb{N}}$ be independent uniformly distributed on $\{ 1, \ldots, n \}$, and define
+
+$$x_{k+1} = x_k - \eta \, \nabla f_{i_k}(x_k),$$
+
+with step size $\eta > 0$. Then for $\bar{x}_N := \frac{1}{N} \sum_{k=0}^{N-1} x_k$,
+
+$$\mathbb{E}[F(\bar{x}_N)] - F(x^*) \le \frac{\| x_0 - x^* \|^2}{2 \eta N} + \frac{\eta C^2}{2}.$$
+
+In particular, choosing $\eta = \| x_0 - x^* \| / (C \sqrt{N})$ yields
+
+$$\mathbb{E}[F(\bar{x}_N)] - F(x^*) \le N^{-\frac{1}{2}} \, C \| x_0 - x^* \|.$$
+
+*Proof idea.*
+
+The only probabilistic input we use is the following elementary fact: if $i$ is independently, uniformly distributed on $\{ 1, \ldots, n \}$ and $\psi : \{ 1, \ldots, n \} \rightarrow \mathbb{R}^m$ is any function, then
+
+$$\mathbb{E}_i[\psi(i)] = \frac{1}{n} \sum_{j=1}^{n} \psi(j).$$
+
+In our setting, this implies
+
+$$\mathbb{E}_{i_k}[\nabla f_{i_k}(x)] = \frac{1}{N} \sum_{i=1}^{N} \nabla f_i(x) = \nabla F(x).$$
+
+We now follow the proof of gradient descent and use the expectation at the appropriate locations. We omit the details.
+
+* Theorem:     Implicit Function Theorem
+:PROPERTIES:
+:CUSTOM_ID: thm:implicit-function
+:LECTURE_REF: 5.3.1
+:END:
+
+Let $U_1 \subset \mathbb{R}^n$ and $U_2 \subset \mathbb{R}^m$ be open sets, and let
+
+$$f : U_1 \times U_2 \rightarrow \mathbb{R}^m, \qquad (x, y) \mapsto f(x, y),$$
+
+be continuously differentiable. Suppose that
+
+$$f(a, b) = 0$$
+
+for some $(a, b) \in U_1 \times U_2$, and that the Jacobian matrix
+
+$$\frac{\partial f}{\partial y}(a, b) = \begin{pmatrix} \frac{\partial f_1}{\partial y_1} & \cdots & \frac{\partial f_1}{\partial y_m} \\ \vdots & \ddots & \vdots \\ \frac{\partial f_m}{\partial y_1} & \cdots & \frac{\partial f_m}{\partial y_m} \end{pmatrix}$$
+
+is invertible. Then there exist neighborhoods $V_1 \subset U_1$ of $a$ and $V_2 \subset U_2$ of $b$, together with a continuously differentiable map
+
+$$g : V_1 \rightarrow V_2,$$
+
+such that
+
+1. $f(x, g(x)) = 0$ for all $x \in V_1$,
+
+2. Moreover, for all $(x, y) \in V_1 \times V_2$,
+
+   $$f(x, y) = 0 \iff y = g(x).$$
+
+** Questions
+
+*** DONE The theorem does not click for me. Could you please explain it intuitively?
+
+The question the [[#thm:implicit-function][Theorem 7.5.1]] answers: given an equation linking $x$ and $y$, can you rewrite it as $y = g(x)$?
+
+Take a $x^2 + y^2 = 1$ (the circle). This is an equation in $x$ and $y$. Is $y$ a function of $x$? No, for $x=0$ there are two $y$ values: $+1$ and $-1$ (fails vertical line test). So *globally* you can not write $y = g(x)$.
+
+But now zoom in on one point of the circle, take $(0,1)$. Look only at a round arc around it. That arc is a function $y = \sqrt{1 - x^2}$. One $y$ per $x$, so its true locally, but false globally.
+
+In addition, note that Jacobian matrix inversion assumption is basically *not vertical* test. If we look at point $(1, 0)$, no matter how close we zoom, there would be always to solutions in $(1,0)$ neighborhood. Vertical means $\frac{\partial f}{\partial y} = 0$.
+
+* Theorem:     Inverse Function Theorem
+:PROPERTIES:
+:CUSTOM_ID: thm:inverse-function
+:LECTURE_REF: 5.3.2
+:END:
+
+Let $U \subset \mathbb{R}^n$ be open and let $f : U \rightarrow \mathbb{R}^n$ be continuously differentiable. Suppose that $a \in U$ and that $f'(a)$ is invertible. Then there exist neighborhoods $U_0 \subset U$ of $a$ and $V_0 \subset \mathbb{R}^n$ of $b = f(a)$ such that $f : U_0 \rightarrow V_0$ is bijective and $f^{-1} : V_0 \rightarrow U_0$ is continuously differentiable with
+
+$$(f^{-1})'(b) = (f'(a))^{-1}.$$
+
+#+begin_proof
+Define $F : \mathbb{R}^n \times U \rightarrow \mathbb{R}^n$ according to
+
+$$F(x, y) = x - f(y).$$
+
+Then $F(f(a), a) = 0$ and $\frac{\partial F}{\partial y}(x, y) = -f'(y)$. Since $Df(a)$ is invertible, so is $\frac{\partial F}{\partial y}(f(a), a)$. By the Implicit Function Theorem, there exist neighborhoods
+
+$$V_1 \ni f(a), \qquad V_2 \ni a,$$
+
+and a continuously differentiable map $g : V_1 \rightarrow V_2$ such that (according to Part (i))
+
+$$F(x, g(x)) = 0.$$
+
+Hence $x - f(g(x)) = 0$, so that $f(g(x)) = x$ for all $x \in V_1$. We use Part (ii) to see that $(x, y) \in V_1 \times V_2$ with $F(x, y) = 0$ implies $y = g(x)$. Since then $x = f(y)$, we obtain $y = g(f(y))$. Hence, $g$ is the inverse of $f$ on suitable neighborhoods contained in $V_1$ and $V_2$.
+#+end_proof
+
+** Questions
+
 * Lemma:       Continuously differentiable implies Lipschitz on closed ball
 :PROPERTIES:
 :CUSTOM_ID: lem:c1-implies-lipschitz-closed-ball
-:LECTURE_REF: 7.4.1
+:LECTURE_REF: 5.3.3
 :END:
 
 Suppose $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ is continuously differentiable and $B_r \subseteq \mathbb{R}^n$ a closed ball. Then $f$ is $L$ Lipschitz continuous on $B_r$ with Lipschitz constant
@@ -863,7 +1237,7 @@ $$\| f(x) - f(y) \| \le \int_0^1 \| f'(y + t(x - y)) \| \| (x - y) \| \, dt \le 
 * Theorem:     Quadratic convergence of Newton's method
 :PROPERTIES:
 :CUSTOM_ID: thm:newton-quadratic-convergence
-:LECTURE_REF: 7.4.2
+:LECTURE_REF: 5.3.4
 :END:
 
 Suppose $f : \mathbb{R}^n \rightarrow \mathbb{R}^n$ is twice continuously differentiable and $x^* \in \mathbb{R}^n$ such that $f(x^*) = 0$ and $f'(x^*)$ is invertible. Then there is $r > 0$ such that for all $x_0 \in B_r(x^*)$ the iterative sequence
@@ -936,80 +1310,10 @@ No. $f(x^{*}) = 0 \in \mathbb{R}^n$ is a vector, $f'(x^{*}) \in \mathbb{R}^{n \t
 *** DONE What is the point of the $\| x_{k+1} - x^* \| \le C \| x_k - x^* \|^2$?
 
 It shows how fast the error shrinks per iteration. The exponent 2 is the key: if $\|x_{k} - x^{*}\| = 10^{-3}$, then $\|x_{k+1} - x^{*}\| \le C \cdot 10^{-6}$.
-* Theorem:     Implicit Function Theorem
-:PROPERTIES:
-:CUSTOM_ID: thm:implicit-function
-:LECTURE_REF: 7.5.1
-:END:
-
-Let $U_1 \subset \mathbb{R}^n$ and $U_2 \subset \mathbb{R}^m$ be open sets, and let
-
-$$f : U_1 \times U_2 \rightarrow \mathbb{R}^m, \qquad (x, y) \mapsto f(x, y),$$
-
-be continuously differentiable. Suppose that
-
-$$f(a, b) = 0$$
-
-for some $(a, b) \in U_1 \times U_2$, and that the Jacobian matrix
-
-$$\frac{\partial f}{\partial y}(a, b) = \begin{pmatrix} \frac{\partial f_1}{\partial y_1} & \cdots & \frac{\partial f_1}{\partial y_m} \\ \vdots & \ddots & \vdots \\ \frac{\partial f_m}{\partial y_1} & \cdots & \frac{\partial f_m}{\partial y_m} \end{pmatrix}$$
-
-is invertible. Then there exist neighborhoods $V_1 \subset U_1$ of $a$ and $V_2 \subset U_2$ of $b$, together with a continuously differentiable map
-
-$$g : V_1 \rightarrow V_2,$$
-
-such that
-
-1. $f(x, g(x)) = 0$ for all $x \in V_1$,
-
-2. Moreover, for all $(x, y) \in V_1 \times V_2$,
-
-   $$f(x, y) = 0 \iff y = g(x).$$
-
-** Questions
-
-*** DONE The theorem does not click for me. Could you please explain it intuitively?
-
-The question the [[#thm:implicit-function][Theorem 7.5.1]] answers: given an equation linking $x$ and $y$, can you rewrite it as $y = g(x)$?
-
-Take a $x^2 + y^2 = 1$ (the circle). This is an equation in $x$ and $y$. Is $y$ a function of $x$? No, for $x=0$ there are two $y$ values: $+1$ and $-1$ (fails vertical line test). So *globally* you can not write $y = g(x)$.
-
-But now zoom in on one point of the circle, take $(0,1)$. Look only at a round arc around it. That arc is a function $y = \sqrt{1 - x^2}$. One $y$ per $x$, so its true locally, but false globally.
-
-In addition, note that Jacobian matrix inversion assumption is basically *not vertical* test. If we look at point $(1, 0)$, no matter how close we zoom, there would be always to solutions in $(1,0)$ neighborhood. Vertical means $\frac{\partial f}{\partial y} = 0$.
-
-* Theorem:     Inverse Function Theorem
-:PROPERTIES:
-:CUSTOM_ID: thm:inverse-function
-:LECTURE_REF: 7.5.2
-:END:
-
-Let $U \subset \mathbb{R}^n$ be open and let $f : U \rightarrow \mathbb{R}^n$ be continuously differentiable. Suppose that $a \in U$ and that $f'(a)$ is invertible. Then there exist neighborhoods $U_0 \subset U$ of $a$ and $V_0 \subset \mathbb{R}^n$ of $b = f(a)$ such that $f : U_0 \rightarrow V_0$ is bijective and $f^{-1} : V_0 \rightarrow U_0$ is continuously differentiable with
-
-$$(f^{-1})'(b) = (f'(a))^{-1}.$$
-
-#+begin_proof
-Define $F : \mathbb{R}^n \times U \rightarrow \mathbb{R}^n$ according to
-
-$$F(x, y) = x - f(y).$$
-
-Then $F(f(a), a) = 0$ and $\frac{\partial F}{\partial y}(x, y) = -f'(y)$. Since $Df(a)$ is invertible, so is $\frac{\partial F}{\partial y}(f(a), a)$. By the Implicit Function Theorem, there exist neighborhoods
-
-$$V_1 \ni f(a), \qquad V_2 \ni a,$$
-
-and a continuously differentiable map $g : V_1 \rightarrow V_2$ such that (according to Part (i))
-
-$$F(x, g(x)) = 0.$$
-
-Hence $x - f(g(x)) = 0$, so that $f(g(x)) = x$ for all $x \in V_1$. We use Part (ii) to see that $(x, y) \in V_1 \times V_2$ with $F(x, y) = 0$ implies $y = g(x)$. Since then $x = f(y)$, we obtain $y = g(f(y))$. Hence, $g$ is the inverse of $f$ on suitable neighborhoods contained in $V_1$ and $V_2$.
-#+end_proof
-
-** Questions
-
 * Definition:  Submanifolds
 :PROPERTIES:
 :CUSTOM_ID: def:submanifold
-:LECTURE_REF: 7.5.3
+:LECTURE_REF: 5.4.1
 :END:
 
 A subset $M \subset \mathbb{R}^n$ is called a $k$ dimensional submanifold if for every $x_0 \in M$, there exist
@@ -1029,3 +1333,100 @@ $$\text{rank}\, g'(x) = r \qquad \forall x \in M \cap U.$$
 ** Questions
 
 *** TODO Why neighborhood $U \in \mathbb{R}^n$ and not $U \in M$?
+
+* Definition:  Tangent and normal space
+:PROPERTIES:
+:CUSTOM_ID: def:tangent-normal-space
+:LECTURE_REF: 5.4.3
+:END:
+
+Let $M \subset \mathbb{R}^n$ be a $k$ -dimensional submanifold and let $x \in M$.
+
+1. tangent space: the tangent space of $M$ at $x$ is
+
+   $$T_x(M) = \{\gamma'(0) : \gamma : (-\varepsilon, \varepsilon) \rightarrow M \text{ continuously differentiable}, \gamma(0) = x\}.$$
+
+2. normal space: the normal space of $M$ at $x$ is
+
+   $$N_x(M) = T_x(M)^\perp.$$
+
+** Questions
+
+* Definition:  Local maximum on submanifold
+:PROPERTIES:
+:CUSTOM_ID: def:local-maximum-submanifold
+:LECTURE_REF: 5.4.4
+:END:
+
+Let $\Omega \subseteq \mathbb{R}^n$ be open and $f : \Omega \rightarrow \mathbb{R}$. Suppose $M \subseteq \mathbb{R}^n$ is a $k$ -dimensional submanifold. We say that $x \in M \cap \Omega$ is a local maximum of $f$ on $M$ if there is an open neighborhood $U \subseteq \mathbb{R}^n$ of $x$ such that
+
+$$f(y) \le f(x), \quad \forall y \in U \cap M \cap \Omega.$$
+
+** Questions
+
+* Theorem:     Extrema under constraints
+:PROPERTIES:
+:CUSTOM_ID: thm:extrema-under-constraints
+:LECTURE_REF: 5.4.5
+:END:
+
+Let $\Omega \subset \mathbb{R}^n$ be open, $f : \Omega \rightarrow \mathbb{R}$ be continuously differentiable, and suppose that $M$ is a $k$ -dimensional submanifold. If $x_0 \in \Omega \cap M$ is a local extremum of $f$ on $M$, then
+
+$$\nabla f(x_0) \in N_{x_0}(M).$$
+
+#+begin_proof
+Let $\gamma : (-\varepsilon, \varepsilon) \rightarrow M$ be a continuously differentiable curve such that $\gamma(0) = x_0$. Define $F : (-\varepsilon, \varepsilon) \rightarrow \mathbb{R}$ by $F(t) = f(\gamma(t))$. Since $f$ has a local extremum at $x_0$ on $M$, the function $F$ has a local extremum at $0$ and hence $F'(0) = 0$. The chain rule implies
+
+$$0 = F'(0) = f'(x_0) \gamma'(0) = \langle \nabla f(x_0), \gamma'(0) \rangle.$$
+
+Since $\gamma'(0) \in T_{x_0}(M)$ was arbitrary,
+
+$$\nabla f(x_0) \perp T_{x_0}(M).$$
+
+Therefore, $\nabla f(x_0) \in N_{x_0}(M)$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Tangent and normal space from defining function
+:PROPERTIES:
+:CUSTOM_ID: thm:tangent-normal-defining-function
+:LECTURE_REF: 5.4.6
+:END:
+
+Let $M \subset \mathbb{R}^n$ be a $k$ -dimensional submanifold and $x \in M$ with a neighborhood $U \subseteq \mathbb{R}^n$ of $x$ such that $g : U \rightarrow \mathbb{R}^r$ with $r = n - k$ is continuously differentiable with $M \cap U = \{y \in U : g(y) = 0\}$ and $\operatorname{rank} g'(y) = r$ for all $y \in M \cap U$. Then
+
+\begin{align*}
+T_x(M) &= \{\nabla g_1(x), \ldots, \nabla g_r(x)\}^\perp, \\
+N_x(M) &= \operatorname{span}\{\nabla g_1(x), \ldots, \nabla g_r(x)\}.
+\end{align*}
+
+Since the Jacobian of $g$ is
+
+$$g'(x) = \begin{pmatrix} \operatorname{grad} g_1(x) \\ \vdots \\ \operatorname{grad} g_r(x) \end{pmatrix} = \begin{pmatrix} (\nabla g_1(x))^\top \\ \vdots \\ (\nabla g_r(x))^\top \end{pmatrix},$$
+
+the rank requirement ensures that $\{\nabla g_1(x), \ldots, \nabla g_r(x)\}$ are linearly independent. The theorem further says that $T_x(M) = \operatorname{null} g'(x) = \{v \in \mathbb{R}^n : g'(x) v = 0\}$ is a linear subspace of dimension $k$, $N_x(M)$ is a $n - k$ -dimensional linear subspace, and
+
+$$\mathbb{R}^n = T_x(M) \oplus N_x(M).$$
+
+** Questions
+
+* Corollary:   Lagrange multipliers
+:PROPERTIES:
+:CUSTOM_ID: cor:lagrange-multipliers
+:LECTURE_REF: 5.4.7
+:END:
+
+Let $U \subset \mathbb{R}^n$ be open and let
+
+$$M = \{x \in U : g_1(x) = \cdots = g_r(x) = 0\}$$
+
+be a $k$ -dimensional submanifold. Let
+
+$$f : U \rightarrow \mathbb{R}$$
+
+be continuously differentiable and suppose that $f|_M$ has a local extremum at $x_0 \in M$. Then there are coefficients $\lambda_1, \ldots, \lambda_r \in \mathbb{R}$ such that
+
+$$\nabla f(x_0) = \sum_{i=1}^r \lambda_i \nabla g_i(x_0).$$
+
+** Questions
