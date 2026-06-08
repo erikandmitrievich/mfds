@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-27>
-#+lastmod: <2026-06-01 14:52>
+#+lastmod: <2026-06-08 11:48>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -232,6 +232,12 @@ One can define in the same way the characteristic polynomial of a matrix $A \in 
 #+end_proof
 
 ** Questions
+
+*** TODO Point 1: "$p_f$ is independent of the basis $\mathcal{E}$" - how can a function be independent of some basis? Its a function, not a vectors/matrix.
+
+*** TODO Why later lemma uses $\lambda$? Is it a bad notation? Why not previous $t$?
+
+
 
 * Corollary:   Characteristic polynomial for $n = 2$
 :PROPERTIES:

@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-07>
-#+lastmod: <2026-06-07 13:17>
+#+lastmod: <2026-06-08 13:12>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -23,6 +23,20 @@ Let $\mathbb{E}$ be a vector space, and let $L, M \in \mathcal{L}(E)$ with $L$ b
 #+end_quote
 
 ** Solution
+
+Since $L$ is an isomorphism, $L^{-1} \circ L = \mathrm{Id}_E$, so
+
+$$M \circ L = L^{-1} \circ (L \circ M) \circ L.$$
+
+Subtract $t \mathrm{Id}_E = L^{-1} \circ (t \mathrm{Id}_E) \circ L$:
+
+$$M \circ L - t \mathrm{Id}_E = L^{-1} \circ (L \circ M - t \mathrm{Id}_E) \circ L.$$
+
+Apply $\det$ and use multiplicativity:
+
+$$p_{M \circ L}(t) = \det(L^{-1}) \cdot \det(L \circ M - t \mathrm{Id}_E) \cdot \det(L) = p_{L \circ M}(t),$$
+
+since $\det(L^{-1}) \cdot \det(L) = \det(L^{-1} \circ L) = 1$.
 
 * Problem 5.8 :eigenvalue:eigenvector:diagonalization:
 ** Task

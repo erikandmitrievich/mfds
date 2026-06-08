@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-18>
-#+lastmod: <2026-06-01 09:09>
+#+lastmod: <2026-06-08 12:08>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -31,6 +31,25 @@ For any $A \in \mathbb{K}^{n \times n}$, its determinant is defined as
 \end{align*}
 
 ** Questions
+
+*** DONE What are $\sigma$ and $\mathcal{S}$?
+
+$\mathcal{S}_n$ is the set of all permutations of $\{1, \ldots, n\}$.
+
+
+$\sigma \in \mathcal{S}_n$ is just an element of a set.
+
+*** DONE What are $\varepsilon$ and $\varepsilon(\sigma)$?
+
+$\varepsilon$ is the sign function such that:
+
+\begin{align*}
+\varepsilon(\sigma) =
+\begin{cases}
++1 & \text{if } \varepsilon \text{ is the product of even number of transpositions} \\
+-1 & \text{if odd}
+\end{cases}
+\end{align*}
 
 * Lemma:       Laplace expansion
 :PROPERTIES:
