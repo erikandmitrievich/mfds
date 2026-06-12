@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-30>
-#+lastmod: <2026-06-05 19:17>
+#+lastmod: <2026-06-12 13:18>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -146,8 +146,6 @@ $$\sum_{i=1}^{n} \sum_{j=i}^{n} R(i, j) = \frac{n^3 - n}{3}$$
 #+end_quote
 
 ** Solution
-
-Count references by who makes them, not by who receives them.
 
 MATRIX-CHAIN-ORDER computes $m[i,j]$ for $i < j$ via
 
@@ -366,6 +364,14 @@ You are given a directed acyclic graph $\Gamma = (V, E)$ with real-valued edge w
 
 ** Solution
 
+DAG $\rightarrow$ every path is simple (a repeat would close a cycle), so this is just longest path. Let $\mathrm{dist}(v)$ be the max weight of an $s$–$v$ path, $-\infty$ if none:
+
+$$\mathrm{dist}(s) = 0, \qquad \mathrm{dist}(v) = \max_{(u,v)\in E}\{\mathrm{dist}(u) + w(u,v)\}.$$
+
+In topological order every predecessor of $v$ is final before $v$, so one relaxation pass suffices (DAG-SHORTEST-PATHS with $\max$ for $\min$).
+
+Answer $\mathrm{dist}(t)$; store predecessors to recover the path. Time $\Theta(V + E)$.
+
 * Problem 87 :dynamic_programming:string:subsequence:palindrome:
 ** Task
 #+begin_quote
@@ -469,16 +475,6 @@ end
 
 #+end_src
 
-#+RESULTS:
-#+begin_example
-lps (generic function with 1 method)
-Test Summary:      | Pass  Total  Time
-longest palindrome |    6      6  0.0s
-
-Test Summary:                  | Pass  Total  Time
-longest palindrome subsequence |   33     33  0.1s
-#+end_example
-
 * Problem 88 :dynamic_programming:optimization:inventory:
 ** Task
 #+begin_quote
@@ -490,6 +486,12 @@ Give an algorithm that calculates a plan for the company that minimizes its cost
 #+end_quote
 
 ** Solution
+
+No backlogging; state = end-of-month inventory $s_i \in \{0,\dots,D\}$, $s_0 = 0$, $D = \sum_i d_i$. Month $i$ makes $x_i = s_i - s_{i-1} + d_i \ge 0$, paying overtime $\kappa(x) = c\max(0, x - m)$ and holding $h(s_i)$, $h(0) = 0$.
+
+$$C(i, j) = h(j) + \min_{0 \le j' \le j + d_i}\{C(i-1, j') + \kappa(j + d_i - j')\}, \quad C(0,0) = 0,\ C(0, j{>}0) = \infty.$$
+
+$h$ increasing $\implies$ optimum ends $s_n = 0$, so the answer is $C(n, 0)$; the minimizing $j'$ recovers each $x_i$. Time $O(nD^2)$ - pseudo-polynomial ($D$ is exponential in input size, as with knapsack).
 
 * Problem 89 :dynamic_programming:string:optimal_partition:
 ** Task
