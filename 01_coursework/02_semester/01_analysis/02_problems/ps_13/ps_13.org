@@ -1,0 +1,111 @@
+#+title: Ps 13
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-06-12>
+#+lastmod: <2026-06-12 14:41>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 1 :lagrange:constrained_optimization:submanifold:
+** Task
+#+begin_quote
+Let $f : (0,\infty)^n \to \mathbb{R}$, given by
+$$f(x) = x_1 x_2 \cdots x_n,$$
+and consider the constraint manifold
+$$M = \{x \in \mathbb{R}^n : x_1 + \cdots + x_n = n\}$$.
+
+(a) Show that $M$ is an $(n-1)$ -dimensional submanifold of $\mathbb{R}^n$.
+
+(b) Show that every constrained extremum $x \in (0,\infty)^n$ satisfies
+$$\nabla f(x) = \lambda(1, \dots, 1)$$.
+
+(c) Prove that $f(x) \le 1$, $\forall x \in M \cap (0,\infty)^n$, and determine when equality occurs.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+* Problem 2 :lagrange:newtons_method:submanifold:
+** Task
+#+begin_quote
+Consider $f : \mathbb{R}^3 \to \mathbb{R}$,
+$$f(x, y, z) = e^x + y^2 + z$$
+subject to the constraints
+$$\begin{align*}
+g_1(x, y, z) &= x + y + z - 1 = 0, \\
+g_2(x, y, z) &= x^2 + y^2 - z = 0.
+\end{align*}$$
+
+(a) Show that the feasible set $M = \{(x, y, z)^\top \in \mathbb{R}^3 : g_1(x, y, z) = 0, g_2(x, y, z) = 0\}$ is a 1-dimensional submanifold.
+
+(b) Derive the Lagrange multiplier system
+$$\nabla f(x, y, z) = \lambda \nabla g_1(x, y, z) + \mu \nabla g_2(x, y, z), \quad g_1(x, y, z) = 0, \quad g_2(x, y, z) = 0$$.
+
+(c) Apply Newton's method to find local extrema of $f$ restricted to $M$.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+* Problem 3 :lagrange:hessian:constrained_optimization:
+** Task
+#+begin_quote
+Consider $f : \mathbb{R}^2 \to \mathbb{R}$ given by
+$$f(x) = x_1^2 + 2x_2^2$$
+subject to the constraint
+$$g(x) = x_1^2 + x_2^2 - 1 = 0$$.
+
+Use the Lagrangian and its Hessian to identify the local minimum of the restriction of $f$. Visualize your result in Julia.
+#+end_quote
+
+** Solution
+#+begin_src julia :results value :exports both :tangle julia/p_3.jl
+#+end_src
+
+* Problem 4 :gradient_descent:quadratic_form:convergence:
+** Task
+#+begin_quote
+Consider $f : \mathbb{R}^2 \to \mathbb{R}$ given by
+$$f(x, y) = x^2 + 2xy + 5y^2$$.
+
+(a) Show that $f$ has a unique global minimizer.
+
+(b) Write the gradient descent iteration
+$$u_{k+1} = u_k - \tau \nabla f(u_k), \quad u_k = (x_k, y_k)^\top, \quad \tau > 0,$$
+in the form
+$$u_{k+1} = A_\tau u_k,$$
+where $A_\tau \in \mathbb{R}^{2\times2}$.
+
+(c) Determine all step sizes $\tau > 0$ for which $u_k \to 0$ for every initial vector $u_0 \in \mathbb{R}^2$.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+* Time Estimates
+- Problem 1: ~40 min~
+- Problem 2: ~40 min~
+- Problem 3: ~30 min~
+- Problem 4: ~35 min~
