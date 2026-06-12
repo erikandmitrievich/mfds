@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-06>
-#+lastmod: <2026-06-06 20:01>
+#+lastmod: <2026-06-10 17:36>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -30,6 +30,26 @@ $$x^2 + y^2 + z^2 = 12.$$
 
 ** Solution
 
+Constraint $g(x,y,z) = x^2 + y^2 + z^2 - 12$. Lagrange condition ([[file:../../01_material/ch_07_analysis_in_multivariable_coordinates.org::#cor:lagrange-multipliers][Corollary 5.4.7]]): $\nabla f = \lambda \nabla g$.
+
+$$\nabla f = (yz,\, xz,\, xy), \qquad \nabla g = (2x,\, 2y,\, 2z).$$
+
+System:
+
+$$yz = 2\lambda x, \quad xz = 2\lambda y, \quad xy = 2\lambda z, \quad x^2 + y^2 + z^2 = 12.$$
+
+Multiply the three stationarity equations by $x, y, z$ respectively:
+
+$$xyz = 2\lambda x^2 = 2\lambda y^2 = 2\lambda z^2.$$
+
+*Case $\lambda = 0$.* Then $yz = xz = xy = 0$, forcing at least two coordinates to vanish; $f = 0$. Not extremal.
+
+*Case $\lambda \neq 0$.* Then $x^2 = y^2 = z^2$. Constraint gives $3x^2 = 12$, so $\lvert x \rvert = \lvert y \rvert = \lvert z \rvert = 2$. Hence $f = xyz = \pm 8$, the sign set by the parity of negative coordinates.
+
+- $\max f = 8$ (even number of negatives): $(2,2,2),\ (2,-2,-2),\ (-2,2,-2),\ (-2,-2,2)$.
+
+- $\min f = -8$ (odd number of negatives): $(-2,-2,-2),\ (-2,2,2),\ (2,-2,2),\ (2,2,-2)$.
+
 * Problem 2 :constrained_optimization:lagrange_multipliers:ellipse:
 ** Task
 #+begin_quote
@@ -47,11 +67,58 @@ $$M = \{(x, y)^\top \in \mathbb{R}^2 : 4x^2 + y^2 = 16\}.$$
 ** Solution
 *** (a)
 
+Extremize squared distance $d^2 = x^2 + y^2$ under $g = 4x^2 + y^2 - 16$ (the square root is monotone, so extrema coincide).
+
+$$\nabla d^2 = (2x,\, 2y), \qquad \nabla g = (8x,\, 2y).$$
+
+$$2x = 8\lambda x, \quad 2y = 2\lambda y \;\Longrightarrow\; x(1 - 4\lambda) = 0, \quad y(1 - \lambda) = 0.$$
+
+Both coordinates cannot vanish (not on $M$).
+
+- $x = 0 \Rightarrow y = \pm 4$, distance $4$.
+
+- $y = 0 \Rightarrow x = \pm 2$, distance $2$.
+
+Closest: $(\pm 2, 0)^\top$ at distance $2$ (ends of the minor axis). Farthest: $(0, \pm 4)^\top$ at distance $4$ (ends of the major axis).
+
 *** (b)
 #+begin_src julia :results value :exports both :tangle julia/p_2b.jl
+using Plots
+
+t  = range(0, 2π, length=400)
+xs = 2 .* cos.(t)          # 4x² = 16cos²t
+ys = 4 .* sin.(t)          # y²  = 16sin²t   ->   4x²+y² = 16
+
+plt = plot(xs, ys; aspect_ratio=:equal, lw=2,
+           label="4x²+y²=16", legend=:topright,
+           xlabel="x", ylabel="y", title="Distance from origin")
+scatter!(plt, [0], [0];          color=:black, label="origin")
+scatter!(plt, [2, -2], [0, 0];   color=:green, ms=6, label="closest, d=2")
+scatter!(plt, [0, 0], [4, -4];   color=:red,   ms=6, label="farthest, d=4")
+
+mkpath("./assets"); savefig("./assets/p_02_b.png")
 #+end_src
 
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_12/assets/p_02_b.png
+
 *** (c)
+
+Extremize $(x - 3)^2 + y^2$ under the same $g$:
+
+$$2(x - 3) = 8\lambda x, \quad 2y = 2\lambda y \;\Longrightarrow\; x(1 - 4\lambda) = 3, \quad y(1 - \lambda) = 0.$$
+
+- $y = 0 \Rightarrow x = \pm 2$:  at $(2,0)^\top$, $d = 1$;  at $(-2,0)^\top$, $d = 5$.
+
+- $\lambda = 1 \Rightarrow -3x = 3 \Rightarrow x = -1$, then $y^2 = 12$, so $(-1, \pm 2\sqrt{3})^\top$, $d^2 = 28$, $d = 2\sqrt{7}$.
+
+Comparing $d^2 \in \{1,\ 25,\ 28\}$:
+
+- Closest: $(2, 0)^\top$, $d = 1$.
+
+- Farthest: $(-1, \pm 2\sqrt{3})^\top$, $d = 2\sqrt{7}$.
+
+Along $\gamma(t) = (2\cos t,\, 4\sin t)$, $d^2(t) = -12\cos^2 t - 12\cos t + 25$ takes cyclic values $1,\ 28,\ 25,\ 28$, so $(-2,0)^\top$ is a *local minimum* ($d = 5$), not the farthest point.
 
 * Problem 3 :constrained_optimization:lagrange_multipliers:
 ** Task
@@ -66,6 +133,16 @@ $$x + y + z = 6, \qquad x - y = 2.$$
 #+end_quote
 
 ** Solution
+
+Two constraints $g_1 = x + y + z - 6$, $g_2 = x - y - 2$. Lagrange with two multipliers: $\nabla f = \lambda \nabla g_1 + \mu \nabla g_2$, with $\nabla g_1 = (1,1,1)$, $\nabla g_2 = (1,-1,0)$.
+
+$$2x = \lambda + \mu, \quad 2y = \lambda - \mu, \quad 2z = \lambda.$$
+
+Sum of the first two: $x + y = \lambda$; with $2z = \lambda$ this gives $z = (x+y)/2$. Their difference: $x - y = \mu$, and the constraint $x - y = 2$ fixes $\mu = 2$.
+
+Put $s = x + y$: then $z = s/2$ and $x + y + z = s + s/2 = 6 \Rightarrow s = 4$. So $x + y = 4$, $z = 2$; combined with $x - y = 2$, get $x = 3$, $y = 1$.
+
+Point $(3, 1, 2)^\top$, $f = 9 + 1 + 4 = 14$. The constraint set is a line in $\mathbb{R}^3$, so $f$ (squared distance from the origin) is unbounded above and $14$ is the global *minimum*. No maximum.
 
 * Problem 4 :constrained_optimization:lagrange_multipliers:parametrization:
 ** Task
@@ -82,23 +159,71 @@ $$x^2 + y^2 = 4.$$
 
 2. Parametrize the constraint by
 
-$$\gamma(t) = (2\cos t,\, 2\sin t), \qquad 0 \leq t \leq 2\pi.$$
+   $$\gamma(t) = (2\cos t,\, 2\sin t), \qquad 0 \leq t \leq 2\pi.$$
 
-and plot the function $F(t) = f(\gamma(t))$ with $t$ on the horizontal axis.
+   and plot the function $F(t) = f(\gamma(t))$ with $t$ on the horizontal axis.
 
 3. Make an educated guess of the exact maxima and minima based on this investigation. Then determine the exact constrained extrema using Corollary 5.4.7.
 #+end_quote
 
 ** Solution
 *** 1.
+
 #+begin_src julia :results value :exports both :tangle julia/p_4_1.jl
+using Plots
+
+xs = range(-3, 3, length=300)
+ys = range(-3, 3, length=300)
+f(x, y) = x^2 - y^2
+
+plt = heatmap(xs, ys, f; aspect_ratio=:equal, c=:viridis,
+              xlabel="x", ylabel="y",
+              title="f(x,y)=x²−y²  with  x²+y²=4")
+t = range(0, 2π, length=400)
+plot!(plt, 2 .* cos.(t), 2 .* sin.(t); lw=2, color=:white, label="x²+y²=4")
+
+mkpath("./assets"); savefig("./assets/p_04_1.png")
 #+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_12/assets/p_04_1.png
 
 *** 2.
+
+$F(t) = f(\gamma(t)) = 4\cos^2 t - 4\sin^2 t = 4\cos 2t$.
+
 #+begin_src julia :results value :exports both :tangle julia/p_4_2.jl
+using Plots
+
+F(t) = 4cos(2t)
+t = range(0, 2π, length=400)
+
+plt = plot(t, F.(t); lw=2, legend=false,
+           xlabel="t", ylabel="F(t)=f(γ(t))",
+           title="F(t)=4cos(2t)")
+hline!(plt, [0]; color=:gray, ls=:dash)
+scatter!(plt, [0, π, 2π], [4, 4, 4]; color=:red,   ms=5)   # maxima
+scatter!(plt, [π/2, 3π/2], [-4, -4]; color=:green, ms=5)   # minima
+
+mkpath("./assets"); savefig("./assets/p_04_2.png")
 #+end_src
 
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_12/assets/p_04_2.png
+
 *** 3.
+
+From $F(t) = 4\cos 2t$: maximum $4$ at $t \in \{0, \pi\}$, i.e. $(\pm 2, 0)^\top$; minimum $-4$ at $t \in \{\pi/2,\, 3\pi/2\}$, i.e. $(0, \pm 2)^\top$.
+
+Confirm via /Corollary 5.4.7/ with $g = x^2 + y^2 - 4$:
+
+$$2x = 2\lambda x, \quad -2y = 2\lambda y \;\Longrightarrow\; x(1 - \lambda) = 0, \quad y(1 + \lambda) = 0.$$
+
+- $x = 0 \Rightarrow y = \pm 2$, $f = -4$ (minimum).
+
+- $\lambda = 1 \Rightarrow y = 0$, $x = \pm 2$, $f = 4$ (maximum).
+
+$\max f = 4$ at $(\pm 2, 0)^\top$, $\min f = -4$ at $(0, \pm 2)^\top$ — matching the guess.
 
 * Time Estimates
 - Problem 1: ~20 min~
