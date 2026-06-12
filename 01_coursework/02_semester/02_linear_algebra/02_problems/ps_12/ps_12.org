@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-07>
-#+lastmod: <2026-06-08 13:12>
+#+lastmod: <2026-06-08 13:46>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -49,6 +49,40 @@ Determine the eigenvalues and eigenvectors of $A$. Is $A$ diagonalizable over $\
 #+end_quote
 
 ** Solution
+
+*Characteristic Polynomial.*
+
+$$p_A(\lambda) = \mathrm{det}(A - \lambda I) = (p - \lambda)^2 + q^2$$
+
+*Eigenvalues.*
+
+Setting $p_A (\lambda) = 0$ ([[file:../../01_material/ch_05_eigenvalues.org::#lem:characteristic-polynomial][Lemma 5.9]]):
+
+$$(p - \lambda)^2 = -q^2 \implies \lambda_{1,2} = p \pm iq$$
+
+Since $q \neq 0$, both are non-real (complex conjugates).
+
+*Eigenvectors.*
+
+For $\lambda_1 = p + iq$:
+
+$$A - \lambda_1 I = \begin{pmatrix} -iq & -q \\ q & -iq \end{pmatrix}$$
+
+Row 1 gives $-iq \cdot x_1 - q \cdot x_2 = 0$, hence $x_2 = -i x_1$. Eigenvector $v_1 = (1, -i)^{\top}$.
+
+For $\lambda_2 = p - iq$ (conjugate): $v_2 = (1, i)^{\top} = \overline{v_1}$.
+
+*Diagonalizability.*
+
+- Over $\mathbb{R}$: $p_A$ has no real roots (since $q \neq 0$), so $A$ has no real eigenvalues. *Not diagonalizable* over $\mathbb{R}$.
+
+- Over $\mathbb{C}$: two distinct eigenvalues in a 2 dimensional space, hence two linearly independent eigenvectors. *Diagonalizable* over $\mathbb{C}$:
+
+$$A = P D P^{-1}, \quad P = \begin{pmatrix} 1 & 1 \\ -i & i \end{pmatrix}, \quad D = \begin{pmatrix} p + iq & 0 \\ 0 & p - iq \end{pmatrix}.$$
+
+*Geometric remark.*
+
+$A$ acts on $\mathbb{R}^2$ as rotation by $\theta = \arg(p + iq)$ combined with scaling by $r = \sqrt{p^2 + q^2}$. A genuine rotation has no invariant real line (for $\theta \notin \{0, \pi\}$), which is exactly why no real eigenvector exists. Complex eigenvalues $p \pm iq$ are the polar form $re^{\pm i\theta}$ encoding the rotation-scaling.
 
 * Problem 5.15 :orthogonal_matrix:diagonalization:
 ** Task
