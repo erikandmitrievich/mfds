@@ -1,8 +1,8 @@
-#+title: Ch 07 Analysis In Multivariable Coordinates
+#+title: Ch 05 Analysis In Coordinates
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-26>
-#+lastmod: <2026-06-07 22:00>
+#+lastmod: <2026-06-12 15:17>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -1332,7 +1332,15 @@ $$\text{rank}\, g'(x) = r \qquad \forall x \in M \cap U.$$
 
 ** Questions
 
-*** TODO Why neighborhood $U \in \mathbb{R}^n$ and not $U \in M$?
+*** DONE What is a manifold in the first place?
+
+A $k$ dimensional manifold is a space that locally looks like $\mathbb{R}^k$ - near every point it has exactly $k$ independent degrees of freedom, possibly bent or curved globally.
+
+A circle is locally a line ($k = 1$), a sphere is locally a plane ($k = 2$).
+
+*** TODO I understand what each word of the definition mean, but I can not see the image.
+
+
 
 * Definition:  Tangent and normal space
 :PROPERTIES:
