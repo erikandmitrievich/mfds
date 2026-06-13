@@ -1,0 +1,91 @@
+#+title: Ps 13
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-06-13>
+#+lastmod: <2026-06-13 17:39>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 5.10 :eigenvalue:diagonalization:linear_map:
+** Task
+#+begin_quote
+Let $\mathbb{E}$ be the space of all $2 \times 2$ upper-triangular matrices, and
+
+$$L : \mathbb{E} \to \mathbb{E}, \quad L\begin{pmatrix} p & q \\ 0 & r \end{pmatrix} = \begin{pmatrix} 3 & 2 \\ 0 & 1 \end{pmatrix}\begin{pmatrix} p & q \\ 0 & r \end{pmatrix}$$
+
+Obtain the eigenvalue(s) and associated eigenspace(s) of $L$. Is $L$ diagonalizable?
+#+end_quote
+
+** Solution
+
+* Problem 5.14 :diagonalization:linear_map:
+** Task
+#+begin_quote
+Prove [[file:../../01_material/ch_05_eigenvalues.org::#lem:distinct-eigenvalues-diagonalizable][Lemma 5.19]].
+#+end_quote
+
+** Solution
+
+* Problem 5.16 :projection:eigenvalue:diagonalization:
+** Task
+#+begin_quote
+(Diagonalizability of projection and symmetric operators)
+
+Let $P, S : \mathbb{E} \to \mathbb{E}$ be (respectively) a projection and a symmetry operator (not necessarily orthogonal) on a $\mathbb{K}$ -vector space $\mathbb{E}$.
+
+(i) Prove that the eigenvalues of $P$ can only be 1 or 0.
+
+(ii) Prove that the eigenvalues of $S$ can only be $\pm 1$.
+
+(iii) Prove that $P$ and $S$ are always diagonalizable.
+#+end_quote
+
+** Solution
+
+*** (i)
+
+*** (ii)
+
+*** (iii)
+
+* Problem 5.17 :eigenvalue:diagonalization:fibonacci:
+** Task
+#+begin_quote
+(Closed expression for the Fibonacci sequences)
+
+We are well aware of the recursive definition of a Fibonacci sequence (see ex. 1.32). In the same exercise, we have also solved for the closed form of expression for the $n$ -th term of the standard Fibonacci sequence $(0, 1, 1, 2, 3, 5, 8, 13, \ldots)$. We shall now try and obtain the closed expression for any Fibonacci sequence.
+
+(i) Let $x = (x_i)_{i=0}^{\infty}$ be a real Fibonacci sequence. Determine the matrix $A \in \mathbb{R}^{2\times 2}$ such that
+
+$$\begin{pmatrix} x_{n+1} \\ x_n \end{pmatrix} = A \begin{pmatrix} x_n \\ x_{n-1} \end{pmatrix}, \quad \forall n \in \mathbb{N}$$
+
+(ii) Obtain an eigenbasis for $A$ and therefore diagonalize $A$.
+
+(iii) With the information above, obtain the closed form of the $n$ -th entry of the sequence $x_n$:
+
+$$x_n = \frac{1}{\sqrt{5}}\left[(x_1 - \psi x_0)\phi^n - (x_1 - \phi x_0)\psi^n\right], \quad \text{where } \phi = \frac{1 + \sqrt{5}}{2} \text{ and } \psi = \frac{1 - \sqrt{5}}{2}$$
+#+end_quote
+
+** Solution
+
+*** (i)
+
+*** (ii)
+
+*** (iii)
+
+* Time Estimates
+- Problem 5.10: ~20 min~
+- Problem 5.14: ~15 min~
+- Problem 5.16: ~30 min~
+- Problem 5.17: ~35 min~
