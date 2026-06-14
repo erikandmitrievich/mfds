@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-06>
-#+lastmod: <2026-06-10 17:36>
+#+lastmod: <2026-06-13 17:24>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -30,7 +30,7 @@ $$x^2 + y^2 + z^2 = 12.$$
 
 ** Solution
 
-Constraint $g(x,y,z) = x^2 + y^2 + z^2 - 12$. Lagrange condition ([[file:../../01_material/ch_07_analysis_in_multivariable_coordinates.org::#cor:lagrange-multipliers][Corollary 5.4.7]]): $\nabla f = \lambda \nabla g$.
+Constraint $g(x,y,z) = x^2 + y^2 + z^2 - 12$. Lagrange condition ([[file:../../01_material/ch_05_analysis_in_coordinates.org::#cor:lagrange-multipliers][Corollary 5.4.7]]): $\nabla f = \lambda \nabla g$.
 
 $$\nabla f = (yz,\, xz,\, xy), \qquad \nabla g = (2x,\, 2y,\, 2z).$$
 

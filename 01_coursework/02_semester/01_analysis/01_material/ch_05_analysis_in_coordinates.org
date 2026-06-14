@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-04-26>
-#+lastmod: <2026-06-12 15:17>
+#+lastmod: <2026-06-14 17:16>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -1340,8 +1340,6 @@ A circle is locally a line ($k = 1$), a sphere is locally a plane ($k = 2$).
 
 *** TODO I understand what each word of the definition mean, but I can not see the image.
 
-
-
 * Definition:  Tangent and normal space
 :PROPERTIES:
 :CUSTOM_ID: def:tangent-normal-space
@@ -1438,3 +1436,11 @@ be continuously differentiable and suppose that $f|_M$ has a local extremum at $
 $$\nabla f(x_0) = \sum_{i=1}^r \lambda_i \nabla g_i(x_0).$$
 
 ** Questions
+
+*** DONE What is $r$? It was not defined. Should I assume it is $r = n - k$ from [[#def:submanifold][Definition 5.4.1]]?
+
+Yes, $r$ is the number of constraint equations. The corollary reuses it without restating it.
+
+*** DONE What is $f|_M$?
+
+The restriction of $f$ to $M$: same function $f$ but with its domain cut down from $U$ to $M$.

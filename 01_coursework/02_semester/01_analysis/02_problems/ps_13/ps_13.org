@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-12>
-#+lastmod: <2026-06-12 14:41>
+#+lastmod: <2026-06-14 18:39>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -20,13 +20,17 @@
 ** Task
 #+begin_quote
 Let $f : (0,\infty)^n \to \mathbb{R}$, given by
+
 $$f(x) = x_1 x_2 \cdots x_n,$$
+
 and consider the constraint manifold
+
 $$M = \{x \in \mathbb{R}^n : x_1 + \cdots + x_n = n\}$$.
 
 (a) Show that $M$ is an $(n-1)$ -dimensional submanifold of $\mathbb{R}^n$.
 
 (b) Show that every constrained extremum $x \in (0,\infty)^n$ satisfies
+
 $$\nabla f(x) = \lambda(1, \dots, 1)$$.
 
 (c) Prove that $f(x) \le 1$, $\forall x \in M \cap (0,\infty)^n$, and determine when equality occurs.
@@ -35,16 +39,73 @@ $$\nabla f(x) = \lambda(1, \dots, 1)$$.
 ** Solution
 *** (a)
 
+$M$ is an $(n-1)$ dimensional submanifold of $\mathbb{R}^n$ iff $\forall x_0 \in M$
+
+- $\exists$ an open $U \subseteq \mathbb{R}^n$ with $x_0 \in U$
+
+- $g \in \mathcal{C}^1(U, \mathbb{R}^r)$, $r = n-(n-1) = 1$, such that
+
+  $$M \cap U = \{x \in U : g(x) = 0\}, \qquad \mathrm{rank}\, g'(x) = r = 1 \quad \forall x \in M \cap U.$$
+
+*Proof.*
+
+Define $g \colon \mathbb{R}^n \rightarrow \mathbb{R}$, $g(x) = x_1 + \cdots + x_n - n$.
+
+$g$ is defined on all of $\mathbb{R}^n$, so $U = \mathbb{R}^n$ serves as one global neighborhood: open, containing every $x_0$, discharging the $\forall x_0$ at once.
+
+Hence,
+
+1. $g$ is polynomial, hence $g \in \mathcal{C}^\infty(\mathbb{R}^n, \mathbb{R})$.
+
+2. $M \cap U = M = g^{-1}(0)$ by definition of $M$.
+
+3. $g'(x) = (1, \ldots, 1)$, so $\mathrm{rank}\, g'(x) = 1 = r$ for all $x \in \mathbb{R}^n$, in particular on $M$.
+
+All conditions hold. Hence $M$ is an $(n-1)$ dimensional submanifold of $\mathbb{R}^n$.
+
 *** (b)
 
+*Proof.*
+
+Apply [[file:../../01_material/ch_05_analysis_in_coordinates.org::#cor:lagrange-multipliers][Corollary 5.4.7]] with:
+
+- $U = (0,\infty)^n$, open in $\mathbb{R}^n$. (not $\mathbb{R}^n$, the extremum is constrained to $(0,\infty)^n$)
+
+- $r = 1$, $g_1 = g$, $g(x) = x_1 + \cdots + x_n - n$.
+
+- $M \cap U = \{x \in U : g(x) = 0\}$, an $(n-1)$ dimensional submanifold: the (a) argument restricts to $U$ unchanged, since $\mathrm{rank}\, g'(x) = 1$ for all $x \in U$.
+
+- $f \in \mathcal{C}^1(U)$: $f$ is polynomial.
+
+Given $f\rvert_M$ has a local extremum at $x_0 \in M \cap U$, the corollary yields $\lambda \in \mathbb{R}$ with
+
+$$\nabla f(x_0) = \lambda \nabla g(x_0).$$
+
+Since $\nabla g(x_0) = (1, \ldots, 1)$,
+
+$$\nabla f(x_0) = \lambda(1, \ldots, 1)$$
+
 *** (c)
+
+*Proof.*
+
+Let $x^\ast = (1, \ldots, 1)$, $f(x^\ast) = 1$.
+
+By (b), $\partial_i f(x) = f(x)/x_i = \lambda \;\forall i \Rightarrow$ all $x_i$ equal $\Rightarrow x = x^\ast$ (using $\sum x_i = n$). Unique critical point.
+
+$\Delta = \{x_i \ge 0,\ \sum x_i = n\}$ is compact, $f$ continuous, so $f$ attains a max on $\Delta$. On $\partial\Delta$: some $x_i = 0$, so $f = 0$; interior: $f > 0$. Max lies in the interior $\Rightarrow$ critical point $\Rightarrow x^\ast$. Hence $\max_\Delta f = 1$.
+
+Therefore $f(x) \le 1$ on $M \cap (0,\infty)^n$, equality iff $x = (1, \ldots, 1)$.
 
 * Problem 2 :lagrange:newtons_method:submanifold:
 ** Task
 #+begin_quote
 Consider $f : \mathbb{R}^3 \to \mathbb{R}$,
+
 $$f(x, y, z) = e^x + y^2 + z$$
+
 subject to the constraints
+
 $$\begin{align*}
 g_1(x, y, z) &= x + y + z - 1 = 0, \\
 g_2(x, y, z) &= x^2 + y^2 - z = 0.
@@ -53,6 +114,7 @@ g_2(x, y, z) &= x^2 + y^2 - z = 0.
 (a) Show that the feasible set $M = \{(x, y, z)^\top \in \mathbb{R}^3 : g_1(x, y, z) = 0, g_2(x, y, z) = 0\}$ is a 1-dimensional submanifold.
 
 (b) Derive the Lagrange multiplier system
+
 $$\nabla f(x, y, z) = \lambda \nabla g_1(x, y, z) + \mu \nabla g_2(x, y, z), \quad g_1(x, y, z) = 0, \quad g_2(x, y, z) = 0$$.
 
 (c) Apply Newton's method to find local extrema of $f$ restricted to $M$.
@@ -69,8 +131,11 @@ $$\nabla f(x, y, z) = \lambda \nabla g_1(x, y, z) + \mu \nabla g_2(x, y, z), \qu
 ** Task
 #+begin_quote
 Consider $f : \mathbb{R}^2 \to \mathbb{R}$ given by
+
 $$f(x) = x_1^2 + 2x_2^2$$
+
 subject to the constraint
+
 $$g(x) = x_1^2 + x_2^2 - 1 = 0$$.
 
 Use the Lagrangian and its Hessian to identify the local minimum of the restriction of $f$. Visualize your result in Julia.
@@ -84,14 +149,19 @@ Use the Lagrangian and its Hessian to identify the local minimum of the restrict
 ** Task
 #+begin_quote
 Consider $f : \mathbb{R}^2 \to \mathbb{R}$ given by
+
 $$f(x, y) = x^2 + 2xy + 5y^2$$.
 
 (a) Show that $f$ has a unique global minimizer.
 
 (b) Write the gradient descent iteration
+
 $$u_{k+1} = u_k - \tau \nabla f(u_k), \quad u_k = (x_k, y_k)^\top, \quad \tau > 0,$$
+
 in the form
+
 $$u_{k+1} = A_\tau u_k,$$
+
 where $A_\tau \in \mathbb{R}^{2\times2}$.
 
 (c) Determine all step sizes $\tau > 0$ for which $u_k \to 0$ for every initial vector $u_0 \in \mathbb{R}^2$.
