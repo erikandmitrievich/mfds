@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-12>
-#+lastmod: <2026-06-14 18:39>
+#+lastmod: <2026-06-14 22:10>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -170,7 +170,71 @@ where $A_\tau \in \mathbb{R}^{2\times2}$.
 ** Solution
 *** (a)
 
+\begin{align*}
+\nabla f(x,y) &= \begin{pmatrix} 2x + 2y \\ 2x + 10y \end{pmatrix}
+\end{align*}
+
+\begin{align*}
+\nabla f(x,y) = 0 &\iff
+\begin{cases} 2x + 2y = 0 \\ 2x + 10y = 0 \end{cases} \\
+&\iff 8y = 0 \\
+&\iff (x,y) = (0,0).
+\end{align*}
+
+Unique critical point $(0,0)$.
+
+\begin{align*}
+\partial_1 f    &= 2x + 2y  &  \partial_2 f    &= 2x + 10y \\
+\partial_{11} f &= 2        &  \partial_{22} f &= 10 \\
+\partial_{21} f &= 2        &  \partial_{12} f &= 2
+\end{align*}
+
+\begin{align*}
+H_f(x,y) &=
+\begin{pmatrix}
+2 & 2 \\
+2 & 10
+\end{pmatrix}
+\quad \text{(constant)}
+\end{align*}
+
+$\det H_f = 16 > 0$ (definite) and $\partial_{11} f = 2 > 0$ (positive) $\Rightarrow$ $(0,0)$ local min.
+
+$H_f$ constant and positive definite on $\mathbb{R}^2$ $\Rightarrow$ $f$ strictly convex $\Rightarrow$ $(0,0)$ unique global minimizer, $f(0,0) = 0$.
+
 *** (b)
+
+\begin{align*}
+\nabla f(u) =
+\begin{pmatrix} 2x + 2y \\ 2x + 10y \end{pmatrix}
+=
+\begin{pmatrix} 2 & 2 \\ 2 & 10 \end{pmatrix}
+\begin{pmatrix} x \\ y \end{pmatrix}
+=: H_f\, u.
+\end{align*}
+
+\begin{align*}
+u_{k+1} = u_k - \tau \nabla f(u_k) = u_k - \tau H_f\, u_k = (I - \tau H_f)\, u_k
+\end{align*}
+
+Hence $u_{k+1} = A_\tau u_k$ with
+
+\begin{align*}
+A_\tau = I - \tau H_f
+&=
+\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}
+- \tau
+\begin{pmatrix} 2 & 2 \\ 2 & 10 \end{pmatrix} \\
+&=
+\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}
+-
+\begin{pmatrix} 2\tau & 2\tau \\ 2\tau & 10\tau \end{pmatrix} \\
+&=
+\begin{pmatrix}
+1 - 2\tau & -2\tau \\
+-2\tau & 1 - 10\tau
+\end{pmatrix}.
+\end{align*}
 
 *** (c)
 
