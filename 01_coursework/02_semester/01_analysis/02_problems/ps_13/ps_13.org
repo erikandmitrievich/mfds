@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-12>
-#+lastmod: <2026-06-14 22:10>
+#+lastmod: <2026-06-14 22:38>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -142,6 +142,68 @@ Use the Lagrangian and its Hessian to identify the local minimum of the restrict
 #+end_quote
 
 ** Solution
+
+*Lagrangian.* $L(x, \lambda) = f(x) - \lambda g(x) = x_1^2 + 2x_2^2 - \lambda(x_1^2 + x_2^2 - 1)$.
+
+*Stationarity.* $\nabla_x L = 0$ and $g = 0$:
+
+\begin{align*}
+\partial_1 L &= 2(1 - \lambda) x_1 = 0 \\
+\partial_2 L &= 2(2 - \lambda) x_2 = 0 \\
+g &= x_1^2 + x_2^2 - 1 = 0
+\end{align*}
+
+$x_1, x_2$ cannot both vanish (violates $g = 0$), and $\lambda$ cannot be both $1$ and $2$. Two cases:
+
+- $\lambda = 1 \implies x_2 = 0 \implies x_1 = \pm 1$: points $(\pm 1, 0)$, $f = 1$.
+
+- $\lambda = 2 \implies x_1 = 0 \implies x_2 = \pm 1$: points $(0, \pm 1)$, $f = 2$.
+
+*Hessian of $L$ in $x$.*
+
+\begin{align*}
+H_x L =
+\begin{pmatrix} \partial_{11} L & \partial_{12} L \\ \partial_{21} L & \partial_{22} L \end{pmatrix}
+=
+\begin{pmatrix} 2 - 2\lambda & 0 \\ 0 & 4 - 2\lambda \end{pmatrix}
+\end{align*}
+
+*Classification on the tangent space.* The constraint is the unit circle, so $T_x = \ker g'(x) = x^{\perp}$ (/Definition 7.5.3/). Restrict $H_x L$ to $T_x$:
+
+- $(\pm 1, 0)$, $\lambda = 1$: $T_x = \mathrm{span}\{(0,1)\}$, $H_x L = \mathrm{diag}(0, 2)$. For $v = (0, t)$, $v^{\top} H_x L\, v = 2t^2 > 0$ — positive definite on $T_x$ $\implies$ local *minimum*.
+
+- $(0, \pm 1)$, $\lambda = 2$: $T_x = \mathrm{span}\{(1,0)\}$, $H_x L = \mathrm{diag}(-2, 0)$. For $v = (t, 0)$, $v^{\top} H_x L\, v = -2t^2 < 0$ — negative definite on $T_x$ $\implies$ local *maximum*.
+
+*Result.* The restriction of $f$ to $g = 0$ has local minima at $(\pm 1, 0)$ with $f = 1$ (and maxima at $(0, \pm 1)$ with $f = 2$).
+
+*Check.* On $g = 0$: $f = x_1^2 + 2x_2^2 = (x_1^2 + x_2^2) + x_2^2 = 1 + x_2^2$, minimal at $x_2 = 0$, maximal at $x_2^2 = 1$. $\square$
+
+#+begin_src julia :results value :exports both :tangle julia/p_3.jl
+using Plots
+
+f(x, y) = x^2 + 2y^2
+
+θ  = range(0, 2π, length=400)
+cx = cos.(θ)
+cy = sin.(θ)
+
+xs = range(-1.5, 1.5, length=300)
+ys = range(-1.5, 1.5, length=300)
+
+contour(xs, ys, (x, y) -> f(x, y), levels=20, c=:viridis,
+        aspect_ratio=1, colorbar=true, size=(700, 700),
+        xlabel="x₁", ylabel="x₂", title="f = x₁² + 2x₂² on g = 0")
+
+plot!(cx, cy, lw=2, c=:black, label="g = 0")
+
+scatter!([1, -1], [0, 0], c=:red,  ms=6, label="min  (f = 1)")
+scatter!([0,  0], [1, -1], c=:blue, ms=6, label="max  (f = 2)")
+
+mkpath("./assets")
+savefig("./assets/p_03.png")
+#+end_src
+
+
 #+begin_src julia :results value :exports both :tangle julia/p_3.jl
 #+end_src
 
