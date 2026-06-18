@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-11>
-#+lastmod: <2026-06-11 19:29>
+#+lastmod: <2026-06-18 16:56>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -23,6 +23,49 @@ Write pseudocode for the procedure CONSTRUCT-OPTIMAL-BST(root, n) which, given t
 #+end_quote
 
 ** Solution
+
+#+begin_src julia :results output
+function construct_optimal_bst(r, n)
+    function build(i, j, parent, dir)
+        if i > j
+            println("d", i - 1, " is the ", dir, " child of k", parent)
+            return
+        end
+        t = r[i, j]
+        if parent == 0
+            println("k", t, " is the root")
+        else
+            println("k", t, " is the ", dir, " child of k", parent)
+        end
+        build(i, t - 1, t, "left")
+        build(t + 1, j, t, "right")
+    end
+    build(1, n, 0, "")
+end
+
+root = [1 1 2 2 2;
+        0 2 2 2 4;
+        0 0 3 4 5;
+        0 0 0 4 5;
+        0 0 0 0 5]
+
+construct_optimal_bst(root, 5)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+k2 is the root
+k1 is the left child of k2
+d0 is the left child of k1
+d1 is the right child of k1
+k5 is the right child of k2
+k4 is the left child of k5
+k3 is the left child of k4
+d2 is the left child of k3
+d3 is the right child of k3
+d4 is the right child of k4
+d5 is the right child of k5
+#+end_example
 
 * Problem 91 :binary_search_tree:dynamic_programming:
 ** Task
@@ -108,13 +151,13 @@ Give a dynamic-programming solution of the $0 - 1$ knapsack problem that runs in
 ** Solution
 
 * Time Estimates
-- Problem 90: ~20 min~
-- Problem 91: ~30 min~
-- Problem 92: ~40 min~
-- Problem 93: ~35 min~
-- Problem 94: ~25 min~
-- Problem 95: ~20 min~
-- Problem 96: ~25 min~
-- Problem 97: ~30 min~
-- Problem 98: ~25 min~
-- Problem 99: ~20 min~
+- Problem 90: ~18 min~
+- Problem 91: ~50 min~
+- Problem 92: ~45 min~
+- Problem 93: ~30 min~
+- Problem 94: ~30 min~
+- Problem 95: ~28 min~
+- Problem 96: ~28 min~
+- Problem 97: ~28 min~
+- Problem 98: ~40 min~
+- Problem 99: ~17 min~
