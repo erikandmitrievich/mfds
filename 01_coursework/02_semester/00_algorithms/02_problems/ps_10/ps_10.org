@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-11>
-#+lastmod: <2026-06-18 16:56>
+#+lastmod: <2026-06-18 18:33>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -81,6 +81,83 @@ q_i & 0.06 & 0.06 & 0.06 & 0.06 & 0.05 & 0.05 & 0.05 & 0.05 \\
 #+end_quote
 
 ** Solution
+
+#+begin_src julia :results output
+function optimal_bst(p, q, n)
+    e = zeros(n + 1, n + 1)                             # e = expected cost matrix
+    w = zeros(n + 1, n + 1)                             # w = weight matrix (+1 for dummies)
+    root = zeros(Int, n, n)                             # root = optimal root node
+
+    for i in 1:n+1
+        e[i, i] = q[i]                                  # base: empty subtree
+        w[i, i] = q[i]
+    end
+
+    for l in 1:n                                        # l = length of the sequence
+        for i in 1:n-l+1                                # i = start of the sequence
+            j = i + l - 1                               # j = end of the sequence
+            e[i, j+1] = Inf
+            w[i, j+1] = w[i, j] + p[j] + q[j+1]         # weight of [i,j]: all keys + dummies
+            for r in i:j                                # r = trial root for keys k[i..j]
+                t = e[i, r] + e[r+1, j+1] + w[i, j+1]   # t = temporary cost
+                if t < e[i, j+1]                        # keep root r if it lowers the cost
+                    e[i, j+1] = t
+                    root[i, j] = r
+                end
+            end
+        end
+    end
+
+    return e, root
+end
+
+function construct_optimal_bst(r, n)
+    function build(i, j, parent, dir)
+        if i > j
+            println("d", i - 1, " is the ", dir, " child of k", parent)
+            return
+        end
+        t = r[i, j]
+        if parent == 0
+            println("k", t, " is the root")
+        else
+            println("k", t, " is the ", dir, " child of k", parent)
+        end
+        build(i, t - 1, t, "left")
+        build(t + 1, j, t, "right")
+    end
+    build(1, n, 0, "")
+end
+
+
+p =       [0.04, 0.06, 0.08, 0.02, 0.10, 0.12, 0.14]
+q = [0.06, 0.06, 0.06, 0.06, 0.05, 0.05, 0.05, 0.05]
+n = 7
+
+e, root = optimal_bst(p, q, n)
+println("cost = ", round(e[1, n+1], digits=4))
+construct_optimal_bst(root, n)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+cost = 3.12
+k5 is the root
+k2 is the left child of k5
+k1 is the left child of k2
+d0 is the left child of k1
+d1 is the right child of k1
+k3 is the right child of k2
+d2 is the left child of k3
+k4 is the right child of k3
+d3 is the left child of k4
+d4 is the right child of k4
+k7 is the right child of k5
+k6 is the left child of k7
+d5 is the left child of k6
+d6 is the right child of k6
+d7 is the right child of k7
+#+end_example
 
 * Problem 92 :dynamic_programming:greedy_algorithm:bitonic_tour:
 ** Task
