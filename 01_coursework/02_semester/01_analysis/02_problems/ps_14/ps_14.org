@@ -1,0 +1,100 @@
+#+title: Ps 14
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-06-20>
+#+lastmod: <2026-06-20 11:44>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 1 :optimization:lagrange_multipliers:hessian:
+** Task
+#+begin_quote
+Consider $f : \mathbb{R}^2 \to \mathbb{R}$ given by
+
+$$f(x, y) = (x + 1)^2 + 3y^2$$
+
+(a) Determine all local extrema of $f$ and check by the Hessian if it is a local minimum or local maximum.
+
+(b) Consider the constraint problem $g(x) = 0$, for which $g : \mathbb{R}^2 \to \mathbb{R}$ given by
+
+$$g(x, y) = x^2 + y^2 - 1$$
+
+Compute all local constraint extrema.
+
+(c) Check by the Hessian of the Lagrangian if each local constraint extremum is a local constraint maximum or minimum.
+
+(d) Visualize $f$ and $g$ is Julia, so that you "see" the local (constraint) extrema.
+
+(e) Paramterize the circle by $\gamma : [0, 1] \to \mathbb{R}^2$,
+
+$$\gamma(t) = \begin{pmatrix} \cos(2\pi t) \\ \sin(2\pi t) \end{pmatrix}$$
+
+and plot the function $t \mapsto f(\gamma(t))$. Does this plot confirm the local constraint extrema?
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+*** (d)
+#+begin_src julia :results value :exports both :tangle julia/p_1d.jl
+#+end_src
+
+*** (e)
+
+* Problem 2 :continuity:metric_space:topology:
+** Task
+#+begin_quote
+Let $X$ and $Y$ be metric spaces. Verify the following claim: a function $f : X \to Y$ is continuous if and only if, for every closed subset $U \subseteq Y$, the pre-image $f^{-1}(U)$ is closed.
+#+end_quote
+
+** Solution
+
+* Problem 3 :banach_space:frechet_derivative:fixed_point:
+** Task
+#+begin_quote
+Let $C([0,1]) := \{f : [0,1] \to \mathbb{R} \mid f \text{ continuous}\}$ with the norm $\|f\|_\infty = \sup_{x \in [0,1]} |f(x)|$. Define the map
+
+$$\Phi : C([0,1]) \to C([0,1]), \quad (\Phi(f))(t) = t + \frac{f(t)^2}{4}, \quad t \in [0,1]$$
+
+(a) Show that $C([0,1])$ is a Banach space.
+
+(b) Determine the Fréchet derivative $\Phi'(f)$.
+
+(c) Show that
+
+$$\|\Phi'(f)\|_{\mathrm{op}} \le \frac{1}{2}, \quad \forall f \in C([0,1]),\ \|f\|_\infty \le 1$$
+
+(d) Prove that $\Phi$ has a fixed point and determine it.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+*** (d)
+
+* Errors/Typos
+- Problem 1: "is Julia" → "in Julia"
+- Problem 1: "Paramterize" → "Parameterize"
+
+* Time Estimates
+- Problem 1: ~50 min~
+- Problem 2: ~25 min~
+- Problem 3: ~60 min~
