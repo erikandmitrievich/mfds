@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-20>
-#+lastmod: <2026-06-21 18:54>
+#+lastmod: <2026-06-21 20:41>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -289,6 +289,38 @@ Let $X$ and $Y$ be metric spaces. Verify the following claim: a function $f : X 
 #+end_quote
 
 ** Solution
+
+Recall ps_01 p_03:
+
+#+begin_quote
+Let $(X, d_X)$ and $(Y, d_Y)$ be metric spaces and let $f : X \to Y$ be a function. Show that $f$ is continuous if and only if $f^{-1}(U)$ is open for all open sets $U \subseteq Y$.
+
+(Hint: write the $\varepsilon\delta$ definition of continuity in terms of balls)
+#+end_quote
+
+- Setup
+
+  $f$ is continuous at $x_0$ iff $\forall \varepsilon > 0 \; \exists \delta > 0 : f(B_\delta(x_0)) \subseteq B_\varepsilon(f(x_0))$, and continuous iff continuous at every $x \in X$.
+
+  /Claim./ $f$ continuous $\iff f^{-1}(U)$ open in $X$ for every open $U \subseteq Y$.
+
+- ($\Rightarrow$)
+
+  Let $U \subseteq Y$ be open and $x_0 \in f^{-1}(U)$. Then $f(x_0) \in U$, so $\exists \varepsilon > 0$ with $B_\varepsilon(f(x_0)) \subseteq U$. By continuity at $x_0$, $\exists \delta > 0$ with $f(B_\delta(x_0)) \subseteq B_\varepsilon(f(x_0)) \subseteq U$, hence $B_\delta(x_0) \subseteq f^{-1}(U)$. So $f^{-1}(U)$ is open.
+
+- ($\Leftarrow$)
+
+  Let $x_0 \in X$ and $\varepsilon > 0$. The ball $B_\varepsilon(f(x_0))$ is open, so $f^{-1}(B_\varepsilon(f(x_0)))$ is open by hypothesis and contains $x_0$. Hence $\exists \delta > 0$ with $B_\delta(x_0) \subseteq f^{-1}(B_\varepsilon(f(x_0)))$, i.e. $f(B_\delta(x_0)) \subseteq B_\varepsilon(f(x_0))$. Thus $f$ is continuous at $x_0$; as $x_0$ was arbitrary, $f$ is continuous.
+
+$C \mapsto Y \setminus C$ is a bijection between closed and open subsets of $Y$, and $f^{-1}(Y \setminus C) = X \setminus f^{-1}(C)$. So:
+
+\begin{align*}
+f \text{ continuous}
+&\iff f^{-1}(U) \text{ open} \quad \forall\, U \text{ open} \\
+&\iff f^{-1}(Y \setminus C) \text{ open} \quad \forall\, C \text{ closed} \\
+&\iff X \setminus f^{-1}(C) \text{ open} \quad \forall\, C \text{ closed} \\
+&\iff f^{-1}(C) \text{ closed} \quad \forall\, C \text{ closed}. \qquad \square
+\end{align*}
 
 * Problem 3 :banach_space:frechet_derivative:fixed_point:
 ** Task
