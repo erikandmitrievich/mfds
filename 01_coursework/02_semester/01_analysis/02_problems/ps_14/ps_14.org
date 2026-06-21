@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-20>
-#+lastmod: <2026-06-20 11:44>
+#+lastmod: <2026-06-21 18:54>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -35,7 +35,7 @@ Compute all local constraint extrema.
 
 (d) Visualize $f$ and $g$ is Julia, so that you "see" the local (constraint) extrema.
 
-(e) Paramterize the circle by $\gamma : [0, 1] \to \mathbb{R}^2$,
+(e) Parameterize the circle by $\gamma : [0, 1] \to \mathbb{R}^2$,
 
 $$\gamma(t) = \begin{pmatrix} \cos(2\pi t) \\ \sin(2\pi t) \end{pmatrix}$$
 
@@ -45,15 +45,242 @@ and plot the function $t \mapsto f(\gamma(t))$. Does this plot confirm the local
 ** Solution
 *** (a)
 
+Critical points:
+\begin{align*}
+\nabla f(x, y)
+&= \begin{pmatrix} f_x \\ f_y \end{pmatrix}
+ = \begin{pmatrix} 2x + 2 \\ 6y \end{pmatrix}
+\end{align*}
+
+\begin{align*}
+\nabla f = 0
+\iff
+\begin{cases}
+2x + 2 = 0 \\
+6y = 0
+\end{cases}
+\iff
+(x, y) = (-1, 0)
+\end{align*}
+
+Hessian:
+\begin{align*}
+H_f(x, y)
+&= \begin{pmatrix} f_{xx} & f_{xy} \\ f_{yx} & f_{yy} \end{pmatrix} \\
+&= \begin{pmatrix} 2 & 0 \\ 0 & 6 \end{pmatrix}
+\end{align*}
+
+\begin{align*}
+\begin{pmatrix} x_1 & x_2 \end{pmatrix}
+H_f
+\begin{pmatrix} x_1 \\ x_2 \end{pmatrix}
+&=
+\begin{pmatrix} 2x_1 & 6x_2 \end{pmatrix}
+\begin{pmatrix} x_1 \\ x_2 \end{pmatrix} \\
+&= 2x_1^2 + 6x_2^2 > 0
+\quad \forall (x_1, x_2) \neq (0, 0)
+\end{align*}
+
+Hence $H_f$ is positive definite, so $(-1, 0)$ is a local minimum.
+
 *** (b)
+
+Constraint $g(x,y) = x^2 + y^2 - 1$. Lagrange condition ([[file:../../01_material/ch_05_analysis_in_coordinates.org::#cor:lagrange-multipliers][Corollary 5.4.7]]): $\nabla f = \lambda \nabla g$.
+
+\begin{align*}
+\nabla f(x,y) = \begin{pmatrix} 2x + 2 \\ 6y \end{pmatrix} \quad
+\nabla g(x,y) = \begin{pmatrix} 2x \\ 2y \end{pmatrix}
+\end{align*}
+
+\begin{align*}
+\begin{pmatrix} 2x + 2 \\ 6y \end{pmatrix} &= \lambda \begin{pmatrix} 2x \\ 2y \end{pmatrix} \\
+&\implies \begin{cases}
+2x + 2 = 2 \lambda x \\
+6y = 2 \lambda y &\implies (\lambda = 3 \text{ or } y = 0) \\
+x^2 + y^2 - 1 = 0 \\
+\end{cases} \\
+\end{align*}
+
+- *Case 1: $y \neq 0$*
+
+  \begin{align*}
+  &\begin{cases}
+  2x + 2 = 6x &\implies (x = \frac{1}{2})\\
+  x^2 + y^2 - 1 = 0 \\
+  \end{cases} \\
+  &\implies (\frac{1}{2})^2 + y^2 - 1 = 0 \iff y = \pm \frac{\sqrt{3}}{2} \\
+  \end{align*}
+
+  Hence, local extremas are: $\Big(\dfrac{1}{2}, \dfrac{\sqrt{3}}{2}\Big), \Big(\dfrac{1}{2}, -\dfrac{\sqrt{3}}{2}\Big)$
+
+- *Case 2: $y = 0$*
+
+  \begin{aligned}
+  \begin{cases}
+  2x + 2 = 2 \lambda x & \implies
+      \begin{cases}
+      x = 1 &\implies \lambda = 2 \\
+      x = -1 &\implies \lambda = 0
+      \end{cases} \\
+  x^2 = 1 & \implies x = \pm 1
+  \end{cases}
+  \end{aligned}
+
+  Hence, local extremas are: $(1, 0), (-1, 0)$
+
+The complete list of local constraint extrema is:
+
+$$\Big(\dfrac{1}{2}, \dfrac{\sqrt{3}}{2}\Big), \Big(\dfrac{1}{2}, -\dfrac{\sqrt{3}}{2}\Big), (1, 0), (-1, 0)$$
 
 *** (c)
 
+Recall $\lambda$:
+\begin{align*}
+\Big(\frac{1}{2}, \pm\frac{\sqrt{3}}{2}\Big): \quad \lambda = 3 \\
+(1, 0): \quad \lambda = 2 \\
+(-1, 0): \quad \lambda = 0 \\
+\end{align*}
+
+$$H_g &= \begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix}$$
+
+Hessian of the Lagrangian in $x$ (with $L = f - \lambda g$):
+
+\begin{align*}
+H_x L(x, y, \lambda) &= H_f - \lambda H_g \\
+&= \begin{pmatrix} 2 & 0 \\ 0 & 6 \end{pmatrix} - \begin{pmatrix} 2\lambda & 0 \\ 0 & 2\lambda \end{pmatrix} \\
+&= \begin{pmatrix} 2 - 2\lambda & 0 \\ 0 & 6 - 2\lambda \end{pmatrix} \\
+\end{align*}
+
+\begin{align*}
+H_xL(\frac{1}{2}, \pm \frac{\sqrt{3}}{2}, 3) &=
+\begin{pmatrix}
+-4 & 0 \\
+0 & 0
+\end{pmatrix} \\
+H_xL(1, 0, 2) &=
+\begin{pmatrix}
+-2 & 0 \\
+0 & 2
+\end{pmatrix} \\
+\end{align*}
+
+*Point $(-1, 0)$ with $\lambda = 0$:*
+
+\begin{align*}
+H_xL(-1, 0, 0) &=
+\begin{pmatrix}
+2 & 0 \\
+0 & 6
+\end{pmatrix}
+\end{align*}
+
+By (a), it is classified as local minimum.
+
+*Point $(1, 0)$ with $\lambda = 2$:*
+
+\begin{align*}
+H_x L(1, 0, 2) &= \begin{pmatrix} -2 & 0 \\ 0 & 2 \end{pmatrix} \\
+\nabla g(1, 0) &= (2, 0)^{\top} \\
+T_p = \nabla g^{\perp} &= \mathrm{span}\{(0, 1)^{\top}\}
+\end{align*}
+
+For $v = (0, 1)^{\top}$:
+
+$$v^{\top} (H_x L) v = 2 > 0$$
+
+Positive definite on $T_p$ $\implies$ local constraint *minimum*, $f = 4$ (Second-order sufficient conditions under constraint).
+
+*Points $\Big(\frac{1}{2}, \pm\frac{\sqrt{3}}{2}\Big)$ with $\lambda = 3$:*
+
+\begin{align*}
+H_x L\Big(\tfrac{1}{2}, \pm\tfrac{\sqrt{3}}{2}, 3\Big) &= \begin{pmatrix} -4 & 0 \\ 0 & 0 \end{pmatrix} \\
+\nabla g\Big(\tfrac{1}{2}, \pm\tfrac{\sqrt{3}}{2}\Big) &= (1, \pm\sqrt{3})^{\top} \\
+T_p = \nabla g^{\perp} &= \mathrm{span}\{(\sqrt{3}, \mp 1)^{\top}\}
+\end{align*}
+
+For $v = (\sqrt{3}, \mp 1)^{\top}$:
+
+$$v^{\top} (H_x L) v = -4(\sqrt{3})^2 + 0 = -12 < 0$$
+
+Negative definite on $T_p$ $\implies$ local constraint *maximum*, $f = \frac{9}{2}$.
+
+*Result.*
+
+\begin{align*}
+\Big(\tfrac{1}{2}, \pm\tfrac{\sqrt{3}}{2}\Big) &: \text{constraint maxima}, \quad f = \tfrac{9}{2} \\
+(1, 0) &: \text{constraint minimum}, \quad f = 4 \\
+(-1, 0) &: \text{constraint minimum}, \quad f = 0
+\end{align*}
+
 *** (d)
+
 #+begin_src julia :results value :exports both :tangle julia/p_1d.jl
+using Plots
+
+f(x, y) = (x + 1)^2 + 3y^2
+
+xs = range(-2.0, 2.0, length=400)
+ys = range(-2.0, 2.0, length=400)
+
+θ  = range(0, 2π, length=400)
+cx = cos.(θ); cy = sin.(θ) # constraint
+
+contour(xs, ys, (x, y) -> f(x, y),
+        levels=30, c=:viridis, aspect_ratio=1, size=(700, 700),
+        xlabel="x", ylabel="y", title="f with constraint g = 0")
+
+contour!(xs, ys, (x, y) -> f(x, y); levels=[4.0, 4.5], c=:red, lw=1, colorbar=false)
+
+plot!(cx, cy; lw=2, c=:black, label="g = 0") # plot constraint
+scatter!([1.0, -1.0], [0.0, 0.0], c=:blue, ms=6, label="constraint min (f=4, 0)")
+scatter!([0.5, 0.5],  [sqrt(3)/2, -sqrt(3)/2], c=:red, ms=6, label="constraint max (f=9/2)")
+
+mkpath("./assets"); savefig("./assets/p_01_d.png")
+
+surface(xs, ys, (x, y) -> f(x, y); c=:viridis, alpha=0.7,
+        xlabel="x", ylabel="y", zlabel="f", size=(700, 700),
+        title="f and the lifted constraint curve")
+
+plot!(cx, cy, f.(cx, cy); lw=3, c=:black, label="f on g = 0")
+scatter!([1.0, -1.0], [0.0, 0.0], f.([1.0, -1.0], [0.0, 0.0]); c=:blue,  ms=5, label="min")
+scatter!([0.5, 0.5], [sqrt(3)/2, -sqrt(3)/2], f.([0.5, 0.5], [sqrt(3)/2, -sqrt(3)/2]); c=:red, ms=5, label="max")
+
+savefig("./assets/p_01_d_surface.png")
 #+end_src
 
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_14/assets/p_01_d_surface.png
+
+file:./assets/p_01_d.png
+
+file:./assets/p_01_d_surface.png
+
 *** (e)
+
+#+begin_src julia :results value :exports both :tangle julia/p_1d.jl
+using Plots
+
+f(x, y) = (x + 1)^2 + 3y^2
+γ(t) = (cos(2π*t), sin(2π*t))
+
+ts = range(0, 1, length=400)
+fs = [f(γ(t)...) for t in ts]
+
+plot(ts, fs,
+     lw=2, c=:purple, legend=:topright, label="f(γ(t))",
+     xlabel="t", ylabel="f(γ(t))", title="f along the circle", size=(700, 400))
+
+tmin = [0.0, 0.5]; tmax = [1/6, 5/6]
+scatter!(tmin, [f(γ(t)...) for t in tmin]; c=:blue, ms=6, label="min")
+scatter!(tmax, [f(γ(t)...) for t in tmax]; c=:red,  ms=6, label="max")
+
+mkpath("./assets"); savefig("./assets/p_01_e.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_14/assets/p_01_e.png
+
+file:./assets/p_01_e.png
 
 * Problem 2 :continuity:metric_space:topology:
 ** Task
