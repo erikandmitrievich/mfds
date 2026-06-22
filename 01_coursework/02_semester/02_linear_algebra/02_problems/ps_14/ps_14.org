@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-20>
-#+lastmod: <2026-06-20 11:55>
+#+lastmod: <2026-06-22 15:50>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -23,6 +23,40 @@ Let $\mathbb{E} = \mathbb{R}_4[X]$, and let $L : \mathbb{E} \to \mathbb{E}$ be d
 #+end_quote
 
 ** Solution
+
+$\mathbb{E} = \mathbb{R}_4[X]$ is the space of polynomials of degree $\le 4$, so $\dim(\mathbb{E}) = 5$ with standard basis $B = (1, X, X^2, X^3, X^4)$.
+
+Applying $L(P) = P' + P''$ to each basis vector,
+
+\begin{align*}
+L(1) &= 0 + 0 \\
+L(X) &= 1 + 0 = 1 \\
+L(X^2) &= 2X + 2 = 2 + 2X \\
+L(X^3) &= 3X^2 + 6X = 6X + 3X^2 \\
+L(X^4) &= 4X^3 + 12X^2 = 12X^2 + 4X^3
+\end{align*}
+
+gives the matrix
+
+\begin{align*}
+A = [L]_B^B = \begin{pmatrix}
+0 & 1 & 2 & 0 & 0  \\
+0 & 0 & 2 & 6 & 0  \\
+0 & 0 & 0 & 3 & 12 \\
+0 & 0 & 0 & 0 & 4  \\
+0 & 0 & 0 & 0 & 0
+\end{pmatrix}.
+\end{align*}
+
+$A$ is strictly upper triangular, so $A - t\,\mathrm{Id}$ is upper triangular with diagonal $-t$. By [[file:../../01_material/ch_04_determinants.org::#prop:triangular-matrix-determinant][Proposition 4.4]],
+
+$$p_L(t) = \det(A - t\,\mathrm{Id}) = (-t)^5 = -t^5$$
+
+so by [[file:../../01_material/ch_05_eigenvalues.org::#lem:characteristic-polynomial][Lemma 5.9]] (3) the only eigenvalue is $\lambda = 0$.
+
+Suppose $L$ is diagonalizable. By [[file:../../01_material/ch_05_eigenvalues.org::#lem:diagonalizable-similar-diagonal][Lemma 5.13]], $A = PDP^{-1}$ for some diagonal $D$. The diagonal entries of $D$ are its eigenvalues, which by [[file:../../01_material/ch_05_eigenvalues.org::#cor:similar-matrices-eigenpairs][Corollary 5.4]] are also eigenvalues of $A$, hence all $0$. So $D = 0$, giving $A = P\,0\,P^{-1} = 0$ and thus $L = 0$ — contradicting $L(X) = 1 \neq 0$.
+
+Therefore $L$ is not diagonalizable.
 
 * Problem 5.25 :matrix_exponential:commutativity:binomial_theorem:
 ** Task
