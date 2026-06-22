@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-20>
-#+lastmod: <2026-06-22 15:50>
+#+lastmod: <2026-06-22 16:00>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -50,11 +50,31 @@ A = [L]_B^B = \begin{pmatrix}
 
 $A$ is strictly upper triangular, so $A - t\,\mathrm{Id}$ is upper triangular with diagonal $-t$. By [[file:../../01_material/ch_04_determinants.org::#prop:triangular-matrix-determinant][Proposition 4.4]],
 
+#+begin_quote
+$$\det(A) = \prod_{i=1}^{n} a_{i,i}.$$
+#+end_quote
+
 $$p_L(t) = \det(A - t\,\mathrm{Id}) = (-t)^5 = -t^5$$
 
 so by [[file:../../01_material/ch_05_eigenvalues.org::#lem:characteristic-polynomial][Lemma 5.9]] (3) the only eigenvalue is $\lambda = 0$.
 
-Suppose $L$ is diagonalizable. By [[file:../../01_material/ch_05_eigenvalues.org::#lem:diagonalizable-similar-diagonal][Lemma 5.13]], $A = PDP^{-1}$ for some diagonal $D$. The diagonal entries of $D$ are its eigenvalues, which by [[file:../../01_material/ch_05_eigenvalues.org::#cor:similar-matrices-eigenpairs][Corollary 5.4]] are also eigenvalues of $A$, hence all $0$. So $D = 0$, giving $A = P\,0\,P^{-1} = 0$ and thus $L = 0$ — contradicting $L(X) = 1 \neq 0$.
+#+begin_quote
+$$p_f(\lambda) = 0 \iff \lambda \text{ is an eigenvalue of } f.$$
+#+end_quote
+
+Suppose $L$ is diagonalizable. By [[file:../../01_material/ch_05_eigenvalues.org::#lem:diagonalizable-similar-diagonal][Lemma 5.13]], $A = PDP^{-1}$ for some diagonal $D$.
+
+#+begin_quote
+2. $A$ is diagonalizable if and only if it is similar to a diagonal matrix, namely, there exists an invertible matrix $P$ and a diagonal matrix $D \in \mathbb{K}^{n \times n}$ such that
+
+   $$A = PDP^{-1}$$
+#+end_quote
+
+The diagonal entries of $D$ are its eigenvalues, which by [[file:../../01_material/ch_05_eigenvalues.org::#cor:similar-matrices-eigenpairs][Corollary 5.4]] are also eigenvalues of $A$, hence all $0$. So $D = 0$, giving $A = P\,0\,P^{-1} = 0$ and thus $L = 0$ — contradicting $L(X) = 1 \neq 0$.
+
+#+begin_quote
+Let $A$ and $B \in \mathbb{K}^{n \times n}$ be two similar matrices such that $B = PAP^{-1}$ for an invertible matrix $P \in \mathbb{K}^{n \times n}$. Then, if $(\lambda, x) \in \mathbb{K} \times (\mathbb{K}^n \setminus \{0\})$ is an eigenpair of $A$, then $(\lambda, Px)$ is an eigenpair of $B$.
+#+end_quote
 
 Therefore $L$ is not diagonalizable.
 
