@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-20>
-#+lastmod: <2026-06-21 20:41>
+#+lastmod: <2026-06-22 06:49>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -141,7 +141,7 @@ Recall $\lambda$:
 (-1, 0): \quad \lambda = 0 \\
 \end{align*}
 
-$$H_g &= \begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix}$$
+$$H_g = \begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix}$$
 
 Hessian of the Lagrangian in $x$ (with $L = f - \lambda g$):
 
@@ -149,19 +149,6 @@ Hessian of the Lagrangian in $x$ (with $L = f - \lambda g$):
 H_x L(x, y, \lambda) &= H_f - \lambda H_g \\
 &= \begin{pmatrix} 2 & 0 \\ 0 & 6 \end{pmatrix} - \begin{pmatrix} 2\lambda & 0 \\ 0 & 2\lambda \end{pmatrix} \\
 &= \begin{pmatrix} 2 - 2\lambda & 0 \\ 0 & 6 - 2\lambda \end{pmatrix} \\
-\end{align*}
-
-\begin{align*}
-H_xL(\frac{1}{2}, \pm \frac{\sqrt{3}}{2}, 3) &=
-\begin{pmatrix}
--4 & 0 \\
-0 & 0
-\end{pmatrix} \\
-H_xL(1, 0, 2) &=
-\begin{pmatrix}
--2 & 0 \\
-0 & 2
-\end{pmatrix} \\
 \end{align*}
 
 *Point $(-1, 0)$ with $\lambda = 0$:*
@@ -219,37 +206,38 @@ using Plots
 
 f(x, y) = (x + 1)^2 + 3y^2
 
+# grid
 xs = range(-2.0, 2.0, length=400)
 ys = range(-2.0, 2.0, length=400)
 
 θ  = range(0, 2π, length=400)
 cx = cos.(θ); cy = sin.(θ) # constraint
 
+# contour plot
 contour(xs, ys, (x, y) -> f(x, y),
         levels=30, c=:viridis, aspect_ratio=1, size=(700, 700),
         xlabel="x", ylabel="y", title="f with constraint g = 0")
 
+# levels to see min and max under constraint
 contour!(xs, ys, (x, y) -> f(x, y); levels=[4.0, 4.5], c=:red, lw=1, colorbar=false)
 
 plot!(cx, cy; lw=2, c=:black, label="g = 0") # plot constraint
-scatter!([1.0, -1.0], [0.0, 0.0], c=:blue, ms=6, label="constraint min (f=4, 0)")
-scatter!([0.5, 0.5],  [sqrt(3)/2, -sqrt(3)/2], c=:red, ms=6, label="constraint max (f=9/2)")
+scatter!([1.0, -1.0], [0.0, 0.0], c=:blue, ms=6, label="constraint min (f=4, 0)") # constrained min
+scatter!([0.5, 0.5],  [sqrt(3)/2, -sqrt(3)/2], c=:red, ms=6, label="constraint max (f=9/2)") # constrained max
 
 mkpath("./assets"); savefig("./assets/p_01_d.png")
 
+# 3d plot
 surface(xs, ys, (x, y) -> f(x, y); c=:viridis, alpha=0.7,
         xlabel="x", ylabel="y", zlabel="f", size=(700, 700),
         title="f and the lifted constraint curve")
 
-plot!(cx, cy, f.(cx, cy); lw=3, c=:black, label="f on g = 0")
-scatter!([1.0, -1.0], [0.0, 0.0], f.([1.0, -1.0], [0.0, 0.0]); c=:blue,  ms=5, label="min")
-scatter!([0.5, 0.5], [sqrt(3)/2, -sqrt(3)/2], f.([0.5, 0.5], [sqrt(3)/2, -sqrt(3)/2]); c=:red, ms=5, label="max")
+plot!(cx, cy, f.(cx, cy); lw=3, c=:black, label="f on g = 0") # constraint
+scatter!([1.0, -1.0], [0.0, 0.0], f.([1.0, -1.0], [0.0, 0.0]); c=:blue,  ms=5, label="min") # constrained min
+scatter!([0.5, 0.5], [sqrt(3)/2, -sqrt(3)/2], f.([0.5, 0.5], [sqrt(3)/2, -sqrt(3)/2]); c=:red, ms=5, label="max") # constrained max
 
 savefig("./assets/p_01_d_surface.png")
 #+end_src
-
-#+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_14/assets/p_01_d_surface.png
 
 file:./assets/p_01_d.png
 
@@ -270,7 +258,9 @@ plot(ts, fs,
      lw=2, c=:purple, legend=:topright, label="f(γ(t))",
      xlabel="t", ylabel="f(γ(t))", title="f along the circle", size=(700, 400))
 
-tmin = [0.0, 0.5]; tmax = [1/6, 5/6]
+# convert (x,y) extrema to t using angle = 2πt
+tmin = [0.0, 0.5]; # angles 0 and π for (1,0) and (-1,0)
+tmax = [1/6, 5/6]; # angles π/3 and 5π/3 for (0.5, ±√3/2)
 scatter!(tmin, [f(γ(t)...) for t in tmin]; c=:blue, ms=6, label="min")
 scatter!(tmax, [f(γ(t)...) for t in tmax]; c=:red,  ms=6, label="max")
 
