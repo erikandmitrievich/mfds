@@ -1,0 +1,214 @@
+#+title: Ch 07 Quicksort
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-06-23>
+#+lastmod: <2026-06-23 19:17>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* 7.1 Description of quicksort
+
+** Divide-and-conquer for $A[p:r]$
+
+Three-step process (cf. §2.3.1):
+- *Divide*: partition (rearrange) $A[p:r]$ into two possibly empty subarrays $A[p:q-1]$ (the *low side*) and $A[q+1:r]$ (the *high side*) such that every element of the low side $\leq$ the *pivot* $A[q]$, which in turn $\leq$ every element of the high side. The pivot index $q$ is computed by the partitioning procedure.
+- *Conquer*: recursively sort $A[p:q-1]$ and $A[q+1:r]$.
+- *Combine*: nothing to do. Both subarrays are already sorted, the low side is $\leq A[q]$, the high side is $\geq A[q]$, so $A[p:r]$ is sorted.
+
+** =QUICKSORT= procedure
+
+To sort an array of $n$ elements $A[1:n]$, the initial call is =QUICKSORT(A, 1, n)=.
+
+#+begin_example
+QUICKSORT(A, p, r)
+1  if p < r
+2      // Partition the subarray around the pivot, which ends up in A[q].
+3      q = PARTITION(A, p, r)
+4      QUICKSORT(A, p, q - 1)   // recursively sort the low side
+5      QUICKSORT(A, q + 1, r)   // recursively sort the high side
+#+end_example
+
+** =PARTITION= procedure
+
+- =PARTITION= rearranges $A[p:r]$ in place and returns the dividing index. It always selects $x = A[r]$ as the pivot.
+- Running cost: $\Theta(n)$ on a subarray of $n = r - p + 1$ elements.
+
+#+begin_example
+PARTITION(A, p, r)
+1  x = A[r]                      // the pivot
+2  i = p - 1                     // highest index into the low side
+3  for j = p to r - 1            // process each element other than the pivot
+4      if A[j] <= x              // does this element belong on the low side?
+5          i = i + 1             // index of a new slot in the low side
+6          exchange A[i] with A[j]    // put this element there
+7  exchange A[i + 1] with A[r]   // pivot goes just to the right of the low side
+8  return i + 1                  // new index of the pivot
+#+end_example
+
+- Each element falls into exactly one of four regions during the loop (Fig 7.2): low side $\leq x$, high side $> x$, the unexamined region, and the pivot.
+- Lines 7–8 swap the pivot with the leftmost element greater than $x$, placing the pivot between the two sides, then return its new index. The output satisfies the divide-step spec; in fact, after line 3 of =QUICKSORT=, $A[q]$ is *strictly* less than every element of $A[q+1:r]$.
+
+[FIGURE 7.1: trace of =PARTITION= on $[2,8,7,1,3,5,6,4]$ with pivot $x = A[r] = 4$; elements $\leq 4$ accumulate on the low side, $> 4$ on the high side, ending $[2,1,3,4,7,5,6,8]$ with $4$ between the two sides]
+
+[FIGURE 7.2: the four regions of $A[p:r]$ — $A[p:i] \leq x$ (tan), $A[i+1:j-1] > x$ (blue), $A[j:r-1]$ unknown (white), $A[r] = x$ (yellow)]
+
+** Loop invariant and correctness of =PARTITION=
+
+- At the start of each iteration of the loop (lines 3–6), for any index $k$:
+  1. if $p \leq k \leq i$, then $A[k] \leq x$ (tan region)
+  2. if $i+1 \leq k \leq j-1$, then $A[k] > x$ (blue region)
+  3. if $k = r$, then $A[k] = x$ (yellow region)
+- *Initialization*: before the first iteration $i = p-1$ and $j = p$. The ranges $[p, i]$ and $[i+1, j-1]$ are empty, so conditions 1–2 hold vacuously; line 1 establishes condition 3.
+- *Maintenance*: two cases on the test in line 4 (Fig 7.3).
+  - *Case $A[j] > x$*: only $j$ is incremented. The element now at $A[j-1]$ satisfies condition 2; all other entries are unchanged.
+  - *Case $A[j] \leq x$*: increment $i$, swap $A[i]$ with $A[j]$, increment $j$. The swap puts a value $\leq x$ into $A[i]$ (condition 1 holds), and the value displaced into $A[j-1]$ was $> x$ by the prior invariant (condition 2 holds).
+- *Termination*: the loop runs exactly $r - p$ times, ending with $j = r$. The unexamined region $A[j:r-1]$ is then empty, so every entry lies in one of the three described sets: $\leq x$ (low side), $> x$ (high side), and the singleton $\{x\}$ (pivot).
+
+[FIGURE 7.3: the two iteration cases of =PARTITION= — (a) $A[j] > x$ increments $j$; (b) $A[j] \leq x$ increments $i$, swaps $A[i] \leftrightarrow A[j]$, increments $j$; both preserve the invariant]
+
+* 7.2 Performance of quicksort
+
+** Overview and memory
+
+- Running time depends on partition balance, which depends on pivot choice: balanced partitioning $\to$ asymptotically as fast as merge sort; unbalanced $\to$ as slow as insertion sort.
+- =QUICKSORT= sorts in place, but auxiliary memory is not constant: each recursive call uses $O(1)$ stack space, so total extra space is proportional to recursion depth — as bad as $\Theta(n)$ in the worst case.
+
+** Worst-case partitioning
+
+- Worst case: every partition yields one subproblem of size $n-1$ and one of size $0$ (see §7.4.1). Partitioning costs $\Theta(n)$, and $T(0) = \Theta(1)$, giving:
+  \[ T(n) = T(n-1) + T(0) + \Theta(n) = T(n-1) + \Theta(n) \]
+- Summing per-level costs gives an arithmetic series $\Rightarrow T(n) = \Theta(n^2)$ (also provable by the substitution method).
+- So maximally unbalanced partitioning yields $\Theta(n^2)$ — no better than insertion sort. This occurs on already-sorted input, exactly where insertion sort runs in $O(n)$.
+
+** Best-case partitioning
+
+- Most even split: both subproblems have size $\leq n/2$, since one is $\lfloor (n-1)/2 \rfloor \leq n/2$ and one is $\lceil (n-1)/2 \rceil - 1 \leq n/2$. Upper bound:
+  \[ T(n) = 2T(n/2) + \Theta(n) \]
+- By case 2 of the master theorem (Theorem 4.1), $T(n) = \Theta(n \lg n)$.
+
+** Balanced partitioning
+
+- The average case is much closer to best than worst (full analysis in §7.4); the recurrence's sensitivity to balance explains why.
+- Suppose every split is 9-to-1 proportional:
+  \[ T(n) = T(9n/10) + T(n/10) + \Theta(n) \]
+- In the recursion tree (Fig 7.4, with the $\Theta(n)$ driving function simplified to $n$, which doesn't change the asymptotics), every level costs $\leq n$. The short branch bottoms out at depth $\log_{10} n$, the long branch at depth $\log_{10/9} n = \Theta(\lg n)$.
+- Therefore $T(n) = O(n \lg n)$ — asymptotically the same as a dead-center split. *Any* split of constant proportionality (e.g. 99-to-1) gives depth $\Theta(\lg n)$ with $O(n)$ cost per level, hence $O(n \lg n)$. The split ratio only affects the hidden constant.
+
+[FIGURE 7.4: recursion tree for a 9-to-1 split — nodes show subproblem sizes, each level costs $n$, short branch ends at $\log_{10} n$, long branch at $\log_{10/9} n$; total $O(n \lg n)$]
+
+** Intuition for the average case
+
+- To reason about expected behavior, assume all permutations of the (distinct) input are equally likely (cf. §5.2). Quicksort sorts by comparisons only, so behavior depends on the relative order of values, not their magnitudes.
+- On random input, partitioning will not repeat identically at every level. In the recursion tree, "good" and "bad" splits are distributed randomly.
+- Intuition under alternating splits (good = best-case, bad = worst-case; Fig 7.5(a)): root has a bad split into sizes $n-1$ and $0$ at cost $n$; the size-$(n-1)$ child has a good split into $(n-1)/2 - 1$ and $(n-1)/2$. Combined, the bad-then-good pair produces three subarrays of sizes $0$, $(n-1)/2 - 1$, $(n-1)/2$ at total cost $\Theta(n) + \Theta(n-1) = \Theta(n)$.
+- This is at most a constant factor worse than a single balanced level (Fig 7.5(b)) producing two subarrays of size $(n-1)/2$ at cost $\Theta(n)$. The $\Theta(n-1)$ bad-split cost is absorbed into the good split, and the resulting split is effectively good.
+- Hence alternating good/bad splits run like good splits alone: $O(n \lg n)$, with a slightly larger hidden constant. Rigorous expected-time analysis of randomized quicksort: §7.4.2.
+
+[FIGURE 7.5: (a) two levels — a bad split (sizes $0$, $n-1$) followed by a good split of the size-$(n-1)$ child; (b) one balanced level into two size-$(n-1)/2$ subarrays; the remaining subproblems in (a) are no larger than those in (b)]
+
+* 7.3 A randomized version of quicksort
+
+** Motivation
+
+- The average-case analysis (§7.2) assumed all input permutations equally likely. This does not always hold in practice.
+- Fix: randomize pivot selection so good expected performance holds over *all* inputs, independent of the input distribution.
+
+** Randomization technique
+
+- Instead of always using $A[r]$ as the pivot, choose the pivot uniformly at random from $A[p:r]$ (each element equally likely), then exchange it with $A[r]$ before partitioning.
+- A random pivot makes the split reasonably balanced in expectation. Changes to =PARTITION= and =QUICKSORT= are minimal.
+
+#+begin_example
+RANDOMIZED-PARTITION(A, p, r)
+1  i = RANDOM(p, r)
+2  exchange A[r] with A[i]
+3  return PARTITION(A, p, r)
+#+end_example
+
+#+begin_example
+RANDOMIZED-QUICKSORT(A, p, r)
+1  if p < r
+2      q = RANDOMIZED-PARTITION(A, p, r)
+3      RANDOMIZED-QUICKSORT(A, p, q - 1)
+4      RANDOMIZED-QUICKSORT(A, q + 1, r)
+#+end_example
+
+* 7.4 Analysis of quicksort
+
+** 7.4.1 Worst-case analysis
+
+- Claim: worst-case running time of quicksort is $\Theta(n^2)$. §7.2 already exhibited $\Omega(n^2)$ (maximally unbalanced split at every level); here we prove the $O(n^2)$ upper bound by substitution (§4.3).
+- Let $T(n)$ be the worst-case time on input size $n$. =PARTITION= produces two subproblems of total size $n-1$, so:
+  \[ T(n) = \max\{T(q) + T(n-1-q) : 0 \leq q \leq n-1\} + \Theta(n) \tag{7.1} \]
+- *Guess*: $T(n) \leq cn^2$ for some constant $c > 0$. Substituting into (7.1):
+  \[ T(n) \leq c \cdot \max\{q^2 + (n-1-q)^2 : 0 \leq q \leq n-1\} + \Theta(n) \]
+- *Bounding the maximization*: for $q = 0, 1, \dots, n-1$,
+  \[ q^2 + (n-1-q)^2 = (n-1)^2 + 2q(q - (n-1)) \leq (n-1)^2 \]
+  The inequality holds because $q \leq n-1$ forces $q - (n-1) \leq 0$, so the cross term $2q(q-(n-1)) \leq 0$. Thus every term in the max is bounded by $(n-1)^2$.
+- *Completing the substitution*:
+  \[ T(n) \leq c(n-1)^2 + \Theta(n) = cn^2 - c(2n-1) + \Theta(n) \leq cn^2 \]
+  by choosing $c$ large enough that the $c(2n-1)$ term dominates the $\Theta(n)$ term. Hence $T(n) = O(n^2)$.
+- Combined with the $\Omega(n^2)$ lower bound from §7.2: worst-case is $\Theta(n^2)$.
+
+** 7.4.2 Expected running time
+
+*** Intuition
+
+- If at every recursion level =RANDOMIZED-PARTITION= puts a constant fraction of elements on one side, the tree has depth $\Theta(\lg n)$ with $O(n)$ work per level, giving $O(n \lg n)$. Inserting a few maximally unbalanced levels in between does not change this.
+- This $O(n \lg n)$ expected upper bound, with the $\Theta(n \lg n)$ best-case bound from §7.2, yields $\Theta(n \lg n)$ expected time. Distinct element values assumed throughout.
+
+*** Running time and comparisons
+
+- =QUICKSORT= and =RANDOMIZED-QUICKSORT= differ only in pivot selection, so the analysis proceeds via =QUICKSORT=/=PARTITION= under the assumption that pivots are chosen randomly.
+- Relate runtime to the number of times *array elements* are compared (all in line 4 of =PARTITION=), not comparisons of indices.
+
+*** Lemma 7.1 — runtime in terms of comparisons
+
+- *Lemma 7.1:* the running time of =QUICKSORT= on an $n$ element array is $O(n + X)$, where $X$ is the number of element comparisons performed.
+- *Proof.*
+  - Each =PARTITION= call selects a pivot that appears in no future recursive call, so there are at most $n$ calls to =PARTITION=, hence at most $2n$ calls to =QUICKSORT=.
+  - One =PARTITION= call costs $O(1)$ plus time proportional to its for-loop iterations; each iteration does exactly one comparison (line 4). So total for-loop time across all calls is proportional to $X$.
+  - Time outside the for loop is $O(1)$ per call over $\leq n$ calls, i.e. $O(n)$.
+  - Total: $O(n + X)$.
+
+*** Setup for computing $E[X]$
+
+- Goal: compute $E[X]$, the expected total number of element comparisons.
+- Index elements by sorted position: $z_1 < z_2 < \cdots < z_n$ (strict, since distinct), regardless of input order. Define $Z_{ij} = \{z_i, z_{i+1}, \dots, z_j\}$.
+
+*** Lemma 7.2 — when two elements are compared
+
+- *Lemma 7.2:* during =RANDOMIZED-QUICKSORT=, elements $z_i$ and $z_j$ (with $i < j$) are compared if and only if one of them is the first element of $Z_{ij}$ chosen as a pivot. No two elements are ever compared twice.
+- *Proof.* Consider the first $x \in Z_{ij}$ chosen as a pivot.
+  - *Case $z_i < x < z_j$:* $z_i$ and $z_j$ land on opposite sides of the partition around $x$, so they are never compared afterward.
+  - *Case $x = z_i$:* =PARTITION= compares $z_i$ with every other element of $Z_{ij}$, including $z_j$.
+  - *Case $x = z_j$:* symmetric — $z_j$ is compared with every other element of $Z_{ij}$.
+  - So $z_i$ and $z_j$ are compared iff the first pivot drawn from $Z_{ij}$ is $z_i$ or $z_j$. Once an element becomes a pivot it is removed from future comparisons, so no pair is compared twice.
+- *Example:* input $1, \dots, 10$, first pivot $7$. =PARTITION= splits into $\{1,2,3,4,5,6\}$ and $\{8,9,10\}$; $7$ is compared with all. Then $7$ and $9$ are compared (7 is the first pivot from $Z_{7,9}$), but $2$ and $9$ are never compared, since the first pivot from $Z_{2,9}$ is $7$, which lies strictly between them.
+
+*** Lemma 7.3 — probability two elements are compared
+
+- *Lemma 7.3:* for $i < j$, $\Pr\{z_i$ is compared with $z_j\} = 2/(j-i+1)$.
+- *Proof.* All elements of $Z_{ij}$ stay together in the same recursive call until some $x \in Z_{ij}$ is chosen as a pivot; from then on $x$ appears in no later input set. When the first pivot is drawn from a set containing all of $Z_{ij}$, it is chosen uniformly at random, and $|Z_{ij}| = j-i+1$, so each element of $Z_{ij}$ has probability $1/(j-i+1)$ of being that first pivot. By Lemma 7.2 (the two events are mutually exclusive):
+  \[ \Pr\{z_i \text{ compared with } z_j\} = \frac{1}{j-i+1} + \frac{1}{j-i+1} = \frac{2}{j-i+1} \]
+
+*** Theorem 7.4 — expected running time
+
+- *Theorem 7.4:* the expected running time of =RANDOMIZED-QUICKSORT= on $n$ distinct elements is $O(n \lg n)$.
+- *Proof.* Define indicator $X_{ij} = I\{z_i$ is compared with $z_j\}$. By Lemma 7.2 each pair is compared at most once, so:
+  \[ X = \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} X_{ij} \]
+  - Take expectations, using linearity of expectation, Lemma 5.1 ($E$ of an indicator equals its probability), then Lemma 7.3:
+    \[ E[X] = \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} E[X_{ij}] = \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} \Pr\{z_i \text{ compared with } z_j\} = \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} \frac{2}{j-i+1} \]
+  - *Change of variables* $k = j - i$, then bound by the harmonic series (eq. A.9):
+    \[ E[X] = \sum_{i=1}^{n-1} \sum_{k=1}^{n-i} \frac{2}{k+1} < \sum_{i=1}^{n-1} \sum_{k=1}^{n} \frac{2}{k} = \sum_{i=1}^{n-1} O(\lg n) = O(n \lg n) \]
+- With Lemma 7.1, this gives expected running time $O(n \lg n)$ for =RANDOMIZED-QUICKSORT= (distinct values).
