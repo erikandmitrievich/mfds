@@ -1,0 +1,57 @@
+#+title: Ps 11
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-06-23>
+#+lastmod: <2026-06-23 13:37>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 100 :btree:deletion:pseudocode:
+** Task
+#+begin_quote
+Write pseudocode for deleting a node of a B–Tree.
+#+end_quote
+
+** Solution
+
+* Problem 101 :tree:diameter:shortest_path:
+** Task
+#+begin_quote
+The diameter of a tree $T = (V, E)$ is defined as $\max\{\delta(u, v) \mid u, v \in V\}$, that is, the largest of all shortest-path distances in the tree. Give an efficient algorithm to compute the diameter of a tree, and analyze the running time of your algorithm.
+#+end_quote
+
+** Solution
+
+* Problem 102 :dfs:graph:edge_classification:
+** Task
+#+begin_quote
+Show that in a directed graph, edge $(u, v)$ is
+
+(a) a tree edge or forward edge if and only if $u.d < v.d < v.f < u.f$,
+
+(b) a back edge if and only if $v.d \leq u.d < u.f \leq v.f$,
+
+(c) a cross edge if and only if $v.d < v.f < u.d < u.f$.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+* Time Estimates
+- Problem 100: ~30 min~
+- Problem 101: ~25 min~
+- Problem 102: ~30 min~
