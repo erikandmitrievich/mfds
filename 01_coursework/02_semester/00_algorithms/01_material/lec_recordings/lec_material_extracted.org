@@ -1,0 +1,778 @@
+#+title: Lec Material Extracted
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-06-25>
+#+lastmod: <2026-06-25 19:04>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* lec_02
+
+** B. Implicit emphasis (inferred)
+*** Two-part correctness proof (halting + correct output)
+:PROPERTIES:
+:LECTURE_REF: lec_02
+:CUSTOM_ID: lec02-b-correctness-two-steps
+:END:
+Signal: "the two steps that you need to show that an algorithm is actually correct"
+
+*** $O$, $\Omega$, $\Theta$, $o$, $\omega$ asymptotic notation
+:PROPERTIES:
+:LECTURE_REF: lec_02
+:CUSTOM_ID: lec02-b-asymptotic-notation
+:END:
+Signal: "those are the important notations those are the symbols"
+
+*** Best-case (linear) vs worst-case ($n^2$) running time of insertion sort — data-dependence
+:PROPERTIES:
+:LECTURE_REF: lec_02
+:CUSTOM_ID: lec02-b-running-time-data-dependence
+:END:
+Signal: "this is very important"
+
+** C. CLRS delta (inferred)
+*** Asymptotic notation pulled forward — reordered
+:PROPERTIES:
+:LECTURE_REF: lec_02
+:CUSTOM_ID: lec02-c-asymptotic-reorder
+:END:
+Signal: "jumping for a very short time to chapter three and then back to chapter two"
+
+** Asymptotic notation named "Landau symbols", attributed mostly to Knuth — reframed
+:PROPERTIES:
+:LECTURE_REF: lec_02
+:CUSTOM_ID: lec02-c-landau-naming
+:END:
+Signal: "in analysis the things are called Landau symbols"
+
+** Constant-time-per-line cost: CPU-cycle/cache elaboration of the RAM model — added
+:PROPERTIES:
+:LECTURE_REF: lec_02
+:CUSTOM_ID: lec02-c-cpu-cost-model
+:END:
+Signal: "this is only an assumption that needn't be true"
+
+* lec_03
+
+** A. Exam-tied (explicit)
+*** Proofs of Landau symbol properties (transitivity, reflexivity, symmetry, sum rule, product rule)
+:PROPERTIES:
+:LECTURE_REF: lec_03
+:CUSTOM_ID: lec03-a-landau-proofs
+:END:
+Signal: "they are possible small proofs for the exam"
+
+** B. Implicit emphasis (inferred)
+*** Naming existentially-quantified constants distinctly while reusing the universal $\epsilon$ in $o$-proofs
+:PROPERTIES:
+:LECTURE_REF: lec_03
+:CUSTOM_ID: lec03-b-existential-naming
+:END:
+Signal: "That's an important difference to understand."
+
+*** Meaning of "=" in a Landau-symbol equation (asymptotic enclosure, not literal equality)
+:PROPERTIES:
+:LECTURE_REF: lec_03
+:CUSTOM_ID: lec03-b-landau-equals-semantics
+:END:
+Signal: "this is basically an important notational abbreviation"
+
+** C. CLRS delta (inferred)
+*** "Proposition" numbering and statements — reframed
+:PROPERTIES:
+:LECTURE_REF: lec_03
+:CUSTOM_ID: lec03-c-proposition-numbering
+:END:
+Signal: "That's not a number that is used in the book."
+
+*** Invented relation-symbol notation $R \in \{O, \Omega, \Theta, o, \omega\}$ for proposition 3.4 — added
+:PROPERTIES:
+:LECTURE_REF: lec_03
+:CUSTOM_ID: lec03-c-r-notation
+:END:
+Signal: "I invent a new notation in order to abbreviate stuff."
+
+* lec_04
+
+** A. Exam-tied (explicit)
+*** Substitution method (proof by induction): never put $O$ or $\Theta$ in the induction hypothesis — use the explicit inequality with constants
+:PROPERTIES:
+:LECTURE_REF: lec_04
+:CUSTOM_ID: lec04-a-induction-no-asymptotic-hypothesis
+:END:
+Signal: "Also do it in the exam."
+The hypothesis must be written as e.g. $t(n) \le c\, n \lg n$ for explicit constants, not $t(n) = O(n \lg n)$; using the Landau form in the hypothesis makes the whole proof wrong even if the algebra is right.
+
+*** Master theorem (Theorem 4.1)
+:PROPERTIES:
+:LECTURE_REF: lec_04
+:CUSTOM_ID: lec04-a-master-theorem
+:END:
+Signal: "this is one of the theorems that might be for the exam"
+Let $a > 0$ and $b > 1$ be constants and $f(n)$ the driving function, with
+$$T(n) = a\, T(n/b) + f(n)$$
+(or the floor/ceiling form $T(n) = a' T(\lfloor n/b \rfloor) + a'' T(\lceil n/b \rceil) + f(n)$, $a' + a'' = a$). The watershed function is $n^{\log_b a}$. Then [reconstructed; ASR garbled, matches CLRS 4th-ed canonical form]:
+1. If $f(n) = O(n^{\log_b a - \epsilon})$ for some $\epsilon > 0$, then $T(n) = \Theta(n^{\log_b a})$. [reconstructed]
+2. If $f(n) = \Theta(n^{\log_b a} \lg^k n)$ for some $k \ge 0$, then $T(n) = \Theta(n^{\log_b a} \lg^{k+1} n)$. [reconstructed]
+3. If $f(n) = \Omega(n^{\log_b a + \epsilon})$ for some $\epsilon > 0$ and the regularity condition $a\, f(n/b) \le c\, f(n)$ holds for some constant $0 < c < 1$ and all large $n$, then $T(n) = \Theta(f(n))$. [reconstructed]
+
+** B. Implicit emphasis (inferred)
+*** Subtracting a lower-order term in the hypothesis (e.g. assume $t(n) \le cn - d$) to absorb stubborn $\Theta$ terms in substitution proofs
+:PROPERTIES:
+:LECTURE_REF: lec_04
+:CUSTOM_ID: lec04-b-subtract-lower-order-term
+:END:
+Signal: "adding a term of lower order in order to properly prove something"
+
+** C. CLRS delta (inferred)
+*** Book uses $(X-Y)(X+Y)=X^2-Y^2$ to motivate a matrix trick that fails (non-commutativity) — reframed
+:PROPERTIES:
+:LECTURE_REF: lec_04
+:CUSTOM_ID: lec04-c-book-error-difference-of-squares
+:END:
+Signal: "there's an error in the book because it uses the formula"
+
+* lec_05
+
+** B. Implicit emphasis (inferred)
+*** Comparing the driving function to the watershed function (selecting the case)
+:PROPERTIES:
+:LECTURE_REF: lec_05
+:CUSTOM_ID: lec05-b-compare-driving-watershed
+:END:
+Signal: "important, really important, is that you need to be able to compare"
+Watershed function:
+$$n^{\log_b a}.$$
+Three cases [reconstructed]:
+\begin{align*}
+\text{Case 1:}\quad & f(n) = O(n^{\log_b a - \epsilon}),\ \epsilon > 0 \;\Rightarrow\; T(n) = \Theta(n^{\log_b a}) \\
+\text{Case 2:}\quad & f(n) = \Theta(n^{\log_b a}\,\lg^k n),\ k \ge 0 \;\Rightarrow\; T(n) = \Theta(n^{\log_b a}\,\lg^{k+1} n) \\
+\text{Case 3:}\quad & f(n) = \Omega(n^{\log_b a + \epsilon}),\ \epsilon > 0 \;\Rightarrow\; T(n) = \Theta(f(n))
+\end{align*}
+
+*** Case 2 constant $k$ must be non-negative
+:PROPERTIES:
+:LECTURE_REF: lec_05
+:CUSTOM_ID: lec05-b-case2-k-nonneg
+:END:
+Signal: "It's important that this constant is non-negative"
+$k \ge 0$ in $f(n) = \Theta(n^{\log_b a}\,\lg^k n)$. [reconstructed]
+
+*** Big-O cannot be composed with arbitrary functions (only argument-substitution is valid)
+:PROPERTIES:
+:LECTURE_REF: lec_05
+:CUSTOM_ID: lec05-b-no-o-composition
+:END:
+Signal: "You cannot compose O's with functions. It's important to not do that."
+$f = O(g)$ does not imply $h(f(n)) = O(h(g(n)))$; only substitution into the argument (e.g. $n \rightarrow n/b^j$) is permitted. [reconstructed]
+
+*** Recurrences in the gaps / with imbalanced splits where the master theorem does not apply
+:PROPERTIES:
+:LECTURE_REF: lec_05
+:CUSTOM_ID: lec05-b-master-theorem-gaps
+:END:
+Signal: "none of the cases apply, we cannot use the master theorem at all"
+$$T(n) = 2T(n/2) + \frac{n}{\lg n} \;\Rightarrow\; T(n) = \Theta(n \lg\lg n)$$ (no case applies; falls in the gap between cases 1 and 2). Also: imbalanced $1/3$, $2/3$ split — outside the master theorem (handled later by Akra-Bazzi). [reconstructed]
+
+** C. CLRS delta (inferred)
+*** Master theorem proof restricted to the simple "continuous" version — proof-skipped
+:PROPERTIES:
+:LECTURE_REF: lec_05
+:CUSTOM_ID: lec05-c-continuous-version-only
+:END:
+Signal: "so-called continuous master theorem. So we'll only prove the simple version."
+Floors and ceilings dropped, $a, b$ treated as arbitrary reals (not required integers), and the $n_0$ base case initially ignored (set base case at $n \le 1$); the floor/ceiling rigor is not proved.
+
+* lec_06
+
+** A. Exam-tied (explicit)
+*** Polynomial growth condition (Akra-Bazzi regularity requirement)
+:PROPERTIES:
+:LECTURE_REF: lec_06
+:CUSTOM_ID: lec06-a-polynomial-growth-condition
+:END:
+Signal: "it is good that we learn for the exam what the polynomial growth condition is"
+Definition [reconstructed]:
+$$\exists\, n_0 \in \mathbb{N} \text{ s.t. } \forall \varphi \ge 1\ \exists\, d > 1 \text{ s.t. } \forall n \ge n_0,\ \forall \psi \in \left[ 1, \varphi \right]:\ \frac{f(n)}{d} \le f(\psi n) \le d\, f(n).$$
+
+** B. Implicit emphasis (inferred)
+*** Recognizing the polynomial growth condition in practice
+:PROPERTIES:
+:LECTURE_REF: lec_06
+:CUSTOM_ID: lec06-b-pgc-recognition
+:END:
+Signal: "what is important is that exponential functions don't"
+If $f(n) = \Theta(n^\alpha (\lg n)^\beta (\lg\lg n)^\gamma)$ for constants $\alpha, \beta, \gamma$, then $f$ satisfies the polynomial growth condition. Exponential and superexponential functions (e.g. $2^n$, $n!$) do NOT. [reconstructed]
+
+*** Ignoring floors/ceilings in Akra-Bazzi is only valid under the polynomial growth condition
+:PROPERTIES:
+:LECTURE_REF: lec_06
+:CUSTOM_ID: lec06-b-akra-bazzi-floor-ceiling-caution
+:END:
+Signal: "things start to go wrong here if you really ignore the floor and seal operations"
+Unlike the master theorem, dropping the rounding operations in an Akra-Bazzi recurrence requires $f$ to satisfy the polynomial growth condition first.
+
+*** Akra-Bazzi practical procedure — bracket $p$ rather than computing it
+:PROPERTIES:
+:LECTURE_REF: lec_06
+:CUSTOM_ID: lec06-b-akra-bazzi-p-procedure
+:END:
+Signal: "we don't need to calculate p in many cases"
+Often $p$ cancels, so only its location matters (e.g. $p < 1$ vs $p > 1$); compute it numerically (secant method) only when it does not cancel. Worked example: $T(n) = T(n/5) + T(7n/10) + n$; from $(1/5)^p + (7/10)^p = 1$, $p \approx 0.83978 < 1$ [reconstructed], so $T(n) = \Theta(n)$.
+
+** C. CLRS delta (inferred)
+*** General (floor/ceiling) master theorem — proof omitted
+:PROPERTIES:
+:LECTURE_REF: lec_06
+:CUSTOM_ID: lec06-c-general-master-theorem-unproved
+:END:
+Signal: "the proof of the general master theorem is very involved... that's why we've omitted that"
+Only the continuous version (Theorem 4.4, base case rescaled from $n_0$ to $1$ via $\tilde T(n) = T(n\,n_0)$) is proved; the version with floor/ceiling operations is stated but not proved.
+
+*** Akra-Bazzi recurrences via the polynomial growth condition — added / reframed
+:PROPERTIES:
+:LECTURE_REF: lec_06
+:CUSTOM_ID: lec06-c-akra-bazzi-added
+:END:
+Signal: "this leads us immediately to the section on Akra-Patsi recurrences"
+Generalization of master recurrences to unbalanced splits, $T(n) = f(n) + \sum_{i=1}^{k} a_i T(\lfloor n/b_i \rfloor) + \sum_{i=k+1}^{l} a_i T(\lceil n/b_i \rceil)$, framed through the polynomial growth condition (Leighton-style regularity). Integral-formula theorem (Theorem 4.6) stated without proof: unique $p > 0$ with $\sum_{i=1}^{l} a_i b_i^{-p} = 1$, then
+$$T(n) = \Theta\!\left( n^p \left( 1 + \int_1^n \frac{f(x)}{x^{p+1}}\, dx \right) \right).$$
+Signal: "We don't prove this one. This is just too much." [grounding, not a verbatim cue]
+
+* lec_07
+
+** B. Implicit emphasis (inferred)
+*** Polynomial growth condition — corrected quantifier order
+:PROPERTIES:
+:LECTURE_REF: lec_07
+:CUSTOM_ID: lec07-b-pgc-quantifier-order
+:END:
+Signal: "this is the correct polynomial growth condition, so this is the important thing"
+Flagged as must-know and tied to solving the exercise problems. The thing emphasized is the quantifier sequence (the book reversed it). Spoken order, reconstructed:
+$$\forall \phi > 1\ \exists d > 1\ \exists n_0\ \forall n \ge n_0\ \forall \psi \in \left[ 1, \phi \right]: \tfrac{1}{d} f(n) \ \ldots \quad \text{[reconstructed]}$$
+The inequality body was spoken incompletely (only "$\tfrac{1}{d} f(n)$" reached before he cut off); only the quantifier prefix is recoverable. Secondary cue: "you need to take this definition in order to solve many of the exercise problems."
+
+*** Quantifiers cannot be exchanged ($\forall \exists$ vs $\exists \forall$)
+:PROPERTIES:
+:LECTURE_REF: lec_07
+:CUSTOM_ID: lec07-b-quantifier-no-exchange
+:END:
+Signal: "probably now you remember for the rest of your lives, I cannot easily exchange quantifiers"
+Reinforced: "this is really forbidden." Illustrated with the $\exists w\, \forall m$ vs $\forall m\, \exists w$ love example.
+
+*** Randomization / data ordering as a core subject
+:PROPERTIES:
+:LECTURE_REF: lec_07
+:CUSTOM_ID: lec07-b-randomization-importance
+:END:
+Signal: "you have to understand that this is a very very important subject for you"
+Repeated across the optimizer/Adam analogy and the LLM-training-order argument; framed as important for algorithm design and for data science.
+
+*** Counting formula valid only under the uniform distribution
+:PROPERTIES:
+:LECTURE_REF: lec_07
+:CUSTOM_ID: lec07-b-uniform-counting-caveat
+:END:
+Signal: "this is only true if you have a uniform probability distribution"
+$P(A) = \tfrac{|\text{favourable}|}{|\Omega|}$ holds only when every singleton is equiprobable; emphasized as a thing teachers get wrong.
+
+** C. CLRS delta (inferred)
+*** Polynomial growth condition — book definition is wrong — reframed
+:PROPERTIES:
+:LECTURE_REF: lec_07
+:CUSTOM_ID: lec07-c-pgc-book-error
+:END:
+Signal: "they made the mistake of exchanging quantifiers"
+Explicit correction of the book's stated definition (book swaps the $\exists n_0$ and $\forall \phi$ quantifiers); lecture overrides the book here.
+
+*** Measure-theoretic probability foundations beyond Appendix C — added
+:PROPERTIES:
+:LECTURE_REF: lec_07
+:CUSTOM_ID: lec07-c-measure-theory-added
+:END:
+Signal: "C.0 doesn't feature in the book"
+Professor introduces $\sigma$-algebra (def. C.0.1), measure (def. C.0.2), probability space, Borel $\sigma$-algebra, Lebesgue measure — measure theory well past the book's elementary Appendix C; numbering C.0 invented to mark the prepended material. Stated as a "mix" of the book and his own framing ("not really correct enough for me").
+
+*** Crash course presented without proofs — proof-skipped
+:PROPERTIES:
+:LECTURE_REF: lec_07
+:CUSTOM_ID: lec07-c-crash-course-no-proofs
+:END:
+Signal: "I will do a crash course now, which will not prove anything"
+Full rigor explicitly deferred to the semester-3 probability course; this lecture states results only.
+
+*** Vitali non-measurable set construction (axiom of choice) — added
+:PROPERTIES:
+:LECTURE_REF: lec_07
+:CUSTOM_ID: lec07-c-vitali-nonmeasurable
+:END:
+Signal: "this we can only do if the axiom of choice is allowed" [grounding, not a verbatim cue]
+Construction of a non-measurable $V \subseteq \left[ 0,1 \right]$ via rational-difference equivalence classes, showing translation invariance + all-intervals-measurable cannot both hold for every subset; motivates the Lebesgue $\sigma$-algebra. Not CLRS material.
+* lec_08
+
+** B. Implicit emphasis (inferred)
+*** Pairwise vs. mutual independence are not the same
+:PROPERTIES:
+:LECTURE_REF: lec_08
+:CUSTOM_ID: lec08-b-pairwise-vs-mutual-independence
+:END:
+Signal: "important, these two are not the same"
+Reinforced: "this is a much stronger property being mutually independent." Worked two-coin counterexample given disproportionate time.
+$$\text{pairwise: } P(A_i \cap A_j) = P(A_i)\,P(A_j) \ \forall i \ne j$$
+$$\text{mutual: } P\!\left( \bigcap_i A_i \right) = \prod_i P(A_i)$$
+Counterexample ($A_1$: coin 1 heads, $A_2$: coin 2 heads, $A_3$: coins differ): all $P = \tfrac{1}{2}$, every pairwise product is $\tfrac{1}{4} = \tfrac{1}{2}\cdot\tfrac{1}{2}$, but $A_1 \cap A_2 \cap A_3 = \emptyset$, so $P = 0 \ne \tfrac{1}{8}$.
+
+*** Expected value is linear (always, regardless of dependence)
+:PROPERTIES:
+:LECTURE_REF: lec_08
+:CUSTOM_ID: lec08-b-expectation-linearity
+:END:
+Signal: "important, the expected value is linear"
+Explicitly contrasted against variance as holding "no matter how X and Y are related."
+$$E\!\left[ \alpha X + \beta Y \right] = \alpha\, E[X] + \beta\, E[Y]$$
+
+*** Variance additivity requires independence
+:PROPERTIES:
+:LECTURE_REF: lec_08
+:CUSTOM_ID: lec08-b-variance-additivity-independence
+:END:
+Signal: "for the variance this is not true, this is only true if they are independent"
+Flagged as "a big difference to the expected value."
+$$\operatorname{Var}(aX) = a^2 \operatorname{Var}(X), \qquad \operatorname{Var}(X+Y) = \operatorname{Var}(X) + \operatorname{Var}(Y) \ \text{only if } X, Y \text{ independent}$$
+
+*** Jensen's inequality
+:PROPERTIES:
+:LECTURE_REF: lec_08
+:CUSTOM_ID: lec08-b-jensen-inequality
+:END:
+Signal: "this is very important when you calculate expected values"
+For $g$ convex:
+$$E[g(X)] \ge g(E[X])$$
+
+** C. CLRS delta (inferred)
+*** Continuous distributions / density-function machinery beyond Appendix C — added
+:PROPERTIES:
+:LECTURE_REF: lec_08
+:CUSTOM_ID: lec08-c-continuous-distributions-added
+:END:
+Signal: "you will learn the others in the class next semester"
+Density functions, uniform/exponential/normal distributions, $P(A) = \int_A f\,dx$, the CDF, and the FTC link $f = F'$ are continuous/measure-theoretic content past the book's discrete Appendix C; presented as preview ("you will prove next year that the integral of this function is actually 1").
+
+*** Proofs omitted throughout — proof-skipped
+:PROPERTIES:
+:LECTURE_REF: lec_08
+:CUSTOM_ID: lec08-c-proofs-skipped
+:END:
+Signal: "proofs will be mostly next semester in the lecture course"
+Results stated only; full rigor deferred to the semester-3 probability course (continues the lec_07 pattern).
+
+*** Appendix C probability front-loaded before Chapter 5 — reordered
+:PROPERTIES:
+:LECTURE_REF: lec_08
+:CUSTOM_ID: lec08-c-appendixc-reordered
+:END:
+Signal: "just enough that we can do the next section in the book, which is chapter five" [grounding, not a verbatim cue]
+Appendix-C probability (back of the book) taught now as prerequisite for Chapter 5 (randomized algorithms), inverting the book's ordering.
+
+** Uncertain
+*** Proof-preparation hint (garbled)
+:PROPERTIES:
+:LECTURE_REF: lec_08
+:CUSTOM_ID: lec08-u-proof-prep-hint
+:END:
+Signal: "If you don't miss the proofs, be prepared for them still"
+ASR-garbled remark about proofs; ambiguous whether it signals expectations for this course's assessment or is a throwaway. Referent unclear.
+
+* lec_09
+
+** B. Implicit emphasis (inferred)
+
+*** Indicator random variable technique for expected value of binomial
+:PROPERTIES:
+:LECTURE_REF: lec_09
+:CUSTOM_ID: lec09-b-indicator-ev
+:END:
+Signal: "I think you should remember this technique"
+Decompose $X = X_1 + X_2 + \cdots + X_n$ where $X_i = 1$ iff experiment $i$ succeeds; then by linearity of expectation:
+$$E[X] = \sum_{i=1}^{n} E[X_i] = \sum_{i=1}^{n} p = np.$$
+[reconstructed]
+
+*** RANDOMLY-PERMUTE algorithm
+:PROPERTIES:
+:LECTURE_REF: lec_09
+:CUSTOM_ID: lec09-b-randomly-permute
+:END:
+Signal: "I think we can keep it in our memories, how it works"
+#+begin_example
+RANDOMLY-PERMUTE(A, n)
+for i = 1 to n
+    swap A[i] with A[RANDOM(i, n)]
+#+end_example
+
+*** Loop invariant probability claim for RANDOMLY-PERMUTE
+:PROPERTIES:
+:LECTURE_REF: lec_09
+:CUSTOM_ID: lec09-b-loop-inv-prob
+:END:
+Signal: "This is the important part. This is the important part."
+At the start of iteration $i$, every $(i-1)$-permutation of $A[1 \mathinner{.\,.} i-1]$ occurs with probability
+$$\frac{(n-i+1)!}{n!}.$$
+[reconstructed]
+
+** C. CLRS delta (inferred)
+
+*** Variance of geometric distribution — dropped (pushed to exercises)
+:PROPERTIES:
+:LECTURE_REF: lec_09
+:CUSTOM_ID: lec09-c-geom-variance
+:END:
+Signal: "Calculating the variance is something we can do in the exercises"
+
+** Uncertain
+
+*** RANDOMLY-PERMUTE loop invariant — maintenance step probability calculation cut off
+:PROPERTIES:
+:LECTURE_REF: lec_09
+:CUSTOM_ID: lec09-u-proof-cutoff
+:END:
+Signal: "of course, we do it tomorrow"
+
+* lec_10
+
+** A. Exam-tied (explicit)
+*** Always state loop termination in loop invariant proofs
+:PROPERTIES:
+:LECTURE_REF: lec_10
+:CUSTOM_ID: lec10-a-loop-termination
+:END:
+Signal: "don't forget that in the exam... say at least that the loop ends"
+
+** B. Implicit emphasis (inferred)
+*** RANDOMIZE-IN-PLACE: loop invariant, correctness proof, and running time
+:PROPERTIES:
+:LECTURE_REF: lec_10
+:CUSTOM_ID: lec10-b-randomize-in-place
+:END:
+Signal: "Remember that because this is an important algorithm"
+
+Loop invariant [reconstructed]: prior to iteration $i$, the subarray $A[1..i-1]$ contains an $(i-1)$ permutation drawn from $A$, and every such $(i-1)$ permutation appears with probability
+$$\frac{(n-i+1)!}{n!}.$$
+
+Maintenance [reconstructed]: let $E_1$ = "$A[1..i-1]$ holds a fixed $(i-1)$ permutation $\langle x_1,\ldots,x_{i-1}\rangle$"; let $E_2$ = "$x_i$ is chosen for $A[i]$ in iteration $i$." Since $E_1$ and $E_2$ are not independent:
+\begin{align*}
+\Pr[E_1 \cap E_2] &= \Pr[E_2 \mid E_1]\cdot\Pr[E_1] \\
+                  &= \frac{1}{n-i+1}\cdot\frac{(n-i+1)!}{n!} \\
+                  &= \frac{(n-i)!}{n!},
+\end{align*}
+which equals $\frac{(n-(i+1)+1)!}{n!}$, confirming the invariant for iteration $i+1$.
+
+Termination: at loop end $i = n+1$, so every permutation appears with probability $\frac{0!}{n!} = \frac{1}{n!}$.
+
+Running time: $O(n)$ (one pass; one random draw and one swap per step).
+
+*** BUILD-MAX-HEAP runs in O(n), not O(n lg n)
+:PROPERTIES:
+:LECTURE_REF: lec_10
+:CUSTOM_ID: lec10-b-build-heap-on
+:END:
+Signal: "definitely looks like it'd be n log n. And the point is, it isn't."
+
+Tool used in proof: MAX-HEAPIFY called at a node of height $h$ costs $O(h)$, i.e., $T(v) = O(h(v))$.
+
+Cost bound [reconstructed]:
+$$T(n) \le \sum_{h=0}^{\lfloor \lg n \rfloor} \left\lceil \frac{n}{2^{h+1}} \right\rceil \cdot O(h) \le cn\sum_{h=0}^{\lfloor \lg n \rfloor} \frac{h}{2^h}.$$
+
+Key identity (differentiate the geometric series $f(x) = \frac{1}{1-x/2}$ and evaluate at $x = 1$) [reconstructed]:
+$$\sum_{h=0}^{\infty}\frac{h}{2^h} = f'(1) = \frac{1/2}{(1/2)^{2}} = 2.$$
+
+Therefore $T(n) = O(n)$.
+
+*** Heap-as-array index arithmetic
+:PROPERTIES:
+:LECTURE_REF: lec_10
+:CUSTOM_ID: lec10-b-heap-index-arithmetic
+:END:
+Signal: "if you understand it once then you will see it forever"
+
+For node at index $i$ in a 1-indexed heap of size $n$ [reconstructed]:
+- Parent: $\lfloor i/2 \rfloor$
+- Left child: $2i$
+- Right child: $2i + 1$
+- Leaves: all nodes at index $i > \lfloor n/2 \rfloor$
+
+** C. CLRS delta (inferred)
+*** CPU memory architecture (stack pointer, heap space, garbage collection) — added
+:PROPERTIES:
+:LECTURE_REF: lec_10
+:CUSTOM_ID: lec10-c-memory-heap-added
+:END:
+Signal: "we will talk about the data structure heap and not about the memory organization heap"
+
+*** In-place vs. extra-space comparison as motivation for heap sort — added
+:PROPERTIES:
+:LECTURE_REF: lec_10
+:CUSTOM_ID: lec10-c-inplace-motivation
+:END:
+Signal: "there is a second important component in computer science which is memory space" [grounding, not a verbatim cue]
+
+Framing added: insertion sort is $O(n^2)$ time but in-place; merge sort is $\Theta(n \lg n)$ time but requires $\Theta(n)$ extra space. Motivating question posed: can we achieve $\Theta(n \lg n)$ time with $O(1)$ extra space? Heap sort is presented as the answer.
+
+*** MAX-HEAPIFY $\Theta(\lg n)$ recurrence — proof-skipped
+:PROPERTIES:
+:LECTURE_REF: lec_10
+:CUSTOM_ID: lec10-c-maxheapify-proof-skipped
+:END:
+Signal: "this is a homework to figure out whether this is really true"
+
+Recurrence [reconstructed]:
+$$T(n) \le T\!\left(\frac{2n}{3}\right) + \Theta(1).$$
+
+Result stated without in-lecture derivation: $T(n) = \Theta(\lg n)$ by the master theorem; proof assigned as homework.
+
+* lec_12
+
+** B. Implicit emphasis (inferred)
+*** Lemma 7.3: probability two elements are compared in randomized quicksort
+:PROPERTIES:
+:LECTURE_REF: lec_12
+:CUSTOM_ID: lec12-b-lemma73-comparison-probability
+:END:
+Signal: "this is the really important part of the whole proof"
+$$P(Z_i \text{ and } Z_j \text{ are compared}) = \frac{2}{j - i + 1}, \quad j > i.$$
+
+*** Theorem 7.4: expected running time of randomized quicksort
+:PROPERTIES:
+:LECTURE_REF: lec_12
+:CUSTOM_ID: lec12-b-theorem74-expected-runtime
+:END:
+Signal: "expected running time of randomized quicksort"
+Expected running time of randomized quicksort on an $n$ element array is $O(n \lg n)$. The same proof yields the average-case running time of (non-randomized) quicksort.
+
+*** Reduction of analysis to the expected number of comparisons
+:PROPERTIES:
+:LECTURE_REF: lec_12
+:CUSTOM_ID: lec12-b-reduce-to-E-X
+:END:
+Signal: "we have to calculate the expected value of x"
+Total work of quicksort is $O(n + X)$ where $X$ is the number of element comparisons (Lemma 7.1), so analyzing $E[X]$ analyzes the algorithm.
+
+*** Decision-tree leaves must cover all $n!$ permutations
+:PROPERTIES:
+:LECTURE_REF: lec_12
+:CUSTOM_ID: lec12-b-decision-tree-leaves
+:END:
+Signal: "the leaves have to represent all the permutation of our array"
+For any comparison sort, every permutation of $1, \dots, n$ must appear as a leaf of its decision tree, hence the tree has at least $n!$ leaves.
+
+*** Comparison-sort worst-case lower bound $\Omega(n \lg n)$
+:PROPERTIES:
+:LECTURE_REF: lec_12
+:CUSTOM_ID: lec12-b-comparison-sort-lower-bound
+:END:
+Signal: "you still should know that you cannot sort things faster than $n \lg n$"
+A binary tree of height $h$ has at most $2^h$ leaves, so $2^h \ge n!$ gives $h \ge \lg(n!) = \Theta(n \lg n)$ (Stirling). Hence any comparison sort has worst-case running time $\Omega(n \lg n)$, and merge sort, heap sort, and randomized quicksort (in expectation) are asymptotically optimal among comparison sorts.
+
+*** Counting sort exploits key-range information beyond comparisons
+:PROPERTIES:
+:LECTURE_REF: lec_12
+:CUSTOM_ID: lec12-b-counting-sort-extra-info
+:END:
+Signal: "this is important additional information"
+Knowing the keys lie in a bounded range $\{0, \dots, k\}$ supplies information that lets the algorithm sidestep the comparison-sort lower bound.
+
+*** Counting sort running time and stability via back-to-front placement
+:PROPERTIES:
+:LECTURE_REF: lec_12
+:CUSTOM_ID: lec12-b-counting-sort-bound-and-stability
+:END:
+Signal: "we will use this sorting mechanism for another sorting mechanism later"
+Counting sort runs in $\Theta(n + k)$ time, where $n$ is the input size and $k$ the key range; it is fast only when $k = O(n)$. Iterating the placement loop over the input from right to left preserves the original order on equal keys, making counting sort stable — a property the next lecture relies on for a chained sort.
+
+** C. CLRS delta (inferred)
+*** Lemma 7.2 (when elements are compared; no pair compared twice) — proof-skipped
+:PROPERTIES:
+:LECTURE_REF: lec_12
+:CUSTOM_ID: lec12-c-lemma72-proof-skipped
+:END:
+Signal: "proof I would say this is obvious"
+The professor declines to write out the proof, asserting it follows by inspection of the partition routine; CLRS gives an explicit (if short) argument.
+
+** Uncertain
+*** Stirling-based estimate of $\lg(n!)$
+:PROPERTIES:
+:LECTURE_REF: lec_12
+:CUSTOM_ID: lec12-u-stirling-calculation
+:END:
+Signal: "this is, by the way, not — you cannot really calculate like this, but we will do it nevertheless"
+The professor flags something irregular about the way Stirling's formula is being applied to derive $\lg(n!) = \Theta(n \lg n)$, but the precise caveat does not survive the ASR.
+
+* lec_13
+
+** B. Implicit emphasis (inferred)
+*** Stability of counting sort
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-b-counting-sort-stable
+:END:
+Signal: "a second very important property, which was it is a stable sorting algorithm"
+
+*** Radix sort processes digits from least-significant to most-significant
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-b-radix-lsd-first
+:END:
+Signal: "what is interesting, what works better... we start sorting them by the one-digit positions"
+
+*** Simultaneous minimum and maximum in $\frac{3n}{2}$ comparisons
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-b-min-max-3n-over-2
+:END:
+Signal: "we don't have to do a two n comparison, but we only have three n over two comparison"
+Pair the array into $n/2$ disjoint pairs; for each pair, do $1$ internal comparison (smaller vs larger), then $2$ comparisons against the running min and max. Total: $\frac{3n}{2}$ comparisons instead of $2n$.
+
+*** Randomized-Select — expected runtime analysis
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-b-randomized-select-effort
+:END:
+Signal: "Randomized Select... this is important"
+
+*** Lemma 9.1 — a partition is helpful with probability $\ge \frac{1}{2}$
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-b-lemma-9-1-helpful-partition
+:END:
+Signal: "a partition is helpful with probability greater or equal one half"
+Define iteration $j$ helpful if $|A_j| \le \frac{3}{4} |A_{j-1}|$. A partition is helpful whenever the pivot lies between the $\frac{n}{4}$-th and $\frac{3n}{4}$-th order statistics of $A_{j-1}$, which occurs with probability $\ge \frac{1}{2}$.
+
+*** Theorem 9.2 — expected runtime of Randomized-Select is $\Theta(n)$
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-b-theorem-9-2-rselect-theta-n
+:END:
+Signal: "the expected runtime of randomized select is theta of n"
+$$E[T(n)] = \Theta(n).$$
+Lower bound $\Omega(n)$ is trivial (each element must be inspected at least once; at least $n-1$ comparisons).
+
+** C. CLRS delta (inferred)
+*** Lemma 8.3 (radix sort correctness/runtime) — proof skipped
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-c-lemma-8-3-proof-skipped
+:END:
+Signal: "I don't write it to the blackboard because this is more or less obvious"
+
+*** Akra–Bazzi invoked for deterministic Select analysis — reframed
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-c-akra-bazzi-for-select
+:END:
+Signal: "we can use Akrabazzi then to show that this... has theta of n runtime"
+CLRS Ch. 9 uses the substitution method for the $T(n) = T(n/5) + T(7n/10) + O(n)$ recurrence; the lecture invokes Akra–Bazzi instead.
+
+*** Deterministic Select — second half deferred to next lecture (dropped here)
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-c-select-deferred
+:END:
+Signal: "we will discuss the remaining of the algorithm tomorrow" [grounding, not a verbatim cue]
+
+*** Radix sort framed via $B$-bit keys with $R$-bit radix — added concrete framing
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-c-radix-b-over-r-framing
+:END:
+Signal: "for sorting, e.g., 64-bit numbers, 4-bit radics, which means hexadecimal"
+Stated runtime: $\Theta\!\left(\frac{B}{R} \cdot n\right)$ [reconstructed].
+
+** Uncertain
+*** Upper bound on number of helpful partitions: $M \le \lfloor \log_{4/3} n \rfloor$
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-u-m-upper-bound
+:END:
+Signal: "we can have at most logarithm of four thirds of n rounded down helpful partitions"
+After $m$ helpful partitions $|A| \le \left(\frac{3}{4}\right)^m n$ [reconstructed]; setting this $< 1$ gives $m \le \log_{4/3} n$.
+
+*** Geometric-series finish of the $E[T(n)]$ derivation
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-u-geometric-series-finish
+:END:
+Signal: "this is a geometric series... 2 n times 1 over 1 minus 3 quarters"
+With $X_k$ = gap between helpful partition $k$ and $k+1$, $E[X_k] \le 2$, so
+$$E[T(n)] \le \sum_{k=0}^{M-1} E[X_k] \cdot \left(\tfrac{3}{4}\right)^k n \le 2n \sum_{k \ge 0} \left(\tfrac{3}{4}\right)^k = \frac{2n}{1 - 3/4} = 8n.$$
+[reconstructed]
+* lec_14
+
+** B. Implicit emphasis (inferred)
+*** Theorem 9.3: SELECT worst-case runtime $\Theta(n)$
+:PROPERTIES:
+:LECTURE_REF: lec_14
+:CUSTOM_ID: lec14-b-select-worst-case
+:END:
+Signal: "this is really the runtime. This is a worst case runtime."
+SELECT computes the $i$ th order statistic in $\Theta(n)$ worst-case time. [reconstructed]
+
+*** SELECT deterministic vs RANDOMIZED-SELECT expected runtime
+:PROPERTIES:
+:LECTURE_REF: lec_14
+:CUSTOM_ID: lec14-b-deterministic-vs-randomized
+:END:
+Signal: "select is not a randomized algorithm because it does no random call anywhere inside the loop"
+
+*** While loop executes at most four times, costs $O(n)$ total
+:PROPERTIES:
+:LECTURE_REF: lec_14
+:CUSTOM_ID: lec14-b-while-loop-cost
+:END:
+Signal: "this loop, therefore, is executed at most four times"
+
+*** Line 16 recursive call on group medians: bound $T(n/5)$
+:PROPERTIES:
+:LECTURE_REF: lec_14
+:CUSTOM_ID: lec14-b-line16-recursion
+:END:
+Signal: "select... with an array that is only a fifth of the size"
+$$T_{\mathrm{line\,16}}(n) \le T(n/5)$$ [reconstructed]
+
+*** Blue/yellow/white region argument: guaranteed pivot lower bound
+:PROPERTIES:
+:LECTURE_REF: lec_14
+:CUSTOM_ID: lec14-b-pivot-regions
+:END:
+Signal: "everything in the blue part is definitely not bigger than X"
+
+** C. CLRS delta (inferred)
+*** While-loop pre-processing: strip elements until array length divisible by 5 — reframed
+:PROPERTIES:
+:LECTURE_REF: lec_14
+:CUSTOM_ID: lec14-c-while-loop-padding
+:END:
+Signal: "iterates the while loop until the remaining array... is a multiple of five" [grounding, not a verbatim cue]
+
+*** Interleaved grouping by spacing parameter $G$ (non-contiguous groups) — reframed
+:PROPERTIES:
+:LECTURE_REF: lec_14
+:CUSTOM_ID: lec14-c-interleaved-groups
+:END:
+Signal: "the spacing of two elements, which we consider to be in the same group, is G" [grounding, not a verbatim cue]
+
+** Uncertain
+*** Line 23/24 recursion size bound — analysis garbled and cut off
+:PROPERTIES:
+:LECTURE_REF: lec_14
+:CUSTOM_ID: lec14-u-line2324-recursion
+:END:
+Signal: "so what what we what we do is we remove it it it it"
