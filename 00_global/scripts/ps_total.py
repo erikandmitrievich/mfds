@@ -2,6 +2,7 @@
 
 import re
 import sys
+from pathlib import Path
 
 def extract_problems(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -21,8 +22,8 @@ def extract_problems(file_path):
     begin_quote_pattern = re.compile(r'^\s*#\+begin_quote\s*', re.IGNORECASE)
     end_quote_pattern = re.compile(r'^\s*#\+end_quote\s*', re.IGNORECASE)
 
-    # Matches citation markers like or
-    citation_pattern = re.compile(r'\\')
+    # Matches citation markers like \cite{...}
+    citation_pattern = re.compile(r'\\cite\{.*?\}')
 
     # Metadata extraction
     title = "Unknown Title"
@@ -32,7 +33,7 @@ def extract_problems(file_path):
             break
     if title == "Unknown Title":
         # Fallback to filename if no title found
-        title = file_path.split('/')[-1].replace('.org', '')
+        title = Path(file_path).stem
 
     output_lines = []
     output_lines.append(f"* {title}")
@@ -105,16 +106,23 @@ def clean_content(content_lines, citation_pat, b_quote_pat, e_quote_pat):
     return cleaned
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python extract_ps.py <file1.org> <file2.org> ...")
+    # Resolve the directory where this script is actively located
+    script_dir = Path(__file__).resolve().parent
+
+    # Recursively find all files matching "ps_*.org" in this directory and subdirectories
+    # Sorting ensures they process in order (ps_01, ps_02, etc.)
+    org_files = sorted(script_dir.rglob("ps_*.org"))
+
+    if not org_files:
+        print("No 'ps_XX.org' files found in the current directory or its subfolders.", file=sys.stderr)
         sys.exit(1)
 
     all_output = []
 
-    # Process each file provided as an argument
-    for file_path in sys.argv[1:]:
+    # Process each discovered file
+    for file_path in org_files:
         try:
-            file_output = extract_problems(file_path)
+            file_output = extract_problems(str(file_path))
             all_output.extend(file_output)
         except Exception as e:
             print(f"Error processing {file_path}: {e}", file=sys.stderr)
@@ -123,7 +131,7 @@ def main():
     print("#+begin_src org")
     for line in all_output:
         print(line, end='')
-        # Ensure newlines are preserved correctly (print adds one by default, content usually has one)
+        # Ensure newlines are preserved correctly
         if not line.endswith('\n'):
             print()
     print("\n#+end_src")
