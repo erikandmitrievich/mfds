@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-11>
-#+lastmod: <2026-06-19 18:21>
+#+lastmod: <2026-06-26 14:31>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -352,22 +352,107 @@ Consider a modification to the activity-selection problem in which each activity
 
 ** Solution
 
-The greedy rules fail once activities carry values, so this needs dynamic programming. Sort the activities by finish time, $f_1 \leq \dots \leq f_n$. Define $p(i)$ as the largest index $j < i$ with $f_j \leq s_i$ — the last activity finishing no later than $a_i$ starts — or $0$ if none exists.
+#+begin_src julia :results output
+using Test
 
-*Subproblem.* $W[i]$ = maximum total value obtainable using only $a_1, \dots, a_i$. Activity $a_i$ is either excluded (value $W[i-1]$) or included, in which case all activities indexed between $p(i)+1$ and $i-1$ conflict with it and are unavailable, leaving value $v_i + W[p(i)]$:
-$$W[i] = \max\big(W[i-1],\ v_i + W[p(i)]\big), \qquad W[0] = 0.$$
-The answer is $W[n]$.
+struct Activity
+    start_time::Int
+    finish_time::Int
+    value::Int
+end
 
-#+begin_example
-WEIGHTED-ACTIVITY(s, f, v, n)              // sorted by finish: f[1] ≤ ... ≤ f[n]
-  compute p[1..n]                          // p[i] = max{ j < i : f[j] ≤ s[i] }, else 0
-  W[0] = 0
-  for i = 1 to n
-    W[i] = max(W[i-1], v[i] + W[p[i]])
-  return W[n]
-#+end_example
+function weighted_activity_selection(activities::Vector{Activity})
+    n = length(activities)
+    if n == 0
+        return 0, Activity[]
+    end
 
-*Running time.* Sorting by finish time is $O(n \lg n)$. Each $p(i)$ comes from a binary search over the sorted finish times, $O(\lg n)$, so $O(n \lg n)$ for all of them; a single linear merge would also give all $p(i)$ in $O(n)$. The DP loop is $O(n)$. Total $O(n \lg n)$ — polynomial. The chosen set is recovered by walking $W$ backward: $a_i$ is in the solution iff $v_i + W[p(i)] > W[i-1]$.
+    sorted_acts = sort(activities, by = x -> x.finish_time)
+    finish_times = [act.finish_time for act in sorted_acts]
+
+    W = zeros(Int, n + 1) # stores max profit using first i activities
+    p = zeros(Int, n) # for every activity i, stores latest compatible activity index
+
+    # build the profit table forward
+    for i in 1:n
+        p[i] = searchsortedlast(finish_times, sorted_acts[i].start_time)
+        # W[i+1] = max(Exclude, Include)
+        W[i+1] = max(W[i], sorted_acts[i].value + W[p[i] + 1])
+    end
+
+    selected_activities = Activity[]
+    curr = n
+
+    # backtrack to find which activities were chosen
+    while curr > 0
+        # did taking this activity yield more profit? (include profit > exclude profit)
+        if sorted_acts[curr].value + W[p[curr] + 1] > W[curr]
+            push!(selected_activities, sorted_acts[curr])
+            curr = p[curr] # jump to latest compatible activity
+        else
+            curr -= 1 # skip to previous activity
+        end
+    end
+
+    reverse!(selected_activities)
+
+    return W[n + 1], selected_activities
+end
+
+@testset "Standard Complex Case" begin
+    # T: 0  1  2  3  4  5  6  7  8  9 10 11
+    # 1:    [========]                      v=5
+    # 2:          [-----]                   v=2
+    # 3: [-----------------]                v=6
+    # 4:             [========]             v=3
+    # 5:          [--------------]          v=8
+    # 6:                [-----------]       v=4
+    # 7:                   [-----------]    v=2
+    # 8:                         [========] v=4
+
+    jobs = [
+        Activity(1, 4, 5),
+        Activity(3, 5, 2),
+        Activity(0, 6, 6),
+        Activity(4, 7, 3),
+        Activity(3, 8, 8),
+        Activity(5, 9, 4),
+        Activity(6, 10, 2),
+        Activity(8, 11, 4)
+    ]
+    max_value, chosen_jobs = weighted_activity_selection(jobs)
+
+    @test max_value == 12
+    @test length(chosen_jobs) == 3
+    @test chosen_jobs[1] == Activity(1, 4, 5)
+    @test chosen_jobs[2] == Activity(4, 7, 3)
+    @test chosen_jobs[3] == Activity(8, 11, 4)
+end
+#+end_src
+
+#+RESULTS:
+: weighted_activity_selection (generic function with 1 method)
+: Test Summary:         | Pass  Total  Time
+: Standard Complex Case |    5      5  0.1s
+
+
+The algorithm runs in $O(n \log n)$ time.
+
+Account by phase, $n =$ number of activities:
+
+- *Sort by finish time.* Comparison sort: $O(n \log n)$.
+
+- *Predecessor table $p$.* For each $i$, =searchsortedlast= is a binary search over the sorted =finish_times=, $O(\log n)$ per call, $n$ calls: $O(n \log n)$.
+
+- *Profit table $W$.* The forward recurrence
+
+  $$W[i] = \max\bigl(W[i-1],\; v_i + W[p_i]\bigr)$$
+
+  is $O(1)$ per index (two array reads, one =max=), $O(n)$ total.
+
+- *Backtrack.* Each iteration either decrements =curr= by one or jumps to $p_{\text{curr}} < \text{curr}$. Both strictly decrease =curr=, which never increases, so at most $n$ iterations: $O(n)$. The final =reverse!= is $O(n)$.
+
+The sort and the predecessor computation dominate, giving $O(n \log n)$ overall. Space is $O(n)$ for $W$, $p$, and the sorted copy.
 
 * Problem 98 :greedy_algorithm:knapsack:correctness_proof:
 ** Task
@@ -433,32 +518,91 @@ Give a dynamic-programming solution of the $0 - 1$ knapsack problem that runs in
 
 ** Solution
 
-Items $1, \dots, n$ have weight $w_i$ and value $v_i$; the capacity is $W$. Each item is taken whole or not at all.
+#+begin_src julia :results output
+using Test
 
-*Subproblem.* $c[i, w]$ = maximum value obtainable from a subset of the first $i$ items whose total weight is at most $w$.
+struct Item
+    weight::Int
+    value::Int
+end
 
-*Recurrence.* Item $i$ is either skipped, or taken when it fits:
-$$c[i, w] = \begin{cases}
-0 & i = 0 \text{ or } w = 0, \\
-c[i-1, w] & w_i > w, \\
-\max\big(c[i-1, w],\ v_i + c[i-1, w - w_i]\big) & w_i \leq w.
-\end{cases}$$
-The answer is $c[n, W]$.
+function knapsack(items::Vector{Item}, W::Int)
+    n = length(items)
+    if n == 0 || W == 0
+        return 0, Item[]
+    end
 
-#+begin_example
-KNAPSACK-01(w, v, n, W)
-  for j = 0 to W
-    c[0, j] = 0
-  for i = 1 to n
-    for j = 0 to W
-      if w[i] > j
-        c[i, j] = c[i-1, j]
-      else
-        c[i, j] = max(c[i-1, j], v[i] + c[i-1, j - w[i]])
-  return c[n, W]
-#+end_example
+    K = zeros(Int, n + 1, W + 1) # K[i+1, w+1] = max value, first i items, capacity w
 
-*Running time.* The table has $(n+1)(W+1)$ entries, each filled in $O(1)$, so $\Theta(nW)$. This is pseudo-polynomial: linear in the value of $W$ but exponential in its bit-length. The chosen items are recovered from $c$: item $i$ was taken iff $c[i, w] \neq c[i-1, w]$, after which $w_i$ is subtracted and the walk continues from $c[i-1, w - w_i]$.
+    # fill the table item by item, capacity by capacity
+    for i in 1:n
+        wt, val = items[i].weight, items[i].value
+        for w in 0:W
+            K[i+1, w+1] = K[i, w+1] # exclude item i
+            if wt <= w # item i fits: try Including it
+                K[i+1, w+1] = max(K[i+1, w+1], val + K[i, w - wt + 1])
+            end
+        end
+    end
+
+    selected_items = Item[]
+    w = W
+
+    # backtrack: a cell that changed from the row above means item i was taken
+    for i in n:-1:1
+        if K[i+1, w+1] != K[i, w+1]
+            push!(selected_items, items[i])
+            w -= items[i].weight # reclaim the capacity it consumed
+        end
+    end
+
+    reverse!(selected_items)
+
+    return K[n+1, W+1], selected_items
+end
+
+@testset "Standard Complex Case" begin
+    #  item | weight | value
+    #   1   |   1    |   1
+    #   2   |   3    |   4
+    #   3   |   4    |   5
+    #   4   |   5    |   7
+    #  capacity W = 7  ->  take {2, 3}: weight 7, value 9
+    #  (beats {1,4}: weight 6, value 8)
+
+    items = [
+        Item(1, 1),
+        Item(3, 4),
+        Item(4, 5),
+        Item(5, 7)
+    ]
+    max_value, chosen_items = knapsack(items, 7)
+
+    @test max_value == 9
+    @test length(chosen_items) == 2
+    @test chosen_items[1] == Item(3, 4)
+    @test chosen_items[2] == Item(4, 5)
+end
+#+end_src
+
+#+RESULTS:
+: knapsack (generic function with 1 method)
+: Test Summary:         | Pass  Total  Time
+: Standard Complex Case |    4      4  0.1s
+
+The algorithm runs in $O(nW)$ time.
+
+Account by phase, $n =$ number of items, $W =$ capacity:
+
+- *Table fill.* Two nested loops over $i \in \{1, \dots, n\}$ and $w \in \{0, \dots, W\}$, so $n(W+1)$ cells. Each cell applies the recurrence
+
+  $$K[i, w] = \max\bigl(K[i-1, w],\; v_i + K[i-1,\, w - w_i]\bigr) \quad (w_i \le w)$$
+
+  in $O(1)$ (two array reads, one =max=): $O(nW)$.
+
+- *Backtrack.* A single descending pass over $i = n, \dots, 1$, $O(1)$ per step (one comparison, one subtraction): $O(n)$. The final =reverse!= is $O(n)$.
+
+The table fill dominates, giving $O(nW)$ overall. Space is $O(nW)$ for $K$.
 
 * Time Estimates
 - Problem 90: ~18 min~
