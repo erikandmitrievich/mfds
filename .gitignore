@@ -24,7 +24,6 @@ ps_[0-9][0-9].pdf
 # Jupyter
 .ipynb_checkpoints/
 *-checkpoint.ipynb
-# notebooks kept local only, never tracked
 *.ipynb
 
 # personal
