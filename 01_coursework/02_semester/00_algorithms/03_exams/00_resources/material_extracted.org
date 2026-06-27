@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-25>
-#+lastmod: <2026-06-26 08:00>
+#+lastmod: <2026-06-26 17:47>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -48,14 +48,14 @@ Signal: "this is very important"
 :END:
 Signal: "jumping for a very short time to chapter three and then back to chapter two"
 
-** Asymptotic notation named "Landau symbols", attributed mostly to Knuth — reframed
+*** Asymptotic notation named "Landau symbols", attributed mostly to Knuth — reframed
 :PROPERTIES:
 :LECTURE_REF: lec_02
 :CUSTOM_ID: lec02-c-landau-naming
 :END:
 Signal: "in analysis the things are called Landau symbols"
 
-** Constant-time-per-line cost: CPU-cycle/cache elaboration of the RAM model — added
+*** Constant-time-per-line cost: CPU-cycle/cache elaboration of the RAM model — added
 :PROPERTIES:
 :LECTURE_REF: lec_02
 :CUSTOM_ID: lec02-c-cpu-cost-model
