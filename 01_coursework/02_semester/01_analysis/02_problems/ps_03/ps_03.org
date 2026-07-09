@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-20>
-#+lastmod: <2026-04-13 17:28>
+#+lastmod: <2026-07-01 19:00>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -122,27 +122,6 @@ end
 main()
 
 #+end_src
-
-#+RESULTS:
-#+begin_example
-d (generic function with 1 method)
-approach_a (generic function with 2 methods)
-approach_b (generic function with 2 methods)
-f_1 (generic function with 1 method)
-f_2 (generic function with 1 method)
-f_3 (generic function with 1 method)
-f_4 (generic function with 1 method)
-f_1′ (generic function with 1 method)
-f_2′ (generic function with 1 method)
-f_3′ (generic function with 1 method)
-f_4′ (generic function with 1 method)
-main (generic function with 1 method)
-Unit circle: polygonal = 6.283174951057152, midpoint = 6.283185307179473
-Spiral 1: polygonal = 6.431350516692413, midpoint = 6.43139630404216
-Cusp curve: polygonal = 1.4397098361890286, midpoint = 1.4397097024672785
-Spiral 2: polygonal = 9.534181365684656, midpoint = 9.534328513260087
-"/Users/ziro2173/personal/university/01_coursework/02_semester/01_analysis/02_problems/set_03/assets/p_02.png"
-#+end_example
 
 file:./assets/p_02.png
 

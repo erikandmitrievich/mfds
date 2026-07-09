@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-30>
-#+lastmod: <2026-06-01 06:52>
+#+lastmod: <2026-07-04 11:32>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -129,7 +129,7 @@ Take $U = \mathbb{R}^n$. Then $M_n \cap U = \{ x : g(x) = 0 \} = M_n$.
 
 Gradient: $g'(x) = 2x^{\top}$. For $x \in M_n$, $\|x\| = 1$ so $x \neq 0$, hence $g'(x) \neq 0$ and $\operatorname{rank} g'(x) = 1 = r$.
 
-By [[file:../../01_material/ch_07_analysis_in_multivariable_coordinates.org::#def:submanifold][Definition 7.5.3]], $M_n$ is an $n - 1$ dimensional submanifold of $\mathbb{R}^n$.
+By [[file:../../01_material/ch_05_analysis_in_coordinates.org::#def:submanifold][Definition 5.4.1]], $M_n$ is an $n - 1$ dimensional submanifold of $\mathbb{R}^n$.
 
 *** (b)
 
@@ -170,7 +170,12 @@ plot!(x[1] .+ s .* norm_dir[1], x[2] .+ s .* norm_dir[2];
       label = "Nₓ(M₂)", lw = 2, ls = :dot)
 scatter!([x[1]], [x[2]]; label = "x = (1,0)", ms = 6)
 xlabel!("x₁"); ylabel!("x₂")
+
+mkpath("./assets"); savefig("./assets/p_03_c.png")
 #+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_11/assets/p_03_c.png
 
 * Problem 4 :submanifold:jacobian:
 ** Task

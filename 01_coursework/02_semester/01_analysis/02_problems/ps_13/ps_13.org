@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-12>
-#+lastmod: <2026-06-14 22:38>
+#+lastmod: <2026-07-03 14:12>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -203,9 +203,8 @@ mkpath("./assets")
 savefig("./assets/p_03.png")
 #+end_src
 
-
-#+begin_src julia :results value :exports both :tangle julia/p_3.jl
-#+end_src
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_13/assets/p_03.png
 
 * Problem 4 :gradient_descent:quadratic_form:convergence:
 ** Task
