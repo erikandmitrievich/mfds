@@ -1,0 +1,394 @@
+#+title: Must Know Proofs
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-02-16>
+#+lastmod: <2026-04-13 17:28>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Raw
+
+II.5.7-II.5.10, (Kazeev notes)
+- Pages: 75-80
+
+III.1.29, III.1.36, III.1.38, III.1.46, III.1.47, III.2.11,
+- Pages: 201-202, 204-205, 206, 211-212, 212-213, 225
+
+IV.0.1 not for the first exam: IV.1.4, IV.1.10, IV.1.15
+- Pages: 227-229, 241-243, 246, 249
+
+* Processed
+** II.5.7
+#+begin_quote
+Lemma II.5.7 (triangular structure under matrix multiplication). For $m \in \mathbb{N}$, consider matrices $A \in \mathbb{F}^{m \times m}$ and $B \in \mathbb{F}^{m \times m}$. Then the following properties hold.
+
+(a) If matrices A and B are lower-triangular, then so is AB and $(AB)_{ii} = A_{ii}B_{ii}$ for every $i \in \{1, \dots, m\}$.
+(b) If matrices A and B are unit lower-triangular, then so is AB.
+
+(c) If matrices A and B are strictly lower-triangular, then so is AB.
+
+(d) If matrices A and B are upper-triangular, then so is AB and $(AB)_{ii} = A_{ii}B_{ii}$ for every $i \in \{1, \dots, m\}$.
+
+(e) If matrices A and B are unit upper-triangular, then so is AB.
+
+(f) If matrices A and B are strictly upper-triangular, then so is AB.
+
+
+Proof. Let us first prove part (a). Consider $i, j \in \{1, \dots, m\}$ such that $i \le j$. Applying definition 1.4.3, we obtain that
+$$ (AB)_{ij} = \sum_{k=1}^{m} A_{ik}B_{kj} = \sum_{k=1}^{i-1} A_{ik}B_{kj} + \sum_{k=i}^{j} A_{ik}B_{kj} + \sum_{k=j+1}^{m} A_{ik}B_{kj} $$
+Since matrix B is lower triangular, we have $B_{kj} = 0$ for each $k \in \{1, \dots, j-1\}$. Similarly, we have $A_{ik} = 0$ for each $k \in \{i+1, \dots, m\}$ because A is lower triangular. Due to that $i \le j$, these equalities result in
+
+$$ (AB)_{ij} = \sum_{k=1}^{i-1} A_{ik} \cdot 0 + \sum_{k=i}^{j} A_{ik}B_{kj} + \sum_{k=j+1}^{m} 0 \cdot B_{kj} = \sum_{k=i}^{j} A_{ik}B_{kj}. $$
+
+Further, in the case of $i < j$, we obtain
+
+$$ (AB)_{ij} = \sum_{k=i}^{j} A_{ik}B_{kj} = A_{ii}B_{ij} + \sum_{k=i+1}^{j} A_{ik}B_{kj} = A_{ii} \cdot 0 + \sum_{k=i+1}^{j} 0 \cdot B_{kj} = 0, $$
+
+and, in the case of $i=j$, we arrive at
+
+$$ (AB)_{ij} = \sum_{k=i}^{j} A_{ik}B_{kj} = A_{ii}B_{ii}, $$
+
+which competes the proof of part (a).
+
+Parts (b) and (c) follow immediately from part (a). Indeed, if both A and B are lower-triangular, and so is AB by part (a). If, additionally, both A and B have unitary (as in part (b)) or zero (as in part (c)) diagonals, then, by part (a), the product AB exhibits the same property.
+
+Part (d) follows from part (a) by transposition. Indeed, using proposition II.4.11, we obtain $(AB)^T = B^T A^T$. If A and B are both upper-triangular matrices, then $A^T$ and $B^T$ are both lower-triangular. Then, by part (a), so is $B^T A^T = (AB)^T$ and $(B^T A^T)_{ii} = (B^T)_{ii}(A^T)_{ii}$ for every $i \in \{1, \dots, m\}$. So AB is an upper-triangular matrix and $(AB)_{ii} = ((AB)^T)_{ii} = (B^T A^T)_{ii} = (B^T)_{ii}(A^T)_{ii} = A_{ii}B_{ii}$ for every $i \in \{1, \dots, m\}$.
+
+Parts (e) and (f) are derived from part (d) in the same way as parts (b) and (c) from part (a).
+#+end_quote
+
+** II.5.8
+#+begin_quote
+Lemma II.5.8 (inversion of a single step of Gaussian elemination). For $k \in \{1, \dots, m\}$ let I denote the identity matrix of order $m \in \mathbb{N}$, $e_k \in \mathbb{F}^m$ be column k of I and $l \in \mathbb{F}^m$ have zero components 1 to k. Then the matrix $I - l e_k^T$ is invertible and
+$$ (I - l e_k^T)^{-1} = I + l e_k^T. $$
+
+Proof. Multiplying $I - l e_k^T$ and $I + l e_k^T$ in both possible orders and using the associativity, multiplicative identity and distributivity of matrix multiplication (parts (a) to (c) of proposition II.4.10), we obtain
+
+$$ (I \mp l e_k^T)(I \pm l e_k^T) = I + l e_k^T - l e_k^T - l(e_k^T l)e_k^T. $$
+
+By the assumption of the lemma, all components of $e_k$ except component k are zeros and component k of l is zero. This leads to $e_k^T l = 0$ and hence
+
+$$ (I \mp l e_k^T)(I \pm l e_k^T) = I. $$
+
+Applying definition II.4.14, we obtain the claim of the lemma.
+#+end_quote
+
+** II.5.9
+#+begin_quote
+Lemma II.5.9 (representation of r steps of Gaussian elimination). For $m \in \mathbb{N}$ and $r \in \{1, \dots, m-1\}$, let I denote the identity matrix of order $m \in \mathbb{N}, e_1, \dots, e_m \in \mathbb{F}^m$ be its columns and $l_1, \dots, l_r \in \mathbb{F}^m$ be such that, for each $k \in \{1, \dots, r\}$, components 1 to k of $l_k$ are all zero. Then
+
+$$ (I + l_1 e_1^T) \cdots (I + l_r e_r^T) = I + \sum_{k=1}^r l_k e_k^T. $$
+
+Proof. Let us prove the claim by induction with respect to r. For $r=1$, the claimed statement is trivial and therefore holds (induction base). Let us consider $n \in \{1, \dots, m-2\}$, assume that the claim holds for $r=n$ (induction assumption) and prove the claim for $r=n+1$ (induction step). That will complete the proof since the induction step can be applied iteratively, starting from the base case and yielding thereby the claimed equality for every $r \in \{1, \dots, m-1\}$.
+
+By the induction assumption, we have
+
+$$ (I + l_1 e_1^T) \cdots (I + l_n e_n^T) = I + \sum_{k=1}^n l_k e_k^T. $$
+
+Multiplying both sides by $I + l_{n+1} e_{n+1}^T$ on the right and applying the associativity, multiplicative identity and distributivity of matrix multiplication (parts (a) to (c) of proposition II.4.10), we arrive at
+
+$$ (I + l_1 e_1^T) \cdots (I + l_{n+1} e_{n+1}^T) = (I + \sum_{k=1}^n l_k e_k^T)(I + l_{n+1} e_{n+1}^T) $$
+
+$$ = I + \sum_{k=1}^n l_k e_k^T + l_{n+1} e_{n+1}^T + \sum_{k=1}^n l_k e_k^T l_{n+1} e_{n+1}^T $$
+
+$$ = I + \sum_{k=1}^{n+1} l_k e_k^T + \sum_{k=1}^n l_k (e_k^T l_{n+1}) e_{n+1}^T. $$
+
+Showing that the last sum is zero would be sufficient (and is, in fact, necessary) for completing the induction step (and therefore the entire proof). Indeed, all its terms are equal to zero: for every $k \in \{1, \dots, n\}$ all components of $e_k$ except component k are zeros, whereas component k of $l_{n+1}$ is zero by the assumption of the lemma. This implies $e_k^T l_{n+1} = 0$ for each $k \in \{1, \dots, n\}$.
+#+end_quote
+
+** II.5.10
+#+begin_quote
+Lemma II.5.10 (lower-triangular structure under matrix inversion). For $m \in \mathbb{N}$. consider a lower-triangular matrix $L \in \mathbb{F}^{m \times m}$. Then the following properties hold.
+
+(a) If matrix L is unit lower triangular, then it is invertible and matrix $L^{-1}$ is unit lower triangular.
+
+(b) If matrix L has no zeros on the diagonal, then it is invertible and matrix $L^{-1}$ is lower triangular.
+
+(c) If L is invertible, then it has no zeros on the diagonal.
+
+
+Proof. Let I be the identity matrix of order m throughout the proof.
+
+Let us first prove part (a). Denoting the columns of the strictly lower-triangular matrix $L-I$ by $l_1, \dots, l_m$, we obtain $L = I + \sum_{k=1}^{m-1} l_k e_k^T$ cf. (II.5.19). Clearly, columns $l_1, \dots, l_{m-1} \in \mathbb{F}^m$ are of the form (II.5.18). Using the multiplicative representation given by lemma II.5.9, we obtain
+
+$$ L = (I + l_1 e_1^T) \cdots (I + l_{m-1} e_{m-1}^T). $$
+
+For each $k \in \{1, \dots, m-1\}$, lemma II.5.8 yields that matrix $I + l_k e_k^T$ is invertible and that its inverse equals $I - l_k e_k^T$ So L is a product of invertible matrices and is therefore invertible by proposition II.4.22; furthermore, by the same proposition,
+
+$$ L^{-1} = (I - l_{m-1} e_{m-1}^T) \cdots (I - l_1 e_1^T). $$
+
+Each of the right-hand factors is a unit lower-triangular matrix, and hence $L^{-1}$ is also such by part (b) of lemma II.5.7.
+
+Now we will prove part (b). Let $D \in \mathbb{F}^{m \times m}$ be the diagonal part of L (see definition II.3.8). Since L has no zeros on the diagonal, matrix D is invertible and matrix $D^{-1}L$ is unit lower-triangular. Applying part (a), we deduce that matrix $D^{-1}L$ is invertible and that matrix $(D^{-1}L)^{-1}$ is unit lower triangular. In particular, this means that $L = D(D^{-1}L)$ is a product of two invertible matrices, and we obtain by proposition II.4.22 that L is invertible and $L^{-1} = (D^{-1}L)^{-1}D^{-1}$ Both the right-hand factors are lower-triangular matrices, and hence $L^{-1}$ is also such by part (a) of lemma II.5.7.
+
+Finally, let us prove part (c) by contradiction, assuming that L is invertible but has a zero on the diagonal. Let $k \in \{1, \dots, m\}$ be such that $L_{kk} = 0$ and $L_{ii} \ne 0$ for each $i \in \{1, \dots, k-1\}$ (in other words, the kth diagonal entry is the first of the zero diagonal entries).
+
+$k=1$, then we have $L_{11} = 0$ so that the first row of L is zero. Then so is the first row of $LL^{-1}$, which contradicts that, by definition II.4.14, $LL^{-1} = I$.
+
+If $k=m$. then we have $L_{mm} = 0$, so that column m of L is zero. Then so is column m of $L^{-1}L$ which contradicts that, by definition 1.4.14, $L^{-1}L = I$.
+
+If $1 < k < m$, matrix L is of the form
+
+$$ L = \begin{bmatrix} L_{11} & \\ u^T & 0 \\ L_{21} & v & L_{22} \end{bmatrix} $$
+
+where $L_{11} \in \mathbb{F}^{(k-1) \times (k-1)}$, $L_{22} \in \mathbb{F}^{(m-k) \times (m-k)}$, $L_{21} \in \mathbb{F}^{(m-k) \times (k-1)}$ $u \in \mathbb{F}^{k-1}$ and $v \in \mathbb{F}^{m-k}$ Due to our definition of k, matrix $L_{11}$ has no zeros on the diagonal. It is therefore invertible by part (b). Denoting by $I_1$ and $I_2$ the identity matrices of orders $k-1$ and $m-k$ we define the matrices
+
+$$ X = \begin{bmatrix} I_1 & \\ -u^T L_{11}^{-1} & 1 \\ & I_2 \end{bmatrix} \quad \text{and} \quad Y = \begin{bmatrix} I_1 & \\ u^T L_{11}^{-1} & 1 \\ & I_2 \end{bmatrix} $$
+
+cf. (II.5.27) Direct multiplication in block form shows that $XY = I = YX$ so that X and Y are invertible and mutually inverse by part (b). Direct multiplication in block form also leads to
+
+$$ XL = \begin{bmatrix} L_{11} & \\ 0 & \\ L_{21} & v & L_{22} \end{bmatrix} $$
+
+(II.5.20)
+
+so that row k of XL is zero. Note that the matrices X and $Y = X^{-1}$ are analogues of the matrices M and $L = M^{-1}$ appearing in part (a) of lemma II.5.14. The difference is that a single step of the standard LU decomposition (as presented in lemma II.5.14) is aimed at the elimination a one-column block of maximum height located below the diagonal and uses a single entry as a pivot, whereas the transformation (II.5.20) serves to eliminate a one-row block of maximum width located below the diagonal and uses a square submatrix of the suitable order as a pivot.
+
+Since both L and X are invertible, XL is invertible by proposition II.4.22. Then row k of $(XL)(XL)^{-1}$ is zero, which contradicts that, by definition II.4.14, $(XL)(XL)^{-1} = I$. So we have proved that it is not possible for L to be invertible and, at the same time, to have a zero on the diagonal. This completes the proof of part (c).
+
+#+end_quote
+
+** III.1.29
+#+begin_quote
+Theorem III.1.29 Let V be a F-vector space, and let $A \subseteq V$ be an arbitrary subset.
+
+(i) There is a unique subspace $\langle A \rangle \subseteq V$ such that $A \subseteq \langle A \rangle$ and for every subspace $W \subseteq V$ with $A \subseteq W$ we have $\langle A \rangle \subseteq W$.
+
+(ii) For $v \in V$ we have $v \in \langle A \rangle$ if and only if v can be written as a linear combination of elements of A, that is, if there exist finitely many elements $a_i \in A$ and $\lambda_i \in \mathbb{F}$ with $i = 1, \dots, n$ such that $v = \sum_{i=1}^n \lambda_i a_i$.
+
+
+Proof We define $\langle A \rangle := \bigcap_{A \subseteq W} W$ as the intersection over all subspaces $W \subseteq V$ that contain A. Then by Corollary III.1.16 $\langle A \rangle$ is a subspace that contains A. If U is a subspace that contains A, then $\langle A \rangle \subseteq U$ by construction. Uniqueness holds, because if $\tilde{W}$ is another subspace with the required property, then on the one hand we must have $\tilde{W} \subseteq \langle A \rangle$, and on the other hand $\langle A \rangle \subseteq \tilde{W}$ holds by construction, hence $\tilde{W} = \langle A \rangle$.
+
+(ii) If $v = \sum_{i=1}^n \lambda_i a_i$ for finitely many elements $a_i \in A$ and $\lambda_i \in \mathbb{F}$ with $i = 1, \dots, n$, then $v \in \langle A \rangle$ by Proposition III.1.15.(ii), since $\langle A \rangle$ is a subspace.
+
+Let W be the union of \{0\} with the set of all elements $v \in V$ that can be written as a linear combination of elements of A. Then indeed $W \subseteq \langle A \rangle$. On the other hand, if $v = \sum_{i=1}^n \lambda_i a_i \in W$ then of course also $\lambda v = \sum_{i=1}^n (\lambda \lambda_i) a_i \in W$. Similarly, the sum of two elements of W again lies in W, so by definition $W \subseteq V$ is a subspace. Since obviously $A \subseteq W$, it follows that $\langle A \rangle \subseteq W$ by (i).
+#+end_quote
+
+** III.1.36
+#+begin_quote
+Theorem III.1.36 Let V be a vector space over F and $A \subseteq V$. Then the following are equivalent:
+
+(i) A is linearly independent.
+
+(ii) Every element of $\langle A \rangle \subseteq V$ can be written in a unique way as a linear combination of elements of A.
+
+(iii) If $B \subsetneq A$ is a proper subset, then $\langle B \rangle \subsetneq \langle A \rangle$ So one cannot shrink A without shrinking the span.
+
+
+Proof $(i) \Rightarrow (ii)$ follows directly from Proposition III.1.35.
+
+$(ii) \Rightarrow (iii)$ From Example III.1.31.(ii) we know that $\langle B \rangle \subseteq \langle A \rangle$ Now assume that $\langle B \rangle = \langle A \rangle$ holds. Since $B \subsetneq A$, there exists $v \in A \setminus B$ Because $v \in A$, we have $v \in \langle A \rangle$ hence also $v \in \langle B \rangle$. By Theorem III.1.29.(ii) there exist elements $b_1, \dots, b_n \in B$ and $\lambda_1, \dots, \lambda_n \in \mathbb{F}$ such that
+
+$$ v = \sum_{i=1}^n \lambda_i b_i \quad (III.2) $$
+
+Since $B \subsetneq A$, we have $b_i \in A$ for all $i = 1, \dots, n$. Therefore (III.2) is a linear combination of elements of A. Since $v \in A$ the representation $v = 1 \cdot v$ is also a linear combination of elements of A, and because $v \notin B$ we have $v \ne b_i$ for all $i = 1, \dots, n$. Thus the representation of $v \in \langle A \rangle$ as a linear combination is not unique, contradicting (ii).
+
+$(iii) \Rightarrow (i)$: Assume that A is not linearly independent. Then there exist $v_1, \dots, v_n \in A$ and $\lambda_1, \dots, \lambda_n \in \mathbb{F}$ such that, without loss of generality, $\lambda_1 \ne 0$ and $\sum_{i=1}^n \lambda_i v_i = 0$. From this we obtain
+
+$$ v_1 = \sum_{i=2}^n \frac{-\lambda_i}{\lambda_1} v_i. \quad (III.3) $$
+
+Let $B := A \setminus \{v_1\}$. We show that $\langle B \rangle = \langle A \rangle$ holds. Take an arbitrary $v \in \langle A \rangle$. Then there exist finitely many elements $w_1, \dots, w_m \in A$ and $\mu_1, \dots, \mu_m \in \mathbb{F}$ such that
+
+$$ v = \sum_{j=1}^m \mu_j w_j. \quad (III.4) $$
+
+If $v_1 \ne w_j$ for all $j = 1, \dots, m$ then $w_j \in B$ for all j, so (III.4) is a linear combination of elements of B, hence $v \in \langle B \rangle$. So assume that there exists a $j \in \{1, \dots, m\}$ for which $w_j = v_1$ , and without loss of generality let j be the only index for which this holds. Then from (III.4) and (III.3) we obtain
+
+$$ v = \sum_{k=1}^{j-1} \mu_k w_k + \sum_{k=j+1}^m \mu_k w_k + \sum_{i=2}^n \frac{-\mu_j \lambda_i}{\lambda_1} v_i. $$
+
+Since $w_1, \dots, w_{j-1}, w_{j+1}, \dots, w_m, v_2, \dots, v_n \in B$, the vector v can be represented as a linear combination of elements of B, hence $v \in \langle B \rangle$. Thus $\langle B \rangle = \langle A \rangle$ a contradiction, so A is linearly independent.
+#+end_quote
+
+** III.1.38
+#+begin_quote
+Proposition III.1.38 (Basis) Let V be a vector space over F and $\mathcal{B} \subseteq V$. Then the following conditions are equivalent:
+
+(i) $\mathcal{B}$ is a basis.
+
+(ii) $\mathcal{B}$ is a minimal spanning set, that is, $\langle \mathcal{B} \rangle = V$ and for all $A \subsetneq \mathcal{B}$ we have $\langle A \rangle \ne V$
+
+(iii) $\mathcal{B}$ is a maximal linearly independent subset of V, that is, $\mathcal{B}$ is linearly independent, but every proper superset $A \supset \mathcal{B}$ is linearly dependent.
+
+
+Proof $(i) \Leftrightarrow (ii)$: By definition we certainly have $\langle \mathcal{B} \rangle = V$. By Theorem III.1.36.(iii), for $A \subsetneq \mathcal{B}$ the statement $\langle A \rangle \ne \langle \mathcal{B} \rangle = V$ is equivalent to the linear independence of $\mathcal{B}$.
+
+$(i) \Rightarrow (iii)$: By definition, $\mathcal{B}$ as a basis is linearly independent. Moreover, we have $\langle \mathcal{B} \rangle = V$ Let $B \supset \mathcal{B}$ be a proper superset of $\mathcal{B}$. Then also $\langle B \rangle = V$. Therefore B cannot be linearly independent, because otherwise, by Theorem III.1.36.(iii), the proper subset $\mathcal{B}$ would satisfy $\langle \mathcal{B} \rangle \ne \langle B \rangle = V$, a contradiction.
+
+$(iii) \Rightarrow (i)$: We show that $\mathcal{B}$ is a spanning set. Let $v \in V$ be arbitrary. If $v \in \mathcal{B}$, then $v \in \langle \mathcal{B} \rangle$. Assume now that $v \notin \mathcal{B}$ Then $B := \mathcal{B} \cup \{v\}$ is a proper superset of $\mathcal{B}$, hence linearly dependent. So there exist finitely many elements $v_1, \dots, v_n \in B$ and $\lambda_1, \dots, \lambda_n \in \mathbb{F}$ such that
+
+$$ \sum_{i=1}^n \lambda_i v_i = 0, \quad (III.5) $$
+
+and at least one $\lambda_i$ is nonzero. We claim that $v = v_i$ for some $i = 1, \dots, n$ and that $\lambda_i \ne 0$ Indeed, if all $v_i$ were different from v, then (III.5) would be a linear combination of elements of $\mathcal{B}$, hence we would have $\lambda_1 = \dots = \lambda_n = 0$ since $\mathcal{B}$ is linearly independent, contradicting $\lambda_i \ne 0$ for some i. Consequently $v = v_i$ for some i. If now $\lambda_i = 0$ then we could omit $v_i$ from the linear combination (III.5) and would obtain a linear combination in which v does not occur, contradicting what we just proved. Therefore, from (III.5) we obtain
+
+$$ v = v_i = -\sum_{j=1}^{i-1} \frac{\lambda_j}{\lambda_i} v_j - \sum_{j=i+1}^n \frac{\lambda_j}{\lambda_i} v_j, $$
+
+hence v is a linear combination of elements of $\mathcal{B}$, thus $v \in \langle \mathcal{B} \rangle$. Since $v \in V$ was arbitrary, we have $\langle \mathcal{B} \rangle = V$ so $\mathcal{B}$ is a basis.
+#+end_quote
+
+** III.1.46
+#+begin_quote
+Lemma III.1.46 (Exchange lemma) Let V be a F-vector space, $A \subseteq V$ a subset, and $v \in \langle A \rangle$ an arbitrary element. Let $a_0 \in A$ be an element such that there is a representation of v as a linear combination of elements of A in which $a_0$ has a coefficient $\lambda_0 \ne 0$ Then the set $A' := (A \setminus \{a_0\}) \cup \{v\}$ which is obtained by replacing the vector $a_0$ in A by v, satisfies $\langle A' \rangle = \langle A \rangle$.
+
+Proof By assumption we have $v \in \langle A \rangle$ hence $A' \subseteq \langle A \rangle$ hence $\langle A' \rangle \subseteq \langle A \rangle$ Conversely, by assumption there exist elements $a_1, \dots, a_n \in A \setminus \{a_0\}$ and scalars $\lambda_0, \dots, \lambda_n$ with $\lambda_0 \ne 0$ such that $v = \lambda_0 a_0 + \sum_{j=1}^n \lambda_j a_j$. Hence
+
+$$ a_0 = \lambda_0^{-1}(v - \sum_{j=1}^n \lambda_j a_j) \in \langle A' \rangle. $$
+
+Since obviously $A \setminus \{a_0\} \subseteq \langle A' \rangle$ holds, we obtain $A \subseteq \langle A' \rangle$ and therefore $\langle A \rangle \subseteq \langle A' \rangle$.
+#+end_quote
+
+** III.1.47
+#+begin_quote
+Theorem III.1.47 (Steinitz exchange theorem) Let V be a finitely generated F-vector space, and let $\{v_1, \dots, v_n\}$ be a spanning set of V. Then:
+
+(i) If $A \subseteq V$ is a linearly independent subset, then A is finite and has at most n elements. If $A = \{a_1, \dots, a_k\}$ with $k < n$, then one can renumber the elements $v_i$ in such a way that $\{a_1, \dots, a_k, v_{k+1}, \dots, v_n\}$ is a spanning set of V.
+
+(ii) If $A \subseteq V$ is an arbitrary spanning set, then there exists a finite subset $A' \subseteq A$ with at most n elements that is also a spanning set of V.
+
+
+Proof
+(i) We choose an arbitrary element $a_1 \in A$ Since $\{v_1, \dots, v_n\}$ is a spanning set of V, we find scalars $\lambda_1, \dots, \lambda_n \in \mathbb{F}$ such that $a_1 = \sum_{i=1}^n \lambda_i v_i$. Since A is linearly independent, we have $a_1 \ne 0$, so at least one $\lambda_i \ne 0$, and by renumbering the $v_i$ we achieve $\lambda_1 \ne 0$ By the exchange lemma III.1.46, $\{a_1, v_2, \dots, v_n\}$ is also a spanning set of V. If $A = \{a_1\}$ holds, we are done.
+
+If not, we choose an arbitrary element $a_2 \in A \setminus \{a_1\}$. Then there again exist elements $\lambda_1, \dots, \lambda_n \in \mathbb{F}$ such that $a_2 = \lambda_1 a_1 + \sum_{i=2}^n \lambda_i v_i$. If all $\lambda_i$ for $i \ge 2$ were equal to zero, then $a_2 = \lambda_1 a_1$, hence $\lambda_1 a_1 + (-1)a_2 = 0$, which would contradict that A is linearly independent. Thus there exists an $i \ge 2$ with $\lambda_i \ne 0$, and by renumbering we achieve $\lambda_2 \ne 0$ By the exchange lemma III.1.46, $\{a_1, a_2, v_3, \dots, v_n\}$ is again a spanning set of V.
+
+Assume inductively that for some $l < n$ we have already found $\{a_1, \dots, a_l\} \subseteq A$ such that (for a suitable numbering of the $v_i$) $\{a_1, \dots, a_l, v_{l+1}, \dots, v_n\}$ is a spanning set of V. If $A = \{a_1, \dots, a_l\}$, then we are done. If not, we choose an arbitrary element $a_{l+1} \in A \setminus \{a_1, \dots, a_l\}$ As before we obtain $\lambda_1, \dots, \lambda_n \in \mathbb{F}$ such that $a_{l+1} = \sum_{i=1}^l \lambda_i a_i + \sum_{i=l+1}^n \lambda_i v_i$ holds. From the linear independence of A it follows again that there must be an $i > l$ with $\lambda_i \ne 0$, and by renumbering we obtain $\lambda_{l+1} \ne 0$ By the exchange lemma the set $\{a_1, \dots, a_{l+1}, v_{l+2}, \dots, v_n\}$ is a spanning set of V.
+
+By induction we can now continue this process until we either have " used up" the whole set A, or else in the last step we have found elements $a_1, \dots, a_n \in A$ that form a spanning set of V. In the first case, of course A must be finite with fewer than n elements, and the last step yields exactly the claim of the theorem. In the second case we have $\langle \{a_1, \dots, a_n\} \rangle = V = \langle A \rangle$. Since A is linearly independent, Theorem III.1.36 implies $A = \{a_1, \dots, a_n\}$ so A is again finite with at most n elements.
+
+(ii) If $A = \{0\}$, then we are done, because we can choose $A' = \emptyset$ Otherwise choose an element $0 \ne a_1 \in A$ As in (i) we can write $a_1$ as a linear combination of the $v_i$, and by renumbering we achieve that the coefficient of $v_1$ is nonzero. By the exchange lemma, $\{a_1, v_2, \dots, v_n\}$ is then a spanning set of V. If $\langle \{a_1\} \rangle = V$, then we are done. If not, then there must be an element $a_2 \in A \setminus \langle \{a_1\} \rangle$. If that were not the case, then we would have $A \subseteq \langle \{a_1\} \rangle$, a contradiction, because A is a spanning set of V and $\langle \{a_1\} \rangle \ne V$ Then we can again write $a_2$ as a linear combination of $a_1$ and the $v_i$, and since $a_2 \notin \langle \{a_1\} \rangle$ at least one $v_i$ must have a coefficient that is nonzero. By renumbering this holds for $v_2$, and by the exchange lemma $\{a_1, a_2, v_3, \dots, v_n\}$ is a spanning set of V.
+
+Assume inductively that for an $l < n$ we have already found $a_1, \dots, a_l \in A$ such that $\{a_1, \dots, a_l, v_{l+1}, \dots, v_n\}$ is a spanning set of V. If $\{a_1, \dots, a_l\}$ is a spanning set of V, we are done. If not, then as above there must be an element $a_{l+1} \in A \setminus \langle \{a_1, \dots, a_l\} \rangle$, because otherwise A could not be a spanning set. This condition also implies that in the representation of $a_{l+1}$ as a linear combination of $a_1, \dots, a_l, v_{l+1}, \dots, v_n$ at least one $v_i$ has a coefficient that is nonzero, and after renumbering $v_{l+1}$ is this element. By the exchange lemma the set $\{a_1, \dots, a_{l+1}, v_{l+2}, \dots, v_n\}$ is then a spanning set, and (ii) follows by induction.
+#+end_quote
+
+** III.2.11
+#+begin_quote
+Proposition III.2.11 (Kernel and image) Let V and W be vector spaces over F and let $f: V \rightarrow W$ be linear. Then:
+
+(i) If $\hat{V} \subseteq V$ is a subspace, then $f(\hat{V}) \subseteq W$ is also a subspace. In particular, $im(f) \subseteq W$ is a subspace.
+
+(ii) If $\hat{W} \subseteq W$ is a subspace, then $f^{-1}(\hat{W}) \subseteq V$ is also a subspace. In particular, $ker(f) \subseteq V$ is a subspace.
+
+$(iii) f is surjective if and only if $im(f) = W$.
+
+(iv) f is injective if and only if $ker(f) = \{0\}$.
+
+
+Proof
+(i) Let $w, w' \in f(\hat{V})$ and $\lambda \in \mathbb{F}$ Then there exist $v, v' \in \hat{V}$ with $f(v) = w$ and $f(v') = w'$. By linearity of f we obtain $\lambda w + w' = \lambda f(v) + f(v') = f(\lambda v + v')$ Since $\hat{V}$ is a subspace, we have $\lambda v + v' \in \hat{V}$ (for example by Proposition III.1.15.(i)), and hence $\lambda w + w' \in f(\hat{V})$. Since also $f(0) = 0 \in f(\hat{V})$ it follows that $f(\hat{V})$ is a subspace.
+
+(ii) Let $v, v' \in f^{-1}(\hat{W})$ and $\lambda \in \mathbb{F}$ Then $f(v), f(v') \in \hat{W}$, and therefore $f(\lambda v + v') = \lambda f(v) + f(v') \in \hat{W}$, since $\hat{W}$ is a subspace, and thus $\lambda v + v' \in f^{-1}(\hat{W})$ We have $0 \in f^{-1}(\hat{W})$ because $f(0) = 0 \in \hat{W}$. Therefore $f^{-1}(\hat{W})$ is a subspace.
+
+(iii) This is the definition of surjective.
+
+(iv) If f is injective, then the preimage of every singleton set has at most one element, so since $f(0) = 0$ it must be that $f^{-1}(\{0\}) = \{0\}$ Now assume that $ker(f) = \{0\}$. Let $x, y \in V$ with $f(x) = f(y)$ Then we obtain $0 = f(x) - f(y) = f(x-y)$, and hence $x-y \in ker(f)$ therefore $x-y = 0$, so $x = y$. Thus f is injective.
+#+end_quote
+
+** IV.0.1
+#+begin_quote
+Proposition IV.0.1 (Extension of linear maps) Let V be a F-vector space and $A \subseteq V$. Then A is linearly independent if and only if for every F-vector space W and every function $f: A \rightarrow W$ there exists a linear map $\tilde{f}: \langle A \rangle \rightarrow W$ such that for all $a \in A$ we have $\tilde{f}(a) = f(a)$, i.e. we can extend every function from A into a vector space to a linear map on the linear span of A. The map $\tilde{f}: \langle A \rangle \rightarrow W$ is then uniquely determined. In particular, linear maps are uniquely determined by the images of the elements of a basis of V.
+
+Proof First assume that A is linearly independent. Then, by Theorem III.1.36, for $v \in \langle A \rangle$ there are uniquely determined elements $a_1, \dots, a_k \in A$ and $\lambda_1, \dots, \lambda_k \in \mathbb{F}$ with $v = \sum_{i=1}^k \lambda_i a_i$. We define $\tilde{f}(v) := \sum_{i=1}^k \lambda_i f(a_i)$. (Note that this does not change if we add or omit elements with coefficient 0.) For $a \in A$ we have $a = 1 \cdot a$, hence $\tilde{f}(a) = 1 \cdot f(a) = f(a)$. Thus we only have to show that $\tilde{f}$ linear. Let $v, v' \in \langle A \rangle$ and $\lambda \in \mathbb{F}$ Then $v = \sum_{i=1}^k \lambda_i a_i$ and $v' = \sum_{i=1}^k \mu_i a_i$, where we have assumed without loss of generality that both vectors can be written as linear combinations of the same elements of A (this can always be achieved by taking the union of the two finite sets and completing with 0-coefficients). We then obtain
+
+$$ \tilde{f}(\lambda v + v') = \tilde{f}(\lambda \sum_{i=1}^k \lambda_i a_i + \sum_{i=1}^k \mu_i a_i) $$
+$$ = \tilde{f}(\sum_{i=1}^k (\lambda \lambda_i + \mu_i) a_i) $$
+$$ = \sum_{i=1}^k (\lambda \lambda_i + \mu_i) f(a_i) $$
+$$ = \lambda \sum_{i=1}^k \lambda_i f(a_i) + \sum_{i=1}^k \mu_i f(a_i) $$
+$$ = \lambda \tilde{f}(\sum_{i=1}^k \lambda_i a_i) + \tilde{f}(\sum_{i=1}^k \mu_i a_i) $$
+$$ = \lambda \tilde{f}(v) + \tilde{f}(v') $$
+
+hence $\tilde{f}$ is linear by Proposition III.2.3.
+
+For the converse, for an element $a \in A$ consider the function $\chi_a: A \rightarrow \mathbb{F}$ with $\chi_a(a) = 1$ and $\chi_a(b) = 0$ for all $a \ne b \in A$ By assumption we can find a linear map $\tilde{\chi}_a: \langle A \rangle \rightarrow \mathbb{F}$ that agrees with $\chi_a$ when restricted to A. Now let $a_1, \dots, a_k \in A$ and $\lambda_1, \dots, \lambda_k \in \mathbb{F}$ with $\sum_{i=1}^k \lambda_i a_i = 0$ be given. Then for $j = 1, \dots, k$ we have
+
+$$ 0 = \tilde{\chi}_{a_j}(0) = \tilde{\chi}_{a_j}(\sum_{i=1}^k \lambda_i a_i) = \sum_{i=1}^k \lambda_i \tilde{\chi}_{a_j}(a_i) = \sum_{i=1}^k \lambda_i \delta_{i,j} = \lambda_j. $$
+
+Consequently, A is linearly independent.
+
+Let g be another such map and let $v \in \langle A \rangle$ Then, by Theorem III.1.36, there is a unique linear combination $v = \sum_{i=1}^n \lambda_i a_i$ with $a_1, \dots, a_n \in A$ and $\lambda_1, \dots, \lambda_n \in \mathbb{F}$ We obtain
+
+$$ \tilde{f}(v) = \tilde{f}(\sum_{i=1}^n \lambda_i a_i) = \sum_{i=1}^n \lambda_i \tilde{f}(a_i) = \sum_{i=1}^n \lambda_i g(a_i) = g(\sum_{i=1}^n \lambda_i a_i) = g(v), $$
+thus $\tilde{f} = g$ so $\tilde{f}$ is uniquely determined.
+
+Now let $\mathcal{B}$ be a basis of V and let $f: \mathcal{B} \rightarrow W$ be a function for an arbitrary F-vector space W. Then what we proved above allows us to conclude the existence of a unique linear map $\tilde{f}: V = \langle \mathcal{B} \rangle \rightarrow W$ that agrees with f on $\mathcal{B}$.
+#+end_quote
+
+** IV.1.4
+#+begin_quote
+Proposition IV.1.4 (Sum of subspaces) Let W and $\hat{W}$ be subspaces of a F-vector space V. Then:
+
+(i) An element $v \in V$ lies in $W + \hat{W}$ if and only if there exist elements $w \in W$ and $\hat{w} \in \hat{W}$ such that $v = w + \hat{w}$.
+
+(ii) If W and $\hat{W}$ are finite-dimensional, then $W + \hat{W}$ is also finite-dimensional and
+
+$$ dim(W + \hat{W}) = dim(W) + dim(\hat{W}) - dim(W \cap \hat{W}). $$
+
+
+Proof
+(i) Let U be the set of all $v \in V$ that can be written as $w + \hat{w}$ with $w \in W$ and $\hat{w} \in \hat{W}$ Then of course $W \cup \hat{W} \subseteq U \subseteq W + \hat{W}$, so it suffices to show that $U \subseteq V$ is a subspace. Since $0 \in W$ and $0 \in \hat{W}$, we have $0 + 0 = 0 \in U$ Let $w_1, w_2 \in W$, $\hat{w}_1, \hat{w}_2 \in \hat{W}$, and $\lambda \in \mathbb{F}$ Then
+
+$$\lambda(w_1 + \hat{w}_1) + (w_2 + \hat{w}_2) = \lambda w_1 + \lambda \hat{w}_1 + w_2 + \hat{w}_2 = (\lambda w_1 + w_2) + (\lambda \hat{w}_1 + \hat{w}_2)$$
+
+Since W is a subspace, we have $\lambda w_1 + w_2 \in W$. Similarly, $\lambda \hat{w}_1 + \hat{w}_2 \in \hat{W}$ Hence $\lambda(w_1 + \hat{w}_1) + (w_2 + \hat{w}_2) \in U$, so U is a subspace by Proposition III.1.15.
+
+(ii) Since $W \cap \hat{W}$ is a subspace of W (and of $\hat{W})$, this space is also finite-dimensional. We can therefore choose a basis $\{w_1, \dots, w_k\}$ for $W \cap \hat{W}$, where $k = dim(W \cap \hat{W})$. Since this set is a linearly independent subset of W, by Corollary III.1.48(ii) we find elements $w_{k+1}, \dots, w_n \in W$ such that $\{w_1, \dots, w_n\}$ is a basis of W, and of course then $n = dim(W)$ Similarly, we find elements $\hat{w}_{k+1}, \dots, \hat{w}_m \in \hat{W}$ such that $\{w_1, \dots, w_k, \hat{w}_{k+1}, \dots, \hat{w}_m\}$ is a basis of $\hat{W}$ and $m = dim(\hat{W})$. We now claim that the set $\mathcal{B} := \{w_1, \dots, w_n, \hat{w}_{k+1}, \dots, \hat{w}_m\}$ is a basis of the subspace $W + \hat{W}$ which completes the proof, since this set has $n + m - k$ elements. To prove this, we first note that $\mathcal{B}$ contains a basis of W, hence $W \subseteq \langle \mathcal{B} \rangle$. Similarly, $\hat{W} \subseteq \langle \mathcal{B} \rangle$ and thus $W \cup \hat{W} \subseteq \langle \mathcal{B} \rangle$. Since, on the one hand, $\mathcal{B} \subseteq W \cup \hat{W}$, and on the other hand $\langle \mathcal{B} \rangle$ is a subspace, we conclude that $\langle \mathcal{B} \rangle = W + \hat{W}$. It remains to show that $\mathcal{B}$ is linearly independent. So assume that we can find scalars $\lambda_1, \dots, \lambda_n, \mu_{k+1}, \dots, \mu_m \in \mathbb{F}$ such that
+
+$$\sum_{i=1}^n \lambda_i w_i + \sum_{j=k+1}^m \mu_j \hat{w}_j = 0$$
+
+holds. Then we obtain
+
+$$\sum_{i=1}^n \lambda_i w_i = -\sum_{j=k+1}^m \mu_j \hat{w}_j. \quad (IV.3)$$
+
+Since the $\hat{w}_j \in \hat{W}$ and the $w_i \in W$ both sides of the equation must lie in $W \cap \hat{W}$ Since $\{w_1, \dots, w_k\}$ is a basis of this space, there exist scalars $\nu_1, \dots, \nu_k \in \mathbb{F}$ such that
+
+$$ \sum_{i=1}^k \nu_i w_i + \sum_{j=k+1}^m (-\mu_j) \hat{w}_j = 0, $$
+
+and since $\{w_1, \dots, w_k, \hat{w}_{k+1}, \dots, \hat{w}_m\}$ is a basis of $\hat{W}$ we must have $\nu_1 = \dots = \nu_k = \mu_{k+1} = \dots = \mu_m = 0$. Therefore
+
+$$ \sum_{i=k+1}^n \lambda_i w_i = 0, $$
+
+and since $\{w_{k+1}, \dots, w_n\}$ is linearly independent as a subset of a basis, it follows that $\lambda_{k+1} = \dots = \lambda_n = 0$, and hence $\mathcal{B}$ is linearly independent, thus a basis.
+#+end_quote
+
+** IV.1.10
+#+begin_quote
+Theorem IV.1.10 (Dimension theorem for linear maps) Let V and W be finite-dimensional F-vector spaces, and let $f: V \rightarrow W$ be linear. Then
+
+$$ dim(V) = dim(im(f)) + dim(ker(f)). $$
+
+Proof We choose a basis $\{b_1, \dots, b_k\}$ for the subspace $ker(f) \subseteq V$ Since the vectors $b_i$ are linearly independent, Corollary III.1.48(ii) shows that they can be extended to a basis $\{b_1, \dots, b_n\}$ of the vector space V. We claim that the vectors $f(b_{k+1}), \dots, f(b_n) \in W$ form a basis of the subspace $im(f) \subseteq W$ which of course proves the theorem. First, Proposition III.2.11 tells us that the vectors $f(b_1), \dots, f(b_n)$ form a generating system for im(f). By construction, however, we have $f(b_1) = \dots = f(b_k) = 0$ so $f(b_{k+1}), \dots, f(b_n)$ also form a generating system. On the other hand, assume that $\lambda_{k+1}, \dots, \lambda_n \in \mathbb{F}$ are scalars such that $\lambda_{k+1} f(b_{k+1}) + \dots + \lambda_n f(b_n) = 0$ holds. Then we can write the left-hand side as $f(\lambda_{k+1} b_{k+1} + \dots + \lambda_n b_n)$ hence $\lambda_{k+1} b_{k+1} + \dots + \lambda_n b_n \in ker(f)$. By construction, the vectors $b_1, \dots, b_k$ form a basis of this subspace, so we find scalars $\mu_1, \dots, \mu_k \in \mathbb{F}$ such that
+
+$$ \lambda_{k+1} b_{k+1} + \dots + \lambda_n b_n = \mu_1 b_1 + \dots + \mu_k b_k. $$
+
+But this means precisely that
+
+$$ \mu_1 b_1 + \dots + \mu_k b_k - \lambda_{k+1} b_{k+1} - \dots - \lambda_n b_n = 0, $$
+
+and by linear independence of $b_1, \dots, b_n$ this is possible only if
+
+$$ \mu_1 = \dots = \mu_k = \lambda_{k+1} = \dots = \lambda_n = 0. $$
+#+end_quote
+
+** IV.1.15
+#+begin_quote
+Proposition IV.1.15 (Rank) Let $A \in M_{m,n}(\mathbb{F})$ be a matrix.
+
+(i) The rank of A is exactly the dimension of the subspace of $\mathbb{F}^m$ spanned by the column vectors of A. In particular, $rk(A) = r$ holds if and only if there exist r column vectors of A that are linearly independent in $\mathbb{F}^m$ but any $r+1$ column vectors of A are linearly dependent.
+
+(ii) If $C \in M_m(\mathbb{F})$ and $D \in M_n(\mathbb{F})$ are invertible, then $rk(A) = rk(CA) = rk(AD)$
+
+(iii) If the matrix A is in row echelon form with indices $r, j_1, \dots, j_r$, then $rk(A) = r$.
+
+Proof
+
+(i) If $f: \mathbb{F}^n \rightarrow \mathbb{F}^m$ is the linear map $f(v) = Av$, then the column vectors of A are precisely the vectors $f(e_1), \dots, f(e_n)$ where the $e_i$ are the elements of the standard basis of $\mathbb{F}^n$ By Proposition IV.0.2 these vectors form a generating system for $im(f)$, so the first claim follows immediately. By Corollary III.1.48 this generating system contains a basis of this subspace, so the second claim follows as well.
+
+(ii) Let again $f: \mathbb{F}^n \rightarrow \mathbb{F}^m$ be the linear map $f(v) = Av$, and let $g: \mathbb{F}^m \rightarrow \mathbb{F}^m$ be given by $g(v) = Cv$. By assumption, g is a linear isomorphism. Of course, g maps the subspace $im(f) \subseteq \mathbb{F}^m$ onto $im(g \circ f) \subseteq \mathbb{F}^m$ and $g: im(f) \rightarrow im(g \circ f)$ is also bijective. Hence $rk(CA) = dim(im(g \circ f)) = dim(im(f)) = rk(A)$ Analogously we verify $rk(AD) = rk(A)$ (see Exercise IV.1.16).
+
+(iii) We can transform A into reduced row echelon form with the same indices by elementary row operations. By Theorem II.6.9 this corresponds to a multiplication from the left by an invertible matrix and therefore does not change the rank by part (ii). Thus we may assume without loss of generality that A is in reduced row echelon form. Then for $i = 1, \dots, r$ the $j_i$ -th column vector of A is exactly $e_i$, so A has at least linearly independent column vectors and $rk(A) \ge r$. On the other hand, by definition all rows of A starting with the $(r+1)$ -st row are zero. This means that the image of the map $v \mapsto Av$ lies in the subspace $\mathbb{F}^r \subset \mathbb{F}^m$ and hence must have dimension < r.
+#+end_quote

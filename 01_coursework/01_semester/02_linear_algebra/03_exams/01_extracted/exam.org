@@ -1,0 +1,51 @@
+#+title: Analysis
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-02-18>
+#+lastmod: <2026-04-13 17:28>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* TOPIC HEATMAP (Ranked by Point Value/Frequency)
+| Rank | Topic Cluster        | Freq | Complexity | Style Tags (Max 5 words)      |
+|------+----------------------+------+------------+-------------------------------|
+|    1 | Linear Maps (Theory) | 3/3  | High       | Definitions & Major Theorems  |
+|    2 | Matrix Algebra       | 3/3  | Medium     | Inverses & LU Decomposition   |
+|    3 | Vector Spaces        | 3/3  | Medium     | Subspace Checks & Basis       |
+|    4 | Linear Systems       | 3/3  | Low        | Gaussian Elim & Parametric    |
+|    5 | Maps & Fields        | 2/3  | Low        | Axioms & Function Composition |
+
+* DETAILED STYLE NOTES
+- **Linear Maps (Theory):** Prof B consistently asks for 3 definitions (Kernel, Image, Rank) followed immediately by a major theorem statement and proof. In the *Target Exam*, this was the Steinitz Exchange Theorem. In *Historical Data*, it was often Rank-Nullity or Dimension Theorem for Sums.
+- **Matrix Algebra:** The *Target Exam* specifically requested "LU factorization (with pivoting)" and "Inverse via elementary row operations". Historical papers focused heavily on modular arithmetic ($\mathbb{Z}_5, \mathbb{Z}_7$), whereas the Target Exam used $\mathbb{R}$ and $\mathbb{C}$.
+- **Vector Spaces:** Questions strictly require checking if a set is a subspace (polynomials or $\mathbb{R}^n$). The *Target Exam* included a specific check for a set defined by quadratic constraints ($x^2+...$), requiring a counter-example.
+- **Maps & Fields:** The *Target Exam* devoted significant points (4pts) to the raw "Definition of a Field" and basic map properties (Injectivity/Composition), which is a shift from the purely calculation-heavy historical papers.
+
+* FOUNDATIONAL SKILLS (The "Prof A" Filter)
+- [ ] **Must Learn:** Gaussian Elimination (Row Reduction) :: *Reason: Required for Inverses (Q4), Linear Systems (Q3), and determining Rank (Q5).*
+- [ ] **Must Learn:** LU Decomposition :: *Reason: Explicitly required in Target Exam Q3 (Prof B prefers this over simple elimination).*
+- [ ] **Must Learn:** Complex Number Arithmetic :: *Reason: Target Exam Q6 and Q19 involve $\mathbb{C}$ and $i$.*
+- [ ] **Must Learn:** Polynomial Arithmetic :: *Reason: Target Exam Q6 asks for subspace checks on $P[X]$.*
+- [ ] **SAFE TO IGNORE:** Determinants :: *Reason: Never asked in Target or Historical exams; invertibility is checked via Rank or Row Ops.*
+- [ ] **SAFE TO IGNORE:** Eigenvalues / Eigenvectors :: *Reason: Completely absent from all provided Exam and Problem Set data.*
+- [ ] **SAFE TO IGNORE:** Inner Products / Orthogonality :: *Reason: Absent from Target Exam and definitions.*
+
+* PROOF STRATEGY
+** Verbatim Candidates (Memorize)
+- [ ] Steinitz Exchange Theorem (III.1.47) :: *Reason: 10 points in Target Exam (Statement + Proof).*
+- [ ] Dimension Theorem / Rank-Nullity (IV.1.10) :: *Reason: High frequency in Historical Data; strong candidate if Steinitz isn't asked.*
+- [ ] Dimension Theorem for Sums (IV.1.4) :: *Reason: Appears in Historical Past Paper 01 (2nd/4th Dates).*
+
+** Application Only (Understand Logic)
+- [ ] Subspace Criteria (III.1.15/III.2.11) :: *Reason: Required to solve "Is this a subspace?" questions (Target Q6).*
+- [ ] Linear Independence/Basis Equivalence (III.1.36/38) :: *Reason: Needed to answer "Does this set contain a linearly independent set?" (Target Q6).*
+- [ ] Extension of Linear Maps (IV.0.1) :: *Reason: Foundational logic for defining maps, though not explicitly asked as a proof.*

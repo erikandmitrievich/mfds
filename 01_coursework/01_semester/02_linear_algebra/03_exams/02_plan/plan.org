@@ -1,0 +1,149 @@
+#+title: Plan
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-02-16>
+#+lastmod: <2026-04-13 17:28>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Day 01: Front-Loading Linear Maps & Matrix Algebra (Basics)
+** Block A: Active Computation
+- [X] Open =ps_04.org= and complete Problem 10 (LU Decomposition without pivoting).
+- Rationale: Building flawless Gaussian Elimination and basic LU mechanics is foundational for everything else in Matrix Algebra.
+** Block B: Theory & Proof Memorization
+- [ ] Open =must_know_proofs.org= and memorize the Steinitz Exchange Theorem (Theorem III.1.47).
+- Rationale: Prof B's Target Exam awards a massive 10 points for simply stating and proving this exact theorem.
+** Block C: Application/Testing
+- [X] Open =exam_01.org= and complete Problem 5.
+- Rationale: Tests the definitions of Kernel, Image, and Rank alongside the Steinitz proof exactly as Prof B formats them.
+
+* Day 02: Matrix Algebra - Inverses & Pivoting
+** Block A: Active Computation
+- [X] Open =ps_05.org= and complete Problem 13 (LU with partial pivoting).
+- Rationale: The Target Exam specifically demands LU factorization *with pivoting*, making this non-negotiable.
+** Block B: Theory & Proof Memorization
+- [X] Open =must_know_proofs.org= and memorize the Dimension Theorem / Rank-Nullity (Theorem IV.1.10).
+- Rationale: This is highly frequent in historical data and serves as the most likely verbatim backup if Steinitz is omitted.
+** Block C: Application/Testing
+- [X] Open =exam_01.org= and complete Problem 3.
+- [X] Open =exam_01.org= and complete Problem 4.
+- Rationale: Directly tests LU factorization and matrix inversion via elementary row operations in the exact Target Exam format.
+
+* Day 03: Linear Maps & Systems Integration
+** Block A: Active Computation
+- [X] Open =ps_06.org= and complete Problem 19(a) (Complex Linear Systems).
+- Rationale: The Target Exam integrates complex arithmetic ($\mathbb{C}$ and $i$) heavily into calculation questions.
+** Block B: Theory & Proof Memorization
+- [X] Open =must_know_proofs.org= and memorize Kernel and Image properties (Proposition III.2.11).
+- Rationale: This provides the necessary logic to solve "Is this a subspace?" questions and prove injectivity.
+** Block C: Application/Testing
+- [X] Open =past_paper_01.org=, go to the 1st Exam Date, and complete Problem 2.
+- [X] Open =past_paper_01.org=, go to the 1st Exam Date, and complete Problem 3.
+- Rationale: Drills the Rank-Nullity proof and matrix inversions under the pressure of an alternative past paper format.
+
+* Day 04: Matrix Algebra Mastery & Vector Space Intro
+** Block A: Active Computation
+- [X] Open =ps_05.org= and complete Problem 16 (Gaussian elimination and rank).
+- Rationale: Prof B relies on Gaussian elimination to check invertibility and rank, avoiding determinants entirely.
+** Block B: Theory & Proof Memorization
+- [X] Open =must_know_proofs.org= and memorize the Dimension Theorem for Sums (Proposition IV.1.4).
+- Rationale: This appears in historical Past Paper dates and acts as the final tier-1 verbatim candidate.
+** Block C: Application/Testing
+- [X] Open =exam_01.org= and complete Problem 6(d).
+- Rationale: Integrates complex arithmetic directly into finding a linear map's kernel to determine injectivity.
+
+* Day 05: Vector Spaces - Subspaces & Bases
+** Block A: Active Computation
+- [X] Open =ps_06.org= and complete Problem 21 (Subspace checks).
+- Rationale: Vector space questions strictly require verifying if a given set is a subspace.
+** Block B: Theory & Proof Memorization
+- [ ] Open =must_know_proofs.org= and study Subspace Criteria / Span logic (Theorem III.1.29).
+- Rationale: Grasping this logic is essential to bypass blind calculations and effectively spot trick quadratic counter-examples.
+** Block C: Application/Testing
+- [X] Open =exam_01.org= and complete Problem 6(a).
+- [X] Open =exam_01.org= and complete Problem 6(c).
+- Rationale: Tests subspace checks on polynomials and specific quadratic constraints seen in the Target Exam.
+
+* Day 06: Linear Systems & Vector Spaces (Independence)
+** Block A: Active Computation
+- [X] Open =ps_06.org= and complete Problem 22 (Linear independence and spanning sets).
+- Rationale: Drills polynomial and complex vector independence, which are "Prof A Filter" must-knows.
+** Block B: Theory & Proof Memorization
+- [ ] Open =must_know_proofs.org= and study Linear Independence/Basis Equivalence logic (Theorem III.1.36).
+- [ ] Open =must_know_proofs.org= and study Linear Independence/Basis Equivalence logic (Proposition III.1.38).
+- Rationale: You must understand this logic to answer Target Exam questions regarding linearly independent subsets.
+** Block C: Application/Testing
+- [ ] Open =exam_01.org= and complete Problem 6(b).
+- Rationale: Directly applies basis equivalence theory to determine if a set of complex polynomials contains a linearly independent set.
+
+* Day 07: Synthesis - Maps & Fields
+** Block A: Active Computation
+- [X] Open =ps_01.org= and complete Problem 1 (Verifying field definitions).
+- [ ] Open =ps_01.org= and complete Problem 2(a-c) (Verifying field definitions).
+- Rationale: The Target Exam shifted significantly toward raw definitions of fields rather than just heavy calculation.
+** Block B: Theory & Proof Memorization
+- [ ] Open =must_know_proofs.org= and study the Extension of Linear Maps logic (Proposition IV.0.1).
+- Rationale: Provides the foundational reasoning needed to properly define map composition and injectivity properties.
+** Block C: Application/Testing
+- [X] Open =exam_01.org= and complete Problem 1.
+- [X] Open =exam_01.org= and complete Problem 2.
+- Rationale: This tests the 4-point raw definition of a field, basic injectivity, and function composition.
+
+* Day 08: Synthesis & Pre-Mock Drilling
+** Block A: Active Computation
+- [X] Open =past_paper_01.org=, go to the 2nd Exam Date, and complete Problem 1 (Linear map solutions).
+- Rationale: Rapid-fire computation of linear map images keeps your Gaussian elimination reflexes sharp.
+** Block B: Theory & Proof Memorization
+- [ ] Open =must_know_proofs.org= and drill Steinitz (III.1.47) purely from memory.
+- [ ] Open =must_know_proofs.org= and drill Rank-Nullity (IV.1.10) purely from memory.
+- [X] Open =must_know_proofs.org= and drill Sums (IV.1.4) purely from memory.
+- Rationale: Forces brutal recall of the highest-value theory points right before entering the mock exam phase.
+** Block C: Application/Testing
+- [X] Open =past_paper_01.org=, go to the 2nd Exam Date, and complete Problem 3.
+- Rationale: Forces you to write out the Dimension Theorem for sums perfectly in an exam context.
+
+* Day 09: Timed Mock Exam 1
+** Block A: Active Computation
+- [X] Open =ps_05.org= and complete Problem 15 (LU factorization with pivoting).
+- Rationale: A quick mechanical warm-up to activate row reduction muscle memory before the clock starts.
+** Block B: Theory & Proof Memorization
+- [ ] Open =must_know_proofs.org= and quickly review Subspace Criteria (III.1.15).
+- [ ] Open =must_know_proofs.org= and quickly review Subspace Criteria (III.2.11).
+- Rationale: A brief theory refresher to ensure you don't drop easy points on trick subspace questions.
+** Block C: Application/Testing
+- [ ] Open =exam_01.org=, set a timer for the actual exam duration, and complete the FULL EXAM.
+- Rationale: Simulates the exact pacing, structure, and stress of Prof B's Target Exam.
+
+* Day 10: Timed Mock Exam 2
+** Block A: Active Computation
+- [ ] Open =past_paper_01.org=, go to the 1st Exam Date, and complete Problem 1.
+- Rationale: Modular arithmetic linear system warmup to adjust your brain to historical Prof B variations.
+** Block B: Theory & Proof Memorization
+- [ ] Open =must_know_proofs.org= and quickly review Linear Independence / Basis logic (III.1.36).
+- [ ] Open =must_know_proofs.org= and quickly review Linear Independence / Basis logic (III.1.38).
+- Rationale: Ensures your core logic is rock solid for any theoretical curveballs in the alternative exam.
+** Block C: Application/Testing
+- [ ] Open =past_paper_01.org=, go to the 3rd Exam Date, set a timer, and complete the FULL EXAM.
+- Rationale: Provides exposure to the same professor's style with different bachelor constraints to test adaptability.
+
+* Day 11: Buffer, Review & Rest
+** Block A: Active Computation
+- [ ] Re-open =exam_01.org= and redo Target Exam Q3.
+- [ ] Re-open =exam_01.org= and redo Target Exam Q4.
+- Rationale: Lightweight review of LU decomposition and Inverses to iron out any final calculation bugs.
+** Block B: Theory & Proof Memorization
+- [ ] Open =must_know_proofs.org= and do a lightweight mental review of Steinitz (III.1.47).
+- [ ] Open =must_know_proofs.org= and do a lightweight mental review of Rank-Nullity (IV.1.10).
+- Rationale: Pure buffer time to solidify the most critical memorization points without exhausting yourself.
+** Block C: Application/Testing
+- [ ] Review grading mistakes from the Mock Exams and rest.
+- Rationale: Consolidation of feedback and mental recovery is necessary to walk into the exam sharp.
