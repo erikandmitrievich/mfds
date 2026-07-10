@@ -1,0 +1,107 @@
+#+title: Plan
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-06-27>
+#+lastmod: <2026-06-28 18:41>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Priorities
+
+:P1: Own the 5 proof techniques closed-book — covers the whole rotation + the anomaly (your gap)
+:P2: Indicator-RV engine — 4 proofs from one skeleton (highest single leverage)
+:P3: Tier-0 scaffolding — explicit "do this in exam" rules, all-or-nothing, cheap
+:P4: Problem clusters at speed — co-equal pillar, NOT secondary
+:P5: Pseudocode drills — near-certain points; bank them, don't over-invest (your strength = trap)
+:P6: Graphs — thinnest in-scope coverage, most likely blind spot
+
+* Techniques (the 14 proofs = 7 buckets)
+
+:T1: Recursion-tree / master               — Lem 4.2, Lem 4.3, Thm 4.4
+:T2: Indicator RV + linearity              — Thm 7.4, Thm 9.2, Thm 11.2, Thm 11.8
+:T3: Loop invariant (init/maint/term)      — Lem 5.4, RANDOMIZE-IN-PLACE
+:T4: Exchange / greedy-choice              — Thm 15.1, Lem 15.2
+:T5: Optimal substructure by contradiction — Lem 15.3, DP substructure
+:T6: Decision-tree counting                — Thm 8.1
+:T7: Case analysis / interval trichotomy   — Thm 17.2
+
+* Scaffolding (Tier 0 = Category A explicit, locked Day 1)
+
+:S1: Substitution rule (HABIT): never $O$ or $\Theta$ in the induction hypothesis, use explicit constants — lec_04
+:S2: Loop-termination rule (HABIT): always state the loop ends — lec_10
+:S3: 5 Landau property proofs (SMALL PROOFS): transitivity, reflexivity, symmetry, sum, product — lec_03 notes / CLRS 3.2 (Prop 3.4)
+:S4: Master theorem statement + exact conditions ($k \ge 0$ case 2, regularity case 3) (MEMORIZE) — lec_04, lec_05; the proof itself = T1
+:S5: Polynomial growth condition + recognition rule (poly-log yes, exponential no) (MEMORIZE) — lec_06
+
+* Landmines
+
+:L1: $\mathbb{Z}_p$ field caveat — flagged from PAST EXAMS (lec_16): only nonzero elts have inverses, $1 \ne 0$
+:L2: LCS Thm 14.1 part 1 — CLRS is WRONG, corrected in lecture (lec_22); same logic lec_04 book error
+:L3: Master thm case 2 needs $k \ge 0$; big-$O$ cannot be composed with functions — trap questions
+:L4: Substitution proofs: never put $O$ or $\Theta$ in the induction hypothesis (explicit exam rule)
+:L5: Loop-invariant proofs: always state termination (explicit exam rule)
+:L6: Scope = through lec_29; NN/transformers OUT. Confirm graph cutoff before Day 5.
+
+* Day 1 — Scaffolding + Master-theorem family [5/6]
+:GOAL: Reproduce Lem 4.2 $\to$ 4.3 $\to$ 4.4 closed-book; classify any recurrence's master case in <30s.
+
+- [X] Memorize exact: master thm statement + all 3 case conditions (S4), polynomial growth condition + recognition rule (S5)
+- [X] Reproduce closed-book: 5 Landau property proofs (S3)
+- [ ] Lock as habits, enforce in every proof this week: substitution-hypothesis rule (S1), loop-termination line (S2)
+- [X] Reproduce recursion-tree chain closed-book: Lem 4.2 $\to$ Lem 4.3 $\to$ Thm 4.4 (one argument, three times)
+- [X] Drill case selection: compare $f(n)$ to watershed $n^{\log_b a}$; gap example $2T(n/2) + n/\lg n = \Theta(n \lg \lg n)$ (no case applies)
+- [X] Apply: P8 (revisit), P51 (stooge sort), Akra-Bazzi bracket $T(n) = T(n/5) + T(7n/10) + n$, $p \approx 0.84$
+
+* Day 2 — Indicator pair + select (T2) [0/6]
+:GOAL: Reproduce Thm 7.4 and Thm 11.2 from the indicator skeleton; reconstruct Thm 9.2's generations bound.
+
+- [ ] Shared machinery: indicator RV def; Lem 5.1 ($\mathrm{E}[\mathrm{I}\{A\}]=\Pr\{A\}$); linearity of expectation (no independence needed); harmonic bound $\sum 1/k=O(\lg n)$ (A.9); geometric series $\sum c^k=1/(1-c)$ (A.7)
+- [ ] Thm 7.4 (RANDOMIZED-QUICKSORT $O(n\lg n)$) [needs Lem 7.1 time~comparisons, Lem 7.2 pair compared $\le$ once, Lem 7.3 $\Pr=2/(j-i+1)$, Lem 5.1]: define $X_{ij}$ $\to$ linearity $\to$ sub Lem 7.3 $\to$ change var $k=j-i$ $\to$ harmonic bound
+- [ ] Thm 11.2 (chained hashing $\Theta(1+\alpha)$) [SAME skeleton as 7.4, triple-index; needs Lem 5.1, indep. uniform hashing]: $X_{ijq}\to Y_j\to Z$ $\to$ linearity $\to$ arith. series (A.2) $\to$ $1+\alpha/2-\alpha/2n$
+- [ ] Thm 9.2 (RANDOMIZED-SELECT $\Theta(n)$) [NOT indicators; needs Lem 9.1 $\Pr$ helpful $\ge 1/2$]: generations, sizes shrink $(3/4)^k$, $\mathrm{E}[X_k]\le 2$ (C.36), geometric series $\to 8n_0$
+- [ ] Solve: P44, P45, P46 (expected #picks: random / deterministic / scramble search), P50 (RANDOMIZED-QUICKSORT RANDOM-call count)
+- [ ] Optional foundations if shaky: P34 (Markov), P35 (variance of geometric)
+
+* Day 3 — Loop invariant (T3) + decision tree (T6) + greedy (T4, T5) [0/7]
+:GOAL: Reproduce Lem 5.4, Thm 8.1, Thm 15.1, Lem 15.2, Lem 15.3 closed-book.
+
+- [ ] Lem 5.4 (RANDOMLY-PERMUTE = RANDOMIZE-IN-PLACE in some editions, uniform): invariant $\Pr=(n-i+1)!/n!$; init $\to$ maintenance (via $\Pr\{E_2\cap E_1\}=\Pr\{E_2\mid E_1\}\Pr\{E_1\}$) $\to$ termination (S2)
+- [ ] Thm 8.1 (comparison lower bound $\Omega(n\lg n)$) [needs $\lg(n!)=\Theta(n\lg n)$, eq 3.28]: decision tree, $n!\le l\le 2^h$ $\to$ $h\ge\lg(n!)=\Omega(n\lg n)$
+- [ ] Thm 15.1 (activity-selection greedy choice): exchange argument, swap earliest-finish $a_m$ for $a_j$
+- [ ] Lem 15.2 (Huffman greedy-choice): exchange leaves $a\leftrightarrow x$, $b\leftrightarrow y$; cost diff $(a.freq-x.freq)(d_T(a)-d_T(x))\ge 0$
+- [ ] Lem 15.3 (Huffman optimal-substructure) [needs Lem 15.2 for WLOG-siblings]: $B(T)=B(T')+x.freq+y.freq$ $\to$ contradiction
+- [ ] Thm 15.4 (HUFFMAN optimal): one line from Lem 15.2 + 15.3
+- [ ] Solve: P36 (random sample via permute), P37--P40 (permutation correctness/counterexamples), P94 (alt activity greedy, prove optimal), P95 (activity counterexamples), P96 (interval-graph coloring), P98 (fractional knapsack greedy-choice proof)
+
+* Day 4 — DP + trees + hashing + remaining proofs (T5, T2, T7) [0/7]
+:GOAL: Solve any DP-cluster problem; reproduce Thm 11.8 and Thm 17.2; write the 4 pseudocode procedures cold.
+
+- [ ] DP optimal-substructure pattern (rod-cutting, matrix-chain, LCS, optimal BST, 0-1 knapsack) + LCS Thm 14.1 part-1 correction (L2)
+- [ ] DP solve: P81 (rod greedy counterexample), P82 (rod + cut cost), P83 (matrix-chain ref count $=(n^3-n)/3$), *P84 (matrix-chain greedy FAILS — counterexample, L-flagged pairing with P95), P85 (substructure breaks), P87 (longest palindrome subseq), P88 (inventory), P89 (string partition), P91 (optimal BST numeric), P92 (bitonic tour), P93 (party tree), P97 (weighted activity DP), P99 (0-1 knapsack $O(nW)$)
+- [ ] Thm 11.8 (open addressing successful search $\le \frac1\alpha\ln\frac1{1-\alpha}$) [needs Cor 11.7 unsucc. $\le 1/(1-\alpha)$]: average over insertions $\to$ integral bound (A.19)
+- [ ] Thm 17.2 (INTERVAL-SEARCH correctness, T7): interval trichotomy; case go-left / go-right never misses an overlap
+- [ ] Hashing solve: P59 (universal family bound), P60 (double hashing gcd), P61 (probe bounds at $\alpha=3/4,7/8$ — applies Thm 11.8) + $\mathbb{Z}_p$ caveat (L1)
+- [ ] Trees pseudocode COLD: P70 (RIGHT-ROTATE), P63 (TREE-PREDECESSOR), P90 (CONSTRUCT-OPTIMAL-BST), P100 (B-tree delete)
+- [ ] Trees proofs sample: P68/P69 (RB black-height bounds), P74--P78 (RB insert/delete properties), P80 (AVL height $O(\lg n)$); facts: BUILD-MAX-HEAP is $O(n)$, heap height $\lfloor\lg n\rfloor$
+
+* Day 5 — Graphs + timed integration pass [0/8]
+:GOAL: State every graph theorem from memory; pass the timed T1--T7 reproduction.
+
+- [ ] BFS: shortest-path distances, $O(V+E)$
+- [ ] DFS: parenthesis theorem, edge classification (tree/back/forward/cross), white-path; undirected = tree+back only
+- [ ] Topological sort; SCC (transpose graph + 2nd DFS)
+- [ ] MST: generic-MST safe-edge / cut property
+- [ ] Shortest paths: relaxation, Bellman-Ford (neg weights), Dijkstra (non-neg only), DAG-shortest-path
+- [ ] Solve: P86 (DAG longest path, DP+graph), P101 (tree diameter), P102 (DFS edge-classification iff discovery/finish times)
+- [ ] TIMED closed-book: reproduce one proof from each bucket T1--T7
+- [ ] Patch ONLY the bucket(s) you failed; light pseudocode review; stop early, sleep

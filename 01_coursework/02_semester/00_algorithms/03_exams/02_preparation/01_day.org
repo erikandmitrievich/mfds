@@ -1,0 +1,240 @@
+#+title: 01 Day
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-06-27>
+#+lastmod: <2026-06-28 18:10>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Theorem Minimization
+
+Below is the Algorithms and Data Structures course material. Help me to minimise it to the most minimal form possible. The purpose is to reproduce it on the exam under pressure.
+
+* Master Theorem
+
+*Master Theorem.*
+
+Let $a > 0, b > 1$. Let $f(n) \ge 0$ be a defined driving function. Define recurrence $T(n)$ on $n \in \mathbb{N}$ by
+
+$$T(n) = aT(n/b) + f(n)$$
+
+such that
+
+$$aT(n/b) = a'T(\lfloor n/b \rfloor) + a''T(\lceil n/b \rceil) \quad : \quad a', a'' \ge 0, \quad a = a' + a''$$
+
+1. If $\exists \epsilon > 0 : f(n) = O(n^{\log_b a - \epsilon})$, then $T(n) = \Theta(n^{\log_b a})$
+
+2. If $\exists k \ge 0 : f(n) = \Theta(n^{\log_b a} \lg^k n)$, then $T(n) = \Theta(n^{\log_b a} \lg^{k+1} n)$
+
+3. If $\exists \epsilon > 0 : f(n) = \Omega(n^{\log_b a + \epsilon})$ and $af(n/b) \le cf(n)$ for $c < 1$ and $\forall$ sufficiently large $n$, then $T(n) = \Theta(f(n))$
+
+** Questions
+
+*** DONE Give a little reminder on Big O notation.
+
+- $O$: asymptotic upper bound. $f = O(g)$ if $\exists c, n_0 : 0 \le f(n) \le cg(n) \, \forall n > n_0$
+
+- $\Theta$: tight bound, both upper and lower. $f = \Theta(g)$ iff $f = O(g)$ and $f = \Omega(g)$
+
+- $\Omega$: asymptotic lower bound. $f = \Omega(g)$ if $\exists c, n_0 : 0 \le cg(n) \le f(n) \, \forall n > n_0$
+
+- $o$: strict upper bound. $f = o(g)$ if $\forall c > 0 \, \exists n_0 : 0 \le f(n) < cg(n) \, \forall n > n_0$ ($f/g \rightarrow 0$)
+
+- $\omega$: strict lower bound. $f = \omega(g)$ if $\forall c > 0 \, \exists n_0 : 0 \le cg(n) < f(n) \, \forall n > n_0$ ($f/g \rightarrow \infty$)
+
+
+*** DONE What is the Master Theoream about?
+
+Each algorithm has a time complexity. Master Theorem formalizes and helps to find it.
+
+*** TODO What is the weakness of Master Theorem?
+
+* Polynomial Growth Condition
+
+$$\exists n_0 \in \mathbb{N} : \forall \varphi > 1\ \exists d \ge 1 : \forall n \ge n_0\ \forall \psi \in [1, \varphi] : \frac{f(n)}{d} \le f(\psi n) \le df(n)$$
+
+* Landau Property Proof
+
+*Transitivity* - $f = O(g), g = O(h) \implies f = O(h)$
+
+$f \le c_1 g(n \ge n_1);\ g \le c_2 h(n \ge n_2)$. Let $n_0 = \max(n_1, n_2), c = c_1 c_2$. For $n \ge n_0 : f \le c_1 g \le c_1 c_2 h = ch$
+
+*Product* - $f = O(h), g = O(k) \implies fg = O(hk)$
+
+$f \le c_1 h,\ g \le c_2 k$. Both sides non-negative. Thus, $fg \le c_1 c_2 hk$
+
+*Sum* - $f = O(h), g = O(k) \implies f+g = O(\max(h, k))$
+
+$f \le c_1 h \le c_1 \max(h,k),\ g \le c_2 h \le c_2 \max(h,k)$. Thus, $f + g \le (c_1 + c_2) \max(h,k)$
+
+*$\Theta$ as conjuction* - $f = \Theta(g) \iff f = O(g)\ \wedge\ f = \Omega(g)$
+
+Not directly in the exam. Good to know.
+
+*Transpose symmetry* - $f = O(g) \iff g = \Omega(f)$
+
+Not directly in the exam. Good to know.
+
+* Lemma 4.2 - recursion tree solution of the master recurrence
+
+Let $a>0,\ b>1$ be constants and $f$ be defined for $n\ge 1$. Then
+
+$$T(n)=\begin{cases}\Theta(1) & 0\le n<1\\ aT(n/b)+f(n) & n\ge 1\end{cases}$$
+
+has solution
+
+$$T(n)=\Theta(n^{\log_b a})+\sum_{j=0}^{\lfloor\log_b n\rfloor}a^j f(n/b^j).$$
+
+#+begin_proof
+Depth $j$ has $a^j$ nodes of cost $f(n/b^j)$. Recursion halts at $n/b^j<1$, i.e. $j=\lfloor\log_b n\rfloor+1$ (the leaf depth); internal depths are $j=0,\dots,\lfloor\log_b n\rfloor$.
+
+*Leaves.* With $a^{\log_b n}=n^{\log_b a}$,
+$$n^{\log_b a}=a^{\log_b n}\le a^{\lfloor\log_b n\rfloor+1}\le a^{\log_b n+1}=a\,n^{\log_b a}\ \Rightarrow\ \#\text{leaves}=\Theta(n^{\log_b a}).$$
+Each leaf has argument $<1$, so cost $\Theta(1)$; total leaf cost $\Theta(n^{\log_b a})$.
+
+*Internal.* Depth $j$ contributes $a^j f(n/b^j)$. Summing both parts:
+$$T(n)=\Theta(n^{\log_b a})+\sum_{j=0}^{\lfloor\log_b n\rfloor}a^j f(n/b^j).\qquad\blacksquare$$
+#+end_proof
+
+* Lemma 4.3 - asymptotic bounds for the recursion-tree summation
+
+Let $a>0,\ b>1$ be constants and $f$ be defined for $n\ge 1$. For
+$$g(n)=\sum_{j=0}^{\lfloor\log_b n\rfloor}a^j f(n/b^j):$$
+
+1. $f(n)=O(n^{\log_b a-\epsilon})$ for some $\epsilon>0\ \Rightarrow\ g(n)=O(n^{\log_b a})$.
+2. $f(n)=\Theta(n^{\log_b a}\lg^k n)$ for some $k\ge 0\ \Rightarrow\ g(n)=\Theta(n^{\log_b a}\lg^{k+1}n)$.
+3. $0<af(n/b)\le cf(n)$ for some $0<c<1$ and all $n\ge 1\ \Rightarrow\ g(n)=\Theta(f(n))$.
+
+#+begin_proof
+*Case 1.* $f(n/b^j)=O((n/b^j)^{\log_b a-\epsilon})$, so (using $a/b^{\log_b a}=1$)
+$$g(n)=O\!\left(n^{\log_b a-\epsilon}\sum_{j=0}^{\lfloor\log_b n\rfloor}\Big(\tfrac{ab^\epsilon}{b^{\log_b a}}\Big)^{\!j}\right)=O\!\left(n^{\log_b a-\epsilon}\sum_{j=0}^{\lfloor\log_b n\rfloor}(b^\epsilon)^j\right).$$
+The geometric sum is $\dfrac{b^{\epsilon(\lfloor\log_b n\rfloor+1)}-1}{b^\epsilon-1}=O(b^{\epsilon\log_b n})=O(n^\epsilon)$ ($b,\epsilon$ const). Hence $g(n)=O(n^{\log_b a})$.
+
+*Case 2.* $f(n/b^j)=\Theta((n/b^j)^{\log_b a}\lg^k(n/b^j))$, so (same cancellation, $\lg=\log_b/\log_b 2$)
+$$g(n)=\Theta\!\left(n^{\log_b a}\sum_{j=0}^{\lfloor\log_b n\rfloor}(\log_b n-j)^k\right).$$
+Reindex $i=\lfloor\log_b n\rfloor+1-j$:
+$$\sum_{j=0}^{\lfloor\log_b n\rfloor}(\log_b n-j)^k\le\sum_{i=1}^{\lfloor\log_b n\rfloor+1}i^k=O((\log_b n)^{k+1}),$$
+and analogously $\Omega((\log_b n)^{k+1})$. Thus the sum is $\Theta(\lg^{k+1}n)$ and $g(n)=\Theta(n^{\log_b a}\lg^{k+1}n)$.
+
+*Case 3.* The $j=0$ term is $f(n)$ and all terms are positive, so $g(n)=\Omega(f(n))$. Iterating $af(n/b)\le cf(n)$ gives $a^j f(n/b^j)\le c^j f(n)$, hence
+$$g(n)\le f(n)\sum_{j=0}^{\infty}c^j=\frac{f(n)}{1-c}=O(f(n))\quad(0<c<1).$$
+Therefore $g(n)=\Theta(f(n))$. $\qquad\blacksquare$
+#+end_proof
+
+* Theorem 4.4 - continuous master theorem
+
+Let $a>0,\ b>1$ be constants and $f$ a driving function, defined and nonnegative on all sufficiently large reals. For the recurrence $T(n)=aT(n/b)+f(n)$:
+
+1. $f(n)=O(n^{\log_b a-\epsilon})$ for some $\epsilon>0\ \Rightarrow\ T(n)=\Theta(n^{\log_b a})$.
+2. $f(n)=\Theta(n^{\log_b a}\lg^k n)$ for some $k\ge 0\ \Rightarrow\ T(n)=\Theta(n^{\log_b a}\lg^{k+1}n)$.
+3. $f(n)=\Omega(n^{\log_b a+\epsilon})$ for some $\epsilon>0$ and $af(n/b)\le cf(n)$ for some $c<1$ and all large $n\ \Rightarrow\ T(n)=\Theta(f(n))$.
+
+#+begin_proof
+*Rescaling.* The implicit base case holds for $0<n<n_0$. Set $T'(n)=T(n_0 n)$, $f'(n)=f(n_0 n)$. Then
+$$T'(n)=\begin{cases}\Theta(1)& n<1\\ aT'(n/b)+f'(n)& n\ge 1,\end{cases}$$
+which satisfies Lemma 4.2, so $T'(n)=\Theta(n^{\log_b a})+\sum_{j=0}^{\lfloor\log_b n\rfloor}a^j f'(n/b^j)$. Since $n_0$ is constant, the rescaling $f(n_0 n)$ preserves each case's hypothesis on $f'$ (constants absorbed); apply the matching case of Lemma 4.3 to the sum, then recover $T(n)=T'(n/n_0)$.
+
+*Case 1.* $f'(n)=O((n_0 n)^{\log_b a-\epsilon})=O(n^{\log_b a-\epsilon})$, so the sum is $O(n^{\log_b a})$ (L4.3.1). Hence $T(n)=\Theta(n^{\log_b a})+O(n^{\log_b a})=\Theta(n^{\log_b a})$.
+
+*Case 2.* $f'(n)=\Theta(n^{\log_b a}\lg^k n)$, so the sum is $\Theta(n^{\log_b a}\lg^{k+1}n)$ (L4.3.2), which dominates $\Theta(n^{\log_b a})$. Hence $T(n)=\Theta(n^{\log_b a}\lg^{k+1}n)$.
+
+*Case 3.* $f'(n)=\Omega(n^{\log_b a+\epsilon})$; and for $n\ge 1$, $af'(n/b)=af(n_0 n/b)\le cf(n_0 n)=cf'(n)$, so $f'$ satisfies the regularity condition. By L4.3.3 the sum is $\Theta(f'(n))$, which dominates $\Theta(n^{\log_b a})$ (since $f'=\Omega(n^{\log_b a+\epsilon})$). Hence $T(n)=\Theta(f'(n/n_0))=\Theta(f(n))$. $\qquad\blacksquare$
+#+end_proof
+
+* Master Theorem — case-selection drills
+
+** DONE $7T(n/2)+n^2$
+
+$a=7,\ b=2,\ f(n)=n^2$
+
+$$w(n)=n^{\log_2 7},\quad 2<\log_2 7<3\ (\approx 2.807)$$
+
+$\deg f = 2 < \log_2 7$. $f$ is below $w$
+
+$\epsilon = \log_2 7 - 2 \approx 0.807 > 0$
+
+Then $f(n)=n^2=O(n^{\log_2 7 - \epsilon})$
+
+$$T(n)=\Theta(n^{\log_2 7})$$
+
+** DONE $T(n/2)+n$
+
+$$a = 1,\ b = 2,\ f(n) = n$$
+
+$$w(n) = n^{\log_2 1} = 1$$
+
+$\deg f = 1 > 0 = \deg w$, f is above $w$
+
+$\epsilon = 1 > 0$
+
+Then $f(n) = n = \Omega(n^{0 + 1})$
+
+$$T(n) = \Theta(n)$$
+
+** DONE $4T(n/2)+n^2\lg n$
+
+$$a = 4,\ b = 2,\ f(n) = n^2 \lg n$$
+
+$$w(n) = n^{\log_2 4} = n^2$$
+
+Then $f(n) = \Theta(n^2 \lg^k n) : k = 1$
+
+$$T(n) = \Theta(n^2\lg^2 n)$$
+
+** DONE $8T(n/2)+n^2$
+
+$$a = 8,\ b = 2,\ f(n) = n^2$$
+
+$$w(n) = n^{\log_2 8} = n^3$$
+
+$$\deg f < \deg w$$. $f$ is below $w$
+
+$\epsilon = 3 - 2 = 1 > 0$
+
+Then $f(n) = n^2 = O(n^{\log_2 8 - 1}) = O(n^{2})$
+
+$$T(n) = \Theta(n^3)$$
+
+* Problem 8
+
+** Task
+
+#+begin_quote
+Use mathematical induction to show that when $n = 2^k$ for $k \geq 1$, the solution of the recurrence
+
+$T(n) = \begin{cases} 2 & n = 2 \\ 2T\left(\frac{n}{2}\right) + n & n > 2 \end{cases}$
+
+is $T(n) = n \lg n$.
+#+end_quote
+
+** Solution
+
+*Base case.*
+
+For $k = 1$, $n = 2$. Hence, $T(n) = 2 = 2 \cdot \lg 2$. Base holds.
+
+*Inductive step.*
+
+Assume $T(2^k) = 2^k \cdot k$.
+
+Show: $$T(2^{k+1}) = 2^{k+1} \cdot (k+1)$$
+
+\begin{align*}
+T(2^{k+1}) &= 2 \cdot T(\frac{2^{k+1}}{2}) + 2^{k+1} \\
+           &= 2 \cdot T(2^{k}) + 2^{k+1} \\
+           &= 2 \cdot 2^{k} \cdot k + 2^{k+1} \\
+           &= 2^{k+1} \cdot k + 2^{k+1} \\
+           &= 2^{k+1} \cdot (k + 1) \\
+\end{align*}
+
+Hence, $T(n) = n\lg(n)$
