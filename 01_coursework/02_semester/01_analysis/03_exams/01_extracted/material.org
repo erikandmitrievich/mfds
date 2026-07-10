@@ -1,0 +1,585 @@
+#+title: Lecture Notes Analysis
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-06-25>
+#+lastmod: <2026-06-28 20:07>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* [Off-notes]
+:PROPERTIES:
+:LECTURE: 01
+:END:
+
+#+begin_quote
+My plan is to finish your questions from the lectures. Then I would like to give you my thoughts on whatever we have done, from the beginning to the end, that relates to Banach's fixed-point theorem. And we also have some time for questions and comments. [INAUDIBLE] The next chapter starts with 4.4, so 4.2 and 4.3 are the parts you are working through now; after 4.1 it jumps to 4.4. [?]
+#+end_quote
+
+#+begin_quote
+All of this happens in general normed vector spaces. Relatively soon, in the next semester, you will see why it is so nice to have a theory that works for a general normed space and not just for $\mathbb{R}^n$. As an appetizer: it almost looks like data comes in coordinates, but this is not true — it is a lie. Somebody else has chosen something, so the data comes in these specific coordinates. But very often you can modify things a little and the same data comes in very different coordinates, and in very different coordinates everything looks very different — and much easier.
+
+In linear algebra you have eigenvalues and eigenvectors. If you have a linear map between general spaces $V \to W$, you pick a basis — actually two bases, one in each space — and then you describe your linear map by a matrix. This is the heart of linear algebra. It is very important how you pick your bases: with random bases the matrix looks very ugly, but if you pick very nice bases the matrix becomes diagonal [?]. If the basis you pick is a basis of eigenvectors, then suddenly everything looks very simple. So it is important to have notions that work independently of the coordinates, because otherwise you pick bad coordinates and then it looks like a mess. On the other hand, if you really want to compute, eventually you have to give your device coordinates — you have to tell it what the data point is.
+#+end_quote
+
+#+begin_quote
+By the way, in case you wonder how we define $\pi$: in high school $\pi$ was always something with a circle, but we did not do it that way. We said $\pi/2$ is, by definition, the smallest zero of the cosine function. I am not sure what this has to do with the circle, but okay. So this is one way where we see $\pi$ show up as the circumference of the circle: take the curve $(\cos 2\pi t, \sin 2\pi t)$ [?], draw it — it is the circle — and compute the length of the curve by the definition of curve length; then $2\pi$ comes out.
+#+end_quote
+
+* Definition: Frechet differentiability
+:PROPERTIES:
+:CUSTOM_ID: def:frechet-differentiability
+:SOURCE: ch_04 §4.4.1
+:LECTURE: 01
+:END:
+
+#+begin_quote
+We do not redefine differentiability — it really makes sense if you recall differentiability from the first semester, taking first derivatives in the sense that this is a linear approximation. In the first semester you could keep just this line in mind: $f(x + h)$. I move it a little bit around $x$, so it is the function $f$ at $x$, and then there is a correction term, the derivative times $h$, plus a little rest term. So it is exactly the same formula if you do it for some normed spaces. So just imagine it is $\mathbb{R}^n$. In that case this derivative here is simply linear — it is a linear map, evaluated at $h$. And so we go to [INAUDIBLE], and then it becomes a matrix, because it is a linear map. And then we know this is the Jacobian matrix, where you take partial derivatives in each component. It is always the same equation.
+
+So we check: if $f$ is a linear map by itself, then the derivative is $f$ itself, because the derivative locally is the best linear approximation. The affine map is the same — we are a bit lazy when we talk about it: when I say "linear" I often really mean affine, so I am allowed to shift everything a little bit. This is in contrast to linear algebra, where a linear map really means linear and then $f(0)$ has to be $0$, otherwise it cannot be linear. Affine means that even at $0$ you can have a shift.
+
+And then there are special cases. If $f$ is the norm squared, that looks a little bit similar to what we know from analysis. We would love to write $2x$, but $x$ is an element [INAUDIBLE: how we get the map out of this]. On the other hand, in inner-product spaces the vector $2x$ corresponds to taking $2x$ and forming a product, which makes it linear.
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+Let $V$ and $W$ be normed vector spaces. A function $f : V \rightarrow W$ is called Frechet differentiable at $x \in V$ if there exists a continuous linear map $f'(x) : V \rightarrow W$ such that
+
+$$f(x + h) = f(x) + f'(x) h + o(\|h\|), \quad h \in V$$
+
+Since $f'(x)$ is required to be continuous, every Frechet differentiable function is continuous.
+#+end_quote
+
+* Theorem: Chain rule
+:PROPERTIES:
+:CUSTOM_ID: thm:chain-rule
+:SOURCE: ch_04 §4.4.5
+:LECTURE: 01
+:END:
+
+#+begin_quote
+Then we also had the familiar rules for differentiation, the chain rules, which now just mean you have linear maps evaluated after each other. And an example — [INAUDIBLE].
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+Let $V, W, W'$ be normed vector spaces. If $f : V \rightarrow W$ and $g : W \rightarrow W'$ are Fréchet differentiable, then the composition $g \circ f : V \rightarrow W'$ is Fréchet differentiable and
+
+$$(g \circ f)'(x) = g'(f(x)) \, f'(x)$$
+
+Here $f'(x) : V \rightarrow W$ and $g'(f(x)) : W \rightarrow W'$ are continuous linear maps, and their composition is again a continuous linear map from $V$ to $W'$.
+#+end_quote
+
+* Theorem: Local contraction at fixed point
+:PROPERTIES:
+:CUSTOM_ID: thm:local-contraction-fixed-point
+:SOURCE: ch_04 §4.4.12
+:LECTURE: 01
+:END:
+
+#+begin_quote
+This is the story of the Banach fixed-point theorem. After a short break — maybe 15 minutes — if you want me to discuss something, come and let me know; otherwise I will just continue for 15 minutes with the story of the Banach fixed-point theorem [?].
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+Let $X$ be a Banach space and $\Omega \subseteq X$ be open. Assume that $f : \Omega \rightarrow X$ is continuously Fréchet differentiable. Suppose that there is $x \in \Omega$ such that
+
+$$f(x) = x, \quad \|f'(x)\| < 1.$$
+
+Then there is a neighborhood $B_\varepsilon(x) \subseteq \Omega$ such that $f : B_\varepsilon(x) \rightarrow B_\varepsilon(x)$ and $f$ is a contraction on $B_\varepsilon(x)$.
+#+end_quote
+
+* Definition: Local extrema
+:PROPERTIES:
+:CUSTOM_ID: def:local-extrema
+:SOURCE: ch_04 §4.4.1
+:LECTURE: 01
+:END:
+
+#+begin_quote
+At the beginning, for the sheets, we have a few necessary conditions for general normed spaces, when we have a Fréchet derivative. So, local minimum — I think it is clear what you mean by it — and local maximum as well.
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+Let $U \subseteq V$ be open and let $f : U \rightarrow \mathbb{R}$. A point $x_0 \in U$ is called
+
+1. a local minimum if there exists $\varepsilon > 0$ such that
+
+   $$f(x_0) \le f(x) \quad \text{for all } x \in B_\varepsilon(x_0),$$
+
+   a strict local minimum refers to a strict inequality for $x \in B_\varepsilon(x_0) \setminus \{ x_0 \}$,
+
+2. a local maximum if there exists $\varepsilon > 0$ such that
+
+   $$f(x_0) \ge f(x) \quad \text{for all } x \in B_\varepsilon(x_0),$$
+
+   a strict local maximum refers to a strict inequality for $x \in B_\varepsilon(x_0) \setminus \{ x_0 \}$,
+
+If $x_0$ is either a (strict) local minimum or a (strict) local maximum, it is called a (strict) local extremum.
+#+end_quote
+
+* Theorem: Necessary conditions of local extrema
+:PROPERTIES:
+:CUSTOM_ID: thm:necessary-conditions-local-extrema
+:SOURCE: ch_04 §4.4.3
+:LECTURE: 01
+:END:
+
+#+begin_quote
+The main difference is that no matter what strange space you have defined your function on — some normed vector space — if $f$ is Fréchet differentiable and it has a local minimum, then the first derivative is $0$. This is a general statement. And we will not only have necessary conditions but also sufficient conditions: if the first derivative is $0$, I can check whether it is indeed a local extremum — anything global would be even better.
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+Let $V$ be a normed vector space, $U \subseteq V$ an open subset, and let $f : U \rightarrow \mathbb{R}$ be Fréchet differentiable in $x_0 \in U$. If $x_0 \in U$ is a local extremum of $f$, then
+
+$$f'(x_0) = 0.$$
+
+Since $f'(x_0)$ is a linear map, the condition $f'(x_0) = 0$ means that
+
+$$f'(x_0) v = 0 \quad \text{for all } v \in V.$$
+
+The proof reduces the infinite-dimensional problem to a one-dimensional calculus argument by restricting $f$ to lines through $x_0$.
+#+end_quote
+
+* Definition: Convex function
+:PROPERTIES:
+:CUSTOM_ID: def:convex-function
+:SOURCE: ch_04 §4.4.1
+:LECTURE: 01
+:END:
+
+#+begin_quote
+So you should really be familiar with what a convex function means. What it really means: you have two points $x$ and $y$, you can draw the line between the two points, and the function is called convex if it stays below that line. You express the line from $x$ to $y$ as $t x + (1-t) y$: when $t = 0$ you have $y$, and when $t = 1$ you have $x$, and this is exactly the line between the two points. And the function should stay below it the whole way. Now we have several equivalent conditions, so to check whether something is convex we can also express it by a first-order characterization.
+
+The standard functions, the simple ones, are convex. So $f(x) = \|x\|^2$ is convex. But even $f(x) = \|Ax - b\|^2$ is also convex. This is just a hint that later, maybe this semester, many error functions look a little bit like $\|Ax - b\|$ — they come up in all sorts of learning algorithms, and these are convex.
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+A function $f : V \rightarrow \mathbb{R}$ is called convex if for all $x, y \in V$ and all $t \in \left[ 0, 1 \right]$,
+
+$$f(tx + (1 - t)y) \le tf(x) + (1 - t)f(y).$$
+#+end_quote
+
+* Theorem: Local minima of convex functions are global
+:PROPERTIES:
+:CUSTOM_ID: thm:convex-local-global
+:SOURCE: ch_04 §4.4.5
+:LECTURE: 01
+:END:
+
+#+begin_quote
+In a convex situation, every local minimum is also a global minimum. And therefore, if the derivative is $0$ at some point, then it is the global minimum.
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+Let $f : V \rightarrow \mathbb{R}$ be convex.
+
+1. Every local minimum is a global minimum.
+
+2. Let $f$ be Fréchet differentiable. Then $x_0 \in V$ is a global minimum if and only if $f'(x_0) = 0$.
+#+end_quote
+
+* Definition: Length of a curve in a metric space
+:PROPERTIES:
+:CUSTOM_ID: def:curve-length
+:SOURCE: ch_05 §5.0.1
+:LECTURE: 01
+:END:
+
+#+begin_quote
+We looked at curves, we looked at the length of a curve, and we looked at the derivative. We were able to compute the length of a curve — that is also a popular analysis exam question: given a curve, compute its length.
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+Let $(X, d)$ be a metric space and let $\gamma : \left[ 0, 1 \right] \rightarrow X$ be a curve. For a partition
+
+$$\mathcal{P} = \{ 0 = t_0 < t_1 < \cdots < t_n = 1 \}$$
+
+of $\left[ 0, 1 \right]$, define the polygonal length of $\gamma$ along $\mathcal{P}$ by
+
+$$\ell(\gamma, \mathcal{P}) := \sum_{j=1}^{n} d\left( \gamma(t_{j-1}), \gamma(t_j) \right).$$
+
+The length of $\gamma$ is
+
+$$\ell(\gamma) := \sup_{\mathcal{P}} \ell(\gamma, \mathcal{P}),$$
+
+where the supremum is taken over all partitions $\mathcal{P}$ of $\left[ 0, 1 \right]$. The curve $\gamma$ is called rectifiable if $\ell(\gamma) < \infty$.
+#+end_quote
+
+* Definition: Partial derivatives
+:PROPERTIES:
+:CUSTOM_ID: def:partial-derivatives
+:SOURCE: ch_05 §5.1.8
+:LECTURE: 01
+:END:
+
+#+begin_quote
+Eventually we look at a map and assume it comes in coordinates, and then suddenly we have partial derivatives, which require more bookkeeping than the general Fréchet derivative. This you should be familiar with. The gradient is a vector of partial derivatives.
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+The function $f : \mathbb{R}^n \rightarrow \mathbb{R}$ is called partially differentiable at $x \in \mathbb{R}^n$ if, for each $j = 1, \ldots, n$, the limit
+
+$$\partial_j f(x) := \lim_{h \rightarrow 0} \frac{f(x + h e_j) - f(x)}{h}$$
+
+exists. The row vector
+
+$$\operatorname{grad} f(x) := \left( \partial_1 f(x), \ldots, \partial_n f(x) \right)$$
+
+is called the gradient of $f$ at $x$. Its transpose is a column vector and denoted by
+
+$$\nabla f(x) = \operatorname{grad} f(x)^\top.$$
+#+end_quote
+
+* Theorem: Derivative and gradient in $\mathbb{R}^n$
+:PROPERTIES:
+:CUSTOM_ID: thm:derivative-gradient-rn
+:SOURCE: ch_05 §5.1.11
+:LECTURE: 01
+:END:
+
+#+begin_quote
+I used the relation between the derivative and the matrix of partial derivatives, i.e. the Jacobian. [?]
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+Let $f : \mathbb{R}^n \rightarrow \mathbb{R}$ be differentiable at $x \in \mathbb{R}^n$. Then $f$ is partially differentiable at $x$ and
+
+$$f'(x) = \operatorname{grad} f(x).$$
+
+In particular, $f'(x) e_j = \partial_j f(x)$, for $j = 1, \ldots, n$.
+#+end_quote
+
+* Definition: Hessian matrix
+:PROPERTIES:
+:CUSTOM_ID: def:hessian
+:SOURCE: ch_05 §5.1.16
+:LECTURE: 01
+:END:
+
+#+begin_quote
+For the order-two terms you get the Hessian matrix — the second-order derivatives.
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+Let $U \subseteq \mathbb{R}^n$ be open and suppose that $f : U \rightarrow \mathbb{R}$ is twice continuously differentiable. The Hessian matrix of $f$ at $x \in U$ is defined by
+
+$$H_f(x) := \left( \partial_i \partial_j f(x) \right)_{i, j = 1}^{n}.$$
+#+end_quote
+
+* Theorem: Taylor formula in $\mathbb{R}^n$
+:PROPERTIES:
+:CUSTOM_ID: thm:taylor-rn
+:SOURCE: ch_05 §5.2.1
+:LECTURE: 01
+:END:
+
+#+begin_quote
+It is unthinkable to have an analysis exam in the second semester with no questions about Taylor's formula. If that happens, raise your arms — something has gone wrong. In the first semester it is not so dominant, but almost everything we do in analysis goes back to Taylor's formula. In the second semester this should become clearer.
+
+When you write it this way, where $\alpha$ is allowed to be a vector — $\alpha$ is a multi-index with $n$ components. [Dialogue.] The partial derivative with respect to a coordinate is the one-dimensional derivative in that coordinate; that is true. With $\alpha = (\alpha_1, \ldots, \alpha_n)$, you take the partial derivative with respect to the first coordinate $\alpha_1$ times, and so on.
+
+[Student: shouldn't $\alpha$ have only $k$ elements, because $f$ is $k$ times continuously differentiable?] The entries: I am only allowed to take the derivative $k$ times in total, $|\alpha| \le k$. But the length of $\alpha$ is always $n$, because I always specify how often I differentiate with respect to each of the $n$ coordinates.
+
+I would definitely ask: please compute the Taylor expansion of this function of order $5$. So $k = 5$. Then you do all the combinations with $|\alpha| \le 5$ and compute the partial derivatives — I would only ask in cases where many of them are zero, otherwise it takes forever.
+
+The proof was the standard idea: define a new function that only depends on one variable and apply Taylor's formula for one variable. For the second-order Taylor expansion — another classic exam question. If it is only order $2$, it is often easier to use the explicit second-order formula directly; for the order-two terms you get the Hessian matrix, the second-order derivatives. But if you forget this formula, no problem — use the general formula for $k = 2$; it gives the same result, just with more partial derivatives to compute.
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+Let $U \subseteq \mathbb{R}^n$ be open, $k \in \mathbb{N}$, and let $f : U \rightarrow \mathbb{R}$ be $k$ times continuously differentiable. Then for every $x_0 \in U$,
+
+$$f(x) = \sum_{|\alpha| \le k} \frac{\partial^\alpha f(x_0)}{\alpha!} (x - x_0)^\alpha + o(\|x - x_0\|^k) \quad (x \rightarrow x_0).$$
+
+The Taylor polynomial,
+
+$$x \mapsto \sum_{|\alpha| \le k} \frac{\partial^\alpha f(x_0)}{\alpha!} (x - x_0)^\alpha,$$
+
+provides a polynomial approximation of $f$ near $x_0$.
+
+*Remark 7.2.2* (Local approximation). /In data analysis, Taylor expansions are used to approximate complex models locally by simpler ones./
+#+end_quote
+
+* Theorem: Second-order sufficient conditions for extrema
+:PROPERTIES:
+:CUSTOM_ID: thm:second-order-sufficient-extrema
+:SOURCE: ch_05 §5.2.5
+:LECTURE: 01
+:END:
+
+#+begin_quote
+Then we have the analog of what we know from one-dimensional extrema: if the first derivative is $0$ and the second-order term is positive, I have a local minimum. "Second-order positive" means the Hessian matrix is positive definite. You can check the definition directly, or check the eigenvalues: if all eigenvalues are positive the matrix is positive definite; if all are negative it is negative definite. You are allowed to use everything you know from linear algebra here.
+
+Then we have the standard second-order conditions for the constrained case as well. The first-order condition for a constrained extremum is that the gradient of the Lagrangian is $0$ — another way of saying $\nabla f$ is in the normal space. The second-order condition: the Hessian of the Lagrangian with respect to $x$ is positive definite, but only on the tangent space. Then I have a local minimum on the constraint. This is the little twist compared to the unconstrained case: there you check positive-definiteness on all of $\mathbb{R}^n$ via the eigenvalues; here the matrix is square, but you only test vectors $v$ in the tangent space. It can happen — and in one of the exercises it does — that the Hessian is positive definite on the tangent space but not on the whole space. For example, in $\mathbb{R}^2$ it was not positive definite, but on the one-dimensional tangent space it was. So the eigenvalue shortcut no longer works; you really have to use the definition of positive-definiteness.
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+Let $f : \mathbb{R}^n \rightarrow \mathbb{R}$ be twice continuously differentiable and let $x_0 \in \mathbb{R}^n$ be a critical point, i.e. $\operatorname{grad} f(x_0) = 0$.
+
+1. If $H_f(x_0)$ is positive definite, then $x_0$ is a strict local minimum.
+
+2. If $H_f(x_0)$ is negative definite, then $x_0$ is a strict local maximum.
+
+3. If $H_f(x_0)$ is indefinite, then $x_0$ is a saddle point.
+
+*Remark 7.2.6.* /If the Hessian $H_f(x_0)$ is positive semidefinite or negative semidefinite but not definite, the second-order test is inconclusive./
+
+*Remark 7.2.7* (Local extrema). /In data-driven models, local extrema correspond to locally optimal parameter values where small changes do not improve the objective function./
+#+end_quote
+
+* Theorem: Gradient descent
+:PROPERTIES:
+:CUSTOM_ID: thm:gradient-descent
+:SOURCE: ch_05 §5.2.3
+:LECTURE: 01
+:END:
+
+#+begin_quote
+Then we have gradient descent, which in principle is just this iteration. The gradient of a function points in the direction where the function increases maximally, so if I want to decrease it I go in the direction opposite to the gradient. Unfortunately everything is only local, so I go a little bit in that direction, then compute the gradient again and see how much it changes. You take the gradient of $f$ at some point, go in the direction opposite to where the gradient points, and repeat. Under the right circumstances this converges towards a point where the gradient is $0$ — the necessary condition for a local minimum. For a convex function, if the gradient goes to $0$ we really do find the global minimum. There is also a stochastic version of it.
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+Let $f : \mathbb{R}^d \rightarrow \mathbb{R}$ be convex and differentiable and assume that
+
+$$\| \nabla f(x) \| \le C \quad \text{for all } x \in \mathbb{R}^d$$
+
+for some $C > 0$. Let $x^*$ be a minimizer of $f$. For an initial $x_0 \in \mathbb{R}^d$, consider gradient descent
+
+$$x_{k+1} := x_k - \eta \, \nabla f(x_k)$$
+
+with step size $\eta > 0$. Define the average iterate
+
+$$\bar{x}_N := \frac{1}{N} \sum_{k=0}^{N-1} x_k.$$
+
+Then for every $N \ge 1$,
+
+$$|f(\bar{x}_N) - f(x^*)| \le \frac{\| x_0 - x^* \|^2}{2 \eta N} + \frac{\eta C^2}{2}.$$
+
+In particular, with $\eta = \| x_0 - x^* \| / (C \sqrt{N})$,
+
+$$|f(\bar{x}_N) - f(x^*)| \le N^{-\frac{1}{2}} \, C \| x_0 - x^* \|.$$
+
+Thus, the error is bounded by $|f(\bar{x}_N) - f(x^*)|$ decays as $N^{-1/2}$.
+#+end_quote
+
+* Theorem: Implicit Function Theorem
+:PROPERTIES:
+:CUSTOM_ID: thm:implicit-function
+:SOURCE: ch_05 §5.3.1
+:LECTURE: 01
+:END:
+
+#+begin_quote
+The implicit function theorem was not proven in class. So let me say this: in the exam you will not need to formulate this theorem or use it directly. The only way you need it is that we derive other statements from it, and we use those other statements. For example, I used the convergence of the Newton iteration [?]; I could have done it much more simply. So you need to know how and why Newton converges, without relating it to the implicit function theorem.
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+Let $U_1 \subset \mathbb{R}^n$ and $U_2 \subset \mathbb{R}^m$ be open sets, and let
+
+$$f : U_1 \times U_2 \rightarrow \mathbb{R}^m, \qquad (x, y) \mapsto f(x, y),$$
+
+be continuously differentiable. Suppose that
+
+$$f(a, b) = 0$$
+
+for some $(a, b) \in U_1 \times U_2$, and that the Jacobian matrix
+
+$$\frac{\partial f}{\partial y}(a, b) = \begin{pmatrix} \frac{\partial f_1}{\partial y_1} & \cdots & \frac{\partial f_1}{\partial y_m} \\ \vdots & \ddots & \vdots \\ \frac{\partial f_m}{\partial y_1} & \cdots & \frac{\partial f_m}{\partial y_m} \end{pmatrix}$$
+
+is invertible. Then there exist neighborhoods $V_1 \subset U_1$ of $a$ and $V_2 \subset U_2$ of $b$, together with a continuously differentiable map
+
+$$g : V_1 \rightarrow V_2,$$
+
+such that
+
+1. $f(x, g(x)) = 0$ for all $x \in V_1$,
+
+2. Moreover, for all $(x, y) \in V_1 \times V_2$,
+
+   $$f(x, y) = 0 \iff y = g(x).$$
+#+end_quote
+
+* Theorem: Inverse Function Theorem
+:PROPERTIES:
+:CUSTOM_ID: thm:inverse-function
+:SOURCE: ch_05 §5.3.2
+:LECTURE: 01
+:END:
+
+#+begin_quote
+For the implicit function theorem you should at least know that if the derivative is invertible, then the map is invertible in some neighborhood. This is something you should definitely know. It is exactly the extension of the one-dimensional inverse-function statement. I am sure this will show up in your exam somehow.
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+Let $U \subset \mathbb{R}^n$ be open and let $f : U \rightarrow \mathbb{R}^n$ be continuously differentiable. Suppose that $a \in U$ and that $f'(a)$ is invertible. Then there exist neighborhoods $U_0 \subset U$ of $a$ and $V_0 \subset \mathbb{R}^n$ of $b = f(a)$ such that $f : U_0 \rightarrow V_0$ is bijective and $f^{-1} : V_0 \rightarrow U_0$ is continuously differentiable with
+
+$$(f^{-1})'(b) = (f'(a))^{-1}.$$
+#+end_quote
+
+* Definition: Submanifolds
+:PROPERTIES:
+:CUSTOM_ID: def:submanifold
+:SOURCE: ch_05 §5.4.1
+:LECTURE: 01
+:END:
+
+#+begin_quote
+The last chapter was about local extrema on submanifolds, and we introduced submanifolds. If you open an analysis textbook and look for submanifolds, you will find them, but they start in a slightly different way — often one definition is given and then proven equivalent to another. I picked right away what we really need in order to compute the constrained extrema, so this definition deviates a little from some textbooks. Essentially, a submanifold is something given locally as the zero set of a function $g$. To keep it from looking too strange, we require that the derivative of $g$ always has the same rank $r$. In that case the dimension of the manifold is $k$, with $r = n - k$, where $n$ is the dimension of the codomain of $g$. If you do not have this rank condition you get strange sets, but we do not consider those — for us all submanifolds look beautiful, like a circle, with no sharp boundaries, everything smooth.
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+A subset $M \subset \mathbb{R}^n$ is called a $k$ dimensional submanifold if for every $x_0 \in M$, there exist
+
+- an open neighborhood $U \subset \mathbb{R}^n$ of $x_0$,
+
+- a continuously differentiable function $g : U \rightarrow \mathbb{R}^r$ with $r = n - k$,
+
+such that
+
+$$M \cap U = \{ x \in U : g(x) = 0 \},$$
+
+and
+
+$$\text{rank}\, g'(x) = r \qquad \forall x \in M \cap U.$$
+#+end_quote
+
+* Definition: Tangent and normal space
+:PROPERTIES:
+:CUSTOM_ID: def:tangent-normal-space
+:SOURCE: ch_05 §5.4.3
+:LECTURE: 01
+:END:
+
+#+begin_quote
+This is essentially the prototypical thing of a one-dimensional submanifold in $\mathbb{R}^2$. The tangent space is, of course, obtained by taking a curve in the submanifold; the derivative of the curve gives a vector in the tangent space, which we use for tangent spaces of submanifolds. We define the tangent space like a plane that touches the surface at a point, via the derivatives of curves that lie within the submanifold: take a curve $\gamma$ with $\gamma(0) = x$ [?] through the point where I want the tangent space, and take its derivative. The normal space is just the orthogonal complement of the tangent space.
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+Let $M \subset \mathbb{R}^n$ be a $k$ -dimensional submanifold and let $x \in M$.
+
+1. tangent space: the tangent space of $M$ at $x$ is
+
+   $$T_x(M) = \{\gamma'(0) : \gamma : (-\varepsilon, \varepsilon) \rightarrow M \text{ continuously differentiable}, \gamma(0) = x\}.$$
+
+2. normal space: the normal space of $M$ at $x$ is
+
+   $$N_x(M) = T_x(M)^\perp.$$
+#+end_quote
+
+* Definition: Local maximum on submanifold
+:PROPERTIES:
+:CUSTOM_ID: def:local-maximum-submanifold
+:SOURCE: ch_05 §5.4.4
+:LECTURE: 01
+:END:
+
+#+begin_quote
+Our goal is a local extremum on $M$. If we use $f$ again, the gradient does not have to be $0$ anymore, because we only look at points on $M$ — but it has to be in the normal space, i.e. orthogonal to the tangent space.
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+Let $\Omega \subseteq \mathbb{R}^n$ be open and $f : \Omega \rightarrow \mathbb{R}$. Suppose $M \subseteq \mathbb{R}^n$ is a $k$ -dimensional submanifold. We say that $x \in M \cap \Omega$ is a local maximum of $f$ on $M$ if there is an open neighborhood $U \subseteq \mathbb{R}^n$ of $x$ such that
+
+$$f(y) \le f(x), \quad \forall y \in U \cap M \cap \Omega.$$
+#+end_quote
+
+* Theorem: Extrema under constraints
+:PROPERTIES:
+:CUSTOM_ID: thm:extrema-under-constraints
+:SOURCE: ch_05 §5.4.5
+:LECTURE: 01
+:END:
+
+#+begin_quote
+So if I have a local extremum under constraints, the gradient of $f$ is in the normal space.
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+Let $\Omega \subset \mathbb{R}^n$ be open, $f : \Omega \rightarrow \mathbb{R}$ be continuously differentiable, and suppose that $M$ is a $k$ -dimensional submanifold. If $x_0 \in \Omega \cap M$ is a local extremum of $f$ on $M$, then
+
+$$\nabla f(x_0) \in N_{x_0}(M).$$
+#+end_quote
+
+* Theorem: Tangent and normal space from defining function
+:PROPERTIES:
+:CUSTOM_ID: thm:tangent-normal-defining-function
+:SOURCE: ch_05 §5.4.6
+:LECTURE: 01
+:END:
+
+#+begin_quote
+The important point is that the tangent space can be built by taking the gradients of the $G$'s, because the normal space is spanned by the gradients of $G$. [Spoken as recorded; see context block for the precise statement.]
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+Let $M \subset \mathbb{R}^n$ be a $k$ -dimensional submanifold and $x \in M$ with a neighborhood $U \subseteq \mathbb{R}^n$ of $x$ such that $g : U \rightarrow \mathbb{R}^r$ with $r = n - k$ is continuously differentiable with $M \cap U = \{y \in U : g(y) = 0\}$ and $\operatorname{rank} g'(y) = r$ for all $y \in M \cap U$. Then
+
+\begin{align*}
+T_x(M) &= \{\nabla g_1(x), \ldots, \nabla g_r(x)\}^\perp, \\
+N_x(M) &= \operatorname{span}\{\nabla g_1(x), \ldots, \nabla g_r(x)\}.
+\end{align*}
+
+Since the Jacobian of $g$ is
+
+$$g'(x) = \begin{pmatrix} \operatorname{grad} g_1(x) \\ \vdots \\ \operatorname{grad} g_r(x) \end{pmatrix} = \begin{pmatrix} (\nabla g_1(x))^\top \\ \vdots \\ (\nabla g_r(x))^\top \end{pmatrix},$$
+
+the rank requirement ensures that $\{\nabla g_1(x), \ldots, \nabla g_r(x)\}$ are linearly independent. The theorem further says that $T_x(M) = \operatorname{null} g'(x) = \{v \in \mathbb{R}^n : g'(x) v = 0\}$ is a linear subspace of dimension $k$, $N_x(M)$ is a $n - k$ -dimensional linear subspace, and
+
+$$\mathbb{R}^n = T_x(M) \oplus N_x(M).$$
+#+end_quote
+
+* Corollary: Lagrange multipliers
+:PROPERTIES:
+:CUSTOM_ID: cor:lagrange-multipliers
+:SOURCE: ch_05 §5.4.7
+:LECTURE: 01
+:END:
+
+#+begin_quote
+Since $\nabla f$ is in the normal space, it must be a linear combination of the basis vectors of the normal space, so $\nabla f$ is a linear combination, with coefficients $\lambda_i$, of the gradients of the $g_i$. This is where we use these equations to compute the point $x$ from the system. Then we try to get a numerical method out of it, so we do not have to do it by hand every time.
+
+We define a function from $\mathbb{R}^{n+k}$ to the same space, whose first component is the gradient of $f$ minus the sum of $\lambda_i$ times the gradients of the $g_i$, and whose second component is just $g$. Having a local extremum means this capital $F$ is $0$: the first part gives that $\nabla f$ is a linear combination of the $\nabla g_i$, and the second part gives $g(x) = 0$, so $x$ lies on $M$. We are then at a point where at least the necessary conditions are satisfied. I have a function from a space to the same space, I am looking for a zero — this is made for Newton. We implemented this and saw in the exercise classes that it really works.
+#+end_quote
+
+#+begin_quote
+Material context (from notes):
+Let $U \subset \mathbb{R}^n$ be open and let
+
+$$M = \{x \in U : g_1(x) = \cdots = g_r(x) = 0\}$$
+
+be a $k$ -dimensional submanifold. Let
+
+$$f : U \rightarrow \mathbb{R}$$
+
+be continuously differentiable and suppose that $f|_M$ has a local extremum at $x_0 \in M$. Then there are coefficients $\lambda_1, \ldots, \lambda_r \in \mathbb{R}$ such that
+
+$$\nabla f(x_0) = \sum_{i=1}^r \lambda_i \nabla g_i(x_0).$$
+#+end_quote

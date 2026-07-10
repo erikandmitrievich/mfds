@@ -1,0 +1,391 @@
+#+title: Day 3 — Wed Jul 1 · Taylor / linear approx + convexity + curves
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-06-29>
+#+lastmod: <2026-07-05 15:29>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* DONE PS07 P01
+** Task
+#+begin_quote
+Let $f : (-\frac{1}{2}, \infty) \times (-\frac{1}{2}, \infty) \to \mathbb{R}$ be defined by
+
+\[ f(x, y) = \log(1 + x + y) \]
+
+(a) Determine the Taylor polynomial of order 3 of $f$ at $(0, 0)$.
+(b) Use your result to approximate $f(0.1, 0.1)$.
+(c) Plot heatmaps of $f$, of the Taylor polynomial of order 3, and of the difference of the two in $[0, 1]^2$.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+$$f(x) = \sum_{|\alpha| \le k} \dfrac{\partial^{\alpha} f(x_0)}{\alpha!}(x - x_0)^{\alpha} + o(\|x - x_0\|^k) \quad (x \rightarrow x_0)$$
+
+\begin{align*}
+\frac{d}{dx} \log_a(x) &= \frac{1}{x \ln(a)} \\
+\frac{d}{dx} \log_a(f(x)) &= \frac{1}{f(x) \ln(a)}f'(x) \\
+\end{align*}
+
+\begin{align*}
+|\alpha| &= \alpha_1 + \alpha_2 \\
+\alpha! &= \alpha_1! \alpha_2! \\
+x^{\alpha} &= x_1^{\alpha_1} x_2^{\alpha_2} \qquad (x = (x,y),\ x^{\alpha} = x^{\alpha_1}y^{\alpha_2}) \\
+\partial^{\alpha} f &= \dfrac{\partial^{|\alpha|} f}{\partial x^{\alpha_1} \partial y^{\alpha_2}}
+\end{align*}
+
+\begin{align*}
+\partial^{|\alpha| = 1} f &= \partial_1 f,\ \partial_2 f = (1 + x + y)^{-1} \\
+\partial^{|\alpha| = 2} f &= \partial_1^2 f,\ \partial_1 \partial_2 f,\ \partial_2^2 f = -(1 + x + y)^{-2} \\
+\partial^{|\alpha| = 3} f &= \partial_1^3 f,\ \partial_1^2 \partial_2 f,\ \partial_1 \partial_2^2 f,\ \partial_2^3 f = 2(1 + x + y)^{-3} \\
+\end{align*}
+
+|---------+-----------------------------+-----------------+---------+--------+--------+-----------+-------------|
+| $(i,j)$ | $\partial^{\alpha}$         | compute         | $(0,0)$ | $i!j!$ | coef   | $x^i y^j$ | term        |
+|---------+-----------------------------+-----------------+---------+--------+--------+-----------+-------------|
+| $(0,0)$ | $f$                         | $\log(1+x+y)$   | $0$     | $1$    | $0$    | $1$       | $0$         |
+|---------+-----------------------------+-----------------+---------+--------+--------+-----------+-------------|
+| $(1,0)$ | $\partial_1$                | $(1+x+y)^{-1}$  | $1$     | $1$    | $1$    | $x$       | $x$         |
+|---------+-----------------------------+-----------------+---------+--------+--------+-----------+-------------|
+| $(0,1)$ | $\partial_2$                | $(1+x+y)^{-1}$  | $1$     | $1$    | $1$    | $y$       | $y$         |
+|---------+-----------------------------+-----------------+---------+--------+--------+-----------+-------------|
+| $(2,0)$ | $\partial_1^2$              | $-(1+x+y)^{-2}$ | $-1$    | $2$    | $-1/2$ | $x^2$     | $-1/2\ x^2$ |
+|---------+-----------------------------+-----------------+---------+--------+--------+-----------+-------------|
+| $(1,1)$ | $\partial_{1} \partial_{2}$ | $-(1+x+y)^{-2}$ | $-1$    | $1$    | $-1$   | $xy$      | $-xy$       |
+|---------+-----------------------------+-----------------+---------+--------+--------+-----------+-------------|
+| $(0,2)$ | $\partial_2^2$              | $-(1+x+y)^{-2}$ | $-1$    | $2$    | $-1/2$ | $y^2$     | $-1/2\ y^2$ |
+|---------+-----------------------------+-----------------+---------+--------+--------+-----------+-------------|
+| $(3,0)$ | $\partial_1^3$              | $2(1+x+y)^{-3}$ | $2$     | $6$    | $1/3$  | $x^3$     | $1/3\ x^3$  |
+|---------+-----------------------------+-----------------+---------+--------+--------+-----------+-------------|
+| $(1,2)$ | $\partial_1 \partial_2^2$   | $2(1+x+y)^{-3}$ | $2$     | $2$    | $1$    | $xy^{2}$  | $xy^{2}$    |
+|---------+-----------------------------+-----------------+---------+--------+--------+-----------+-------------|
+| $(2,1)$ | $\partial_1^2 \partial_2$   | $2(1+x+y)^{-3}$ | $2$     | $2$    | $1$    | $x^{2}y$  | $x^{2}y$    |
+|---------+-----------------------------+-----------------+---------+--------+--------+-----------+-------------|
+| $(0,3)$ | $\partial_2^3$              | $2(1+x+y)^{-3}$ | $2$     | $6$    | $1/3$  | $y^3$     | $1/3\ y^3$  |
+|---------+-----------------------------+-----------------+---------+--------+--------+-----------+-------------|
+$$T_3(x,y) = x + y - \frac{1}{2}x^2 - xy - \frac{1}{2}y^2 + \frac{1}{3}x^3 + xy^2 + x^2y + \frac{1}{3}y^{3}$$
+
+**** Grasped
+
+1. A lot. Learned taylor mostly from 0.
+
+*** (b)
+
+\begin{align*}
+P_3(0.1, 0.1) &= (0.1+0.1) - \frac{1}{2}(0.1+0.1)^2 + \frac{1}{3}(0.1+0.1)^3 \\
+&= (0.2) - \frac{1}{2}(0.2)^2 + \frac{1}{3}(0.2)^3 \\
+&= 0.182\dot{6} \\
+\log(1.2) &\approx 0.18232 \\
+\end{align*}
+
+**** Grasped
+
+*** (c)
+
+#+begin_src julia :results value
+using Plots
+
+f(x, y) = log(1 + x + y)
+T3(x, y) = x + y - 1/2 * x^2 - x*y - 1/2 * y^2 + 1/3 * x^3 + x*y^2 + x^2*y + 1/3 * y^3
+
+xs = 0:0.01:1
+ys = 0:0.01:1
+
+p1 = heatmap(xs, ys, f)
+p2 = heatmap(xs, ys, T3)
+p3 = heatmap(xs, ys, (x,y) -> f(x,y) - T3(x,y))
+p4 = surface(xs, ys, f)
+p4 = surface!(xs, ys, T3)
+
+plot(p1, p2, p3, p4, layout=(2,2))
+
+savefig("./assets/ps_07_01.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/03_exams/02_preparation/assets/ps_07_01.png
+
+**** Grasped
+
+* DONE PS04 P05
+** Task
+#+begin_quote
+Let $f : \mathbb{R}^2 \to \mathbb{R}$ and $g : \mathbb{R} \to \mathbb{R}$ be twice continuously differentiable such that $f(x, y) = g(x + y)$.
+
+(a) Show that the Taylor polynomial of $g$ of order 1 centered at 0 and evaluated at $t = x + y$ coincides with the local (affine) linear approximation of $f$ in $(0, 0)$.
+
+(b) The Hessian matrix of $f$ is
+
+$$Hf(x, y) = \begin{pmatrix} \partial_x \partial_x f(x, y) & \partial_x \partial_y f(x, y) \\ \partial_y \partial_x f(x, y) & \partial_y \partial_y f(x, y) \end{pmatrix}$$
+
+Consider $g(t) = e^t$ and show that the Taylor polynomial of $g$ of order 2 centered at 0 and evaluated at $t = x + y$ coincides with
+
+$$F(x, y) = f(0, 0) + \operatorname{grad} f(0, 0) \begin{pmatrix} x \\ y \end{pmatrix} + \frac{1}{2} (x, y) \, Hf(0, 0) \begin{pmatrix} x \\ y \end{pmatrix}$$
+#+end_quote
+
+** Solution
+
+*** (a)
+
+Skip, useless for the exam.
+
+*** (b)
+
+$$f(x) = \sum_{n=0}^{\infty} \dfrac{f^n(x)}{n!}(x - x_0)^n$$
+
+\begin{align*}
+f(x,y) &= e^{x+y} \\
+g(t) &= e^t \qquad (t = x + y) \\
+T_2(t) &= g(0) + g'(0)t + \frac{g''(0)}{2}t^2 \\
+       &= 1 + t + \frac{t^2}{2} \\
+T_2(x,y) &= 1 + (x+y) + \frac{(x+y)^2}{2} \\
+\end{align*}
+
+\begin{align*}
+f(x,y) &= e^{x + y} \\
+\nabla f(x,y) &=
+\begin{pmatrix}
+e^{x + y} \\
+e^{x + y}
+\end{pmatrix} \\
+H_f(x,y) &=
+\begin{pmatrix}
+e^{x + y} & e^{x + y} \\
+e^{x + y} & e^{x + y}
+\end{pmatrix} \\
+f(0,0) &= 1 \\
+\nabla f(0,0) &=
+\begin{pmatrix}
+1 \\
+1
+\end{pmatrix} \\
+H_f(0,0) &=
+\begin{pmatrix}
+1 & 1 \\
+1 & 1
+\end{pmatrix} \\
+\end{align*}
+\begin{align*}
+F(x, y) &= f(0, 0) + \operatorname{grad} f(0, 0) \begin{pmatrix} x \\ y \end{pmatrix} + \frac{1}{2} (x, y) \, Hf(0, 0) \begin{pmatrix} x \\ y \end{pmatrix} \\
+&= 1 +
+\begin{pmatrix} 1 & 1 \end{pmatrix}
+\begin{pmatrix} x \\ y \end{pmatrix} +
+\frac{1}{2} (x, y) \,
+\begin{pmatrix}
+1 & 1 \\
+1 & 1
+\end{pmatrix}
+\begin{pmatrix} x \\ y \end{pmatrix} \\
+&= 1 + x + y + \frac{1}{2}(x^2+xy + xy + y^2) \\
+&= 1 + x + y + \frac{(x + y)^2}{2}
+\end{align*}
+
+Hence, $T_2(t) = F(x,y)$.
+
+**** Grasped
+
+1. Learned 1D trick.
+
+* DONE PS03 P01
+** Task
+#+begin_quote
+Consider the curve $f : [0, 1] \to \mathbb{R}^2$ given by
+
+$$f(t) = \begin{pmatrix} t \\ \frac{2}{3} t^{3/2} \end{pmatrix}$$
+
+Determine the length of $f$.
+#+end_quote
+
+** Solution
+
+$$l(\gamma) = \int_0^1 \|\gamma'(t)\|dt$$
+
+$$\gamma'(t) = \begin{pmatrix} 1 & \sqrt{t} \end{pmatrix}$$
+
+\begin{align*}
+l(\gamma) &= \int_0^1 \sqrt{(1)^2 + (\sqrt{t})^2} dt \\
+          &= \int_0^1 \sqrt{1 + t} dt \\
+          &= \Big[ \frac{2}{3}(1 + t)^{3/2} \Big]_0^1 \\
+          &= (\frac{2}{3}(1 + 1)^{3/2}) - (\frac{2}{3}(1 + 0)^{3/2}) \\
+          &= \frac{2}{3}\bigl(2\sqrt{2} - 1\bigr).
+\end{align*}
+
+*** Grasped
+
+1. Again reminded myself of curve length.
+2. Should revise integration and curve length.
+
+* PS07 P03
+** Task
+#+begin_quote
+Let $V$ and $W$ be normed spaces and let $f_1, \ldots, f_n : V \to \mathbb{R}$ be convex. Prove that the following functions are also convex.
+
+(a) $\sum_{i=1}^{n} \alpha_i f_i$ for $\alpha_1, \ldots, \alpha_n \geq 0$.
+(b) $g : V \to \mathbb{R}$ given by $g(x) = \max_{i=1,\ldots,n} f_i(x)$.
+(c) If $A : W \to V$ is linear and $b \in V$, then $g : W \to \mathbb{R}$ given by
+
+\[ g(x) = f_1(Ax - b) \]
+
+is also convex.
+#+end_quote
+
+** Solution
+
+#+begin_quote
+A function $f : \mathbb{R} \rightarrow \mathbb{R}$ is called a convex iff $\forall x, y \in \mathbb{R}$ and $t \in [0,1]$,
+
+$$f(tx + (1-t)y) \le tf(x) + (1-t)f(y)$$
+#+end_quote
+
+*** (a)
+
+Let $h = \sum_{i=1}^{n} \alpha_i f_i$ for $\alpha_1, \ldots, \alpha_n \ge 0$.
+
+By convexity of each $f_i$:
+
+$$f_i(tx + (1 - t)y) \le tf_i(x) + (1 - t)f_i(y)$$
+
+Since $\alpha_i \ge 0$, multiplying preserves the inequality:
+
+\begin{align*}
+\sum_{i=1}^n \alpha_i f_i(tx + (1 - t)y) &\le \sum_{i=1}^n \alpha_i t f_i(x) + \sum_{i=1}^n \alpha_i (1 - t) f_i(y) \\
+\sum_{i=1}^n \alpha_i f_i(tx + (1 - t)y) &\le t \sum_{i=1}^n \alpha_i f_i(x) + (1 - t) \sum_{i=1}^n \alpha_i f_i(y) \\
+h(tx + (1 - t)y) &\le t h(x) + (1 - t) h(y) \\
+\end{align*}
+
+*** (b)
+
+**** Grasped
+
+*** (c)
+
+**** Grasped
+
+* DONE PS03 P03
+** Task
+#+begin_quote
+Consider the curve $f : [0, 1] \to \mathbb{R}^2$ given by
+
+$$f(t) = \begin{pmatrix} t \cos(6\pi t) \\ t \sin(6\pi t) \end{pmatrix}$$
+
+(a) Determine the length of $f$ by your best effort (how many digits are you able to determine accurately?).
+
+(b) Write a Julia function, whose input is a curve $\gamma : [0, 1] \to \mathbb{R}^2$ and a point $t_0 \in [0, 1]$ that returns an (affine) linear function that approximates $\gamma$ in a neighborhood of $t_0$.
+
+(c) Visualize the affine linear approximation for $f$ and for several other different curves.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+#+begin_src julia :results value
+using LinearAlgebra, Plots
+
+f(t) = [t*cos(6*π*t), t*sin(6*π*t)]
+
+function length_by_partition(f, P = range(0, 1, length=1000))
+    l = 0.0
+
+    for i in 1:(length(P) - 1)
+        l += norm(f(P[i+1]) - f(P[i]))
+    end
+
+    return l
+end
+
+length_by_partition(f)
+#+end_src
+
+#+RESULTS:
+: 9.534181365684656
+
+**** Grasped
+
+1. Wrote from memory.
+
+*** (b) + (c)
+
+#+begin_src julia :results value
+using Calculus, Plots
+
+f(t) = [t*cos(6*π*t),
+        t*sin(6*π*t)]
+
+function affine(f, t0)
+    n = length(f(0))
+    df0 = [derivative(h -> f(h)[j], t0) for j in 1:n]
+    return h -> f(t0) + h * df0
+end
+
+plot(t -> f(t)[1], t -> f(t)[2], 0, 1, label="f", lw=2, aspect_ratio=1)
+
+t0 = 0.8
+
+A = affine(f, t0)
+
+plot!(t -> A(t)[1], t -> A(t)[2], -0.1, 0.1, label="A", lw=2, aspect_ratio=1)
+
+savefig("./assets/ps_03_03.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/03_exams/02_preparation/assets/ps_03_03.png
+
+**** Grasped
+
+1. Feels like I forgot affine.
+
+* Practice
+
+Find second order taylor series of:
+
+$f(x) = e^x \cos(y)$
+
+|---------+-----------------------------+------------------+---------+--------+--------+-----------+---------------|
+| $(i,j)$ | $\partial^{\alpha}$         | compute          | $(0,0)$ | $i!j!$ | coef   | $x^i y^j$ | term          |
+|---------+-----------------------------+------------------+---------+--------+--------+-----------+---------------|
+| $(0,0)$ | $f$                         | $e^{x} \cos(y)$  | $1$     | $1$    | $1$    | $1$       | $1$           |
+|---------+-----------------------------+------------------+---------+--------+--------+-----------+---------------|
+| $(1,0)$ | $\partial_1$                | $e^{x} \cos(y)$  | $1$     | $1$    | $1$    | $x$       | $x$           |
+|---------+-----------------------------+------------------+---------+--------+--------+-----------+---------------|
+| $(0,1)$ | $\partial_2$                | $-e^{x} \sin(y)$ | $0$     | $1$    | $0$    | $y$       | $0$           |
+|---------+-----------------------------+------------------+---------+--------+--------+-----------+---------------|
+| $(2,0)$ | $\partial_1^2$              | $e^{x} \cos(y)$  | $1$     | $2$    | $1/2$  | $x^{2}$   | $1/2\ x^{2}$  |
+|---------+-----------------------------+------------------+---------+--------+--------+-----------+---------------|
+| $(1,1)$ | $\partial_{1} \partial_{2}$ | $-e^{x} \sin(y)$ | $0$     | $1$    | $0$    | $xy$      | $0$           |
+|---------+-----------------------------+------------------+---------+--------+--------+-----------+---------------|
+| $(0,2)$ | $\partial_2^2$              | $-e^{x} \cos(y)$ | $-1$    | $2$    | $-1/2$ | $y^{2}$   | $-1/2\ y^{2}$ |
+|---------+-----------------------------+------------------+---------+--------+--------+-----------+---------------|
+
+$$T_2 = 1 + x + \frac{1}{2}x^2 - \frac{1}{2}y^2$$
+
+#+begin_src julia :results value
+using Plots
+
+f(x,y) = exp(x) * cos(y)
+T2(x,y) = 1 + x + 1/2 * x^2 - 1/2 * y^2
+
+xs = -5:0.1:5
+ys = -5:0.1:5
+
+p = surface(xs, ys, f, alpha=0.8)
+p = surface!(xs, ys, T2, alpha=0.8)
+
+savefig("./assets/tmp.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/03_exams/02_preparation/assets/tmp.png

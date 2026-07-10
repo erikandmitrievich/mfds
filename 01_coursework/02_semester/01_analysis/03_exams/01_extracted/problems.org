@@ -1,0 +1,820 @@
+#+title: Problem Sets Analysis
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-06-25>
+#+lastmod: <2026-06-30 15:57>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Triage index
+
+** EXAM (23)
+- PS03 P1 — "that would be a test"
+- PS04 P1 — "everything except 4 certainly relevant for the exam"
+- PS04 P2 — part of bigger exercise, certainly relevant
+- PS04 P3 — part of bigger exercise, certainly relevant
+- PS04 P5 — part of bigger exercise, certainly relevant
+- PS05 P1 — "for sure" in there
+- PS05 P2 — "very likely... classic" Fréchet derivative
+- PS06 P3 — "very much imagine one question on that function"
+- PS07 P1 — "compute the Taylor polynomial, yes"
+- PS08 P1 — critical points classification, "yes"
+- PS08 P2 — critical points classification, "yes"
+- PS10 P1 — 2D Newton iteration, "yes"
+- PS11 P3 — submanifold, tangent/normal space, "for sure, yes"
+- PS11 P4 — submanifold via Jacobian, "also yes"
+- PS12 P1 — Lagrange classic, "yes, that is a classic"
+- PS12 P2 — ellipse closest/farthest, "yes"
+- PS12 P3 — two-constraint Lagrange, "yes"
+- PS12 P4 — "yes, I like 4 very much"
+- PS13 P1 — constrained extrema, "that is yes"
+- PS13 P2 — two G-functions, "yes"
+- PS13 P3 — Lagrangian + Hessian classification, "very likely"
+- PS14 P1 — extrema with/without constraints, "for sure"
+- PS14 P3 — Banach fixed point, "for sure on the exam"
+
+** METHOD (15)
+- PS02 P1 — path-connectedness "classic", mild signal
+- PS02 P2 — continuity iff component continuity, "should be clear"
+- PS02 P4 — 1D contraction, exam version is multivariate
+- PS03 P2 — Julia arc-length code, multiple-choice form
+- PS03 P3 — spiral arc length + affine approximation, "could be"
+- PS05 P3 — chain rule for Fréchet derivative, master technique
+- PS05 P4 — "know how to compute the Jacobian"
+- PS06 P2 — Taylor order 2 with Hessian, "important"
+- PS07 P2 — gradient descent Julia code, multiple-choice recognition
+- PS07 P3 — convex function combinations, "could be in example"
+- PS07 P4 — GD/SGD/mini-batch recognition, multiple choice
+- PS08 P4 — recognize Newton iterations
+- PS10 P2 — Newton implementation should be known
+- PS10 P3 — Jacobian non-invertibility, nikita-only
+- PS10 P4 — Newton variants for multiple choice, nikita-only
+
+** COVERED (0)
+(none)
+
+** DEEMPHASIZED (17)
+- PS01 P1 — sheet 1 globally "no" [NIKITA-ONLY]
+- PS01 P2 — sheet 1 globally "no" [NIKITA-ONLY]
+- PS01 P3 — sheet 1 globally "no" [NIKITA-ONLY]
+- PS01 P4 — sheet 1 globally "no" [NIKITA-ONLY]
+- PS02 P3 — "I don't like that one"
+- PS03 P4 — "nothing" / "probably no"
+- PS04 P4 — "everything except 4 is relevant" (so 4 is not)
+- PS06 P1 — "really unlikely this was done in the exam"
+- PS08 P3 — "unlikely 1D Newton shows up"
+- PS09 P1 — "more appropriate for linear algebra"
+- PS09 P2 — "let's not do an exam question for Neumann series"
+- PS09 P3 — also Neumann series, sheet skipped
+- PS09 P4 — sheet skipped, nikita "no"
+- PS11 P1 — "do not have to directly use the implicit function"
+- PS11 P2 — "also not really... problem 2, no"
+- PS13 P4 — "I don't think problem 4 really shows up in the exam"
+- PS14 P2 — "problem 2 is unlikely"
+
+** ABSENT (1)
+- PS06 P4 — [not addressed in recording]
+
+* Per-problem entries
+
+** PS01 P1  $d_p$ metric in Julia, unit balls, $d_\infty$ as metric
+:PROPERTIES:
+:REL:  DEEMPHASIZED
+:CONF: med
+:END:
+
+*** Professor's signal
+"1. No" (nikita) [NIKITA-ONLY]
+
+** PS01 P2  Inequality $d_\infty \le d_p \le n^{1/p} d_\infty$
+:PROPERTIES:
+:REL:  DEEMPHASIZED
+:CONF: med
+:END:
+
+*** Professor's signal
+"1. No" (nikita) [NIKITA-ONLY]
+
+** PS01 P3  Continuity iff pre-images of opens are open
+:PROPERTIES:
+:REL:  DEEMPHASIZED
+:CONF: med
+:END:
+
+*** Professor's signal
+"1. No" (nikita) [NIKITA-ONLY]
+
+** PS01 P4  $f(x) = d_X(x, y_0)$ continuous; open/closed balls
+:PROPERTIES:
+:REL:  DEEMPHASIZED
+:CONF: med
+:END:
+
+*** Professor's signal
+"1. No" (nikita) [NIKITA-ONLY]
+
+** PS02 P1  Continuous image of $[0,1]$ is path-connected
+:PROPERTIES:
+:REL:  METHOD
+:CONF: med
+:END:
+
+*** Statement
+Let $X$ be a metric space and $f : [0, 1] \to X$ continuous. Show that $f([0, 1]) \subseteq X$ is path-connected.
+
+*** Professor's signal
+"Problem 1 in problem [sheet] two, that's classic. I wouldn't find it super likely, but I could mention it. Maybe." (rec_02_02). Nikita: "P1: maybe".
+
+*** Notes
+Path-connectedness via continuity is the classical technique: if $f : [0,1] \to X$ is continuous and $a, b \in f([0,1])$, then preimages $t_a, t_b \in [0,1]$ are joined by the straight segment, and $f$ restricted to that segment is a continuous path from $a$ to $b$. The professor flagged this as "classic" — the method to internalize — but rated the specific problem only "maybe" for the exam. Treat the result as a building block for path-connectedness arguments elsewhere (e.g. PS02 P3, which is downplayed but uses the same idea).
+
+** PS02 P2  Continuity of $f : [0,1] \to \mathbb{R}^2$ iff components continuous
+:PROPERTIES:
+:REL:  METHOD
+:CONF: high
+:END:
+
+*** Statement
+Let $f : [0, 1] \to \mathbb{R}^2$ and $f_1, f_2 : [0, 1] \to \mathbb{R}$, so that $f(t) = (f_1(t), f_2(t))^\top$, with the standard metric on $\mathbb{R}^2$. (a) Coordinate map $\chi_i$ is continuous. (b) $f$ is continuous iff both $f_1$ and $f_2$ are continuous.
+
+*** Professor's signal
+"Problem 2, maybe not really as important, but knowing that $f$ is continuous if and only if $f_1$ and $f_2$ are. This should be clear." (rec_02_02 + rec_01_02). Nikita confirms.
+
+*** Notes
+Not flagged as exam-worthy on its own, but the equivalence "vector-valued continuity = componentwise continuity" is treated as a baseline fact you must already have. It enters silently in every multivariate continuity / curve / submanifold argument later in the course (PS03 curves; PS11 submanifolds). Coordinate-map continuity follows from $|\chi_i(x) - \chi_i(y)| \le \|x - y\|$. The forward direction of (b) again uses this inequality; the reverse direction uses $\|f(t) - f(t_0)\| \le \sqrt{2}\, \max_i |f_i(t) - f_i(t_0)|$.
+
+** PS02 P3  Continuous path in $\mathbb{R}^2 \setminus \{0\}$; path-connectedness in Julia
+:PROPERTIES:
+:REL:  DEEMPHASIZED
+:CONF: high
+:END:
+
+*** Professor's signal
+"Problem 3, I don't like it anymore." (rec_02_02). Nikita: "P3: No".
+
+** PS02 P4  Contraction $f(x) = (x^2+1)/4$, fixed-point iteration in Julia
+:PROPERTIES:
+:REL:  METHOD
+:CONF: high
+:END:
+
+*** Statement
+Let $f : [0, 1] \to \mathbb{R}$ be given by $f(x) = \tfrac{1}{4}(x^2 + 1)$. (a) Show $f$ maps $[0,1]$ into itself and is a contraction. (b) Deduce a unique fixed point and implement the fixed-point iteration in Julia.
+
+*** Professor's signal
+"Problem 4, for sure, but more likely in a multivariate setting." (rec_02_02). Nikita: "P4: fixed point stuff"; and later "For sure something with Banach fixed point thm on the exam."
+
+*** Notes
+The 1D contraction with constant $L = 1/2$ on $[0,1]$ is the warm-up; the professor explicitly redirected the exam-relevant version to the multivariate / Banach-space form. The technique is therefore double-anchored in this triage: the method (Banach fixed-point theorem) is exam-critical, but the realization on the exam is expected at PS14 P3 (the $C([0,1])$ map $\Phi(f)(t) = t + f(t)^2/4$, which is essentially this same problem promoted to a function space). Use PS02 P4 to drill the bookkeeping — invariance of the interval, the contraction estimate, the fixed-point iteration code — and PS14 P3 for the exam dress rehearsal.
+
+** PS03 P1  Length of curve $f(t) = (t, \tfrac{2}{3} t^{3/2})$
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+Consider $f : [0,1] \to \mathbb{R}^2$ given by $f(t) = (t, \tfrac{2}{3} t^{3/2})^\top$. Determine the length of $f$.
+
+*** Professor's signal
+"Given a curve, [compute] the length, that would be a test. I mentioned this." (rec_02_02, rec_01_02). Nikita: "P1: can imagine it's there."
+
+*** Notes
+The professor explicitly used the word "test" — read this as the canonical arc-length-via-speed exam item. The mechanics: $\|f'(t)\| = \sqrt{1 + t}$, so $L = \int_0^1 \sqrt{1 + t}\, dt = \tfrac{2}{3}\big[(1+t)^{3/2}\big]_0^1 = \tfrac{2}{3}(2\sqrt{2} - 1)$. The setup chosen by the problem (the integrand simplifies to $\sqrt{1+t}$) is precisely the kind of "clean closed-form integral" that signals exam-suitability. Be ready to (i) write the speed, (ii) recognize the antiderivative without computer aid, (iii) plug in cleanly.
+
+** PS03 P2  Polygonal and midpoint approximation of arc length in Julia
+:PROPERTIES:
+:REL:  METHOD
+:CONF: high
+:END:
+
+*** Statement
+Write Julia code to approximate the length of $f : [0,1] \to \mathbb{R}^2$ by (a) polygonal length over a partition $P$, (b) midpoint-rule approximation of the length integral, and (c) test/compare for several curves.
+
+*** Professor's signal
+"Julia code, unlikely we need to write code, but I could give you the implementation in Julia and ask what it does." (rec_02_02). Nikita: "P2: give implementation of code and ask what gives [multiple choice]."
+
+*** Notes
+Don't memorize syntax — instead, be able to read a Julia snippet and identify whether it is implementing (i) the polygonal approximation $\sum_k \|f(t_{k+1}) - f(t_k)\|$, or (ii) the midpoint quadrature $\sum_k \|f'(t_k^\ast)\|\,\Delta t_k$, or (iii) something else (e.g., trapezoid, naive forward differences). Expect a multiple-choice item built around this distinction. Side observations the professor implicitly wants: polygonal approximation converges from below for sufficiently smooth curves; midpoint rule is second-order accurate in $\Delta t$ for smooth $\|f'\|$.
+
+** PS03 P3  Spiral length $f(t) = (t\cos 6\pi t, t\sin 6\pi t)$; affine approximation
+:PROPERTIES:
+:REL:  METHOD
+:CONF: med
+:END:
+
+*** Statement
+For $f(t) = (t \cos 6\pi t, t \sin 6\pi t)^\top$ on $[0,1]$: (a) determine the length to best precision; (b) write a Julia function returning the affine linear approximation of a curve $\gamma$ at $t_0$; (c) visualize.
+
+*** Professor's signal
+"Problem 3, that's again... could be." (rec_02_02). Nikita: "P3: sure could be."
+
+*** Notes
+Two distinct deliverables in one problem, both exam-plausible. The affine linear approximation $\gamma(t) \approx \gamma(t_0) + \gamma'(t_0)(t - t_0)$ is the 1D analogue of the linearization technique that recurs throughout sheets 4–5 and underlies Newton's method (PS08, PS10). For (a), the speed is $\|f'(t)\| = \sqrt{1 + (6\pi t)^2}$, so $L = \int_0^1 \sqrt{1 + (6\pi t)^2}\, dt$ — closed form available via $\sinh^{-1}$ but messy; the point of (a) is numerical accuracy. For an exam form, expect either the affine-approximation function (more likely) or a recognize-the-integrand item.
+
+** PS03 P4  Metric derivative and length of $\gamma = f \circ \varphi$
+:PROPERTIES:
+:REL:  DEEMPHASIZED
+:CONF: med
+:END:
+
+*** Professor's signal
+"Nothing. Four." (rec_01_02, rec_02_02 — fragmentary). Nikita: "P4: probably no."
+
+** PS04 P1  $\nabla f$ and linear approximation for $f(x,y) = x^2 + y^2$
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+Let $f : \mathbb{R}^2 \to \mathbb{R}$, $f(x,y) = x^2 + y^2$. (a) Compute $\nabla f$. (b) Evaluate at $(1,2)$ and give the local affine linear approximation at $(1,2)$. (c) Plot $f$ and $\nabla f$ in Julia.
+
+*** Professor's signal
+"Everything except for 4 is certainly relevant for the exam because it will be part of the bigger exercise." (rec_01_02). "I think the exam for four [sheet] is certainly relevant for the exam." (rec_02_02). Nikita: "P1, P2, P3, P5: will be; P4: no."
+
+*** Notes
+The professor's framing: gradient + affine approximation is plumbing for every larger multivariate exercise on the exam (Taylor expansion, Newton, Lagrange — they all open with these two operations). Concretely: $\nabla f(x,y) = (2x, 2y)^\top$, so $\nabla f(1,2) = (2,4)^\top$ and the affine approximation at $(1,2)$ is $L(x,y) = 5 + 2(x-1) + 4(y-2)$. Don't overinvest in this problem in isolation — internalize the mechanical pipeline so it is automatic when it shows up as step 1 inside a longer Taylor / Hessian / Lagrange chain.
+
+** PS04 P2  $\nabla f$ and linear approximation for $f(x,y,z) = xyz$
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+$f : \mathbb{R}^3 \to \mathbb{R}$, $f(x,y,z) = xyz$. (a) Compute $\nabla f$. (b) Evaluate at $(1,1,1)$; affine linear approximation there. (c) Plot $(x,y) \mapsto f(x,y,1)$.
+
+*** Professor's signal
+"Everything except for 4 is certainly relevant for the exam." (rec_01_02). Nikita: "P2: will be."
+
+*** Notes
+Same drilling logic as P1, but $\nabla f = (yz, xz, xy)^\top$, so at $(1,1,1)$ the gradient is $(1,1,1)^\top$ and the affine approximation is $1 + (x-1) + (y-1) + (z-1) = x + y + z - 2$. The 3-variable case is mildly more demanding to set up: be sure the gradient is treated as a row in the linearization $f(x_0) + \nabla f(x_0)^\top(x - x_0)$.
+
+** PS04 P3  $\nabla f$ and linear approximation for $f(x,y) = x^2 y + y^2$
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+$f : \mathbb{R}^2 \to \mathbb{R}$, $f(x,y) = x^2 y + y^2$. (a) Compute $\nabla f$. (b) Local affine linear approximation at $(1,1)$.
+
+*** Professor's signal
+"Everything except for 4 is certainly relevant for the exam." (rec_01_02). Nikita: "P3: will be."
+
+*** Notes
+$\nabla f(x,y) = (2xy,\, x^2 + 2y)^\top$, so $\nabla f(1,1) = (2, 3)^\top$ and $L(x,y) = 2 + 2(x-1) + 3(y-1)$. The mixed-variable derivative $\partial_x = 2xy$ is the kind of step the professor flagged as the "first step in a bigger exercise" — getting the cross terms right is the only place to slip.
+
+** PS04 P4  Guess local extrema of $f(x,y) = x/(x^2 + y^2 + 1)$ from a plot
+:PROPERTIES:
+:REL:  DEEMPHASIZED
+:CONF: high
+:END:
+
+*** Professor's signal
+"1, 2, 3, maybe 4 not... everything except for 4 is certainly relevant for the exam." (rec_01_02). Nikita: "P4: no."
+
+** PS04 P5  Taylor of $g$ agrees with linear / Hessian approximation of $f(x,y) = g(x+y)$
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+Let $f : \mathbb{R}^2 \to \mathbb{R}$, $g : \mathbb{R} \to \mathbb{R}$ both $C^2$, with $f(x,y) = g(x+y)$. (a) Show the order-1 Taylor polynomial of $g$ at $0$, evaluated at $t = x+y$, equals the affine linear approximation of $f$ at $(0,0)$. (b) For $g(t) = e^t$, show the order-2 Taylor polynomial of $g$ at $0$, evaluated at $t = x+y$, equals $f(0,0) + \nabla f(0,0)\cdot(x,y)^\top + \tfrac{1}{2}(x,y)\, H_f(0,0)(x,y)^\top$.
+
+*** Professor's signal
+"Everything except for 4 is certainly relevant for the exam." (rec_01_02). Nikita: "P5: will be."
+
+*** Notes
+This is the conceptual bridge between 1D Taylor and the multivariate quadratic Taylor formula — exactly the perspective the professor returns to in PS06 P2 ("Taylor approximation of order 2, significance of the Hessian"). Mechanically: $\partial_x f = \partial_y f = g'(x+y)$, $\partial_x^2 f = \partial_y^2 f = \partial_x \partial_y f = g''(x+y)$, so $H_f = g''(x+y)\,\begin{pmatrix}1 & 1\\1 & 1\end{pmatrix}$. Then $(x,y) H_f(0,0) (x,y)^\top = g''(0)(x+y)^2$, which is exactly what falls out of the 1D Taylor of $g$ when one writes $t^2 = (x+y)^2$. Be prepared to do this kind of derivation cleanly in both directions.
+
+** PS05 P1  Extrema and saddle points of $f(x,y) = \|x\|^2 - \|y\|^2$
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+$f : \mathbb{R}^{2n} \to \mathbb{R}$, $f(x,y) = \|x\|^2 - \|y\|^2$. (a) All local extrema and saddle points. (b) Visualize $f$ and $\nabla f$ in Julia for $n=1$.
+
+*** Professor's signal
+"Something given the function, you know that already is in there for sure." (rec_01_02). Nikita: "P1: for sure."
+
+*** Notes
+The professor's "for sure" is the strongest exam signal you get short of a written guarantee. $\nabla f = (2x, -2y)$ has unique critical point at $(0,0)$; the Hessian is $\operatorname{diag}(2 I_n,\, -2 I_n)$ with signature $(n, n)$ — pure saddle. The pedagogical payoff: a single example that shows that a critical point with non-degenerate Hessian can fail to be an extremum, motivating the Hessian-eigenvalue classification used everywhere in sheets 6–8 and in PS14 P1. Make sure to state "saddle point" explicitly and to justify it via the indefinite Hessian, not via inspection alone.
+
+** PS05 P2  Fréchet derivative of $L(x) = \|Ax - b\|^2$; normal equations
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+$L : \mathbb{R}^n \to \mathbb{R}$, $L(x) = \|Ax - b\|^2$. (a) Compute the Fréchet derivative. (b) Show $x$ is a global minimum iff $A^\ast A x = A^\ast b$. (c) Implement the affine local approximation in Julia.
+
+*** Professor's signal
+"Classic to give some function of the Fréchet derivative — that's very likely in one way or the other, maybe not exactly for this function." (rec_01_02). Nikita: "P2: very likely."
+
+*** Notes
+The professor flagged the kind, not necessarily this specific instance — expect a quadratic-loss / normal-equations item on the exam, possibly with a different matrix. Mechanically: $L(x+h) - L(x) = 2\langle Ax-b, Ah\rangle + \|Ah\|^2$, so $L'(x)h = 2\langle A^\ast(Ax-b), h\rangle$, i.e., $\nabla L(x) = 2 A^\ast(Ax - b)$. Global minimality follows because $L$ is convex (quadratic with $A^\ast A \succeq 0$), so $\nabla L(x) = 0 \Leftrightarrow A^\ast A x = A^\ast b$ characterizes global minima — the normal equations. Be ready to (i) derive the Fréchet derivative from first principles (do not skip the $o(\|h\|)$ bookkeeping), and (ii) explain the iff in (b) explicitly via convexity.
+
+** PS05 P3  Chain rule $(g \circ f)'(x,y)$
+:PROPERTIES:
+:REL:  METHOD
+:CONF: high
+:END:
+
+*** Statement
+$f : \mathbb{R}^2 \to \mathbb{R}^2$, $f(x,y) = (x^2, y^2)^\top$; $g : \mathbb{R}^2 \to \mathbb{R}$, $g(u,v) = u - v$. Compute $(g \circ f)'(x,y)$.
+
+*** Professor's signal
+"Chain rule for the Fréchet derivative — sure this can happen probably." (rec_01_02). Nikita: "P3: chain rule for Fréchet der."
+
+*** Notes
+The signal is on the technique. The exam-form delivery is most likely a different pair $(f, g)$, but the recipe is fixed: $(g \circ f)'(x) = g'(f(x))\, f'(x)$ as a product of Jacobians. For the given $f, g$: $f'(x,y) = \operatorname{diag}(2x, 2y)$, $g'(u,v) = (1, -1)$, so $(g \circ f)'(x,y) = (1, -1)\, \operatorname{diag}(2x, 2y) = (2x, -2y)$. Cross-check: $(g \circ f)(x,y) = x^2 - y^2$, whose gradient is $(2x, -2y)$ — matches. The exam-shape risk: getting the multiplication order or shape wrong (Jacobian of outer evaluated at $f(x)$, applied to Jacobian of inner at $x$).
+
+** PS05 P4  Jacobi matrix and linear approximation; estimate $f(1.01, 0.98)$
+:PROPERTIES:
+:REL:  METHOD
+:CONF: high
+:END:
+
+*** Statement
+$f : \mathbb{R}^2 \to \mathbb{R}^2$, $f(x,y) = (xy,\, x^2 + y^3)^\top$. (a) Jacobi matrix $J_f$. (b) $J_f(1,1)$. (c) Affine linear approximation near $(1,1)$. (d) Estimate $f(1.01, 0.98)$.
+
+*** Professor's signal
+"From the 4th [problem] you have to know how to compute the Jacobian, that's also OK." (rec_01_02). Nikita: "P4: know how to compute Jacobian."
+
+*** Notes
+"Have to know" — non-negotiable mechanical skill. $J_f(x,y) = \begin{pmatrix} y & x \\ 2x & 3y^2 \end{pmatrix}$, evaluated at $(1,1)$ gives $\begin{pmatrix}1 & 1 \\ 2 & 3\end{pmatrix}$. Affine approximation: $L(x,y) = f(1,1) + J_f(1,1)\begin{pmatrix}x-1\\y-1\end{pmatrix} = \begin{pmatrix}1 + (x-1) + (y-1)\\ 2 + 2(x-1) + 3(y-1)\end{pmatrix}$. So $L(1.01, 0.98) = (0.99,\, 1.96)^\top$. The exam usefulness is twofold: Jacobian shows up directly in chain rule (PS05 P3), implicit/inverse function theorems (PS11), submanifold tests (PS11 P4, PS13 P1), and as the system matrix in Newton's method (PS10).
+
+** PS06 P1  Identities used in the proof of the Taylor formula
+:PROPERTIES:
+:REL:  DEEMPHASIZED
+:CONF: high
+:END:
+
+*** Professor's signal
+"Something from the [proof] of Taylor's [formula] — it's really unlikely that this was done in the exam." (rec_02_02). Nikita: "P1: unlikely."
+
+** PS06 P2  Taylor formula at order 2 with Hessian; heatmap of the approximation
+:PROPERTIES:
+:REL:  METHOD
+:CONF: high
+:END:
+
+*** Statement
+$f : \mathbb{R}^n \to \mathbb{R}$ twice continuously differentiable. (a) Prove the Taylor formula of order 2 at $x_0$: $f(x) = f(x_0) + \nabla f(x_0)^\top(x - x_0) + \tfrac{1}{2}(x - x_0)^\top H_f(x_0)(x - x_0) + o(\|x - x_0\|^2)$. (b) Implement and heatmap-plot the order-2 Taylor approximation of $f(x,y) = x^4 + y^4 + x^2 + y^2$.
+
+*** Professor's signal
+"Problem 2, we certainly should have looked at. The Taylor approximation in second order, the significance of the Hessian matrix — that's important." (rec_02_02). Nikita: "P2: have a look at."
+
+*** Notes
+"Important" + "should have looked at" — strong METHOD signal without an explicit exam claim. The technique to internalize is the order-2 Taylor formula in multivariate form and the role of the Hessian in driving the quadratic correction. The "significance of the Hessian" line points at what is reused on the exam: classification of critical points (PS06 P3, PS07 P2, PS08 P1–P2, PS14 P1), curvature-based local approximation, and the Hessian of the Lagrangian for constrained classification (PS13 P3, PS14 P1). For (b), the heatmap mainly serves as a sanity check that the quadratic approximation matches near $(0,0)$ and diverges as $\|x\|$ grows — the kind of qualitative item that fits a multiple-choice "which heatmap belongs to which approximation" question.
+
+** PS06 P3  Local extrema of $f(x,y) = x^2 + y^2 + 2x + 4y$
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+$f(x,y) = x^2 + y^2 + 2x + 4y$. (a) All local extrema. (b) Heatmap plot in Julia to check.
+
+*** Professor's signal
+"I can very much imagine one question about the [local extrema] on that function. And then another question below, when we introduce additional constraints, compute the local extrema under those constraints." (rec_02_02). Nikita: "P3: important (for sure local extrema / under constraints)."
+
+*** Notes
+The professor explicitly described the exam embedding: a clean unconstrained extremum problem on a quadratic + linear, paired with a constrained version (the constrained version is the territory of PS12–14). Here: $\nabla f = (2x + 2,\, 2y + 4)$, vanishing at $(-1, -2)$; Hessian $H_f = 2I$ is positive definite, so $(-1, -2)$ is the unique global minimum with $f(-1,-2) = -5$. Do this cleanly, then mentally rehearse "what if I now constrain $x + y = c$" — that is the shape the professor described for the second exam question. The completion-of-squares form $f = (x+1)^2 + (y+2)^2 - 5$ is the cleanest exam-style presentation.
+
+** PS06 P4  Local extrema of $f(x,y) = x^2 + 3y^2 + 2xy$
+:PROPERTIES:
+:REL:  ABSENT
+:CONF: low
+:END:
+
+*** Professor's signal
+[not addressed in recording]
+
+** PS07 P1  Taylor polynomial order 3 of $\log(1 + x + y)$ at $(0,0)$
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+$f(x,y) = \log(1 + x + y)$. (a) Order-3 Taylor polynomial at $(0,0)$. (b) Approximate $f(0.1, 0.1)$. (c) Heatmaps of $f$, the order-3 Taylor polynomial, and the difference on $[0,1]^2$.
+
+*** Professor's signal
+"Given some function, please compute the Taylor polynomial. Yes. And it's also a way to approximate. Yes." (rec_02_02 + rec_01_02). Nikita: "P1: Taylor."
+
+*** Notes
+Double "yes" — the cleanest exam-style item on this sheet. Computational trick: $\log(1+u)$ has 1D Taylor $u - u^2/2 + u^3/3 + o(u^3)$, and substituting $u = x+y$ gives the multivariate order-3 polynomial directly: $T_3(x,y) = (x+y) - \tfrac{1}{2}(x+y)^2 + \tfrac{1}{3}(x+y)^3$. Plugging $(0.1, 0.1)$: $T_3 \approx 0.2 - 0.02 + 0.00267 \approx 0.18267$, compared to $\log(1.2) \approx 0.18232$. The exam play: be ready to (i) substitute into a 1D Taylor series instead of computing multivariate partial derivatives, when the function has the form $g(x+y)$ or similar — this is the PS04 P5 lesson cashed in.
+
+** PS07 P2  Critical points of $x^4 + y^4 - 2x^2 - 2y^2$; Hessian classification; gradient descent in Julia
+:PROPERTIES:
+:REL:  METHOD
+:CONF: high
+:END:
+
+*** Statement
+$f(x,y) = x^4 + y^4 - 2x^2 - 2y^2$. (a) $\nabla f$. (b) Critical points + classify by Hessian. (c) Gradient descent in Julia, vary starting values, describe convergence.
+
+*** Professor's signal
+"You don't have to implement anything yourself in Julia, but at least in the multiple-choice part I expect some Julia [code shown] and an option to say what it really does." (rec_02_02 + rec_01_02). Nikita: "P2: yes (Julia code)."
+
+*** Notes
+The mathematical content here (compute gradient $\nabla f = (4x^3 - 4x,\, 4y^3 - 4y)$, find critical points $\{-1, 0, 1\}^2$ — 9 points — classify via Hessian $\operatorname{diag}(12x^2 - 4,\, 12y^2 - 4)$) feeds directly into the EXAM territory of PS08 P1 and PS14 P1. For the Julia side, the professor's framing is exact: don't memorize syntax — be able to look at a gradient-descent snippet and identify (i) what step size is used, (ii) whether it terminates by tolerance or iteration cap, (iii) whether it implements vanilla GD or something else (SGD / mini-batch as in PS07 P4). Multiple choice with three slightly-different Julia code blocks is the predicted exam form.
+
+** PS07 P3  Convex function combinations preserve convexity
+:PROPERTIES:
+:REL:  METHOD
+:CONF: med
+:END:
+
+*** Statement
+$V, W$ normed; $f_1, \ldots, f_n : V \to \mathbb{R}$ convex. Prove convex: (a) $\sum_i \alpha_i f_i$ with $\alpha_i \ge 0$; (b) $\max_i f_i$; (c) $f_1(Ax - b)$ for $A$ linear, $b \in V$.
+
+*** Professor's signal
+"If you have a convex function, you can [combine] them and you still get a convex function — that's also, could be in the example." (rec_02_02 + rec_01_02).
+
+*** Notes
+"Could be" is softer than the EXAM signals elsewhere but explicit enough to keep this as METHOD rather than drop to COVERED. The technique is the convexity calculus — be ready to write the three inequalities directly from the definition. For (a): linearity in $\alpha_i \ge 0$ preserves Jensen's inequality. For (b): $\max_i f_i(\lambda x + (1-\lambda)y) \le \max_i (\lambda f_i(x) + (1-\lambda) f_i(y)) \le \lambda \max_i f_i(x) + (1-\lambda)\max_i f_i(y)$. For (c): $f_1(A(\lambda x + (1-\lambda)y) - b) = f_1(\lambda(Ax-b) + (1-\lambda)(Ay-b))$ — affine-substitution preserves convexity. The exam form, if it appears, is most likely a multiple-choice "which of the following preserves convexity" or a 2–3 line written proof of one of the three parts.
+
+** PS07 P4  GD, SGD, mini-batch SGD for least squares
+:PROPERTIES:
+:REL:  METHOD
+:CONF: med
+:END:
+
+*** Statement
+$a_i = (1, t_i, t_i^2)^\top$, $t_i = i/n$, $b_i = a_i^\top x_{\mathrm{true}}$, $f(x) = \tfrac{1}{n}\sum (a_i^\top x - b_i)^2$. (a) Derive $\nabla f$. (b) Implement GD, SGD, and mini-batch with given hyperparameters. (c) Plot $f(x_k)$ for all three.
+
+*** Professor's signal
+"And the fourth is — I guess it's [the same] kind. They are to recognize what it [does] for a bunch of choices." (rec_02_02 + rec_01_02).
+
+*** Notes
+Same multiple-choice / code-recognition shape as P2, escalated to three variants of stochastic gradient descent. The mathematical step that you should be able to do on demand is part (a): $\nabla f(x) = \tfrac{2}{n} \sum_i (a_i^\top x - b_i) a_i$ — a sum of rank-1 "outer" terms — which then makes the three iterations transparent: vanilla GD uses the full sum, SGD picks one index, mini-batch averages $m$ of them. Read code with this template in mind and the difference between (1), (2), (3) becomes a one-line check.
+
+** PS08 P1  Critical points of $\sqrt{1 + x^2 + y^2}$; classification
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+$f(x,y) = \sqrt{1 + x^2 + y^2}$. All critical points; classify as min, max, saddle.
+
+*** Professor's signal
+"Critical points for the [Hessian] — so yes, first one." (rec_02_02). Nikita: "P1: yes."
+
+*** Notes
+Single explicit "yes" — solid EXAM signal. $\nabla f(x,y) = (x, y)/\sqrt{1 + x^2 + y^2}$, vanishing only at $(0,0)$ with $f(0,0) = 1$. Hessian at $(0,0)$: $H_f(0,0) = I$ (positive definite), so $(0,0)$ is a strict local minimum. It is also the global minimum because $f(x,y) \ge 1$ with equality only at the origin — be ready to argue both the local classification (Hessian) and the global statement (a one-line lower-bound argument). The simplicity of the answer is itself an exam signal: this is the kind of clean-data problem that fits a written-out solution in a few lines.
+
+** PS08 P2  Critical points of $\sin x + \cos y$; Lipschitz $\nabla f$; gradient descent
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+$f(x,y) = \sin x + \cos y$. (a) All critical points; classify. (b) Show $\nabla f$ is $L$-Lipschitz. (c) Gradient descent in Julia on $[0, 2\pi] \times [-\pi/2, 3\pi/2]$, find all critical points there.
+
+*** Professor's signal
+"Second one, yes." (rec_02_02). Nikita: "P2: yes."
+
+*** Notes
+Critical points satisfy $\cos x = 0$ and $\sin y = 0$, so $x \in \{\pi/2, 3\pi/2\}$ (on $[0, 2\pi]$) and $y \in \{0, \pi\}$ (on $[-\pi/2, 3\pi/2]$): four critical points. Hessian $H_f = \operatorname{diag}(-\sin x, -\cos y)$ — classify each by sign pattern (max, min, two saddles). For (b), use $\|\nabla^2 f\|_{\mathrm{op}} \le \sqrt{2}$ uniformly, so $\nabla f$ is $\sqrt{2}$-Lipschitz (any explicit bound on $\|H_f\|$ gives a Lipschitz constant for $\nabla f$ via mean value, which is the lemma you should be able to state). For (c), the practical message is that initial vectors near each critical point converge to it under GD with step size $\tau < 2/L$ — the standard GD convergence condition tied to (b).
+
+** PS08 P3  Newton's method as linearization of $f$ at $x_k$
+:PROPERTIES:
+:REL:  DEEMPHASIZED
+:CONF: high
+:END:
+
+*** Professor's signal
+"It's unlikely that the one-dimensional [Newton's] method shows up everywhere, but it's good to know because the multivariate [Newton's] method will very surely show up." (rec_02_02). Nikita: "P3: unlikely 1-dim Newton, multidimension Newton yes."
+
+** PS08 P4  Julia myNewton implementation
+:PROPERTIES:
+:REL:  METHOD
+:CONF: high
+:END:
+
+*** Statement
+Write =myNewton(f, x0, tol, maxiter)= performing Newton's method, terminating on tolerance or iteration cap; return final approximation, iteration count, vector of iterates. Test on $x^2 - 2 = 0$ and $\cos x - x = 0$; plot $k \mapsto |x_k - x^\ast|$.
+
+*** Professor's signal
+"You should definitely be able to recognize Newton iterations." (rec_02_02).
+
+*** Notes
+The professor's verb is "recognize", not "implement" — for the exam, the test is reading a code snippet and identifying it as Newton's method (vs. fixed-point iteration, vs. gradient descent). Distinguishing tells: (i) division by $f'(x_k)$, (ii) the linearization-and-solve structure $x_{k+1} = x_k - f(x_k)/f'(x_k)$, (iii) termination on $|x_{k+1} - x_k|$ rather than $|f(x_k)|$. Convergence behaviour on $x^2 - 2$ from $x_0 = 1$ is the canonical doubling-of-correct-digits diagnostic for quadratic convergence — useful to recognize on a log-plot.
+
+** PS09 P1  Operator norm: column-sum norm and row-sum norm
+:PROPERTIES:
+:REL:  DEEMPHASIZED
+:CONF: high
+:END:
+
+*** Professor's signal
+"Problem 1 is more appropriate for [linear] algebra, so we'll not [start]." (rec_02_02 + rec_01_02). Nikita: "P1: no."
+
+** PS09 P2  Von Neumann series via geometric sum; induction identity
+:PROPERTIES:
+:REL:  DEEMPHASIZED
+:CONF: high
+:END:
+
+*** Professor's signal
+"Problem 2: not an exam question for [the] Neumann series." (rec_02_02 + rec_01_02). Nikita: "P2: no."
+
+** PS09 P3  Inverse via von Neumann series for diagonal $A$; numerical for $B$
+:PROPERTIES:
+:REL:  DEEMPHASIZED
+:CONF: high
+:END:
+
+*** Professor's signal
+"This is also Neumann series. Let's skip problem [set]." (rec_02_02 + rec_01_02). Nikita: "P3: no."
+
+** PS09 P4  $C([0,1])$ with integral norm; $S(f) = f(0)$ linear, not continuous
+:PROPERTIES:
+:REL:  DEEMPHASIZED
+:CONF: med
+:END:
+
+*** Professor's signal
+"Let's skip problem [set]. This was really more about connections to linear algebra." (rec_01_02). Nikita: "P4: no."
+
+** PS10 P1  Newton 2D for $f(x,y) = (x^2 + y^2 - 1,\, x - y)^\top$
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+$f : \mathbb{R}^2 \to \mathbb{R}^2$, $f(x,y) = (x^2 + y^2 - 1,\, x - y)^\top$. (a) All solutions of $f = 0$. (b) Starting from $X_0 = (1, 1/2)^\top$, apply Newton's iteration twice by hand to get $X_2$; report the error.
+
+*** Professor's signal
+"Now 10 is again [Newton] iteration two variables, so yes." (rec_02_02 + rec_01_02). Nikita: "P1: yes."
+
+*** Notes
+Direct EXAM signal — and the by-hand two-step Newton is a canonical exam item because it forces clean execution under time pressure. Solutions: $x = y$ and $2x^2 = 1$, so the roots are $\pm(1/\sqrt{2}, 1/\sqrt{2})$. Jacobian $J_f(x,y) = \begin{pmatrix} 2x & 2y \\ 1 & -1 \end{pmatrix}$, $\det J_f = -2x - 2y$, invertible unless $x + y = 0$. From $X_0 = (1, 1/2)$: $f(X_0) = (1/4,\, 1/2)$; $J_f(X_0) = \begin{pmatrix}2 & 1\\ 1 & -1\end{pmatrix}$, $\det = -3$, $J_f^{-1} = -\tfrac{1}{3}\begin{pmatrix}-1 & -1\\ -1 & 2\end{pmatrix} = \tfrac{1}{3}\begin{pmatrix}1 & 1\\ 1 & -2\end{pmatrix}$. So $X_1 = X_0 - J_f^{-1}(X_0) f(X_0) = (1, 1/2) - \tfrac{1}{3}(3/4, -3/4) = (3/4, 3/4)$. Iterate once more for $X_2$ and compare to the closest root $(1/\sqrt{2}, 1/\sqrt{2})$. Rehearse the arithmetic until it is automatic — this is the by-hand drill the professor names.
+
+** PS10 P2  Newton's method implemented numerically (linear solve per step)
+:PROPERTIES:
+:REL:  METHOD
+:CONF: med
+:END:
+
+*** Statement
+Implement Newton's method (use $A \backslash b$ for the linear system in each iteration); test on the problems above.
+
+*** Professor's signal
+"The implementation of this method should be known." (rec_02_02 + rec_01_02). [CONFLICT: rec_02_02="implementation should be known" | nikita="P2: no"]
+
+*** Notes
+Reading the conflict: the professor's phrasing favours knowing the *structure* of the implementation (Jacobian assembly, linear solve, update), not writing it from scratch in an exam. Nikita's "no" is consistent with "won't be a write-this-yourself problem" but glosses the recognition expectation. Treat it as METHOD: be able to (i) read a multivariate Newton snippet, (ii) identify the Jacobian evaluation, (iii) identify the linear solve, (iv) identify the update. The Jacobian-singularity gotcha (PS10 P3 territory) is what makes the linear-solve step interesting.
+
+** PS10 P3  Solutions of $f(x,y) = (x^2 - y,\, y^2 - x)^\top = 0$; non-invertibility of $J_f$
+:PROPERTIES:
+:REL:  METHOD
+:CONF: med
+:END:
+
+*** Statement
+$f(x,y) = (x^2 - y,\, y^2 - x)^\top$. (a) All solutions. (b) Points where $J_f$ is not invertible; visualize. (c) What does Newton's method do when initialized near such a point?
+
+*** Professor's signal
+Nikita: "P3: yes, able to do Jacobian." [NIKITA-ONLY]
+
+*** Notes
+Marked NIKITA-ONLY because the transcripts do not explicitly call P3 out — the signal is the student's note that you should be able to compute and analyze the Jacobian. Roots of $f = 0$: $y = x^2$ and $x = y^2 = x^4$, so $x \in \{0, 1\}$, giving $(0,0)$ and $(1,1)$ (the complex roots of $x^3 = 1$ other than $x=1$ are not in $\mathbb{R}$ here). $J_f = \begin{pmatrix}2x & -1 \\ -1 & 2y\end{pmatrix}$, $\det = 4xy - 1$, non-invertible on the hyperbola $xy = 1/4$. Initialization on/near this curve makes Newton blow up or jump erratically — the visualization captures basins of attraction with fractal-like boundaries, a recurring conceptual point about Newton's local-only guarantee.
+
+** PS10 P4  Newton for linear systems; linear vs. quadratic convergence; Newton on $\nabla \|Ax-b\|^2$
+:PROPERTIES:
+:REL:  METHOD
+:CONF: med
+:END:
+
+*** Statement
+(1) What does Newton's iteration do for $Ax - b = 0$? (2) Sequence converging linearly but not quadratically. (3) Sequence converging quadratically. (4) Visualize on log-axis. (5) Compute $\nabla \|Ax-b\|^2$; apply Newton to the gradient; observe.
+
+*** Professor's signal
+Nikita: "P4: yes for multiple choice." [NIKITA-ONLY]
+
+*** Notes
+NIKITA-ONLY: the transcripts do not address P4 by name, but Nikita flags it as multiple-choice exam material. Anchor facts worth knowing cold: (1) Newton applied to a linear system $Ax - b$ converges in one step (the linearization is exact). (2) $x_k = 1/k \to 0$ is linear (ratio $\to 1$) but not quadratic; $x_k = 1/2^k$ is linear with ratio $1/2$. (3) The Newton iteration on $f(x) = x^2 - 2$ from $x_0 = 1$ doubles correct digits per step — explicit quadratic. (5) Newton on $\nabla(\|Ax-b\|^2) = 2 A^\ast(Ax - b)$ is exactly the normal-equations solve from PS05 P2 — Newton terminates in one step on this quadratic objective. On a log-axis convergence plot, linear convergence is a straight line, quadratic is a downward curve.
+
+** PS11 P1  Implicit function theorem for $f(x,y) = x^3 + x - 2y$
+:PROPERTIES:
+:REL:  DEEMPHASIZED
+:CONF: high
+:END:
+
+*** Professor's signal
+"You do not have to directly use the implicit function [theorem] here. So problem 1, no." (rec_01_02 + rec_02_02). Nikita: "P1: no, no direct implicit function thm."
+
+** PS11 P2  Inverse function theorem for $f(x_1, x_2) = (e^{x_1}\cos x_2,\, e^{x_1}\sin x_2)$
+:PROPERTIES:
+:REL:  DEEMPHASIZED
+:CONF: high
+:END:
+
+*** Professor's signal
+"Problem 2, yeah also not really, I would say... Problem 2, no." (rec_01_02 + rec_02_02). Nikita: "P2: no."
+
+** PS11 P3  Unit sphere $M_n = \{\|x\|_2 = 1\}$ as submanifold; tangent and normal spaces
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+$M_n = \{x \in \mathbb{R}^n : \|x\|_2 = 1\}$. (a) Show $M_n$ is an $(n-1)$-dimensional submanifold. (b) Determine $T_x(M_n)$ and $N_x(M_n)$ for $x \in M_n$. (c) Visualize $M_2$, $T_x(M_2)$, $N_x(M_2)$ at $x = (1,0)^\top$.
+
+*** Professor's signal
+"Problem 3, for sure, yes. Given some submanifold for [checking] this one — tangent spaces, normal spaces and so on, yes." (rec_01_02 + rec_02_02). Nikita: "P3: yes."
+
+*** Notes
+The cleanest "for sure" + topical anchor on this sheet. Define $g(x) = \|x\|_2^2 - 1$ so $M_n = g^{-1}(0)$; $\nabla g(x) = 2x \ne 0$ on $M_n$, so $g'(x)$ has full rank — $M_n$ is a level-set submanifold of dimension $n - 1$. Tangent space at $x$: $T_x(M_n) = \ker g'(x) = \{v : x^\top v = 0\} = x^\perp$. Normal space: $N_x(M_n) = \operatorname{span}(x)$. For $n = 2$, $x = (1,0)$: $T_x(M_2)$ is the $y$-axis, $N_x(M_2)$ is the $x$-axis. The exam-shape: be ready to (i) phrase the submanifold proof via a regular level set, (ii) compute $T_x$ as the kernel of the Jacobian of the defining function, (iii) compute $N_x$ as its orthogonal complement.
+
+** PS11 P4  $M = \{g_1 = 0, g_2 = 0\} \subset \mathbb{R}^3$ as 1D submanifold
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+$M = \{x \in \mathbb{R}^3 : g_1(x) = x_1^2 + x_2^2 - 1 = 0,\, g_2(x) = x_3 - x_1 = 0\}$. (a) Compute $g'(x)$. (b) Show $M$ is a 1-dimensional submanifold.
+
+*** Professor's signal
+"And problem 4, also yes." (rec_01_02 + rec_02_02). Nikita: "P4: yes."
+
+*** Notes
+Explicit "yes" — submanifold defined by two constraints in $\mathbb{R}^3$ giving codimension 2, i.e. dimension 1. Jacobian $g'(x) = \begin{pmatrix}2x_1 & 2x_2 & 0 \\ -1 & 0 & 1\end{pmatrix}$. To show full row rank at every $x \in M$: rows are linearly independent unless one is a scalar multiple of the other; the second row has a $0$ in the middle while the first has $2x_2$ there, and $x_2 = 0$ on $M$ forces $x_1^2 = 1$, i.e. $x_1 = \pm 1$, and then the two rows $(\pm 2, 0, 0)$ and $(-1, 0, 1)$ are clearly independent. So $g'(x)$ has rank 2 everywhere on $M$, confirming dim $= 3 - 2 = 1$. Geometrically: $M$ is the unit circle in the plane $x_3 = x_1$, a tilted ellipse. Be ready for an exam variant with different $g_1, g_2$ on the same template.
+
+** PS12 P1  Lagrange: extrema of $f = xyz$ subject to $x^2 + y^2 + z^2 = 12$
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+$f(x, y, z) = xyz$ subject to $x^2 + y^2 + z^2 = 12$.
+
+*** Professor's signal
+"Sheet 12 problem 1, yes — that is a classic." (rec_01_02 + rec_02_02). Nikita: "P1: yes."
+
+*** Notes
+"Classic" + "yes" — top-tier exam signal. The Lagrange system is $yz = 2\lambda x$, $xz = 2\lambda y$, $xy = 2\lambda z$, $x^2 + y^2 + z^2 = 12$. Multiplying the first three: $(xyz)^2 = 8\lambda^3 xyz$, so either $xyz = 0$ (giving boundary extrema where one variable is 0 — these are critical points with $f = 0$) or $xyz = 8\lambda^3$. By symmetry of the constraint, when $|x| = |y| = |z|$ we get $3x^2 = 12$, so $|x| = 2$, and $f = \pm 8$. The maxima are at points with an even number of negative signs (e.g. $(2,2,2)$, $(2,-2,-2)$, ...) giving $f = 8$; minima at odd number of negative signs (e.g. $(-2,2,2)$, $(2,2,-2)$, ...) giving $f = -8$. Exam clean-up: write the multiplier system, identify symmetry, list extrema with values.
+
+** PS12 P2  Closest / farthest points on ellipse $4x^2 + y^2 = 16$ from origin and from $(3,0)$
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+$M = \{4x^2 + y^2 = 16\}$. (a) Closest / farthest points from origin. (b) Julia visualization. (c) Closest / farthest from $(3, 0)$.
+
+*** Professor's signal
+"Yes" — in the "yes... yes... yes" series for sheet 12 (rec_01_02 + rec_02_02). Nikita: "P2: yes... all different examples."
+
+*** Notes
+Ellipse has semi-axes $a = 2$ along $x$, $b = 4$ along $y$. From the origin, minimize / maximize $x^2 + y^2$ subject to $4x^2 + y^2 = 16$: substitute $y^2 = 16 - 4x^2$, so we are extremizing $-3x^2 + 16$ over $x^2 \in [0, 4]$ — minimum at $x^2 = 4$ (so $x = \pm 2$, $y = 0$, distance 2), maximum at $x = 0$ (so $y = \pm 4$, distance 4). For part (c), minimize / maximize $(x - 3)^2 + y^2$ subject to the same constraint — the Lagrange system gives $2(x-3) = 8\lambda x$, $2y = 2\lambda y$, so either $y = 0$ (then $x = \pm 2$) or $\lambda = 1$ (then $x = -1$, $y^2 = 12$, points $(-1, \pm 2\sqrt 3)$). Compute the four candidate distances and rank them. Exam value: the parametrization-free Lagrange routine on a clean conic.
+
+** PS12 P3  Lagrange with two linear constraints: $x^2 + y^2 + z^2$ on $\{x+y+z=6,\, x-y=2\}$
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+$f(x,y,z) = x^2 + y^2 + z^2$ subject to $x + y + z = 6$ and $x - y = 2$.
+
+*** Professor's signal
+"Yes... 3, yes." (rec_01_02 + rec_02_02). Nikita: "P3: yes."
+
+*** Notes
+Two linear constraints reduce the search to a line in $\mathbb{R}^3$, parametrize: from $x - y = 2$ get $y = x - 2$; from $x + y + z = 6$ get $z = 8 - 2x$. Then minimize $g(x) = x^2 + (x-2)^2 + (8-2x)^2 = 6x^2 - 36x + 68$, vanishing derivative at $x = 3$, giving the point $(3, 1, 2)$ with $f = 14$. This is the constrained minimum; there is no constrained maximum (the line goes to infinity). The Lagrange-multiplier route gives the same answer but with two multipliers and a $3 \times 3$ system — be able to do either, and recognize when parametrization-eliminating is faster.
+
+** PS12 P4  $x^2 - y^2$ on $x^2 + y^2 = 4$; heatmap + parametrization + Cor 5.4.7
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+$f(x, y) = x^2 - y^2$ subject to $x^2 + y^2 = 4$. (1) Heatmap of $f$ on $[-3,3]^2$ + constraint curve. (2) Parametrize $\gamma(t) = (2\cos t, 2\sin t)$, plot $F(t) = f(\gamma(t))$. (3) Educated guess of extrema, then exact extrema via Corollary 5.4.7.
+
+*** Professor's signal
+"4, yes. Yeah. I like 4 very much." (rec_01_02 + rec_02_02). Nikita: "P4: yes (I like 4 very much)."
+
+*** Notes
+Strongest soft signal of the sheet — the professor's preference often correlates with exam selection. The "guess then prove" pipeline is itself the exam shape: $F(t) = 4(\cos^2 t - \sin^2 t) = 4\cos(2t)$, with maxima $F = 4$ at $t \in \{0, \pi\}$ (i.e. $(\pm 2, 0)$, $f = 4$) and minima $F = -4$ at $t \in \{\pi/2, 3\pi/2\}$ (i.e. $(0, \pm 2)$, $f = -4$). To confirm via Lagrange / Cor 5.4.7: $\nabla f = (2x, -2y)$, $\nabla g = (2x, 2y)$, multiplier system gives $-y = \lambda y$ and $x = \lambda x$, so either $x = 0, \lambda = -1$ (minima) or $y = 0, \lambda = 1$ (maxima), exactly the four points found by parametrization. The dual presentation — geometric parametrization vs. multiplier system — is the pedagogical payoff and the most likely exam form.
+
+** PS13 P1  $f = x_1 \cdots x_n$ on $M = \{\sum x_i = n\}$; AM-GM via Lagrange
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+$f : (0, \infty)^n \to \mathbb{R}$, $f(x) = x_1 x_2 \cdots x_n$, with $M = \{x : x_1 + \cdots + x_n = n\}$. (a) Show $M$ is $(n-1)$-dim submanifold. (b) Constrained extrema satisfy $\nabla f(x) = \lambda(1, \ldots, 1)$. (c) Prove $f(x) \le 1$ on $M \cap (0, \infty)^n$; equality condition.
+
+*** Professor's signal
+"13, again another example of extrema with constraints, so that is yes." (rec_01_02 + rec_02_02). Nikita: "P1: yes."
+
+*** Notes
+The exam-clean instance of AM-GM via Lagrange. (a) follows from $\nabla g = (1, \ldots, 1) \ne 0$ — regular hyperplane. (b) is direct: $\partial_i f = \prod_{j \ne i} x_j$, so the Lagrange condition is $\prod_{j \ne i} x_j = \lambda$ for all $i$, which by inspection forces $x_1 = x_2 = \cdots = x_n$ (each $\prod_{j \ne i} x_j$ equals the same value $\lambda$ only when all coordinates coincide, on $(0, \infty)^n$). Combined with $\sum x_i = n$: $x_i = 1$ for all $i$, and $f = 1$. (c) is the AM-GM inequality $\sqrt[n]{x_1 \cdots x_n} \le (x_1 + \cdots + x_n)/n = 1$, with equality iff all coordinates equal. The exam play: present (c) either via the multiplier-determined unique critical point + a boundary argument, or by direct AM-GM citing the textbook inequality.
+
+** PS13 P2  Two-constraint Lagrange + Newton: $f = e^x + y^2 + z$ on $g_1, g_2 = 0$
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+$f(x,y,z) = e^x + y^2 + z$ with $g_1 = x + y + z - 1$ and $g_2 = x^2 + y^2 - z$. (a) Show $M = \{g_1 = g_2 = 0\}$ is 1-dim submanifold. (b) Lagrange system $\nabla f = \lambda \nabla g_1 + \mu \nabla g_2$, $g_1 = g_2 = 0$. (c) Apply Newton's method to find local extrema on $M$.
+
+*** Professor's signal
+"Problem 2, finally also an example of constraints with more than only one G function, so yes. Don't get upset by G1, G2 — probably easier than if there were only one G." (rec_01_02 + rec_02_02). Nikita: "P2: yes."
+
+*** Notes
+The professor explicitly demystifies the multi-constraint format — exam-version reassurance to internalize. (a) $g'(x,y,z) = \begin{pmatrix}1 & 1 & 1 \\ 2x & 2y & -1\end{pmatrix}$; the rows are independent unless $(2x, 2y, -1) = c(1,1,1)$, which is impossible (third component fixes $c = -1$, then $2x = 2y = -1$, but plugging $x = y = -1/2$ into $g_1 = 0$ gives $z = 2$ and into $g_2$: $1/4 + 1/4 - 2 = -3/2 \ne 0$). So $g'$ has full row rank on $M$, giving $\dim M = 1$. (b) $\nabla f = (e^x, 2y, 1)$, so the Lagrange equations are $e^x = \lambda + 2\mu x$, $2y = \lambda + 2\mu y$, $1 = \lambda - \mu$, plus $g_1 = g_2 = 0$ — five equations, five unknowns $(x, y, z, \lambda, \mu)$. The system is nonlinear in $x$ (because of $e^x$), so (c) is exactly the place to plug in Newton. On the exam, expect a similar-shape system with closed-form-friendly nonlinearities; the reassurance was that the constraints will be chosen so the algebra goes through.
+
+** PS13 P3  Lagrangian + Hessian classification: $f = x_1^2 + 2x_2^2$ on $x_1^2 + x_2^2 = 1$
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+$f(x) = x_1^2 + 2x_2^2$, $g(x) = x_1^2 + x_2^2 - 1 = 0$. Use the Lagrangian and its Hessian to identify the local minimum of the restriction of $f$.
+
+*** Professor's signal
+"Very likely we should know what the Lagrangian is — we have to write it down. Then we will check the [Hessian] if it is a local maximum or not." (rec_01_02 + rec_02_02). Nikita: "P3: yes."
+
+*** Notes
+The professor described the exam shape almost verbatim: write the Lagrangian, get the critical points, then classify via the Hessian of the Lagrangian (the bordered / projected version, restricted to the tangent space). $\mathcal{L}(x, \lambda) = x_1^2 + 2x_2^2 - \lambda(x_1^2 + x_2^2 - 1)$, $\nabla_x \mathcal{L} = (2x_1(1 - \lambda),\, 2x_2(2 - \lambda))$. Critical points: $(\pm 1, 0)$ with $\lambda = 1$, $f = 1$; $(0, \pm 1)$ with $\lambda = 2$, $f = 2$. To classify, evaluate the Hessian of the Lagrangian $H_{\mathcal{L}}$ on the tangent space $T_x M = \{v : \nabla g(x)^\top v = 0\}$: at $(\pm 1, 0)$, tangent vectors are vertical, and $v^\top H_{\mathcal{L}}(\pm 1, 0; 1) v = 2v_2^2 > 0$ — local minima (constrained, $f = 1$); at $(0, \pm 1)$, tangent vectors are horizontal, $v^\top H_{\mathcal{L}}(0, \pm 1; 2) v = -2 v_1^2 < 0$ — local maxima (constrained, $f = 2$). This is the EXAM shape: write Lagrangian → solve for critical points → tangent-space Hessian → classify.
+
+** PS13 P4  Gradient descent on $x^2 + 2xy + 5y^2$; convergence as $u_{k+1} = A_\tau u_k$
+:PROPERTIES:
+:REL:  DEEMPHASIZED
+:CONF: high
+:END:
+
+*** Professor's signal
+"I don't think that problem 4 really shows up in the exam... but of course you should know what gradient descent is." (rec_01_02 + rec_02_02). Nikita: "P4: should know / recognize gradient descent, probably do not show up this way."
+
+** PS14 P1  Extrema of $(x+1)^2 + 3y^2$ unconstrained and on $x^2 + y^2 = 1$
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+$f(x,y) = (x+1)^2 + 3y^2$. (a) Unconstrained local extrema + Hessian classification. (b) Constrained extrema for $g(x,y) = x^2 + y^2 - 1 = 0$. (c) Classify via Hessian of the Lagrangian. (d) Julia visualization. (e) Parametrize $\gamma(t) = (\cos 2\pi t, \sin 2\pi t)$, plot $t \mapsto f(\gamma(t))$, confirm.
+
+*** Professor's signal
+"Locally extrema without any constraints will show up for sure, and it will also show up that we have constraints." (rec_01_02 + rec_02_02). Nikita: "P1: yes."
+
+*** Notes
+The professor's "for sure" is doubled — both the unconstrained and the constrained versions are flagged. (a) $\nabla f = (2(x+1),\, 6y)$ vanishes at $(-1, 0)$, $H_f = \operatorname{diag}(2, 6)$ positive definite — strict local (and global) minimum, $f(-1, 0) = 0$. (b) Lagrange: $2(x+1) = 2\lambda x$, $6y = 2\lambda y$. From the second: $y = 0$ or $\lambda = 3$. Case $y = 0$, constraint $x^2 = 1$: points $(\pm 1, 0)$, $f(1, 0) = 4$, $f(-1, 0) = 0$. Case $\lambda = 3$: $2(x+1) = 6x \Rightarrow x = 1/2$, then $y^2 = 3/4$, points $(1/2, \pm \sqrt{3}/2)$, $f = 9/4 + 9/4 = 9/2 = 4.5$. (c) Classify via tangent-space Hessian of $\mathcal{L} = f - \lambda g$ as in PS13 P3: $(1, 0)$ is a constrained local minimum (after restricting); $(1/2, \pm \sqrt 3/2)$ are constrained local maxima ($f = 4.5$ is the global constrained max); $(-1, 0)$ is the constrained minimum ($f = 0$, attained because the unconstrained minimum sits on the constraint circle). This is a complete dress rehearsal for an exam item that tests every piece of the constrained-optimization machinery.
+
+** PS14 P2  Continuity via closed pre-images
+:PROPERTIES:
+:REL:  DEEMPHASIZED
+:CONF: high
+:END:
+
+*** Professor's signal
+"Problem 2 is unlikely. I don't think something like this [shows up]." (rec_01_02 + rec_02_02). Nikita: "P2: unlikely."
+
+** PS14 P3  Banach fixed point in $C([0,1])$: $\Phi(f)(t) = t + f(t)^2/4$
+:PROPERTIES:
+:REL:  EXAM
+:CONF: high
+:END:
+
+*** Statement
+$C([0,1])$ with $\|f\|_\infty$. $\Phi : C([0,1]) \to C([0,1])$, $\Phi(f)(t) = t + f(t)^2/4$. (a) $C([0,1])$ is a Banach space. (b) $\Phi'(f)$. (c) $\|\Phi'(f)\|_{\mathrm{op}} \le 1/2$ for $\|f\|_\infty \le 1$. (d) $\Phi$ has a fixed point; determine it.
+
+*** Professor's signal
+"You should know that this space is a Banach space and that you can apply Banach's fixed point [theorem] in this space. For sure there will be something with Banach['s fixed-point theorem] on the exam." (rec_01_02 + rec_02_02). Nikita: "P3: should know Banach space / apply Banach fixed point thm" + "For sure something with Banach fixed point thm on the exam."
+
+*** Notes
+The single strongest exam guarantee on the entire problem set — the professor said "for sure" about the topic and named this exact problem as the rehearsal. The pieces fit together as the function-space promotion of the 1D contraction in PS02 P4: (a) standard — $C([0,1])$ with sup-norm is complete because uniform-Cauchy continuous functions converge uniformly to a continuous limit. (b) Fréchet derivative: $\Phi(f + h)(t) - \Phi(f)(t) = (f(t) + h(t))^2/4 - f(t)^2/4 = f(t)h(t)/2 + h(t)^2/4$. The linear part $h \mapsto f h / 2$ is the Fréchet derivative; the $h^2/4$ remainder is $o(\|h\|_\infty)$. So $\Phi'(f) : C([0,1]) \to C([0,1])$, $\Phi'(f)\cdot h = (fh)/2$. (c) $\|\Phi'(f) h\|_\infty = \sup_t |f(t) h(t)|/2 \le \|f\|_\infty \|h\|_\infty / 2 \le \|h\|_\infty/2$ when $\|f\|_\infty \le 1$, so $\|\Phi'(f)\|_{\mathrm{op}} \le 1/2$. (d) On the closed ball $\{f : \|f\|_\infty \le 1\}$, $\Phi$ maps into itself ($|\Phi(f)(t)| \le 1 + 1/4 < 2$ — needs sharper check; in fact $\Phi(f)(t) \in [t, t + 1/4] \subset [0, 5/4]$ — strictly the invariance needs the ball $\{\|f\|_\infty \le 1\}$ to be checked, and the contraction estimate from (c) via the mean-value theorem gives $\|\Phi(f) - \Phi(g)\|_\infty \le \tfrac{1}{2}\|f - g\|_\infty$ — contraction). Banach gives a unique fixed point $f^\ast$ satisfying $f^\ast(t) = t + f^\ast(t)^2/4$, i.e. $f^\ast(t)^2 - 4 f^\ast(t) + 4t = 0$, so $f^\ast(t) = 2 - 2\sqrt{1 - t}$ (selecting the root that stays in $[0,1]$ at $t = 0$). Exam version: be ready to (i) state Banach's fixed-point theorem cleanly, (ii) verify invariance and contraction on the closed ball, (iii) extract the fixed point as the limit of the iteration, (iv) solve the algebraic equation for $f^\ast(t)$.

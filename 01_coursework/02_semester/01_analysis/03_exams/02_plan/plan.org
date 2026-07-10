@@ -1,0 +1,198 @@
+#+title: Plan
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-06-29>
+#+lastmod: <2026-07-05 15:31>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Bottom line
+- Exam = 90 min, 5 open (4 pt) + 7–8 MC (1 pt) ≈ 27–28 pts. *The 5-slot mapping is a forecast, not a 1:1 fact*: the coverage map lists 7 candidate open topics (5 "yes" + 2 "maybe") competing for 5 slots. Treat it as a bet and carry a contingency (see *Slot-count risk*).
+- *Slot-count risk.* PS14 P1 is unconstrained + constrained + Hessian-of-Lagrangian + curve in *one* problem — it may be scored as a single open question, not two. If so, a slot frees up and most likely goes to curves, the convexity proof (PS07 P3), or *PS05 P2 (Fréchet-from-definition / normal equations)*. Do not leave PS05 P2 uncovered — it was the hole in the prior draft.
+- Exam is *computational*, but several items are proof-*shaped*: "show $M$ is a submanifold", the AM-GM equality (PS13 P1), $\|\Phi'\|\le1/2$, the normal-equations iff. *Justification earns marks* — state the theorem/argument, don't only compute (see *Justification marks*).
+- =material_extracted.org= is the reference layer + 6 must-state theorems. It is NOT a memorize-everything corpus. Priority-2.
+- "Constrained extrema" is a 3-part machine: submanifold → Lagrange system → Hessian-of-Lagrangian *on the tangent space*. The tangent-space restriction is the #1 slip — *now drilled across three days (D4 full → D6 second pass → D7 mock), not once*.
+- Julia MC ≈ 4 pts (= one open question), pure recognition. Batch it; do not let it absorb by accident.
+- *MC ≈ 7–8 pts (~28% of grade) — cheapest, lowest-variance points on the paper.* Drill recognition *daily* (Julia threads, D2–D5) and rehearse the concept-MC items as answerable questions, not as passive tells (see MC bank + D6/D7).
+- Cut the DEEMPHASIZED 17 actively. The professor was explicit; skipping them is safe and buys time.
+- *Schedule reworked (2026-06-30).* Algorithms (Jul 2) deferred → Thursday is now a full heavy day, not the old collision-protected light one. The hard clusters are pulled earlier so Fri/Sat/Sun act as buffer; two mocks (D5 + D7) with a dedicated repair day (D6) between mock-1 and the exam.
+
+* Carryover status — Jul 3 (D5), after reviewing 01–04_day
+Execution has drifted from the plan in the exact direction the plan warned about: the *computational* sub-parts are done, the *proof-shaped* sub-parts and the Fréchet/normal-eqns thread are blank. This is not "behind on volume" — it is behind on the specific high-value cluster.
+
+*Done and solid:* unconstrained extrema (PS06 P3, PS05 P1, PS08 P1/P2, PS07 P2); Taylor computation (PS07 P1 — but via the slow multi-index table, NOT the 1D-substitution trick the problem teaches; PS04 P5(b) proved the trick but PS07 P1 didn't use it — fix the speed); curve length (PS03 P1/P3); Lagrange *systems* for critical points (PS12 P1–P4); convexity part (a) only.
+
+*Blank or stops at setup — the priority order:*
+1. PS13 P3 — *stops exactly at the tangent-space Hessian restriction.* The #1 slip has ZERO completed reps. Highest-leverage 30 min on the sheet. ($(\pm1,0)$: $H_{\mathcal L}=\operatorname{diag}(0,2)$, semidefinite on $\mathbb R^2$ so eigenvalue shortcut fails; on $T=\operatorname{span}(0,1)$ it is $2t^2>0$ ⇒ min. $(0,\pm1)$: $\operatorname{diag}(-2,0)$ on $T=\operatorname{span}(1,0)$ ⇒ max.)
+2. PS14 P1 — capstone, fully blank. Rehearses open-Q #1 and #2 together; time it.
+3. PS05 P2 — Fréchet derivative + normal equations, fully blank. The orphan this plan specifically rescued; still uncovered.
+4. PS11 P3/P4 — submanifold verification + tangent/normal, blank. Step 1 of the constrained machine; PS12 drilled the multiplier bookkeeping but never the submanifold→$T_xM$→restricted-Hessian pipeline end to end.
+5. Quick blanks: PS07 P3(b,c), PS13 P1(c), PS10 P4.
+
+*Schedule adjustment.* Do NOT run the full closed-book Mock 1 tonight: ~40% of the high-value cluster is blank, so a mock re-exposes known gaps instead of testing consolidation and burns one of only two mocks.
+- D5 (today): clear blanks 1–4 + today's real content (Banach PS02 P4→PS14 P3; Newton PS10 P1). No mock.
+- D6 (Sat): finish quick blanks (5) + *then* Mock 1 (evening). Still leaves D7 + Mon Jul 6 to repair.
+- D7 (Sun): Mock 2 + repair, as planned. Mon Jul 6: cold theorem-lock write only.
+- Theorem-lock is unverified — the day files list titles, no cold reproduction. Write the *constrained* second-order condition and the Newton-convergence argument cold before Mock 1.
+
+* Red Alert — must-pass [0/9]
+One problem per open slot + the strongest signals. If the week collapses, this list is the floor.
+- [ ] PS14 P3 — Banach fixed point in $C([0,1])$. Strongest signal on the sheet ("for sure", named rehearsal). Full (a)–(d).
+- [ ] PS14 P1 — extrema unconstrained + constrained on one function. Doubled "for sure". Dress rehearsal for open-Q #1 and #2 together.
+- [ ] PS10 P1 — 2D Newton by hand, two steps. "yes". Drill arithmetic to automatic.
+- [ ] PS07 P1 — Taylor order 3 of $\log(1+x+y)$. Double "yes". 1D-substitution trick.
+- [ ] PS13 P3 — Lagrangian + tangent-space Hessian classification. The exact constrained-classification shape.
+- [ ] PS11 P3 — unit sphere as submanifold, tangent/normal. "for sure". Opens the constrained machine.
+- [ ] PS05 P1 — saddle of $\|x\|^2-\|y\|^2$. "for sure". Indefinite-Hessian classification, state "saddle" explicitly.
+- [ ] PS03 P1 — curve length. Professor said "test". Clean closed-form integral, no computer aid.
+- [ ] *PS05 P2 — Fréchet derivative of $\|Ax-b\|^2$ from the definition + normal-equations iff via convexity.* EXAM-tagged, professor "very likely in one way or the other"; was missing from the prior schedule. $\nabla L=2A^\ast(Ax-b)$, global min $\iff A^\ast Ax=A^\ast b$.
+
+* Theorem lock [0/6]
+Reproduce each statement verbatim, cold. These are the only theory you write out; everything else is computation.
+- [ ] Fréchet derivative def + chain rule (ch_04 §4.4.1, §4.4.5). $f(x+h)=f(x)+f'(x)h+o(\|h\|)$; $(g\circ f)'=g'(f(x))f'(x)$.
+- [ ] Second-order sufficient, *unconstrained* (§5.2.5). $H_f$ pos.def. → strict min; neg.def. → strict max; indefinite → saddle. Eigenvalue test allowed.
+- [ ] Second-order sufficient, *constrained*. $H_{\mathcal L}$ tested *only on the tangent space* $T_xM=\{v:\nabla g(x)^\top v=0\}$. Eigenvalue shortcut fails — use the definition of definiteness.
+- [ ] Lagrange corollary (§5.4.7). $\nabla f(x_0)=\sum_i \lambda_i \nabla g_i(x_0)$. Build $F:\mathbb R^{n+k}\to\mathbb R^{n+k}$ for Newton.
+- [ ] Submanifold + tangent/normal (§5.4.1, §5.4.6). Regular level set, $\operatorname{rank}g'=r=n-k$; $T_x=\ker g'(x)$, $N_x=\operatorname{span}\{\nabla g_i\}$.
+- [ ] Banach fixed point / local contraction (§4.4.12) + Newton iteration. $\|f'(x)\|<1$ ⇒ contraction near $x$; $X_{k+1}=X_k-J_f(X_k)^{-1}f(X_k)$.
+- [ ] Newton convergence — *why* + order (added Jul 3 from lec_03/lec_04). Newton is a fixed-point iteration $\Phi(x)=x-J_f(x)^{-1}f(x)$; at a root $\Phi'(x^\ast)=0$, so §4.4.12 gives a local contraction ⇒ convergence, and $\Phi'(x^\ast)=0$ (not merely $<1$) is what upgrades it to *quadratic*. This is the "how and why Newton converges, without the IFT" the professor requires (§5.3.1). 1D sanity check: $\Phi'=f\,f''/(f')^2$, which vanishes at $f=0$.
+- [ ] (Recognition only) Inverse Function Thm statement: $f'(a)$ invertible ⇒ $f$ locally invertible, $(f^{-1})'(b)=(f'(a))^{-1}$. Statement may appear in MC; the *problems* are cut.
+- NB: PS05 P2's normal-equations result is a *computation*, drilled D3 — not a memorized statement, so it stays out of this list. But the Fréchet *definition* above is the lever for it.
+
+* Cut list — do NOT study
+PS01 P1–P4 · PS02 P3 · PS03 P4 · PS04 P4 · PS06 P1 · PS06 P4 · PS08 P3 · PS09 P1–P4 · PS11 P1 · PS11 P2 · PS13 P4 · PS14 P2.
+Reasons on record: Neumann series "not an exam question", IFT "do not use directly", several "more appropriate for linear algebra", explicit "no"s. GD *convergence-rate proof* (§5.2.3, $N^{-1/2}$) is also out — GD survives only as code recognition + iteration + step condition $\tau<2/L$.
+
+* Coverage map (open slot → problems)
+| Open slot                    | Firm? | Primary                | Reps / support                     |
+|------------------------------+-------+------------------------+------------------------------------|
+| Unconstrained extrema        | yes   | PS14 P1(a), PS08 P1/P2 | PS06 P3, PS05 P1                   |
+| Constrained extrema (3-part) | yes   | PS14 P1(b,c), PS13 P3  | PS11 P3/P4, PS12 P1–P4, PS13 P1/P2 |
+| Banach fixed point           | yes   | PS14 P3                | PS02 P4 (warmup)                   |
+| Newton (multivariate)        | yes   | PS10 P1                | PS13 P2, PS08 P4                   |
+| Linear approx / Taylor       | yes   | PS07 P1                | PS04 P1/P2/P3/P5, PS05 P4, PS06 P2 |
+| Fréchet deriv / normal eqns  | yes*  | PS05 P2                | PS14 P3(b) (operator-deriv)        |
+| Curves + convexity           | maybe | PS03 P1, PS07 P3       | PS03 P3                            |
+| Complete-space proof         | maybe | PS14 P3(a)             | —                                  |
+| Julia MC (~4 pts)            | yes   | PS03 P2, PS07 P2/P4    | PS08 P4, PS10 P2/P4                |
+| Concept MC (~3 pts)          | yes   | convexity, sup-norm    | IFT statement, Hessian sign→type   |
+- 7 non-MC "yes/maybe" topics for 5 open slots → see *Slot-count risk* in the bottom line. The realistic contraction is that PS14 P1 covers two of the five (unconstrained + constrained) in one problem, which is why curves and the complete-space proof stay "maybe" — but if PS14 P1 is scored as *one* question, one of the "maybe"s or PS05 P2 takes the freed slot.
+- (*) "Fréchet deriv / normal eqns" was orphaned in the prior draft — EXAM-tagged but in zero days. Now drilled D3 and on the Red Alert floor.
+
+* Time budget (90 min)
+The 90-minute wall is a hard constraint; the open questions are NOT equal-length. Budget *before* the mock so the mock confirms timing rather than discovering a failure.
+- MC: 7–8 × ~1.5–2 min ≈ 12–15 min. Run as one fast block; don't let it bleed into the open questions.
+- Open (~75 min remaining), by length:
+  - PS14 P1 (constrained capstone, 4–5 parts) — *the long pole*, budget 20–22 min.
+  - PS14 P3 (Banach chain a–d) — 15–18 min.
+  - PS10 P1 (two Newton steps, 2×2 inverse by hand) — 12–15 min, only if arithmetic is automatic.
+  - Unconstrained extrema / Taylor or Fréchet item — 8–12 min each.
+- *Stopwatch-drill PS14 P1, PS10 P1, PS14 P3 individually on D6* against these numbers. If any overruns, drill the bottleneck step (usually the tangent-space restriction for P1, the $J_f^{-1}$ arithmetic for P10).
+- On the day, if over budget: bank MC + the short open questions first, then spend the rest on the long pole. Partial credit on PS14 P1 beats a blank Taylor question.
+
+* Justification marks (the proof-shaped items)
+Where stating the argument — not just computing — earns points. "Computational, not proof-heavy" does NOT mean "skip the justification line".
+- Submanifold (PS11 P3/P4, PS13 P1/P2 (a)): name the regular-value theorem; show $\nabla g\ne0$ / $g'$ full rank *explicitly on $M$*; conclude $\dim=n-k$.
+- Constrained classification (PS13 P3, PS14 P1(c)): definiteness on $T_xM$ *by definition* — the eigenvalue shortcut fails. Write the restricted quadratic form and its sign.
+- AM-GM (PS13 P1(c)): equality condition $x_1=\dots=x_n=1$, justified via the multiplier-forced unique critical point or by citing the inequality.
+- Banach (PS14 P3): state the hypotheses you verify — invariance of the closed ball, contraction estimate, uniqueness — then extract $f^\ast$.
+- Saddle (PS05 P1): say "saddle" and justify via the *indefinite Hessian*, not inspection.
+- Normal equations (PS05 P2): the iff via convexity ($A^\ast A\succeq0$ ⇒ a stationary point is the global min).
+- Newton convergence (open-Q #4 / MC, added Jul 3): if asked *why* Newton converges, give the fixed-point argument — $\Phi'(x^\ast)=0$ ⇒ contraction via §4.4.12 ⇒ (quadratic) convergence — not just the iteration steps. Order of convergence may be asked directly (lec_04).
+
+* Schedule
+
+** Day 1 — Mon Jun 29 · Gradient, Jacobian, affine approximation :build:drill:
+Cheapest, most-reused mechanics. These open *every* larger exercise. Get them automatic, then bank them — this is the safe block if Jul 2 eats the middle.
+- [X] PS04 P1 — $\nabla f$, affine approx of $x^2+y^2$. Pure pipeline. Nail: $L=5+2(x-1)+4(y-2)$ form.
+- [X] PS04 P2 — same for $xyz$ at $(1,1,1)$. Fail: gradient-as-row in the linearization.
+- [X] PS04 P3 — same for $x^2y+y^2$. Fail: mixed-term $\partial_x=2xy$.
+- [X] PS05 P4 — Jacobian + affine approx, estimate $f(1.01,0.98)$. "Have to know." Fail: shape of $J_f$.
+- [X] PS05 P3 — chain rule $(g\circ f)'$. Master technique. Fail: multiplication order / shape ($g'$ at $f(x)$, times $f'$ at $x$).
+- [X] Julia thread: PS03 P2 — read arc-length code; distinguish polygonal $\sum\|f(t_{k+1})-f(t_k)\|$ vs midpoint $\sum\|f'(t_k^\ast)\|\Delta t$.  → *rolls to D3 if not done*
+- [ ] Theorem lock: Fréchet def + chain rule.  → *rolls to D2 (do first) if not done*
+
+** Day 2 — Tue Jun 30 · Unconstrained extrema + Hessian + Taylor bridge :build:drill:
+Spine of open-Q #1. Early and buffered — the safe block.
+- Rollover from D1: Fréchet def + chain rule theorem-lock (do first, ~10 min).
+- [X] PS06 P3 — extrema of $x^2+y^2+2x+4y$. Completion of squares $=(x+1)^2+(y+2)^2-5$. Rehearse "what if I now add $x+y=c$".
+- [X] PS05 P1 — extrema/saddle of $\|x\|^2-\|y\|^2$. "for sure". Justify saddle via *indefinite Hessian* $\operatorname{diag}(2I,-2I)$, not inspection.
+- [X] PS08 P1 — critical points of $\sqrt{1+x^2+y^2}$. "yes". Local (Hessian $=I$ at 0) *and* global ($f\ge1$) argument.
+- [X] PS08 P2 — critical points of $\sin x+\cos y$. "yes". Four points; classify by sign pattern of $\operatorname{diag}(-\sin x,-\cos y)$.
+- [X] PS06 P2 — order-2 Taylor with Hessian. "important". The hinge between Taylor and extrema.
+- [X] Julia thread: PS07 P2 — GD code; identify step size, termination (tol vs cap), GD vs SGD.
+- [X] Concept MC: Hessian sign → min/max/saddle. *Drill as an answerable item, not a tell.*
+- [X] Theorem lock: second-order sufficient, unconstrained.
+
+** Day 3 — Wed Jul 01 · Linear approx / Taylor / Fréchet + convexity + curves :drill:proof:
+Open-Q #5, the Fréchet/normal-equations item, plus the "maybe" curves+convexity slot.
+- Rollover from D1: PS03 P2 arc-length Julia (if not done).
+- [X] PS07 P1 — Taylor order 3 of $\log(1+x+y)$. Substitute 1D series $u-u^2/2+u^3/3$, $u=x+y$ — do NOT compute multivariate partials.
+- [X] PS04 P5 — Taylor/Hessian bridge for $g(x+y)$. The PS07 P1 trick proved; $(x,y)H_f(x,y)^\top=g''(0)(x+y)^2$.
+- [X] *PS05 P2 (was missing) — Fréchet derivative of $\|Ax-b\|^2$ from the definition.* $L(x+h)-L(x)=2\langle A^\ast(Ax-b),h\rangle+\|Ah\|^2$ ⇒ $\nabla L=2A^\ast(Ax-b)$; global min $\iff A^\ast Ax=A^\ast b$ *via convexity*. Do the $o(\|h\|)$ bookkeeping; state the iff. Recurs in PS10 P4(5) — Newton on $\nabla\|Ax-b\|^2$ = normal equations.
+- [X] PS03 P1 — curve length. $\|f'\|=\sqrt{1+t}$, $L=\tfrac23(2\sqrt2-1)$. Antiderivative by hand.
+- [ ] PS07 P3 — convex combinations preserve convexity (sum / max / affine sub). 2–3 line proofs *from the definition* (justification mark).
+- [ ] Concept MC: "which function is convex" (exam_01 P8 style); convex def + local-min-is-global.
+- [ ] Theorem lock: Taylor formula $\mathbb R^n$ (multi-index); convex def + local=global.
+- NB: =notes_lean.org= says curves (ch.5) were covered last and lightly. Nail PS03 P1; do not over-invest in spiral / metric-derivative variants (PS03 P3 METHOD, P4 cut).
+
+** Day 4 — Thu Jul 02 · Submanifolds + Constrained extrema (FULL) :build:drill:classify:
+*[reloaded]* Algorithms (Jul 2) deferred → this is a full heavy day, not the old collision-light one. Open-Q #2 in full + its prereq. *First tangent-space exposure — the #1 slip; treat the tangent-space restriction as the thing to get right.* PS12 P1–P4 are one routine across four constraint shapes — do them as fast reps; PS13 P3 + PS14 P1 are the classification capstones.
+- [X] PS11 P3 — unit sphere $\{\|x\|_2=1\}$ as submanifold; $T_x=x^\perp$, $N_x=\operatorname{span}(x)$. "for sure". Phrase via regular level set $g=\|x\|^2-1$, $\nabla g=2x\ne0$.
+- [X] PS11 P4 — $\{g_1=g_2=0\}\subset\mathbb R^3$ as 1-dim submanifold. "yes". Show $g'$ (2×3) has rank 2 *on $M$*.
+- [X] PS12 P1 — Lagrange $xyz$ on sphere $=12$. "classic". Multiplier system → symmetry → $f=\pm8$.
+- [X] PS12 P2 — ellipse closest/farthest from origin and from $(3,0)$. Substitute constraint or run multipliers; rank 4 candidate distances.
+- [X] PS12 P3 — two linear constraints. Parametrize the line → 1-var minimization → $(3,1,2)$, $f=14$, no max.
+- [X] PS12 P4 — $x^2-y^2$ on circle. "I like 4 very much." Parametrize $4\cos2t$ vs multiplier system — know both presentations.
+- [X] PS13 P1 — AM-GM via Lagrange. Multiplier forces $x_1=\dots=x_n=1$, $f\le1$. *State the equality condition* (justification mark).
+- [X] PS13 P3 — Lagrangian + tangent-space Hessian. THE shape: write $\mathcal L$ → critical points → restrict $H_{\mathcal L}$ to $T_xM$ → classify. $(\pm1,0)$ min, $(0,\pm1)$ max. *Definiteness by definition on $T_xM$ — eigenvalue shortcut fails.*
+- [X] PS14 P1 — capstone: unconstrained (a) + constrained (b) + Hessian-of-Lagrangian (c) + curve param (e). *Time it (target 20–22 min); it may be one OR two open questions.*
+- [ ] Theorem lock: submanifold def + tangent/normal + Lagrange corollary; second-order constrained (tangent-space Hessian).
+- Time-crunch fallback: PS11 P3 + PS12 P3 + PS13 P3 + PS14 P1; skip redundant PS12 reps.
+
+** Day 5 — Fri Jul 03 · Newton + Banach + Mock 1 :drill:proof:mock:
+*NB (Jul 3): superseded by "Carryover status" — Mock 1 deferred to D6. Today = clear the blank proof-shaped cluster (PS13 P3 classification, PS14 P1, PS05 P2, PS11 P3/P4) + Banach + Newton below. No mock tonight.*
+Two independent machines, two open questions (#3, #4) — one canonical problem each, high ROI. Then the *first* timed mock, while there is still a weekend to repair.
+- [X] PS02 P4 — 1D contraction warmup (15 min). Invariance of $[0,1]$, contraction const $1/2$, fixed-point iteration. Then →
+- [X] PS14 P3 — Banach in $C([0,1])$. Full chain: (a) completeness, (b) $\Phi'(f)h=fh/2$, (c) $\|\Phi'\|_{op}\le1/2$, (d) $f^\ast(t)=2-2\sqrt{1-t}$. State the hypotheses you verify (invariance + contraction + uniqueness) — justification marks.
+- [X] PS10 P1 — 2D Newton by hand. $X_0=(1,\tfrac12)\to X_1=(\tfrac34,\tfrac34)$; iterate to $X_2$, compare to root $(1/\sqrt2,1/\sqrt2)$. Drill until arithmetic is automatic.
+- [X] PS13 P2 — Newton on a Lagrange system. (a) submanifold, (b) 5×5 nonlinear system ($e^x$ term), (c) Newton. Bridges #2 and #4.
+- [X] Julia thread: PS08 P4 (recognize Newton: division by $f'$, linearize-and-solve, terminate on $|x_{k+1}-x_k|$); PS10 P2/P4 (multivariate Newton structure; Newton on linear system → one step; on $\nabla\|Ax-b\|^2$ → one step = normal equations).
+- [ ] Theorem lock: Banach / local contraction + Newton iteration.
+- [ ] *Mock 1 (evening) — 90 min, closed book (exam_01: no devices/documents), covers everything through Banach.* 5 open (1 unconstrained PS08 variant, 1 constrained PS14 P1 or PS13 P3 variant, 1 Banach PS14 P3, 1 Newton PS10 P1, 1 Taylor/Fréchet PS07 P1 or PS05 P2) + 7–8 MC. Mark it. Log every miss with the failing step.
+
+** Day 6 — Sat Jul 04 · Mock-1 repair + time-drills + MC :review:drill:
+The recovery day the prior draft lacked. Fix what Mock 1 exposed; *do not learn new topics here.*
+- [ ] Mock 1 error review → re-drill every weak spot to clean execution.
+- [ ] *Second tangent-space-Hessian pass* (spacing the #1 slip): re-run PS13 P3 + PS14 P1(c) + one PS12 classification, cold.
+- [ ] *Stopwatch-drill the three long open problems* against the budget: PS14 P1 (≤20–22 min), PS14 P3 (≤15–18 min), PS10 P1 (≤12–15 min). If any overruns, isolate and drill the bottleneck step.
+- [ ] MC consolidation: run every Julia code pattern + every concept-MC item (convexity, sup-norm-limit continuous, IFT statement, Hessian sign→type) back-to-back until each is a one-glance call.
+- [ ] Re-write any Theorem-lock statement that was shaky in Mock 1.
+
+** Day 7 — Sun Jul 05 · Mock 2 (dress rehearsal) + final pass :mock:
+- [ ] *Mock 2 — a fresh 90-min mock to the predicted structure, closed book:*
+  - 1 unconstrained extrema (PS08 variant), 1 constrained (PS14 P1 or PS13 P3 variant), 1 Banach (PS14 P3), 1 Newton (PS10 P1), 1 Taylor or Fréchet (PS07 P1 / PS05 P2).
+  - 7–8 MC: 4 Julia recognition (arc-length, GD/SGD, Newton, Jacobian+solve) + 3–4 concept (convexity, sup-norm limit is continuous, IFT statement, Hessian sign → min/max/saddle).
+- [ ] Time it. 90 min hard stop. Confirm the budget holds (it should, after D6).
+- [ ] Light error review only — no new material the night before.
+- [ ] Final pass on the 6 Theorem-lock statements, written cold.
+
+* Julia & concept MC bank
+Recognition only — read the snippet, name the method. *Rehearse these as answerable items (D6/D7), not just passive tells.* Distinguishing signals:
+- Arc length: polygonal $\sum\|f(t_{k+1})-f(t_k)\|$ vs midpoint $\sum\|f'(t_k^\ast)\|\Delta t$ vs trapezoid (PS03 P2). exam_01 P10 is this format (midpoint rule).
+- GD / SGD / mini-batch: full-sum gradient vs single index vs $m$-average (PS07 P2/P4). Also: step size, tol-vs-cap termination.
+- Newton: division by $f'$ / linear solve $J\backslash$; update $x-J^{-1}f$; terminate on $|x_{k+1}-x_k|$ (PS08 P4, PS10 P2). vs fixed-point iteration vs GD. *lec_03: the professor said he will test the name↔formula correspondence both ways and — unusually — that he considers this terminology important (he normally dislikes terminology Qs). Rehearse writing the iteration on cue, not only recognizing it.*
+- Newton facts: on $Ax-b=0$ → converges in one step; on $\nabla\|Ax-b\|^2$ → one step (normal equations, = PS05 P2); $1/k$ linear-not-quadratic, $1/2^k$ linear, $x^2-2$ from $x_0=1$ quadratic (digits double); log-axis: linear = straight line, quadratic = downward curve (PS10 P4).
+- Convexity: which $f$ is convex (exam_01 P8). Sum (nonneg coeff) / max / affine-substitution preserve convexity (PS07 P3).
+- sup-norm limit of differentiable functions is *continuous*, not necessarily differentiable (exam_01 P9). Known past-exam item — rehearse it, don't just recognize it.
+- IFT statement recognition (problems cut, statement may appear).

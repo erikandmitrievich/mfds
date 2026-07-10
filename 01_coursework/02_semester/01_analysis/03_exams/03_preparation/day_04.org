@@ -1,0 +1,858 @@
+#+title: Day 4 — Thu Jul 02 · Submanifolds + Constrained extrema (FULL)
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-07-02>
+#+lastmod: <2026-07-05 19:27>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* DONE PS12 P01
+** Task
+#+begin_quote
+Find the extrema of $f : \mathbb{R}^3 \to \mathbb{R}$,
+
+$$f(x, y, z) = xyz$$
+
+subject to the constraint
+
+$$x^2 + y^2 + z^2 = 12.$$
+#+end_quote
+
+** Solution
+
+\begin{align*}
+\nabla f(x,y,z) &= \begin{pmatrix} yz \\ xz \\ xy \end{pmatrix} \\
+\nabla g(x,y,z) &= \begin{pmatrix} 2x \\ 2y \\ 2z \end{pmatrix} \\
+\end{align*}
+
+\begin{align*}
+\nabla f &= \lambda \nabla g \\
+\begin{pmatrix} yz \\ xz \\ xy \end{pmatrix} &=
+\lambda \begin{pmatrix} 2x \\ 2y \\ 2z \end{pmatrix} \\
+&\implies
+\begin{cases}
+yz = \lambda 2x \\
+xz = \lambda 2y \\
+xy = \lambda 2z \\
+x^2 + y^2 + z^2 = 12
+\end{cases} \\
+&\implies
+\begin{cases}
+xyz = \lambda 2x^2 = \lambda 2y^2 = \lambda 2z^2 \\
+x^2 + y^2 + z^2 = 12
+\end{cases}
+\end{align*}
+
+*Case $\lambda = 0$.* Then $yz=xz=xy=0$, forcing at least two coordinates to be $0$, $f = 0$.
+
+*Case $\lambda \neq 0$.* Then $x^2 = y^2 = z^2$. Constraint gives $3x^2 = 12$, so $|x| = |y| = |z| = 2$.
+
+Hence, $f(x,y,z) = xyz = \pm8$.
+
+- $\max(f) = 8$: $(2,2,2),\ (2,-2,-2),\ (-2,2,-2),\ (-2,-2,2)$
+
+- $\min(f) = -8$: $(-2,-2,-2),\ (-2,2,2),\ (2,-2,2),\ (2,2,-2)$.
+
+*** Grasped
+
+1. Learned how to work with constrianed extremas
+
+* DONE PS12 P02
+** Task
+#+begin_quote
+Consider the ellipse
+
+$$M = \{(x, y)^\top \in \mathbb{R}^2 : 4x^2 + y^2 = 16\}.$$
+
+(a) Determine the points that are closest to and farthest from the origin.
+
+(b) Visualize the problem in Julia.
+
+(c) Determine the points on the ellipse that are closest to and farthest from $(3, 0)^\top$.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+\begin{align*}
+d^2 &= x^2 + y^2 \\
+\nabla g^2 &= \begin{pmatrix} 2x \\ 2y \end{pmatrix} \\
+M &= 4x^2 + y^2 - 16 = 0 \\
+\nabla M &= \begin{pmatrix} 8x \\ 2y \end{pmatrix} \\
+\end{align*}
+
+\begin{align*}
+\begin{cases}
+2x = \lambda 8x \\
+2y = \lambda 2y
+\end{cases}
+\end{align*}
+
+$\lambda = \dfrac{1}{4}$: $y = 0 \Rightarrow x = \pm 2$, $d = \sqrt{4 + 0} = 2$
+
+$\lambda = 1$: $x = 0 \Rightarrow y = \pm 4$, $d = \sqrt{0 + 16} = 4$
+
+**** Grasped
+
+1. Constrained extrema application.
+
+*** (b)
+
+#+begin_src julia :results value
+using Plots
+
+M(x,y) = 4*x^2 + y^2 - 16
+
+xs = range(-5, 5, length=400)
+ys = range(-5, 5, length=400)
+
+dts = [abs(M(x,y)) < 0.1 for y in ys, x in xs]
+
+heatmap(xs, ys, dts, aspect_ratio=:equal, color=:grays, legend=false)
+
+savefig("./assets/ps_12_02.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/03_exams/02_preparation/assets/ps_12_02.png
+
+**** Grasped
+
+1. Successfully Attempted to plot such a curve.
+
+*** (c)
+
+\begin{align*}
+f^2(x,y) &= (x - 3)^2 + y^2 = x^2 - 6x + 9 + y^2 \\
+M(x,y) &= 4x^2 + y^2 - 16 = 0 \\
+\end{align*}
+
+\begin{align*}
+\nabla f^2(x,y) &=
+\begin{pmatrix}
+2x - 6 \\
+2y
+\end{pmatrix} \\
+\nabla m &= \begin{pmatrix} 8x \\ 2y \end{pmatrix} \\
+\end{align*}
+
+\begin{align*}
+\begin{pmatrix}
+2x - 6 \\
+2y
+\end{pmatrix} &=
+\lambda \begin{pmatrix} 8x \\ 2y \end{pmatrix} \\
+&\implies
+\begin{cases}
+2x - 6 = 8 \lambda x \\
+2y = 2 \lambda y
+\end{cases} \\
+&\implies
+\begin{cases}
+(2 - 8 \lambda)x = 6 \\
+2y = 2 \lambda y
+\end{cases} \\
+\end{align*}
+
+$\lambda = 0$: $(3,0)$
+
+$\lambda = 1$: $x = -1 \Rightarrow y = \pm\sqrt{12}$
+
+Thus, $(3,0),\ (-1, \pm \sqrt{12})$.
+
+\begin{align*}
+f^2(2,0) &= 2^2 - 6(2) + 9 + 0 = 4 - 12 + 9 = 1 \implies d = 1 \\
+f^2(-1,\pm\sqrt{12}) &= (-1)^2 - 6(-1) + 9 + (\pm\sqrt{12})^2 = 1 + 6 + 9 + 12 = 28 \implies d = \sqrt{28} \\
+\end{align*}
+
+**** Grasped
+
+1. Feel more or less confident with this problem.
+
+* DONE PS12 P03
+** Task
+#+begin_quote
+Find the extrema of $f : \mathbb{R}^3 \to \mathbb{R}$,
+
+$$f(x, y, z) = x^2 + y^2 + z^2$$
+
+subject to the constraints
+
+$$x + y + z = 6, \qquad x - y = 2.$$
+#+end_quote
+
+** Solution
+
+\begin{align*}
+c_1(x,y,z) &= x + y + z - 6 = 0 \\
+c_2(x,y,z) &= x - y - 2 = 0 \\
+\nabla f(x,y,z) &= \begin{pmatrix} 2x \\ 2y \\ 2z \end{pmatrix} \\
+\nabla c_1(x,y,z) &= \begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix} \\
+\nabla c_2(x,y,z) &= \begin{pmatrix} 1 \\ -1 \\ 0 \end{pmatrix} \\
+\end{align*}
+
+\begin{align*}
+\begin{pmatrix} 2x \\ 2y \\ 2z \end{pmatrix} &=
+\lambda \begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix} +
+\mu \begin{pmatrix} 1 \\ -1 \\ 0 \end{pmatrix} \\
+&\implies \begin{cases} 2x = \lambda + \mu \\ 2y = \lambda - \mu \\ 2z = \lambda \end{cases} \\
+&\implies
+\begin{cases}
+x + y = 2z \\
+x - y = \mu &\implies \mu = 2
+\end{cases} \\
+&\implies (\lambda + 2) + (\lambda - 2) + (\lambda) = 12 \implies \lambda = 4 \\
+\end{align*}
+
+\begin{align*}
+x &= 3 \\
+y &= 1 \\
+z &= 2
+\end{align*}
+
+Point $(3, 1, 2)^\top$, $f = 9 + 1 + 4 = 14$. The constraint set is a line in $\mathbb{R}^3$, so $f$ (squared distance from the origin) is unbounded above and $14$ is the global *minimum*. No maximum.
+
+*** Grasped
+
+1. Learned how to work with multiple constraints.
+
+* DONE PS12 P04
+** Task
+#+begin_quote
+Consider the function $f : \mathbb{R}^2 \to \mathbb{R}$,
+
+$$f(x, y) = x^2 - y^2$$
+
+subject to the constraint
+
+$$x^2 + y^2 = 4.$$
+
+1. Generate a heatmap of $f$ on the square $[-3, 3]^2$ and draw the constraint curve on top of the heatmap.
+
+2. Parametrize the constraint by
+
+   $$\gamma(t) = (2\cos t,\, 2\sin t), \qquad 0 \leq t \leq 2\pi.$$
+
+   and plot the function $F(t) = f(\gamma(t))$ with $t$ on the horizontal axis.
+
+3. Make an educated guess of the exact maxima and minima based on this investigation. Then determine the exact constrained extrema using Corollary 5.4.7.
+#+end_quote
+
+** Solution
+
+*** (1)
+
+#+begin_src julia :results value
+using Plots
+
+f(x, y) = x^2 - y^2
+c(x, y) = x^2 + y^2
+
+xs = -3:0.05:3
+ys = -3:0.05:3
+
+heatmap(xs, ys, f, color=:viridis, aspect_ratio=:equal)
+contour!(xs, ys, c, levels=[4], color=:white, lw=2)
+
+savefig("./assets/ps_12_04_01.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/03_exams/02_preparation/assets/ps_12_04_01.png
+
+**** Grasped
+
+1. Found a more nice way to plot a constraint.
+
+*** (2)
+
+#+begin_src julia :results value
+using Plots
+
+f(v) = (v[1])^2 - (v[2])^2
+c(t) = [2*cos(t), 2*sin(t)]
+
+t  = 0:0.05:2*π
+
+plot(t, f.(c.(t)), lw=2)
+
+savefig("./assets/ps_12_04_02.png")
+
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/03_exams/02_preparation/assets/ps_12_04_02.png
+
+**** Grasped
+
+1. Nothing.
+
+*** (3)
+
+From $F(t) = 4\cos 2t$: maximum $4$ at $t \in \{0, \pi\}$, i.e. $(\pm 2, 0)^\top$; minimum $-4$ at $t \in \{\pi/2,\, 3\pi/2\}$, i.e. $(0, \pm 2)^\top$.
+
+Confirm via /Corollary 5.4.7/ with $g = x^2 + y^2 - 4$:
+
+$$2x = 2\lambda x, \quad -2y = 2\lambda y \;\Longrightarrow\; x(1 - \lambda) = 0, \quad y(1 + \lambda) = 0.$$
+
+- $x = 0 \Rightarrow y = \pm 2$, $f = -4$ (minimum).
+
+- $\lambda = 1 \Rightarrow y = 0$, $x = \pm 2$, $f = 4$ (maximum).
+
+$\max f = 4$ at $(\pm 2, 0)^\top$, $\min f = -4$ at $(0, \pm 2)^\top$ — matching the guess.
+
+**** Grasped
+
+* DONE PS13 P03
+** Task
+#+begin_quote
+Consider $f : \mathbb{R}^2 \to \mathbb{R}$ given by
+
+$$f(x) = x_1^2 + 2x_2^2$$
+
+subject to the constraint
+
+$$g(x) = x_1^2 + x_2^2 - 1 = 0$$.
+
+Use the Lagrangian and its Hessian to identify the local minimum of the restriction of $f$. Visualize your result in Julia.
+#+end_quote
+
+** Solution
+
+\begin{align*}
+f(x) &= x_1^2 + 2x_2^2 \\
+g(x) &= x_1^2 + x_2^2 - 1 = 0 \\
+\end{align*}
+
+\begin{align*}
+L (x, \lambda) &= f(x) - \lambda g(x) \\
+L (x, \lambda) &= x_1^2 + 2x_2^2 - \lambda(x_1^2 + x_2^2 - 1) \\
+               &= x_1^2 + 2x_2^2 - \lambda x_1^2 - \lambda x_2^2 + \lambda \\
+\end{align*}
+
+\begin{align*}
+\nabla L(x, \lambda) &=
+\begin{pmatrix}
+2x_1 - 2 \lambda x_1 \\
+4x_2 - 2 \lambda x_2
+\end{pmatrix} \\
+H_L &=
+\begin{pmatrix}
+2 - 2 \lambda & 0 \\
+0 & 4 - 2 \lambda \\
+\end{pmatrix}
+\end{align*}
+
+$\lambda = 1$: $x_2 = 0 \implies x_1 = \pm 1$
+
+$\lambda = 2$: $x_1 = 0 \implies x_2 = \pm 1$
+
+Thus, $(\pm 1,0),\ (0, \pm 1)$.
+
+\begin{align*}
+H_L((\pm 1, 0), 1) &= \mathrm{diag}(0,2) &(\text{semidefinite}) \\
+H_L((0, \pm 1), 2) &= \mathrm{diag}(-2,0) &(\text{semidefinite}) \\
+\end{align*}
+
+Let $T_x = \ker(g'(x)) = x^{\bot}$. Restrict $H_xL$ to $T_x$:
+
+- $(\pm 1, 0),\ \lambda = 1$: $T_x = \mathrm{span}(0,1)$, $H_xL = \mathrm{diag}(0,2)$. For $v = (0,t)^{\top}$,
+
+  \begin{align*}
+  v^{\top}H_xLv &=
+  \begin{pmatrix}
+  0 & t
+  \end{pmatrix}
+  \begin{pmatrix}
+  0 & 0 \\
+  0 & 2
+  \end{pmatrix}
+  \begin{pmatrix}
+  0 \\ t
+  \end{pmatrix} \\
+  &=
+  \begin{pmatrix}
+  0 & 2t
+  \end{pmatrix}
+  \begin{pmatrix}
+  0 \\ t
+  \end{pmatrix} \\
+  &= 2t^2 > 0 \quad \forall t \neq 0 \\
+  &\Rightarrow \text{ local minimum}
+  \end{align*}
+
+- $(0, \pm 1),\ \lambda = 2$: $T_x = \mathrm{span}(1,0)$, $H_xL = \mathrm{diag}(-2,0)$. For $v = (t,0)^{\top}$,
+
+  \begin{align*}
+  v^{\top}H_xLv &=
+  \begin{pmatrix}
+  t & 0
+  \end{pmatrix}
+  \begin{pmatrix}
+  -2 & 0 \\
+  0 & 0
+  \end{pmatrix}
+  \begin{pmatrix}
+  t \\ 0
+  \end{pmatrix} \\
+  &=
+  \begin{pmatrix}
+  -2t & 0
+  \end{pmatrix}
+  \begin{pmatrix}
+  t \\ 0
+  \end{pmatrix} \\
+  &= -2t^2 < 0 \quad \forall t \neq 0 \\
+  &\Rightarrow \text{ local maximum}
+  \end{align*}
+
+#+begin_src julia :results value
+using Plots
+
+f(x, y) = x^2 + 2y^2
+
+θ  = range(0, 2π, length=400)
+cx = cos.(θ)
+cy = sin.(θ)
+
+xs = range(-1.5, 1.5, length=300)
+ys = range(-1.5, 1.5, length=300)
+
+contour(xs, ys, (x, y) -> f(x, y), levels=20, c=:viridis,
+        aspect_ratio=1, colorbar=true, size=(700, 700),
+        xlabel="x₁", ylabel="x₂", title="f = x₁² + 2x₂² on g = 0")
+
+plot!(cx, cy, lw=2, c=:black, label="g = 0")
+
+scatter!([1, -1], [0, 0], c=:red,  ms=6, label="min  (f = 1)")
+scatter!([0,  0], [1, -1], c=:blue, ms=6, label="max  (f = 2)")
+
+mkpath("./assets")
+savefig("./assets/p_03.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/03_exams/02_preparation/assets/ps_13_03.png
+
+*** Grasped
+
+1. Learned how to solve constrained extremas problems.
+
+* DONE PS14 P01
+** Task
+#+begin_quote
+Consider $f : \mathbb{R}^2 \to \mathbb{R}$ given by
+
+$$f(x, y) = (x + 1)^2 + 3y^2$$
+
+(a) Determine all local extrema of $f$ and check by the Hessian if it is a local minimum or local maximum.
+
+(b) Consider the constraint problem $g(x) = 0$, for which $g : \mathbb{R}^2 \to \mathbb{R}$ given by
+
+$$g(x, y) = x^2 + y^2 - 1$$
+
+Compute all local constraint extrema.
+
+(c) Check by the Hessian of the Lagrangian if each local constraint extremum is a local constraint maximum or minimum.
+
+(d) Visualize $f$ and $g$ is Julia, so that you "see" the local (constraint) extrema.
+
+(e) Parameterize the circle by $\gamma : [0, 1] \to \mathbb{R}^2$,
+
+$$\gamma(t) = \begin{pmatrix} \cos(2\pi t) \\ \sin(2\pi t) \end{pmatrix}$$
+
+and plot the function $t \mapsto f(\gamma(t))$. Does this plot confirm the local constraint extrema?
+#+end_quote
+
+** Solution
+
+*** (a)
+
+\begin{align*}
+\nabla f(x,y) &=
+\begin{pmatrix}
+2x + 2 \\
+6y
+\end{pmatrix} \\
+&\Rightarrow
+\begin{cases}
+2x + 2 = 0 \implies (x = -1) \\
+y = 0
+\end{cases} \\
+&\Rightarrow (-1,0)
+\end{align*}
+
+\begin{align*}
+H_f(x,y) &=
+\begin{pmatrix}
+2 & 0 \\
+0 & 6
+\end{pmatrix}
+\end{align*}
+
+$H_f$ has a positive eigenvalues $\implies$ $H_f$ is positive definite $\implies$ $(-1,0)$ is a local minimum.
+
+**** Grasped
+
+*** (b)
+
+$$\nabla g (x,y) = (2x, 2y) = 0 \iff (x,y) = (0,0),\ \text{but } g(0,0) = -1 \neq 0$$
+
+Hence, $\nabla g \neq 0$ on $\{g=0\}$, so $0$ is a regular value, $\{g=0\}$ is a submanifold, and the Lagrange condition applies at every constrained extremum.
+
+\begin{align*}
+\nabla g(x,y) &=
+\begin{pmatrix}
+2x \\ 2y
+\end{pmatrix} \\
+H_g(x,y) &=
+\begin{pmatrix}
+2 & 0 \\
+0 & 2
+\end{pmatrix} \\
+\end{align*}
+
+\begin{align*}
+\begin{pmatrix}
+2x + 2 \\
+6y
+\end{pmatrix} &=
+\lambda
+\begin{pmatrix}
+2x \\ 2y
+\end{pmatrix} \\
+&\Rightarrow
+\begin{cases}
+2x + 2 = 2 \lambda x \\
+6y = 2 \lambda y \implies (\lambda = 3 \text{ or } y = 0) \\
+x^2 + y^2 = 1
+\end{cases}
+\end{align*}
+
+
+\begin{align*}
+\lambda &= 3 \\
+2x + 2 &= 6x \implies x = \dfrac{1}{2} \\
+\frac{1}{2}^2 + y^2 &= 1 \implies y = \pm \dfrac{\sqrt{3}}{2}
+\end{align*}
+
+
+\begin{align*}
+y &= 0 \\
+x &= \pm 1
+\end{align*}
+
+Thus, $\Big(\dfrac{1}{2}, \pm \dfrac{\sqrt{3}}{2}\Big), (\pm 1, 0)$
+
+**** Grasped
+
+$$L = \nabla f - \lambda \nabla g$$
+
+\begin{align*}
+H_xL (x, y, \lambda) &=
+\end{align*}
+
+*** (c)
+
+Recall:
+
+\begin{align*}
+(1, 0) &: \lambda = 2 \\
+(-1, 0) &: \lambda = 0 \\
+\Big(\dfrac{1}{2}, \pm \dfrac{\sqrt{3}}{2}\Big) &: \lambda = 3
+\end{align*}
+
+
+\begin{align*}
+H_xL &= H_f - \lambda H_g \\
+H_xL &=
+\begin{pmatrix}
+2 & 0 \\
+0 & 6
+\end{pmatrix} -
+\lambda
+\begin{pmatrix}
+2 & 0 \\
+0 & 2
+\end{pmatrix} \\
+&=
+\begin{pmatrix}
+2 - 2 \lambda & 0 \\
+0 & 6 - 2 \lambda
+\end{pmatrix} \\
+\end{align*}
+
+- $(1, 0), \lambda = 2$:
+
+  \begin{align*}
+  H_xL &=
+  \begin{pmatrix}
+  -2 & 0 \\
+  0 & 2
+  \end{pmatrix} \\
+  \end{align*}
+
+  \begin{align*}
+  \nabla g(1,0) &= (2,0)^{\top} \\
+  T_p &= \nabla g^{\bot} = \mathrm{span}\{(0,1)^{\top}\}
+  \end{align*}
+
+  For $v = (0,1)^{\top}$,
+
+  \begin{align*}
+  v^{\top} (H_xL) v &=
+  \begin{pmatrix}
+  0 & 1
+  \end{pmatrix}
+  \begin{pmatrix}
+  -2 & 0 \\
+  0 & 2
+  \end{pmatrix}
+  \begin{pmatrix}
+  0 \\ 1
+  \end{pmatrix} \\
+  &=
+  \begin{pmatrix}
+  0 & 2
+  \end{pmatrix}
+  \begin{pmatrix}
+  0 \\ 1
+  \end{pmatrix} \\
+  &= 2 > 0 \implies \text{local constrained minimum}
+  \end{align*}
+
+- $(-1, 0), \lambda = 0$:
+
+  From (a), classified as local minimum
+
+- $\Big(\dfrac{1}{2}, \pm \dfrac{\sqrt{3}}{2}\Big), \lambda = 3$:
+
+  \begin{align*}
+  H_xL &=
+  \begin{pmatrix}
+  -4 & 0 \\
+  0 & 0
+  \end{pmatrix} \\
+  \end{align*}
+
+  \begin{align*}
+  \nabla g\Big(\dfrac{1}{2}, \pm \dfrac{\sqrt{3}}{2}\Big) &= (1, \pm \sqrt{3})^{\top} \\
+  T_p &= \nabla g^{\bot} = \mathrm{span}\{ (\sqrt{3}, \mp 1)^{\top} \}
+  \end{align*}
+
+  For $v = (\sqrt{3}, \mp 1)^{\top}$,
+
+  \begin{align*}
+  v^{\top} (H_xL) v &=
+  \begin{pmatrix}
+  \sqrt{3} & \mp 1
+  \end{pmatrix}
+  \begin{pmatrix}
+  -2 & 0 \\
+  0 & 2
+  \end{pmatrix}
+  \begin{pmatrix}
+  \sqrt{3} \\ \mp 1
+  \end{pmatrix} \\
+  \end{align*}
+
+  \begin{align*}
+  v^{\top} (H_xL) v &=
+  \begin{pmatrix}
+  \sqrt{3} & \mp 1
+  \end{pmatrix}
+  \begin{pmatrix}
+  -4 & 0 \\
+  0 & 0
+  \end{pmatrix}
+  \begin{pmatrix}
+  \sqrt{3} \\ \mp 1
+  \end{pmatrix} \\
+  &=
+  \begin{pmatrix}
+  -4\sqrt{3} & 0
+  \end{pmatrix}
+  \begin{pmatrix}
+  \sqrt{3} \\ \mp 1
+  \end{pmatrix} \\
+  &= -12 < 0 \implies \text{ local constrained maximum}
+  \end{align*}
+
+**** Grasped
+
+*** (d)
+
+Low priority. Skip.
+
+**** Grasped
+
+*** (e)
+
+Low priority. Skip.
+
+**** Grasped
+
+* DONE PS11 P03
+** Task
+#+begin_quote
+Let
+
+$$M_n = \{x \in \mathbb{R}^n : \|x\|_2 = 1\}$$
+
+(a) Show that $M_n$ is a $n-1$ -dimensional submanifold of $\mathbb{R}^n$.
+
+(b) Determine the tangent space $T_x(M_n)$ and the normal space $N_x(M_n)$ for all $x \in M_n$.
+
+(c) Visualize $M_2$, $T_x(M_2)$, and $N_x(M_2)$ in Julia for the point $x = (1, 0)^\top$.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+Let $g : \mathbb{R}^n \rightarrow \mathbb{R},\ g(x) = \|x\|_2^2 - 1$. Then $g \in \mathcal{C}^1$, as $g$ is polynomial. Here $k = n-1$, so $r = n - k = 1$.
+
+Take $U = \mathbb{R}^n$, $M_n \cap U = \{ g(x) = 0 \} = M_n$.
+
+$g'(x) = 2x^{\top}$. For $x \in M_n : \|x\| = 1 \Rightarrow x \neq 0 \Rightarrow g'(x) \neq 0$. Thus, $\mathrm{rank}(g') = 1 = r$.
+
+By definition of submanifold, $M_n$ is a $(n-1)$ -dimensional submanifold of $\mathbb{R}^n$.
+
+**** Grasped
+
+Skeleton:
+
+1. Find $g : U \rightarrow \mathbb{R}^r$ with $M \cap U = \{g(x) = 0\} = M$, $r = n - k$.
+
+2. Check $g \in \mathcal{C}^1$.
+
+3. Take $U$ (usually $\mathbb{R}^n$).
+
+4. Verify $M \cap U = M$.
+
+5. Compute $g'(x)$.
+
+6. Show $\mathrm{rank}(g'(x)) = r$ for all $x \in M \cap U$.
+
+*** (b)
+
+By Theorem of tangent and normal space from defining function, since $M_n$ is a submanifold with $M_n \cap U = \{g(x) = 0\}$ and $\mathrm{rank}(g'(x)) = 1$:
+
+\begin{align*}
+T_x(M_n) &= \ker(g'(x)) = \{ v \in \mathbb{R}^n : \langle x, v \rangle = 0 \} = x^{\bot}, \quad \dim T_x(M_n) = n-1 \\
+N_x(M_n) &= \mathrm{span}\{\nabla g(x)\} = \mathrm{span}\{x\}, \quad \dim N_x(M_n) = 1 \\
+\end{align*}
+
+**** Grasped
+
+*** (c)
+
+Skip. Not relevant.
+
+**** Grasped
+
+* DONE PS11 P04
+** Task
+#+begin_quote
+Let
+
+$$M = \{x \in \mathbb{R}^3 : g_1(x) = 0, g_2(x) = 0\}, \quad g_1(x) = x_1^2 + x_2^2 - 1, \quad g_2(x) = x_3 - x_1$$
+
+(a) Compute the Jacobian $g'(x)$ for $g = (g_1, g_2)^\top$.
+
+(b) Show that $M$ is a 1-dimensional submanifold of $\mathbb{R}^3$.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+\begin{align*}
+g(x) &=
+\begin{pmatrix}
+x_1^2 + x_2^2 - 1 \\
+x_3 - x_1
+\end{pmatrix} \\
+J_g(x) &=
+\begin{pmatrix}
+2x_1 & 2x_2 & 0 \\
+-1 & 0 & 1
+\end{pmatrix}
+\end{align*}
+
+**** Grasped
+
+1. Figured out 2x3 jacobian by myself.
+
+*** (b)
+
+Choose $g : \mathbb{R}^3 \rightarrow \mathbb{R}^2,\ g = (g_1, g_2)^{\top}$. $g \in \mathcal{C}^1$, as $g_1, g_2$ are polynomials. $k = 1$, $r = n - k = 2$.
+
+$U = \mathbb{R}^3$, $M \cap U = \{g(x) = 0\} = M$
+
+$$J_g(x) = \begin{pmatrix} 2x_1 & 2x_2 & 0 \\ -1 & 0 & 1 \end{pmatrix} \neq 0\, \forall x_1, x_2 \in \mathbb{R}$$. Rows are trivially linearly independent,  thus, $\mathrm{rank}(J_g) = 2$.
+
+By definition of submanifold, $M$ is a $(n - r) = 1$ -dimensional submanifold of $\mathbb{R}^3$.
+
+**** Grasped
+
+1. 80% of the problem solved by myself. Feel much more confident.
+
+* DONE PS13 P01
+** Task
+#+begin_quote
+Let $f : (0,\infty)^n \to \mathbb{R}$, given by
+
+$$f(x) = x_1 x_2 \cdots x_n,$$
+
+and consider the constraint manifold
+
+$$M = \{x \in \mathbb{R}^n : x_1 + \cdots + x_n = n\}$$.
+
+(a) Show that $M$ is an $(n-1)$ -dimensional submanifold of $\mathbb{R}^n$.
+
+(b) Show that every constrained extremum $x \in (0,\infty)^n$ satisfies
+
+$$\nabla f(x) = \lambda(1, \dots, 1)$$.
+
+(c) Prove that $f(x) \le 1$, $\forall x \in M \cap (0,\infty)^n$, and determine when equality occurs.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+Choose $g(x) = \sum_{i=1}^n x_i - n$. $g \in \mathcal{C}^1$ (polynomial). $k = n-1$, $r = n - k = 1$.
+
+Choose $U = \mathbb{R}^n$, $M \cap U = \{ g(x) = 0 \} = M$.
+
+$g'(x) = (1, \ldots, 1)$, thus, $g'(x)$ is a non zero row vector, so $\mathrm{rank}(g'(x)) = 1$.
+
+Thus, by definition of submanifold, $M$ is $(n-1)$ -dimensional submanifold of $\mathbb{R}^n$.
+
+**** Grasped
+
+1. Much better, 90% solved by myself.
+
+*** (b)
+
+Skip. Low relevant.
+
+**** Grasped
+
+*** (c)
+
+Skip. Low relevant.
+
+**** Grasped

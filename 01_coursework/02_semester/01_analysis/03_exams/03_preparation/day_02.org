@@ -1,0 +1,553 @@
+#+title: Day 2 — Tue Jun 30 · Unconstrained extrema + Hessian + Taylor bridge
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-06-29>
+#+lastmod: <2026-07-05 15:28>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* DONE PS06 P03
+** Task
+#+begin_quote
+Consider the function $f : \mathbb{R}^2 \to \mathbb{R}$,
+
+\[ f(x, y) = x^2 + y^2 + 2x + 4y \]
+
+(a) Determine all local extrema of $f$.
+
+(b) Plot $f$ in Julia by a heatmap to check your calculations in Part (a).
+#+end_quote
+
+** Solution
+
+*** (a)
+
+\begin{align*}
+f(x, y) = x^2 + y^2 + 2x + 4y \\
+\end{align*}
+
+
+\begin{align*}
+\nabla f(x, y) &=
+\begin{pmatrix}
+2x + 2 \\
+2y + 4
+\end{pmatrix} \\
+&\implies
+\begin{cases}
+2x + 2 = 0 &\implies x = -1 \\
+2y + 4 = 0 &\implies y = -2
+\end{cases} \\
+&\implies (-1,\ -2) \text{ is a critical point}
+\end{align*}
+
+\begin{align*}
+H_f(x,y) &=
+\begin{pmatrix}
+2 & 0 \\
+0 & 2
+\end{pmatrix}
+\end{align*}
+
+The eigenvalues ($\lambda_1 = 2,\ \lambda_2 = 2$) are strictly positive $\implies$ Hessian is positive definite and thus the only critical point $(-1, -2)$ is a local minimum.
+
+**** Grasped
+
+1. Was initially a bit confused how to make a Hessian, but quickly figured out.
+
+2. Initially though that "Determine all local extrema" meant to only find the critical points without classifying them.
+
+*** (b)
+
+#+begin_src julia :results value
+using Plots
+
+f(x, y) = x^2 + y^2 + 2x + 4y
+
+xs = -5:0.1:5
+ys = -5:0.1:5
+
+heatmap(xs, ys, f)
+
+mkpath("./assets"); savefig("./assets/ps_06_03.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/03_exams/02_preparation/assets/ps_06_03.png
+
+**** Grasped
+
+1. Just used heatmap.
+
+* DONE PS05 P01
+** Task
+#+begin_quote
+Let $f : \mathbb{R}^{2n} \to \mathbb{R}$ be defined by $f(x, y) = \|x\|^2 - \|y\|^2$ for $x, y \in \mathbb{R}^n$ and $\|\cdot\|$ the standard norm in $\mathbb{R}^n$.
+
+(a) Determine all local extrema and all saddle points.
+
+(b) Visualize $f$ and $\nabla f$ in Julia for $n = 1$.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+\begin{align*}
+\nabla f(x, y) &=
+\begin{pmatrix}
+2x \\
+-2y
+\end{pmatrix} \\
+&\implies (0, 0) \text{ is a critical point}
+\end{align*}
+
+\begin{align*}
+H_f(x,y) &=
+\begin{pmatrix}
+2 & 0 \\
+0 & -2 \\
+\end{pmatrix}
+\end{align*}
+
+\begin{align*}
+\begin{pmatrix} x & y \end{pmatrix}
+\begin{pmatrix}
+2 & 0 \\
+0 & -2 \\
+\end{pmatrix}
+\begin{pmatrix} x \\ y \end{pmatrix} &=
+\begin{pmatrix} 2x & -2y \end{pmatrix}
+\begin{pmatrix} x \\ y \end{pmatrix} \\
+&= 2x^2 - 2y^2 \\
+&\implies \text{indefinite}
+\end{align*}
+
+Thus, $(0,0)$ is a saddle point.
+
+**** Grasped
+
+1. Used quadratic form classification.
+
+*** (b)
+
+#+begin_src julia :results value
+using Plots
+
+norm(v) = sqrt(sum(v[i]^2 for i in 1:length(v)))
+
+f(x, y) = norm(x)^2 - norm(y)^2
+gf(x, y) = [2x -2y]
+
+xs = -5:0.1:5
+ys = -5:0.1:5
+
+xg = -5:0.5:5
+yg = -5:0.5:5
+
+U = [gf(x, y)[1] for y in yg, x in xg] * 0.1
+V = [gf(x, y)[2] for y in yg, x in xg] * 0.1
+
+X = [x for y in yg, x in xg]
+Y = [y for y in yg, x in xg]
+
+p = heatmap(xs, ys, f)
+
+p = quiver!(X, Y, quiver=(U, V))
+
+savefig("./assets/ps_05_01.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/03_exams/02_preparation/assets/ps_05_01.png
+
+**** Grasped
+
+1. Practiced norm writing.
+
+* DONE PS08 P01
+** Task
+#+begin_quote
+Consider $f: \mathbb{R}^2 \to \mathbb{R}$ given by
+
+\[
+f(x, y) = \sqrt{1 + x^2 + y^2}.
+\]
+
+Determine all critical points and classify them into local minima, maxima, and saddle points.
+#+end_quote
+
+** Solution
+
+\begin{align*}
+\nabla f(x, y) &=
+\begin{pmatrix}
+\dfrac{x}{\sqrt{1 + x^2 + y^2}} \\
+\dfrac{y}{\sqrt{1 + x^2 + y^2}}
+\end{pmatrix} \\
+&\implies x,y = 0
+\end{align*}
+
+\begin{align*}
+H_f(x, y) &=
+\begin{pmatrix}
+\dfrac{1 + y^2}{(1 + x^2 + y^2)^{3/2}} & \dfrac{-xy}{(1 + x^2 + y^2)^{3/2}} \\
+\dfrac{-xy}{(1 + x^2 + y^2)^{3/2}} & \dfrac{1 + x^2}{(1 + x^2 + y^2)^{3/2}}
+\end{pmatrix} \\
+H_f(0, 0) &=
+\begin{pmatrix}
+1 & 0 \\
+0 & 1
+\end{pmatrix}
+\end{align*}
+
+The eigenvalues ($\lambda_1, \lambda_2 = 1$) are positive $\implies$ $H_f(x, y)$ is strictly positive $\implies$ $(0,0)$ is local minimum.
+
+*** Grasped
+
+1. Reminded myself of chain and product rules.
+
+* DONE PS08 P02
+** Task
+#+begin_quote
+Consider the function $f: \mathbb{R}^2 \to \mathbb{R}$ given by
+
+\[
+f(x, y) = \sin x + \cos y.
+\]
+
+(a) Determine all critical points and classify them as local minima, maxima, and saddle points.
+
+(b) Show that $\nabla f$ is $L$ -Lipschitz continuous.
+
+(c) Compute all critical points within $[0, 2\pi] \times [-\frac{\pi}{2}, \frac{3}{2}\pi]$ in Julia via gradient descent by selecting suitable initial vectors $(x_0, y_0)$.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+\begin{align*}
+\nabla f(x, y) &=
+\begin{pmatrix}
+\cos(x) \\
+-\sin(y)
+\end{pmatrix} \\
+&\implies
+\begin{cases}
+\cos(x) = 0 &\implies x = \{ \frac{1}{2}\pi + n\pi : n \in \mathbb{N} \} \\
+-\sin(y) = 0 &\implies y = \{ m\pi : m \in \mathbb{N} \}
+\end{cases}
+\end{align*}
+
+\begin{align*}
+H_f(x, y) &=
+\begin{pmatrix}
+-\sin(x) & 0 \\
+0 & -\cos(y)
+\end{pmatrix} \\
+H_f(\frac{1}{2}\pi + n\pi, m\pi) &=
+\begin{pmatrix}
+-\sin(\frac{1}{2}\pi + n\pi) & 0 \\
+0 & -\cos(m\pi)
+\end{pmatrix} \\
+&=
+\begin{pmatrix}
+(-1)^{n+1} & 0 \\
+0 & (-1)^{m+1}
+\end{pmatrix}
+\end{align*}
+
+- $n$ odd, $m$ odd: (positive eigenvalues) $H_f$ is positive definite $\implies$ strict local minimum
+
+- $n$ even, $m$ even: (negative eigenvalues) $H_f$ is negative definite $\implies$ strict local maximum
+
+- $n$ odd, $m$ even: (mixed sign eigenvalues) $H_f$ is indefinite $\implies$ saddle point
+
+- $n$ even, $m$ odd: (mixed sign eigenvalues) $H_f$ is indefinite $\implies$ saddle point
+
+**** Grasped
+
+1. Worked with trigonometric functions in terms of differentiation and critical points classification.
+
+*** (b)
+
+\begin{align*}
+\nabla f(x,y) - \nabla f(\tilde{x}, \tilde{y}) &=
+\begin{pmatrix}
+\cos(x) - \cos(\tilde{x}) \\
+-\sin(y) + \sin(\tilde{y}) \\
+\end{pmatrix}
+\end{align*}
+
+By the mean value theorem applied to $\sin$ and $\cos$ on $\mathbb{R}$, together with $|\sin'| = |\cos| \leq 1$ and $|\cos'| = |\sin| \leq 1$:
+
+\begin{align*}
+|\cos(x) - \cos(\tilde{x})| &\leq |x - \tilde{x}| \\
+|\sin(y) - \sin(\tilde{y})| &\leq |y - \tilde{y}|
+\end{align*}
+
+Hence
+
+\begin{align*}
+\|\nabla f(x,y) - \nabla f(\tilde{x}, \tilde{y})\|^2
+&= (\cos(x) - \cos(\tilde{x}))^2 + (\sin(y) - \sin(\tilde{y}))^2 \\
+&\leq (x - \tilde{x})^2 + (y - \tilde{y})^2 \\
+&= \|(x,y) - (\tilde{x}, \tilde{y})\|^2.
+\end{align*}
+
+Therefore $\nabla f$ is $L$ -Lipschitz with $L = 1$. $\blacksquare$
+
+**** Grasped
+
+1. Remembered Lipschitz continuous definition.
+
+*** (c)
+
+#+begin_src julia :results value
+using Plots
+
+f(x, y) = sin(x) + cos(y)
+df(v) = [cos(v[1]), -sin(v[2])]
+df_neg(v) = [-cos(v[1]), sin(v[2])]
+
+xs = 0:0.1:2π
+ys = -π/2:0.1:3π/2
+
+function gradient_descent(f, df, x0, n=0.1, N=1000)
+    d = length(x0)
+    path = zeros(d, N)
+    path[:, 1] = x0
+
+    for k in 1:N-1
+        path[:, k+1] = path[:, k] - n * df(path[:, k])
+    end
+
+    return path
+end
+
+path_1 = gradient_descent(f, df, [5, 1])
+xp_1 = path_1[1, :]
+yp_1 = path_1[2, :]
+
+path_2 = gradient_descent(f, df_neg, [1, 2])
+xp_2 = path_2[1, :]
+yp_2 = path_2[2, :]
+
+p = heatmap(xs, ys, f)
+p = scatter!(xp_1, yp_1)
+p = scatter!(xp_2, yp_2)
+
+savefig("./assets/ps_08_02.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/03_exams/02_preparation/assets/ps_08_02.png
+
+**** Grasped
+
+1. Revised gradient descent.
+
+* DONE PS06 P02
+** Task
+#+begin_quote
+Suppose $f : \mathbb{R}^n \to \mathbb{R}$ is twice continuously differentiable.
+
+(a) Prove that the Taylor formula centered at $x_0 \in \mathbb{R}^n$ of order 2 is
+
+$$f(x) = f(x_0) + (\nabla f(x_0))^\top (x - x_0) + \frac{1}{2}(x - x_0)^\top H_f(x_0)(x - x_0) + o(\|x - x_0\|^2)$$
+
+(b) Implement and plot the Taylor approximation of $f$ of order 2 by a heatmap for the function
+
+$$f : \mathbb{R}^2 \to \mathbb{R}, \quad f(x, y) = x^4 + y^4 + x^2 + y^2$$
+
+#+end_quote
+
+** Solution
+
+*** (a)
+
+Skip.
+
+**** Grasped
+
+*** (b)
+
+\begin{align*}
+x_0 &= 0 \\
+f(x, y) &= x^4 + y^4 + x^2 + y^2 \\
+\nabla f(x, y) &=
+\begin{pmatrix}
+4x^3 + 2x \\
+4y^3 + 2y
+\end{pmatrix} \\
+H_f(x, y) &=
+\begin{pmatrix}
+12x^2 + 2 & 0 \\
+0 & 12y^2 + 2
+\end{pmatrix} \\
+T2(x, y) &= 0 + 0 +
+\frac{1}{2} \begin{pmatrix} x & y \end{pmatrix}
+\begin{pmatrix}
+2 & 0 \\
+0 & 2
+\end{pmatrix}
+\begin{pmatrix} x \\ y \end{pmatrix} \\
+&=
+\begin{pmatrix} x & y \end{pmatrix}
+\begin{pmatrix} x \\ y \end{pmatrix} \\
+&=
+x^2 + y^2
+\end{align*}
+
+#+begin_src julia :results value
+using Plots
+
+f(x, y)  = x^4 + y^4 + x^2 + y^2
+T2(x, y) = x^2 + y^2
+
+xs = ys = range(-2, 2, length = 400)
+
+p = surface(xs, ys, f,
+             alpha=0.7, label="f")
+p = surface!(xs, ys, T2,
+             alpha=0.7, label="T2")
+
+savefig("./assets/ps_06_02.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/03_exams/02_preparation/assets/ps_06_02.png
+
+
+**** Grasped
+
+1. Had to work with Taylor polynomial by hands.
+
+* DONE PS07 P02
+** Task
+#+begin_quote
+Consider the function $f : \mathbb{R}^2 \to \mathbb{R}$ defined by
+
+\[ f(x, y) = x^4 + y^4 - 2x^2 - 2y^2 \]
+
+(a) Compute the gradient $\nabla f(x, y)$.
+(b) Determine all critical points of $f$ and classify them as local minima, local maxima, or saddle points via the Hessian matrix.
+(c) Implement gradient descent for $f$ in Julia. Experiment with several starting values and describe which critical points the algorithm converges to.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+\begin{align*}
+\nabla f(x, y) &=
+\begin{pmatrix}
+4x^3 - 4x \\
+4y^3 - 4y
+\end{pmatrix} \\
+\end{align*}
+
+**** Grasped
+
+1. Computation practice.
+
+*** (b)
+
+\begin{align*}
+\nabla f(x, y) &=
+\begin{pmatrix}
+4x^3 - 4x \\
+4y^3 - 4y
+\end{pmatrix} \\
+&\implies
+\begin{cases}
+4x^3 - 4x = 0 \\
+4y^3 - 4y = 0
+\end{cases} \\
+&\implies
+\begin{cases}
+4x(x - 1)(x + 1) = 0 &\implies (x = \{-1, 0, 1\}) \\
+4y(y - 1)(y + 1) = 0 &\implies (y = \{-1, 0, 1\})
+\end{cases}
+\end{align*}
+
+Hence, 9 critical points:
+
+\begin{align*}
+P = \{-1, 0, 1\} \times \{-1, 0, 1\} = \left\{
+\begin{array}{ccc}
+(-1,-1), & (0,-1), & (1,-1) \\
+(-1, 0), & (0, 0), & (1, 0) \\
+(-1, 1), & (0, 1), & (1, 1)
+\end{array}
+\right\}.
+\end{align*}
+
+\begin{align*}
+H_f &=
+\begin{pmatrix}
+12x^2 - 4 & 0 \\
+0 & 12y^2 - 4
+\end{pmatrix} \\
+\end{align*}
+
+Hence,
+
+\begin{align*}
+H_f(\pm 1, \pm 1) &= \begin{pmatrix} 8 & 0 \\ 0 & 8 \end{pmatrix} \quad \text{(local min)} \\
+H_f(0, 0) &= \begin{pmatrix} -4 & 0 \\ 0 & -4 \end{pmatrix} \quad \text{(local max)} \\
+H_f(\pm 1, 0) &= \begin{pmatrix} 8 & 0 \\ 0 & -4 \end{pmatrix} \quad \text{(saddle)} \\
+H_f(0, \pm 1) &= \begin{pmatrix} -4 & 0 \\ 0 & 8 \end{pmatrix} \quad \text{(saddle)}
+\end{align*}
+
+**** Grasped
+
+*** (c)
+
+#+begin_src julia :results value
+using Plots
+
+f(x, y) = x^4 + y^4 - 2x^2 - 2y^2
+df(v) = [4(v[1])^3 - 4(v[1]), 4(v[2])^3 - 4(v[2])]
+
+xs = -2:0.05:2
+ys = -2:0.05:2
+
+function gradient_descent(df, x0, n=0.01, N=1000)
+    d = length(x0)
+    path = zeros(d, N)
+    path[:,1] = x0
+
+    for k in 1:(N-1)
+        path[:, k+1] = path[:, k] - n * df(path[:, k])
+    end
+
+    return path
+end
+
+path = gradient_descent(df, [0.1, 0.1])
+xp = path[1,:]
+yp = path[2,:]
+
+p = heatmap(xs, ys, f, color=:viridis)
+p = scatter!(xp, yp)
+
+savefig("./assets/ps_07_02.png")
+#+end_src
+
+Code is done for one critical point. Similarly it can be reproduced with all other.
+
+**** Grasped
+
+1. Remembered gradient descent by heart.

@@ -1,0 +1,496 @@
+#+title: Day 1 — Mon Jun 29 · Gradient, Jacobian, affine approximation
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-06-29>
+#+lastmod: <2026-07-02 11:29>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* DONE PS04 P01
+** Task
+#+begin_quote
+Let $f : \mathbb{R}^2 \to \mathbb{R}$ be defined by $f(x, y) = x^2 + y^2$.
+
+(a) Compute $\nabla f(x, y)$.
+
+(b) Evaluate it at $(1, 2)$ and determine the local (affine) linear approximation of $f$ in $(1, 2)$.
+
+(c) Plot $f$ and $\nabla f$ in Julia.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+\begin{align*}
+\nabla f(x,y) =
+\begin{pmatrix}
+2x \\
+2y
+\end{pmatrix}
+\end{align*}
+
+**** Grasped
+
+1. There is no need to overcomplicate the gradient computation. (e.g. something like $\partial_1 f(x, y) &= \lim_{h \to 0} \frac{f(x + h, y) - f(x, y)}{h}$)
+
+*** (b)
+
+\begin{align*}
+\nabla f(1,2) =
+\begin{pmatrix}
+2 \\
+4
+\end{pmatrix}
+\end{align*}
+
+Local affine linear approximation of $f : \mathbb{R}^n \rightarrow \mathbb{R}$ in $x_0$ is
+
+$$L_f(x) = f(x_0) + \mathrm{grad} f(x_0)(x - x_0)$$
+
+\begin{align*}
+L_f(x) &=
+5 +
+\begin{pmatrix}
+2 & 4
+\end{pmatrix}
+\begin{pmatrix}
+x - 2 \\
+y - 4
+\end{pmatrix} \\
+&= 5 + 2(x - 1) + 4(y - 2) \\
+&= 2x + 4y - 5
+\end{align*}
+
+**** Grasped
+
+1. Local affine approximation. I feel that I forgot about it. Needs revisit.
+
+*** (c)
+
+#+begin_src julia :results value
+using Plots
+
+f(x, y)  = x^2 + y^2
+gf(x, y) = [2x 2y]
+
+x = -5:0.1:5
+y = -5:0.1:5
+
+heatmap(x, y, f, color=:jet)
+
+# coordinates for arrows
+xs = -5:0.5:5
+ys = -5:0.5:5
+
+# vectors of gradient at each xs and ys grid point
+U = [gf(x, y)[1] for y in ys, x in xs] * 0.1
+V = [gf(x, y)[2] for y in ys, x in xs] * 0.1
+
+# create a coordinate maxtrix
+X = [x for y in ys, x in xs]
+Y = [y for y in ys, x in xs]
+
+quiver!(X, Y, quiver=(U, V), color=:black, linewidth=1.2)
+
+mkpath("./assets"); savefig("./assets/ps_02_01.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/03_exams/02_preparation/assets/ps_02_01.png
+
+**** Grasped
+
+1. Different grids for heatmap and coordinate arrows.
+
+2. The reason behind =U, V= and =X, Y=. (explained in comments)
+
+* DONE PS04 P02
+** Task
+#+begin_quote
+Let $f : \mathbb{R}^3 \to \mathbb{R}$ be defined by $f(x, y, z) = xyz$.
+
+(a) Compute $\nabla f(x, y, z)$.
+
+(b) Evaluate it at $(1, 1, 1)$ and determine the local (affine) linear approximation of $f$ in $(1, 1, 1)$.
+
+(c) Plot $(x, y) \mapsto f(x, y, 1)$ in Julia.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+\begin{align*}
+\nabla f(x, y, z) =
+\begin{pmatrix}
+yz \\
+xz \\
+xy
+\end{pmatrix}
+\end{align*}
+
+**** Grasped
+
+1. Reminded how to find gradient of a triple input function.
+
+*** (b)
+
+\begin{align*}
+\nabla f(1, 1, 1) =
+\begin{pmatrix}
+1 \\
+1 \\
+1
+\end{pmatrix}
+\end{align*}
+
+\begin{align*}
+L_f(x) &= 1 +
+\begin{pmatrix}
+1 & 1 & 1
+\end{pmatrix}
+\begin{pmatrix}
+x - 1 \\
+y - 1 \\
+z - 1
+\end{pmatrix} \\
+&= x + y + z - 2
+\end{align*}
+
+**** Grasped
+
+1. Implemented affine on tripple input function.
+
+*** (c)
+
+#+begin_src julia :results value
+using Plots
+
+f(x, y, z) = x * y * z
+g(x, y) = f(x, y, 1)
+
+xs = -7:0.1:7
+ys = -7:0.1:7
+
+surface(xs, ys, g, alpha=0.7)
+# heatmap(xs, ys, g)
+
+mkpath("./assets"); savefig("./assets/ps_02_02.png")
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/03_exams/02_preparation/assets/ps_02_02.png
+
+**** Grasped
+
+1. Reminded myself of =plot, scatter, contour, surface, heatmap, quiver= plots.
+* DONE PS04 P03
+** Task
+#+begin_quote
+Let $f : \mathbb{R}^2 \to \mathbb{R}$ be defined by $f(x, y) = x^2 y + y^2$.
+
+(a) Compute $\operatorname{grad} f(x, y)$.
+
+(b) Determine the local (affine) linear approximation of $f$ at $(1, 1)$.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+$$\mathrm{grad}f(x, y) = \begin{pmatrix} 2xy & x^2 + 2y \end{pmatrix}$$
+
+**** Grasped
+
+1. There is no practical difference between $\mathrm{grad} f(x,y)$ and $\nabla f(x,y)$.
+
+*** (b)
+
+$$L_f(x) = f(x_0) + \nabla f(x_0) (x - x_0)$$
+
+\begin{align*}
+\nabla f(1, 1) &=
+\begin{pmatrix}
+2 \\
+3
+\end{pmatrix}
+\end{align*}
+
+\begin{align*}
+L_f(x, y) &= 2 +
+\begin{pmatrix}
+2 & 3
+\end{pmatrix}
+\begin{pmatrix}
+x - 1 \\
+y - 1
+\end{pmatrix} \\
+&= 2 + 2(x - 1) + 3(y - 1) \\
+&= 2x + 3y - 3 \\
+\end{align*}
+
+**** Grasped
+
+1. Mainly just computation accuracy and confidence.
+
+* DONE PS05 P04
+** Task
+#+begin_quote
+Let $f : \mathbb{R}^2 \to \mathbb{R}^2$ be defined by
+\[
+f(x, y) = \begin{pmatrix} x y \\ x^2 + y^3 \end{pmatrix}
+\]
+
+(a) Compute the Jacobi matrix $J_f(x, y)$.
+
+(b) Evaluate $J_f(1, 1)$.
+
+(c) Determine the (affine) linear approximation of $f$ near the point $(1, 1)$.
+
+(d) Use this approximation to estimate $f(1.01, 0.98)$.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+\begin{align*}
+J_f =
+\begin{pmatrix}
+\dfrac{\partial f_1}{dx} & \dfrac{\partial f_1}{dy} \\
+\dfrac{\partial f_2}{dx} & \dfrac{\partial f_2}{dy}
+\end{pmatrix} \\
+J_f(x,y) =
+\begin{pmatrix}
+y & x \\
+2x & 3y^2
+\end{pmatrix}
+\end{align*}
+
+**** Grasped
+
+1. Reminded myself of Jacobian.
+
+*** (b)
+
+\begin{align*}
+J_f(1,1) =
+\begin{pmatrix}
+1 & 1 \\
+2 & 3
+\end{pmatrix}
+\end{align*}
+
+**** Grasped
+
+1. Nothing.
+
+*** (c)
+
+\begin{align*}
+L_f(x) = f(x_0) + J_f(x_0) (x - x_0)
+\end{align*}
+
+\begin{align*}
+L_f(x, y) &=
+\begin{pmatrix} 1 \\ 2 \end{pmatrix} +
+\begin{pmatrix} 1 & 1 \\ 2 & 3 \end{pmatrix}
+\begin{pmatrix} x - 1 \\ y - 1 \end{pmatrix} \\
+&=
+\begin{pmatrix} 1 \\ 2 \end{pmatrix} +
+\begin{pmatrix} x - 1 + y - 1 \\ 2x - 2 + 3y - 3 \end{pmatrix} \\
+&=
+\begin{pmatrix} 1 \\ 2 \end{pmatrix} +
+\begin{pmatrix} x + y - 2 \\ 2x + 3y - 5 \end{pmatrix} \\
+&=
+\begin{pmatrix} x + y - 1 \\ 2x + 3y - 3 \end{pmatrix} \\
+\end{align*}
+
+**** Grasped
+
+1. I do not need to fully solve the $L_f(x,y)$. (meaning no need to simplify further)
+
+*** (d)
+
+\begin{align*}
+L_f(1.01, 0.98) &= \begin{pmatrix} 1.01 + 0.98 - 1 \\ 2(1.01) + 3(0.98) - 3 \end{pmatrix} \\
+                &= \begin{pmatrix} 0.99 \\ 1.96 \end{pmatrix} \\
+\end{align*}
+
+**** Grasped
+
+1. Nothing.
+
+* DONE PS05 P03
+** Task
+#+begin_quote
+Consider the functions $f : \mathbb{R}^2 \to \mathbb{R}^2$ and $g : \mathbb{R}^2 \to \mathbb{R}$ given by
+\[
+f(x, y) = \begin{pmatrix} x^2 \\ y^2 \end{pmatrix}, \quad g(u, v) = u - v
+\]
+Compute $(g \circ f)'(x, y)$.
+#+end_quote
+
+** Solution
+
+\begin{align*}
+f'(x,y) &=
+\begin{pmatrix}
+2x & 0 \\
+0 & 2y
+\end{pmatrix} \\
+g'(u,v) &=
+\begin{pmatrix}
+1 & -1
+\end{pmatrix} \\
+(g \circ f)'(x, y) &=
+\begin{pmatrix}
+1 & -1
+\end{pmatrix}
+\begin{pmatrix}
+2x & 0 \\
+0 & 2y
+\end{pmatrix} \\
+&=
+\begin{pmatrix}
+2x & -2y
+\end{pmatrix}
+\end{align*}
+
+*** Grasped
+
+1. Remembered how the chain rule is working with matrices.
+
+* DONE PS03 P02
+** Task
+#+begin_quote
+Write Julia code to approximate the length of a curve $f : [0, 1] \to \mathbb{R}^2$ by implementing two approaches:
+
+(a) Given a partition $P$ of $[0, 1]$, determine the polygonal length of $f$ along $P$.
+
+(b) Approximate the length integral by the mid-point rule.
+
+(c) Test and compare your code for several illustrative curves.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+Main idea behind the partition method is continuity of a curve at $[0,1]$, which allows partitioning and summing up the distances between partitions.
+
+#+begin_src julia :results value
+d(x, y) = sqrt((x[1] - y[1])^2 + (x[2] - y[2])^2)
+
+function length_by_partition(f, P = range(0, 1, length=1000))
+    l = 0.0
+    for i in 1:(length(P) - 1)
+        l += d(f(P[i]), f(P[i+1]))
+    end
+    return l
+end
+#+end_src
+
+#+RESULTS:
+: length_by_partition
+
+
+**** Grasped
+
+1. Reminded myself of ways to calculate the length fo the curve.
+
+*** (b) + (c)
+
+$$L(\gamma) = \int_0^1 \|\gamma'(t)\|dt$$
+
+#+begin_src julia :results value
+using Plots
+
+d(x, y) = sqrt((x[1] - y[1])^2 + (x[2] - y[2])^2)
+
+function length_by_partition(f, P = range(0, 1, length=1000))
+    l = 0.0
+    for i in 1:(length(P) - 1)
+        l += d(f(P[i]), f(P[i+1]))
+    end
+    return l
+end
+
+function mid_point(f, P = range(0, 1, length=1000))
+    area = 0.0
+
+    for i in 1:(length(P) - 1)
+        mid = (P[i] + P[i+1]) / 2
+        h = f(mid)
+        area += h * (P[i+1] - P[i])
+    end
+    return area
+end
+
+function length_by_midpoint(f′, P = range(0, 1, length=1000))
+    s(t) = sqrt(f′(t)[1]^2 + f′(t)[2]^2)
+    return mid_point(s, P)
+end
+
+# curves
+f_1(t) = (cos(2π*t), sin(2π*t))
+f_2(t) = (t*cos(4π*t), t*sin(4π*t))
+f_3(t) = (t^2, t^3)
+f_4(t) = (t*cos(6π*t), t*sin(6π*t))
+
+# derivatives
+f_1′(t) = (-2π*sin(2π*t), 2π*cos(2π*t))
+f_2′(t) = (cos(4π*t) - 4π*t*sin(4π*t), sin(4π*t) + 4π*t*cos(4π*t))
+f_3′(t) = (2t, 3t^2)
+f_4′(t) = (cos(6π*t) - 6π*t*sin(6π*t), sin(6π*t) + 6π*t*cos(6π*t))
+
+function main()
+    curves = [(f_1, f_1′, "Unit circle"),
+              (f_2, f_2′, "Spiral 1"),
+              (f_3, f_3′, "Cusp curve"),
+              (f_4, f_4′, "Spiral 2")]
+
+    # print comparison
+    for (f, f′, name) in curves
+        a = length_by_partition(f)
+        b = length_by_midpoint(f′)
+        println("$name: polygonal = $a, midpoint = $b")
+    end
+
+    # plot each curve
+    ts = range(0, 1, length=500)
+    p = plot(layout=(2, 2), size=(900, 900), legend=false)
+    for (i, (f, _, name)) in enumerate(curves)
+        xs = [f(t)[1] for t in ts]
+        ys = [f(t)[2] for t in ts]
+        plot!(p[i], xs, ys, title=name, aspect_ratio=:equal)
+    end
+    savefig("./assets/ps_03_02.png")
+end
+
+main()
+#+end_src
+
+#+RESULTS:
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/03_exams/02_preparation/assets/ps_03_02.png
+
+**** Grasped
+
+1. Learned how to calculate curve length by the midpoint rule.
+
+* Theorem lock
+
+Frechet definition
+
+Chain rule

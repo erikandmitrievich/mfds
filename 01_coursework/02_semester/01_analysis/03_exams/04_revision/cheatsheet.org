@@ -1,0 +1,149 @@
+#+title: Cheatsheet
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-07-02>
+#+lastmod: <2026-07-06 13:40>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Affine linear approximation
+
+$$L_f(x) = f(x_0) + \nabla f(x_0)^{\top}(x - x_0)$$
+
+* Length of the curve
+
+$$L(\gamma) = \int_0^1 \|\gamma'(t)\|dt$$
+
+* Convex function definition
+
+#+begin_quote
+A function $f : \mathbb{R} \rightarrow \mathbb{R}$ is called a convex iff for all $x, y \in \mathbb{R}$ and all $t \in [0,1]$,
+
+$$f(tx + (1 - t)y) \le tf(x) + (1 - t)f(y)$$
+#+end_quote
+
+* Taylor with Jacobian
+
+$$f(x) = f(x_0) + (\nabla f(x_0))^\top (x - x_0) + \frac{1}{2}(x - x_0)^\top H_f(x_0)(x - x_0) + o(\|x - x_0\|^2)$$
+
+* Gradient descent
+
+$$x_{k+1} = x_k - n \nabla f(x_k)$$
+
+* Prove submanifold
+
+1. Find $g : U \rightarrow \mathbb{R}^r$ with $M \cap U = \{g(x) = 0\} = M$, $r = n-k$.
+
+2. Chech $g \in \mathcal{C}^1$.
+
+3. Take $U$.
+
+4. Verify $M \cap U = M$.
+
+5. Compute $g'(x)$.
+
+6. Show $\mathrm{rank}(g'(x)) = r$ for all $x \in M \cap U$.
+
+* Tangent and normal spaces
+
+\begin{align*}
+T_x(M) &= \{\nabla g_1(x), \ldots, \nabla g_r(x)\}^\perp, \\
+N_x(M) &= \operatorname{span}\{\nabla g_1(x), \ldots, \nabla g_r(x)\}.
+\end{align*}
+
+* Newton step
+
+\begin{align*}
+x_{k+1} &= x_k - \frac{f(x_k)}{f'(x_k)} \\
+x_{k+1} &= x_k - \nabla f(x_k)^{-1} f(x_k) \\
+\end{align*}
+
+* Inverse of $2 \times 2$ matrix
+
+\begin{align*}
+A &=
+\begin{pmatrix}
+a & b \\
+c & d
+\end{pmatrix} \\
+\det(A) &= ad - bc \\
+A^{-1} &= \frac{1}{\det(A)}
+\begin{pmatrix}
+d & -b \\
+-c & a
+\end{pmatrix} \\
+\end{align*}
+
+* Quick linearly and quadratically convergent sequences
+
+\begin{align*}
+c &\in (0,1) \\
+x_{k+1} &= c^{k} \quad (\text{linear}) \\
+x_{k+1} &= c^{2^{k}} \quad (\text{quadratic}) \\
+\end{align*}
+
+* Newton iteration on $Ax - b = 0$
+
+\begin{align*}
+x_{k+1} &= x_k - A^{-1}(Ax_k - b) \\
+        &= x_k - (A^{-1}Ax_k - A^{-1}b) \\
+        &= x_k - (x_k - A^{-1}b) \\
+        &= A^{-1}b \\
+\end{align*}
+
+Newton converges in one step.
+
+* $\|Ax - b\|^2$
+
+Tricks:
+
+- $\|v\|^2 = v^{\top}v$
+
+- $b^{\top}Ax = x^{\top}A^{\top}b$ (if its a constant)
+
+- $DL(x)[h] = \langle \nabla L(x), h \rangle = (\nabla L(x))^{\top}h$
+
+* Banach fixed point theorem
+
+Let $(X, d)$ be a complete metric space and let $f : X \rightarrow X$ be a contraction.
+
+$f$ is a contraction iff $\exists q \in [0,1)$ such that
+
+$$d(f(x), f(y)) \le gd(x, y) \quad \forall x, y \in X$$
+
+Then,
+
+1. $f$ has a unique fixed point $x \in X : f(x) = x$.
+
+2. For every $x_0 \in X,\ x_{k+1} = f(x_n)$ converges linearly to the fixed point $x$.
+
+3. One has the approximation estimates, $\forall n \ge 0$,
+
+   $$d(x_n, x) \le \dfrac{q^n}{1 - q} d(x_1, x_0)$$
+
+* Constrained 2nd order rule
+
+1. Construct Lagrange ($L(x, \lambda) = f(x) - \lambda g(x)$).
+
+2. Find critical points.
+
+3. Find tangent space to restriction derivative $T_x = \ker(g'(x))$.
+
+4. Choose vector based on $T_x$.
+
+5. Assess critical point on $v^{\top}H_xLv$. ($>0 \Rightarrow \text{min},\ <0 \Rightarrow \text{max}$)
+
+
+* Lagrange multipliers justification
+
+"Since $\nabla g(x) \neq 0$ on $M = \{g = 0\}$, Lagrange multipliers corrollary gives that every constrained extremum satisfies $\nabla f(x) = \lambda \nabla g(x)$ for some $\lambda \in \mathbb{R}$."

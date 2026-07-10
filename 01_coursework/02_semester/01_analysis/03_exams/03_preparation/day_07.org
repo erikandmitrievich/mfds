@@ -1,0 +1,378 @@
+#+title: Day 7 — Sun Jul 05 · Mock 2 (dress rehearsal) + final pass
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-07-02>
+#+lastmod: <2026-07-04 20:03>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* PS14 P01
+** Task
+#+begin_quote
+Consider $f : \mathbb{R}^2 \to \mathbb{R}$ given by
+
+$$f(x, y) = (x + 1)^2 + 3y^2$$
+
+(a) Determine all local extrema of $f$ and check by the Hessian if it is a local minimum or local maximum.
+
+(b) Consider the constraint problem $g(x) = 0$, for which $g : \mathbb{R}^2 \to \mathbb{R}$ given by
+
+$$g(x, y) = x^2 + y^2 - 1$$
+
+Compute all local constraint extrema.
+
+(c) Check by the Hessian of the Lagrangian if each local constraint extremum is a local constraint maximum or minimum.
+
+(d) Visualize $f$ and $g$ is Julia, so that you "see" the local (constraint) extrema.
+
+(e) Parameterize the circle by $\gamma : [0, 1] \to \mathbb{R}^2$,
+
+$$\gamma(t) = \begin{pmatrix} \cos(2\pi t) \\ \sin(2\pi t) \end{pmatrix}$$
+
+and plot the function $t \mapsto f(\gamma(t))$. Does this plot confirm the local constraint extrema?
+#+end_quote
+
+** Solution
+
+*** (a)
+
+**** Grasped
+
+*** (b)
+
+**** Grasped
+
+*** (c)
+
+**** Grasped
+
+*** (d)
+
+**** Grasped
+
+*** (e)
+
+**** Grasped
+
+* PS13 P03
+** Task
+#+begin_quote
+Consider $f : \mathbb{R}^2 \to \mathbb{R}$ given by
+
+$$f(x) = x_1^2 + 2x_2^2$$
+
+subject to the constraint
+
+$$g(x) = x_1^2 + x_2^2 - 1 = 0$$.
+
+Use the Lagrangian and its Hessian to identify the local minimum of the restriction of $f$. Visualize your result in Julia.
+#+end_quote
+
+** Solution
+
+*** Grasped
+
+* PS14 P03
+** Task
+#+begin_quote
+Let $C([0,1]) := \{f : [0,1] \to \mathbb{R} \mid f \text{ continuous}\}$ with the norm $\|f\|_\infty = \sup_{x \in [0,1]} |f(x)|$. Define the map
+
+$$\Phi : C([0,1]) \to C([0,1]), \quad (\Phi(f))(t) = t + \frac{f(t)^2}{4}, \quad t \in [0,1]$$
+
+(a) Show that $C([0,1])$ is a Banach space.
+
+(b) Determine the Fréchet derivative $\Phi'(f)$.
+
+(c) Show that
+
+$$\|\Phi'(f)\|_{\mathrm{op}} \le \frac{1}{2}, \quad \forall f \in C([0,1]),\ \|f\|_\infty \le 1$$
+
+(d) Prove that $\Phi$ has a fixed point and determine it.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+**** Grasped
+
+*** (b)
+
+**** Grasped
+
+*** (c)
+
+**** Grasped
+
+*** (d)
+
+**** Grasped
+
+* PS10 P01
+** Task
+#+begin_quote
+Given $f : \mathbb{R}^2 \to \mathbb{R}^2$ by
+
+$$f(x, y) = \begin{pmatrix} x^2 + y^2 - 1 \\ x - y \end{pmatrix}$$
+
+(a) Determine all $(x, y)^\top \in \mathbb{R}^2$ such that $f(x, y) = 0$.
+
+(b) By using the initial vector $X_0 = (1, \frac{1}{2})^\top \in \mathbb{R}^2$, apply the Newton iteration twice by hand to compute $X_2$. How big is the error?
+#+end_quote
+
+** Solution
+
+*** (a)
+
+**** Grasped
+
+*** (b)
+
+**** Grasped
+
+* PS07 P01
+** Task
+#+begin_quote
+Let $f : (-\frac{1}{2}, \infty) \times (-\frac{1}{2}, \infty) \to \mathbb{R}$ be defined by
+
+\[ f(x, y) = \log(1 + x + y) \]
+
+(a) Determine the Taylor polynomial of order 3 of $f$ at $(0, 0)$.
+(b) Use your result to approximate $f(0.1, 0.1)$.
+(c) Plot heatmaps of $f$, of the Taylor polynomial of order 3, and of the difference of the two in $[0, 1]^2$.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+**** Grasped
+
+*** (b)
+
+**** Grasped
+
+*** (c)
+
+**** Grasped
+
+* PS05 P02
+** Task
+#+begin_quote
+Let $A \in \mathbb{R}^{m \times n}$ and $b \in \mathbb{R}^m$. We consider the loss function
+\[
+L : \mathbb{R}^n \to \mathbb{R}, \quad x \mapsto \|Ax - b\|^2
+\]
+
+(a) Compute the Fréchet derivative of $L$.
+
+(b) Show that $x \in \mathbb{R}^n$ is a global minimum if and only if
+\[
+A^* A x = A^{*}b
+\]
+
+(c) Implement the (affine) local approximation of $L$ in Julia.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+**** Grasped
+
+*** (b)
+
+**** Grasped
+
+*** (c)
+
+**** Grasped
+
+* PS03 P02
+** Task
+#+begin_quote
+Write Julia code to approximate the length of a curve $f : [0, 1] \to \mathbb{R}^2$ by implementing two approaches:
+
+(a) Given a partition $P$ of $[0, 1]$, determine the polygonal length of $f$ along $P$.
+
+(b) Approximate the length integral by the mid-point rule.
+
+(c) Test and compare your code for several illustrative curves.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+**** Grasped
+
+*** (b)
+
+**** Grasped
+
+*** (c)
+
+**** Grasped
+
+* PS07 P02
+** Task
+#+begin_quote
+Consider the function $f : \mathbb{R}^2 \to \mathbb{R}$ defined by
+
+\[ f(x, y) = x^4 + y^4 - 2x^2 - 2y^2 \]
+
+(a) Compute the gradient $\nabla f(x, y)$.
+(b) Determine all critical points of $f$ and classify them as local minima, local maxima, or saddle points via the Hessian matrix.
+(c) Implement gradient descent for $f$ in Julia. Experiment with several starting values and describe which critical points the algorithm converges to.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+**** Grasped
+
+*** (b)
+
+**** Grasped
+
+*** (c)
+
+**** Grasped
+
+* PS07 P04
+** Task
+#+begin_quote
+Let $n = 1000$, $d = 3$, and define
+
+\[ a_i = \begin{pmatrix} 1 \\ t_i \\ t_i^2 \end{pmatrix}, \quad t_i = \frac{i}{n}, \quad x_{\text{true}} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} \]
+
+Set $b_i = a_i^\top x_{\text{true}}$ and consider
+
+\[ f(x) = \frac{1}{n} \sum_{i=1}^{n} (a_i^\top x - b_i)^2 \]
+
+(a) Show that
+
+\[ \nabla f(x) = \frac{2}{n} \sum_{i=1}^{n} (a_i^\top x - b_i) a_i \]
+
+(b) Implement the following three methods with
+
+\[ x_0 = 0, \quad \eta = 0.01, \quad N = 50000, \quad m = 8 \]
+
+\[ x_{k+1}^{\text{GD}} = x_k - \eta \nabla f(x_k) \tag{1} \]
+
+\[ x_{k+1}^{\text{SGD}} = x_k - \eta \, 2(a_{i_k}^T x_k - b_{ik}}) a_{i_k}, \quad i_k = 1 + (k \bmod n) \tag{2} \]
+
+\[ x_{k+1}^{\text{MB}} = x_k - \eta \, \frac{1}{m} \sum_{i \in B_k} 2(a_i^T x_k - b_i) a_i \tag{3} \]
+
+where
+
+\[ B_k = \{1 + (km + j \bmod n) : j = 0, \ldots, m-1\} \]
+
+(c) Plot $f(x_k)$ for all three methods.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+**** Grasped
+
+*** (b)
+
+**** Grasped
+
+*** (c)
+
+**** Grasped
+
+* PS08 P04
+** Task
+#+begin_quote
+Write a Julia function
+
+=myNewton(f, x0, tol, maxiter)=
+
+that performs Newton's method for a function $f$, starting from the initial value $x_0$. The iteration should terminate when either
+
+$$|x_{k+1} - x_k| < \text{tol}$$
+
+or when the maximal number of iterations maxiter is reached. Your function should return:
+- the final approximation,
+- the number of iterations used,
+- and a vector containing all iterates.
+
+Test your implementation on the equations $x^2 - 2 = 0$ and $\cos(x) - x = 0$. Experiment with different initial values $x_0$. What do you observe? Plot the convergence history $k \mapsto |x_k - x^*|$ for one suitable example, where $x^*$ denotes the computed root.
+#+end_quote
+
+** Solution
+
+*** Grasped
+
+* PS10 P02
+** Task
+#+begin_quote
+Implement Newton's method numerically (use Julia's Linear Algebra package to solve a system of linear equations $Ax = b$ needed in each iteration by $A \backslash b$). Test your code for a few meaningful examples, in particular, solve the exercises above using your implementation.
+#+end_quote
+
+** Solution
+
+*** Grasped
+
+* PS10 P04
+** Task
+#+begin_quote
+Answer the following questions:
+
+1. What does the Newton iterations do for the linear system of equations $Ax - b = 0$, where $A \in \mathbb{R}^{n\times n}$ and $b \in \mathbb{R}^n$?
+
+2. Find a sequence $(x_k)_{k\in\mathbb{N}} \subset \mathbb{R}^n$ that converges linearly towards some $x^* \in \mathbb{R}^n$ but not quadratically.
+
+3. Find a sequence $(x_k)_{k\in\mathbb{N}} \subset \mathbb{R}^n$ that converges quadratically towards some $x^* \in \mathbb{R}^n$.
+
+4. Visualize the two aforementioned sequence in Julia by using suitable plots with logarithmic axis labels.
+
+5. Compute the gradient of $f(x) = \|Ax - b\|^2$ for $A \in \mathbb{R}^{n\times n}$ and $b \in \mathbb{R}^n$. Apply the Newton method to the gradient of $f$. What do you observe?
+#+end_quote
+
+** Solution
+
+*** Grasped
+
+* PS07 P03
+** Task
+#+begin_quote
+Let $V$ and $W$ be normed spaces and let $f_1, \ldots, f_n : V \to \mathbb{R}$ be convex. Prove that the following functions are also convex.
+
+(a) $\sum_{i=1}^{n} \alpha_i f_i$ for $\alpha_1, \ldots, \alpha_n \geq 0$.
+(b) $g : V \to \mathbb{R}$ given by $g(x) = \max_{i=1,\ldots,n} f_i(x)$.
+(c) If $A : W \to V$ is linear and $b \in V$, then $g : W \to \mathbb{R}$ given by
+
+\[ g(x) = f_1(Ax - b) \]
+
+is also convex.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+**** Grasped
+
+*** (b)
+
+**** Grasped
+
+*** (c)
+
+**** Grasped
