@@ -1,0 +1,1733 @@
+#+title: Lec Material Extracted
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-06-25>
+#+lastmod: <2026-06-26 17:47>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* lec_02
+
+** B. Implicit emphasis (inferred)
+*** Two-part correctness proof (halting + correct output)
+:PROPERTIES:
+:LECTURE_REF: lec_02
+:CUSTOM_ID: lec02-b-correctness-two-steps
+:END:
+Signal: "the two steps that you need to show that an algorithm is actually correct"
+
+*** $O$, $\Omega$, $\Theta$, $o$, $\omega$ asymptotic notation
+:PROPERTIES:
+:LECTURE_REF: lec_02
+:CUSTOM_ID: lec02-b-asymptotic-notation
+:END:
+Signal: "those are the important notations those are the symbols"
+
+*** Best-case (linear) vs worst-case ($n^2$) running time of insertion sort — data-dependence
+:PROPERTIES:
+:LECTURE_REF: lec_02
+:CUSTOM_ID: lec02-b-running-time-data-dependence
+:END:
+Signal: "this is very important"
+
+** C. CLRS delta (inferred)
+*** Asymptotic notation pulled forward — reordered
+:PROPERTIES:
+:LECTURE_REF: lec_02
+:CUSTOM_ID: lec02-c-asymptotic-reorder
+:END:
+Signal: "jumping for a very short time to chapter three and then back to chapter two"
+
+*** Asymptotic notation named "Landau symbols", attributed mostly to Knuth — reframed
+:PROPERTIES:
+:LECTURE_REF: lec_02
+:CUSTOM_ID: lec02-c-landau-naming
+:END:
+Signal: "in analysis the things are called Landau symbols"
+
+*** Constant-time-per-line cost: CPU-cycle/cache elaboration of the RAM model — added
+:PROPERTIES:
+:LECTURE_REF: lec_02
+:CUSTOM_ID: lec02-c-cpu-cost-model
+:END:
+Signal: "this is only an assumption that needn't be true"
+
+* lec_03
+
+** A. Exam-tied (explicit)
+*** Proofs of Landau symbol properties (transitivity, reflexivity, symmetry, sum rule, product rule)
+:PROPERTIES:
+:LECTURE_REF: lec_03
+:CUSTOM_ID: lec03-a-landau-proofs
+:END:
+Signal: "they are possible small proofs for the exam"
+
+** B. Implicit emphasis (inferred)
+*** Naming existentially-quantified constants distinctly while reusing the universal $\epsilon$ in $o$-proofs
+:PROPERTIES:
+:LECTURE_REF: lec_03
+:CUSTOM_ID: lec03-b-existential-naming
+:END:
+Signal: "That's an important difference to understand."
+
+*** Meaning of "=" in a Landau-symbol equation (asymptotic enclosure, not literal equality)
+:PROPERTIES:
+:LECTURE_REF: lec_03
+:CUSTOM_ID: lec03-b-landau-equals-semantics
+:END:
+Signal: "this is basically an important notational abbreviation"
+
+** C. CLRS delta (inferred)
+*** "Proposition" numbering and statements — reframed
+:PROPERTIES:
+:LECTURE_REF: lec_03
+:CUSTOM_ID: lec03-c-proposition-numbering
+:END:
+Signal: "That's not a number that is used in the book."
+
+*** Invented relation-symbol notation $R \in \{O, \Omega, \Theta, o, \omega\}$ for proposition 3.4 — added
+:PROPERTIES:
+:LECTURE_REF: lec_03
+:CUSTOM_ID: lec03-c-r-notation
+:END:
+Signal: "I invent a new notation in order to abbreviate stuff."
+
+* lec_04
+
+** A. Exam-tied (explicit)
+*** Substitution method (proof by induction): never put $O$ or $\Theta$ in the induction hypothesis — use the explicit inequality with constants
+:PROPERTIES:
+:LECTURE_REF: lec_04
+:CUSTOM_ID: lec04-a-induction-no-asymptotic-hypothesis
+:END:
+Signal: "Also do it in the exam."
+The hypothesis must be written as e.g. $t(n) \le c\, n \lg n$ for explicit constants, not $t(n) = O(n \lg n)$; using the Landau form in the hypothesis makes the whole proof wrong even if the algebra is right.
+
+*** Master theorem (Theorem 4.1)
+:PROPERTIES:
+:LECTURE_REF: lec_04
+:CUSTOM_ID: lec04-a-master-theorem
+:END:
+Signal: "this is one of the theorems that might be for the exam"
+Let $a > 0$ and $b > 1$ be constants and $f(n)$ the driving function, with
+$$T(n) = a\, T(n/b) + f(n)$$
+(or the floor/ceiling form $T(n) = a' T(\lfloor n/b \rfloor) + a'' T(\lceil n/b \rceil) + f(n)$, $a' + a'' = a$). The watershed function is $n^{\log_b a}$. Then [reconstructed; ASR garbled, matches CLRS 4th-ed canonical form]:
+1. If $f(n) = O(n^{\log_b a - \epsilon})$ for some $\epsilon > 0$, then $T(n) = \Theta(n^{\log_b a})$. [reconstructed]
+2. If $f(n) = \Theta(n^{\log_b a} \lg^k n)$ for some $k \ge 0$, then $T(n) = \Theta(n^{\log_b a} \lg^{k+1} n)$. [reconstructed]
+3. If $f(n) = \Omega(n^{\log_b a + \epsilon})$ for some $\epsilon > 0$ and the regularity condition $a\, f(n/b) \le c\, f(n)$ holds for some constant $0 < c < 1$ and all large $n$, then $T(n) = \Theta(f(n))$. [reconstructed]
+
+** B. Implicit emphasis (inferred)
+*** Subtracting a lower-order term in the hypothesis (e.g. assume $t(n) \le cn - d$) to absorb stubborn $\Theta$ terms in substitution proofs
+:PROPERTIES:
+:LECTURE_REF: lec_04
+:CUSTOM_ID: lec04-b-subtract-lower-order-term
+:END:
+Signal: "adding a term of lower order in order to properly prove something"
+
+** C. CLRS delta (inferred)
+*** Book uses $(X-Y)(X+Y)=X^2-Y^2$ to motivate a matrix trick that fails (non-commutativity) — reframed
+:PROPERTIES:
+:LECTURE_REF: lec_04
+:CUSTOM_ID: lec04-c-book-error-difference-of-squares
+:END:
+Signal: "there's an error in the book because it uses the formula"
+
+* lec_05
+
+** B. Implicit emphasis (inferred)
+*** Comparing the driving function to the watershed function (selecting the case)
+:PROPERTIES:
+:LECTURE_REF: lec_05
+:CUSTOM_ID: lec05-b-compare-driving-watershed
+:END:
+Signal: "important, really important, is that you need to be able to compare"
+Watershed function:
+$$n^{\log_b a}.$$
+Three cases [reconstructed]:
+\begin{align*}
+\text{Case 1:}\quad & f(n) = O(n^{\log_b a - \epsilon}),\ \epsilon > 0 \;\Rightarrow\; T(n) = \Theta(n^{\log_b a}) \\
+\text{Case 2:}\quad & f(n) = \Theta(n^{\log_b a}\,\lg^k n),\ k \ge 0 \;\Rightarrow\; T(n) = \Theta(n^{\log_b a}\,\lg^{k+1} n) \\
+\text{Case 3:}\quad & f(n) = \Omega(n^{\log_b a + \epsilon}),\ \epsilon > 0 \;\Rightarrow\; T(n) = \Theta(f(n))
+\end{align*}
+
+*** Case 2 constant $k$ must be non-negative
+:PROPERTIES:
+:LECTURE_REF: lec_05
+:CUSTOM_ID: lec05-b-case2-k-nonneg
+:END:
+Signal: "It's important that this constant is non-negative"
+$k \ge 0$ in $f(n) = \Theta(n^{\log_b a}\,\lg^k n)$. [reconstructed]
+
+*** Big-O cannot be composed with arbitrary functions (only argument-substitution is valid)
+:PROPERTIES:
+:LECTURE_REF: lec_05
+:CUSTOM_ID: lec05-b-no-o-composition
+:END:
+Signal: "You cannot compose O's with functions. It's important to not do that."
+$f = O(g)$ does not imply $h(f(n)) = O(h(g(n)))$; only substitution into the argument (e.g. $n \rightarrow n/b^j$) is permitted. [reconstructed]
+
+*** Recurrences in the gaps / with imbalanced splits where the master theorem does not apply
+:PROPERTIES:
+:LECTURE_REF: lec_05
+:CUSTOM_ID: lec05-b-master-theorem-gaps
+:END:
+Signal: "none of the cases apply, we cannot use the master theorem at all"
+$$T(n) = 2T(n/2) + \frac{n}{\lg n} \;\Rightarrow\; T(n) = \Theta(n \lg\lg n)$$ (no case applies; falls in the gap between cases 1 and 2). Also: imbalanced $1/3$, $2/3$ split — outside the master theorem (handled later by Akra-Bazzi). [reconstructed]
+
+** C. CLRS delta (inferred)
+*** Master theorem proof restricted to the simple "continuous" version — proof-skipped
+:PROPERTIES:
+:LECTURE_REF: lec_05
+:CUSTOM_ID: lec05-c-continuous-version-only
+:END:
+Signal: "so-called continuous master theorem. So we'll only prove the simple version."
+Floors and ceilings dropped, $a, b$ treated as arbitrary reals (not required integers), and the $n_0$ base case initially ignored (set base case at $n \le 1$); the floor/ceiling rigor is not proved.
+
+* lec_06
+
+** A. Exam-tied (explicit)
+*** Polynomial growth condition (Akra-Bazzi regularity requirement)
+:PROPERTIES:
+:LECTURE_REF: lec_06
+:CUSTOM_ID: lec06-a-polynomial-growth-condition
+:END:
+Signal: "it is good that we learn for the exam what the polynomial growth condition is"
+Definition [reconstructed]:
+$$\exists\, n_0 \in \mathbb{N} \text{ s.t. } \forall \varphi \ge 1\ \exists\, d > 1 \text{ s.t. } \forall n \ge n_0,\ \forall \psi \in \left[ 1, \varphi \right]:\ \frac{f(n)}{d} \le f(\psi n) \le d\, f(n).$$
+
+** B. Implicit emphasis (inferred)
+*** Recognizing the polynomial growth condition in practice
+:PROPERTIES:
+:LECTURE_REF: lec_06
+:CUSTOM_ID: lec06-b-pgc-recognition
+:END:
+Signal: "what is important is that exponential functions don't"
+If $f(n) = \Theta(n^\alpha (\lg n)^\beta (\lg\lg n)^\gamma)$ for constants $\alpha, \beta, \gamma$, then $f$ satisfies the polynomial growth condition. Exponential and superexponential functions (e.g. $2^n$, $n!$) do NOT. [reconstructed]
+
+*** Ignoring floors/ceilings in Akra-Bazzi is only valid under the polynomial growth condition
+:PROPERTIES:
+:LECTURE_REF: lec_06
+:CUSTOM_ID: lec06-b-akra-bazzi-floor-ceiling-caution
+:END:
+Signal: "things start to go wrong here if you really ignore the floor and seal operations"
+Unlike the master theorem, dropping the rounding operations in an Akra-Bazzi recurrence requires $f$ to satisfy the polynomial growth condition first.
+
+*** Akra-Bazzi practical procedure — bracket $p$ rather than computing it
+:PROPERTIES:
+:LECTURE_REF: lec_06
+:CUSTOM_ID: lec06-b-akra-bazzi-p-procedure
+:END:
+Signal: "we don't need to calculate p in many cases"
+Often $p$ cancels, so only its location matters (e.g. $p < 1$ vs $p > 1$); compute it numerically (secant method) only when it does not cancel. Worked example: $T(n) = T(n/5) + T(7n/10) + n$; from $(1/5)^p + (7/10)^p = 1$, $p \approx 0.83978 < 1$ [reconstructed], so $T(n) = \Theta(n)$.
+
+** C. CLRS delta (inferred)
+*** General (floor/ceiling) master theorem — proof omitted
+:PROPERTIES:
+:LECTURE_REF: lec_06
+:CUSTOM_ID: lec06-c-general-master-theorem-unproved
+:END:
+Signal: "the proof of the general master theorem is very involved... that's why we've omitted that"
+Only the continuous version (Theorem 4.4, base case rescaled from $n_0$ to $1$ via $\tilde T(n) = T(n\,n_0)$) is proved; the version with floor/ceiling operations is stated but not proved.
+
+*** Akra-Bazzi recurrences via the polynomial growth condition — added / reframed
+:PROPERTIES:
+:LECTURE_REF: lec_06
+:CUSTOM_ID: lec06-c-akra-bazzi-added
+:END:
+Signal: "this leads us immediately to the section on Akra-Patsi recurrences"
+Generalization of master recurrences to unbalanced splits, $T(n) = f(n) + \sum_{i=1}^{k} a_i T(\lfloor n/b_i \rfloor) + \sum_{i=k+1}^{l} a_i T(\lceil n/b_i \rceil)$, framed through the polynomial growth condition (Leighton-style regularity). Integral-formula theorem (Theorem 4.6) stated without proof: unique $p > 0$ with $\sum_{i=1}^{l} a_i b_i^{-p} = 1$, then
+$$T(n) = \Theta\!\left( n^p \left( 1 + \int_1^n \frac{f(x)}{x^{p+1}}\, dx \right) \right).$$
+Signal: "We don't prove this one. This is just too much." [grounding, not a verbatim cue]
+
+* lec_07
+
+** B. Implicit emphasis (inferred)
+*** Polynomial growth condition — corrected quantifier order
+:PROPERTIES:
+:LECTURE_REF: lec_07
+:CUSTOM_ID: lec07-b-pgc-quantifier-order
+:END:
+Signal: "this is the correct polynomial growth condition, so this is the important thing"
+Flagged as must-know and tied to solving the exercise problems. The thing emphasized is the quantifier sequence (the book reversed it). Spoken order, reconstructed:
+$$\forall \phi > 1\ \exists d > 1\ \exists n_0\ \forall n \ge n_0\ \forall \psi \in \left[ 1, \phi \right]: \tfrac{1}{d} f(n) \ \ldots \quad \text{[reconstructed]}$$
+The inequality body was spoken incompletely (only "$\tfrac{1}{d} f(n)$" reached before he cut off); only the quantifier prefix is recoverable. Secondary cue: "you need to take this definition in order to solve many of the exercise problems."
+
+*** Quantifiers cannot be exchanged ($\forall \exists$ vs $\exists \forall$)
+:PROPERTIES:
+:LECTURE_REF: lec_07
+:CUSTOM_ID: lec07-b-quantifier-no-exchange
+:END:
+Signal: "probably now you remember for the rest of your lives, I cannot easily exchange quantifiers"
+Reinforced: "this is really forbidden." Illustrated with the $\exists w\, \forall m$ vs $\forall m\, \exists w$ love example.
+
+*** Randomization / data ordering as a core subject
+:PROPERTIES:
+:LECTURE_REF: lec_07
+:CUSTOM_ID: lec07-b-randomization-importance
+:END:
+Signal: "you have to understand that this is a very very important subject for you"
+Repeated across the optimizer/Adam analogy and the LLM-training-order argument; framed as important for algorithm design and for data science.
+
+*** Counting formula valid only under the uniform distribution
+:PROPERTIES:
+:LECTURE_REF: lec_07
+:CUSTOM_ID: lec07-b-uniform-counting-caveat
+:END:
+Signal: "this is only true if you have a uniform probability distribution"
+$P(A) = \tfrac{|\text{favourable}|}{|\Omega|}$ holds only when every singleton is equiprobable; emphasized as a thing teachers get wrong.
+
+** C. CLRS delta (inferred)
+*** Polynomial growth condition — book definition is wrong — reframed
+:PROPERTIES:
+:LECTURE_REF: lec_07
+:CUSTOM_ID: lec07-c-pgc-book-error
+:END:
+Signal: "they made the mistake of exchanging quantifiers"
+Explicit correction of the book's stated definition (book swaps the $\exists n_0$ and $\forall \phi$ quantifiers); lecture overrides the book here.
+
+*** Measure-theoretic probability foundations beyond Appendix C — added
+:PROPERTIES:
+:LECTURE_REF: lec_07
+:CUSTOM_ID: lec07-c-measure-theory-added
+:END:
+Signal: "C.0 doesn't feature in the book"
+Professor introduces $\sigma$-algebra (def. C.0.1), measure (def. C.0.2), probability space, Borel $\sigma$-algebra, Lebesgue measure — measure theory well past the book's elementary Appendix C; numbering C.0 invented to mark the prepended material. Stated as a "mix" of the book and his own framing ("not really correct enough for me").
+
+*** Crash course presented without proofs — proof-skipped
+:PROPERTIES:
+:LECTURE_REF: lec_07
+:CUSTOM_ID: lec07-c-crash-course-no-proofs
+:END:
+Signal: "I will do a crash course now, which will not prove anything"
+Full rigor explicitly deferred to the semester-3 probability course; this lecture states results only.
+
+*** Vitali non-measurable set construction (axiom of choice) — added
+:PROPERTIES:
+:LECTURE_REF: lec_07
+:CUSTOM_ID: lec07-c-vitali-nonmeasurable
+:END:
+Signal: "this we can only do if the axiom of choice is allowed" [grounding, not a verbatim cue]
+Construction of a non-measurable $V \subseteq \left[ 0,1 \right]$ via rational-difference equivalence classes, showing translation invariance + all-intervals-measurable cannot both hold for every subset; motivates the Lebesgue $\sigma$-algebra. Not CLRS material.
+* lec_08
+
+** B. Implicit emphasis (inferred)
+*** Pairwise vs. mutual independence are not the same
+:PROPERTIES:
+:LECTURE_REF: lec_08
+:CUSTOM_ID: lec08-b-pairwise-vs-mutual-independence
+:END:
+Signal: "important, these two are not the same"
+Reinforced: "this is a much stronger property being mutually independent." Worked two-coin counterexample given disproportionate time.
+$$\text{pairwise: } P(A_i \cap A_j) = P(A_i)\,P(A_j) \ \forall i \ne j$$
+$$\text{mutual: } P\!\left( \bigcap_i A_i \right) = \prod_i P(A_i)$$
+Counterexample ($A_1$: coin 1 heads, $A_2$: coin 2 heads, $A_3$: coins differ): all $P = \tfrac{1}{2}$, every pairwise product is $\tfrac{1}{4} = \tfrac{1}{2}\cdot\tfrac{1}{2}$, but $A_1 \cap A_2 \cap A_3 = \emptyset$, so $P = 0 \ne \tfrac{1}{8}$.
+
+*** Expected value is linear (always, regardless of dependence)
+:PROPERTIES:
+:LECTURE_REF: lec_08
+:CUSTOM_ID: lec08-b-expectation-linearity
+:END:
+Signal: "important, the expected value is linear"
+Explicitly contrasted against variance as holding "no matter how X and Y are related."
+$$E\!\left[ \alpha X + \beta Y \right] = \alpha\, E[X] + \beta\, E[Y]$$
+
+*** Variance additivity requires independence
+:PROPERTIES:
+:LECTURE_REF: lec_08
+:CUSTOM_ID: lec08-b-variance-additivity-independence
+:END:
+Signal: "for the variance this is not true, this is only true if they are independent"
+Flagged as "a big difference to the expected value."
+$$\operatorname{Var}(aX) = a^2 \operatorname{Var}(X), \qquad \operatorname{Var}(X+Y) = \operatorname{Var}(X) + \operatorname{Var}(Y) \ \text{only if } X, Y \text{ independent}$$
+
+*** Jensen's inequality
+:PROPERTIES:
+:LECTURE_REF: lec_08
+:CUSTOM_ID: lec08-b-jensen-inequality
+:END:
+Signal: "this is very important when you calculate expected values"
+For $g$ convex:
+$$E[g(X)] \ge g(E[X])$$
+
+** C. CLRS delta (inferred)
+*** Continuous distributions / density-function machinery beyond Appendix C — added
+:PROPERTIES:
+:LECTURE_REF: lec_08
+:CUSTOM_ID: lec08-c-continuous-distributions-added
+:END:
+Signal: "you will learn the others in the class next semester"
+Density functions, uniform/exponential/normal distributions, $P(A) = \int_A f\,dx$, the CDF, and the FTC link $f = F'$ are continuous/measure-theoretic content past the book's discrete Appendix C; presented as preview ("you will prove next year that the integral of this function is actually 1").
+
+*** Proofs omitted throughout — proof-skipped
+:PROPERTIES:
+:LECTURE_REF: lec_08
+:CUSTOM_ID: lec08-c-proofs-skipped
+:END:
+Signal: "proofs will be mostly next semester in the lecture course"
+Results stated only; full rigor deferred to the semester-3 probability course (continues the lec_07 pattern).
+
+*** Appendix C probability front-loaded before Chapter 5 — reordered
+:PROPERTIES:
+:LECTURE_REF: lec_08
+:CUSTOM_ID: lec08-c-appendixc-reordered
+:END:
+Signal: "just enough that we can do the next section in the book, which is chapter five" [grounding, not a verbatim cue]
+Appendix-C probability (back of the book) taught now as prerequisite for Chapter 5 (randomized algorithms), inverting the book's ordering.
+
+** Uncertain
+*** Proof-preparation hint (garbled)
+:PROPERTIES:
+:LECTURE_REF: lec_08
+:CUSTOM_ID: lec08-u-proof-prep-hint
+:END:
+Signal: "If you don't miss the proofs, be prepared for them still"
+ASR-garbled remark about proofs; ambiguous whether it signals expectations for this course's assessment or is a throwaway. Referent unclear.
+
+* lec_09
+
+** B. Implicit emphasis (inferred)
+
+*** Indicator random variable technique for expected value of binomial
+:PROPERTIES:
+:LECTURE_REF: lec_09
+:CUSTOM_ID: lec09-b-indicator-ev
+:END:
+Signal: "I think you should remember this technique"
+Decompose $X = X_1 + X_2 + \cdots + X_n$ where $X_i = 1$ iff experiment $i$ succeeds; then by linearity of expectation:
+$$E[X] = \sum_{i=1}^{n} E[X_i] = \sum_{i=1}^{n} p = np.$$
+[reconstructed]
+
+*** RANDOMLY-PERMUTE algorithm
+:PROPERTIES:
+:LECTURE_REF: lec_09
+:CUSTOM_ID: lec09-b-randomly-permute
+:END:
+Signal: "I think we can keep it in our memories, how it works"
+#+begin_example
+RANDOMLY-PERMUTE(A, n)
+for i = 1 to n
+    swap A[i] with A[RANDOM(i, n)]
+#+end_example
+
+*** Loop invariant probability claim for RANDOMLY-PERMUTE
+:PROPERTIES:
+:LECTURE_REF: lec_09
+:CUSTOM_ID: lec09-b-loop-inv-prob
+:END:
+Signal: "This is the important part. This is the important part."
+At the start of iteration $i$, every $(i-1)$-permutation of $A[1 \mathinner{.\,.} i-1]$ occurs with probability
+$$\frac{(n-i+1)!}{n!}.$$
+[reconstructed]
+
+** C. CLRS delta (inferred)
+
+*** Variance of geometric distribution — dropped (pushed to exercises)
+:PROPERTIES:
+:LECTURE_REF: lec_09
+:CUSTOM_ID: lec09-c-geom-variance
+:END:
+Signal: "Calculating the variance is something we can do in the exercises"
+
+** Uncertain
+
+*** RANDOMLY-PERMUTE loop invariant — maintenance step probability calculation cut off
+:PROPERTIES:
+:LECTURE_REF: lec_09
+:CUSTOM_ID: lec09-u-proof-cutoff
+:END:
+Signal: "of course, we do it tomorrow"
+
+* lec_10
+
+** A. Exam-tied (explicit)
+*** Always state loop termination in loop invariant proofs
+:PROPERTIES:
+:LECTURE_REF: lec_10
+:CUSTOM_ID: lec10-a-loop-termination
+:END:
+Signal: "don't forget that in the exam... say at least that the loop ends"
+
+** B. Implicit emphasis (inferred)
+*** RANDOMIZE-IN-PLACE: loop invariant, correctness proof, and running time
+:PROPERTIES:
+:LECTURE_REF: lec_10
+:CUSTOM_ID: lec10-b-randomize-in-place
+:END:
+Signal: "Remember that because this is an important algorithm"
+
+Loop invariant [reconstructed]: prior to iteration $i$, the subarray $A[1..i-1]$ contains an $(i-1)$ permutation drawn from $A$, and every such $(i-1)$ permutation appears with probability
+$$\frac{(n-i+1)!}{n!}.$$
+
+Maintenance [reconstructed]: let $E_1$ = "$A[1..i-1]$ holds a fixed $(i-1)$ permutation $\langle x_1,\ldots,x_{i-1}\rangle$"; let $E_2$ = "$x_i$ is chosen for $A[i]$ in iteration $i$." Since $E_1$ and $E_2$ are not independent:
+\begin{align*}
+\Pr[E_1 \cap E_2] &= \Pr[E_2 \mid E_1]\cdot\Pr[E_1] \\
+                  &= \frac{1}{n-i+1}\cdot\frac{(n-i+1)!}{n!} \\
+                  &= \frac{(n-i)!}{n!},
+\end{align*}
+which equals $\frac{(n-(i+1)+1)!}{n!}$, confirming the invariant for iteration $i+1$.
+
+Termination: at loop end $i = n+1$, so every permutation appears with probability $\frac{0!}{n!} = \frac{1}{n!}$.
+
+Running time: $O(n)$ (one pass; one random draw and one swap per step).
+
+*** BUILD-MAX-HEAP runs in O(n), not O(n lg n)
+:PROPERTIES:
+:LECTURE_REF: lec_10
+:CUSTOM_ID: lec10-b-build-heap-on
+:END:
+Signal: "definitely looks like it'd be n log n. And the point is, it isn't."
+
+Tool used in proof: MAX-HEAPIFY called at a node of height $h$ costs $O(h)$, i.e., $T(v) = O(h(v))$.
+
+Cost bound [reconstructed]:
+$$T(n) \le \sum_{h=0}^{\lfloor \lg n \rfloor} \left\lceil \frac{n}{2^{h+1}} \right\rceil \cdot O(h) \le cn\sum_{h=0}^{\lfloor \lg n \rfloor} \frac{h}{2^h}.$$
+
+Key identity (differentiate the geometric series $f(x) = \frac{1}{1-x/2}$ and evaluate at $x = 1$) [reconstructed]:
+$$\sum_{h=0}^{\infty}\frac{h}{2^h} = f'(1) = \frac{1/2}{(1/2)^{2}} = 2.$$
+
+Therefore $T(n) = O(n)$.
+
+*** Heap-as-array index arithmetic
+:PROPERTIES:
+:LECTURE_REF: lec_10
+:CUSTOM_ID: lec10-b-heap-index-arithmetic
+:END:
+Signal: "if you understand it once then you will see it forever"
+
+For node at index $i$ in a 1-indexed heap of size $n$ [reconstructed]:
+- Parent: $\lfloor i/2 \rfloor$
+- Left child: $2i$
+- Right child: $2i + 1$
+- Leaves: all nodes at index $i > \lfloor n/2 \rfloor$
+
+** C. CLRS delta (inferred)
+*** CPU memory architecture (stack pointer, heap space, garbage collection) — added
+:PROPERTIES:
+:LECTURE_REF: lec_10
+:CUSTOM_ID: lec10-c-memory-heap-added
+:END:
+Signal: "we will talk about the data structure heap and not about the memory organization heap"
+
+*** In-place vs. extra-space comparison as motivation for heap sort — added
+:PROPERTIES:
+:LECTURE_REF: lec_10
+:CUSTOM_ID: lec10-c-inplace-motivation
+:END:
+Signal: "there is a second important component in computer science which is memory space" [grounding, not a verbatim cue]
+
+Framing added: insertion sort is $O(n^2)$ time but in-place; merge sort is $\Theta(n \lg n)$ time but requires $\Theta(n)$ extra space. Motivating question posed: can we achieve $\Theta(n \lg n)$ time with $O(1)$ extra space? Heap sort is presented as the answer.
+
+*** MAX-HEAPIFY $\Theta(\lg n)$ recurrence — proof-skipped
+:PROPERTIES:
+:LECTURE_REF: lec_10
+:CUSTOM_ID: lec10-c-maxheapify-proof-skipped
+:END:
+Signal: "this is a homework to figure out whether this is really true"
+
+Recurrence [reconstructed]:
+$$T(n) \le T\!\left(\frac{2n}{3}\right) + \Theta(1).$$
+
+Result stated without in-lecture derivation: $T(n) = \Theta(\lg n)$ by the master theorem; proof assigned as homework.
+
+* lec_12
+
+** B. Implicit emphasis (inferred)
+*** Lemma 7.3: probability two elements are compared in randomized quicksort
+:PROPERTIES:
+:LECTURE_REF: lec_12
+:CUSTOM_ID: lec12-b-lemma73-comparison-probability
+:END:
+Signal: "this is the really important part of the whole proof"
+$$P(Z_i \text{ and } Z_j \text{ are compared}) = \frac{2}{j - i + 1}, \quad j > i.$$
+
+*** Theorem 7.4: expected running time of randomized quicksort
+:PROPERTIES:
+:LECTURE_REF: lec_12
+:CUSTOM_ID: lec12-b-theorem74-expected-runtime
+:END:
+Signal: "expected running time of randomized quicksort"
+Expected running time of randomized quicksort on an $n$ element array is $O(n \lg n)$. The same proof yields the average-case running time of (non-randomized) quicksort.
+
+*** Reduction of analysis to the expected number of comparisons
+:PROPERTIES:
+:LECTURE_REF: lec_12
+:CUSTOM_ID: lec12-b-reduce-to-E-X
+:END:
+Signal: "we have to calculate the expected value of x"
+Total work of quicksort is $O(n + X)$ where $X$ is the number of element comparisons (Lemma 7.1), so analyzing $E[X]$ analyzes the algorithm.
+
+*** Decision-tree leaves must cover all $n!$ permutations
+:PROPERTIES:
+:LECTURE_REF: lec_12
+:CUSTOM_ID: lec12-b-decision-tree-leaves
+:END:
+Signal: "the leaves have to represent all the permutation of our array"
+For any comparison sort, every permutation of $1, \dots, n$ must appear as a leaf of its decision tree, hence the tree has at least $n!$ leaves.
+
+*** Comparison-sort worst-case lower bound $\Omega(n \lg n)$
+:PROPERTIES:
+:LECTURE_REF: lec_12
+:CUSTOM_ID: lec12-b-comparison-sort-lower-bound
+:END:
+Signal: "you still should know that you cannot sort things faster than $n \lg n$"
+A binary tree of height $h$ has at most $2^h$ leaves, so $2^h \ge n!$ gives $h \ge \lg(n!) = \Theta(n \lg n)$ (Stirling). Hence any comparison sort has worst-case running time $\Omega(n \lg n)$, and merge sort, heap sort, and randomized quicksort (in expectation) are asymptotically optimal among comparison sorts.
+
+*** Counting sort exploits key-range information beyond comparisons
+:PROPERTIES:
+:LECTURE_REF: lec_12
+:CUSTOM_ID: lec12-b-counting-sort-extra-info
+:END:
+Signal: "this is important additional information"
+Knowing the keys lie in a bounded range $\{0, \dots, k\}$ supplies information that lets the algorithm sidestep the comparison-sort lower bound.
+
+*** Counting sort running time and stability via back-to-front placement
+:PROPERTIES:
+:LECTURE_REF: lec_12
+:CUSTOM_ID: lec12-b-counting-sort-bound-and-stability
+:END:
+Signal: "we will use this sorting mechanism for another sorting mechanism later"
+Counting sort runs in $\Theta(n + k)$ time, where $n$ is the input size and $k$ the key range; it is fast only when $k = O(n)$. Iterating the placement loop over the input from right to left preserves the original order on equal keys, making counting sort stable — a property the next lecture relies on for a chained sort.
+
+** C. CLRS delta (inferred)
+*** Lemma 7.2 (when elements are compared; no pair compared twice) — proof-skipped
+:PROPERTIES:
+:LECTURE_REF: lec_12
+:CUSTOM_ID: lec12-c-lemma72-proof-skipped
+:END:
+Signal: "proof I would say this is obvious"
+The professor declines to write out the proof, asserting it follows by inspection of the partition routine; CLRS gives an explicit (if short) argument.
+
+** Uncertain
+*** Stirling-based estimate of $\lg(n!)$
+:PROPERTIES:
+:LECTURE_REF: lec_12
+:CUSTOM_ID: lec12-u-stirling-calculation
+:END:
+Signal: "this is, by the way, not — you cannot really calculate like this, but we will do it nevertheless"
+The professor flags something irregular about the way Stirling's formula is being applied to derive $\lg(n!) = \Theta(n \lg n)$, but the precise caveat does not survive the ASR.
+
+* lec_13
+
+** B. Implicit emphasis (inferred)
+*** Stability of counting sort
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-b-counting-sort-stable
+:END:
+Signal: "a second very important property, which was it is a stable sorting algorithm"
+
+*** Radix sort processes digits from least-significant to most-significant
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-b-radix-lsd-first
+:END:
+Signal: "what is interesting, what works better... we start sorting them by the one-digit positions"
+
+*** Simultaneous minimum and maximum in $\frac{3n}{2}$ comparisons
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-b-min-max-3n-over-2
+:END:
+Signal: "we don't have to do a two n comparison, but we only have three n over two comparison"
+Pair the array into $n/2$ disjoint pairs; for each pair, do $1$ internal comparison (smaller vs larger), then $2$ comparisons against the running min and max. Total: $\frac{3n}{2}$ comparisons instead of $2n$.
+
+*** Randomized-Select — expected runtime analysis
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-b-randomized-select-effort
+:END:
+Signal: "Randomized Select... this is important"
+
+*** Lemma 9.1 — a partition is helpful with probability $\ge \frac{1}{2}$
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-b-lemma-9-1-helpful-partition
+:END:
+Signal: "a partition is helpful with probability greater or equal one half"
+Define iteration $j$ helpful if $|A_j| \le \frac{3}{4} |A_{j-1}|$. A partition is helpful whenever the pivot lies between the $\frac{n}{4}$-th and $\frac{3n}{4}$-th order statistics of $A_{j-1}$, which occurs with probability $\ge \frac{1}{2}$.
+
+*** Theorem 9.2 — expected runtime of Randomized-Select is $\Theta(n)$
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-b-theorem-9-2-rselect-theta-n
+:END:
+Signal: "the expected runtime of randomized select is theta of n"
+$$E[T(n)] = \Theta(n).$$
+Lower bound $\Omega(n)$ is trivial (each element must be inspected at least once; at least $n-1$ comparisons).
+
+** C. CLRS delta (inferred)
+*** Lemma 8.3 (radix sort correctness/runtime) — proof skipped
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-c-lemma-8-3-proof-skipped
+:END:
+Signal: "I don't write it to the blackboard because this is more or less obvious"
+
+*** Akra–Bazzi invoked for deterministic Select analysis — reframed
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-c-akra-bazzi-for-select
+:END:
+Signal: "we can use Akrabazzi then to show that this... has theta of n runtime"
+CLRS Ch. 9 uses the substitution method for the $T(n) = T(n/5) + T(7n/10) + O(n)$ recurrence; the lecture invokes Akra–Bazzi instead.
+
+*** Deterministic Select — second half deferred to next lecture (dropped here)
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-c-select-deferred
+:END:
+Signal: "we will discuss the remaining of the algorithm tomorrow" [grounding, not a verbatim cue]
+
+*** Radix sort framed via $B$-bit keys with $R$-bit radix — added concrete framing
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-c-radix-b-over-r-framing
+:END:
+Signal: "for sorting, e.g., 64-bit numbers, 4-bit radics, which means hexadecimal"
+Stated runtime: $\Theta\!\left(\frac{B}{R} \cdot n\right)$ [reconstructed].
+
+** Uncertain
+*** Upper bound on number of helpful partitions: $M \le \lfloor \log_{4/3} n \rfloor$
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-u-m-upper-bound
+:END:
+Signal: "we can have at most logarithm of four thirds of n rounded down helpful partitions"
+After $m$ helpful partitions $|A| \le \left(\frac{3}{4}\right)^m n$ [reconstructed]; setting this $< 1$ gives $m \le \log_{4/3} n$.
+
+*** Geometric-series finish of the $E[T(n)]$ derivation
+:PROPERTIES:
+:LECTURE_REF: lec_13
+:CUSTOM_ID: lec13-u-geometric-series-finish
+:END:
+Signal: "this is a geometric series... 2 n times 1 over 1 minus 3 quarters"
+With $X_k$ = gap between helpful partition $k$ and $k+1$, $E[X_k] \le 2$, so
+$$E[T(n)] \le \sum_{k=0}^{M-1} E[X_k] \cdot \left(\tfrac{3}{4}\right)^k n \le 2n \sum_{k \ge 0} \left(\tfrac{3}{4}\right)^k = \frac{2n}{1 - 3/4} = 8n.$$
+[reconstructed]
+* lec_14
+
+** B. Implicit emphasis (inferred)
+*** Theorem 9.3: SELECT worst-case runtime $\Theta(n)$
+:PROPERTIES:
+:LECTURE_REF: lec_14
+:CUSTOM_ID: lec14-b-select-worst-case
+:END:
+Signal: "this is really the runtime. This is a worst case runtime."
+SELECT computes the $i$ th order statistic in $\Theta(n)$ worst-case time. [reconstructed]
+
+*** SELECT deterministic vs RANDOMIZED-SELECT expected runtime
+:PROPERTIES:
+:LECTURE_REF: lec_14
+:CUSTOM_ID: lec14-b-deterministic-vs-randomized
+:END:
+Signal: "select is not a randomized algorithm because it does no random call anywhere inside the loop"
+
+*** While loop executes at most four times, costs $O(n)$ total
+:PROPERTIES:
+:LECTURE_REF: lec_14
+:CUSTOM_ID: lec14-b-while-loop-cost
+:END:
+Signal: "this loop, therefore, is executed at most four times"
+
+*** Line 16 recursive call on group medians: bound $T(n/5)$
+:PROPERTIES:
+:LECTURE_REF: lec_14
+:CUSTOM_ID: lec14-b-line16-recursion
+:END:
+Signal: "select... with an array that is only a fifth of the size"
+$$T_{\mathrm{line\,16}}(n) \le T(n/5)$$ [reconstructed]
+
+*** Blue/yellow/white region argument: guaranteed pivot lower bound
+:PROPERTIES:
+:LECTURE_REF: lec_14
+:CUSTOM_ID: lec14-b-pivot-regions
+:END:
+Signal: "everything in the blue part is definitely not bigger than X"
+
+** C. CLRS delta (inferred)
+*** While-loop pre-processing: strip elements until array length divisible by 5 — reframed
+:PROPERTIES:
+:LECTURE_REF: lec_14
+:CUSTOM_ID: lec14-c-while-loop-padding
+:END:
+Signal: "iterates the while loop until the remaining array... is a multiple of five" [grounding, not a verbatim cue]
+
+*** Interleaved grouping by spacing parameter $G$ (non-contiguous groups) — reframed
+:PROPERTIES:
+:LECTURE_REF: lec_14
+:CUSTOM_ID: lec14-c-interleaved-groups
+:END:
+Signal: "the spacing of two elements, which we consider to be in the same group, is G" [grounding, not a verbatim cue]
+
+** Uncertain
+*** Line 23/24 recursion size bound — analysis garbled and cut off
+:PROPERTIES:
+:LECTURE_REF: lec_14
+:CUSTOM_ID: lec14-u-line2324-recursion
+:END:
+Signal: "so what what we what we do is we remove it it it it"
+
+* lec_15
+
+** B. Implicit emphasis (inferred)
+*** Hash tables (flagged as a major topic)
+:PROPERTIES:
+:LECTURE_REF: lec_15
+:CUSTOM_ID: lec15-b-hash-tables-important
+:END:
+Signal: "this is a very important subject, this is hash tables"
+
+*** Average-case search in hashing with chaining
+:PROPERTIES:
+:LECTURE_REF: lec_15
+:CUSTOM_ID: lec15-b-chaining-search-runtime
+:END:
+Signal: "Search is theta of one plus alpha"
+Stated as Theorem 11.1 + 11.2; disproportionate time, full proof attempted on board. The flagged specific result:
+Under an independent uniform hash function, the average-case time of both successful and unsuccessful search in a hash table with chaining is
+$$\Theta(1 + \alpha),$$
+where $\alpha = n/m$ is the load factor.
+
+*** Insert/delete vs. search tradeoff governs data-structure choice
+:PROPERTIES:
+:LECTURE_REF: lec_15
+:CUSTOM_ID: lec15-b-insert-delete-vs-search-tradeoff
+:END:
+Signal: "the balance between these operations usually determines which data structure you need to use"
+Hammered structurally across array (search $\Theta(\lg n)$, insert/delete $\Theta(n)$), unordered/ordered doubly linked list (insert/delete $\Theta(1)$, search $\Theta(n)$), and chaining.
+
+*** Independent uniform hash function — the consistency requirement
+:PROPERTIES:
+:LECTURE_REF: lec_15
+:CUSTOM_ID: lec15-b-iuhf-consistency
+:END:
+Signal: "And repeat it. This is important."
+
+*** Quality of the hash function is the primary concern
+:PROPERTIES:
+:LECTURE_REF: lec_15
+:CUSTOM_ID: lec15-b-good-hash-functions-priority
+:END:
+Signal: "producing good hash functions is the first thing you have to think about"
+
+** C. CLRS delta (inferred)
+*** Array index range $0$ to $m-1$ — reframed
+:PROPERTIES:
+:LECTURE_REF: lec_15
+:CUSTOM_ID: lec15-c-zero-indexing
+:END:
+Signal: "the book is using 1 to M, but not here anymore"
+Lecture adopts $0$ to $m-1$ indexing explicitly against the textbook's $1$ to $m$.
+
+*** Independent-uniform hashing labelled "universal" — reframed
+:PROPERTIES:
+:LECTURE_REF: lec_15
+:CUSTOM_ID: lec15-c-iuhf-universal-conflation
+:END:
+Signal: "independent uniform hash functions are what we call universal"
+Lecture equates "independent uniform" with "universal" (collision probability $\le 1/m$), collapsing CLRS's separation of the independent-uniform idealization from universal hashing. [grounding, not a verbatim cue]
+
+** Uncertain
+*** Successful-search proof via indicator random variables
+:PROPERTIES:
+:LECTURE_REF: lec_15
+:CUSTOM_ID: lec15-u-successful-search-proof
+:END:
+Signal: "we use an indicator random variable to describe that"
+ASR degrades into fragments at lecture end; the indicator variable $X_{ijq}$ and its stated expectation ($1/(n m^2)$, likely garbled/misspoken) cannot be transcribed faithfully, but the proof technique plausibly matters.
+
+* lec_16
+
+** B. Implicit emphasis (inferred)
+*** Chaining search proof completed: $\Theta(1 + \alpha)$
+:PROPERTIES:
+:LECTURE_REF: lec_16
+:CUSTOM_ID: lec16-b-chaining-proof-complete
+:END:
+Signal: "that is what we need to know about hashing with chaining"
+Finishes the successful-search proof begun in lec_15 via indicator variables $X_{ijq}$, $Y_j$, $Z$; concludes expected comparisons $= 1 + \frac{n-1}{2m} = \Theta(1 + \alpha)$.
+
+*** Construction of a universal hash family (Theorem 11.4)
+:PROPERTIES:
+:LECTURE_REF: lec_16
+:CUSTOM_ID: lec16-b-universal-family
+:END:
+Signal: "we want to construct a universal family of hash functions"
+Disproportionate time + worked example ($p=17$, $h_{3,4}(8)=5$). Flagged construction:
+Pick prime $p$ greater than all keys, $a \in \mathbb{Z}_p^*$, $b \in \mathbb{Z}_p$. Then
+$$h_{a,b}(k) = ((a k + b) \bmod p) \bmod m,$$
+and the family $\mathcal{H}_{p,m} = \{h_{a,b}\}$ of size $p(p-1)$ is universal.
+
+*** Double hashing as the dominant open-addressing scheme
+:PROPERTIES:
+:LECTURE_REF: lec_16
+:CUSTOM_ID: lec16-b-double-hashing
+:END:
+Signal: "the most frequent hash table ... is called double hashing"
+Probe sequence with two auxiliary functions:
+$$h(k,i) = (h_1(k) + i \, h_2(k)) \bmod m, \quad i = 0, \dots, m-1.$$
+Linear probing is the special case $h_2(k) = 1$.
+
+*** Open-addressing probe bounds depend on $\alpha$, not $n$
+:PROPERTIES:
+:LECTURE_REF: lec_16
+:CUSTOM_ID: lec16-b-open-addressing-bounds
+:END:
+Signal: "maybe this is the most important thing about these results, they don't depend on n"
+Strongest emphasis in the lecture. Flagged results (Thm 11.6 / Cor 11.7 / Thm 11.8):
+Unsuccessful search and insertion: expected probes $O\!\left(\frac{1}{1-\alpha}\right)$.
+Successful search: expected probes $\le \frac{1}{\alpha} \ln \frac{1}{1-\alpha}$.
+
+*** Probe sequence must cover all slots (relative-primality caveat)
+:PROPERTIES:
+:LECTURE_REF: lec_16
+:CUSTOM_ID: lec16-b-probe-coprime
+:END:
+Signal: "you have to make sure that these are somehow relatively prime to each other"
+If $h_2(k)$ and $m$ share a factor, the probe sequence cycles early and misses free slots before the table is full.
+
+*** Field caveat for $\mathbb{Z}_p$ (prerequisite, flagged from past exams)
+:PROPERTIES:
+:LECTURE_REF: lec_16
+:CUSTOM_ID: lec16-b-field-caveat
+:END:
+Signal: "just remember that for the future"
+Stresses that in a field only nonzero elements have multiplicative inverses, and $1 \ne 0$ (at least two elements); cited as a recurring error in prior exams.
+
+** C. CLRS delta (inferred)
+*** Open-addressing deletion algorithm — added (not in the book)
+:PROPERTIES:
+:LECTURE_REF: lec_16
+:CUSTOM_ID: lec16-c-delete-not-in-book
+:END:
+Signal: "This algorithm, I think, is not in the book."
+Professor's preferred delete: run to the end of the probe run, copy the last occupied element into the slot being deleted, set the last to nil — declared better than the book's tombstone approach and explicitly "important to know."
+
+*** Proofs skipped across §11.3–11.4 — proof-skipped
+:PROPERTIES:
+:LECTURE_REF: lec_16
+:CUSTOM_ID: lec16-c-proofs-skipped
+:END:
+Signal: "that's why I skipped all of the proofs"
+Cor. 11.3 (universal-family expected runtime), Thm 11.4 (family universal), and the open-addressing theorems 11.6 / 11.7 / 11.8 are all stated without proof.
+
+*** Crypto hashing for arbitrary-length strings — reframed against the book
+:PROPERTIES:
+:LECTURE_REF: lec_16
+:CUSTOM_ID: lec16-c-crypto-hash-advice
+:END:
+Signal: "I would not do that because they're really slow"
+The book mentions cryptographic hashes for hashing arbitrary-length strings; the lecture advises against it (too slow) and prefers iterative multiply-mod constructions.
+
+* lec_17
+
+** B. Implicit emphasis (inferred)
+
+*** Three pointers per node (left, right, parent)
+:PROPERTIES:
+:LECTURE_REF: lec_17
+:CUSTOM_ID: lec17-b-three-pointers
+:END:
+Signal: "we will need all the three pointers... not only the children, but also the parents"
+Node fields: $\{\text{key}, \text{left}, \text{right}, \text{parent}\}$.
+
+*** All BST operations run in $\Theta(h)$; minimize height
+:PROPERTIES:
+:LECTURE_REF: lec_17
+:CUSTOM_ID: lec17-b-theta-h-height
+:END:
+Signal: "as I've iterated it 70 million times now... the height of the tree is as small as possible"
+Theorem 12.2: SEARCH, MINIMUM, MAXIMUM, SUCCESSOR, PREDECESSOR run in $\Theta(h)$.
+Theorem 12.3: INSERT and DELETE run in $\Theta(h)$.
+With optimal height $h = \Theta(\lg n)$, all operations run in $\Theta(\lg n)$.
+
+*** Deletion via successor (successor has no left child)
+:PROPERTIES:
+:LECTURE_REF: lec_17
+:CUSTOM_ID: lec17-b-delete-successor
+:END:
+Signal: "the successor of the node cannot have a left child"
+
+*** Successor's two cases — flagged as a common stumbling point
+:PROPERTIES:
+:LECTURE_REF: lec_17
+:CUSTOM_ID: lec17-b-successor-cases
+:END:
+Signal: "this is sometimes one of the first hurdles in understanding trees"
+
+*** Tree operations implemented iteratively, not recursively
+:PROPERTIES:
+:LECTURE_REF: lec_17
+:CUSTOM_ID: lec17-b-iterative
+:END:
+Signal: "just remember that many of the tree operations actually work by doing iterative approaches"
+
+*** Red-black tree properties (esp. black-height equality, property 5)
+:PROPERTIES:
+:LECTURE_REF: lec_17
+:CUSTOM_ID: lec17-b-rb-properties
+:END:
+Signal: "every simple path from any node going down to a nil contains the same number of black nodes"
+1. Every node is red or black.
+2. The root is black.
+3. Every leaf (nil) is black.
+4. If a node is red, both children are black (no two reds in succession).
+5. Every simple path from a node down to a descendant nil has the same number of black nodes.
+Consequence (4 + 5): the longest root-to-leaf path is at most $2\times$ the shortest.
+
+** C. CLRS delta (inferred)
+
+*** Open-addressing deletion + cache motivation for linear probing — added/reframed
+:PROPERTIES:
+:LECTURE_REF: lec_17
+:CUSTOM_ID: lec17-c-linear-probing-cache
+:END:
+Signal: "it's only true for very special double hash functions" [grounding, not a verbatim cue]
+Correction to prior lecture: the "follow to end, copy last element back" deletion is valid only for constant-step probing (he calls it "linear hashing"), not general double hashing, which needs delete markers; motivated by CPU-cache locality.
+
+*** Sentinel T.nil + re-entrancy / thread-safety / shared-library tangent — added
+:PROPERTIES:
+:LECTURE_REF: lec_17
+:CUSTOM_ID: lec17-c-reentrancy-sentinel
+:END:
+Signal: "if we use the sentinel... this does make the red-black tree implementation not re-entrant"
+* lec_18
+
+** B. Implicit emphasis (inferred)
+
+*** Lemma 13.1: RB-tree height bound, hence all operations $O(\lg n)$
+:PROPERTIES:
+:LECTURE_REF: lec_18
+:CUSTOM_ID: lec18-b-lemma-height
+:END:
+Signal: "its height... at most two times the LG of n plus one"
+Lemma 13.1: a red-black tree with $n$ internal nodes has height
+$$h \le 2\lg(n+1).$$
+Proof: the subtree at $x$ has $\ge 2^{bh(x)} - 1$ internal nodes (induction on the height of $x$); since at least half of any root-to-leaf path is black, $bh(\text{root}) \ge h/2$.
+Consequence: SEARCH, MINIMUM, MAXIMUM, SUCCESSOR, PREDECESSOR run in $O(\lg n)$.
+
+*** Rotations preserve the BST property
+:PROPERTIES:
+:LECTURE_REF: lec_18
+:CUSTOM_ID: lec18-b-rotations-bst
+:END:
+Signal: "All the rotations make sure that the binary search tree property stays as it is"
+LEFT-ROTATE and RIGHT-ROTATE are mutual inverses; $\Theta(1)$ pointer rewiring; fringe cases are nil children and the rotated node being the root.
+
+*** RIGHT-ROTATE is the first exercise on the new sheet (must implement)
+:PROPERTIES:
+:LECTURE_REF: lec_18
+:CUSTOM_ID: lec18-b-right-rotate-exercise
+:END:
+Signal: "right rotate will be the first exercise of the new sheet"
+
+*** RB-INSERT: new node colored red; only properties 2 or 4 can break
+:PROPERTIES:
+:LECTURE_REF: lec_18
+:CUSTOM_ID: lec18-b-insert-red-violations
+:END:
+Signal: "if we insert the node and make it red, we don't change that property"
+Ordinary BST insert, with the comparison against the sentinel $T.nil$ instead of plain nil; the new node is colored red so property 5 (black-height) is preserved. Only property 2 (root red) or property 4 (two reds in succession) can be violated, never both.
+
+*** RB-INSERT-FIXUP — three cases by uncle color
+:PROPERTIES:
+:LECTURE_REF: lec_18
+:CUSTOM_ID: lec18-b-fixup-cases
+:END:
+Signal: "If the uncle of the node is red, it's easy. We just change colors"
+Assume the parent is a left child (right is symmetric: 6 cases, prove 3).
+- Case 1 — uncle red: recolor parent and uncle black, grandparent red; move $z$ up to the grandparent.
+- Case 2 — uncle black, $z$ a right child: left-rotate at the parent to reduce to case 3.
+- Case 3 — uncle black, $z$ a left child: recolor parent black and grandparent red; right-rotate at the grandparent.
+
+*** RB-INSERT-FIXUP correctness via loop invariant
+:PROPERTIES:
+:LECTURE_REF: lec_18
+:CUSTOM_ID: lec18-b-fixup-invariant
+:END:
+Signal: "if any red black property is violated, it is either property two... or property four"
+Three-part invariant: (1) $z$ is red; (2) if $z.p$ is the root, then $z.p$ is black; (3) if any RB property is violated, it is exactly one of property 2 (root black) or property 4 (no two adjacent reds), never both.
+
+*** RB-INSERT runs in $O(\lg n)$
+:PROPERTIES:
+:LECTURE_REF: lec_18
+:CUSTOM_ID: lec18-b-insert-runtime
+:END:
+Signal: "every while iteration moves our point up by at least one"
+Each fixup iteration moves $z$ up at least one level and does $\Theta(1)$ work (at most two rotations plus recoloring); total $O(\lg n)$.
+
+* lec_19
+
+** B. Implicit emphasis (inferred)
+*** Property 5 (black-height) must never be violated
+:PROPERTIES:
+:LECTURE_REF: lec_19
+:CUSTOM_ID: lec19-b-property-five-invariant
+:END:
+Signal: "We never ever want to violate five because this is something we cannot easily repair."
+Reason given: checking property 5 means traversing every root-to-leaf path (exponentially many) — too expensive. The whole delete-fixup design is organized around never breaking it.
+
+*** Double-color device (red-black / black-black)
+:PROPERTIES:
+:LECTURE_REF: lec_19
+:CUSTOM_ID: lec19-b-double-color-device
+:END:
+Signal: "we replace violating five with violating one, so we introduce new colors."
+Transcribed semantics:
+- A *black-black* node counts as $2$ blacks when a path passes through it (black, plus one extra).
+- A *red-black* node is red in the tree but counts as $1$ black when traversed.
+After removing a black node, the replacing child $x$ absorbs the missing black (becomes black-black if it was black, red-black if it was red), restoring property 5 at the cost of property 1.
+
+*** RB-DELETE-FIXUP four-case structure
+:PROPERTIES:
+:LECTURE_REF: lec_19
+:CUSTOM_ID: lec19-b-fixup-four-cases
+:END:
+Signal: "case one is the sibling is red and the other cases the sibling is black."
+Transcribed case map (stated for $x$ = left child; right-child branch is the mirror image, see C):
+- Case 1: sibling $w$ red $\rightarrow$ rotate + recolor to *reduce* to case 2/3/4 (does not terminate).
+- Case 2: $w$ black, both children of $w$ black $\rightarrow$ recolor, push the extra black up to the parent, continue from there.
+- Case 3: $w$ black, near child red / far child black $\rightarrow$ rotate to *reduce* to case 4.
+- Case 4: $w$ black, far child red $\rightarrow$ rotate + recolor, *terminates*; extra black is discharged, loop ends (new problem node at most the root).
+
+*** Color bookkeeping in RB-DELETE: y-original-color and x
+:PROPERTIES:
+:LECTURE_REF: lec_19
+:CUSTOM_ID: lec19-b-color-bookkeeping
+:END:
+Signal: "this was the first important step to understanding delete."
+Transcribed semantics:
+- $y$ = the node actually removed from the tree (for the two-children case, the successor, not $z$).
+- y-original-color = the color removed from the tree; fixup runs only if it was black (line 21).
+- $x$ = the (only) child that moves into $y$'s old position — where the tree "continues" and where the extra black sits.
+For the two-children case, line 20 copies $z$'s color onto $y$, so colors change in exactly one place.
+
+*** Correctness of property 5 shown by path-black-count bookkeeping
+:PROPERTIES:
+:LECTURE_REF: lec_19
+:CUSTOM_ID: lec19-b-counting-proof
+:END:
+Signal: "that it stays correct is something we just did by counting."
+Each case was verified by counting black nodes on every path through $\alpha,\beta,\gamma,\delta,\epsilon,\zeta$ before and after the transformation and checking the counts are unchanged.
+
+*** Delete runs in $O(\lg n)$
+:PROPERTIES:
+:LECTURE_REF: lec_19
+:CUSTOM_ID: lec19-b-delete-logn
+:END:
+Signal: "after at most three rotations, we are at least one level up."
+Transcribed bound: fixup performs at most $3$ rotations total over the whole call; case 2 may recolor repeatedly moving up by $\ge 1$ level per step, so the loop is bounded by the tree height. With height $O(\lg n)$, delete is $O(\lg n)$.
+
+*** Work delete by hand on a small tree
+:PROPERTIES:
+:LECTURE_REF: lec_19
+:CUSTOM_ID: lec19-b-practice-by-hand
+:END:
+Signal: "almost the only way to really grasp what happens."
+Explicit directive: draw a small tree, delete nodes hitting each case, and step through the algorithm recoloring by hand.
+
+** C. CLRS delta (inferred)
+*** RB-DELETE-FIXUP shown for one symmetric half only — dropped
+:PROPERTIES:
+:LECTURE_REF: lec_19
+:CUSTOM_ID: lec19-c-fixup-half-only
+:END:
+Signal: "I don't have to show you the whole algorithm but only half of it."
+Only the $x$-is-left-child branch is presented; the right-child branch (left/right swapped throughout) is asserted as the mirror image rather than walked through. CLRS gives the full pseudocode.
+
+*** AVL trees as alternative balanced BST — added
+:PROPERTIES:
+:LECTURE_REF: lec_19
+:CUSTOM_ID: lec19-c-avl-mention
+:END:
+Signal: "There are also other guaranteed logarithmic height trees, like AVL trees."
+Brief comparative aside (AVL "work a bit differently"; red-black claimed usually most efficient), beyond the main CLRS red-black chapter text.
+
+*** Real-world implementation note — added
+:PROPERTIES:
+:LECTURE_REF: lec_19
+:CUSTOM_ID: lec19-c-implementation-note
+:END:
+Signal: "they're implemented in the GNU C standard or C++ standard library."
+Also attributed to Java maps; framed as the most widely used search tree today. Enrichment not in CLRS.
+
+* lec_20
+
+** B. Implicit emphasis (inferred)
+*** Optimal substructure of rod cutting
+:PROPERTIES:
+:LECTURE_REF: lec_20
+:CUSTOM_ID: lec20-b-optimal-substructure
+:END:
+Signal: "a problem that has these properties called subproblem optimal."
+(Professor's term "subproblem optimal" = CLRS "optimal substructure"; phrasing variance only, not flagged as a deviation.) An optimal cut of length $n$ contains optimal cuts of its sub-pieces, so only optimal subproblem values matter. Central recurrence (with $c_k$ = price of a piece of length $k$):
+$$r_n = \max_{1 \le k \le n}\bigl(c_k + r_{n-k}\bigr), \qquad r_0 = 0.$$
+
+*** Overlapping subproblems (the DP insight)
+:PROPERTIES:
+:LECTURE_REF: lec_20
+:CUSTOM_ID: lec20-b-overlapping-subproblems
+:END:
+Signal: "we have done a lot of computations many times in a row."
+The naive recursive CUT-ROD recomputes the same subproblems repeatedly (the recursion tree enumerates every cut), so it is still $\Theta(2^{n})$. The fix is to remember already-computed subproblem results; for length $n$ only the values $r_0,\dots,r_{n}$ are ever needed.
+
+*** Memoized (top-down) and bottom-up both run in $\Theta(n^2)$
+:PROPERTIES:
+:LECTURE_REF: lec_20
+:CUSTOM_ID: lec20-b-memoization-bottomup-nsquared
+:END:
+Signal: "it's quadratic if you do it better but it's exponential if you do it bad."
+Top-down memoization initializes $R[0..n]$ to $-\infty$ (sentinel for "not yet computed", valid since prices are non-negative) and returns a stored value if present. Bottom-up fills $R$ for lengths $1$ to $n$ with a nested loop. Both visit $\sum_{k=0}^{n} k = \tfrac{n(n-1)}{2}$ subproblem-work units $\Rightarrow \Theta(n^2)$, versus $\Theta(2^n)$ for naive recursion.
+
+*** Brute-force enumeration is exponential
+:PROPERTIES:
+:LECTURE_REF: lec_20
+:CUSTOM_ID: lec20-b-bruteforce-exponential
+:END:
+Signal: "you will never, ever, ever finish that stuff if you have length 50."
+A rod of length $L$ has $L-1$ cut positions, each cut-or-not, giving $2^{L-1}$ ways to cut (e.g. $L=10 \Rightarrow 2^9 = 512$). Heavily emphasized as intractable.
+
+*** Reconstructing the actual cuts, not just the optimal value
+:PROPERTIES:
+:LECTURE_REF: lec_20
+:CUSTOM_ID: lec20-b-reconstruct-solution
+:END:
+Signal: "I forgot an important thing actually before we go there."
+The value function returns only the optimal revenue, not where to cut. Store the first-cut length in an auxiliary array $s[1..n]$ (update $s[j] = k$ whenever a larger candidate $p = c_k + r_{j-k}$ is found). Recover the cuts:
+#+begin_example
+PRINT-CUT-ROD-SOLUTION(r, s, L)
+    while L > 0
+        print s[L]
+        L = L - s[L]
+#+end_example
+
+*** "Dynamic programming" — name and definition
+:PROPERTIES:
+:LECTURE_REF: lec_20
+:CUSTOM_ID: lec20-b-dynamic-programming-definition
+:END:
+Signal: "the word programming in dynamic programming is not about proper programming."
+"Programming" here means solving an optimization problem, not writing code (hence also linear/quadratic/nonlinear programming). The method = solving an optimization problem by reusing optimal subproblem solutions.
+
+*** Optimization problem formulation
+:PROPERTIES:
+:LECTURE_REF: lec_20
+:CUSTOM_ID: lec20-b-optimization-formulation
+:END:
+Signal: "a very, very important part of data science, which is optimization."
+Standard form: objective $f$, variables (controllable) vs constants (fixed), and constraints, written
+$$\min f(x) \quad \text{s.t.} \quad g(x) \le 0,\; h(x) = 0,$$
+with $f:\mathbb{R}^n \rightarrow \mathbb{R}$, $g:\mathbb{R}^n \rightarrow \mathbb{R}^m$ (componentwise $\le 0$). Max/min interchangeable via $\max f = -\min(-f)$. Variable types: continuous, integer, and categorical (finite unordered set, e.g. engine choice).
+
+*** Matrix-chain multiplication — motivation (next week)
+:PROPERTIES:
+:LECTURE_REF: lec_20
+:CUSTOM_ID: lec20-b-matrix-chain-motivation
+:END:
+Signal: "just by choosing the wrong sequence so this is an optimization problem."
+Multiplying a $P \times Q$ by a $Q \times R$ matrix costs $P \cdot Q \cdot R$ scalar multiplications. Parenthesization (associative, not commutative) changes total cost drastically: for $A_1 (10{\times}100), A_2 (100{\times}5), A_3 (5{\times}50)$, $(A_1 A_2)A_3 = 7500$ vs $A_1(A_2 A_3) = 75000$ — factor $10$. (Four matrices: $5$ parenthesizations.) Full algorithm deferred to next lecture.
+
+** C. CLRS delta (inferred)
+*** General optimization framework prepended — added
+:PROPERTIES:
+:LECTURE_REF: lec_20
+:CUSTOM_ID: lec20-c-optimization-framework-added
+:END:
+Signal: "this is what optimization is about in Maths."
+The CLRS DP chapter opens directly on rod cutting; this lecture first builds a general optimization taxonomy (objective/constraints, continuous/integer/categorical variables, discrete-vs-continuous split) not present in that chapter.
+
+*** Extended etymology of "programming" — added
+:PROPERTIES:
+:LECTURE_REF: lec_20
+:CUSTOM_ID: lec20-c-dp-etymology-added
+:END:
+Signal: "solving optimization problems first algorithmically was basically invented for the American military."
+Goes beyond CLRS's brief note: traces "programming" to 1950s US military logistics, lists linear/quadratic/nonlinear programming, and notes the German name for the field translates as "dynamic optimization" rather than "programming".
+
+* lec_21
+
+** B. Implicit emphasis (inferred)
+*** Conditions for applying dynamic programming: optimal substructure and division into independent subproblems
+:PROPERTIES:
+:LECTURE_REF: lec_21
+:CUSTOM_ID: lec21-b-dp-conditions
+:END:
+Signal: "this is the first thing you have to do, you have to know"
+
+*** Longest simple path lacks optimal substructure (contrast with shortest path)
+:PROPERTIES:
+:LECTURE_REF: lec_21
+:CUSTOM_ID: lec21-b-longest-path-no-optimal-substructure
+:END:
+Signal: "the interesting question is ... does this have optimal substructure"
+
+** C. CLRS delta (inferred)
+*** Structural induction as construction principle for well-formed parenthesizations — added
+:PROPERTIES:
+:LECTURE_REF: lec_21
+:CUSTOM_ID: lec21-c-structural-induction
+:END:
+Signal: "this is called structural induction ... however, we don't need it now"
+
+*** Exponential blow-up of naive recursive matrix-chain (Catalan number) — proof-skipped
+:PROPERTIES:
+:LECTURE_REF: lec_21
+:CUSTOM_ID: lec21-c-recursion-bound-proof-skipped
+:END:
+Signal: "Otherwise, I don't prove it."
+
+* lec_22
+
+** B. Implicit emphasis (inferred)
+*** Optimal-substructure check as the first step before attempting dynamic programming
+:PROPERTIES:
+:LECTURE_REF: lec_22
+:CUSTOM_ID: lec22-b-dp-optimal-substructure-check
+:END:
+Signal: "this is the important first step, you have to check ... whether it's sub-problem optimal"
+
+*** Non-uniform access frequencies make a balanced BST suboptimal (motivation for optimal BST)
+:PROPERTIES:
+:LECTURE_REF: lec_22
+:CUSTOM_ID: lec22-b-optimal-bst-nonuniform-frequency
+:END:
+Signal: "you want to have the frequent ones on top of the search tree"
+
+** C. CLRS delta (inferred)
+*** Theorem 14.1 (LCS optimal substructure), part 1 — incorrect in CLRS, corrected in lecture — reframed
+:PROPERTIES:
+:LECTURE_REF: lec_22
+:CUSTOM_ID: lec22-c-lcs-theorem-error
+:END:
+Signal: "we found an error in the book"
+Corrected statement. Let $X = \langle x_1, \ldots, x_m \rangle$, $Y = \langle y_1, \ldots, y_n \rangle$, and let $Z = \langle z_1, \ldots, z_k \rangle$ be an LCS of $X$ and $Y$.
+1. (corrected) If $x_m = y_n$, then $z_k = x_m = y_n$, and an LCS of $X_{m-1}$ and $Y_{n-1}$ has length $k-1$ or $k$; in the length-$(k-1)$ case $Z_{k-1}$ is such an LCS.
+2. If $x_m \ne y_n$ and $z_k \ne x_m$, then $Z$ is an LCS of $X_{m-1}$ and $Y$.
+3. If $x_m \ne y_n$ and $z_k \ne y_n$, then $Z$ is an LCS of $X$ and $Y_{n-1}$.
+CLRS part 1 asserts only that $Z_{k-1}$ is an LCS of $X_{m-1}$ and $Y_{n-1}$ (length $k-1$); the professor disproved this with an explicit counterexample (exact strings garbled in the transcript) where the prefixes' LCS has length $k$. The book's proof of part 1 is wrong, but the LCS-LENGTH algorithm is still correct because it fills the table in row-major order rather than via the stated recursion.
+
+* lec_24
+
+** B. Implicit emphasis (inferred)
+*** B-trees (upcoming) — flagged as the most important tree structure
+:PROPERTIES:
+:LECTURE_REF: lec_24
+:CUSTOM_ID: lec24-b-btrees-most-important
+:END:
+Signal: "B-trees are probably the most important trees among all of them nowadays in data science"
+
+*** Huffman optimal-substructure cost relation
+:PROPERTIES:
+:LECTURE_REF: lec_24
+:CUSTOM_ID: lec24-b-huffman-optimal-substructure
+:END:
+Signal: "this is the most important thing... tells us that this has to be optimal"
+$$B(T) = B(T') + f(x) + f(y).$$
+
+*** Huffman cost function (objective minimized)
+:PROPERTIES:
+:LECTURE_REF: lec_24
+:CUSTOM_ID: lec24-b-huffman-cost-function
+:END:
+Signal: "the height of the node is the important factor here"
+$$B(T) = \sum_{c \in C} f(c)\, d_T(c).$$
+[reconstructed]
+
+*** 0-1 vs fractional knapsack — flagged as a frequent problem class
+:PROPERTIES:
+:LECTURE_REF: lec_24
+:CUSTOM_ID: lec24-b-knapsack-problem-class
+:END:
+Signal: "this is a problem class you will encounter very often"
+
+*** Augmenting data structures with new functionality
+:PROPERTIES:
+:LECTURE_REF: lec_24
+:CUSTOM_ID: lec24-b-augmenting-data-structures
+:END:
+Signal: "this is something you will face more frequently than you think"
+
+** C. CLRS delta (inferred)
+*** Amortized analysis (CLRS ch. 16) — reordered (jumps greedy ch.15 -> augmenting data structures ch.17, skipping 16)
+:PROPERTIES:
+:LECTURE_REF: lec_24
+:CUSTOM_ID: lec24-c-amortized-analysis-skipped
+:END:
+Signal: "the next chapter will be 17 in the book" [grounding, not a verbatim cue]
+
+** Uncertain
+*** Matrix-chain multiplication lacks the greedy-choice property (announced exercise)
+:PROPERTIES:
+:LECTURE_REF: lec_24
+:CUSTOM_ID: lec24-u-matrix-chain-greedy-counterexample
+:END:
+Signal: "in the next exercises sheet, there is a counter example for the matrix multiplication problem"
+
+* lec_25
+
+** B. Implicit emphasis (inferred)
+*** B-trees — flagged repeatedly as the most important data structure
+:PROPERTIES:
+:LECTURE_REF: lec_25
+:CUSTOM_ID: lec25-b-btrees-most-important
+:END:
+Signal: "they are probably the most important data structure nowadays in large data science"
+
+*** Equal-cost comparison assumption breaks for disk-resident data
+:PROPERTIES:
+:LECTURE_REF: lec_25
+:CUSTOM_ID: lec25-b-equal-cost-assumption
+:END:
+Signal: "the most important assumption we take is that all the comparisons... have the same effort"
+
+*** Augmentation theorem — O(1)-computable attribute is O(log n)-maintainable
+:PROPERTIES:
+:LECTURE_REF: lec_25
+:CUSTOM_ID: lec25-b-augmentation-theorem
+:END:
+Signal: "we always can update this attribute... with an effort of order of log n"
+If a node attribute is computable in $O(1)$ from its two children's attributes and the node's own data, it can be maintained in $O(\lg n)$ per insert or delete. [reconstructed]
+
+*** Interval-tree INTERVAL-SEARCH correctness — single branch suffices
+:PROPERTIES:
+:LECTURE_REF: lec_25
+:CUSTOM_ID: lec25-b-interval-search-correctness
+:END:
+Signal: "this is not trivial because we only take one choice"
+
+*** B-tree balance and key-count property
+:PROPERTIES:
+:LECTURE_REF: lec_25
+:CUSTOM_ID: lec25-b-btree-balance-property
+:END:
+Signal: "this is what is important in a B-tree... all leaves have the same height or level"
+All leaves at the same depth (balanced); each internal node holds between $t-1$ and $2t-1$ keys, hence between $t$ and $2t$ children; $t=2$ gives a 2-3-4 tree. [reconstructed]
+
+** C. CLRS delta (inferred)
+*** General augmentation theorem — proof-skipped
+:PROPERTIES:
+:LECTURE_REF: lec_25
+:CUSTOM_ID: lec25-c-augmentation-theorem-proof-skipped
+:END:
+Signal: "I don't copy to the blackboard because it's just a very simple thing"
+
+*** Memory hierarchy and disk mechanics — added (cache levels, SSD/HDD/tape, access latencies, sync reads vs async writes)
+:PROPERTIES:
+:LECTURE_REF: lec_25
+:CUSTOM_ID: lec25-c-memory-hierarchy-added
+:END:
+Signal: "a CPU computer has... usually four classes of memory" [grounding, not a verbatim cue]
+
+** Uncertain
+*** Red-black tree rotation counts under update (flagged as exercise-class material)
+:PROPERTIES:
+:LECTURE_REF: lec_25
+:CUSTOM_ID: lec25-u-rbtree-rotation-counts
+:END:
+Signal: "After insertion you at most have to do two rotations. After deletion... at most three"
+
+* lec_26
+
+** B. Implicit emphasis (inferred)
+
+*** B-tree defining properties (equal leaf height; interior key bound)
+:PROPERTIES:
+:LECTURE_REF: lec_26
+:CUSTOM_ID: lec26-b-defining-properties
+:END:
+Signal: "the two most important characteristics of bee trees"
+Interior nodes hold between $t-1$ and $2t-1$ keys; all leaves share the same height.
+
+*** Root node as the unique exception to the key-count bound
+:PROPERTIES:
+:LECTURE_REF: lec_26
+:CUSTOM_ID: lec26-b-root-exception
+:END:
+Signal: "the root node is the only node that doesn't satisfy the property"
+
+*** Search is the primary B-tree operation
+:PROPERTIES:
+:LECTURE_REF: lec_26
+:CUSTOM_ID: lec26-b-search-primary
+:END:
+Signal: "the most important operation in B-trees, searching stuff"
+
+*** Split-child is the first operation hit on descent
+:PROPERTIES:
+:LECTURE_REF: lec_26
+:CUSTOM_ID: lec26-b-split-child
+:END:
+Signal: "This is the important one because that's the first one we hit"
+
+*** Each node read at most once; disk reads bounded by tree height
+:PROPERTIES:
+:LECTURE_REF: lec_26
+:CUSTOM_ID: lec26-b-single-disk-read
+:END:
+Signal: "we want to avoid that we have to access a node twice in the same operation"
+
+*** Preemptive split on descent so the parent is never full (symmetric: preemptive transfer/merge on delete)
+:PROPERTIES:
+:LECTURE_REF: lec_26
+:CUSTOM_ID: lec26-b-preemptive-split
+:END:
+Signal: "we split the node preemptively"
+
+*** Odd key count gives a well-defined median for splitting
+:PROPERTIES:
+:LECTURE_REF: lec_26
+:CUSTOM_ID: lec26-b-odd-median
+:END:
+Signal: "there is a well-defined median key that is actually separating the two"
+Splitting a full node distributes its $2t-1$ keys: the single median is promoted, leaving two nodes of $t-1$ keys.
+$$2t-1 = (t-1) + 1 + (t-1).$$
+
+** C. CLRS delta (inferred)
+
+*** B-tree deletion pseudocode — dropped (deferred to an exercise problem)
+:PROPERTIES:
+:LECTURE_REF: lec_26
+:CUSTOM_ID: lec26-c-delete-pseudocode-deferred
+:END:
+Signal: "one of the problems for the exercises class is to write this down as a pseudocode"
+
+* lec_27
+
+** B. Implicit emphasis (inferred)
+
+*** BFS and DFS as the two core graph algorithms
+:PROPERTIES:
+:LECTURE_REF: lec_27
+:CUSTOM_ID: lec27-b-bfs-dfs-core
+:END:
+Signal: "the two basic, most important algorithms for graphs"
+
+*** BFS computes shortest-path distances (distances/layers unique, tree not)
+:PROPERTIES:
+:LECTURE_REF: lec_27
+:CUSTOM_ID: lec27-b-bfs-shortest-path
+:END:
+Signal: "the important property is that ... breadth-first search ... computes the shortest path distance"
+At termination $v.d = \delta(s,v)$ for every $v$; the layer depths are unique even though the BFS tree itself is not.
+
+*** $O(V+E)$ running time for both BFS and DFS
+:PROPERTIES:
+:LECTURE_REF: lec_27
+:CUSTOM_ID: lec27-b-running-time
+:END:
+Signal: "the running time of both of the algorithms is on the order of v plus e"
+$$O(V + E).$$
+
+*** DFS parenthesis theorem (nested/disjoint discovery–finish intervals)
+:PROPERTIES:
+:LECTURE_REF: lec_27
+:CUSTOM_ID: lec27-b-parenthesis-theorem
+:END:
+Signal: "the most important is the so-called parenthesis theorem"
+For vertices $u, v$ the intervals $\left[ u.d, u.f \right]$ and $\left[ v.d, v.f \right]$ are either disjoint or one nests inside the other; nesting $\iff$ one vertex is a descendant of the other in the DFS forest.
+
+*** DFS edge classification: tree, back, forward, cross
+:PROPERTIES:
+:LECTURE_REF: lec_27
+:CUSTOM_ID: lec27-b-edge-classification
+:END:
+Signal: "every edge does have a designator either a t or an f or a b or a c"
+
+*** Undirected graphs: only tree and back edges
+:PROPERTIES:
+:LECTURE_REF: lec_27
+:CUSTOM_ID: lec27-b-undirected-edges
+:END:
+Signal: "this is an important theorem ... we never have forward edges"
+
+** C. CLRS delta (inferred)
+
+*** White-path theorem — reframed/skipped (declared uninteresting, not proved)
+:PROPERTIES:
+:LECTURE_REF: lec_27
+:CUSTOM_ID: lec27-c-white-path-skipped
+:END:
+Signal: "this is not so interesting in my eyes"
+
+*** Queue-ordering lemma (20.3) — full induction proof deferred to the textbook
+:PROPERTIES:
+:LECTURE_REF: lec_27
+:CUSTOM_ID: lec27-c-queue-lemma-proof-deferred
+:END:
+Signal: "the induction step in full is written in the book so you can read it"
+
+* lec_28
+
+** B. Implicit emphasis (inferred)
+*** Topological sort
+:PROPERTIES:
+:LECTURE_REF: lec_28
+:CUSTOM_ID: lec28-b-topological-sort
+:END:
+Signal: "needed in the exercises class, at least for one problem, which is topological sort"
+
+*** Transpose graph $G^T$
+:PROPERTIES:
+:LECTURE_REF: lec_28
+:CUSTOM_ID: lec28-b-transpose-graph
+:END:
+Signal: "this is something you need to know"
+$$G^T = (V, E^T), \quad E^T = \{(v,u) : (u,v) \in E\}.$$
+
+*** Strongly connected components — correctness proof (lemmas 20.13, 20.14, cor. 20.15, thm. 20.16)
+:PROPERTIES:
+:LECTURE_REF: lec_28
+:CUSTOM_ID: lec28-b-scc-correctness-proof
+:END:
+Signal: "now comes the important corollary, which is 2015"
+
+*** Minimum spanning tree — sub-problem optimality
+:PROPERTIES:
+:LECTURE_REF: lec_28
+:CUSTOM_ID: lec28-b-mst-subproblem-optimality
+:END:
+Signal: "important to understand is that minimum spanning trees have a sort of sub problem optimality"
+
+*** Generic MST algorithm — the "safe edge" line (line 3)
+:PROPERTIES:
+:LECTURE_REF: lec_28
+:CUSTOM_ID: lec28-b-mst-safe-edge-line
+:END:
+Signal: "the most important or most non-trivial line is line three"
+
+** C. CLRS delta (inferred)
+*** DAG motivation extended to data-science applications — added
+:PROPERTIES:
+:LECTURE_REF: lec_28
+:CUSTOM_ID: lec28-c-dag-data-science
+:END:
+Signal: "directed acyclic graphs are frequent in applications, also in data science applications"
+
+*** SCC motivated via directed real-world networks (knowledge/friendship) — added
+:PROPERTIES:
+:LECTURE_REF: lec_28
+:CUSTOM_ID: lec28-c-scc-network-motivation
+:END:
+Signal: "you probably know who Brad Pitt is, but probably he doesn't know who you"
+
+*** MST framed as dynamic-programming-solvable before pivoting to greedy — added
+:PROPERTIES:
+:LECTURE_REF: lec_28
+:CUSTOM_ID: lec28-c-mst-dp-vs-greedy
+:END:
+Signal: "we could solve this by some sort of dynamic programming"
+
+*** MST safe-edge / cut theorem and full Kruskal & Prim — dropped (deferred this lecture)
+:PROPERTIES:
+:LECTURE_REF: lec_28
+:CUSTOM_ID: lec28-c-mst-safe-edge-theorem
+:END:
+Signal: "we will discuss the rest of the minimum spanning tree problem next week" [grounding, not a verbatim cue]
+
+* lec_29
+
+** B. Implicit emphasis (inferred)
+*** Relaxation
+:PROPERTIES:
+:LECTURE_REF: lec_29
+:CUSTOM_ID: lec29-b-relaxation
+:END:
+Signal: "one of the most important steps in the algorithm is called relaxation"
+#+begin_example
+RELAX(u, v, w)
+    if v.d > u.d + w(u, v)
+        v.d = u.d + w(u, v)
+        v.pi = u
+#+end_example
+
+*** Optimal substructure of shortest paths
+:PROPERTIES:
+:LECTURE_REF: lec_29
+:CUSTOM_ID: lec29-b-shortest-path-optimal-substructure
+:END:
+Signal: "the single-source shortest path problem has the optimal subproblem structure"
+
+*** Negative-weight cycles
+:PROPERTIES:
+:LECTURE_REF: lec_29
+:CUSTOM_ID: lec29-b-negative-weight-cycle
+:END:
+Signal: "what is really hurting is a negative weight cycle"
+
+*** Min-priority queue (central to Prim and Dijkstra)
+:PROPERTIES:
+:LECTURE_REF: lec_29
+:CUSTOM_ID: lec29-b-min-priority-queue
+:END:
+Signal: "they're really really important parts of many algorithms"
+
+*** Dijkstra correctness (thm. 22.6) — non-negative weights required
+:PROPERTIES:
+:LECTURE_REF: lec_29
+:CUSTOM_ID: lec29-b-dijkstra-nonneg-weights
+:END:
+Signal: "non negative weights is important"
+
+** C. CLRS delta (inferred)
+*** All-pairs shortest paths (ch. 23) — dropped
+:PROPERTIES:
+:LECTURE_REF: lec_29
+:CUSTOM_ID: lec29-c-all-pairs-dropped
+:END:
+Signal: "we will not discuss in the lecture course... it's in chapter 23 in the book"
+
+*** Fibonacci heaps — dropped
+:PROPERTIES:
+:LECTURE_REF: lec_29
+:CUSTOM_ID: lec29-c-fibonacci-heap-dropped
+:END:
+Signal: "if you use a Fibonacci heap, which we didn't talk about"
+
+*** Bellman-Ford early-termination boolean — added
+:PROPERTIES:
+:LECTURE_REF: lec_29
+:CUSTOM_ID: lec29-c-bellman-ford-early-stop
+:END:
+Signal: "if you implement Bellman Ford you wouldn't do it like this"
+
+*** Kruskal vertex-count early stop — added
+:PROPERTIES:
+:LECTURE_REF: lec_29
+:CUSTOM_ID: lec29-c-kruskal-early-stop
+:END:
+Signal: "this is usually something that's being added to the Kruskal algorithm"
+
+** Uncertain
+*** MST running times (ASR-garbled / internally inconsistent)
+:PROPERTIES:
+:LECTURE_REF: lec_29
+:CUSTOM_ID: lec29-u-mst-running-times
+:END:
+Signal: "Prim's algorithm is E, the order of E plus V log V running time"
+Kruskal: $O(E \lg V)$ [reconstructed]. Prim with binary heap: $O(E \lg V)$ [reconstructed]. Prim with Fibonacci heap: $O(E + V \lg V)$ [reconstructed].
+* lec_30
+
+** A. Exam-tied (explicit)
+*** Neural networks and transformers — declared out of exam scope
+:PROPERTIES:
+:LECTURE_REF: lec_30
+:CUSTOM_ID: lec30-a-nn-transformers-out-of-scope
+:END:
+Signal: "they're not for the exam because we will do only cursory thing"
+
+*** Exam scope boundary — only material through the prior lecture
+:PROPERTIES:
+:LECTURE_REF: lec_30
+:CUSTOM_ID: lec30-a-exam-scope-boundary
+:END:
+Signal: "the exam contains stuff that we did until yesterday"

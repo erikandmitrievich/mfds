@@ -1,0 +1,573 @@
+#+title: Exam Material
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-06-23>
+#+lastmod: <2026-06-23 12:45>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Lemma:       Recursion-tree solution of the master recurrence
+:PROPERTIES:
+:CUSTOM_ID: lem:recursion-tree-solution
+:LECTURE_REF: 4.2
+:END:
+
+Let $a > 0$ and $b > 1$ be constants, and let $f(n)$ be a function defined over real numbers $n \ge 1$. Then the recurrence
+
+$$T(n) = \begin{cases} \Theta(1) & \text{if } 0 \le n < 1, \\ aT(n/b) + f(n) & \text{if } n \ge 1 \end{cases}$$
+
+has solution
+
+$$T(n) = \Theta(n^{\log_b a}) + \sum_{j=0}^{\lfloor \log_b n \rfloor} a^j f(n/b^j)$$
+
+#+begin_proof
+Consider the recursion tree in Figure 4.3. Let's look first at its internal nodes. The root of the tree has cost $f(n)$, and it has $a$ children, each with cost $f(n/b)$. (It is convenient to think of $a$ as being an integer, especially when visualizing the recursion tree, but the mathematics does not require it.) Each of these children has $a$ children, making $a^2$ nodes at depth 2, and each of the $a$ children has cost $f(n/b^2)$. In general, there are $a^j$ nodes at depth $j$, and each node has cost $f(n/b^j)$.
+
+Now, let's move on to understanding the leaves. The tree grows downward until $n/b^j$ becomes less than 1. Thus, the tree has height $\lfloor \log_b n \rfloor + 1$, because $n/b^{\lfloor \log_b n \rfloor} \ge n/b^{\log_b n} = 1$ and $n/b^{\lfloor \log_b n \rfloor + 1} < n/b^{\log_b n} = 1$. Since, as we have observed, the number of nodes at depth $j$ is $a^j$ and all the leaves are at depth $\lfloor \log_b n \rfloor + 1$, the tree contains $a^{\lfloor \log_b n \rfloor + 1}$ leaves. Using the identity (3.21) on page 66, we have $a^{\lfloor \log_b n \rfloor + 1} \le a^{\log_b n + 1} = a n^{\log_b a} = O(n^{\log_b a})$, since $a$ is constant, and $a^{\lfloor \log_b n \rfloor + 1} \ge a^{\log_b n} = n^{\log_b a} = \Omega(n^{\log_b a})$. Consequently, the total number of leaves is $\Theta(n^{\log_b a})$ --- asymptotically, the watershed function.
+
+We are now in a position to derive equation (4.18) by summing the costs of the nodes at each depth in the tree, as shown in the figure. The first term in the equation is the total costs of the leaves. Since each leaf is at depth $\lfloor \log_b n \rfloor + 1$ and $n/b^{\lfloor \log_b n \rfloor + 1} < 1$, the base case of the recurrence gives the cost of a leaf: $T(n/b^{\lfloor \log_b n \rfloor + 1}) = \Theta(1)$. Hence the cost of all $\Theta(n^{\log_b a})$ leaves is $\Theta(n^{\log_b a}) \cdot \Theta(1) = \Theta(n^{\log_b a})$ by Problem 3-5(d). The second term in equation (4.18) is the cost of the internal nodes, which, in the underlying divide-and-conquer algorithm, represents the costs of dividing problems into subproblems and then recombining the subproblems. Since the cost for all the internal nodes at depth $j$ is $a^j f(n/b^j)$, the total cost of all internal nodes is
+
+$$\sum_{j=0}^{\lfloor \log_b n \rfloor} a^j f(n/b^j)$$
+#+end_proof
+
+** Questions
+
+* Lemma:       Asymptotic bounds for the recursion-tree summation
+:PROPERTIES:
+:CUSTOM_ID: lem:recursion-tree-summation-bounds
+:LECTURE_REF: 4.3
+:END:
+
+Let $a > 0$ and $b > 1$ be constants, and let $f(n)$ be a function defined over real numbers $n \ge 1$. Then the asymptotic behavior of the function
+
+$$g(n) = \sum_{j=0}^{\lfloor \log_b n \rfloor} a^j f(n/b^j)$$
+
+defined for $n \ge 1$, can be characterized as follows:
+
+1. If there exists a constant $\epsilon > 0$ such that $f(n) = O(n^{\log_b a - \epsilon})$, then $g(n) = O(n^{\log_b a})$.
+
+2. If there exists a constant $k \ge 0$ such that $f(n) = \Theta(n^{\log_b a} \lg^k n)$, then $g(n) = \Theta(n^{\log_b a} \lg^{k+1} n)$.
+
+3. If there exists a constant $c$ in the range $0 < c < 1$ such that $0 < af(n/b) \le cf(n)$ for all $n \ge 1$, then $g(n) = \Theta(f(n))$.
+
+#+begin_proof
+For case 1, we have $f(n) = O(n^{\log_b a - \epsilon})$, which implies that $f(n/b^j) = O((n/b^j)^{\log_b a - \epsilon})$. Substituting into equation (4.19) yields
+
+\begin{align*}
+g(n) &= \sum_{j=0}^{\lfloor \log_b n \rfloor} a^j O\left( \left( \frac{n}{b^j} \right)^{\log_b a - \epsilon} \right) \\
+&= O\left( \sum_{j=0}^{\lfloor \log_b n \rfloor} a^j \left( \frac{n}{b^j} \right)^{\log_b a - \epsilon} \right) && \text{(by Problem 3-5(c), repeatedly)} \\
+&= O\left( n^{\log_b a - \epsilon} \sum_{j=0}^{\lfloor \log_b n \rfloor} \left( \frac{ab^\epsilon}{b^{\log_b a}} \right)^j \right) \\
+&= O\left( n^{\log_b a - \epsilon} \sum_{j=0}^{\lfloor \log_b n \rfloor} (b^\epsilon)^j \right) && \text{(by equation (3.17) on page 66)} \\
+&= O\left( n^{\log_b a - \epsilon} \left( \frac{b^{\epsilon(\lfloor \log_b n \rfloor + 1)} - 1}{b^\epsilon - 1} \right) \right) && \text{(by equation (A.6) on page 1142)}
+\end{align*}
+
+the last series being geometric. Since $b$ and $\epsilon$ are constants, the $b^\epsilon - 1$ denominator doesn't affect the asymptotic growth of $g(n)$, and neither does the $-1$ in the numerator. Since $b^{\epsilon(\lfloor \log_b n \rfloor + 1)} \le (b^{\log_b n + 1})^\epsilon = b^\epsilon n^\epsilon = O(n^\epsilon)$, we obtain $g(n) = O(n^{\log_b a - \epsilon} \cdot O(n^\epsilon)) = O(n^{\log_b a})$, thereby proving case 1.
+
+Case 2 assumes that $f(n) = \Theta(n^{\log_b a} \lg^k n)$, from which we can conclude that $f(n/b^j) = \Theta((n/b^j)^{\log_b a} \lg^k(n/b^j))$. Substituting into equation (4.19) and repeatedly applying Problem 3-5(c) yields
+
+\begin{align*}
+g(n) &= \Theta\left( \sum_{j=0}^{\lfloor \log_b n \rfloor} a^j \left( \frac{n}{b^j} \right)^{\log_b a} \lg^k\left( \frac{n}{b^j} \right) \right) \\
+&= \Theta\left( n^{\log_b a} \sum_{j=0}^{\lfloor \log_b n \rfloor} \frac{a^j}{b^{j \log_b a}} \lg^k\left( \frac{n}{b^j} \right) \right) \\
+&= \Theta\left( n^{\log_b a} \sum_{j=0}^{\lfloor \log_b n \rfloor} \lg^k\left( \frac{n}{b^j} \right) \right) \\
+&= \Theta\left( n^{\log_b a} \sum_{j=0}^{\lfloor \log_b n \rfloor} \left( \frac{\log_b(n/b^j)}{\log_b 2} \right)^k \right) && \text{(by equation (3.19) on page 66)} \\
+&= \Theta\left( n^{\log_b a} \sum_{j=0}^{\lfloor \log_b n \rfloor} \left( \frac{\log_b n - j}{\log_b 2} \right)^k \right) && \text{(by equations (3.17), (3.18), and (3.20))} \\
+&= \Theta\left( \frac{n^{\log_b a}}{\log_b^k 2} \sum_{j=0}^{\lfloor \log_b n \rfloor} (\log_b n - j)^k \right) \\
+&= \Theta\left( n^{\log_b a} \sum_{j=0}^{\lfloor \log_b n \rfloor} (\log_b n - j)^k \right) && \text{($b > 1$ and $k$ are constants)}
+\end{align*}
+
+The summation within the $\Theta$ -notation can be bounded from above as follows:
+
+\begin{align*}
+\sum_{j=0}^{\lfloor \log_b n \rfloor} (\log_b n - j)^k &\le \sum_{j=0}^{\lfloor \log_b n \rfloor} (\lfloor \log_b n \rfloor + 1 - j)^k \\
+&= \sum_{j=1}^{\lfloor \log_b n \rfloor + 1} j^k && \text{(reindexing --- pages 1143--1144)} \\
+&= O\left( (\lfloor \log_b n \rfloor + 1)^{k+1} \right) && \text{(by Exercise A.1-5 on page 1144)} \\
+&= O(\log_b^{k+1} n) && \text{(by Exercise 3.3-3 on page 70)}
+\end{align*}
+
+Exercise 4.6-1 asks you to show that the summation can similarly be bounded from below by $\Omega(\log_b^{k+1} n)$. Since we have tight upper and lower bounds, the summation is $\Theta(\log_b^{k+1} n)$, from which we can conclude that $g(n) = \Theta(n^{\log_b a} \log_b^{k+1} n)$, thereby completing the proof of case 2.
+
+For case 3, observe that $f(n)$ appears in the definition (4.19) of $g(n)$ (when $j = 0$) and that all terms of $g(n)$ are positive. Therefore, we must have $g(n) = \Omega(f(n))$, and it only remains to prove that $g(n) = O(f(n))$. Performing $j$ iterations of the inequality $af(n/b) \le cf(n)$ yields $a^j f(n/b^j) \le c^j f(n)$. Substituting into equation (4.19), we obtain
+
+\begin{align*}
+g(n) &= \sum_{j=0}^{\lfloor \log_b n \rfloor} a^j f(n/b^j) \\
+&\le \sum_{j=0}^{\lfloor \log_b n \rfloor} c^j f(n) \\
+&\le f(n) \sum_{j=0}^{\infty} c^j \\
+&= f(n) \left( \frac{1}{1-c} \right) && \text{(by equation (A.7) on page 1142 since $|c| < 1$)} \\
+&= O(f(n))
+\end{align*}
+
+Thus, we can conclude that $g(n) = \Theta(f(n))$. With case 3 proved, the entire proof of the lemma is complete.
+#+end_proof
+
+** Questions
+
+* Theorem:     Continuous master theorem
+:PROPERTIES:
+:CUSTOM_ID: thm:continuous-master-theorem
+:LECTURE_REF: 4.4
+:END:
+
+Let $a > 0$ and $b > 1$ be constants, and let $f(n)$ be a driving function that is defined and nonnegative on all sufficiently large reals. Define the algorithmic recurrence $T(n)$ on the positive real numbers by
+
+$$T(n) = aT(n/b) + f(n)$$
+
+Then the asymptotic behavior of $T(n)$ can be characterized as follows:
+
+1. If there exists a constant $\epsilon > 0$ such that $f(n) = O(n^{\log_b a - \epsilon})$, then $T(n) = \Theta(n^{\log_b a})$.
+
+2. If there exists a constant $k \ge 0$ such that $f(n) = \Theta(n^{\log_b a} \lg^k n)$, then $T(n) = \Theta(n^{\log_b a} \lg^{k+1} n)$.
+
+3. If there exists a constant $\epsilon > 0$ such that $f(n) = \Omega(n^{\log_b a + \epsilon})$, and if $f(n)$ additionally satisfies the regularity condition $af(n/b) \le cf(n)$ for some constant $c < 1$ and all sufficiently large $n$, then $T(n) = \Theta(f(n))$.
+
+#+begin_proof
+The idea is to bound the summation (4.18) from /Lemma 4.2/ by applying /Lemma 4.3/. But we must account for /Lemma 4.2/ using a base case for $0 < n < 1$, whereas this theorem uses an implicit base case for $0 < n < n_0$, where $n_0 > 0$ is an arbitrary threshold constant. Since the recurrence is algorithmic, we can assume that $f(n)$ is defined for $n \ge n_0$.
+
+For $n > 0$, let us define two auxiliary functions $T'(n) = T(n_0 n)$ and $f'(n) = f(n_0 n)$. We have
+
+\begin{align*}
+T'(n) &= T(n_0 n) \\
+&= \begin{cases} \Theta(1) & \text{if } n_0 n < n_0, \\ aT(n_0 n/b) + f(n_0 n) & \text{if } n_0 n \ge n_0 \end{cases} \\
+&= \begin{cases} \Theta(1) & \text{if } n < 1, \\ aT'(n/b) + f'(n) & \text{if } n \ge 1 \end{cases}
+\end{align*}
+
+We have obtained a recurrence for $T'(n)$ that satisfies the conditions of /Lemma 4.2/, and by that lemma, the solution is
+
+$$T'(n) = \Theta(n^{\log_b a}) + \sum_{j=0}^{\lfloor \log_b n \rfloor} a^j f'(n/b^j)$$
+
+To solve $T'(n)$, we first need to bound $f'(n)$. Let's examine the individual cases in the theorem.
+
+The condition for case 1 is $f(n) = O(n^{\log_b a - \epsilon})$ for some constant $\epsilon > 0$. We have
+
+\begin{align*}
+f'(n) &= f(n_0 n) \\
+&= O((n_0 n)^{\log_b a - \epsilon}) \\
+&= O(n^{\log_b a - \epsilon})
+\end{align*}
+
+since $a, b, n_0$, and $\epsilon$ are all constant. The function $f'(n)$ satisfies the conditions of case 1 of /Lemma 4.3/, and the summation in equation (4.18) of /Lemma 4.2/ evaluates to $O(n^{\log_b a})$. Because $a, b$ and $n_0$ are all constants, we have
+
+\begin{align*}
+T(n) &= T'(n/n_0) \\
+&= \Theta((n/n_0)^{\log_b a}) + O((n/n_0)^{\log_b a}) \\
+&= \Theta(n^{\log_b a}) + O(n^{\log_b a}) \\
+&= \Theta(n^{\log_b a}) && \text{(by Problem 3-5(b))}
+\end{align*}
+
+thereby completing case 1 of the theorem.
+
+The condition for case 2 is $f(n) = \Theta(n^{\log_b a} \lg^k n)$ for some constant $k \ge 0$. We have
+
+\begin{align*}
+f'(n) &= f(n_0 n) \\
+&= \Theta((n_0 n)^{\log_b a} \lg^k(n_0 n)) \\
+&= \Theta(n^{\log_b a} \lg^k n) && \text{(by eliminating the constant terms)}
+\end{align*}
+
+Similar to the proof of case 1, the function $f'(n)$ satisfies the conditions of case 2 of /Lemma 4.3/. The summation in equation (4.18) of /Lemma 4.2/ is therefore $\Theta(n^{\log_b a} \lg^{k+1} n)$, which implies that
+
+\begin{align*}
+T(n) &= T'(n/n_0) \\
+&= \Theta((n/n_0)^{\log_b a}) + \Theta((n/n_0)^{\log_b a} \lg^{k+1}(n/n_0)) \\
+&= \Theta(n^{\log_b a}) + \Theta(n^{\log_b a} \lg^{k+1} n) \\
+&= \Theta(n^{\log_b a} \lg^{k+1} n) && \text{(by Problem 3-5(c))}
+\end{align*}
+
+which proves case 2 of the theorem.
+
+Finally, the condition for case 3 is $f(n) = \Omega(n^{\log_b a + \epsilon})$ for some constant $\epsilon > 0$ and $f(n)$ additionally satisfies the regularity condition $af(n/b) \le cf(n)$ for all $n \ge n_0$ and some constants $c < 1$ and $n_0 > 1$. The first part of case 3 is like case 1:
+
+\begin{align*}
+f'(n) &= f(n_0 n) \\
+&= \Omega((n_0 n)^{\log_b a + \epsilon}) \\
+&= \Omega(n^{\log_b a + \epsilon})
+\end{align*}
+
+Using the definition of $f'(n)$ and the fact that $n_0 n \ge n_0$ for all $n \ge 1$, we have for $n \ge 1$ that
+
+\begin{align*}
+af'(n/b) &= af(n_0 n/b) \\
+&\le cf(n_0 n) \\
+&= cf'(n)
+\end{align*}
+
+Thus $f'(n)$ satisfies the requirements for case 3 of /Lemma 4.3/, and the summation in equation (4.18) of /Lemma 4.2/ evaluates to $\Theta(f'(n))$, yielding
+
+\begin{align*}
+T(n) &= T'(n/n_0) \\
+&= \Theta((n/n_0)^{\log_b a}) + \Theta(f'(n/n_0)) \\
+&= \Theta(f'(n/n_0)) \\
+&= \Theta(f(n))
+\end{align*}
+
+which completes the proof of case 3 of the theorem and thus the whole theorem.
+#+end_proof
+
+** Questions
+
+* Lemma:       RANDOMLY-PERMUTE produces a uniform random permutation
+:PROPERTIES:
+:CUSTOM_ID: lem:randomly-permute-uniform
+:LECTURE_REF: 5.4
+:END:
+
+Procedure RANDOMLY-PERMUTE computes a uniform random permutation.
+
+#+begin_proof
+We use the following loop invariant:
+
+Just prior to the $i$ th iteration of the *for* loop of lines 1--2, for each possible $(i-1)$ -permutation of the $n$ elements, the subarray $A[1:i-1]$ contains this $(i-1)$ -permutation with probability $(n-i+1)!/n!$.
+
+We need to show that this invariant is true prior to the first loop iteration, that each iteration of the loop maintains the invariant, that the loop terminates, and that the invariant provides a useful property to show correctness when the loop terminates.
+
+*Initialization:* Consider the situation just before the first loop iteration, so that $i = 1$. The loop invariant says that for each possible $0$ -permutation, the subarray $A[1:0]$ contains this $0$ -permutation with probability $(n-i+1)!/n! = n!/n! = 1$. The subarray $A[1:0]$ is an empty subarray, and a $0$ -permutation has no elements. Thus, $A[1:0]$ contains any $0$ -permutation with probability 1, and the loop invariant holds prior to the first iteration.
+
+*Maintenance:* By the loop invariant, we assume that just before the $i$ th iteration, each possible $(i-1)$ -permutation appears in the subarray $A[1:i-1]$ with probability $(n-i+1)!/n!$. We shall show that after the $i$ th iteration, each possible $i$ -permutation appears in the subarray $A[1:i]$ with probability $(n-i)!/n!$. Incrementing $i$ for the next iteration then maintains the loop invariant.
+
+Let us examine the $i$ th iteration. Consider a particular $i$ -permutation, and denote the elements in it by $\langle x_1, x_2, \ldots, x_i \rangle$. This permutation consists of an $(i-1)$ -permutation $\langle x_1, \ldots, x_{i-1} \rangle$ followed by the value $x_i$ that the algorithm places in $A[i]$. Let $E_1$ denote the event in which the first $i-1$ iterations have created the particular $(i-1)$ -permutation $\langle x_1, \ldots, x_{i-1} \rangle$ in $A[1:i-1]$. By the loop invariant, $\Pr\{E_1\} = (n-i+1)!/n!$. Let $E_2$ be the event that the $i$ th iteration puts $x_i$ in position $A[i]$. The $i$ -permutation $\langle x_1, \ldots, x_i \rangle$ appears in $A[1:i]$ precisely when both $E_1$ and $E_2$ occur, and so we wish to compute $\Pr\{E_2 \cap E_1\}$. Using equation (C.16) on page 1187, we have
+
+$$\Pr\{E_2 \cap E_1\} = \Pr\{E_2 \mid E_1\} \Pr\{E_1\}$$
+
+The probability $\Pr\{E_2 \mid E_1\}$ equals $1/(n-i+1)$ because in line 2 the algorithm chooses $x_i$ randomly from the $n - i + 1$ values in positions $A[i:n]$. Thus, we have
+
+\begin{align*}
+\Pr\{E_2 \cap E_1\} &= \Pr\{E_2 \mid E_1\} \Pr\{E_1\} \\
+&= \frac{1}{n-i+1} \cdot \frac{(n-i+1)!}{n!} \\
+&= \frac{(n-i)!}{n!}
+\end{align*}
+
+*Termination:* The loop terminates, since it is a *for* loop iterating $n$ times. At termination, $i = n + 1$, and we have that the subarray $A[1:n]$ is a given $n$ -permutation with probability $(n-(n+1)+1)!/n! = 0!/n! = 1/n!$.
+
+Thus, RANDOMLY-PERMUTE produces a uniform random permutation.
+#+end_proof
+
+** Questions
+
+* Theorem:     Expected running time of randomized quicksort
+:PROPERTIES:
+:CUSTOM_ID: thm:randomized-quicksort-expected-time
+:LECTURE_REF: 7.4
+:END:
+
+The expected running time of RANDOMIZED-QUICKSORT on an input of $n$ distinct elements is $O(n \lg n)$.
+
+#+begin_proof
+The analysis uses indicator random variables (see Section 5.2). Let the $n$ distinct elements be $z_1 < z_2 < \cdots < z_n$, and for $1 \le i < j \le n$, define the indicator random variable $X_{ij} = \mathrm{I}\{z_i \text{ is compared with } z_j\}$. From /Lemma 7.2/, each pair is compared at most once, and so we can express $X$ as follows:
+
+$$X = \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} X_{ij}$$
+
+By taking expectations of both sides and using linearity of expectation (equation (C.24) on page 1192) and /Lemma 5.1/ on page 130, we obtain
+
+\begin{align*}
+\mathrm{E}[X] &= \mathrm{E}\left[ \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} X_{ij} \right] \\
+&= \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} \mathrm{E}[X_{ij}] && \text{(by linearity of expectation)} \\
+&= \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} \Pr\{z_i \text{ is compared with } z_j\} && \text{(by Lemma 5.1)} \\
+&= \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} \frac{2}{j-i+1} && \text{(by Lemma 7.3)}
+\end{align*}
+
+We can evaluate this sum using a change of variables ($k = j - i$) and the bound on the harmonic series in equation (A.9) on page 1142:
+
+\begin{align*}
+\mathrm{E}[X] &= \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} \frac{2}{j-i+1} \\
+&= \sum_{i=1}^{n-1} \sum_{k=1}^{n-i} \frac{2}{k+1} \\
+&< \sum_{i=1}^{n-1} \sum_{k=1}^{n} \frac{2}{k} \\
+&= \sum_{i=1}^{n-1} O(\lg n) \\
+&= O(n \lg n)
+\end{align*}
+
+This bound and /Lemma 7.1/ allow us to conclude that the expected running time of RANDOMIZED-QUICKSORT is $O(n \lg n)$ (assuming that the element values are distinct).
+#+end_proof
+
+** Questions
+* Theorem:     Comparison sort lower bound
+:PROPERTIES:
+:CUSTOM_ID: thm:comparison-sort-lower-bound
+:LECTURE_REF: 8.1
+:END:
+
+Any comparison sort algorithm requires $\Omega(n \lg n)$ comparisons in the worst case.
+
+#+begin_proof
+From the preceding discussion, it suffices to determine the height of a decision tree in which each permutation appears as a reachable leaf. Consider a decision tree of height $h$ with $l$ reachable leaves corresponding to a comparison sort on $n$ elements. Because each of the $n!$ permutations of the input appears as one or more leaves, we have $n! \le l$. Since a binary tree of height $h$ has no more than $2^h$ leaves, we have
+
+$$n! \le l \le 2^h$$
+
+which, by taking logarithms, implies
+
+\begin{align*}
+h &\ge \lg(n!) && \text{(since the $\lg$ function is monotonically increasing)} \\
+&= \Omega(n \lg n) && \text{(by equation (3.28) on page 67)}
+\end{align*}
+#+end_proof
+
+** Questions
+
+* Theorem:     Expected running time of randomized select
+:PROPERTIES:
+:CUSTOM_ID: thm:randomized-select-expected-time
+:LECTURE_REF: 9.2
+:END:
+
+The procedure RANDOMIZED-SELECT on an input array of $n$ distinct elements has an expected running time of $\Theta(n)$.
+
+#+begin_proof
+Since not every partitioning is necessarily helpful, let's give each partitioning an index starting at 0 and denote by $\langle h_0, h_1, h_2, \ldots, h_m \rangle$ the sequence of partitionings that are helpful, so that the $h_k$ th partitioning is helpful for $k = 0, 1, 2, \ldots, m$. Although the number $m$ of helpful partitionings is a random variable, we can bound it, since after at most $\lceil \log_{4/3} n \rceil$ helpful partitionings, only one element remains in play. Consider the dummy 0th partitioning as helpful, so that $h_0 = 0$. Denote $|A^{(h_k)}|$ by $n_k$, where $n_0 = |A^{(0)}|$ is the original problem size. Since the $h_k$ th partitioning is helpful and the sizes of the sets $A^{(j)}$ strictly decrease, we have $n_k = |A^{(h_k)}| \le (3/4)|A^{(h_k - 1)}| = (3/4) n_{k-1}$ for $k = 1, 2, \ldots, m$. By iterating $n_k \le (3/4) n_{k-1}$, we have that $n_k \le (3/4)^k n_0$ for $k = 0, 1, 2, \ldots, m$.
+
+As Figure 9.2 depicts, we break up the sequence of sets $A^{(j)}$ into $m$ *generations* consisting of consecutively partitioned sets, starting with the result $A^{(h_k)}$ of a helpful partitioning and ending with the last set $A^{(h_{k+1} - 1)}$ before the next helpful partitioning, so that the sets in generation $k$ are $A^{(h_k)}, A^{(h_k + 1)}, \ldots, A^{(h_{k+1} - 1)}$. Then for each set of elements $A^{(j)}$ in the $k$ th generation, we have that $|A^{(j)}| \le |A^{(h_k)}| = n_k \le (3/4)^k n_0$.
+
+Next, we define the random variable
+
+$$X_k = h_{k+1} - h_k$$
+
+for $k = 0, 1, 2, \ldots, m-1$. That is, $X_k$ is the number of sets in the $k$ th generation, so that the sets in the $k$ th generation are $A^{(h_k)}, A^{(h_k + 1)}, \ldots, A^{(h_k + X_k - 1)}$.
+
+By /Lemma 9.1/, the probability that a partitioning is helpful is at least $1/2$. The probability is actually even higher, since a partitioning is helpful even if the pivot does not fall into the middle half but the $i$ th smallest element happens to lie in the smaller side of the partitioning. We'll just use the lower bound of $1/2$, however, and then equation (C.36) gives that $\mathrm{E}[X_k] \le 2$ for $k = 0, 1, 2, \ldots, m-1$.
+
+Let's derive an upper bound on how many comparisons are made altogether during partitioning, since the running time is dominated by the comparisons. Since we are calculating an upper bound, assume that the recursion goes all the way until only one element remains in play. The $j$ th partitioning takes the set $A^{(j-1)}$ of elements in play, and it compares the randomly chosen pivot with all the other $|A^{(j-1)}| - 1$ elements, so that the $j$ th partitioning makes fewer than $|A^{(j-1)}|$ comparisons. The sets in the $k$ th generation have sizes $|A^{(h_k)}|, |A^{(h_k + 1)}|, \ldots, |A^{(h_k + X_k - 1)}|$. Thus, the total number of comparisons during partitioning is less than
+
+\begin{align*}
+\sum_{k=0}^{m-1} \sum_{j=h_k}^{h_k + X_k - 1} |A^{(j)}| &\le \sum_{k=0}^{m-1} \sum_{j=h_k}^{h_k + X_k - 1} |A^{(h_k)}| \\
+&= \sum_{k=0}^{m-1} X_k |A^{(h_k)}| \\
+&\le \sum_{k=0}^{m-1} X_k \left( \frac{3}{4} \right)^k n_0
+\end{align*}
+
+Since $\mathrm{E}[X_k] \le 2$, we have that the expected total number of comparisons during partitioning is less than
+
+\begin{align*}
+\mathrm{E}\left[ \sum_{k=0}^{m-1} X_k \left( \frac{3}{4} \right)^k n_0 \right] &= \sum_{k=0}^{m-1} \mathrm{E}\left[ X_k \left( \frac{3}{4} \right)^k n_0 \right] && \text{(by linearity of expectation)} \\
+&= n_0 \sum_{k=0}^{m-1} \left( \frac{3}{4} \right)^k \mathrm{E}[X_k] \\
+&\le 2 n_0 \sum_{k=0}^{m-1} \left( \frac{3}{4} \right)^k \\
+&< 2 n_0 \sum_{k=0}^{\infty} \left( \frac{3}{4} \right)^k \\
+&= 8 n_0 && \text{(by equation (A.7) on page 1142)}
+\end{align*}
+
+Since $n_0$ is the size of the original array $A$, we conclude that the expected number of comparisons, and thus the expected running time, for RANDOMIZED-SELECT is $O(n)$. All $n$ elements are examined in the first call of RANDOMIZED-PARTITION, giving a lower bound of $\Omega(n)$. Hence the expected running time is $\Theta(n)$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Successful search in chained hashing
+:PROPERTIES:
+:CUSTOM_ID: thm:chained-hashing-successful-search
+:LECTURE_REF: 11.2
+:END:
+
+In a hash table in which collisions are resolved by chaining, a successful search takes $\Theta(1 + \alpha)$ time on average, under the assumption of independent uniform hashing.
+
+#+begin_proof
+We assume that the element being searched for is equally likely to be any of the $n$ elements stored in the table. The number of elements examined during a successful search for an element $x$ is 1 more than the number of elements that appear before $x$ in $x$'s list. Because new elements are placed at the front of the list, elements before $x$ in the list were all inserted after $x$ was inserted. Let $x_i$ denote the $i$ th element inserted into the table, for $i = 1, 2, \ldots, n$, and let $k_i = x_i.key$.
+
+Our analysis uses indicator random variables extensively. For each slot $q$ in the table and for each pair of distinct keys $k_i$ and $k_j$, we define the indicator random variable
+
+$$X_{ijq} = \mathrm{I}\{\text{the search is for } x_i, h(k_i) = q, \text{ and } h(k_j) = q\}$$
+
+That is, $X_{ijq} = 1$ when keys $k_i$ and $k_j$ collide at slot $q$ and the search is for element $x_i$. Because $\Pr\{\text{the search is for } x_i\} = 1/n$, $\Pr\{h(k_i) = q\} = 1/m$, $\Pr\{h(k_j) = q\} = 1/m$, and these events are all independent, we have that $\Pr\{X_{ijq} = 1\} = 1/nm^2$. /Lemma 5.1/ on page 130 gives $\mathrm{E}[X_{ijq}] = 1/nm^2$.
+
+Next, we define, for each element $x_j$, the indicator random variable
+
+\begin{align*}
+Y_j &= \mathrm{I}\{x_j \text{ appears in a list prior to the element being searched for}\} \\
+&= \sum_{q=0}^{m-1} \sum_{i=1}^{j-1} X_{ijq}
+\end{align*}
+
+since at most one of the $X_{ijq}$ equals 1, namely when the element $x_i$ being searched for belongs to the same list as $x_j$ (pointed to by slot $q$), and $i < j$ (so that $x_i$ appears after $x_j$ in the list).
+
+Our final random variable is $Z$, which counts how many elements appear in the list prior to the element being searched for:
+
+$$Z = \sum_{j=1}^{n} Y_j$$
+
+Because we must count the element being searched for as well as all those preceding it in its list, we wish to compute $\mathrm{E}[Z + 1]$. Using linearity of expectation (equation (C.24) on page 1192), we have
+
+\begin{align*}
+\mathrm{E}[Z + 1] &= \mathrm{E}\left[ 1 + \sum_{j=1}^{n} Y_j \right] \\
+&= 1 + \mathrm{E}\left[ \sum_{j=1}^{n} \sum_{q=0}^{m-1} \sum_{i=1}^{j-1} X_{ijq} \right] \\
+&= 1 + \mathrm{E}\left[ \sum_{q=0}^{m-1} \sum_{j=1}^{n} \sum_{i=1}^{j-1} X_{ijq} \right] \\
+&= 1 + \sum_{q=0}^{m-1} \sum_{j=1}^{n} \sum_{i=1}^{j-1} \mathrm{E}[X_{ijq}] && \text{(by linearity of expectation)} \\
+&= 1 + \sum_{q=0}^{m-1} \sum_{j=1}^{n} \sum_{i=1}^{j-1} \frac{1}{nm^2} \\
+&= 1 + m \cdot \frac{n(n-1)}{2} \cdot \frac{1}{nm^2} && \text{(by equation (A.2) on page 1141)} \\
+&= 1 + \frac{n-1}{2m} \\
+&= 1 + \frac{n}{2m} - \frac{1}{2m} \\
+&= 1 + \frac{\alpha}{2} - \frac{\alpha}{2n}
+\end{align*}
+
+Thus, the total time required for a successful search (including the time for computing the hash function) is $\Theta(2 + \alpha/2 - \alpha/2n) = \Theta(1 + \alpha)$.
+#+end_proof
+
+** Questions
+
+* Theorem:     Successful search in open addressing
+:PROPERTIES:
+:CUSTOM_ID: thm:open-addressing-successful-search
+:LECTURE_REF: 11.8
+:END:
+
+Given an open-address hash table with load factor $\alpha < 1$, the expected number of probes in a successful search is at most
+
+$$\frac{1}{\alpha} \ln \frac{1}{1 - \alpha}$$
+
+assuming independent uniform permutation hashing with no deletions and assuming that each key in the table is equally likely to be searched for.
+
+#+begin_proof
+A search for a key $k$ reproduces the same probe sequence as when the element with key $k$ was inserted. If $k$ was the $(i+1)$ st key inserted into the hash table, then the load factor at the time it was inserted was $i/m$, and so by /Corollary 11.7/, the expected number of probes made in a search for $k$ is at most $1/(1 - i/m) = m/(m - i)$. Averaging over all $n$ keys in the hash table gives us the expected number of probes in a successful search:
+
+\begin{align*}
+\frac{1}{n} \sum_{i=0}^{n-1} \frac{m}{m - i} &= \frac{m}{n} \sum_{i=0}^{n-1} \frac{1}{m - i} \\
+&= \frac{1}{\alpha} \sum_{k=m-n+1}^{m} \frac{1}{k} \\
+&\le \frac{1}{\alpha} \int_{m-n}^{m} \frac{1}{x} \, dx && \text{(by inequality (A.19) on page 1150)} \\
+&= \frac{1}{\alpha} (\ln m - \ln(m - n)) \\
+&= \frac{1}{\alpha} \ln \frac{m}{m - n} \\
+&= \frac{1}{\alpha} \ln \frac{1}{1 - \alpha}
+\end{align*}
+#+end_proof
+
+** Questions
+
+* Theorem:     Greedy choice for activity selection
+:PROPERTIES:
+:CUSTOM_ID: thm:activity-selection-greedy-choice
+:LECTURE_REF: 15.1
+:END:
+
+Consider any nonempty subproblem $S_k$, and let $a_m$ be an activity in $S_k$ with the earliest finish time. Then $a_m$ is included in some maximum-size subset of mutually compatible activities of $S_k$.
+
+#+begin_proof
+Let $A_k$ be a maximum-size subset of mutually compatible activities in $S_k$, and let $a_j$ be the activity in $A_k$ with the earliest finish time. If $a_j = a_m$, we are done, since we have shown that $a_m$ belongs to some maximum-size subset of mutually compatible activities of $S_k$. If $a_j \ne a_m$, let the set $A_k' = (A_k - \{a_j\}) \cup \{a_m\}$ be $A_k$ but substituting $a_m$ for $a_j$. The activities in $A_k'$ are compatible, which follows because the activities in $A_k$ are compatible, $a_j$ is the first activity in $A_k$ to finish, and $f_m \le f_j$. Since $|A_k'| = |A_k|$, we conclude that $A_k'$ is a maximum-size subset of mutually compatible activities of $S_k$, and it includes $a_m$.
+#+end_proof
+
+** Questions
+
+* Lemma:       Optimal prefix-free codes have the greedy-choice property
+:PROPERTIES:
+:CUSTOM_ID: lem:huffman-greedy-choice
+:LECTURE_REF: 15.2
+:END:
+
+Let $C$ be an alphabet in which each character $c \in C$ has frequency $c.freq$. Let $x$ and $y$ be two characters in $C$ having the lowest frequencies. Then there exists an optimal prefix-free code for $C$ in which the codewords for $x$ and $y$ have the same length and differ only in the last bit.
+
+#+begin_proof
+The idea of the proof is to take the tree $T$ representing an arbitrary optimal prefix-free code and modify it to make a tree representing another optimal prefix-free code such that the characters $x$ and $y$ appear as sibling leaves of maximum depth in the new tree. In such a tree, the codewords for $x$ and $y$ have the same length and differ only in the last bit.
+
+Let $a$ and $b$ be any two characters that are sibling leaves of maximum depth in $T$. Without loss of generality, assume that $a.freq \le b.freq$ and $x.freq \le y.freq$. Since $x.freq$ and $y.freq$ are the two lowest leaf frequencies, in order, and $a.freq$ and $b.freq$ are two arbitrary frequencies, in order, we have $x.freq \le a.freq$ and $y.freq \le b.freq$.
+
+In the remainder of the proof, it is possible that we could have $x.freq = a.freq$ or $y.freq = b.freq$, but $x.freq = b.freq$ implies that $a.freq = b.freq = x.freq = y.freq$ (see Exercise 15.3-1), and the lemma would be trivially true. Therefore, assume that $x.freq \ne b.freq$, which means that $x \ne b$.
+
+As Figure 15.7 shows, imagine exchanging the positions in $T$ of $a$ and $x$ to produce a tree $T'$, and then exchanging the positions in $T'$ of $b$ and $y$ to produce a tree $T''$ in which $x$ and $y$ are sibling leaves of maximum depth. (Note that if $x = b$ but $y \ne a$, then tree $T''$ does not have $x$ and $y$ as sibling leaves of maximum depth. Because we assume that $x \ne b$, this situation cannot occur.) By equation (15.4), the difference in cost between $T$ and $T'$ is
+
+\begin{align*}
+&B(T) - B(T') \\
+&= \sum_{c \in C} c.freq \cdot d_T(c) - \sum_{c \in C} c.freq \cdot d_{T'}(c) \\
+&= x.freq \cdot d_T(x) + a.freq \cdot d_T(a) - x.freq \cdot d_{T'}(x) - a.freq \cdot d_{T'}(a) \\
+&= x.freq \cdot d_T(x) + a.freq \cdot d_T(a) - x.freq \cdot d_T(a) - a.freq \cdot d_T(x) \\
+&= (a.freq - x.freq)(d_T(a) - d_T(x)) \\
+&\ge 0
+\end{align*}
+
+because both $a.freq - x.freq$ and $d_T(a) - d_T(x)$ are nonnegative. More specifically, $a.freq - x.freq$ is nonnegative because $x$ is a minimum-frequency leaf, and $d_T(a) - d_T(x)$ is nonnegative because $a$ is a leaf of maximum depth in $T$. Similarly, exchanging $y$ and $b$ does not increase the cost, and so $B(T') - B(T'')$ is nonnegative. Therefore, $B(T'') \le B(T') \le B(T)$, and since $T$ is optimal, we have $B(T) \le B(T'')$, which implies $B(T'') = B(T)$. Thus, $T''$ is an optimal tree in which $x$ and $y$ appear as sibling leaves of maximum depth, from which the lemma follows.
+#+end_proof
+
+** Questions
+
+* Lemma:       Optimal prefix-free codes have the optimal-substructure property
+:PROPERTIES:
+:CUSTOM_ID: lem:huffman-optimal-substructure
+:LECTURE_REF: 15.3
+:END:
+
+Let $C$ be a given alphabet with frequency $c.freq$ defined for each character $c \in C$. Let $x$ and $y$ be two characters in $C$ with minimum frequency. Let $C'$ be the alphabet $C$ with the characters $x$ and $y$ removed and a new character $z$ added, so that $C' = (C - \{x, y\}) \cup \{z\}$. Define $freq$ for all characters in $C'$ with the same values as in $C$, along with $z.freq = x.freq + y.freq$. Let $T'$ be any tree representing an optimal prefix-free code for alphabet $C'$. Then the tree $T$, obtained from $T'$ by replacing the leaf node for $z$ with an internal node having $x$ and $y$ as children, represents an optimal prefix-free code for the alphabet $C$.
+
+#+begin_proof
+We first show how to express the cost $B(T)$ of tree $T$ in terms of the cost $B(T')$ of tree $T'$, by considering the component costs in equation (15.4). For each character $c \in C - \{x, y\}$, we have that $d_T(c) = d_{T'}(c)$, and hence $c.freq \cdot d_T(c) = c.freq \cdot d_{T'}(c)$. Since $d_T(x) = d_T(y) = d_{T'}(z) + 1$, we have
+
+\begin{align*}
+x.freq \cdot d_T(x) + y.freq \cdot d_T(y) &= (x.freq + y.freq)(d_{T'}(z) + 1) \\
+&= z.freq \cdot d_{T'}(z) + (x.freq + y.freq)
+\end{align*}
+
+from which we conclude that
+
+$$B(T) = B(T') + x.freq + y.freq$$
+
+or, equivalently,
+
+$$B(T') = B(T) - x.freq - y.freq$$
+
+We now prove the lemma by contradiction. Suppose that $T$ does not represent an optimal prefix-free code for $C$. Then there exists an optimal tree $T''$ such that $B(T'') < B(T)$. Without loss of generality (by /Lemma 15.2/), $T''$ has $x$ and $y$ as siblings. Let $T'''$ be the tree $T''$ with the common parent of $x$ and $y$ replaced by a leaf $z$ with frequency $z.freq = x.freq + y.freq$. Then
+
+\begin{align*}
+B(T''') &= B(T'') - x.freq - y.freq \\
+&< B(T) - x.freq - y.freq \\
+&= B(T')
+\end{align*}
+
+yielding a contradiction to the assumption that $T'$ represents an optimal prefix-free code for $C'$. Thus, $T$ must represent an optimal prefix-free code for the alphabet $C$.
+#+end_proof
+
+** Questions
+* Theorem:     HUFFMAN produces an optimal prefix-free code
+:PROPERTIES:
+:CUSTOM_ID: thm:huffman-optimal
+:LECTURE_REF: 15.4
+:END:
+
+Procedure HUFFMAN produces an optimal prefix-free code.
+
+#+begin_proof
+Immediate from /Lemma 15.2/ and /Lemma 15.3/.
+#+end_proof
+
+** Questions
+
+* Theorem:     Correctness of INTERVAL-SEARCH
+:PROPERTIES:
+:CUSTOM_ID: thm:interval-search-correctness
+:LECTURE_REF: 17.2
+:END:
+
+Any execution of INTERVAL-SEARCH$(T, i)$ either returns a node whose interval overlaps $i$, or it returns $T.nil$ and the tree $T$ contains no node whose interval overlaps $i$.
+
+#+begin_proof
+The *while* loop of lines 2--5 terminates when either $x = T.nil$ or $i$ overlaps $x.int$. In the latter case, it is certainly correct to return $x$. Therefore, we focus on the former case, in which the *while* loop terminates because $x = T.nil$, which is the node that INTERVAL-SEARCH returns.
+
+We'll prove that if the procedure returns $T.nil$, then it did not miss any intervals in $T$ that overlap $i$. The idea is to show that whether the search goes left in line 4 or right in line 5, it always heads toward a node containing an interval overlapping $i$, if any such interval exists. In particular, we'll prove that
+
+1. If the search goes left in line 4, then the left subtree of node $x$ contains an interval that overlaps $i$ or the right subtree of $x$ contains no interval that overlaps $i$. Therefore, even if $x$ 's left subtree contains no interval that overlaps $i$ but the search goes left, it does not make a mistake, because $x$ 's right subtree does not contain an interval overlapping $i$, either.
+
+2. If the search goes right in line 5, then the left subtree of $x$ contains no interval that overlaps $i$. Thus, if the search goes right, it does not make a mistake.
+
+For both cases, we rely on the interval trichotomy. Let's start with the case where the search goes right, whose proof is simpler. By the tests in line 3, we know that $x.left = T.nil$ or $x.left.max < i.low$. If $x.left = T.nil$, then $x$ 's left subtree contains no interval that overlaps $i$, since it contains no intervals at all. Now suppose that $x.left \ne T.nil$, so that we must have $x.left.max < i.low$. Consider any interval $i'$ in $x$ 's left subtree. Because $x.left.max$ is the maximum endpoint in $x$ 's left subtree, we have $i'.high \le x.left.max$. Thus, as Figure 17.5(a) shows,
+
+\begin{align*}
+i'.high &\le x.left.max \\
+&< i.low
+\end{align*}
+
+By the interval trichotomy, therefore, intervals $i$ and $i'$ do not overlap, and so $x$ 's left subtree contains no interval that overlaps $i$.
+
+Now we examine the case in which the search goes left. If the left subtree of node $x$ contains an interval that overlaps $i$, we're done, so let's assume that no node in $x$ 's left subtree overlaps $i$. We need to show that in this case, no node in $x$ 's right subtree overlaps $i$, so that going left will not miss any overlaps in $x$ 's right subtree. By the tests in line 3, the left subtree of $x$ is not empty and $x.left.max \ge i.low$. By the definition of the /max/ attribute, $x$ 's left subtree contains some interval $i'$ such that
+
+\begin{align*}
+i'.high &= x.left.max \\
+&\ge i.low
+\end{align*}
+
+as illustrated in Figure 17.5(b). Since $i'$ is in $x$ 's left subtree, it does not overlap $i$, and since $i'.high \ge i.low$, the interval trichotomy tells us that $i.high < i'.low$. Now we bring in the property that interval trees are keyed on the low endpoints of intervals. Because $i'$ is in $x$ 's left subtree, we have $i'.low \le x.int.low$. Now consider any interval $i''$ in $x$ 's right subtree, so that $x.int.low \le i''.low$. Putting inequalities together, we get
+
+\begin{align*}
+i.high &< i'.low \\
+&\le x.int.low \\
+&\le i''.low
+\end{align*}
+
+Because $i.high < i''.low$, the interval trichotomy tells us that $i$ and $i''$ do not overlap. Since we chose $i''$ as any interval in $x$ 's right subtree, no node in $x$ 's right subtree overlaps $i$.
+#+end_proof
+
+** Questions
