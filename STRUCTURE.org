@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-27>
-#+lastmod: <2026-05-29 17:21>
+#+lastmod: <2026-07-10 11:57>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -111,20 +111,61 @@ One directory per problem set:
 Every problem set is a =ps_NN/= directory, even if it would hold a single
 file — the uniform shape is the point.
 
-** 03_exams/   [PROVISIONAL — ratify after the semester-2 exam period]
+** 03_exams/   [PROVISIONAL — ratify once all semester-2 courses conform; algorithms is still on the pre-split layout]
 
-Recommended shape per exam:
+Five stage-numbered slots. The number encodes the *role*, not sequence
+position: unused stages are simply absent and the rest do NOT renumber
+(cf. semester-1 STEOP =01_lecture_exam/= runs 00→01→02→04, no 03).
+Typical minimum populated is 00→01→02.
 
 #+begin_example
 03_exams/
-    00_resources/     past papers, official material, raw photos
-    01_plan/          preparation plan
-    02_preparation/   worked preparation material
-    03_revision/      final condensed revision
+    00_resources/     irreplaceable INPUTS — cannot be regenerated
+        notes/          notes_<name>.{org,jpeg}   own + crowdsourced; distilled recording intel
+        transcripts/    lec_NN.txt                machine transcripts (see Recordings)
+    01_extracted/     LLM BUILD PRODUCTS — disposable, regenerable from 00_ + rules
+        material.org    synthesis spine; + course-dependent:
+                          theorems.org                       proof-heavy course
+                          problems.org                       computation-heavy course
+                          <paper>.org / <paper>_solution.org past-paper course
+    02_plan/          plan.org               preparation plan, built from 01_
+    03_preparation/   day_NN.org, assets/    worked preparation
+    04_revision/      cheatsheet.org         final condensed pass (optional)
 #+end_example
 
-If a course has multiple distinct exams, split one level up:
-=03_exams/0N_<exam-name>/...= (cf. semester-1 STEOP's lecture/exercise exams).
+*Core invariant.* =00_resources/= (sources) and =01_extracted/= (products) are
+never conflated. Test: =rm -rf 01_extracted/ && regenerate= must be obviously
+safe. If deleting a file loses information you cannot reproduce, it belongs in
+=00_resources/=, not =01_extracted/=.
+
+*Multiple distinct exams* → split one level up, each a full stack:
+=03_exams/0N_<exam_name>/{00_resources,…}= (STEOP: =01_lecture_exam/=,
+=02_exercise_exam/=).
+
+*Recordings.* Audio (=.m4a=/=.mp3=) is transient and NOT committed;
+=00_global/scripts/{m4a,mp3}_to_txt.py= converts it to =lec_NN.txt= in
+=transcripts/=. The "professor previews the exam" case: transcribe, then distil
+the exam-relevant part into a =notes/= file. Recordings enter the pipeline as
+transcripts (machine) or notes (curated) — never as raw audio.
+
+*Raw / irreplaceable captures* are marked by a =_source= filename suffix in
+place, not a =_raw/= dir: =page_NN_source.jpeg=, =ps_NN_source.pdf=. (Leading-
+underscore material PDFs =_<course>_source_NN_semester.pdf= are the unresolved
+repo-wide =_= question — out of scope here.)
+
+*Reproducibility header — required on every =01_extracted/= file.* The layout
+makes products disposable; it does NOT make them deterministic. Pin the
+transform in the file:
+
+#+begin_src org
+#+model:  claude-opus-4-8
+#+prompt: 00_global/_llm_rules/03_exams/01_course_specific/<course>/<rule>.org@<sha>
+#+date:   2026-07-09
+#+end_src
+
+Rules live centrally under =00_global/_llm_rules/03_exams/= (=00_general= +
+=01_course_specific/<course>=), not inside the exam folder — this header is the
+only pointer from a product back to the exact rule + model that produced it.
 
 * Source vs derived files   [DECIDE]
 
