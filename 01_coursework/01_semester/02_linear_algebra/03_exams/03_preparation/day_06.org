@@ -1,0 +1,220 @@
+#+title: Day 06: Linear Systems & Vector Spaces (Independence)
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-02-21>
+#+lastmod: <2026-04-13 17:28>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Block A: Active Computation
+** Task
+#+begin_quote
+Spanning sets, Linear Independence
+
+1. (2) Show that $\mathbb{C}$ is a vector space over $\mathbb{R}$ and find a small spanning set for $\mathbb{C}$.
+
+2. (4) We consider the vector space $\mathbb{F}^{4}$ for some field $\mathbb{F}$. Show that the vectors $(1,0,0,0)^{T}$, $(1,1,0,0)^{T}$, $(1,1,1,0)^{T}$ and $(1,1,1,1)^{T}$ are linearly independent.
+
+3. (6) Show that the three vectors $(i, 1, 2+i)$, $(1,3i+1,2)$ and $(-1,5i, 5)$ are a spanning set of $\mathbb{C}^{3}$. Are they linearly independent?
+#+end_quote
+
+** Solution
+
+*** (1)
+
+#+begin_quote
+*Definition (Vector Space)* A vector space $V$ over a field $\mathbb{F}$ is equipped with two operations:
+
+- Vector addition $+ : V + V \rightarrow V$
+- Vector multiplication $\times : \mathbb{F} \times V \rightarrow V$
+
+Such that the following axioms hold for all $u, v, w \in V$ and all scalars $a,b \in \mathbb{F}$:
+
+1. Associativity of addition
+
+   $(u + v) + w = u + (v + w)$
+
+2. Commutativity of addition
+
+   $u + v = v + u$
+
+3. Additive identity
+
+   $\exists 0 \in V : \forall u \in V,  u + 0 = u$
+
+4. Additive inverse
+
+   $\forall u \in V, \exists -u \in V : u + (-u) = 0$
+
+5. Distributivity over scalar additon
+
+   $(a + b) \times u = (a \times u) + (b \times u)$
+
+6. Distributivity over vector addition
+
+   $a \times (u + v) = (a \times u) + (a \times v)$
+
+7. Compatability of scalar multiplication
+
+   $a \times (b \times u) = (a \times b) \times u$
+
+8. Scalar multiplicative identity
+
+   $1 \times u = u$
+
+   Where $1$ is a multiplicative identity of $\mathbb{F}$.
+
+#+end_quote
+
+
+We consider:
+- Vector set: $V = \mathbb{C}$
+- Field of scalars: $\mathbb{F} = \mathbb{R}$
+- Vector addition: usual complex addition
+- Scalar multiplication: multiplication of a real with complex number
+
+Additive structure:
+1. Addition is associative
+2. Addition is commutitative
+3. The additive identity $0$ exists
+4. Every $z \in \mathbb{C}$ has additive inverse $-z$
+
+Scalar multiplication sturcture:
+Let $w, z \in \mathbb{C}$ and $a,b \in \mathbb{R}$
+1. $w(a + b) = wa + wb$
+2. $a(w + z) = aw + az$
+3. $a(bw) = (ab)w$
+4. $1z = z$
+
+Thus, all vector space axioms are satisfied.
+
+Hence, $\mathbb{C}$ is a vector space over $\mathbb{R}$.
+
+
+Every complex number can be represented as:
+
+$$z = a + bi : a,b \in \mathbb{R}$$
+
+Hence, $z = a \cdot 1 + b \cdot i$.
+
+Therefore, $\mathbb{C} = span_{\mathbb{R}}\left\{ 1, i \right\}$
+
+
+*** (2)
+
+To show linear independence, we consider the linear system:
+
+$$ \begin{bmatrix} 1&1&1&1 \\ 0&1&1&1 \\ 0&0&1&1 \\ 0&0&0&1 \end{bmatrix} \begin{bmatrix} c_1 \\ c_2 \\ c_3 \\ c_4 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 0 \\ 0 \end{bmatrix} $$
+
+\begin{align*}
+(1) \cdot c_4 &= 0 &\implies c_4 &= 0 \\
+(1) \cdot c_3 + (1) \cdot c_4 &= 0 &\implies c_3 &= 0 \\
+(1) \cdot c_2 + (1) \cdot c_3 +(1) \cdot c_4 &= 0 &\implies c_2 &= 0 \\
+(1) \cdot c_1 + (1) \cdot c_2 +(1) \cdot c_3 +(1) \cdot c_4 &= 0 &\implies c_1 &= 0 \\
+\end{align*}
+
+Hence, the only solution $c = 0$, hence, the vectors are linearly independent.
+
+
+*** (3)
+
+Let $v_1, v_2, v_3$ be the columns of the matrix $A$:
+
+\begin{align*}
+A =
+\begin{bmatrix}
+i   & 1    & -1 \\
+1   & 3i+1 & 5i \\
+2+i & 2    & 5  \\
+\end{bmatrix}
+\end{align*}
+
+- Determine Rank
+
+\begin{align*}
+P_1A &=
+\begin{bmatrix}
+0 & 1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1 \\
+\end{bmatrix}
+\begin{bmatrix}
+i   & 1    & -1 \\
+1   & 3i+1 & 5i \\
+2+i & 2    & 5  \\
+\end{bmatrix} \\
+&=
+\begin{bmatrix}
+1   & 3i+1 & 5i \\
+i   & 1    & -1 \\
+2+i & 2    & 5  \\
+\end{bmatrix}
+\end{align*}
+
+\begin{align*}
+m_{21} &= i \\
+(2, 2) &= 1 - (i)(3i + 1) = 1 + 3 - i = 4 - i \\
+(2, 3) &= -1 - (i)(5i) = -1 + 5 = 4 \\
+&\implies
+\begin{bmatrix}
+1   & 3i+1 & 5i \\
+0   & 4-i  & 4  \\
+2+i & 2    & 5  \\
+\end{bmatrix}
+\end{align*}
+
+\begin{align*}
+m_{31} &= 2 + i \\
+(3, 2) &= 2 - (2 + i)(3i + 1) = 2 - (6i + 2 - 3 + i) = 3 - 7i \\
+(3, 3) &= 5 - (2 + i)(5i) = 5 - (10i - 5) = 10 - 10i \\
+&\implies
+\begin{bmatrix}
+1 & 3i+1   & 5i       \\
+0 & 4-i    & 4        \\
+0 & 3 - 7i & 10 - 10i \\
+\end{bmatrix}
+\end{align*}
+
+\begin{align*}
+m_{32} &= \frac{(3 - 7i)(4 + i)}{(4^2 - i^2)} = \frac{19 - 25i}{17} \\
+(3, 3) &= 10 - 10i - (\frac{19 - 25i}{17})(4) = \frac{170 - 170i - 76 + 100i}{17} = \frac{94 - 70i}{17}
+\end{align*}
+
+Hence, rows are linearly independent.
+
+As, $\mathbb{C}^3$ has 3 dimensions, and given vectors are linearly independent and span $\mathbb{C}$, they form a basis.
+
+** Review Metrics
+- Time Spent:
+- Confidence (1-5):
+- Mistakes / Takeaways:
+
+* Block B: Theory & Proof Memorization
+** Task
+
+** Solution
+
+** Review Metrics
+- Time Spent:
+- Confidence (1-5):
+- Mistakes / Takeaways:
+
+* Block C: Application/Testing
+** Task
+
+** Solution
+
+** Review Metrics
+- Time Spent:
+- Confidence (1-5):
+- Mistakes / Takeaways:
+

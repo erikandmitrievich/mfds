@@ -1,0 +1,45 @@
+#+title: Day 11: Buffer, Review & Rest
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-02-21>
+#+lastmod: <2026-04-13 17:28>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Block A: Active Computation (Review)
+** Task
+
+** Solution
+
+** Review Metrics
+- Time Spent:
+- Confidence (1-5):
+- Mistakes / Takeaways:
+
+* Block B: Theory & Proof Memorization (Review)
+** Task
+
+** Solution
+
+** Review Metrics
+- Time Spent:
+- Confidence (1-5):
+- Mistakes / Takeaways:
+
+* Block C: Application/Testing (Analysis & Consolidation)
+** Task
+Review all notes, mistakes, and confidence levels from Days 1-10.
+** Solution
+- Top 3 recurring calculation errors:
+- Weakest proof(s) to read one last time:
+- Final Strategy / Exam Execution Plan:
+

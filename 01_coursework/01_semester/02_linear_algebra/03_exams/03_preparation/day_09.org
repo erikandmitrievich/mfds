@@ -1,0 +1,168 @@
+#+title: Day 09: Timed Mock Exam 1
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-02-21>
+#+lastmod: <2026-04-13 17:28>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Block A: Active Computation (Warm-up)
+** Task
+#+begin_quote
+Let
+$$A=\begin{bmatrix}3&1&1\\ 6&3&4\\ 3&1&5\end{bmatrix}\in\mathbb{R}^{3\times3}, \quad b^{(1)}=\begin{bmatrix}1\\ 2\\ 3\end{bmatrix} \quad b^{(2)}=\begin{bmatrix}2\\ 0\\ 1\end{bmatrix}$$
+
+(a) Compute an LU factorization with pivoting, i.e. find $P$, $L$, $U$ such that $PA=LU$.
+
+(b) Using the same $P$, $L$, $U$, solve $Ax=b^{(1)}$ and $Ax=b^{(2)}$. Show the two solutions.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+\begin{align*}
+P_1\left[ A \mid b^{(1)} \right] &=
+\begin{bmatrix}
+0 & 1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1 \\
+\end{bmatrix}
+\left[ \begin{array}{ccc|c}
+3 & 1 & 1 & 1 \\
+6 & 3 & 4 & 2 \\
+3 & 1 & 5 & 3 \\
+\end{array} \right] \\
+&=
+\left[ \begin{array}{ccc|c}
+6 & 3 & 4 & 2 \\
+3 & 1 & 1 & 1 \\
+3 & 1 & 5 & 3 \\
+\end{array} \right]
+\end{align*}
+
+\begin{align*}
+m_{21} &= \frac{3}{6} = \frac{1}{2} \\
+(2, 2) &= 1 - (\frac{1}{2})(3) = \frac{2}{2} - \frac{3}{2} = -\frac{1}{2} \\
+(2, 3) &= 1 - (\frac{1}{2})(4) = 1 - 2 = -1 \\
+(2, 4) &= 1 - (\frac{1}{2})(2) = 0 \\
+\end{align*}
+
+\begin{align*}
+\implies
+\left[ \begin{array}{ccc|c}
+6 & 3            & 4  & 2 \\
+0 & -\frac{1}{2} & -1 & 0 \\
+3 & 1            & 5  & 3 \\
+\end{array} \right]
+\end{align*}
+
+\begin{align*}
+m_{31} &= \frac{1}{2} \\
+(3, 2) &= 1 - (\frac{1}{2})(3) = \frac{2}{2} - \frac{3}{2} = -\frac{1}{2} \\
+(3, 3) &= 5 - (\frac{1}{2})(4) = 5 - 2 = 3 \\
+(3, 4) &= 3 - (\frac{1}{2})(2) = 3 - 1 = 2 \\
+\end{align*}
+
+\begin{align*}
+\implies
+\left[ \begin{array}{ccc|c}
+6 & 3            & 4  & 2 \\
+0 & -\frac{1}{2} & -1 & 0 \\
+0 & -\frac{1}{2} & 3  & 2 \\
+\end{array} \right]
+\end{align*}
+
+\begin{align*}
+m_{32} &= 1 \\
+(3, 3) &= 3 - (1)(-1) = 4 \\
+(3, 4) &= 2 - (1)(0) = 2 \\
+\end{align*}
+
+\begin{align*}
+\implies
+\left[ \begin{array}{ccc|c}
+6 & 3            & 4  & 2 \\
+0 & -\frac{1}{2} & -1 & 0 \\
+0 & 0            & 4  & 2 \\
+\end{array} \right]
+\end{align*}
+
+Hence,
+
+\begin{align*}
+P &=
+\begin{bmatrix}
+0 & 1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1 \\
+\end{bmatrix} \\
+L &=
+\begin{bmatrix}
+1           & 0 & 0 \\
+\frac{1}{2} & 1 & 0 \\
+\frac{1}{2} & 1 & 1 \\
+\end{bmatrix} \\
+U &=
+\begin{bmatrix}
+6 & 3            & 4  \\
+0 & -\frac{1}{2} & -1 \\
+0 & 0            & 4  \\
+\end{bmatrix}
+\end{align*}
+
+*** (b)
+
+- $b^{(1)}$
+
+  \begin{align*}
+  \left[ \begin{array}{ccc|c}
+  6 & 3            & 4  & 2 \\
+  0 & -\frac{1}{2} & -1 & 0 \\
+  0 & 0            & 4  & 2 \\
+  \end{array} \right]
+  \end{align*}
+
+
+  \begin{align*}
+  (4)x_3 &= 2 &\implies x_3 &= \frac{1}{2} \\
+  (-\frac{1}{2})x_2 + (-1)x_3 &= 0 &\implies x_2 &= -1 \\
+  (6)x_1 + (3)x_2 + (4)x_3 &= 2 &\implies x_1 &= \frac{1}{2} \\
+  \end{align*}
+
+
+** Review Metrics
+- Time Spent:
+- Confidence (1-5):
+- Mistakes / Takeaways:
+
+* Block B: Theory & Proof Memorization (Refresher)
+** Task
+
+** Solution
+
+** Review Metrics
+- Time Spent:
+- Confidence (1-5):
+- Mistakes / Takeaways:
+
+* Block C: Application/Testing (Full Mock Exam)
+** Task
+
+** Solution
+
+** Review Metrics
+- Time Spent:
+- Total Exam Score Estimate:
+- Time Management Assessment:
+- Mistakes / Takeaways:
+

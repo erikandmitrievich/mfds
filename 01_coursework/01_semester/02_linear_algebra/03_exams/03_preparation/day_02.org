@@ -1,0 +1,454 @@
+#+title: Day 02: Matrix Algebra - Inverses & Pivoting
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-02-21>
+#+lastmod: <2026-04-13 17:28>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Block A: Active Computation
+** Task
+#+begin_quote
+Let
+$$A=\begin{bmatrix}0&2&1\\ 2&2&3\\ 4&1&8\end{bmatrix}\in\mathbb{R}^{3\times3}, \quad b=\begin{bmatrix}3\\ 7\\ 10\end{bmatrix}\in\mathbb{R}^{3}.$$
+
+(a) Perform the first step of Gaussian elimination with partial pivoting in the first column, i.e., look for an appropriate row $j$ in your working column that contains a non-zero element, and then swap the first and $j$ th row. Write down the permutation matrix $P_{1}$ representing the row swap that is performed (if any), and the resulting matrix $P_{1}A$.
+
+(b) Continue the elimination with partial pivoting until you obtain matrices $P, L, U$ such that
+$$PA=LU$$,
+where $P$ is a permutation matrix, $L$ is unit lower triangular, and $U$ is upper triangular. Write down $P$, $L$, and $U$ explicitly.
+
+(c) Solve $Ax=b$ using the factorization $PA=LU$ by solving $Ly=Pb$, $Ux=y$. Present $y$ and $r$.
+#+end_quote
+
+** Solution
+*** (a)
+
+\begin{align*}
+P_1A
+&=
+\underbrace{
+\begin{bmatrix}
+0 & 0 & 1 \\
+0 & 1 & 0 \\
+1 & 0 & 0 \\
+\end{bmatrix}
+}_{P_1}
+\underbrace{
+\begin{bmatrix}
+0 & 2 & 1 \\
+2 & 2 & 3 \\
+4 & 1 & 8 \\
+\end{bmatrix}
+}_{A} \\
+&=
+\begin{bmatrix}
+4 & 1 & 8 \\
+2 & 2 & 3 \\
+0 & 2 & 1 \\
+\end{bmatrix} \\
+\end{align*}
+
+*** (b)
+
+        \begin{align*}
+P_1A &=
+\begin{bmatrix}
+4 & 1 & 8 \\
+2 & 2 & 3 \\
+0 & 2 & 1 \\
+\end{bmatrix} \\
+&=
+\begin{bmatrix}
+1 & 0 & 0 \\
+\frac{1}{2} & 1 & 0 \\
+0 & 0 & 1 \\
+\end{bmatrix}
+\begin{bmatrix}
+4 & 1 & 8 \\
+0 & \frac{3}{2} & -1 \\
+0 & 2 & 1 \\
+\end{bmatrix}
+\quad \left( R_2 \leftarrow R_2 - (\frac{1}{2}) R_1 \right) \\
+P_2A &=
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 0 & 1 \\
+0 & 1 & 0 \\
+\end{bmatrix}
+\begin{bmatrix}
+1 & 0 & 0 \\
+\frac{1}{2} & 1 & 0 \\
+0 & 0 & 1 \\
+\end{bmatrix}
+\begin{bmatrix}
+4 & 1 & 8 \\
+0 & \frac{3}{2} & -1 \\
+0 & 2 & 1 \\
+\end{bmatrix} \\
+&=
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 1 \\
+\frac{1}{2} & 0 & 1 \\
+\end{bmatrix}
+\begin{bmatrix}
+4 & 1 & 8 \\
+0 & 2 & 1 \\
+0 & \frac{3}{2} & -1 \\
+\end{bmatrix} \\
+&=
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\frac{1}{2} & \frac{3}{4} & 1 \\
+\end{bmatrix}
+\begin{bmatrix}
+4 & 1 & 8 \\
+0 & 2 & 1 \\
+0 & 0 & -\frac{7}{4} \\
+\end{bmatrix}
+\quad \left( R_3 \leftarrow R_3 - (\frac{3}{4}) R_2 \right) \\
+\end{align*}
+
+\begin{align*}
+P &=
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 0 & 1 \\
+0 & 1 & 0 \\
+\end{bmatrix}
+\begin{bmatrix}
+0 & 0 & 1 \\
+0 & 1 & 0 \\
+1 & 0 & 0 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+0 & 0 & 1 \\
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\end{bmatrix} \\
+L &=
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\frac{1}{2} & \frac{3}{4} & 1 \\
+\end{bmatrix} \\
+U &=
+\begin{bmatrix}
+4 & 1 & 8 \\
+0 & 2 & 1 \\
+0 & 0 & -\frac{7}{4} \\
+\end{bmatrix} \\
+\end{align*}
+
+*** (c)
+
+\begin{align*}
+Ly &= Pb \\
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+\frac{1}{2} & \frac{3}{4} & 1 \\
+\end{bmatrix}
+\begin{bmatrix}
+y_1 \\
+y_2 \\
+y_3 \\
+\end{bmatrix}
+&=
+\begin{bmatrix}
+10 \\
+3 \\
+7 \\
+\end{bmatrix} \\
+\end{align*}
+
+\begin{align*}
+(1) y_1 &= 10 &\implies y_1 &= 10 \\
+(0) y_1 + (1) y_2 &= 3 &\implies y_2 &= 3 \\
+(\frac{1}{2}) y_1 + (\frac{3}{4}) y_2 + (1) y_3 &= 7 &\implies y_3 &= - \frac{1}{4} \\
+\end{align*}
+
+\begin{align*}
+Ux &= y \\
+\begin{bmatrix}
+4 & 1 & 8 \\
+0 & 2 & 1 \\
+0 & 0 & -\frac{7}{4} \\
+\end{bmatrix}
+\begin{bmatrix}
+x_1 \\
+x_2 \\
+x_3 \\
+\end{bmatrix}
+&=
+\begin{bmatrix}
+10 \\
+3 \\
+-\frac{1}{4} \\
+\end{bmatrix}
+\end{align*}
+
+\begin{align*}
+(-\frac{7}{4}) x_3 &= -\frac{1}{4} &\implies x_3 &= \frac{1}{7} \\
+(2) x_2 + (1) x_3 &= 3 &\implies x_2 &= \frac{10}{7} \\
+(4) x_1 + (1) x_2 + (8) x_3 &= 10 &\implies x_1 &= \frac{13}{7} \\
+\end{align*}
+
+** Review Metrics
+- Time Spent: 40 minutes, was mainly thinking about the notation of writing.
+- Confidence (1-5): 4
+- Mistakes / Takeaways: There were some basic arithmetic mistakes that I later fixed.
+
+* Block B: Theory & Proof Memorization
+** Task
+#+begin_quote
+Learn and memorize the Dimension Theorem / Rank-Nullity (Theorem IV.1.10).
+#+end_quote
+
+** Solution
+*** Annotated Rewriting
+
+*Theorem (Dimension Theorem for Linear Maps).*
+
+Let $V$ and $W$ be finite-dimensional $\mathbb{F}$ vector spaces, and let $f : V \rightarrow W$ be linear. Then
+
+$$dim(V) = dim(im(f)) + dim(ker(f))$$
+
+*Proof.*
+
+We choose a basis $\left\{ b_1, \ldots, b_k \right\}$ for the subspace $ker(f) \subseteq V$.
+
+/define basis of a kernel/
+
+Since the vectors $b_i$ are linearly independent, /Corollary III.1.48(ii)/ shows they can be extended to a basis $\left\{ b_1, \ldots, b_n \right\}$ of the vector space $V$.
+
+/using Corollary to state the basis set can be extended (with linear independent vectors) to span the whole vector space $V$/
+
+We claim that the vectors $f(b_{k+1}), \ldots, f(b_{n}) \in W$ form a basis of the subspace $im(f) \in W$, which of course proves the theorem.
+
+/outlining the whole point of the proof, to demonstrate $\left\{ f(b_{k+1}), \ldots, f(b_n) \right\}$ (extended part of initial kernel basis) is basis of image under $f$/
+
+First, /Proposition III.2.11/ tells us that vectors $f(b_1), \ldots, f(b_n)$ form a generating system of $im(f)$.
+
+/using proposition to state $\left\{ f(b_1), \ldots, f(b_n) \right\}$ spans the $im(f)$, foundation/
+
+By construction, however, we have $f(b_1) = \ldots = f(b_k) = 0$, so $f(b_{k+1}), \ldots, f(b_n)$ also form a generating system.
+
+/outline that only $\left\{ f(b_{k+1}), \ldots, f(b_n) \right\}$ actually spans the $im(f)$ (as linearly mapped vectors of kernel result in zero - no contribution)/
+
+On the other hand, assume that $\lambda_{k+1}, \ldots, \lambda_n \in \mathbb{F}$ are scalars such that $\lambda_{k+1}f(b_{k+1}) + \ldots + \lambda_{n}f(b_n) = 0$ holds.
+
+/assume existence of scalars $\lambda_{k+1}, \ldots, \lambda_{n} \in \mathbb{F}$ such that, $\lambda_{k+1}f(b_{k+1}) + \ldots + \lambda_{n}f(b_n) = 0$/
+
+Then we can write the left hand side as $f(\lambda_{k+1}b_{k+1} + \ldots + \lambda_n b_n)$, hence, $\lambda_{k+1}b_{k+1} + \ldots + \lambda_n b_n \in ker(f)$.
+
+/using linearity of $f$ to rewrite the scaled vector sums into the form of $f(\lambda_{k+1}b_{k+1} + \ldots + \lambda_n b_n)$, and hence, as scaled vector sum equals to zero, it is within the kernel of $f$ (by definition of a kernel $ker(T) = \left\{ T(v) = 0 : v \in V \right\}$)/
+
+By construction, the vectors $b_1, \ldots, b_k$ form a basis of this subspace, so we find scalars $\mu_1, \ldots, \mu_k \in \mathbb{F}$ such that
+
+$$\lambda_{k+1}b_{k+1} + \ldots + \lambda_nb_n = \mu_1b_1 + \ldots + \mu_kb_k$$
+
+/as scaled vector sum (constructed with $b_{k+1}, \ldots, b_{n}$) is in kernel, it can be written as scaled vector sum of $b_1, \ldots, b_k$, (there must exist scalars such that) $\lambda_{k+1}b_{k+1} + \ldots + \lambda_nb_n = \mu_1b_1 + \ldots + \mu_kb_k$ /
+
+But this means precisely that
+
+$$\mu_1b_1 + \ldots + \mu_kb_k - \lambda_{k+1}b_{k+1} - \ldots - \lambda_nb_n = 0$$
+
+/rewriting the equation to further invoke property of linear independence of $b_1, \ldots, b_n$/
+
+and by linear independence of $b_1, \ldots, b_n$ this is possible only if
+
+$$\mu_1 = \ldots = \mu_k = \lambda_{k+1} = \ldots = \lambda_n = 0$$
+
+/as $b_1, \ldots, b_n$ are linearly independent (as are basis of vector space $V$) the only way the total sum of scaled vectors can be equal to zero iff all scalars equal to zero, hence, as $f(b_{k+1}), \dots, f(b_n)$ are generating system of $im(f)$ and also are linear independent, they are a basis of $im(f)$/
+
+/to sum up, as $\left\{ b_1, \ldots, b_n \right\}$ is basis of vector space, let $\left\{ b_{1}, \ldots, b_k \right\}$ be basis of $ker(f)$ ($k \leq n$). the extended part obviously spans $im(f)$, and now it only needs to prove its linear independence (by using linearity and scalars operations). as extended part spans $im(f)$ and is linear independent, it is a basis of $im(f)$, which implies $dim(V) = dim(ker(f)) + dim(im(f))$/
+
+*** Personal Review
+
+Let $V$ and $W$ be a finite dimensional $F$ vector spaces.
+
+Let $f : V \rightarrow W$ be linear map.
+
+Let $\left\{ b_1, \ldots, b_k \right\}$ be a basis of $ker(f) \subseteq V$.
+
+Proving kernel basis can be extended to $n$ values (keep in mind $b_i$ are all linearly independent), with $\left\{ f(b_{k+1}), \ldots, f(b_n) \right\}$ being a basis of $im(f) \subseteq W$.
+
+Claim $\left\{ f(b_1), \ldots, f(b_n) \right\}$ form a basis of $im(f)$.
+
+Note $f(b_1) = \ldots = f(b_k) = 0$ (as they are kernel), while only $\left\{ b_{k+1}, \ldots, b_n \right\}$ are "contributing" to the span of $im(f)$.
+
+Assume $\exists \, \lambda_{k+1}, \ldots, \lambda_n \in \mathbb{F}$ (scalars) such that $\lambda_{k+1}f(b_{k+1}) + \ldots + \lambda_nf(b_n) = 0$.
+
+Hence, (rewriting) $f(\lambda_{k+1}b_{k+1} + \ldots + \lambda_nb_n) = 0$.
+
+Thus, $\lambda_{k+1}b_{k+1} + \ldots + \lambda_nb_n \in ker(f)$ (as their sum is zero).
+
+Since $\left\{ b_1, \ldots, b_k \right\}$ are basis, there must exist scalars $\mu_1, \ldots, \mu_k \in \mathbb{F}$ such that $\lambda_{k+1}b_{k+1} + \ldots + \lambda_nb_n = \mu_1b_1 + \ldots + \mu_kb_k$
+
+Hence, $\mu_1b_1 + \ldots + \mu_kb_k - \lambda_{k+1}b_{k+1} - \ldots - \lambda_nb_n = 0$.
+
+And by linear independence of $b_1, \ldots, b_n$, this is possible iff $\mu_1 = \ldots = \mu_k = \lambda_{k+1} = \ldots = \lambda_n = 0$.
+
+*** Exam Style
+
+- *Theorem:*
+
+  For a finite dimensional vector space $V$ and a linear map $f : V \rightarrow W$, $dim(V) = dim(ker(f)) + dim(im(f))$.
+
+- *Proof:*
+
+  Let $dim(V) = n$ and $dim(ker(f)) = k$.
+
+  1. Basis Extension
+
+     Choose a basis $\left\{ b_1, \ldots, b_k \right\}$ for $ker(f)$. Extend it to basis $\left\{ b_1, \ldots, b_n \right\}$ for $V$.
+
+  2. Claim
+
+     The set $S = \left\{ f(b_{k+1}), \ldots, f(b_n) \right\}$ is basis for $im(f)$.
+
+  3. Proof of Span
+
+     Let $y \in im(f)$, then $\exists x \in V : y = f(x)$. Since $\left\{ b_1, \dots, b_n \right\}$ is a basis for $V$, we can write $x = \sum_{i = 1}^n c_i b_i$. By linearity, and because $b_1, \ldots, b_k \in ker(f)$:
+
+     $$y = f\left( \sum_{i=1}^{n}c_i b_i \right) = \sum_{i=1}^{k}c_i f(b_i) + \sum_{i=k+1}^n c_i f(b_i) = \sum_{i=k+1}^n c_i f(b_i)$$
+
+     Thus, the set $S$ spans $im(f)$.
+
+  4. Proof of Linear Independence
+
+     Assume $\sum_{i=k+1}^n c_i f(b_i) = 0$. By linearity, $f(\sum_{i=k+1}^n c_i b_i) = 0$, meaning the vector $v = \sum_{i=k+1}^n c_i b_i$ is in $ker(f)$. Hence,
+
+     Because $v \in ker(f)$, it can be expressed using the kernel's basis: $v = \sum_{i=1}^k c_i b_i$. Hence,
+
+     $$\sum_{i=1}^k c_i b_i - \sum_{i=k+1}^{n} c_i b_i = 0$$
+
+     Because $\left\{ b_1, \ldots, b_n \right\}$ is a basis of $V$, all coefficients must be strictly zero. Therefore, $c_{k+1} = \ldots = c_n = 0$, proving $S$ is linearly independent.
+
+  5. Conclusion
+
+     Therefore, as $S$ spans $im(f)$ and is linearly independent, it is a basis of $im(f)$. The size of this basis is $n-k$.
+
+     Therefore, $dim(V) = dim(ker(f)) + dim(im(f))$.
+
+** Review Metrics
+- Time Spent: Few hours, learned from zero.
+- Confidence (1-5): 5.
+- Mistakes / Takeaways: None.
+
+* Block C: Application/Testing
+** Task
+#+begin_quote
+1. Compute all solutions of the following linear system of equations using LU factorization (if needed with partial pivoting). Explicitly provide the factors $L, U$, and the solution.
+
+   \begin{align*}
+   6x + 6y + 5z &= 1 \\
+   2x + 4y + 5z &= 2 \\
+   4x + 3y + 4z &= 1.
+   \end{align*}
+
+2. Compute the inverse matrix of $A$ using elementary row operations
+   $$
+   A = \begin{pmatrix} 3 & 2 & 3 \\ 3 & 1 & 3 \\ 2 & 3 & 1 \end{pmatrix}.
+   $$
+   (6 Points)
+#+end_quote
+
+** Solution
+
+*** 1.
+
+\begin{align*}
+\left[ A \mid b \right] =
+&\left[ \begin{array}{ccc|c}
+6 & 6 & 5 & 1 \\
+2 & 4 & 5 & 2 \\
+4 & 3 & 4 & 1 \\
+\end{array} \right] \\
+\xrightarrow{m_{21} = \frac{1}{3}, m_{31} = \frac{4}{6}}
+&\left[ \begin{array}{ccc|c}
+6 & 6 & 5 & 1 \\
+0 & 2 & \frac{10}{3} & \frac{5}{3} \\
+0 & -1 & \frac{2}{3} & \frac{2}{6} \\
+\end{array} \right] \\
+\xrightarrow{m_{32} = -\frac{1}{2}}
+&\left[ \begin{array}{ccc|c}
+6 & 6 & 5 & 1 \\
+0 & 2 & \frac{10}{3} & \frac{5}{3} \\
+0 & 0 & \frac{7}{3} & \frac{7}{6} \\
+\end{array} \right]
+= \left[ U \mid y \right] \\
+L =
+&\begin{bmatrix}
+1 & 0 & 0 \\
+\frac{1}{3} & 1 & 0 \\
+\frac{4}{6} & -\frac{1}{2} & 1 \\
+\end{bmatrix} \\
+\end{align*}
+
+\begin{align*}
+(\frac{7}{3}) z &= \frac{7}{6} &\implies z &= \frac{1}{2} \\
+(2) y + (\frac{10}{3}) z &= \frac{5}{3} &\implies y &= 0 \\
+(6) x + (6) y + (5) z &= 1 &\implies x &= -\frac{1}{4} \\
+\end{align*}
+
+
+
+*** 2.
+
+\begin{align*}
+&\left[ \begin{array}{ccc|ccc}
+3 & 2 & 3 & 1 & 0 & 0 \\
+3 & 1 & 3 & 0 & 1 & 0 \\
+2 & 3 & 1 & 0 & 0 & 1 \\
+\end{array} \right] \\
+\xrightarrow{m_{21} = 1, m_{31} = \frac{2}{3}}
+&\left[ \begin{array}{ccc|ccc}
+3 & 2            & 3  & 1             & 0 & 0 \\
+0 & -1           & 0  & -1            & 1 & 0 \\
+0 & \frac{5}{3}  & -1 & -\frac{2}{3}  & 0 & 1 \\
+\end{array} \right] \\
+\xrightarrow{m_{32} = -\frac{5}{3}}
+&\left[ \begin{array}{ccc|ccc}
+3 & 2  & 3  & 1             & 0            & 0 \\
+0 & -1 & 0  & -1            & 1            & 0 \\
+0 & 0  & -1 & -\frac{7}{3}  & \frac{5}{3}  & 1 \\
+\end{array} \right] \\
+\xrightarrow{m_{13} = -3}
+&\left[ \begin{array}{ccc|ccc}
+3 & 2  & 0  & -6            & 5            & 3 \\
+0 & -1 & 0  & -1            & 1            & 0 \\
+0 & 0  & -1 & -\frac{7}{3}  & \frac{5}{3}  & 1 \\
+\end{array} \right] \\
+\xrightarrow{m_{12} = -2}
+&\left[ \begin{array}{ccc|ccc}
+3 & 0  & 0  & -8            & 7            & 3 \\
+0 & -1 & 0  & -1            & 1            & 0 \\
+0 & 0  & -1 & -\frac{7}{3}  & \frac{5}{3}  & 1 \\
+\end{array} \right] \\
+\xrightarrow{R_1 \leftarrow \frac{1}{3}R_1, R_2 \leftarrow -R_2, R_3 \leftarrow -R_3}
+&\left[ \begin{array}{ccc|ccc}
+1 & 0 & 0  & -\frac{8}{3} & \frac{7}{3}  & 1  \\
+0 & 1 & 0  & 1            & -1           & 0  \\
+0 & 0 & 1  & \frac{7}{3}  & -\frac{5}{3} & -1 \\
+\end{array} \right] \\
+\end{align*}
+
+** Review Metrics
+- Time Spent: <1 hour
+- Confidence (1-5): 3, mainly because I did not practice calculating inverse matrix. Comfortable with LU factorization.
+- Mistakes / Takeaways: Only writing style concerns, with arithmetics caution.
+

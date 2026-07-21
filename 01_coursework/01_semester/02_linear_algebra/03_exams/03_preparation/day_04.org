@@ -1,0 +1,443 @@
+#+title: Day 04: Matrix Algebra Mastery & Vector Space Intro
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-02-21>
+#+lastmod: <2026-04-13 17:28>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Block A: Active Computation
+** Task
+#+begin_quote
+Consider
+$$A=\begin{bmatrix}1&2&3\\ 2&4&6\\ 1&1&1\end{bmatrix}\in\mathbb{R}^{3\times3}.$$
+
+(a) Perform Gaussian elimination with partial pivoting and determine the rank of $A$ from the resulting echelon form.
+
+(b) For the two right-hand sides
+$$b^{(1)}=\begin{bmatrix}1\\ 2\\ 1\end{bmatrix} \quad b^{(2)}=\begin{bmatrix}1\\ 3\\ 1\end{bmatrix}$$
+decide for each system $Ax=b^{(j)}$ whether it is consistent, i.e., whether it has a solution. If consistent, describe the full solution set.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+\begin{align*}
+P_1A&=
+\begin{bmatrix}
+0 & 1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1 \\
+\end{bmatrix}
+\begin{bmatrix}
+1 & 2 & 3 \\
+2 & 4 & 6 \\
+1 & 1 & 1 \\
+\end{bmatrix} \\
+&=
+\begin{bmatrix}
+2 & 4 & 6 \\
+1 & 2 & 3 \\
+1 & 1 & 1 \\
+\end{bmatrix}
+\end{align*}
+
+\begin{align*}
+\xrightarrow{m_{21} = \frac{1}{2}, m_{31} = \frac{1}{2}}
+\begin{bmatrix}
+2 & 4  & 6  \\
+0 & 0  & 0  \\
+0 & -1 & -2 \\
+\end{bmatrix}
+\end{align*}
+
+\begin{align*}
+P_2(P_1A)&=
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 0 & 1 \\
+0 & 1 & 0 \\
+\end{bmatrix}
+\begin{bmatrix}
+2 & 4  & 6  \\
+0 & 0  & 0  \\
+0 & -1 & -2 \\
+\end{bmatrix} \\
+&=
+\begin{bmatrix}
+2 & 4  & 6  \\
+0 & -1 & -2 \\
+0 & 0  & 0  \\
+\end{bmatrix} \\
+\end{align*}
+
+\begin{align*}
+P &=
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 0 & 1 \\
+0 & 1 & 0 \\
+\end{bmatrix}
+\begin{bmatrix}
+0 & 1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1 \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+0 & 1 & 0 \\
+0 & 0 & 1 \\
+1 & 0 & 0 \\
+\end{bmatrix} \\
+L &=
+\begin{bmatrix}
+1           & 0 & 0 \\
+\frac{1}{2} & 1 & 0 \\
+\frac{1}{2} & 0 & 1 \\
+\end{bmatrix} \\
+U &=
+\begin{bmatrix}
+2 & 4  & 6  \\
+0 & -1 & -2 \\
+0 & 0  & 0  \\
+\end{bmatrix} \\
+\end{align*}
+
+The matrix $U$ has a 2 non zero rows, hence, $Rank(A) = 2$.
+
+*** (b)
+
+- $b^{(1)}$
+
+  \begin{align*}
+  \left[ L \mid \tilde{b} \right] &=
+  \left[ \begin{array}{ccc|c}
+  1           & 0 & 0 & 2 \\
+  \frac{1}{2} & 1 & 0 & 1 \\
+  \frac{1}{2} & 0 & 1 & 1 \\
+  \end{array} \right] \\
+  \end{align*}
+
+  \begin{align*}
+  (1) y_1 &= 2                     &\implies y_1 &= 2 \\
+  (\frac{1}{2}) y_1 + (1) y_2 &= 1 &\implies y_2 &= 0 \\
+  (\frac{1}{2}) y_1 + (0) y_2 + (1) y_3 &= 1 &\implies y_3 &= 0 \\
+  \end{align*}
+
+  \begin{align*}
+  \left[ U \mid y \right] &=
+  \left[ \begin{array}{ccc|c}
+  2 & 4  & 6  & 2 \\
+  0 & -1 & -2 & 0 \\
+  0 & 0  & 0  & 0 \\
+  \end{array} \right] \\
+  \end{align*}
+
+  \begin{align*}
+  (0) x_3 &= 0 &\implies x_3 &= t : t \in \mathbb{R} \\
+  (-1) x_2 + (-2) x_3 &= 0 &\implies x_2 &= -2t \\
+  (2) x_1 + (4) x_2 + (6) x_3 &= 2 &\implies x_1 &= 1 + t \\
+  \end{align*}
+
+  $$x = \begin{bmatrix} 1 + t \\ -2t \\ t \end{bmatrix} : t \in \mathbb{R}$$
+
+- $b^{(2)}$
+
+  \begin{align*}
+  \left[ L \mid \tilde{b} \right] &=
+  \left[ \begin{array}{ccc|c}
+  1           & 0 & 0 & 3 \\
+  \frac{1}{2} & 1 & 0 & 1 \\
+  \frac{1}{2} & 0 & 1 & 1 \\
+  \end{array} \right] \\
+  \end{align*}
+
+  \begin{align*}
+  (1) y_1 &= 3                     &\implies y_1 &= 3 \\
+  (\frac{1}{2}) y_1 + (1) y_2 &= 1 &\implies y_2 &= -\frac{1}{2} \\
+  (\frac{1}{2}) y_1 + (0) y_2 + (1) y_3 &= 1 &\implies y_3 &= -\frac{1}{2} \\
+  \end{align*}
+
+  \begin{align*}
+  \left[ U \mid y \right] &=
+  \left[ \begin{array}{ccc|c}
+  2 & 4  & 6  & 3            \\
+  0 & -1 & -2 & -\frac{1}{2} \\
+  0 & 0  & 0  & -\frac{1}{2} \\
+  \end{array} \right] \\
+  \end{align*}
+
+  Since $(0) x_3 \neq -\frac{1}{2}$, the system is inconsistent and thus have no solution.
+
+** Review Metrics
+- Time Spent:
+- Confidence (1-5):
+- Mistakes / Takeaways:
+
+* Block B: Theory & Proof Memorization
+** Task
+#+begin_quote
+Learn and memorize the Dimension Theorem for Sums (Proposition IV.1.4).
+#+end_quote
+
+** Solution
+
+*** Annotated Rewriting
+
+*Proposition (Sum of subspaces)*
+
+Let $W$ and $\hat{W}$ be subspaces of a $\mathbb{F}$ vector space $V$. Then:
+
+1. An element $v \in V$ lies in $W + \hat{W}$ iff there exists elements $w \in W$ and $\hat{w} \in \hat{W} : v = w + \hat{w}$.
+
+2. If $W$ and $\hat{W}$ are finite dimensional, then $W + \hat{W}$ is also finite dimensional and
+
+   $$dim(W + \hat{W}) = dim(W) + dim(\hat{W}) - dim(W \cap \hat{W})$$
+
+*Proof.*
+
+- Setup
+
+  Let $U, W \in V$ be finite dimensional subspaces.
+
+  Let $I := U \cap W$.
+
+  Choose $B_I$ be basis of $I$.
+
+- Extend Basis
+
+  Extend $B_I$ to be basis of $U$:
+
+  $$B_U = B_I \cup B_1$$
+
+  Extend $B_I$ to be basis of $W$:
+
+  $$B_W = B_I \cup B_2$$
+
+  Observe:
+
+  $$dim(U) = |B_U| = |B_I| + |B_1|$$
+
+  $$dim(W) = |B_W| = |B_I| + |B_2|$$
+
+- Claim 1: Span
+
+  Claim, $B_I \cup B_1 \cup B_2$ spans $U + W$.
+
+  Let $v \in U + W$, hence, $v = u + w : u \in U, w \in W$. $u$ can be written as a linear combination of basis $B_U = B_I + B_1$, and $w$ as a linear combination of $B_W = B_I + B_2$, hence, $u + w$ can be represented as a linear combination of $B_I \cup B_1 \cup B_2$. Hence, $B_I \cup B_1 \cup B_2$ spans $U + W$.
+
+- Claim 2: Linear Independence
+
+  Claim, $B_I \cup B_1 \cup B_2$ is linearly independent.
+
+  Assume
+
+  $$\sum_{b \in B_I} \alpha_b b + \sum_{b \in B_1} \beta_b b + \sum_{b \in B_2} \gamma_b b = 0$$
+
+  Observe that
+
+  $$\left( \sum_{b \in B_I} \alpha_b b + \sum_{b \in B_1} \beta_b b \right) + \left( \sum_{b \in b_2} \gamma_b b \right) = 0$$
+
+  where first parenthesis is a vector in $U$ (as constructed with $B_I$ and $B_1$), while second paranthesis is a vector in $W$ (as constructed with $B_2$).
+
+  $$\left( \sum_{b \in B_I} \alpha_b b + \sum_{b \in B_1} \beta_b b \right) = - \left( \sum_{b \in b_2} \gamma_b b \right)$$
+
+  Hence, all scalars $\beta$ must be equal to zero.
+
+  As $\beta$'s equal to zero, the original equality simplifies to:
+
+  $$\sum_{b \in B_I} \alpha_b b + \sum_{b \in B_2} \gamma_b b = 0$$
+
+  Where the left side is a linear combination of $W$ basis. This forces all $\gamma$ scalars to be equal to zero, due to linear independence of the basis.
+
+  Hence, all coefficients are zero. Thus, the original vector combination of basis $B_I, B_1, B_2$ is linear independent.
+
+- Conclusion
+
+  As $B_I \cup B_1 \cup B_2$ spans $U + W$, and is linearly independent, it is a basis of $U + W$.
+
+  Therefore,
+
+  $$dim(U + W) = dim(U) + dim(W) - dim(U \cap W)$$
+
+*** Exam Style
+
+*Proof.*
+
+Let $U_1$, $U_2$ be finite dimensional subspaces of $V$. Let $\left\{ w_1, \cdots, w_k \right\}$ be basis of $U_1 \cap U_2$. Extend to a basis $\left\{ w_1, \cdots, w_k, u_1 \cdots, u_p \right\}$ of $U_1$ and a basis $\left\{ w_1, \cdots, w_k, v_1, \cdots, v_q \right\}$ of $U_2$.
+
+Claim: $B = \left\{ w_1, \cdots, w_k, u_1, \cdots, u_p, v_1, \cdots, v_q \right\}$ is basis of $U_1 + U_2$.
+
+Spanning is immediate: any $x = x_1 + x_2 \in U_1 + U_2$ can be expanded to respective basis, giving a linear combination over $B$.
+
+Linear independence: Suppose $\sum \alpha_i w_i + \sum \beta_j u_j + \sum \gamma_l v_l = 0$. Then,
+
+$$\sum \gamma_l v_l = - \sum \alpha_i w_i - \sum \beta_j u_j \in U_1$$
+
+The left side is in $U_2$, so its vector is in $U_1 \cap U_2$, hence expressible as $\sum \mu_i w_i$. Then $\sum \gamma_l v_l - \sum \mu_i w_i = 0$, and the linear independence of $U_2$ basis gives $\gamma_l = 0$ for all $l$. Substituting back, $\sum \alpha_i w_i + \sum \beta_i u_i = 0$, and the linear independence of $U_1$ basis gives $\alpha_i = \beta_j = 0$ for all $i, j$.
+
+Thus, $|B| = k + p + q = m + n - k$, i.e. $dim(U_1 + U_2) = dim(U_1) + dim(U_2) - dim(U_1 \cap U_2)$.
+
+*** Exam Style 2
+
+Let $U_1, U_2$ be finite dimensional subspaces of $V$. Put $I := U_1 \cap U_2$ and choose a basis $B_I = \left\{ w_1, \cdots, w_k \right\}$ of $I$. Extend $B_I$ to basis $B_1$ and $B_2$:
+
+$$B_{U_1} = \left\{ w_1, \cdots, w_k, u_1, \cdots, u_p \right\}, \quad B_{U_2} = \left\{ w_1, \cdots, w_k, v_1, \cdots, v_q \right\}$$
+
+Consider $B = B_I \cup \left\{ u_1, \cdots, u_p \right\} \cup \left\{ v_1, \cdots, v_q \right\}$.
+
+Every $x \in U_1 + U_2$ equals to $x_1 + x_2 : x_1 \in U_1, x_2 \in U_2$, so $B$ spans $U_1, U_2$.
+
+For independence, suppose $\sum \alpha_i w_i + \sum \beta_j u_j + \sum \gamma_l v_l = 0$. Rearanging gives:
+
+$$\sum \gamma_l v_l = - \left\{ \sum \alpha_i w_i + \sum \beta_j u_j \right\} \in U_1$$
+
+but the left side is in $U_2$, so $\sum \gamma_l v_l \in U_1 \cap U_2 = I$. Hence, $\sum \gamma_l v_l = \sum \mu_i w_i$ for some scalars $\mu_i$. Thus $\sum \gamma_l v_l - \sum \mu_i w_i = 0$, and linear independence of $B_{U_2}$ forces $\gamma_l = \mu_i = 0$. Substituting back, $\sum \alpha_i w_i + \sum \beta_j u_j = 0$, and linear independence of $B_{U_1}$ forces $w_i = u_j = 0$. Therefore $B$ is a basis of $U_1 + U_2$.
+
+Thus,
+
+$$dim(U_1 + U_2) = k + p + q = (p + k) + (q + k) - k = |U_1| + |U_2| - |U_1 \cap U_2|$$
+
+*** Exam Style 3
+
+Let $U_1, U_2$ be finite dimensional subspaces of $V$. Put $I := U_1 \cap U_2$ and choose a basis $B_I = \left\{ w_1, \cdots, w_k \right\}$ of $I$. Extend $B_I$ to basis $B_{U_1}$ $B_{U_2}$:
+
+$$B_{U_1} = \left\{ w_1, \cdots, w_k, u_1, \cdots, u_p \right\}, \quad B_{U_2} = \left\{ w_1, \cdots, w_k, v_1, \cdots, v_q \right\}$$
+
+Consider $B = B_I \cup \left\{ u_1, \cdots, u_p \right\} \cup \left\{ v_1, \cdots, v_q \right\}$.
+
+Every $x \in U_1 + U_2$ equals to $x_1 + x_2 : x_1 \in U_1, x_2 \in U_2$, so $B$ spans $U_1 + U_2$.
+
+For independence, suppose $\sum \alpha_i w_i + \sum \beta_j u_j + \sum \gamma_l v_l = 0$. Rearanging gives:
+
+$$\sum \gamma_l v_l = - \left( \sum \alpha_i w_i + \sum \beta_j u_j \right) \in U_1$$
+
+but the left side is in $U_2$, so $\sum \gamma_l v_l \in U_1 \cap U_2 = I$. Hence, $\sum \gamma_l v_l = \sum \mu_i w_i$ for some scalars $\mu_i$. Thus, $\sum \gamma_l v_l - \sum \mu_i w_i = 0$, and linear independence of $B_{U_1}$, forces $\gamma_l = \mu_i = 0$. Therefore, $B$ is a basis of $U_1 + U_2$.
+
+Thus,
+
+$$dim(U_1 + U_2) = k + p + q = (p + k) + (q + k) - k = |U_1| + |U_2| - |U_1 \cap U_2|$$
+
+*** Exam Style From Memory
+
+Let $U_1, U_2$ be finite dimensional subspaces of vector space $V$. Define $I := U_1 \cap U_2$ and choose basis $B_I = \left\{ w_1, \cdots, w_k \right\}$. Extend $B_I$ to basis $U_1$ and $U_2$:
+
+$$B_{U_1} = \left\{ w_1, \cdots, w_k, u_1, \cdots, u_p \right\} \quad B_{U_2} = \left\{ w_1, \cdots, w_k, v_1, \cdots, v_q \right\}$$
+
+Claim: constructed $B = \left\{ w_1, \cdots, w_k, u_1, \cdots, u_p, v_1, \cdots v_q \right\}$ is basis of $U_1 + U_2$.
+
+Span is immediate. Let $x \in U_1 + U_2$. It can be represented as $x = x_1 + x_2 : x_1 \in U_1, x_2 \in U_2$, hence it can be represented as scalar sum of their basis $B_{U_1}$ and $B_{U_2}$.
+
+Linear independence. Assume $\sum \alpha_i w_i + \sum \beta_j u_j + \sum \gamma_l v_l = 0$. Rearange,
+
+$$\sum \gamma_l v_l = - \left( \sum \alpha_i w_i + \sum \beta_j u_j  \right) \in U_1$$
+
+As LHS is in $U_2$, the RHS must be in $U_1 \cap U_2$, and hence could be written as $\sum \mu_i w_i$. Thus,
+
+
+$$\sum \gamma_l v_l - \sum \mu_i w_i = 0$$
+
+Linear independence of $B_{U_2}$ forces all $\gamma_l = 0$. Substituting back:
+
+$$\sum \alpha_i w_i + \sum \beta_j u_j = 0$$
+
+Linear independence of $B_{U_1}$ forces $\alpha_i = \beta_j = 0$. Hence $B$ is linearly independent.
+
+Therefore, as $B$ is basis of $U_1 + U_2$,
+
+$$dim(U_1 + U_2) = (p + k) + (q + k) - k = dim(U_1) + dim(U_2) - dim(U_1 \cap U_2)$$
+
+** Review Metrics
+- Time Spent: alot
+- Confidence (1-5): 5 (extremely)
+- Mistakes / Takeaways: none
+
+* Block C: Application/Testing
+** Task
+#+begin_quote
+(d) Compute the kernel of the linear map $T: \mathbb{C}^2 \rightarrow \mathbb{C}^2$
+
+$$T(z, w) := \begin{pmatrix} (1 + 5i)z + 2w \\ (8 + i)z + (1 - 3i)w \end{pmatrix}$$
+
+Is the map injective? (3 Points)
+#+end_quote
+
+** Solution
+
+\begin{align*}
+A &=
+\begin{bmatrix}
+(1 + 5i) & (2)      \\
+(8 + i)  & (1 - 3i) \\
+\end{bmatrix} \\
+A
+\begin{bmatrix}
+z \\
+w \\
+\end{bmatrix} &=
+\begin{bmatrix}
+0 \\
+0 \\
+\end{bmatrix} \\
+\end{align*}
+
+
+\begin{align*}
+det(A) &= (1 + 5i)(1 - 3i) - (2)(8 + i) \\
+       &= 16 + 2i - 16 - 2i \\
+       &= 0 \\
+\end{align*}
+
+As the $det(A) = 0$, this implies matrix is not invertable. Therefore,
+- $T$ is not injective
+- $ker(T) \neq 0$
+
+\begin{align*}
+\begin{bmatrix}
+(1 + 5i) & (2)      \\
+(8 + i)  & (1 - 3i) \\
+\end{bmatrix}
+\begin{bmatrix}
+z \\
+w \\
+\end{bmatrix} &=
+\begin{bmatrix}
+0 \\
+0 \\
+\end{bmatrix} \\
+\end{align*}
+
+$$\frac{(8 + i)}{(1 + 5i)} = \frac{(8 + i)(1 - 5i)}{1^{2} - 25i^{2}} = \frac{13 - 39i}{26} = \frac{1 - 3i}{2}$$
+
+\begin{align*}
+(1 - 3i) - (\frac{1 - 3i}{2})(2) = 0 \\
+\end{align*}
+
+Hence the second row becomes $0$.
+
+So the system reduces to:
+
+\begin{align*}
+(1 + 5i)z + 2w &= 0 \\
+w = -\frac{1 + 5i}{2}z \\
+\end{align*}
+
+Thus,
+
+$$ker(T) = \left\{ z \begin{pmatrix} 1 \\ -\frac{1 + 5i}{2} \end{pmatrix} : z \in \mathbb{C} \right\}$$
+
+** Review Metrics
+- Time Spent: 40 minutes (as I was learning from 0).
+- Confidence (1-5): 4
+- Mistakes / Takeaways: Plenty, as I was learning.
+

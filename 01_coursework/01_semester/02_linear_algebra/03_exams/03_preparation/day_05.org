@@ -1,0 +1,215 @@
+#+title: Day 05: Vector Spaces - Subspaces & Bases
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-02-21>
+#+lastmod: <2026-04-13 17:28>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Block A: Active Computation
+** Task
+#+begin_quote
+21. (12) Subspace
+
+We consider the vector space $\mathbb{F}^{n}$ for the specified field and some $4\le n\in\mathbb{N}$. Check, whether the following subsets are subspaces.
+
+(a) (2) $W_{1}:=\{x\in\mathbb{R}^{n}|x_{1}+x_{2}=0\}$,
+
+(b) (2) $W_{2}:=\{x\in\mathbb{R}^{n}|\sum_{j=1}^{n}jx_{j}=0\}$,
+
+(c) (2) $W_{3}:=\{x\in\mathbb{R}^{n}|x_{1}-x_{3}=x_{4}+1\}$,
+
+(d) (2) $W_{4}:=\{x\in\mathbb{R}^{n}|\sum_{i=1}^{n}x_{i}^{2}=0\}$,
+
+(e) (2) $W_{5}:=\{x\in\mathbb{F}_{2}^{3}|x_{1}^{2}+x_{2}+x_{3}^{3}=0\}$,
+
+(f) (2) $W_{6}:=\{x\in\mathbb{C}^{2}|x_{1}\ne0\wedge\frac{x_{2}}{x_{1}}=1\}$.
+#+end_quote
+
+** Solution
+
+To prove a set is a subspace I must check three conditions:
+1. $0 \in W$
+2. Closure under addition ($u, v \in W \implies u + v \in W$)
+3. Closure under scalar multiplication ($\lambda \in \mathbb{F}, u \in W \implies \lambda u \in W$)
+
+*** (a)
+
+1. Zero Vector
+
+   For $x = 0$, $x_1 + x_2 = 0 + 0$. Thus, $0 \in W_1$.
+
+2. Closure Under Addition
+
+   Let $x, y \in W_1$.
+   $(x_1 + y_1) + (x_2 + y_2) = (x_1 + x_2) + (y_1 + y_2) = 0 + 0 = 0 \implies x + y \in W_1$
+
+3. Closure Under Scalar Multiplication
+
+   Let $x \in W_{1}$ and $\lambda \in \mathbb{R}$.
+
+   $(\lambda x_1) + (\lambda x_2) = \lambda (x_1 + x_2) = \lambda (0) = 0 \implies \lambda x \in W_1$
+
+Hence, $W_1$ is a subspace.
+
+*** (b)
+
+1. Zero Vector
+
+   $\sum j(0) = 0$. Thus, $0 \in W_2$
+
+2. Closure Under Addition
+
+   Let $x, y \in W_2$.
+
+   $\sum_{j=1}^n j(x_j + y_j) = \sum_{j=1}^n jx_j + \sum_{j=1}^n jy_j = 0 + 0 = 0$
+
+3. Closure Under Multiplication
+
+   Let $x \in W_2$ and $\lambda \in \mathbb{R}$.
+
+   $\sum_{j=1}^n j(\lambda x_j) = \lambda \sum_{j=1}^n jx_j = \lambda (0) = 0$
+
+Hence, $W_2$ is a subspace.
+
+*** (c)
+
+1. Zero Vector
+
+   For $x = 0$, $x_1 - x_3 - x_4 = 1 \implies 0 = 1$.
+
+   The zero is not in $W_3$.
+
+Hence, $W_3$ is not a subspace.
+
+*** (d)
+
+1. Zero Vector
+
+   For $x = 0$, $\sum_{i = 1}^n 0^2 = 0$. Hence $\left\{ 0 \right\} = W_{4}$.
+
+2. Closure Under Addition
+
+   $W_4$ is a trivial subspace. It satisfies all axioms ($0 + 0 = 0, \lambda 0 = 0$).
+
+Hence $W_4$ is a subspace.
+
+*** (e)
+
+- Zero Vector
+
+  $\left\{ x \in \mathbb{F}_2^3 | x_1^2 + x_2 + x_3^3 = 0 \right\} = \left\{ x \in \mathbb{F}_2^3 | x_1 + x_2 + x_3 = 0 \right\}$
+
+  For $x = 0$, $x_1 + x_2 + x_3 = 0 + 0 + 0 = 0$. Thus $0 \in W_5$.
+
+- Closure Under Addition
+
+  Let $x , y \in W_5$.
+
+  $(x_1 + y_1) + (x_2 + y_2) + (x_3 + y_3) = (x_1 + x_2 + x_3) + (y_1 + y_2 + y_3) = 0$
+
+- Closure Under Multiplication
+
+  Let $x \in W_5$ and $\lambda \in \mathbb{F}_2$.
+
+  $(\lambda x_1) + (\lambda x_2) + (\lambda x_3) = \lambda (x_1 + x_2 + x_3) = \lambda (0)= 0$
+
+Hence, $W_5$ is a subspace.
+
+*** (f)
+
+- Zero Vector
+
+  The definition requires $x_1 \neq 0$. The zero vector $0 = (0,0)$ has the first component $0$.
+
+Hence $W_6$ is not a subspace.
+
+** Review Metrics
+- Time Spent: 1 hour (new topic, new exercise).
+- Confidence (1-5): 4, understood, but might struggle with new style problems.
+- Mistakes / Takeaways:
+
+* Block B: Theory & Proof Memorization
+** Task
+
+** Solution
+
+** Review Metrics
+- Time Spent:
+- Confidence (1-5):
+- Mistakes / Takeaways:
+
+* Block C: Application/Testing
+** Task
+#+begin_quote
+1. Show that the set $\{p \in \mathbb{R}[X] \mid p(0) = p(1) = 0\}$ is a subspace of the space of polynomials. (3 Points)
+
+2. Is the following set a subspace of the vector space $\mathbb{R}^3$?
+
+   $$W := \{x \in \mathbb{R}^3 \mid x^2 + y^2 + z^2 = 0\}?$$
+
+   Provide an explanation for your answer. (1 Point)
+#+end_quote
+
+** Solution
+
+*** (1)
+
+$V = \left\{ p \in \mathbb{R}\left[ X \right] \mid p(0) = p(1) = 0 \right\}$
+
+- Zero Vector
+
+  Let $z$ be zero polynomial.
+
+  Hence, $z(0) = z(1) = 0$.
+
+- Closure Under Addition
+
+  Let $p, q \in V$.
+
+  $(p + q)(0) = p(0) + q(0) = 0$
+
+  $(p + q)(1) = p(1) + q(1) = 0$
+
+  Thus, $(p+q) \in V$.
+
+- Closure Under Multiplication
+
+  Let $p \in V$ and $\lambda \in \mathbb{R}$.
+
+  $(\lambda p)(0) = \lambda \cdot p(0) = \lambda \cdot 0 = 0$
+
+  $(\lambda p)(1) = \lambda \cdot p(1) = \lambda \cdot 0 = 0$
+
+  Thus, $(\lambda p) \in V$.
+
+Hence, $V$ is subspace.
+
+*** (2)
+
+- Zero Vector
+
+  Since $x^2 + y^2 + z^2$ can not be negative by definition, the only possible way $x^2 + y^2 + z^2 = 0$ iff $x = y = z = 0$.
+
+  Thus, $0 \in W$.
+
+- Scalability
+
+  Since the only element subspace is $(0 , 0 , 0) \in W$ (making subspace trivial), it satisfies all subspace constraints.
+
+Hence, $W$ is subspace.
+
+** Review Metrics
+- Time Spent: 30 minutes
+- Confidence (1-5): 4
+- Mistakes / Takeaways: no
+

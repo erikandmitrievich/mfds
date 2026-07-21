@@ -1,0 +1,170 @@
+#+title: Day 07: Synthesis - Maps & Fields
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-02-21>
+#+lastmod: <2026-04-13 17:28>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview latexpreview inlineimages
+
+* Block A: Active Computation
+** Task
+#+begin_quote
+1. verifying the definition of a field
+
+   show that $\mathbb{f}_{2}$ is indeed a field (see example ii.1.5 in the lecture notes).
+#+end_quote
+
+** Solution
+
+*** (1)
+
+*Definition (Field).* A field $\mathbb{F}$ is a set equipped with additive and multiplicative operations ($+, \times$, respectively), such that it fullfils the following axioms:
+
+Let $a, b, c \in \mathbb{F}$.
+
+1. Additive associativity
+
+   $(a + b) + c = a + (b + c)$
+
+2. Additive commutativity
+
+   $a + b = b + a$
+
+3. Additive identity
+
+   $\exists 0 \in \mathbb{F} : \forall a \in \mathbb{F}, a + 0 = a$
+
+4. Additive inverse
+
+   $\forall a \in \mathbb{F}, \exists (-a) : a + (-a) = 0$
+ 
+5. Multiplicative associativity
+
+   $(a \times b) \times c = a \times (b \times c)$
+
+6. Multiplicative commutativity
+
+   $a \times b = b \times a$
+
+7. Multiplicative identity
+
+   $\exists 1 \in \mathbb{F} : 1 \neq 0, \forall a \in \mathbb{F}, a \times 1 = a$
+
+8. Multiplicative inverse
+
+   $\forall a \in \mathbb{F} : a \neq 0, \exists a^{-1} : a \times a^{-1} = 1$
+
+9. Distributivity
+
+   $a \times (b + c) = (a \times b) + (a \times c)$
+
+
+** Review Metrics
+- Time Spent:
+- Confidence (1-5):
+- Mistakes / Takeaways:
+
+* Block B: Theory & Proof Memorization
+** Task
+
+** Solution
+
+** Review Metrics
+- Time Spent:
+- Confidence (1-5):
+- Mistakes / Takeaways:
+
+* Block C: Application/Testing
+** Task
+#+begin_quote
+1. Provide the definition of a field. (4 Points)
+
+2. Consider sets $X$ and $Y$ and a map $f: X \rightarrow Y$.
+
+   a) Let $A \subseteq X$ be a subset. Define $f(A)$. (1 Point)
+
+   b) Define the term injective for the map $f$. (1 Point)
+
+   c) Is the map $f: \mathbb{R}_+ \rightarrow \mathbb{R}$ with $f(x) := x^4$ injective? ($\mathbb{R}_+$ is the set of all non-negative real numbers) (1 Point)
+
+   d) Let $Z$ be another set and $g: Y \rightarrow Z$ another map. Define the composition of $f$ and $g$. (1 Point)
+
+   e) Show that function composition is associative. (1 Point)
+
+#+end_quote
+** Solution
+*** (1)
+
+*Definition (Field).* A field $\mathbb{F}$ is a set equipped with additive and multiplicative operations ($+, \times$, respectively), such that it fullfils the following axioms:
+
+Let $a, b, c \in \mathbb{F}$.
+
+1. Additive associativity
+
+   $(a + b) + c = a + (b + c)$
+
+2. Additive commutativity
+
+   $a + b = b + a$
+
+3. Additive identity
+
+   $\exists 0 \in \mathbb{F} : \forall a \in \mathbb{F}, a + 0 = a$
+
+4. Additive inverse
+
+   $\forall a \in \mathbb{F}, \exists (-a) : a + (-a) = 0$
+
+5. Multiplicative associativity
+
+   $(a \times b) \times c = a \times (b \times c)$
+
+6. Multiplicative commutativity
+
+   $a \times b = b \times a$
+
+7. Multiplicative identity
+
+   $\exists 1 \in \mathbb{F} : 1 \neq 0, \forall a \in \mathbb{F}, a \times 1 = a$
+
+8. Multiplicative inverse
+
+   $\forall a \in \mathbb{F} : a \neq 0, \exists a^{-1} : a \times a^{-1} = 1$
+
+9. Distributivity
+
+   $a \times (b + c) = (a \times b) + (a \times c)$
+
+
+*** (2)
+
+a. $f(A) := \left\{ f(a) \mid a \in A \right\}$
+
+b. $f \text{ is injective } \iff \forall p, q \in X : f(p) = f(q) \implies p = q$
+
+c. Yes, as every element of the given domain is mapped to exactly one element of codomain. Real positive number in power of 4 results in a real positive number.
+
+d. $g \circ f : g(f(x)), \forall x \in X$
+
+e. $f : X \rightarrow Y$, $g : Y \rightarrow Z$, $h : Z \rightarrow W$
+
+   $(h \circ g) \circ f = h \circ (g \circ f)$
+
+   $(h \circ g) \circ f = (h \circ g)(f(x)) = h(g(f(x)))$
+
+   $h \circ (g \circ f) = h((g \circ f)(x)) = h(g(f(x)))$
+
+** Review Metrics
+- Time Spent:
+- Confidence (1-5):
+- Mistakes / Takeaways:
+
