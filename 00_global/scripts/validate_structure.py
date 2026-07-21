@@ -150,6 +150,7 @@ SCHEMA = {
             FileRule(r"^LICENSE$",        required=True, rule_id="R011"),
             FileRule(r"^STRUCTURE\.org$", required=True, rule_id="R012"),
             FileRule(r"^\.gitignore$",                   rule_id="R013"),
+            FileRule(r"^justfile$",       required=True, rule_id="R014"),
         ),
     ),
 
