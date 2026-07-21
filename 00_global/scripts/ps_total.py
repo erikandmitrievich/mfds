@@ -3,6 +3,8 @@
 import re
 import sys
 from pathlib import Path
+import argparse
+from pathlib import Path
 
 def extract_problems(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -105,36 +107,46 @@ def clean_content(content_lines, citation_pat, b_quote_pat, e_quote_pat):
 
     return cleaned
 
-def main():
-    # Resolve the directory where this script is actively located
-    script_dir = Path(__file__).resolve().parent
+def main() -> int:
+    ap = argparse.ArgumentParser(
+        description="Concatenate the Task sections of every ps_NN.org under a "
+                    "problem-set directory into one org block.")
+    ap.add_argument("--ps-dir", type=Path, default=Path.cwd(),
+                    help="directory containing ps_NN/ (default: cwd)")
+    ap.add_argument("--out", type=Path, default=None,
+                    help="write here instead of stdout")
+    ap.add_argument("--raw", action="store_true",
+                    help="omit the #+begin_src org wrapper")
+    args = ap.parse_args()
 
-    # Recursively find all files matching "ps_*.org" in this directory and subdirectories
-    # Sorting ensures they process in order (ps_01, ps_02, etc.)
-    org_files = sorted(script_dir.rglob("ps_*.org"))
+    if not args.ps_dir.is_dir():
+        print(f"not a directory: {args.ps_dir}", file=sys.stderr)
+        return 1
 
+    org_files = sorted(args.ps_dir.rglob("ps_*.org"))
     if not org_files:
-        print("No 'ps_XX.org' files found in the current directory or its subfolders.", file=sys.stderr)
-        sys.exit(1)
+        print(f"no ps_*.org under {args.ps_dir}", file=sys.stderr)
+        return 1
 
-    all_output = []
-
-    # Process each discovered file
-    for file_path in org_files:
+    lines = []
+    failed = 0
+    for path in org_files:
         try:
-            file_output = extract_problems(str(file_path))
-            all_output.extend(file_output)
-        except Exception as e:
-            print(f"Error processing {file_path}: {e}", file=sys.stderr)
+            lines.extend(extract_problems(str(path)))
+        except Exception as exc:
+            print(f"error processing {path}: {exc}", file=sys.stderr)
+            failed += 1
 
-    # Print Result inside a code block
-    print("#+begin_src org")
-    for line in all_output:
-        print(line, end='')
-        # Ensure newlines are preserved correctly
-        if not line.endswith('\n'):
-            print()
-    print("\n#+end_src")
+    body = "".join(l if l.endswith("\n") else l + "\n" for l in lines)
+    text = body if args.raw else f"#+begin_src org\n{body}#+end_src\n"
+
+    if args.out:
+        args.out.write_text(text, encoding="utf-8")
+        print(f"wrote {len(org_files) - failed} file(s) -> {args.out}", file=sys.stderr)
+    else:
+        sys.stdout.write(text)
+    return 1 if failed else 0
+
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
