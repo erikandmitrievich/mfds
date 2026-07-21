@@ -81,7 +81,11 @@ def bind(pattern: str, caps: dict) -> str:
 #
 # Names are cheap to check and catch little. The one exam invariant a name
 # cannot express is the provenance header: STRUCTURE.org calls it required on
-# every 01_extracted/ file, and nothing enforced it.
+# every 01_extracted/ file.
+#
+# OPT-IN (--content). The headers are not yet applied repo-wide, so running
+# this by default would bury the name findings. The rules stay declared rather
+# than commented out: a commented rule is drift, a gated rule is a decision.
 # --------------------------------------------------------------------------- #
 
 PROVENANCE_KEYS = ("#+model:", "#+prompt:", "#+date:")
@@ -153,9 +157,9 @@ SCHEMA = {
 
     "GLOBAL": Node(
         children=(
-            ChildRule(r"^_archive$",   kind="ARCHIVE",   required=True, rule_id="G001"),
+            ChildRule(r"^_archive$",   kind="ARCHIVE",                  rule_id="G001"),
             ChildRule(r"^_llm_rules$", kind="LLM_RULES", required=True, rule_id="G002"),
-            ChildRule(r"^books$",      kind="BOOKS",     required=True, rule_id="G003"),
+            ChildRule(r"^books$",      kind="BOOKS",                    rule_id="G003"),
             ChildRule(r"^scripts$",    kind="SCRIPTS",   required=True, rule_id="G004"),
         ),
         files=(),
@@ -193,8 +197,19 @@ SCHEMA = {
     ),
 
     "SCRIPTS": Node(
+        children=(ChildRule(r"^hooks$", kind="HOOKS", rule_id="T002"),),
+        files=(
+            FileRule(r"^[a-z0-9_]+\.py$",              rule_id="T001"),
+            # written by --write-baseline; the default --baseline path lives here
+            FileRule(r"^structure_baseline\.txt$",      rule_id="T003"),
+        ),
+    ),
+    # git hooks are repo machinery and belong in the repo, not in .git/.
+    # Enable with: git config core.hooksPath 00_global/scripts/hooks
+    "HOOKS": Node(
         children=(),
-        files=(FileRule(r"^[a-z0-9_]+\.py$", rule_id="T001"),),
+        files=(FileRule(r"^(pre-commit|commit-msg|pre-push|prepare-commit-msg)$",
+                        rule_id="T010"),),
     ),
 
     # ---------------------------- 01_coursework ---------------------------- #
@@ -209,7 +224,7 @@ SCHEMA = {
     ),
     "COURSE": Node(
         children=(
-            ChildRule(r"^01_material$", kind="MATERIAL", required=True, rule_id="C010"),
+            ChildRule(r"^01_material$", kind="MATERIAL",                rule_id="C010"),
             ChildRule(r"^02_problems$", kind="PROBLEMS", required=True, rule_id="C011"),
             ChildRule(r"^03_exams$",    kind="EXAMS",                   rule_id="C012"),
         ),
@@ -248,9 +263,9 @@ SCHEMA = {
     # 03_exams is [PROVISIONAL] in STRUCTURE.org. Provisional applies to the
     # slug conventions, not to the invariants. Two tiers are enforced:
     #
-    #   hard  stage vocabulary; stack-xor-stages; source/product separation;
-    #         provenance headers on build products
+    #   hard  stage vocabulary; stack-xor-stages; source/product separation
     #   soft  file slugs, left as [a-z0-9_]+ until a naming decision lands
+    #   opt-in (--content)  provenance headers on build products
     #
     # A stack (03_exams/0N_<exam>/) and bare stages (03_exams/00_resources/)
     # are mutually exclusive: the spec says a second exam splits one level up,
@@ -292,14 +307,10 @@ SCHEMA = {
     "EXAM_EXTRACTED": Node(
         children=(),
         files=(
-            FileRule(r"^material\.org$",           rule_id="E040"),
-            FileRule(r"^theorems\.org$",           rule_id="E041"),
-            FileRule(r"^problems\.org$",           rule_id="E042"),
-            FileRule(r"^exam(_[a-z0-9_]+)?\.org$", rule_id="E043"),
-            # FileRule(r"^material\.org$",           rule_id="E040", content="provenance"),
-            # FileRule(r"^theorems\.org$",           rule_id="E041", content="provenance"),
-            # FileRule(r"^problems\.org$",           rule_id="E042", content="provenance"),
-            # FileRule(r"^exam(_[a-z0-9_]+)?\.org$", rule_id="E043", content="provenance"),
+            FileRule(r"^material\.org$",           rule_id="E040", content="provenance"),
+            FileRule(r"^theorems\.org$",           rule_id="E041", content="provenance"),
+            FileRule(r"^problems\.org$",           rule_id="E042", content="provenance"),
+            FileRule(r"^exam(_[a-z0-9_]+)?\.org$", rule_id="E043", content="provenance"),
         ),
     ),
     "EXAM_PLAN": Node(
@@ -403,7 +414,7 @@ def check_schema() -> None:
 # --------------------------------------------------------------------------- #
 
 def walk(dirpath: Path, kind: str, caps: dict, root: Path, out: list,
-         names_only: bool = False) -> None:
+         content_checks: bool = False) -> None:
     node = SCHEMA[kind]
 
     def rel(p) -> str:
@@ -425,7 +436,7 @@ def walk(dirpath: Path, kind: str, caps: dict, root: Path, out: list,
             if m:
                 matched.add(r.rule_id)
                 walk(Path(e.path), r.kind, {**caps, **m.groupdict()}, root, out,
-                     names_only)
+                     content_checks)
                 break
         else:
             out.append(Finding(fid("DIR"), rel(e.path), "unexpected directory"))
@@ -442,7 +453,7 @@ def walk(dirpath: Path, kind: str, caps: dict, root: Path, out: list,
         for r in node.files:
             if re.match(bind(r.pattern, caps), e.name):
                 matched.add(r.rule_id)
-                if r.content and not names_only:
+                if r.content and content_checks:
                     msg = CONTENT_CHECKS[r.content](Path(e.path))
                     if msg:
                         out.append(Finding(fid(r.rule_id), rel(e.path), msg))
@@ -493,8 +504,10 @@ def main(argv=None) -> int:
                     help="overwrite the baseline with current findings")
     ap.add_argument("--strict", action="store_true", help="ignore the baseline")
     ap.add_argument("--summary", action="store_true", help="counts per rule only")
-    ap.add_argument("--names-only", action="store_true",
-                    help="skip content checks (provenance headers)")
+    ap.add_argument("--content", action="store_true",
+                    help="also verify file contents (provenance headers on "
+                         "01_extracted/ files); off until the convention is "
+                         "applied repo-wide")
     args = ap.parse_args(argv)
 
     check_schema()
@@ -503,7 +516,7 @@ def main(argv=None) -> int:
     baseline_path = args.baseline or (root / "00_global/scripts/structure_baseline.txt")
 
     findings = []
-    walk(root, "ROOT", {}, root, findings, names_only=args.names_only)
+    walk(root, "ROOT", {}, root, findings, content_checks=args.content)
     findings.sort(key=lambda f: (f.rule_id, f.path))
 
     if args.write_baseline:
