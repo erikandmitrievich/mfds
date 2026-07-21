@@ -150,11 +150,11 @@ $$f(x) = \sum_{k=0}^{n} \frac{f^{(k)}(x_{0})}{k!} (x-x_{0})^{k} + R_{n+1}(x)$$
       plot!(p[i], x_range, poly_data.(x_range), label="Taylor Approx (n=2)", ls=:dash, lw=3)
   end
 
-  savefig("./figs/p_2.png")
+  savefig("./assets/p_02.png")
   #+end_src
 
   #+RESULTS:
-  : /Users/ziro2173/personal/university/01_coursework/2025_winter_term/01_analysis/02_problems/set_07/figs/p_2.png
+  : /Users/ziro2173/personal/mfds/01_coursework/01_semester/01_analysis/02_problems/ps_07/assets/p_02.png
 
 * Problem 3 :DONE:
 ** Task

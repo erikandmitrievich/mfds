@@ -437,16 +437,16 @@ $$\dfrac{d}{dx} log_a \left[ f(x) \right] = \dfrac{1}{f(x) ln(a)} \cdot f'(x)$$
 #+begin_src julia :results output :export both :tangle julia/p_6.jl
 using Plots
 
-const PATH = "./figs/"
+const PATH = "./assets/"
 
 # format: (function, derivative, range, title, name)
 data = [
-    (x -> sin(x^2),          x -> 2x * cos(x^2),                 -3:0.01:3,     "f(x) = sin(x^2)",     "fig_1"),
-    (x -> exp(3x + 1),       x -> 3 * exp(3x + 1),               -1:0.01:0.5,   "g(x) = e^(3x+1)",     "fig_2"),
-    (x -> log(5x^2 - x + 4), x -> (10x - 1) / (5x^2 - x + 4),    -3:0.01:3,     "f(x) = ln(5x^2-x+4)", "fig_3"),
-    (x -> (2x^3 - x)^5,      x -> 5 * (2x^3 - x)^4 * (6x^2 - 1), -1.1:0.01:1.1, "g(x) = (2x^3-x)^5",   "fig_4"),
-    (x -> sqrt(1 + exp(2x)), x -> exp(2x) / sqrt(1 + exp(2x)),   -2:0.01:2,     "f(x) = sqrt(1+e^2x)", "fig_5"),
-    (x -> cos(log(x)),       x -> -sin(log(x)) / x,              0.2:0.01:6,    "g(x) = cos(ln x)",    "fig_6")
+    (x -> sin(x^2),          x -> 2x * cos(x^2),                 -3:0.01:3,     "f(x) = sin(x^2)",     "p_06_01"),
+    (x -> exp(3x + 1),       x -> 3 * exp(3x + 1),               -1:0.01:0.5,   "g(x) = e^(3x+1)",     "p_06_02"),
+    (x -> log(5x^2 - x + 4), x -> (10x - 1) / (5x^2 - x + 4),    -3:0.01:3,     "f(x) = ln(5x^2-x+4)", "p_06_03"),
+    (x -> (2x^3 - x)^5,      x -> 5 * (2x^3 - x)^4 * (6x^2 - 1), -1.1:0.01:1.1, "g(x) = (2x^3-x)^5",   "p_06_04"),
+    (x -> sqrt(1 + exp(2x)), x -> exp(2x) / sqrt(1 + exp(2x)),   -2:0.01:2,     "f(x) = sqrt(1+e^2x)", "p_06_05"),
+    (x -> cos(log(x)),       x -> -sin(log(x)) / x,              0.2:0.01:6,    "g(x) = cos(ln x)",    "p_06_06")
 ]
 
 plots = map(data) do (f, df, r, t, n)
@@ -457,19 +457,19 @@ plots = map(data) do (f, df, r, t, n)
 end
 
 final_plot = plot(plots..., layout=(3, 2), size=(1000, 1200), plot_title="Functions and Derivatives")
-savefig(joinpath(PATH, "derivatives"))
+savefig(joinpath(PATH, "p_06_07.png"))
 #+end_src
 
 #+RESULTS:
 #+begin_example
-"./figs/"
+"./assets/"
 6-element Vector{Tuple{Function, Function, StepRangeLen{Float64, Base.TwicePrecision{Float64}, Base.TwicePrecision{Float64}, Int64}, String, String}}:
- (var"#1#13"(), var"#2#14"(), -3.0:0.01:3.0, "f(x) = sin(x^2)", "fig_1")
- (var"#3#15"(), var"#4#16"(), -1.0:0.01:0.5, "g(x) = e^(3x+1)", "fig_2")
- (var"#5#17"(), var"#6#18"(), -3.0:0.01:3.0, "f(x) = ln(5x^2-x+4)", "fig_3")
- (var"#7#19"(), var"#8#20"(), -1.1:0.01:1.1, "g(x) = (2x^3-x)^5", "fig_4")
- (var"#9#21"(), var"#10#22"(), -2.0:0.01:2.0, "f(x) = sqrt(1+e^2x)", "fig_5")
- (var"#11#23"(), var"#12#24"(), 0.2:0.01:6.0, "g(x) = cos(ln x)", "fig_6")
+ (var"#13#14"(), var"#15#16"(), -3.0:0.01:3.0, "f(x) = sin(x^2)", "p_06_01")
+ (var"#17#18"(), var"#19#20"(), -1.0:0.01:0.5, "g(x) = e^(3x+1)", "p_06_02")
+ (var"#21#22"(), var"#23#24"(), -3.0:0.01:3.0, "f(x) = ln(5x^2-x+4)", "p_06_03")
+ (var"#25#26"(), var"#27#28"(), -1.1:0.01:1.1, "g(x) = (2x^3-x)^5", "p_06_04")
+ (var"#29#30"(), var"#31#32"(), -2.0:0.01:2.0, "f(x) = sqrt(1+e^2x)", "p_06_05")
+ (var"#33#34"(), var"#35#36"(), 0.2:0.01:6.0, "g(x) = cos(ln x)", "p_06_06")
 6-element Vector{Plots.Plot{Plots.GRBackend}}:
  Plot{Plots.GRBackend() n=2}
  Plot{Plots.GRBackend() n=2}
@@ -477,7 +477,7 @@ savefig(joinpath(PATH, "derivatives"))
  Plot{Plots.GRBackend() n=2}
  Plot{Plots.GRBackend() n=2}
  Plot{Plots.GRBackend() n=2}
-"/Users/ziro2173/personal/university/01_coursework/2025_winter_term/01_analysis/02_problems/set_04/figs/derivatives.png"
+"/Users/ziro2173/personal/mfds/01_coursework/01_semester/01_analysis/02_problems/ps_04/assets/p_06_07.png"
 #+end_example
 
 * Problem 7

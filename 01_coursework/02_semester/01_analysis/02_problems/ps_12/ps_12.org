@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-06-06>
-#+lastmod: <2026-06-13 17:24>
+#+lastmod: <2026-07-21 16:50>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -182,11 +182,11 @@ plt = heatmap(xs, ys, f; aspect_ratio=:equal, c=:viridis,
 t = range(0, 2π, length=400)
 plot!(plt, 2 .* cos.(t), 2 .* sin.(t); lw=2, color=:white, label="x²+y²=4")
 
-mkpath("./assets"); savefig("./assets/p_04_1.png")
+mkpath("./assets"); savefig("./assets/p_04_01.png")
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_12/assets/p_04_1.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_12/assets/p_04_01.png
 
 *** 2.
 
@@ -205,11 +205,11 @@ hline!(plt, [0]; color=:gray, ls=:dash)
 scatter!(plt, [0, π, 2π], [4, 4, 4]; color=:red,   ms=5)   # maxima
 scatter!(plt, [π/2, 3π/2], [-4, -4]; color=:green, ms=5)   # minima
 
-mkpath("./assets"); savefig("./assets/p_04_2.png")
+mkpath("./assets"); savefig("./assets/p_04_02.png")
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_12/assets/p_04_2.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_12/assets/p_04_02.png
 
 *** 3.
 

@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-23>
-#+lastmod: <2026-05-26 19:15>
+#+lastmod: <2026-07-21 16:49>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -295,11 +295,11 @@ plot!(p, 0:length(x_quadratic)-1, x_quadratic,
       label="quadratic: c^(2^k)",
       marker=:circle)
 
-savefig(joinpath(mkpath("./assets"), "p_04_4.png"))
+savefig(joinpath(mkpath("./assets"), "p_04_04.png"))
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_10/assets/p_04_4.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_10/assets/p_04_04.png
 
 *** 5.
 
