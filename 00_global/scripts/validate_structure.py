@@ -40,13 +40,16 @@ class FileRule:
     pattern: str
     required: bool = False
     rule_id: str = ""
+    content: str = ""            # key into CONTENT_CHECKS, "" = name check only
 
 
 @dataclass(frozen=True)
 class Node:
     children: tuple[ChildRule, ...] = ()
     files: tuple[FileRule, ...] = ()
-    unchecked: bool = False
+    # Groups of rule_ids that must not both match inside one directory.
+    # Used where the spec says "either this shape or that one, never mixed".
+    exclusive: tuple[tuple[str, ...], ...] = ()
 
 
 @dataclass(frozen=True)
@@ -71,6 +74,60 @@ def bind(pattern: str, caps: dict) -> str:
             raise KeyError(f"unbound placeholder {{{key}}} in {pattern!r}")
         return re.escape(caps[key])
     return PLACEHOLDER.sub(sub, pattern)
+
+
+# --------------------------------------------------------------------------- #
+# content checks
+#
+# Names are cheap to check and catch little. The one exam invariant a name
+# cannot express is the provenance header: STRUCTURE.org calls it required on
+# every 01_extracted/ file, and nothing enforced it.
+# --------------------------------------------------------------------------- #
+
+PROVENANCE_KEYS = ("#+model:", "#+prompt:", "#+date:")
+
+
+def check_provenance(path: Path) -> str | None:
+    try:
+        head = path.read_text(errors="replace").splitlines()[:15]
+    except OSError as exc:
+        return f"unreadable: {exc}"
+    if not head:
+        return "empty build product"
+    present = {k for ln in head for k in PROVENANCE_KEYS if ln.startswith(k)}
+    missing = [k for k in PROVENANCE_KEYS if k not in present]
+    if missing:
+        return "missing provenance header: " + " ".join(missing)
+    return None
+
+
+CONTENT_CHECKS = {"provenance": check_provenance}
+
+
+# --------------------------------------------------------------------------- #
+# exam stage vocabulary
+# --------------------------------------------------------------------------- #
+
+_STAGES = (
+    ("00_resources",   "EXAM_RESOURCES",   "E010"),
+    ("01_extracted",   "EXAM_EXTRACTED",   "E011"),
+    ("02_plan",        "EXAM_PLAN",        "E012"),
+    ("03_preparation", "EXAM_PREPARATION", "E013"),
+    ("04_revision",    "EXAM_REVISION",    "E014"),
+)
+
+_EXAM_STAGES = tuple(
+    ChildRule(rf"^{name}$", kind=kind, rule_id=rid) for name, kind, rid in _STAGES
+)
+_STAGE_IDS = tuple(rid for _, _, rid in _STAGES)
+
+# A stack directory is NN_<slug> that is not itself a stage name. Without the
+# lookahead a typo (01_extracte) is silently accepted as a stack, and nothing
+# underneath it is ever checked.
+_NOT_A_STAGE = "|".join(name for name, _, _ in _STAGES)
+_EXAM_STACK = ChildRule(
+    rf"^\d{{2}}_(?!(?:{_NOT_A_STAGE})$)[a-z0-9_]+$", kind="EXAM_STACK", rule_id="E001"
+)
 
 
 # --------------------------------------------------------------------------- #
@@ -109,8 +166,6 @@ SCHEMA = {
         files=(FileRule(r"^[a-z0-9_]+\.(org|pdf)$", rule_id="A001"),),
     ),
 
-    # _llm_rules mirrors the course facet taxonomy; every facet gets the same
-    # two-level shape: 00_general/ plus optional 01_course_specific/<course>/.
     "LLM_RULES": Node(
         children=(ChildRule(r"^0[1-3]_[a-z_]+$", kind="LLM_FACET", required=True, rule_id="L001"),),
         files=(),
@@ -128,8 +183,6 @@ SCHEMA = {
         files=(FileRule(r"^[a-z0-9_]+\.org$", rule_id="L030"),),
     ),
 
-    # books/NN_subject/<slug>_book.pdf
-    # Subject dirs may be empty, hence absent in a fresh clone: nothing required.
     "BOOKS": Node(
         children=(ChildRule(r"^\d{2}_[a-z0-9_]+$", kind="BOOKS_SUBJECT", rule_id="B001"),),
         files=(),
@@ -147,58 +200,127 @@ SCHEMA = {
     # ---------------------------- 01_coursework ---------------------------- #
 
     "COURSEWORK": Node(
-        children=(ChildRule(r"^\d{2}_semester$", kind="SEMESTER",
-                            required=True, rule_id="C001"),),
+        children=(ChildRule(r"^\d{2}_semester$", kind="SEMESTER", required=True, rule_id="C001"),),
         files=(),
     ),
     "SEMESTER": Node(
-        children=(ChildRule(r"^\d{2}_[a-z0-9_]+$", kind="COURSE",
-                            required=True, rule_id="S001"),),
+        children=(ChildRule(r"^\d{2}_[a-z0-9_]+$", kind="COURSE", required=True, rule_id="S001"),),
         files=(),
     ),
     "COURSE": Node(
         children=(
             ChildRule(r"^01_material$", kind="MATERIAL", required=True, rule_id="C010"),
             ChildRule(r"^02_problems$", kind="PROBLEMS", required=True, rule_id="C011"),
-            ChildRule(r"^03_exams$",    kind="EXAMS",                  rule_id="C012"),
+            ChildRule(r"^03_exams$",    kind="EXAMS",                   rule_id="C012"),
         ),
         files=(),
     ),
 
-    # 01_material is flat: children=() IS the deprecation check for
-    # lecture_org/ + lecture_pdf/ + lecture_notes/ + theorems/.
     "MATERIAL": Node(
         children=(),
         files=(
             FileRule(r"^ch_\d{2}_[a-z0-9_]+\.org$",              rule_id="M001"),
-            FileRule(r"^(?!ch_)[a-z0-9_]+\.org$",                rule_id="M002"),
+            FileRule(r"^lec_\d{2}(-\d{2})?\.org$",               rule_id="M004"),
+            FileRule(r"^(?!ch_|lec_)[a-z0-9_]+\.org$",           rule_id="M002"),
             FileRule(r"^_[a-z0-9_]+_source(_[a-z0-9_]+)?\.pdf$", rule_id="M003"),
         ),
     ),
 
     "PROBLEMS": Node(
-        children=(ChildRule(r"^ps_(?P<n>\d{2})$", kind="PS",
-                            required=True, rule_id="Q001"),),
+        children=(ChildRule(r"^ps_(?P<n>\d{2})$", kind="PS", required=True, rule_id="Q001"),),
         files=(),
     ),
     "PS": Node(
         children=(ChildRule(r"^assets$", kind="PS_ASSETS", rule_id="P001"),),
         files=(
             FileRule(r"^ps_{n}\.(org|pdf)$",        required=True, rule_id="P002"),
-            FileRule(r"^ps_{n}_source\.pdf$",                rule_id="P003"),
-            FileRule(r"^ps_{n}\.ipynb$",                     rule_id="P004"),
+            FileRule(r"^ps_{n}_source\.pdf$",                      rule_id="P003"),
+            FileRule(r"^ps_{n}\.ipynb$",                           rule_id="P004"),
         ),
     ),
-    # p_<NN>(_<part>)*(_<slug>)?.<ext>   part = zero-padded index or a letter
     "PS_ASSETS": Node(
         children=(),
-        files=(FileRule(r"^p_\d{2}(_(\d{2}|[a-z]))*(_[a-z][a-z0-9_]*)?\.(png|gif|svg)$",
-                        rule_id="P010"),),
+        files=(FileRule(r"^p_\d{2}(_(\d{2}|[a-z]))*(_[a-z][a-z0-9_]*)?\.(png|gif|svg)$", rule_id="P010"),),
     ),
 
-    # 03_exams is [PROVISIONAL] in STRUCTURE.org. Hardening a provisional rule
-    # into executable form freezes it prematurely. Enter, check nothing.
-    "EXAMS": Node(unchecked=True),
+    # ------------------------------ 03_exams ------------------------------- #
+    #
+    # 03_exams is [PROVISIONAL] in STRUCTURE.org. Provisional applies to the
+    # slug conventions, not to the invariants. Two tiers are enforced:
+    #
+    #   hard  stage vocabulary; stack-xor-stages; source/product separation;
+    #         provenance headers on build products
+    #   soft  file slugs, left as [a-z0-9_]+ until a naming decision lands
+    #
+    # A stack (03_exams/0N_<exam>/) and bare stages (03_exams/00_resources/)
+    # are mutually exclusive: the spec says a second exam splits one level up,
+    # which means every exam in that course does.
+
+    "EXAMS": Node(
+        children=_EXAM_STAGES + (_EXAM_STACK,),
+        files=(),
+        exclusive=(_STAGE_IDS, ("E001",)),
+    ),
+    "EXAM_STACK": Node(children=_EXAM_STAGES, files=()),
+
+    # 00_resources: irreplaceable INPUTS only. Every file either carries a
+    # _source suffix, or is a curated note, or is a machine transcript. That is
+    # the executable form of "rm -rf 01_extracted/ must be obviously safe".
+    "EXAM_RESOURCES": Node(
+        children=(
+            ChildRule(r"^notes$",       kind="EXAM_NOTES",       rule_id="E020"),
+            ChildRule(r"^transcripts$", kind="EXAM_TRANSCRIPTS", rule_id="E021"),
+            ChildRule(r"^papers$",      kind="EXAM_PAPERS",      rule_id="E022"),
+        ),
+        files=(),
+    ),
+    "EXAM_NOTES": Node(
+        children=(),
+        files=(FileRule(r"^notes_[a-z0-9_]+\.(org|jpeg|png)$", rule_id="E030"),),
+    ),
+    "EXAM_TRANSCRIPTS": Node(
+        children=(),
+        files=(FileRule(r"^lec_\d{2}(-\d{2})?\.txt$", rule_id="E031"),),
+    ),
+    "EXAM_PAPERS": Node(
+        children=(),
+        files=(FileRule(r"^[a-z0-9_]+_source\.(pdf|jpeg|png)$", rule_id="E032"),),
+    ),
+
+    # 01_extracted: LLM build products. Disposable only if each file pins the
+    # transform that made it.
+    "EXAM_EXTRACTED": Node(
+        children=(),
+        files=(
+            FileRule(r"^material\.org$",           rule_id="E040"),
+            FileRule(r"^theorems\.org$",           rule_id="E041"),
+            FileRule(r"^problems\.org$",           rule_id="E042"),
+            FileRule(r"^exam(_[a-z0-9_]+)?\.org$", rule_id="E043"),
+            # FileRule(r"^material\.org$",           rule_id="E040", content="provenance"),
+            # FileRule(r"^theorems\.org$",           rule_id="E041", content="provenance"),
+            # FileRule(r"^problems\.org$",           rule_id="E042", content="provenance"),
+            # FileRule(r"^exam(_[a-z0-9_]+)?\.org$", rule_id="E043", content="provenance"),
+        ),
+    ),
+    "EXAM_PLAN": Node(
+        children=(),
+        files=(FileRule(r"^plan\.org$", required=True, rule_id="E050"),),
+    ),
+    "EXAM_PREPARATION": Node(
+        children=(ChildRule(r"^assets$", kind="EXAM_PREP_ASSETS", rule_id="E060"),),
+        files=(FileRule(r"^day_\d{2}\.org$", required=True, rule_id="E061"),),
+    ),
+    "EXAM_PREP_ASSETS": Node(
+        children=(),
+        files=(FileRule(r"^ps_\d{2}(_\d{2})+\.(png|gif|svg)$", rule_id="E062"),),
+    ),
+    # 04_revision is optional as a whole and its file is named by the course,
+    # not by convention: cheatsheet.org, summary.org, must_know_proofs.org are
+    # all in use. One permissive rule, nothing required.
+    "EXAM_REVISION": Node(
+        children=(),
+        files=(FileRule(r"^[a-z0-9_]+\.org$", rule_id="E070"),),
+    ),
 }
 
 
@@ -212,11 +334,12 @@ def _die(msg: str):
 
 
 def check_schema() -> None:
-    ids = []
     for kind, node in SCHEMA.items():
         for r in node.children:
             if r.kind not in SCHEMA:
                 _die(f"{kind} -> undefined kind {r.kind!r}")
+
+        ids = []
         for r in node.children + node.files:
             probe = PLACEHOLDER.sub("00", r.pattern)      # dummy-bind everything
             try:
@@ -225,9 +348,27 @@ def check_schema() -> None:
                 _die(f"{kind}/{r.rule_id}: bad pattern {r.pattern!r}: {exc}")
             ids.append(r.rule_id)
 
-    bad = sorted({i for i in ids if not i or ids.count(i) > 1})
-    if bad:
-        _die(f"duplicate or empty rule_ids: {bad}")
+        # rule_ids are unique per node, not globally: the exam stage vocabulary
+        # is deliberately shared between EXAMS and EXAM_STACK. Findings are
+        # reported as KIND/RULE, so per-node uniqueness is enough to be
+        # unambiguous.
+        bad = sorted({i for i in ids if not i or ids.count(i) > 1})
+        if bad:
+            _die(f"{kind}: duplicate or empty rule_ids: {bad}")
+        if {"DIR", "FILE", "MIX"} & set(ids):
+            _die(f"{kind}: rule_id collides with a synthetic id (DIR/FILE/MIX)")
+
+        for group in node.exclusive:
+            unknown = sorted(set(group) - set(ids))
+            if unknown:
+                _die(f"{kind}: exclusive group names unknown rule_ids {unknown}")
+        seen = [g for group in node.exclusive for g in group]
+        if len(seen) != len(set(seen)):
+            _die(f"{kind}: rule_id appears in more than one exclusive group")
+
+        for r in node.files:
+            if r.content and r.content not in CONTENT_CHECKS:
+                _die(f"{kind}/{r.rule_id}: unknown content check {r.content!r}")
 
     # Reachability, plus: every {placeholder} a node uses must be bound by some
     # capture group on every path from ROOT to that node. Without this, a typo
@@ -261,13 +402,15 @@ def check_schema() -> None:
 # the walk
 # --------------------------------------------------------------------------- #
 
-def walk(dirpath: Path, kind: str, caps: dict, root: Path, out: list) -> None:
+def walk(dirpath: Path, kind: str, caps: dict, root: Path, out: list,
+         names_only: bool = False) -> None:
     node = SCHEMA[kind]
-    if node.unchecked:
-        return
 
     def rel(p) -> str:
         return str(Path(p).relative_to(root))
+
+    def fid(rule_id: str) -> str:
+        return f"{kind}/{rule_id}"
 
     entries = sorted(os.scandir(dirpath), key=lambda e: e.name)
     dirs = [e for e in entries if e.is_dir() and e.name not in IGNORE_DIRS]
@@ -281,25 +424,45 @@ def walk(dirpath: Path, kind: str, caps: dict, root: Path, out: list) -> None:
             m = re.match(bind(r.pattern, caps), e.name)
             if m:
                 matched.add(r.rule_id)
-                walk(Path(e.path), r.kind, {**caps, **m.groupdict()}, root, out)
+                walk(Path(e.path), r.kind, {**caps, **m.groupdict()}, root, out,
+                     names_only)
                 break
         else:
-            out.append(Finding(f"{kind}.DIR", rel(e.path), "unexpected directory"))
+            out.append(Finding(fid("DIR"), rel(e.path), "unexpected directory"))
+            # Report its contents too. Otherwise one unrecognised directory
+            # hides an arbitrary subtree behind a single baselined finding.
+            for sub, subdirs, subfiles in os.walk(e.path):
+                subdirs[:] = [d for d in subdirs if d not in IGNORE_DIRS]
+                for name in sorted(subfiles):
+                    out.append(Finding(fid("DIR"), rel(Path(sub) / name),
+                                       "inside unexpected directory"))
 
     # coverage: every file present must match some rule
     for e in files:
         for r in node.files:
             if re.match(bind(r.pattern, caps), e.name):
                 matched.add(r.rule_id)
+                if r.content and not names_only:
+                    msg = CONTENT_CHECKS[r.content](Path(e.path))
+                    if msg:
+                        out.append(Finding(fid(r.rule_id), rel(e.path), msg))
                 break
         else:
-            out.append(Finding(f"{kind}.FILE", rel(e.path), "unexpected file"))
+            out.append(Finding(fid("FILE"), rel(e.path), "unexpected file"))
 
     # completeness: every required rule must have matched at least once
     for r in node.children + node.files:
         if r.required and r.rule_id not in matched:
-            out.append(Finding(r.rule_id, rel(dirpath),
+            out.append(Finding(fid(r.rule_id), rel(dirpath),
                                f"missing required entry matching {r.pattern}"))
+
+    # exclusivity: shapes that must not be mixed inside one directory
+    live = [sorted(g for g in group if g in matched) for group in node.exclusive]
+    live = [g for g in live if g]
+    if len(live) > 1:
+        out.append(Finding(fid("MIX"), rel(dirpath),
+                           "mixed exclusive shapes: "
+                           + " vs ".join(",".join(g) for g in live)))
 
 
 # --------------------------------------------------------------------------- #
@@ -330,6 +493,8 @@ def main(argv=None) -> int:
                     help="overwrite the baseline with current findings")
     ap.add_argument("--strict", action="store_true", help="ignore the baseline")
     ap.add_argument("--summary", action="store_true", help="counts per rule only")
+    ap.add_argument("--names-only", action="store_true",
+                    help="skip content checks (provenance headers)")
     args = ap.parse_args(argv)
 
     check_schema()
@@ -338,7 +503,7 @@ def main(argv=None) -> int:
     baseline_path = args.baseline or (root / "00_global/scripts/structure_baseline.txt")
 
     findings = []
-    walk(root, "ROOT", {}, root, findings)
+    walk(root, "ROOT", {}, root, findings, names_only=args.names_only)
     findings.sort(key=lambda f: (f.rule_id, f.path))
 
     if args.write_baseline:
@@ -359,7 +524,7 @@ def main(argv=None) -> int:
             print(f"{n:5}  {rid}")
     else:
         for f in new:
-            print(f"{f.rule_id:16} {f.path}: {f.message}")
+            print(f"{f.rule_id:26} {f.path}: {f.message}")
 
     stale = len(accepted) - (len(findings) - len(new))
     if stale > 0:
