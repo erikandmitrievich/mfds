@@ -5,15 +5,6 @@
 # when any two disagree, one of them is wrong.
 #
 #   just                 list recipes
-#   just check           what pre-commit runs
-#   just transcribe analysis
-#
-# Course arguments are slugs, not paths: `analysis`, not
-# `01_coursework/02_semester/01_analysis` -- though a path is accepted too.
-# Slug resolution is by suffix match and fails loudly on ambiguity.
-#
-# Portability: macOS /bin/bash is 3.2. No mapfile, no associative arrays,
-# no ${x^^}. If a recipe needs bash 4, it is wrong.
 
 set shell := ["bash", "-euo", "pipefail", "-c"]
 

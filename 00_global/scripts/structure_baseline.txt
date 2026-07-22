@@ -1,1 +1,0 @@
-# accepted structure violations - may only shrink
