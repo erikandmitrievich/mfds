@@ -130,6 +130,24 @@ ps-total-to COURSE OUT:
     {{py}} {{scripts}}/ps_total.py --ps-dir "$dir/02_problems" --out "{{OUT}}"
 
 # ---------------------------------------------------------------------------
+# extraction (Anthropic API — needs ANTHROPIC_API_KEY)
+# ---------------------------------------------------------------------------
+
+# extract a problem-set PDF into ps_NN.org
+ps-extract COURSE NN *ARGS="":
+    @dir=$(just course-dir {{COURSE}}); \
+    nn=$(printf '%02d' "{{NN}}"); \
+    ps="$dir/02_problems/ps_$nn"; \
+    {{py}} {{scripts}}/ps_extraction.py \
+        --pdf  "$ps/ps_${nn}_source.pdf" \
+        --rule "{{root}}/00_global/_llm_rules/02_problems/ps_extraction_api.org" \
+        --out  "$ps/ps_${nn}.org" {{ARGS}}
+
+# show what ps-extract would do, without calling the API
+ps-extract-plan COURSE NN:
+    @just extract-ps {{COURSE}} {{NN}} --dry-run
+
+# ---------------------------------------------------------------------------
 # exam preparation
 # ---------------------------------------------------------------------------
 
