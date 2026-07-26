@@ -16,43 +16,109 @@ _default:
     @just --list --unsorted
 
 # ---------------------------------------------------------------------------
-# structure
+# validate structure
 # ---------------------------------------------------------------------------
 
 # validate the tree against STRUCTURE.org (baseline honoured)
+[group('validate structure')]
 validate:
     @{{py}} {{scripts}}/validate_structure.py
 
 # validate ignoring the baseline -- the real state
+[group('validate structure')]
 validate-strict:
     @{{py}} {{scripts}}/validate_structure.py --strict
 
 # counts per rule, no paths
+[group('validate structure')]
 validate-summary:
     @{{py}} {{scripts}}/validate_structure.py --summary
 
 # also check provenance headers on 01_extracted/ products
+[group('validate structure')]
 validate-content:
     @{{py}} {{scripts}}/validate_structure.py --content
 
 # accept the current findings; the baseline may only ever shrink
-baseline:
+[group('validate structure')]
+validate-baseline:
     @{{py}} {{scripts}}/validate_structure.py --write-baseline
 
 # how far from a clean tree: strict findings, counted per rule
-debt:
+[group('validate structure')]
+validate-debt:
     @{{py}} {{scripts}}/validate_structure.py --strict --summary || true
 
 # what the pre-commit hook runs
-check: validate
+[group('validate structure')]
+validate-check: validate
 
 # point git at the tracked hooks (run once per clone)
-hooks:
+[group('validate structure')]
+validate-hooks:
     @cd {{root}} && git config core.hooksPath 00_global/scripts/hooks
     @echo "core.hooksPath -> 00_global/scripts/hooks"
 
 # ---------------------------------------------------------------------------
-# course resolution
+# problem sets
+# ---------------------------------------------------------------------------
+
+# extract a problem-set PDF into ps_NN.org
+[group('problem sets')]
+ps-extract COURSE NN *ARGS="":
+    @dir=$(just course-dir {{COURSE}}); \
+    nn=$(printf '%02d' "{{NN}}"); \
+    ps="$dir/02_problems/ps_$nn"; \
+    {{py}} {{scripts}}/ps_extraction.py \
+        --pdf  "$ps/ps_${nn}_source.pdf" \
+        --rule "{{root}}/00_global/_llm_rules/02_problems/ps_extraction_api.org" \
+        --out  "$ps/ps_${nn}.org" {{ARGS}}
+
+# ---------------------------------------------------------------------------
+# exam preparation
+# ---------------------------------------------------------------------------
+
+# concatenate every ps_NN.org (ps_total.org)
+[group('exam')]
+exam-ps-total COURSE:
+    @dir=$(just course-dir {{COURSE}}); \
+    {{py}} {{scripts}}/ps_total.py --ps-dir "$dir/02_problems" --out "$dir/02_problems/ps_total.org"
+
+# build day_NN.org files from a plan.org
+[group('exam')]
+exam-days COURSE EXAM="" *ARGS="":
+    @dir=$(just course-dir {{COURSE}}); \
+    stack="$dir/03_exams{{ if EXAM != "" { "/" + EXAM } else { "" } }}"; \
+    {{py}} {{scripts}}/build_day_files_exam_preparation.py \
+        --plan "$stack/02_plan/plan.org" \
+        --out-dir "$stack/03_preparation" \
+        --ps-dir "$dir/02_problems" {{ARGS}}
+
+# Per-course vocabulary lives here rather than in a file, because
+# 00_global/scripts/ admits only *.py under SCRIPTS/T001 -- a vocab/ directory
+# would need a new schema node for four lines of text. Revisit if it grows.
+#
+# Prime with terms Whisper actually mangles, not with terms that merely appear.
+
+[private]
+vocab COURSE:
+    @case "{{COURSE}}" in \
+      *analysis) echo "Fréchet derivative, Jacobian, Banach space, Banach fixed point theorem, Taylor polynomial, Newton's method, gradient descent, convex function, Hessian, Lagrange multipliers, tangent space, submanifold, implicit function theorem, local extremum, KKT, positive definite, eigenvector, Julia." ;; \
+      *linear_algebra) echo "eigenvalue, eigenvector, characteristic polynomial, Jordan normal form, orthogonal complement, Gram-Schmidt, singular value decomposition, bilinear form, quadratic form, kernel, image, rank-nullity, diagonalisable, unitary, Hermitian, determinant, trace." ;; \
+      *algorithms) echo "loop invariant, insertion sort, merge sort, quicksort, asymptotic notation, big O, Theta, Omega, recurrence relation, master theorem, divide and conquer, binary search tree, red-black tree, hash table, dynamic programming, amortised analysis, CLRS." ;; \
+      *) echo "" ;; \
+    esac
+
+# transcribe audio in a course's exam resources
+[group('exam')]
+exam-transcribe COURSE EXAM="" *ARGS="":
+    @dir=$(just course-dir {{COURSE}}); \
+    res="$dir/03_exams{{ if EXAM != "" { "/" + EXAM } else { "" } }}/00_resources"; \
+    test -d "$res" || { echo "no such resources dir: $res" >&2; exit 1; }; \
+    {{py}} {{scripts}}/transcribe.py "$res" --prompt "$(just vocab {{COURSE}})" {{ARGS}}
+
+# ---------------------------------------------------------------------------
+# helpers
 # ---------------------------------------------------------------------------
 
 # print the directory for a course slug or path
@@ -77,102 +143,24 @@ course-dir COURSE:
     echo "{{root}}/$matches"
 
 # list every course slug
+[group('helpers')]
 courses:
     @cd {{root}} && find 01_coursework -mindepth 2 -maxdepth 2 -type d \
         | sort | sed 's|.*/||'
 
 # resolve a slug and print the path (debugging)
+[group('helpers')]
 where COURSE:
     @just course-dir {{COURSE}}
 
-# ---------------------------------------------------------------------------
-# transcription
-# ---------------------------------------------------------------------------
-#
-# Per-course vocabulary lives here rather than in a file, because
-# 00_global/scripts/ admits only *.py under SCRIPTS/T001 -- a vocab/ directory
-# would need a new schema node for four lines of text. Revisit if it grows.
-#
-# Prime with terms Whisper actually mangles, not with terms that merely appear.
-
-[private]
-vocab COURSE:
-    @case "{{COURSE}}" in \
-      *analysis) echo "Fréchet derivative, Jacobian, Banach space, Banach fixed point theorem, Taylor polynomial, Newton's method, gradient descent, convex function, Hessian, Lagrange multipliers, tangent space, submanifold, implicit function theorem, local extremum, KKT, positive definite, eigenvector, Julia." ;; \
-      *linear_algebra) echo "eigenvalue, eigenvector, characteristic polynomial, Jordan normal form, orthogonal complement, Gram-Schmidt, singular value decomposition, bilinear form, quadratic form, kernel, image, rank-nullity, diagonalisable, unitary, Hermitian, determinant, trace." ;; \
-      *algorithms) echo "loop invariant, insertion sort, merge sort, quicksort, asymptotic notation, big O, Theta, Omega, recurrence relation, master theorem, divide and conquer, binary search tree, red-black tree, hash table, dynamic programming, amortised analysis, CLRS." ;; \
-      *) echo "" ;; \
-    esac
-
-# transcribe audio in a course's exam resources (add EXAM for a split stack: 01_lecture_exam)
-transcribe COURSE EXAM="" *ARGS="":
-    @dir=$(just course-dir {{COURSE}}); \
-    res="$dir/03_exams{{ if EXAM != "" { "/" + EXAM } else { "" } }}/00_resources"; \
-    test -d "$res" || { echo "no such resources dir: $res" >&2; exit 1; }; \
-    {{py}} {{scripts}}/transcribe.py "$res" --prompt "$(just vocab {{COURSE}})" {{ARGS}}
-
-# show what transcribe would do, without doing it
-transcribe-plan COURSE EXAM="":
-    @just transcribe {{COURSE}} "{{EXAM}}" --dry-run
-
-# ---------------------------------------------------------------------------
-# problem sets
-# ---------------------------------------------------------------------------
-
-# concatenate every ps_NN.org statement in a course into one org block (stdout)
-ps-total COURSE:
-    @dir=$(just course-dir {{COURSE}}); \
-    {{py}} {{scripts}}/ps_total.py --ps-dir "$dir/02_problems"
-
-# same, written to a file
-ps-total-to COURSE OUT:
-    @dir=$(just course-dir {{COURSE}}); \
-    {{py}} {{scripts}}/ps_total.py --ps-dir "$dir/02_problems" --out "{{OUT}}"
-
-# ---------------------------------------------------------------------------
-# extraction (Anthropic API — needs ANTHROPIC_API_KEY)
-# ---------------------------------------------------------------------------
-
-# extract a problem-set PDF into ps_NN.org
-ps-extract COURSE NN *ARGS="":
-    @dir=$(just course-dir {{COURSE}}); \
-    nn=$(printf '%02d' "{{NN}}"); \
-    ps="$dir/02_problems/ps_$nn"; \
-    {{py}} {{scripts}}/ps_extraction.py \
-        --pdf  "$ps/ps_${nn}_source.pdf" \
-        --rule "{{root}}/00_global/_llm_rules/02_problems/ps_extraction_api.org" \
-        --out  "$ps/ps_${nn}.org" {{ARGS}}
-
-# show what ps-extract would do, without calling the API
-ps-extract-plan COURSE NN:
-    @just extract-ps {{COURSE}} {{NN}} --dry-run
-
-# ---------------------------------------------------------------------------
-# exam preparation
-# ---------------------------------------------------------------------------
-
-# build day_NN.org files from a plan.org
-days COURSE EXAM="" *ARGS="":
-    @dir=$(just course-dir {{COURSE}}); \
-    stack="$dir/03_exams{{ if EXAM != "" { "/" + EXAM } else { "" } }}"; \
-    {{py}} {{scripts}}/build_day_files_exam_preparation.py \
-        --plan "$stack/02_plan/plan.org" \
-        --out-dir "$stack/03_preparation" \
-        --ps-dir "$dir/02_problems" {{ARGS}}
-
-# preview the day files without writing
-days-plan COURSE EXAM="":
-    @just days {{COURSE}} "{{EXAM}}" --dry-run
-
-# ---------------------------------------------------------------------------
-# reporting
-# ---------------------------------------------------------------------------
 
 # repository analytics
+[group('helpers')]
 stats:
     @cd {{root}} && {{py}} {{scripts}}/repository_stats.py
 
 # regenerate the tree snapshot in 00_global/_archive/
+[group('helpers')]
 tree:
     @cd {{root}} && \
     { echo "#+title: Tree"; echo; echo "#+begin_example"; \
