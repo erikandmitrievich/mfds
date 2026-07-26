@@ -4,7 +4,6 @@ import re
 import sys
 from pathlib import Path
 import argparse
-from pathlib import Path
 
 def extract_problems(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -110,13 +109,11 @@ def clean_content(content_lines, citation_pat, b_quote_pat, e_quote_pat):
 def main() -> int:
     ap = argparse.ArgumentParser(
         description="Concatenate the Task sections of every ps_NN.org under a "
-                    "problem-set directory into one org block.")
+                    "problem-set directory into one org file.")
     ap.add_argument("--ps-dir", type=Path, default=Path.cwd(),
                     help="directory containing ps_NN/ (default: cwd)")
-    ap.add_argument("--out", type=Path, default=None,
-                    help="write here instead of stdout")
-    ap.add_argument("--raw", action="store_true",
-                    help="omit the #+begin_src org wrapper")
+    ap.add_argument("--out", type=Path, required=True,
+                    help="output file to write")
     args = ap.parse_args()
 
     if not args.ps_dir.is_dir():
@@ -137,14 +134,9 @@ def main() -> int:
             print(f"error processing {path}: {exc}", file=sys.stderr)
             failed += 1
 
-    body = "".join(l if l.endswith("\n") else l + "\n" for l in lines)
-    text = body if args.raw else f"#+begin_src org\n{body}#+end_src\n"
-
-    if args.out:
-        args.out.write_text(text, encoding="utf-8")
-        print(f"wrote {len(org_files) - failed} file(s) -> {args.out}", file=sys.stderr)
-    else:
-        sys.stdout.write(text)
+    text = "".join(l if l.endswith("\n") else l + "\n" for l in lines)
+    args.out.write_text(text, encoding="utf-8")
+    print(f"wrote {len(org_files) - failed} file(s) -> {args.out}", file=sys.stderr)
     return 1 if failed else 0
 
 
