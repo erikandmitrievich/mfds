@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-27>
-#+lastmod: <2026-07-10 11:57>
+#+lastmod: <2026-07-27 22:21>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -25,8 +25,17 @@ Single source of truth for directory layout and file naming in this repository.
 - =00_global/prompts/= holds task instructions for LLM-assisted work; it
   references this file for naming and must not restate it.
 
-When this file and =scripts/validate_structure.py= disagree, one of them is
-wrong — fix it. They must not drift.
+=00_global/scripts/validate_structure.py= is the executable form of this file.
+When the two disagree, *the validator wins and this file is the one that gets
+fixed*. Every rule below is tagged with the validator rule id that enforces it
+(=R014=, =M004=, …); the full list is in [[*Rule index][Rule index]]. A rule
+stated here with no id is not enforced, and the tag =[UNENFORCED]= says so out
+loud.
+
+*Scope.* Both files describe the directory tree only: which directories may
+exist where, what files may be named, what must be present. Neither reads file
+contents. Header conventions, =CUSTOM_ID= format and math-delimiter rules are
+content questions and belong to a separate validator that does not exist yet.
 
 * Naming rules — apply everywhere
 
@@ -34,138 +43,222 @@ wrong — fix it. They must not drift.
 - No spaces, no =&=, no quotes. Every name must survive shell globbing unquoted.
 - Numeric prefixes (=NN_=) pin sort order. They denote *parallel categories*,
   not a sequence — =01_material= is not "before" =02_problems= in any real sense.
-- Zero-pad numbers to width two: =ps_01=, =lecture_07=, =p_03.png= — never
-  =ps_1= or =p_9.png=.
+- Zero-pad numbers to width two: =ps_01=, =lec_07=, =p_03.png= — never =ps_1=
+  or =p_9.png=.
 - Leading =_= marks non-content: machinery directories and raw upstream files.
   It sorts them to the top.
-- The =_source= suffix marks upstream, unedited input: =analysis_source.pdf=,
+- The =_source= suffix marks upstream, unedited input: =ws2024_source.pdf=,
   =ps_01_source.pdf=.
+
+These are stated once here and then enforced per-directory by the patterns
+below; there is no global name check.
 
 * Top level
 
 #+begin_example
-00_global/        repo machinery — not course content
-01_coursework/    all study material
-                  (02_thesis/ reserved if a thesis ever needs its own tree)
-README.md         overview
-LICENSE
-STRUCTURE.org     this file
+00_global/        repo machinery — not course content     required   R001
+01_coursework/    all study material                      required   R002
+README.md         overview                                required   R010
+LICENSE                                                   required   R011
+STRUCTURE.org     this file                               required   R012
+justfile          task runner; entry point for validation required   R014
+.gitignore                                                optional   R013
 #+end_example
+
+Nothing else may sit at the repo root. =02_thesis/= has been discussed as a
+reservation for a thesis tree; it is *not* in the schema, and creating it today
+produces a =ROOT/DIR= finding. Adding it means adding a rule.  [UNENFORCED]
 
 * 00_global/
 
 #+begin_example
-archive/       repo meta-docs: history, rationale, reorganisation log, tree.org
-prompts/       task instructions for LLM-assisted work;
-               mirrors the course facet taxonomy below
-books/         reference textbooks, grouped by subject (NN_subject/)
-scripts/       repo tooling
+prompts/       task instructions for LLM-assisted work    required   G002
+scripts/       repo tooling                               required   G004
+archive/       repo meta-docs: history, rationale, tree.org  opt     G001
+books/         reference textbooks, grouped by subject       opt     G003
 #+end_example
+
+** prompts/
+
+Facet directories mirror the course facet taxonomy, restricted to the three
+facets that exist: =01_material/=, =02_problems/=, =03_exams/= (=L001=,
+required — at least one facet directory must be present).
+
+#+begin_example
+prompts/
+    0N_<facet>/                       L001   01|02|03 only
+        <slug>.org                    L011   facet-wide rules
+        course_specific/              L010   optional
+            NN_<course>/              L020   required if course_specific/ exists
+                <slug>.org            L030
+#+end_example
+
+There is no =00_general/= and no =01_course_specific/=: general rules are the
+=.org= files sitting directly in the facet directory, and the split directory is
+named =course_specific= with no numeric prefix.
+
+** scripts/
+
+#+begin_example
+scripts/
+    <slug>.py                         T001
+    structure_baseline.txt            T003   written by --write-baseline
+    hooks/                            T002   optional
+        pre-commit                    T010   also: commit-msg, pre-push,
+                                             prepare-commit-msg
+#+end_example
+
+Git hooks are repo machinery and are versioned here rather than in =.git/=.
+Enable with:
+
+#+begin_src sh
+git config core.hooksPath 00_global/scripts/hooks
+#+end_src
+
+Only =.py= is admitted under =scripts/= (=T001=). A shell script or a Julia
+script here is a finding — decide where it goes before writing it.
+
+** archive/ and books/
+
+#+begin_example
+archive/<slug>.org  or  <slug>.pdf    A001
+books/NN_<subject>/<slug>_book.pdf    B001, B010
+#+end_example
+
+The =_book.pdf= suffix is mandatory: it is what distinguishes a textbook from
+anything else that might drift into the directory.
 
 * 01_coursework/
 
-Layout:
-
 #+begin_example
-01_coursework/NN_semester/NN_course/<facet>/
+01_coursework/NN_semester/NN_<course>/<facet>/
 #+end_example
 
-Semesters are =NN_semester=. Courses are =NN_course=
-(=00_steop=, =01_analysis=, =02_linear_algebra=, ...).
+Semesters are literally =NN_semester= (=C001=, at least one required). Courses
+are =NN_<slug>= (=S001=, at least one required per semester): =00_steop=,
+=01_analysis=, =02_linear_algebra=, …
 
 ** Course facets — the contract
 
-Every course directory contains exactly these facets:
+#+begin_example
+01_material/    lecture and reading notes           optional   C010
+02_problems/    problem sets                        required   C011
+03_exams/       present once the course has exams   optional   C012
+#+end_example
 
-- =01_material/= — required
-- =02_problems/= — required
-- =03_exams/=    — present once the course has had exams
-
-No other directories at the course level.
+No other directories at the course level. Note the asymmetry: only
+=02_problems/= is required. A course with no notes and no exam yet is legal; a
+course with no problem sets is not.
 
 ** 01_material/
 
-Flat. *No subdirectories.*
+Flat. *No subdirectories* — the node has no child rules, so any directory here
+is a finding.
 
-- =ch_NN_slug.org=  — chapter-aligned notes, or
-- =slug.org=        — topic-aligned notes (e.g. =induction.org=)
-- =theorems.org=    — consolidated theorem index, if the course warrants one
-- =_<subject>_source.pdf= — the single upstream source document
+#+begin_example
+ch_NN_<slug>.org              M001   chapter-aligned notes
+lec_NN.org / lec_NN-NN.org    M004   lecture-aligned notes; NN-NN = a range
+<slug>.org                    M002   topic-aligned (induction.org,
+                                     theorems.org); must NOT start ch_ or lec_
+_<slug>_source[_<qualifier>].pdf   M003   upstream source document
+#+end_example
 
-The semester-2 shape is canonical. The =lecture_org/= + =lecture_pdf/= format
-split and the =lecture_notes/= nesting are *deprecated* — retrofit older
-courses to the flat shape.
+=theorems.org= has no rule of its own here; it is an ordinary =M002= slug file.
+=M003= permits a qualifier (=_analysis_source_02_semester.pdf=), so more than
+one source PDF per course is legal.
+
+The =lecture_org/= + =lecture_pdf/= format split and the =lecture_notes/=
+nesting are *deprecated* — retrofit older courses to the flat shape. The
+semester-2 shape is canonical.
 
 ** 02_problems/
 
-One directory per problem set:
+One directory per problem set, =ps_NN/= (=Q001=, at least one required). The
+=NN= is captured and every file inside must repeat it — =ps_03/ps_04.org= is a
+finding, not a near-miss.
 
 #+begin_example
 02_problems/ps_NN/
-    ps_NN.org           worked solutions (required)
-    ps_NN_source.pdf    the original problem sheet
-    ps_NN.ipynb         code — only when a problem needs it
-    assets/             images used by ps_NN.org; named p_NN[_x].png
+    ps_NN.org  or  ps_NN.pdf   P002   required (either extension satisfies it)
+    ps_NN_source.pdf           P003   the original problem sheet
+    ps_NN.ipynb                P004   code — only when a problem needs it
+    assets/                    P001
+        p_NN[_NN|_a]*[_<slug>].{png,gif,svg}    P010
 #+end_example
 
 Every problem set is a =ps_NN/= directory, even if it would hold a single
-file — the uniform shape is the point.
+file — the uniform shape is the point. There is no rule admitting loose files
+directly under =02_problems/=: an aggregate such as =ps_total.org= currently has
+no legal home and reports as =PROBLEMS/FILE=.  [DECIDE]
 
 ** 03_exams/   [PROVISIONAL — ratify once all semester-2 courses conform; algorithms is still on the pre-split layout]
 
+Provisional applies to the file slugs, not to the invariants. Two tiers:
+
+- *hard*: the stage vocabulary, stack-xor-stages, source/product separation.
+- *soft*: file slugs, left permissive until a naming decision lands.
+
 Five stage-numbered slots. The number encodes the *role*, not sequence
-position: unused stages are simply absent and the rest do NOT renumber
-(cf. semester-1 STEOP =01_lecture_exam/= runs 00→01→02→04, no 03).
-Typical minimum populated is 00→01→02.
+position: unused stages are simply absent and the rest do NOT renumber (STEOP
+=01_lecture_exam/= runs 00→01→02→04, no 03). *No stage is required* —
+typical minimum populated is 00→01→02, but that is a habit, not a rule.
 
 #+begin_example
 03_exams/
-    00_resources/     irreplaceable INPUTS — cannot be regenerated
-        notes/          notes_<name>.{org,jpeg}   own + crowdsourced; distilled recording intel
-        transcripts/    lec_NN.txt                machine transcripts (see Recordings)
-    01_extracted/     LLM BUILD PRODUCTS — disposable, regenerable from 00_ + rules
-        material.org    synthesis spine; + course-dependent:
-                          theorems.org                       proof-heavy course
-                          problems.org                       computation-heavy course
-                          <paper>.org / <paper>_solution.org past-paper course
-    02_plan/          plan.org               preparation plan, built from 01_
-    03_preparation/   day_NN.org, assets/    worked preparation
-    04_revision/      cheatsheet.org         final condensed pass (optional)
+    00_resources/     irreplaceable INPUTS — cannot be regenerated       E010
+        notes/                                                           E020
+            notes_<slug>.{org,jpeg,png}                                  E030
+        transcripts/                                                     E021
+            lec_NN.txt / lec_NN-NN.txt   machine transcripts             E031
+        papers/                                                          E022
+            <slug>_source.{pdf,jpeg,png}   past papers, scans            E032
+    01_extracted/     LLM BUILD PRODUCTS — disposable                    E011
+        material.org                     synthesis spine                 E040
+        theorems.org                     proof-heavy course              E041
+        problems.org                     computation-heavy course        E042
+        exam[_<slug>].org                past-paper course               E043
+    02_plan/                                                             E012
+        plan.org                         required if 02_plan/ exists     E050
+    03_preparation/                                                      E013
+        day_NN.org                       required if the stage exists    E061
+        assets/                                                          E060
+            ps_NN_NN[_NN].{png,gif,svg}                                  E062
+    04_revision/      final condensed pass                               E014
+        <slug>.org    cheatsheet.org, summary.org, must_know_proofs.org  E070
 #+end_example
+
+Nothing in =01_extracted/= is required: which products a course needs is a
+property of the course, not of the schema. Past-paper products must carry the
+=exam= prefix (=exam_ws2024.org=, =exam_ws2024_solution.org=) — a bare
+=ws2024.org= is a finding. Sources for those papers live in
+=00_resources/papers/= as =ws2024_source.pdf=.
 
 *Core invariant.* =00_resources/= (sources) and =01_extracted/= (products) are
 never conflated. Test: =rm -rf 01_extracted/ && regenerate= must be obviously
 safe. If deleting a file loses information you cannot reproduce, it belongs in
-=00_resources/=, not =01_extracted/=.
+=00_resources/=, not =01_extracted/=. The three =00_resources/= subdirectories
+are the executable form of this: every file there is either a =_source= capture,
+a curated note, or a machine transcript.
 
 *Multiple distinct exams* → split one level up, each a full stack:
 =03_exams/0N_<exam_name>/{00_resources,…}= (STEOP: =01_lecture_exam/=,
 =02_exercise_exam/=).
 
+The two shapes are *mutually exclusive* inside one =03_exams/= (=EXAMS/MIX=): if
+a course splits, every exam in that course splits. A stack directory is
+=NN_<slug>= where =<slug>= is not itself a stage name, so =01_extracte/= is
+caught as a typo rather than silently accepted as a stack.
+
 *Recordings.* Audio (=.m4a=/=.mp3=) is transient and NOT committed;
-=00_global/scripts/{m4a,mp3}_to_txt.py= converts it to =lec_NN.txt= in
-=transcripts/=. The "professor previews the exam" case: transcribe, then distil
-the exam-relevant part into a =notes/= file. Recordings enter the pipeline as
+=00_global/scripts/transcribe.py= converts it to =lec_NN.txt= in =transcripts/=.
+The "professor previews the exam" case: transcribe, then distil the
+exam-relevant part into a =notes/= file. Recordings enter the pipeline as
 transcripts (machine) or notes (curated) — never as raw audio.
 
 *Raw / irreplaceable captures* are marked by a =_source= filename suffix in
 place, not a =_raw/= dir: =page_NN_source.jpeg=, =ps_NN_source.pdf=. (Leading-
 underscore material PDFs =_<course>_source_NN_semester.pdf= are the unresolved
 repo-wide =_= question — out of scope here.)
-
-*Reproducibility header — required on every =01_extracted/= file.* The layout
-makes products disposable; it does NOT make them deterministic. Pin the
-transform in the file:
-
-#+begin_src org
-#+model:  claude-opus-4-8
-#+prompt: 00_global/prompts/03_exams/course_specific/<course>/<rule>.org@<sha>
-#+date:   2026-07-09
-#+end_src
-
-Rules live centrally under =00_global/prompts/03_exams/= (=00_general= +
-=01_course_specific/<course>=), not inside the exam folder — this header is the
-only pointer from a product back to the exact rule + model that produced it.
 
 * Source vs derived files   [DECIDE]
 
@@ -175,8 +268,106 @@ only pointer from a product back to the exact rule + model that produced it.
   rebuild on demand. If you instead choose to commit exports, commit them for
   *every* =.org= — no partial coverage, which is the current inconsistent state.
 
+The validator cannot adjudicate this: =P002= accepts =ps_NN.org= or =ps_NN.pdf=
+interchangeably, so both the tracked-export and the gitignored-export worlds
+pass. Deciding means changing =P002=.  [UNENFORCED]
+
 * Enforcement
 
-=scripts/validate_structure.py= checks the rules above. This file is the
-human-readable spec; the validator is the executable one. A change to the
-convention is not done until both are updated.
+=00_global/scripts/validate_structure.py= walks the tree and reports every
+directory and file that no rule admits, every required rule that matched
+nothing, and every mixed exclusive shape.
+
+#+begin_example
+just validate            the normal entry point
+--strict                 ignore the baseline
+--summary                counts per rule only
+--write-baseline         overwrite the baseline with current findings
+--baseline PATH          default: 00_global/scripts/structure_baseline.txt
+#+end_example
+
+Exit codes: =0= clean (no findings outside the baseline), =1= new findings,
+=2= schema bug — the validator self-checks its own rule table at startup and
+refuses to run if a rule id is duplicated, a pattern does not compile, a kind is
+unreachable, or a =NN= placeholder is unbound.
+
+*The baseline is a debt register, not an exemption list.* It records violations
+that exist and are accepted for now, and it may only ever shrink. The validator
+prints a warning when a baselined finding stops occurring, which is the signal
+to rewrite it smaller.
+
+A change to the convention is not done until both files are updated.
+
+* Rule index
+
+Derived from =SCHEMA= in the validator. This table is the exact surface on which
+the two files must agree — if a row here has no counterpart above, one of the
+two is stale. Regenerate rather than hand-edit.
+
+Findings are reported as =KIND/RULE=. Rule ids are unique per node, not
+globally: the exam stage vocabulary is deliberately shared between =EXAMS= and
+=EXAM_STACK=. =DIR=, =FILE= and =MIX= are synthetic ids for, respectively, an
+unexpected directory, an unexpected file, and mixed exclusive shapes.
+
+#+begin_example
+ROOT                 R001 dir  00_global                          required
+                     R002 dir  01_coursework                      required
+                     R010 file README\.md                         required
+                     R011 file LICENSE                            required
+                     R012 file STRUCTURE\.org                     required
+                     R013 file \.gitignore
+                     R014 file justfile                           required
+GLOBAL               G001 dir  archive
+                     G002 dir  prompts                            required
+                     G003 dir  books
+                     G004 dir  scripts                            required
+ARCHIVE              A001 file [a-z0-9_]+\.(org|pdf)
+PROMPTS              L001 dir  0[1-3]_[a-z_]+                     required
+PROMPT_FACET         L010 dir  course_specific
+                     L011 file [a-z0-9_]+\.org
+PROMPT_COURSE_SPLIT  L020 dir  \d{2}_[a-z0-9_]+                   required
+PROMPT_COURSE_DIR    L030 file [a-z0-9_]+\.org
+BOOKS                B001 dir  \d{2}_[a-z0-9_]+
+BOOKS_SUBJECT        B010 file [a-z0-9_]+_book\.pdf
+SCRIPTS              T001 file [a-z0-9_]+\.py
+                     T002 dir  hooks
+                     T003 file structure_baseline\.txt
+HOOKS                T010 file (pre-commit|commit-msg|pre-push|prepare-commit-msg)
+COURSEWORK           C001 dir  \d{2}_semester                     required
+SEMESTER             S001 dir  \d{2}_[a-z0-9_]+                   required
+COURSE               C010 dir  01_material
+                     C011 dir  02_problems                        required
+                     C012 dir  03_exams
+MATERIAL             M001 file ch_\d{2}_[a-z0-9_]+\.org
+                     M002 file (?!ch_|lec_)[a-z0-9_]+\.org
+                     M003 file _[a-z0-9_]+_source(_[a-z0-9_]+)?\.pdf
+                     M004 file lec_\d{2}(-\d{2})?\.org
+PROBLEMS             Q001 dir  ps_(?P<n>\d{2})                    required
+PS                   P001 dir  assets
+                     P002 file ps_{n}\.(org|pdf)                  required
+                     P003 file ps_{n}_source\.pdf
+                     P004 file ps_{n}\.ipynb
+PS_ASSETS            P010 file p_\d{2}(_(\d{2}|[a-z]))*(_[a-z][a-z0-9_]*)?\.(png|gif|svg)
+EXAMS                E010 dir  00_resources     ]
+                     E011 dir  01_extracted     ]
+                     E012 dir  02_plan          ] exclusive with E001
+                     E013 dir  03_preparation   ]
+                     E014 dir  04_revision      ]
+                     E001 dir  \d{2}_<not-a-stage-name>
+EXAM_STACK           E010..E014  as above
+EXAM_RESOURCES       E020 dir  notes
+                     E021 dir  transcripts
+                     E022 dir  papers
+EXAM_NOTES           E030 file notes_[a-z0-9_]+\.(org|jpeg|png)
+EXAM_TRANSCRIPTS     E031 file lec_\d{2}(-\d{2})?\.txt
+EXAM_PAPERS          E032 file [a-z0-9_]+_source\.(pdf|jpeg|png)
+EXAM_EXTRACTED       E040 file material\.org
+                     E041 file theorems\.org
+                     E042 file problems\.org
+                     E043 file exam(_[a-z0-9_]+)?\.org
+EXAM_PLAN            E050 file plan\.org                          required
+EXAM_PREPARATION     E060 dir  assets
+                     E061 file day_\d{2}\.org                     required
+EXAM_PREP_ASSETS     E062 file ps_\d{2}(_\d{2})+\.(png|gif|svg)
+EXAM_REVISION        E070 file [a-z0-9_]+\.org
+#+end_example

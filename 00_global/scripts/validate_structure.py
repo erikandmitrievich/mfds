@@ -2,7 +2,10 @@
 """Executable form of STRUCTURE.org.
 
 STRUCTURE.org is the human-readable spec; this file is the machine-readable one.
-When they disagree, one of them is wrong.
+When they disagree, this file wins and STRUCTURE.org gets fixed.
+
+Scope is the directory tree: which directories may exist where, what files may
+be named, what must be present. File contents are never read.
 
 Exit codes:
     0  no findings outside the baseline
@@ -40,7 +43,6 @@ class FileRule:
     pattern: str
     required: bool = False
     rule_id: str = ""
-    content: str = ""            # key into CONTENT_CHECKS, "" = name check only
 
 
 @dataclass(frozen=True)
@@ -77,35 +79,12 @@ def bind(pattern: str, caps: dict) -> str:
 
 
 # --------------------------------------------------------------------------- #
-# content checks
-#
-# Names are cheap to check and catch little. The one exam invariant a name
-# cannot express is the provenance header: STRUCTURE.org calls it required on
-# every 01_extracted/ file.
-#
-# OPT-IN (--content). The headers are not yet applied repo-wide, so running
-# this by default would bury the name findings. The rules stay declared rather
-# than commented out: a commented rule is drift, a gated rule is a decision.
+# Scope: names and shapes only. This validator reads the directory tree, never
+# file contents. Anything that requires opening a file -- header conventions,
+# CUSTOM_ID format, math delimiters -- belongs to a separate content validator,
+# not here. Keeping the boundary sharp is why there is no --content flag: an
+# empty extension point is the same drift as a commented-out rule.
 # --------------------------------------------------------------------------- #
-
-PROVENANCE_KEYS = ("#+model:", "#+prompt:", "#+date:")
-
-
-def check_provenance(path: Path) -> str | None:
-    try:
-        head = path.read_text(errors="replace").splitlines()[:15]
-    except OSError as exc:
-        return f"unreadable: {exc}"
-    if not head:
-        return "empty build product"
-    present = {k for ln in head for k in PROVENANCE_KEYS if ln.startswith(k)}
-    missing = [k for k in PROVENANCE_KEYS if k not in present]
-    if missing:
-        return "missing provenance header: " + " ".join(missing)
-    return None
-
-
-CONTENT_CHECKS = {"provenance": check_provenance}
 
 
 # --------------------------------------------------------------------------- #
@@ -266,7 +245,6 @@ SCHEMA = {
     #
     #   hard  stage vocabulary; stack-xor-stages; source/product separation
     #   soft  file slugs, left as [a-z0-9_]+ until a naming decision lands
-    #   opt-in (--content)  provenance headers on build products
     #
     # A stack (03_exams/0N_<exam>/) and bare stages (03_exams/00_resources/)
     # are mutually exclusive: the spec says a second exam splits one level up,
@@ -303,15 +281,17 @@ SCHEMA = {
         files=(FileRule(r"^[a-z0-9_]+_source\.(pdf|jpeg|png)$", rule_id="E032"),),
     ),
 
-    # 01_extracted: LLM build products. Disposable only if each file pins the
-    # transform that made it.
+    # 01_extracted: LLM build products. Disposable by construction -- everything
+    # needed to rebuild them lives in 00_resources/ plus 00_global/prompts/.
+    # Nothing here is required: which products a course needs is a property of
+    # the course, not of the schema.
     "EXAM_EXTRACTED": Node(
         children=(),
         files=(
-            FileRule(r"^material\.org$",           rule_id="E040", content="provenance"),
-            FileRule(r"^theorems\.org$",           rule_id="E041", content="provenance"),
-            FileRule(r"^problems\.org$",           rule_id="E042", content="provenance"),
-            FileRule(r"^exam(_[a-z0-9_]+)?\.org$", rule_id="E043", content="provenance"),
+            FileRule(r"^material\.org$",           rule_id="E040"),
+            FileRule(r"^theorems\.org$",           rule_id="E041"),
+            FileRule(r"^problems\.org$",           rule_id="E042"),
+            FileRule(r"^exam(_[a-z0-9_]+)?\.org$", rule_id="E043"),
         ),
     ),
     "EXAM_PLAN": Node(
@@ -378,10 +358,6 @@ def check_schema() -> None:
         if len(seen) != len(set(seen)):
             _die(f"{kind}: rule_id appears in more than one exclusive group")
 
-        for r in node.files:
-            if r.content and r.content not in CONTENT_CHECKS:
-                _die(f"{kind}/{r.rule_id}: unknown content check {r.content!r}")
-
     # Reachability, plus: every {placeholder} a node uses must be bound by some
     # capture group on every path from ROOT to that node. Without this, a typo
     # like {m} for {n} survives startup and raises KeyError mid-walk.
@@ -414,8 +390,7 @@ def check_schema() -> None:
 # the walk
 # --------------------------------------------------------------------------- #
 
-def walk(dirpath: Path, kind: str, caps: dict, root: Path, out: list,
-         content_checks: bool = False) -> None:
+def walk(dirpath: Path, kind: str, caps: dict, root: Path, out: list) -> None:
     node = SCHEMA[kind]
 
     def rel(p) -> str:
@@ -436,8 +411,7 @@ def walk(dirpath: Path, kind: str, caps: dict, root: Path, out: list,
             m = re.match(bind(r.pattern, caps), e.name)
             if m:
                 matched.add(r.rule_id)
-                walk(Path(e.path), r.kind, {**caps, **m.groupdict()}, root, out,
-                     content_checks)
+                walk(Path(e.path), r.kind, {**caps, **m.groupdict()}, root, out)
                 break
         else:
             out.append(Finding(fid("DIR"), rel(e.path), "unexpected directory"))
@@ -454,10 +428,6 @@ def walk(dirpath: Path, kind: str, caps: dict, root: Path, out: list,
         for r in node.files:
             if re.match(bind(r.pattern, caps), e.name):
                 matched.add(r.rule_id)
-                if r.content and content_checks:
-                    msg = CONTENT_CHECKS[r.content](Path(e.path))
-                    if msg:
-                        out.append(Finding(fid(r.rule_id), rel(e.path), msg))
                 break
         else:
             out.append(Finding(fid("FILE"), rel(e.path), "unexpected file"))
@@ -505,10 +475,6 @@ def main(argv=None) -> int:
                     help="overwrite the baseline with current findings")
     ap.add_argument("--strict", action="store_true", help="ignore the baseline")
     ap.add_argument("--summary", action="store_true", help="counts per rule only")
-    ap.add_argument("--content", action="store_true",
-                    help="also verify file contents (provenance headers on "
-                         "01_extracted/ files); off until the convention is "
-                         "applied repo-wide")
     args = ap.parse_args(argv)
 
     check_schema()
@@ -517,7 +483,7 @@ def main(argv=None) -> int:
     baseline_path = args.baseline or (root / "00_global/scripts/structure_baseline.txt")
 
     findings = []
-    walk(root, "ROOT", {}, root, findings, content_checks=args.content)
+    walk(root, "ROOT", {}, root, findings)
     findings.sort(key=lambda f: (f.rule_id, f.path))
 
     if args.write_baseline:

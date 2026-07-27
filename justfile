@@ -34,11 +34,6 @@ validate-strict:
 validate-summary:
     @{{py}} {{scripts}}/validate_structure.py --summary
 
-# also check provenance headers on 01_extracted/ products
-[group('validate structure')]
-validate-content:
-    @{{py}} {{scripts}}/validate_structure.py --content
-
 # accept the current findings; the baseline may only ever shrink
 [group('validate structure')]
 validate-baseline:
