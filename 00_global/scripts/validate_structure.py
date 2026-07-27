@@ -158,10 +158,10 @@ SCHEMA = {
 
     "GLOBAL": Node(
         children=(
-            ChildRule(r"^_archive$",   kind="ARCHIVE",                  rule_id="G001"),
-            ChildRule(r"^_llm_rules$", kind="LLM_RULES", required=True, rule_id="G002"),
-            ChildRule(r"^books$",      kind="BOOKS",                    rule_id="G003"),
-            ChildRule(r"^scripts$",    kind="SCRIPTS",   required=True, rule_id="G004"),
+            ChildRule(r"^archive$", kind="ARCHIVE",                rule_id="G001"),
+            ChildRule(r"^prompts$", kind="PROMPTS", required=True, rule_id="G002"),
+            ChildRule(r"^books$",   kind="BOOKS",                  rule_id="G003"),
+            ChildRule(r"^scripts$", kind="SCRIPTS", required=True, rule_id="G004"),
         ),
         files=(),
     ),
@@ -171,19 +171,19 @@ SCHEMA = {
         files=(FileRule(r"^[a-z0-9_]+\.(org|pdf)$", rule_id="A001"),),
     ),
 
-    "LLM_RULES": Node(
-        children=(ChildRule(r"^0[1-3]_[a-z_]+$", kind="LLM_FACET", required=True, rule_id="L001"),),
+    "PROMPTS": Node(
+        children=(ChildRule(r"^0[1-3]_[a-z_]+$", kind="PROMPT_FACET", required=True, rule_id="L001"),),
         files=(),
     ),
-    "LLM_FACET": Node(
-        children=(ChildRule(r"^course_specific$", kind="LLM_COURSE_SPLIT", rule_id="L010"),),
+    "PROMPT_FACET": Node(
+        children=(ChildRule(r"^course_specific$", kind="PROMPT_COURSE_SPLIT", rule_id="L010"),),
         files=(FileRule(r"^[a-z0-9_]+\.org$", rule_id="L011"),),
     ),
-    "LLM_COURSE_SPLIT": Node(
-        children=(ChildRule(r"^\d{2}_[a-z0-9_]+$", kind="LLM_COURSE_DIR", required=True, rule_id="L020"),),
+    "PROMPT_COURSE_SPLIT": Node(
+        children=(ChildRule(r"^\d{2}_[a-z0-9_]+$", kind="PROMPT_COURSE_DIR", required=True, rule_id="L020"),),
         files=(),
     ),
-    "LLM_COURSE_DIR": Node(
+    "PROMPT_COURSE_DIR": Node(
         children=(),
         files=(FileRule(r"^[a-z0-9_]+\.org$", rule_id="L030"),),
     ),

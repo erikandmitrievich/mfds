@@ -18,16 +18,13 @@
 # problem set PDFs (keep local only)
 ps_[0-9][0-9].pdf
 
-# unrelated
-*ignore*
-
 # Jupyter
 .ipynb_checkpoints/
 *-checkpoint.ipynb
 *.ipynb
 
 # personal
-_archive/
+archive/
 
 # assets (images, figures — keep local only)
 assets/
