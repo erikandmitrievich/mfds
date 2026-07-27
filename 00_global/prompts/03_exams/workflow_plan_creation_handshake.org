@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-02-21>
-#+lastmod: <2026-04-13 17:28>
+#+lastmod: <2026-07-27 21:45>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -17,7 +17,7 @@
 
 * Step 1: Rule Ingestion (The Hard Wait)
 
-Copy the text below and paste it ALONG WITH the specific course's `_llm_rules_exam_[course]_plan_creation.org` file.
+Copy the text below and paste it ALONG WITH the specific course's `00_global/prompts/03_exams/course_specific/NN_<course>/plan_creation.org` file.
 
 Attached are your system instructions. Read them, but do not generate the schedule yet. Acknowledge that you understand the rules, constraints, and output format with a single sentence. Wait for me to provide the data files.
 

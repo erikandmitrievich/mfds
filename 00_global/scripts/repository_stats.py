@@ -36,7 +36,7 @@ from pathlib import Path
 
 COURSEWORK = "01_coursework"
 GLOBAL     = "00_global"
-LLM_RULES  = "_llm_rules"
+PROMPTS = "prompts"
 SCRIPTS    = "scripts"
 
 # exam pipeline stages, in order (see validate_structure._STAGES)
@@ -588,7 +588,7 @@ def report(stats: RepoStats, top: int):
             s = summarize(stats.infra[name])
             if not s["files"]:
                 continue
-            label = {"rules": "_llm_rules", "scripts": "scripts",
+            label = {"rules": "prompts", "scripts": "scripts",
                      "other": "other"}[name]
             extra = ""
             if s["code"]:

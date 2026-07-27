@@ -22,7 +22,7 @@ Single source of truth for directory layout and file naming in this repository.
 
 - =tree.org= is a generated snapshot — the territory, not the rules.
 - This file records *what* the structure is *now* (the spec).
-- =00_global/_llm_rules/= holds task instructions for LLM-assisted work; it
+- =00_global/prompts/= holds task instructions for LLM-assisted work; it
   references this file for naming and must not restate it.
 
 When this file and =scripts/validate_structure.py= disagree, one of them is
@@ -55,8 +55,8 @@ STRUCTURE.org     this file
 * 00_global/
 
 #+begin_example
-_archive/      repo meta-docs: history, rationale, reorganisation log, tree.org
-_llm_rules/    task instructions for LLM-assisted work;
+archive/       repo meta-docs: history, rationale, reorganisation log, tree.org
+prompts/       task instructions for LLM-assisted work;
                mirrors the course facet taxonomy below
 books/         reference textbooks, grouped by subject (NN_subject/)
 scripts/       repo tooling
@@ -159,11 +159,11 @@ transform in the file:
 
 #+begin_src org
 #+model:  claude-opus-4-8
-#+prompt: 00_global/_llm_rules/03_exams/01_course_specific/<course>/<rule>.org@<sha>
+#+prompt: 00_global/prompts/03_exams/course_specific/<course>/<rule>.org@<sha>
 #+date:   2026-07-09
 #+end_src
 
-Rules live centrally under =00_global/_llm_rules/03_exams/= (=00_general= +
+Rules live centrally under =00_global/prompts/03_exams/= (=00_general= +
 =01_course_specific/<course>=), not inside the exam folder — this header is the
 only pointer from a product back to the exact rule + model that produced it.
 

@@ -71,7 +71,7 @@ ps-extract COURSE NN *ARGS="":
     ps="$dir/02_problems/ps_$nn"; \
     {{py}} {{scripts}}/ps_extraction.py \
         --pdf  "$ps/ps_${nn}_source.pdf" \
-        --rule "{{root}}/00_global/_llm_rules/02_problems/ps_extraction_api.org" \
+        --rule "{{root}}/00_global/prompts/02_problems/ps_extraction_api.org" \
         --out  "$ps/ps_${nn}.org" {{ARGS}}
 
 # ---------------------------------------------------------------------------
@@ -159,11 +159,11 @@ where COURSE:
 stats:
     @cd {{root}} && {{py}} {{scripts}}/repository_stats.py
 
-# regenerate the tree snapshot in 00_global/_archive/
+# regenerate the tree snapshot in 00_global/archive/
 [group('helpers')]
 tree:
     @cd {{root}} && \
     { echo "#+title: Tree"; echo; echo "#+begin_example"; \
       git ls-files | tree --fromfile -a --noreport; \
-      echo "#+end_example"; } > 00_global/_archive/tree.org
-    @echo "wrote 00_global/_archive/tree.org"
+      echo "#+end_example"; } > 00_global/archive/tree.org
+    @echo "wrote 00_global/archive/tree.org"
