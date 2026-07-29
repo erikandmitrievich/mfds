@@ -298,7 +298,7 @@ def classify(parts):
     extra  : dict with area-specific facts
     """
     if parts and parts[0] == GLOBAL:
-        if len(parts) > 1 and parts[1] == LLM_RULES:
+        if len(parts) > 1 and parts[1] == PROMPTS:
             return ("infra", "rules"), None, {}
         if len(parts) > 1 and parts[1] == SCRIPTS:
             return ("infra", "scripts"), None, {}
