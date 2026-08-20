@@ -6,9 +6,9 @@ The notes are written for one reader and are not designed as a study resource. T
 
 ## Design
 
-- **The layout is a spec, not a habit.** [`STRUCTURE.org`](STRUCTURE.org) states the directory contract; [`validate_structure.py`](00_global/scripts/validate_structure.py) is its executable form and runs as a pre-commit hook. When the two disagree, the validator wins and the prose gets fixed.
+- **The layout is a spec, not a habit.** [`STRUCTURE.org`](STRUCTURE.org) states the directory contract; [`validate_structure.py`](00_global/scripts/validate_structure.py) is its executable form and runs as a pre-commit hook.
 - **Sources and products are never conflated.** `rm -rf 01_extracted/` must be obviously safe. Anything whose deletion loses information belongs in `00_resources/`.
-- **LLMs handle volume; they never produce mathematics.** Extraction from high-volume source material and synthesis of exam plans across a large problem pile are delegated; solutions and proofs are not. Prompts live in [`00_global/prompts/`](00_global/prompts/); generated files carry `#+model:`, `#+prompt:`, `#+date:`.
+- **LLMs handle volume; they never produce mathematics.** Extraction from high-volume source material and synthesis of exam plans across a large problem set pile are delegated; solutions and proofs are not. Prompts live in [`00_global/prompts/`](00_global/prompts/).
 
 ## Use
 
