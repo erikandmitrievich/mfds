@@ -218,12 +218,13 @@ SCHEMA = {
             FileRule(r"^lec_\d{2}(-\d{2})?\.org$",               rule_id="M004"),
             FileRule(r"^(?!ch_|lec_)[a-z0-9_]+\.org$",           rule_id="M002"),
             FileRule(r"^_[a-z0-9_]+_source(_[a-z0-9_]+)?\.pdf$", rule_id="M003"),
+            FileRule(r"^\.gitkeep$",                             rule_id="M010"),
         ),
     ),
 
     "PROBLEMS": Node(
-        children=(ChildRule(r"^ps_(?P<n>\d{2})$", kind="PS", required=True, rule_id="Q001"),),
-        files=(),
+        children=(ChildRule(r"^ps_(?P<n>\d{2})$", kind="PS", rule_id="Q001"),),
+        files=(FileRule(r"^\.gitkeep$", rule_id="Q010"),),
     ),
     "PS": Node(
         children=(ChildRule(r"^assets$", kind="PS_ASSETS", rule_id="P001"),),
@@ -252,7 +253,7 @@ SCHEMA = {
 
     "EXAMS": Node(
         children=_EXAM_STAGES + (_EXAM_STACK,),
-        files=(),
+        files=(FileRule(r"^\.gitkeep$", rule_id="E002"),),
         exclusive=(_STAGE_IDS, ("E001",)),
     ),
     "EXAM_STACK": Node(children=_EXAM_STAGES, files=()),
