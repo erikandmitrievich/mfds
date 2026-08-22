@@ -178,7 +178,7 @@ savefig(joinpath(mkpath("./assets"), "p_03_b.png"))
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_10/assets/p_03_b.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis_ii/02_problems/ps_10/assets/p_03_b.png
 
 *** (c)
 
@@ -299,7 +299,7 @@ savefig(joinpath(mkpath("./assets"), "p_04_04.png"))
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_10/assets/p_04_04.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis_ii/02_problems/ps_10/assets/p_04_04.png
 
 *** 5.
 

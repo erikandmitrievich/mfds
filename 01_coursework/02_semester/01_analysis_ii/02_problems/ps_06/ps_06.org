@@ -151,7 +151,7 @@ savefig("./assets/p_03_b.png")
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_06/assets/p_03_b.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis_ii/02_problems/ps_06/assets/p_03_b.png
 
 * Problem 4 :local_extrema:quadratic_form:hessian:
 ** Task
@@ -226,7 +226,7 @@ savefig("./assets/p_04_b.png")
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_06/assets/p_04_b.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis_ii/02_problems/ps_06/assets/p_04_b.png
 
 * Errors/Typos
 - Problem 1(a): "$\|h\|^{|\alpha|}$" → "$\|h\|_\infty^{|\alpha|}$" (missing $\infty$ subscript on RHS; the natural bound from $|h_i| \leq \|h\|_\infty$ is in $\|h\|_\infty$)

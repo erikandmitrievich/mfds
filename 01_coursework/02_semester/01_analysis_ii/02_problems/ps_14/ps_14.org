@@ -268,7 +268,7 @@ mkpath("./assets"); savefig("./assets/p_01_e.png")
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_14/assets/p_01_e.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis_ii/02_problems/ps_14/assets/p_01_e.png
 
 file:./assets/p_01_e.png
 

@@ -144,7 +144,7 @@ savefig("./assets/p_01_c.png")
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_07/assets/p_01_c.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis_ii/02_problems/ps_07/assets/p_01_c.png
 
 * Problem 2 :critical_points:hessian:gradient_descent:
 ** Task
@@ -248,7 +248,7 @@ savefig("./assets/p_02_c.png")
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_07/assets/p_02_c.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis_ii/02_problems/ps_07/assets/p_02_c.png
 
 * Problem 3 :convex_function:normed_space:
 ** Task
@@ -447,7 +447,7 @@ savefig("./assets/p_04_c.png")
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_07/assets/p_04_c.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis_ii/02_problems/ps_07/assets/p_04_c.png
 
 * Errors/Typos
 - Problem 3: "be a normed spaces" → "be normed spaces" (number disagreement)

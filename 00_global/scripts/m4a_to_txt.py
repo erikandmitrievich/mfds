@@ -2,7 +2,7 @@
 
 import mlx_whisper, pathlib, subprocess
 
-SRC = pathlib.Path.home() / "personal/mfds/01_coursework/02_semester/01_analysis/03_exams/00_resources"
+SRC = pathlib.Path.home() / "personal/mfds/01_coursework/02_semester/01_analysis_ii/03_exams/00_resources"
 OUT = SRC / "transcripts"
 PREP = SRC / "preprocessed"
 OUT.mkdir(exist_ok=True); PREP.mkdir(exist_ok=True)

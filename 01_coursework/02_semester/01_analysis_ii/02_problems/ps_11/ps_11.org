@@ -175,7 +175,7 @@ mkpath("./assets"); savefig("./assets/p_03_c.png")
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_11/assets/p_03_c.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis_ii/02_problems/ps_11/assets/p_03_c.png
 
 * Problem 4 :submanifold:jacobian:
 ** Task

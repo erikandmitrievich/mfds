@@ -533,7 +533,7 @@ f2, x0=10.0:  x★=0.7390851332151607, iters=94
  1.5949463971764999e-12
  2.220446049250313e-16
  0.0
-"/Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/03_exams/02_preparation/assets/p_04.png"
+"/Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis_ii/03_exams/02_preparation/assets/p_04.png"
 #+end_example
 
 *** Grasped
@@ -643,7 +643,7 @@ savefig("ps_10_04.png")
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/03_exams/02_preparation/ps_10_04.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis_ii/03_exams/02_preparation/ps_10_04.png
 
 *** (5)
 

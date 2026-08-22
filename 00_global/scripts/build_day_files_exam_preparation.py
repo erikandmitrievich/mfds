@@ -36,7 +36,7 @@ from pathlib import Path
 # Default; override with --ps-dir.
 DEFAULT_PS_DIR = Path(
     "/Users/ziro2173/personal/mfds/01_coursework/"
-    "02_semester/01_analysis/02_problems"
+    "02_semester/01_analysis_ii/02_problems"
 )
 
 # ──────────────────────────────────────────────────────────────────────────

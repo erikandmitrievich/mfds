@@ -100,7 +100,7 @@ mkpath("./assets"); savefig("./assets/p_02_b.png")
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_12/assets/p_02_b.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis_ii/02_problems/ps_12/assets/p_02_b.png
 
 *** (c)
 
@@ -186,7 +186,7 @@ mkpath("./assets"); savefig("./assets/p_04_01.png")
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_12/assets/p_04_01.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis_ii/02_problems/ps_12/assets/p_04_01.png
 
 *** 2.
 
@@ -209,7 +209,7 @@ mkpath("./assets"); savefig("./assets/p_04_02.png")
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_12/assets/p_04_02.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis_ii/02_problems/ps_12/assets/p_04_02.png
 
 *** 3.
 

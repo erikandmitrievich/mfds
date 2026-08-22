@@ -125,7 +125,7 @@ savefig("./assets/ps_12_02.png")
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/03_exams/02_preparation/assets/ps_12_02.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis_ii/03_exams/02_preparation/assets/ps_12_02.png
 
 **** Grasped
 
@@ -269,7 +269,7 @@ savefig("./assets/ps_12_04_01.png")
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/03_exams/02_preparation/assets/ps_12_04_01.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis_ii/03_exams/02_preparation/assets/ps_12_04_01.png
 
 **** Grasped
 
@@ -292,7 +292,7 @@ savefig("./assets/ps_12_04_02.png")
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/03_exams/02_preparation/assets/ps_12_04_02.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis_ii/03_exams/02_preparation/assets/ps_12_04_02.png
 
 **** Grasped
 
@@ -443,7 +443,7 @@ savefig("./assets/p_03.png")
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/03_exams/02_preparation/assets/ps_13_03.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis_ii/03_exams/02_preparation/assets/ps_13_03.png
 
 *** Grasped
 

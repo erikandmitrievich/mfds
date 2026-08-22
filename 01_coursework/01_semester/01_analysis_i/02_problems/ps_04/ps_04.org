@@ -477,7 +477,7 @@ savefig(joinpath(PATH, "p_06_07.png"))
  Plot{Plots.GRBackend() n=2}
  Plot{Plots.GRBackend() n=2}
  Plot{Plots.GRBackend() n=2}
-"/Users/ziro2173/personal/mfds/01_coursework/01_semester/01_analysis/02_problems/ps_04/assets/p_06_07.png"
+"/Users/ziro2173/personal/mfds/01_coursework/01_semester/01_analysis_i/02_problems/ps_04/assets/p_06_07.png"
 #+end_example
 
 * Problem 7

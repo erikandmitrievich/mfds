@@ -154,7 +154,7 @@ $$f(x) = \sum_{k=0}^{n} \frac{f^{(k)}(x_{0})}{k!} (x-x_{0})^{k} + R_{n+1}(x)$$
   #+end_src
 
   #+RESULTS:
-  : /Users/ziro2173/personal/mfds/01_coursework/01_semester/01_analysis/02_problems/ps_07/assets/p_02.png
+  : /Users/ziro2173/personal/mfds/01_coursework/01_semester/01_analysis_i/02_problems/ps_07/assets/p_02.png
 
 * Problem 3 :DONE:
 ** Task

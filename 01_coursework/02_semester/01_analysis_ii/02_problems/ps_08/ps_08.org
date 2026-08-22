@@ -111,7 +111,7 @@ savefig(joinpath(mkpath("./assets"), "p_01.png"))
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_08/assets/p_01.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis_ii/02_problems/ps_08/assets/p_01.png
 
 * Problem 2 :critical_point:lipschitz:gradient_descent:
 ** Task
@@ -218,7 +218,7 @@ savefig(joinpath(mkpath("./assets"), "p_02_a.png"))
 #+end_src
 
 #+RESULTS:
-: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis/02_problems/ps_08/assets/p_02_a.png
+: /Users/ziro2173/personal/mfds/01_coursework/02_semester/01_analysis_ii/02_problems/ps_08/assets/p_02_a.png
 
 *** (b)
 
