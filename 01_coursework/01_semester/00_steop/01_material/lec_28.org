@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-24>
-#+lastmod: <2026-04-13 17:28>
+#+lastmod: <2026-08-22 23:11>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -102,6 +102,10 @@ $(x - \alpha)$ divides $f(x)$ if and only if $\alpha$ is a root of $f$.
    So $f(x) = (x - \alpha) g(x)$, meaning $(x - \alpha) | f(x)$.
 
 ** Theorem: Bound on Roots
+:PROPERTIES:
+:CUSTOM_ID: thm:bound-on-roots
+:LECTURE_REF: 28
+:END:
 A non-constant polynomial $f(x) \in \mathbb{R}[x]$ of degree $n$ has at most $n$ real roots.
 
 *** Proof (by Induction)

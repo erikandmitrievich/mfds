@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-25>
-#+lastmod: <2026-04-13 17:28>
+#+lastmod: <2026-08-22 23:11>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -17,6 +17,10 @@
 
 * Rationality of Square Roots (Continued Proof)
 ** Theorem: Rational Square Roots of Integers
+:PROPERTIES:
+:CUSTOM_ID: thm:rational-square-roots-of-integers
+:LECTURE_REF: 11
+:END:
 Let $n \in \mathbb{N}$. Then $\sqrt{n}$ is rational if and only if $n$ is a perfect square.
 
 *** Proof
@@ -72,6 +76,10 @@ Before defining general modular arithmetic, consider the arithmetic of Even ($e$
 This arithmetic corresponds to calculations modulo 2.
 
 ** Definition: Congruence Modulo $m$
+:PROPERTIES:
+:CUSTOM_ID: def:congruence-modulo-m
+:LECTURE_REF: 11
+:END:
 Let $a, b, m \in \mathbb{Z}$ with $m > 1$.
 We say $a$ is congruent to $b$ modulo $m$ if $m$ divides the difference $a - b$.
 

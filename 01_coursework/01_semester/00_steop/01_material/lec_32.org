@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-24>
-#+lastmod: <2026-04-13 17:28>
+#+lastmod: <2026-08-22 23:11>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -75,6 +75,10 @@ Field $\subset$ Integral Domain $\subset$ Commutative Ring with Identity $\subse
 
 * Properties and Theorems
 ** Lemma: Properties of Rings
+:PROPERTIES:
+:CUSTOM_ID: lem:properties-of-rings
+:LECTURE_REF: 32
+:END:
 Let $R$ be a ring. Then for all $a, b \in R$:
 1.  $a \cdot 0 = 0 \cdot a = 0$.
 2.  $a \cdot (-b) = (-a) \cdot b = -(ab)$.
@@ -90,6 +94,10 @@ $$ ab + a(-b) = a(b + (-b)) = a \cdot 0 = 0 $$
 Thus, $a(-b) = -(ab)$. Similarly for $(-a)b$.
 
 ** Theorem: Fields and Integral Domains
+:PROPERTIES:
+:CUSTOM_ID: thm:fields-and-integral-domains
+:LECTURE_REF: 32
+:END:
 Every field is an integral domain.
 
 *** Proof
@@ -102,6 +110,10 @@ $$ 1 \cdot y = 0 \implies y = 0 $$
 Thus, no zero divisors exist.
 
 ** Theorem: Finite Integral Domains
+:PROPERTIES:
+:CUSTOM_ID: thm:finite-integral-domains
+:LECTURE_REF: 32
+:END:
 A finite integral domain is a field.
 
 *** Proof

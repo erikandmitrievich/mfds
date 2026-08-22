@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-24>
-#+lastmod: <2026-04-13 17:28>
+#+lastmod: <2026-08-22 23:11>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -52,6 +52,10 @@ We want to define $a^x$ for $a > 1$ and $x \in \mathbb{R}$.
 We already know $a^x$ for $x \in \mathbb{Q}$ (rational exponents).
 
 *** Proposition: Monotonicity on $\mathbb{Q}$
+:PROPERTIES:
+:CUSTOM_ID: prop:monotonicity-on-mathbb-q
+:LECTURE_REF: 39
+:END:
 The function $f: \mathbb{Q} \to \mathbb{R}$ defined by $f(q) = a^q$ is increasing.
 *Proof Sketch:*
 Let $\frac{m_1}{n_1} < \frac{m_2}{n_2}$. This implies $m_1 n_2 < m_2 n_1$.

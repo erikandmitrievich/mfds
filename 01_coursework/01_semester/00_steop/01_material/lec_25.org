@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-25>
-#+lastmod: <2026-04-13 17:28>
+#+lastmod: <2026-08-22 23:04>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -29,6 +29,10 @@ Two sets $A$ and $B$ are said to have equal size (or *cardinality*), or are *equ
 - *Notation:* $A \sim B$ or $|A| = |B|$.
 
 *** Theorem: Equivalence Relation
+:PROPERTIES:
+:CUSTOM_ID: thm:equivalence-relation
+:LECTURE_REF: 25
+:END:
 The relation $\sim$ is an equivalence relation.
 *Proof:*
 1.  *Reflexive:* $A \sim A$.
@@ -59,6 +63,10 @@ In this context, we often focus on infinite countable sets.
 
 ** Theorems on Countability
 *** Theorem: Infinite Subsets
+:PROPERTIES:
+:CUSTOM_ID: thm:infinite-subsets
+:LECTURE_REF: 25
+:END:
 Every infinite subset of $\mathbb{N}$ is countable.
 *Proof Sketch:*
 Let $A \subset \mathbb{N}$ be infinite.
@@ -70,6 +78,10 @@ We can list elements of $A$ in increasing order:
 This defines a bijection $f: \mathbb{N} \to A$ where $f(i) = a_i$.
 
 *** Theorem: Rationals ($\mathbb{Q}$)
+:PROPERTIES:
+:CUSTOM_ID: thm:rationals-mathbb-q
+:LECTURE_REF: 25
+:END:
 The set of rational numbers $\mathbb{Q}$ is countable ($|\mathbb{Q}| = \aleph_0$).
 *Proof Strategy:*
 1.  Show positive rationals $\mathbb{Q}_{>0}$ are countable.
@@ -90,6 +102,10 @@ The set of rational numbers $\mathbb{Q}$ is countable ($|\mathbb{Q}| = \aleph_0$
     $\mathbb{Q} = \{0, q_1, -q_1, q_2, -q_2, \dots\}$.
 
 *** Theorem: Union of Countable Sets
+:PROPERTIES:
+:CUSTOM_ID: thm:union-of-countable-sets
+:LECTURE_REF: 25
+:END:
 The union of countably many countable sets is countable.
 *Proof Sketch:*
 Let $A_1, A_2, A_3, \dots$ be countable sets.
@@ -134,6 +150,10 @@ This contradicts the assumption that the list contains all numbers in $(0,1)$.
 Thus, $(0,1)$ is uncountable.
 
 ** Theorem: Supersets of Uncountable Sets
+:PROPERTIES:
+:CUSTOM_ID: thm:supersets-of-uncountable-sets
+:LECTURE_REF: 25
+:END:
 Let $A \subset B$. If $A$ is uncountable, then $B$ is uncountable.
 *Proof:*
 Assume $B$ is countable.

@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2025-11-25>
-#+lastmod: <2026-04-13 17:28>
+#+lastmod: <2026-08-22 23:04>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -69,6 +69,10 @@ $A$ is called a subset of $B$ if all elements of $A$ are elements of $B$.
 - Notation: $A \subset B$ or $A \subseteq B$
 
 ** Theorem: Number of Subsets
+:PROPERTIES:
+:CUSTOM_ID: thm:number-of-subsets
+:LECTURE_REF: 1
+:END:
 If a set has $n$ elements, then it has $2^n$ subsets.
 
 *** Proof Idea
