@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-27>
-#+lastmod: <2026-07-27 22:21>
+#+lastmod: <2026-09-08 00:00>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -87,15 +87,46 @@ required — at least one facet directory must be present).
 #+begin_example
 prompts/
     0N_<facet>/                       L001   01|02|03 only
-        <slug>.org                    L011   facet-wide rules
-        course_specific/              L010   optional
-            NN_<course>/              L020   required if course_specific/ exists
-                <slug>.org            L030
+        <slug>.org                    L011   reusable across runs
 #+end_example
 
-There is no =00_general/= and no =01_course_specific/=: general rules are the
-=.org= files sitting directly in the facet directory, and the split directory is
-named =course_specific= with no numeric prefix.
+Facet directories are *flat*. The node has no child rules, so any directory here
+is a finding. There is no =00_general/=: the reusable prompts are the =.org=
+files sitting directly in the facet directory, and nothing else is in it.
+
+A prompt lives in exactly one of two places, and the axis is *lifetime*, not
+subject:
+
+- *Reusable across runs* → =00_global/prompts/0N_<facet>/<slug>.org=. Machinery:
+  parameterised, naming no particular file, course, professor or date.
+- *Bound to one run* → =01_coursework/NN_semester/NN_<course>/03_exams/=
+  =[NN_exam/]00_resources/prompts/<slug>.org= (=E023=, =E033=). It names the
+  literal inputs it was written against, and it is stored with them.
+
+Course is *not* a third dimension. It was tried — a =course_specific/NN_<course>/=
+split, rules =L010=/=L020=/=L030= — and it carried no information: one course
+directory ended up holding prompts written for two different courses' runs,
+because what those files actually shared was a run, not a subject. The split is
+gone. Do not reintroduce it.
+
+*** Promotion   [UNENFORCED]
+
+A prompt is *born in the run that needs it*. It goes to that run's
+=00_resources/prompts/= naming whatever it was actually pointed at —
+=ch_04_linear_algebra_meets_analysis.org=, =rec_02_02.txt=, =ps_total.org=, "11
+days", "Prof B".
+
+On its *second* use it is generalized — literal file names, day counts, target
+lists and professor references stripped — and moves up to the facet root as
+machinery. *Reuse is the promotion event, not intent.* Wanting a prompt to be
+general does not make it general; a prompt that has run exactly once is evidence
+of nothing.
+
+Nothing checks this, and no rule can. =L011= and =E033= are the same permissive
+=<slug>.org= pattern, and the validator never opens a file — the difference
+between a parameterised prompt and one naming =rec_02_02.txt= is invisible to
+it. Promotion is a judgement made when the second run arrives, one file at a
+time.
 
 ** scripts/
 
@@ -212,6 +243,8 @@ typical minimum populated is 00→01→02, but that is a habit, not a rule.
             lec_NN.txt / lec_NN-NN.txt   machine transcripts             E031
         papers/                                                          E022
             <slug>_source.{pdf,jpeg,png}   past papers, scans            E032
+        prompts/                                                         E023
+            <slug>.org   prompts authored for this run                   E033
     01_extracted/     LLM BUILD PRODUCTS — disposable                    E011
         material.org                     synthesis spine                 E040
         theorems.org                     proof-heavy course              E041
@@ -236,9 +269,16 @@ property of the course, not of the schema. Past-paper products must carry the
 *Core invariant.* =00_resources/= (sources) and =01_extracted/= (products) are
 never conflated. Test: =rm -rf 01_extracted/ && regenerate= must be obviously
 safe. If deleting a file loses information you cannot reproduce, it belongs in
-=00_resources/=, not =01_extracted/=. The three =00_resources/= subdirectories
+=00_resources/=, not =01_extracted/=. The four =00_resources/= subdirectories
 are the executable form of this: every file there is either a =_source= capture,
-a curated note, or a machine transcript.
+a curated note, a machine transcript, or an authored prompt.
+
+The fourth kind is the odd one. A prompt is neither upstream nor captured — it
+is hand-written, here, by me — but it passes the test that decides the
+directory: delete it and the information is gone, because nothing regenerates
+it. =01_extracted/= holds what the prompt produced and is disposable;
+=00_resources/prompts/= holds the prompt and is not. Without this clause the
+document argues against its own schema.
 
 *Multiple distinct exams* → split one level up, each a full stack:
 =03_exams/0N_<exam_name>/{00_resources,…}= (STEOP: =01_lecture_exam/=,
@@ -323,10 +363,7 @@ GLOBAL               G001 dir  archive
                      G004 dir  scripts                            required
 ARCHIVE              A001 file [a-z0-9_]+\.(org|pdf)
 PROMPTS              L001 dir  0[1-3]_[a-z_]+                     required
-PROMPT_FACET         L010 dir  course_specific
-                     L011 file [a-z0-9_]+\.org
-PROMPT_COURSE_SPLIT  L020 dir  \d{2}_[a-z0-9_]+                   required
-PROMPT_COURSE_DIR    L030 file [a-z0-9_]+\.org
+PROMPT_FACET         L011 file [a-z0-9_]+\.org
 BOOKS                B001 dir  \d{2}_[a-z0-9_]+
 BOOKS_SUBJECT        B010 file [a-z0-9_]+_book\.pdf
 SCRIPTS              T001 file [a-z0-9_]+\.py
@@ -358,9 +395,11 @@ EXAM_STACK           E010..E014  as above
 EXAM_RESOURCES       E020 dir  notes
                      E021 dir  transcripts
                      E022 dir  papers
+                     E023 dir  prompts
 EXAM_NOTES           E030 file notes_[a-z0-9_]+\.(org|jpeg|png)
 EXAM_TRANSCRIPTS     E031 file lec_\d{2}(-\d{2})?\.txt
 EXAM_PAPERS          E032 file [a-z0-9_]+_source\.(pdf|jpeg|png)
+EXAM_PROMPTS         E033 file [a-z0-9_]+\.org
 EXAM_EXTRACTED       E040 file material\.org
                      E041 file theorems\.org
                      E042 file problems\.org
