@@ -154,17 +154,15 @@ SCHEMA = {
         children=(ChildRule(r"^0[1-3]_[a-z_]+$", kind="PROMPT_FACET", required=True, rule_id="L001"),),
         files=(),
     ),
+    # Facet directories are flat. A prompt is either reusable across runs --
+    # and lives here as machinery -- or it is bound to one exam run, in which
+    # case it lives with that run's other irreplaceable inputs, under
+    # 03_exams/[NN_exam/]00_resources/prompts/. Course is not an axis: it was
+    # tried as course_specific/ (L010/L020/L030) and carried no information,
+    # since one course directory held prompts from two different courses' runs.
     "PROMPT_FACET": Node(
-        children=(ChildRule(r"^course_specific$", kind="PROMPT_COURSE_SPLIT", rule_id="L010"),),
-        files=(FileRule(r"^[a-z0-9_]+\.org$", rule_id="L011"),),
-    ),
-    "PROMPT_COURSE_SPLIT": Node(
-        children=(ChildRule(r"^\d{2}_[a-z0-9_]+$", kind="PROMPT_COURSE_DIR", required=True, rule_id="L020"),),
-        files=(),
-    ),
-    "PROMPT_COURSE_DIR": Node(
         children=(),
-        files=(FileRule(r"^[a-z0-9_]+\.org$", rule_id="L030"),),
+        files=(FileRule(r"^[a-z0-9_]+\.org$", rule_id="L011"),),
     ),
 
     "BOOKS": Node(
@@ -259,13 +257,16 @@ SCHEMA = {
     "EXAM_STACK": Node(children=_EXAM_STAGES, files=()),
 
     # 00_resources: irreplaceable INPUTS only. Every file either carries a
-    # _source suffix, or is a curated note, or is a machine transcript. That is
-    # the executable form of "rm -rf 01_extracted/ must be obviously safe".
+    # _source suffix, or is a curated note, or is a machine transcript, or is an
+    # authored prompt. That is the executable form of "rm -rf 01_extracted/ must
+    # be obviously safe": a prompt is neither upstream nor captured, but it is
+    # hand-written and unrecoverable, which is the test that matters here.
     "EXAM_RESOURCES": Node(
         children=(
             ChildRule(r"^notes$",       kind="EXAM_NOTES",       rule_id="E020"),
             ChildRule(r"^transcripts$", kind="EXAM_TRANSCRIPTS", rule_id="E021"),
             ChildRule(r"^papers$",      kind="EXAM_PAPERS",      rule_id="E022"),
+            ChildRule(r"^prompts$",     kind="EXAM_PROMPTS",     rule_id="E023"),
         ),
         files=(),
     ),
@@ -280,6 +281,14 @@ SCHEMA = {
     "EXAM_PAPERS": Node(
         children=(),
         files=(FileRule(r"^[a-z0-9_]+_source\.(pdf|jpeg|png)$", rule_id="E032"),),
+    ),
+    # Prompts authored for this run. Permissive, mirroring E070: the slug is
+    # named by the task, not by convention. Nothing is required -- a run that
+    # used only the general prompts at 00_global/prompts/0N_<facet>/ has no
+    # prompts/ directory at all.
+    "EXAM_PROMPTS": Node(
+        children=(),
+        files=(FileRule(r"^[a-z0-9_]+\.org$", rule_id="E033"),),
     ),
 
     # 01_extracted: LLM build products. Disposable by construction -- everything

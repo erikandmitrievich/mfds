@@ -17,7 +17,7 @@
 
 * Step 1: Rule Ingestion (The Hard Wait)
 
-Copy the text below and paste it ALONG WITH the specific course's `00_global/prompts/03_exams/course_specific/NN_<course>/plan_creation.org` file.
+Copy the text below and paste it ALONG WITH the specific run's `01_coursework/NN_semester/NN_<course>/03_exams/[NN_exam/]00_resources/prompts/plan_creation.org` file.
 
 Attached are your system instructions. Read them, but do not generate the schedule yet. Acknowledge that you understand the rules, constraints, and output format with a single sentence. Wait for me to provide the data files.
 
