@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-09-05>
-#+lastmod: <2026-09-05 12:09>
+#+lastmod: <2026-09-07 12:47>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -17,8 +17,9 @@
 #+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
 
 * Cover
-Family name: \newline
-First name: \newline
+
+Family name:
+First name:
 Registration number:
 
 Grading grid: 1, 2, 3, 4, 5, G --- Mark:
@@ -26,13 +27,14 @@ Grading grid: 1, 2, 3, 4, 5, G --- Mark:
 Total: 40 points (8 + 8 + 8 + 6 + 10).
 
 * 1. Correctness of bubblesort :8pts:
+
 Bubblesort works by repeatedly swapping adjacent elements that are out of order. The procedure is
 
 #+begin_src text
 1: procedure BUBBLESORT(A, n)
 2:     for i = 1 to n - 1 do
 3:         for j = n downto i + 1 do
-4:             if A[j] < A[i] then
+4:             if A[j] < A[j-1] then
 5:                 exchange A[j] with A[j - 1]
 6:             end if
 7:         end for
@@ -41,6 +43,7 @@ Bubblesort works by repeatedly swapping adjacent elements that are out of order.
 #+end_src
 
 ** (a) (1 point)
+
 Let $A'$ denote the array $A$ after =BUBBLESORT(A, n)= is executed. To prove that =BUBBLESORT= is correct, you need to prove that it terminates and that
 
 $$A'[1] \le A'[2] \le \cdots \le A'[n].$$
@@ -48,57 +51,77 @@ $$A'[1] \le A'[2] \le \cdots \le A'[n].$$
 In order to show that =BUBBLESORT= actually sorts, what else do you need to prove?
 
 ** (b) (3 points)
+
 State a precise loop invariant for the =for j = n downto i + 1= loop in lines 3--7 and prove that it holds.
 
 ** (c) (2 points)
+
 Using the termination condition of the loop invariant stated and proved above, state a loop invariant for the =for i = 1 to n - 1= loop in lines 2--8 that allows you to prove the inequality above for the $A'$ array.
 
 ** (d) (2 points)
+
 Prove that the loop invariant above holds and conclude that =BUBBLESORT= works.
 
 * 2. Runtime analysis :8pts:
+
 For the following recursions, give asymptotically tight upper and lower bounds for $T(n)$.
 
 ** (a) (2 points)
+
 $$T(n) = 16\,T\!\left(\frac{n}{4}\right) + n^2$$
 
 ** (b) (2 points)
+
 $$T(n) = 3\,T\!\left(\frac{n}{2}\right) + \frac{n}{\lg(n)}$$
 
 ** (c) (2 points)
+
 $$T(n) = 4\,T\!\left(\frac{n}{2}\right) + n^2 \lg n$$
 
 ** (d) (2 points)
+
 $$T(n) = 2\,T\!\left(\frac{n}{4}\right) + \sqrt{n}$$
 
 * 3. Heaps :8pts:
+
 Describe what a heap is and what it is usually used for. Especially, talk about the following points:
 
 ** (a) (1 point)
+
 Explain how a heap is represented in an array.
 
 ** (b) (3 points)
+
 Describe the algorithms =MIN-HEAPIFY= and =BUILD-MIN-HEAP= for constructing a min heap.
 
 ** (c) (3 points)
+
 Explain which algorithms are needed to turn a min heap into a min priority queue, and describe the algorithm =MIN-HEAP-DECREASE-KEY=.
 
 ** (d) (1 point)
+
 What are the running times of =MIN-HEAPIFY= and =MIN-HEAP-DECREASE-KEY=?
 
 * 4. Red-Black-Trees :6pts:
+
 ** (a) (1 point)
+
 Define what a binary search tree is, and describe how binary trees are stored.
 
 ** (b) (1 point)
+
 What are the properties that define a red-black tree?
 
 ** (c) (4 points)
+
 Provide the algorithms for inserting a new element in a red-black tree.
 
 * 5. Huffman codes :10pts:
+
 ** (a) (2 points)
+
 Provide the algorithm for constructing a Huffman code.
 
 ** (b) (8 points)
+
 Prove that the Huffman code algorithm produces an optimal prefix-free code.
