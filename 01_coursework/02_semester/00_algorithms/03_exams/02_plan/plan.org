@@ -1,8 +1,8 @@
 #+title: Plan
 #+author: Erik An
 #+email: obluda2173@gmail.com
-#+date: <2026-06-27>
-#+lastmod: <2026-06-28 18:41>
+#+date: <2026-09-08>
+#+lastmod: <2026-09-09 11:03>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -16,92 +16,633 @@
 #+startup: overview latexpreview inlineimages
 #+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
 
-* Priorities
+* PHASE 1 — AUDIT
 
-:P1: Own the 5 proof techniques closed-book — covers the whole rotation + the anomaly (your gap)
-:P2: Indicator-RV engine — 4 proofs from one skeleton (highest single leverage)
-:P3: Tier-0 scaffolding — explicit "do this in exam" rules, all-or-nothing, cheap
-:P4: Problem clusters at speed — co-equal pillar, NOT secondary
-:P5: Pseudocode drills — near-certain points; bank them, don't over-invest (your strength = trap)
-:P6: Graphs — thinnest in-scope coverage, most likely blind spot
+** 1. Slot reading
 
-* Techniques (the 14 proofs = 7 buckets)
+I read the five slots as you do at the level of weights and cognitive mode. I read the *composition procedure* differently, and that changes everything downstream.
 
-:T1: Recursion-tree / master               — Lem 4.2, Lem 4.3, Thm 4.4
-:T2: Indicator RV + linearity              — Thm 7.4, Thm 9.2, Thm 11.2, Thm 11.8
-:T3: Loop invariant (init/maint/term)      — Lem 5.4, RANDOMIZE-IN-PLACE
-:T4: Exchange / greedy-choice              — Thm 15.1, Lem 15.2
-:T5: Optimal substructure by contradiction — Lem 15.3, DP substructure
-:T6: Decision-tree counting                — Thm 8.1
-:T7: Case analysis / interval trichotomy   — Thm 17.2
+*** Finding 1.1 — the paper is assembled from CLRS canonical items, at least two verbatim [high]
 
-* Scaffolding (Tier 0 = Category A explicit, locked Day 1)
+- S1 is CLRS 4th ed. *Problem 2-2 ("Correctness of bubblesort") reproduced verbatim*, including all four subparts in the book's order: (a) what else must be shown, (b) inner-loop invariant, (c) outer-loop invariant using the inner termination condition, (d) prove and conclude. Even the phrasing "Let $A'$ denote the array $A$ after..." is the book's. Evidence: =exam_01= §1 against CLRS Problem 2-2. [high]
+- S2(d), $T(n) = 2T(n/4) + \sqrt{n}$, is CLRS *Exercise 4.5-1(b)* verbatim; the other three are 4.5-shaped. Evidence: =exam_01= §2. [high]
+- S3 is CLRS *Exercise 6.5-3* ("implement a min-priority queue with a min-heap") expanded into subparts, plus 6.1 representation and 6.2/6.3 runtimes. Evidence: =exam_01= §3 against =ch_06_heapsort.org= §§6.1–6.5. [medium-high]
+- S4 is CLRS 12.1 (BST definition + storage) + 13.1 (properties) + 13.3 (RB-INSERT / RB-INSERT-FIXUP). Evidence: =exam_01= §4 against =ch_12=, =ch_13=. [high]
+- S5 is CLRS 15.3: the algorithm plus Lemma 15.2 + Lemma 15.3 + Theorem 15.4. Evidence: =exam_01= §5 against =theorems.org= entries at lines 448, 479, 515. [high]
 
-:S1: Substitution rule (HABIT): never $O$ or $\Theta$ in the induction hypothesis, use explicit constants — lec_04
-:S2: Loop-termination rule (HABIT): always state the loop ends — lec_10
-:S3: 5 Landau property proofs (SMALL PROOFS): transitivity, reflexivity, symmetry, sum, product — lec_03 notes / CLRS 3.2 (Prop 3.4)
-:S4: Master theorem statement + exact conditions ($k \ge 0$ case 2, regularity case 3) (MEMORIZE) — lec_04, lec_05; the proof itself = T1
-:S5: Polynomial growth condition + recognition rule (poly-log yes, exponential no) (MEMORIZE) — lec_06
+Consequence: none of the professor's *own* material appears anywhere on the paper — no Akra–Bazzi, no polynomial growth condition, no measure theory, no universal hash family, no his-own open-addressing delete, no Landau small proofs. Five for five, the slots are textbook items. The generative rule is closer to "open CLRS, take one end-of-chapter item per covered region" than to "ask what I emphasised". This is the single most important structural inference in the audit and it reorders the whole candidate ranking.
 
-* Landmines
+*** Finding 1.2 — the paper is a chapter sweep in book order, one item per region [medium-high]
 
-:L1: $\mathbb{Z}_p$ field caveat — flagged from PAST EXAMS (lec_16): only nonzero elts have inverses, $1 \ne 0$
-:L2: LCS Thm 14.1 part 1 — CLRS is WRONG, corrected in lecture (lec_22); same logic lec_04 book error
-:L3: Master thm case 2 needs $k \ge 0$; big-$O$ cannot be composed with functions — trap questions
-:L4: Substitution proofs: never put $O$ or $\Theta$ in the induction hypothesis (explicit exam rule)
-:L5: Loop-invariant proofs: always state termination (explicit exam rule)
-:L6: Scope = through lec_29; NN/transformers OUT. Confirm graph cutoff before Day 5.
+Chapters drawn: 2, 4, 6, 12–13, 15. Untouched despite being in scope: 5, 7, 8, 9, 10, 11, 14, 17, 18, 20–22. The draw is ordered and non-repeating. Two competing rotation models follow, and they are not distinguishable from one paper:
+- *Model R1 (redraw the sweep):* he sweeps again, hitting the regions he skipped. Predicts hashing (ch. 11) and DP (ch. 14) heavily.
+- *Model R2 (hold the sweep, vary the item):* same chapters, different exercise — bubblesort → selection sort, min-heap → max-heap, RB-insert → RB-delete, Huffman → activity selection.
+Both are live. The preparation that satisfies their intersection is cheap; the union is what the point target actually requires.
 
-* Day 1 — Scaffolding + Master-theorem family [5/6]
-:GOAL: Reproduce Lem 4.2 $\to$ 4.3 $\to$ 4.4 closed-book; classify any recurrence's master case in <30s.
+*** Finding 1.3 — a decomposition your version does not carry: subpart scaffolding [high]
 
-- [X] Memorize exact: master thm statement + all 3 case conditions (S4), polynomial growth condition + recognition rule (S5)
-- [X] Reproduce closed-book: 5 Landau property proofs (S3)
-- [ ] Lock as habits, enforce in every proof this week: substitution-hypothesis rule (S1), loop-termination line (S2)
-- [X] Reproduce recursion-tree chain closed-book: Lem 4.2 $\to$ Lem 4.3 $\to$ Thm 4.4 (one argument, three times)
-- [X] Drill case selection: compare $f(n)$ to watershed $n^{\log_b a}$; gap example $2T(n/2) + n/\lg n = \Theta(n \lg \lg n)$ (no case applies)
-- [X] Apply: P8 (revisit), P51 (stooge sort), Akra-Bazzi bracket $T(n) = T(n/5) + T(7n/10) + n$, $p \approx 0.84$
+Every slot is broken into 1–4-point subparts, and he front-loads the trivial ones. Pure-recall subparts total 7 points (S1a 1, S3a 1, S3d 1, S4a 1, S4b 1, S5a 2). Add S2's 8 points of mechanical classification and 15 of 40 points are obtainable with no proof capability whatsoever. Exactly one subpart on the paper is an open proof: S5(b), 8 points. The paper is 32 points of scaffolded reproduction and 8 points of risk.
 
-* Day 2 — Indicator pair + select (T2) [0/6]
-:GOAL: Reproduce Thm 7.4 and Thm 11.2 from the indicator skeleton; reconstruct Thm 9.2's generations bound.
+*** Finding 1.4 — the variant transformation [medium-high]
 
-- [ ] Shared machinery: indicator RV def; Lem 5.1 ($\mathrm{E}[\mathrm{I}\{A\}]=\Pr\{A\}$); linearity of expectation (no independence needed); harmonic bound $\sum 1/k=O(\lg n)$ (A.9); geometric series $\sum c^k=1/(1-c)$ (A.7)
-- [ ] Thm 7.4 (RANDOMIZED-QUICKSORT $O(n\lg n)$) [needs Lem 7.1 time~comparisons, Lem 7.2 pair compared $\le$ once, Lem 7.3 $\Pr=2/(j-i+1)$, Lem 5.1]: define $X_{ij}$ $\to$ linearity $\to$ sub Lem 7.3 $\to$ change var $k=j-i$ $\to$ harmonic bound
-- [ ] Thm 11.2 (chained hashing $\Theta(1+\alpha)$) [SAME skeleton as 7.4, triple-index; needs Lem 5.1, indep. uniform hashing]: $X_{ijq}\to Y_j\to Z$ $\to$ linearity $\to$ arith. series (A.2) $\to$ $1+\alpha/2-\alpha/2n$
-- [ ] Thm 9.2 (RANDOMIZED-SELECT $\Theta(n)$) [NOT indicators; needs Lem 9.1 $\Pr$ helpful $\ge 1/2$]: generations, sizes shrink $(3/4)^k$, $\mathrm{E}[X_k]\le 2$ (C.36), geometric series $\to 8n_0$
-- [ ] Solve: P44, P45, P46 (expected #picks: random / deterministic / scramble search), P50 (RANDOMIZED-QUICKSORT RANDOM-call count)
-- [ ] Optional foundations if shaky: P34 (Markov), P35 (variance of geometric)
+Where he does not copy verbatim, he mirrors: lectures and notes teach the *max*-heap, the paper asks *min*-heapify, build-min-heap, min-heap-decrease-key; lectures teach insertion sort's invariant, the paper asks bubblesort's. Preparation implication: for every structure, hold the dual form, not the lectured form.
 
-* Day 3 — Loop invariant (T3) + decision tree (T6) + greedy (T4, T5) [0/7]
-:GOAL: Reproduce Lem 5.4, Thm 8.1, Thm 15.1, Lem 15.2, Lem 15.3 closed-book.
+*** Finding 1.5 — cognitive modes do not repeat across slots [medium-low]
 
-- [ ] Lem 5.4 (RANDOMLY-PERMUTE = RANDOMIZE-IN-PLACE in some editions, uniform): invariant $\Pr=(n-i+1)!/n!$; init $\to$ maintenance (via $\Pr\{E_2\cap E_1\}=\Pr\{E_2\mid E_1\}\Pr\{E_1\}$) $\to$ termination (S2)
-- [ ] Thm 8.1 (comparison lower bound $\Omega(n\lg n)$) [needs $\lg(n!)=\Theta(n\lg n)$, eq 3.28]: decision tree, $n!\le l\le 2^h$ $\to$ $h\ge\lg(n!)=\Omega(n\lg n)$
-- [ ] Thm 15.1 (activity-selection greedy choice): exchange argument, swap earliest-finish $a_m$ for $a_j$
-- [ ] Lem 15.2 (Huffman greedy-choice): exchange leaves $a\leftrightarrow x$, $b\leftrightarrow y$; cost diff $(a.freq-x.freq)(d_T(a)-d_T(x))\ge 0$
-- [ ] Lem 15.3 (Huffman optimal-substructure) [needs Lem 15.2 for WLOG-siblings]: $B(T)=B(T')+x.freq+y.freq$ $\to$ contradiction
-- [ ] Thm 15.4 (HUFFMAN optimal): one line from Lem 15.2 + 15.3
-- [ ] Solve: P36 (random sample via permute), P37--P40 (permutation correctness/counterexamples), P94 (alt activity greedy, prove optimal), P95 (activity counterexamples), P96 (interval-graph coloring), P98 (fractional knapsack greedy-choice proof)
+S1 correctness-by-invariant, S2 asymptotics, S3+S4 structure description, S5 one optimality proof. No mode occupies two slots. If that holds, S5's candidate space narrows toward optimality/structural proofs and away from runtime-analysis proofs (which would duplicate S2's mode). I mark this low-medium — it is one draw, and it is a tiebreaker, not a filter.
 
-* Day 4 — DP + trees + hashing + remaining proofs (T5, T2, T7) [0/7]
-:GOAL: Solve any DP-cluster problem; reproduce Thm 11.8 and Thm 17.2; write the 4 pseudocode procedures cold.
+** 2. Anchor / rotate judgement
 
-- [ ] DP optimal-substructure pattern (rod-cutting, matrix-chain, LCS, optimal BST, 0-1 knapsack) + LCS Thm 14.1 part-1 correction (L2)
-- [ ] DP solve: P81 (rod greedy counterexample), P82 (rod + cut cost), P83 (matrix-chain ref count $=(n^3-n)/3$), *P84 (matrix-chain greedy FAILS — counterexample, L-flagged pairing with P95), P85 (substructure breaks), P87 (longest palindrome subseq), P88 (inventory), P89 (string partition), P91 (optimal BST numeric), P92 (bitonic tour), P93 (party tree), P97 (weighted activity DP), P99 (0-1 knapsack $O(nW)$)
-- [ ] Thm 11.8 (open addressing successful search $\le \frac1\alpha\ln\frac1{1-\alpha}$) [needs Cor 11.7 unsucc. $\le 1/(1-\alpha)$]: average over insertions $\to$ integral bound (A.19)
-- [ ] Thm 17.2 (INTERVAL-SEARCH correctness, T7): interval trichotomy; case go-left / go-right never misses an overlap
-- [ ] Hashing solve: P59 (universal family bound), P60 (double hashing gcd), P61 (probe bounds at $\alpha=3/4,7/8$ — applies Thm 11.8) + $\mathbb{Z}_p$ caveat (L1)
-- [ ] Trees pseudocode COLD: P70 (RIGHT-ROTATE), P63 (TREE-PREDECESSOR), P90 (CONSTRUCT-OPTIMAL-BST), P100 (B-tree delete)
-- [ ] Trees proofs sample: P68/P69 (RB black-height bounds), P74--P78 (RB insert/delete properties), P80 (AVL height $O(\lg n)$); facts: BUILD-MAX-HEAP is $O(n)$, heap height $\lfloor\lg n\rfloor$
+| Slot | Pts | My judgement                                                         | Confidence         | Basis                                                                         |
+|------+-----+----------------------------------------------------------------------+--------------------+-------------------------------------------------------------------------------|
+| S1   |   8 | slot anchored; content rotates *within CLRS ch. 2's invariant items* | high / medium-high | verbatim Problem 2-2; the slot's role is elementary correctness               |
+| S2   |   8 | slot anchored; technique anchored; instances rotate                  | high / high        | 4.5-shaped; technique is instance-invariant                                   |
+| S3   |   8 | slot anchored; content rotates                                       | high / medium-high | template is structure-agnostic; hashing/B-trees untouched and heavily flagged |
+| S4   |   6 | slot *least* stable                                                  | medium             | see below                                                                     |
+| S5   |  10 | slot anchored; theorem rotates                                       | high / high        | widest space, largest weight                                                  |
 
-* Day 5 — Graphs + timed integration pass [0/8]
-:GOAL: State every graph theorem from memory; pass the timed T1--T7 reproduction.
+*Most likely to break: S4.* It is the only off-weight slot (6), it duplicates S3's cognitive mode, and it reads as the remainder that balances the paper to 40. If he adds a region — graphs (lec_27–29 are in scope per =lec30-a-exam-scope-boundary=) or DP — the displaced slot is S4, not S5. Secondary break risk: S2 acquiring an Akra–Bazzi or unbalanced-split item, since =lec06-a-polynomial-growth-condition= is one of only five Category A items and =lec07-b-pgc-quantifier-order= ties it explicitly to the exercise problems.
 
-- [ ] BFS: shortest-path distances, $O(V+E)$
-- [ ] DFS: parenthesis theorem, edge classification (tree/back/forward/cross), white-path; undirected = tree+back only
-- [ ] Topological sort; SCC (transpose graph + 2nd DFS)
-- [ ] MST: generic-MST safe-edge / cut property
-- [ ] Shortest paths: relaxation, Bellman-Ford (neg weights), Dijkstra (non-neg only), DAG-shortest-path
-- [ ] Solve: P86 (DAG longest path, DP+graph), P101 (tree diameter), P102 (DFS edge-classification iff discovery/finish times)
-- [ ] TIMED closed-book: reproduce one proof from each bucket T1--T7
-- [ ] Patch ONLY the bucket(s) you failed; light pseudocode review; stop early, sleep
+I disagree with the prior claim that S2's content is "nearly anchored". Three of four items are master case 2 with $k \in \{0,1\}$; the fourth, $3T(n/2) + n/\lg n$, is a *perturbation of the lecture's gap example* $2T(n/2) + n/\lg n = \Theta(n\lg\lg n)$ (=lec05-b-master-theorem-gaps=) with $a$ changed from 2 to 3, which makes case 1 apply cleanly and the lecture answer wrong. Whether deliberate or not, the drill target is: compute $n^{\log_b a}$ and compare, every time; never recall an instance. [medium-high]
+
+** 3. Rotation candidates, ranked and sourced
+
+*** S1 — loop-invariant target
+1. INSERTION-SORT invariant — CLRS 2.1; =lec02-b-correctness-two-steps= ("the two steps that you need to show that an algorithm is actually correct"). [medium]
+2. SELECTION-SORT / MERGE invariant — CLRS Ex. 2.2-2, §2.3.1. Same elementary register as bubblesort. [medium]
+3. BUILD-MAX-HEAP invariant — =ch_06_heapsort.org= §6.3 "Correctness — loop invariant". Also a plausible S3 sub-item. [medium-low]
+4. RANDOMIZE-IN-PLACE invariant — =lec10-b-randomize-in-place= ("Remember that because this is an important algorithm"), full proof in =material.org= and =theorems.org= line 217. Ranked low *for S1* because the probabilistic invariant breaks the slot's elementary register; ranked high for S5. [medium-low]
+5. RB-INSERT-FIXUP invariant — =lec18-b-fixup-invariant=. More likely to surface inside S4. [low]
+Whatever appears, the machine is identical and the exam-explicit rule =lec10-a-loop-termination= ("don't forget that in the exam... say at least that the loop ends") is worth points on any instance.
+
+*** S2 — recurrence set
+1. Four master-theorem items, mixed cases, at least two case 2 — =exam_01= §2 plus =lec05-b-compare-driving-watershed=. [high]
+2. One item where no case applies (true gap) — =lec05-b-master-theorem-gaps=. [medium]
+3. One Akra–Bazzi / unbalanced-split item, possibly requiring the polynomial growth condition — =lec06-a-polynomial-growth-condition=, =lec06-b-akra-bazzi-p-procedure= (worked $T(n)=T(n/5)+T(7n/10)+n$, $p\approx 0.84$). [medium]
+4. A substitution-method proof — =lec04-a-induction-no-asymptotic-hypothesis= ("Also do it in the exam"). Note this is Category A and did *not* appear; under your own hierarchy that makes it a live rotation candidate, and it is cheap. [medium]
+
+*** S3 — structure description
+1. *Hash tables* — =lec15-b-hash-tables-important= ("this is a very important subject"), two full lectures, =lec15-b-chaining-search-runtime=, =lec16-b-double-hashing=, =lec16-b-open-addressing-bounds= ("maybe this is the most important thing about these results"), =ch_11= notes complete. Untouched by the paper. Top candidate under both R1 and R2. [medium-high]
+2. *B-trees* — =lec24-b-btrees-most-important=, =lec25-b-btrees-most-important= ("probably the most important data structure nowadays in large data science"), =lec26-b-defining-properties=, =lec26-b-preemptive-split=. No student notes exist. [medium]
+3. *BST as a whole* (representation, six operations, $\Theta(h)$) — =lec17-b-theta-h-height=, =ch_12=. Overlaps S4; likely only if S4 moves away from trees. [medium]
+4. *Heaps again, max variant* — the verbatim-reuse branch. [medium-low]
+5. *Stacks / queues / linked lists / sentinels* — =ch_10=, =lec15-b-insert-delete-vs-search-tradeoff=. Cheap, low-probability. [low-medium]
+
+*** S4 — "properties + algorithm" on a structure
+1. *B-tree SPLIT-CHILD / B-TREE-INSERT* — =lec26-b-split-child= ("This is the important one because that's the first one we hit"), =lec26-b-odd-median=. [medium]
+2. *BST insert/delete incl. TRANSPLANT* — =lec17-b-delete-successor=, =lec17-b-successor-cases= ("one of the first hurdles"), =ch_12= §12.3. [medium]
+3. *RB-DELETE / RB-DELETE-FIXUP* — =lec19-b-fixup-four-cases=. Discounted: =lec19-c-fixup-half-only= means he presented only the $x$-is-left-child branch, so demanding full pseudocode is out of character; the *four-case structure* and the double-colour device (=lec19-b-double-color-device=) are askable. [medium-low]
+4. *Rotations* — =lec18-b-right-rotate-exercise= ("right rotate will be the first exercise of the new sheet"), =ps_total= P70. Too small for 6 points alone; likely a 1–2-point subpart. [medium]
+5. *Interval trees / augmentation* — =lec24-b-augmenting-data-structures=, =lec25-b-augmentation-theorem=. [low-medium]
+6. *Graph representation + BFS/DFS* — =lec27-b-bfs-dfs-core=, =lec27-b-running-time=. This is the displacement candidate if the paper adds a region. [low-medium]
+
+*** S5 — the 8-point proof
+Ranked by: proved on the board (excludes anything skipped), canonical in CLRS, fits an optimality/correctness register, and writable in ~25 minutes.
+1. *Comparison-sort lower bound, Thm 8.1* — =lec12-b-decision-tree-leaves=, =lec12-b-comparison-sort-lower-bound= ("you still should know that you cannot sort things faster than $n\lg n$"); =theorems.org= line 291. Optimality mode, short, canonical. [medium]
+2. *Expected running time of randomized quicksort, Thm 7.4* — =lec12-b-lemma73-comparison-probability= ("this is the really important part of the whole proof"), =lec12-b-reduce-to-E-X=; =theorems.org= line 255. [medium]
+3. *Successful search in chained hashing, Thm 11.2* — =lec15-b-chaining-search-runtime=, =lec16-b-chaining-proof-complete= ("that is what we need to know about hashing with chaining"); =theorems.org= line 358. Discount if S3 → hashing. [medium]
+4. *BUILD-MAX-HEAP is $O(n)$* — =lec10-b-build-heap-on= ("definitely looks like it'd be n log n. And the point is, it isn't"), full derivation with $\sum h/2^h = 2$. *Absent from =theorems.org=.* [medium]
+5. *RB height bound, Lemma 13.1* — =lec18-b-lemma-height=, =ch_13= §13.1. Induction proof, given in full. *Absent from =theorems.org=.* [medium-low]
+6. *Activity-selection greedy choice, Thm 15.1* — =theorems.org= line 434. Same chapter as the July draw: high under R2, low under R1. [medium-low]
+7. *RANDOMIZED-SELECT Thm 9.2 / SELECT Thm 9.3* — =lec13-b-theorem-9-2-rselect-theta-n=, =lec14-b-select-worst-case= ("this is really the runtime"), =lec14-b-pivot-regions=. Thm 9.3 is *absent from =theorems.org=*. [low-medium]
+8. *RANDOMLY-PERMUTE uniformity, Lemma 5.4* — =lec10-b-randomize-in-place=; =theorems.org= line 217. [low-medium]
+9. *INTERVAL-SEARCH correctness, Thm 17.2* — =lec25-b-interval-search-correctness= ("this is not trivial because we only take one choice"); =theorems.org= line 529. [low]
+10. *Graph theorems* (parenthesis theorem =lec27-b-parenthesis-theorem=, SCC =lec28-b-scc-correctness-proof=, Dijkstra =lec29-b-dijkstra-nonneg-weights=). Last three lectures, two problem-set items total, no student notes. [low]
+11. *Continuous master theorem, Thm 4.4* — =theorems.org= line 114. Deprioritised: duplicates S2's region, and it is long. [low]
+
+** 4. Disagreement register
+
+- *D1 — Category A underperformed as a content predictor.* Of five A-items, three (Landau small proofs =lec03-a-landau-proofs=, polynomial growth condition =lec06-a=, substitution-hypothesis rule =lec04-a=) are absent from the paper; the two present (master theorem, loop termination) appear as *applied technique inside another question*, never as the question. Revision: A-items forecast "you will need to use this", not "this will be asked". They are cheap-insurance items, not top-ranked rotation candidates. A "small proof for the exam" is by his own words small — a 1–2-point subpart, never the 8- or 10-point slot.
+- *D2 — the top content predictor is "canonical CLRS item covered in lecture", not "professor emphasis".* Finding 1.1. This inverts the ranking of e.g. universal hashing (heavily emphasised, non-canonical framing, proofs skipped) against the comparison-sort lower bound (moderately emphasised, canonical, proved).
+- *D3 — the composition rule includes a variant transformation* (max→min, insertion→bubble). Not in the prior analysis; it is directly actionable.
+- *D4 — S2's content is not "nearly anchored".* It is anchored *technique* with an instance set that included a perturbation flipping the lecture's answer. Prepare the comparison procedure, not the four instances.
+- *D5 — the Tier A/Tier B split is sized roughly right and composed wrong.* It implicitly funds depth on S1 and S2, which saturate cheaply, and underfunds the S3/S4 breadth that is the actual deficit. Arithmetic in Phase 2.
+- *D6 — =theorems.org= is miscalibrated in both directions.* It contains "Successful search in open addressing" (Thm 11.8) as a proof target, but =lec16-c-proofs-skipped= records "that's why I skipped all of the proofs" for 11.6/11.7/11.8 — under your own exclusion rule that cannot be asked as a proof and must be cut. It omits at least four theorems he *did* prove on the board: BUILD-MAX-HEAP $O(n)$, Lemma 13.1, Thm 9.3 (deterministic SELECT), and the graph theorems. =plan.org= inherits both errors (Day 4 schedules Thm 11.8; no bucket contains Lemma 13.1).
+- *D7 — "re-testing the known paper measures nothing" is half right.* It measures nothing as a *readiness* diagnostic. It measures decay across the gap perfectly well, which is the use Block 2 needs. And separately: =exam_01='s content stays in the preparation set regardless, because it is the modal instance of each slot and it covers the verbatim-reuse branch at near-zero marginal cost. Don't confuse "bad instrument" with "low-value content".
+- *D8 — the sitting-index evidence cuts in your favour and the prior analysis leaves it neutral.* His observed deviation in the Linear Algebra series occurred at the *4th* sitting. This is sitting 2. If deviation is a function of how many times a structure has been reused, sitting 2 is the safest point in the cycle for structural reuse. Raises S1–S5 structural confidence to high.
+- *D9 — verbatim reuse is lower than the "lazy 30-year professor" prior implies, but for a different reason than circulation.* If he composes by lifting CLRS end-of-chapter items (Finding 1.1), a fresh paper costs him about twenty minutes. Low effort therefore predicts *structural* reuse strongly and says almost nothing about content reuse. Combined with the paper being in every retaker's hands: verbatim reuse of the full paper ≈ 10–15%; reuse of one or two slots verbatim ≈ 30–40%. [medium-low]
+- *D10 — the problem sets are demoted slightly too far in one specific respect.* Items he pushed onto the sheets are items he wanted produced as pseudocode: =lec18-b-right-rotate-exercise= (P70), =lec26-c-delete-pseudocode-deferred= (P100), =lec28-b-topological-sort= ("needed in the exercises class"). S4(c) asked for pseudocode and was worth 4 points. Six named problems, not a hundred, and they are targeted at the pseudocode-production subparts specifically.
+
+** 5. Blind spots
+
+- *BS1 — your note infrastructure ends exactly where the largest slot lives.* You have =ch_= files for chapters 2–7, 10–14 and App. C. You have none for ch. 8, 9, 15, 17, 18, or 20–22. The July S5, worth 10 points, was ch. 15. The top S3 rotation candidate after hashing is ch. 18. This is the highest-value structural fact in the audit and the prior analysis does not register it.
+- *BS2 — the evidence file is blind in the same region.* =material.org= has no =lec_01=, =lec_11=, or =lec_23=. lec_23 is where the greedy chapter was taught — the chapter that produced the 10-point slot. So Category A/B ranking for the greedy cluster rests on =lec_24= alone. You cannot rank S5's greedy candidates on lecture evidence; rank them on CLRS canonicity instead (which D2 says you should be doing anyway).
+- *BS3 — the target is bought on S1–S4, not on S5.* Rough shape, arithmetic deferred to Phase 2: if you prepare four S5 candidates out of a live space of roughly ten, hit probability is maybe 40–50%, and a miss yields perhaps 3/10 from the algorithm subpart plus proof scaffolding. Expected S5 ≈ 5–6 of 10. Clearing 32/40 then requires roughly 26–27 of the remaining 30 — i.e. near-perfection on the reproduction slots. The consequence for allocation is uncomfortable and I want you to object to it now rather than in Phase 3: *the marginal hour is worth more spent making S1–S4 airtight than buying a fifth S5 theorem.* And a specified partial-credit protocol for an unprepared S5 (state the theorem, give the algorithm, name the optimal-substructure and exchange-argument skeleton, attempt the base case) is worth more expected points than one additional memorised proof.
+- *BS4 — subpart scaffolding and the 15 cheap points* (Finding 1.3). Not in the prior analysis. It is what makes the reproduction-perfection strategy in BS3 feasible.
+- *BS5 — production speed is unmodelled.* A 32-point reproduction paper is throughput-limited, not knowledge-limited, and neither the prior analysis nor =plan.org= contains a single timed writing task. If the sitting is 90 minutes, the binding constraint is how fast you can write RB-INSERT and RB-INSERT-FIXUP legibly, not whether you know them. This is why the exam duration in Open Questions is load-bearing rather than administrative.
+- *BS6 — weight on the paper is uncorrelated with lecture time.* Heaps got roughly one and a half lectures and 8 points; hashing got two full lectures and zero; probability got three lectures (lec_07–09, including invented measure-theoretic material) and zero. Any prioritisation that follows lecture minutes is invalid, and =plan.org= P2/P4 partly does.
+- *BS7 — the =plan.org= post-mortem is misdiagnosed.* The brief attributes the collapse to volume. Volume was the symptom. Look at the shape: Day 1 consisted of bounded reproduction of already-encoded material and completed 5/6. Days 2–5 each contained at least one *unbounded* task — "DP solve: P81, P82, P83, P84, P85, P87, P88, P89, P91, P92, P93, P97, P99" is not a task, it is a topic with a completion criterion of "done when the list ends". A day containing an unfinishable item is abandoned rather than partially executed, because there is no state in which it can be marked done. Day 4 alone was 12 problems + 2 theorem proofs + 4 cold pseudocode + 6 proof samples, which is 15–20 hours, not 5. The design rule this yields is stronger than "cut volume": *every task is bounded by an explicit count and a clock, and no task may be specified as a list of everything relevant to a topic.* I will hold you to this in Phase 3 and it will mean the plan looks thinner than you expect it to.
+
+** 6. Exclusions — the cut list
+
+Cannot be asked as a proof (he declined to prove it):
+- General (floor/ceiling) master theorem — =lec06-c-general-master-theorem-unproved=, =lec05-c-continuous-version-only=. The *continuous* version remains provable and stays in.
+- Akra–Bazzi integral theorem (Thm 4.6) — =lec06-c-akra-bazzi-added= ("We don't prove this one. This is just too much."). The polynomial growth condition and the practical $p$-bracketing procedure stay in as *applied* items.
+- Open-addressing theorems 11.6, 11.7, 11.8 and Cor. 11.3, Thm 11.4 (universal family) — =lec16-c-proofs-skipped=. *This cuts one of the 14 entries in =theorems.org= and one of the two theorem targets on =plan.org= Day 4.* The results themselves remain askable as statements.
+- Lemma 7.2 (no pair compared twice) — =lec12-c-lemma72-proof-skipped= ("proof I would say this is obvious").
+- Lemma 8.3 (radix sort) — =lec13-c-lemma-8-3-proof-skipped=.
+- White-path theorem — =lec27-c-white-path-skipped= ("this is not so interesting in my eyes").
+- BFS queue-ordering lemma 20.3 — =lec27-c-queue-lemma-proof-deferred=.
+- General augmentation theorem — =lec25-c-augmentation-theorem-proof-skipped=. INTERVAL-SEARCH correctness (Thm 17.2) was presented and stays in.
+- Naive matrix-chain Catalan blow-up — =lec21-c-recursion-bound-proof-skipped= ("Otherwise, I don't prove it").
+- MAX-HEAPIFY $\Theta(\lg n)$ recurrence — =lec10-c-maxheapify-proof-skipped= (assigned as homework). The *result* is required for S3(d)-type subparts.
+- Variance of the geometric distribution — =lec09-c-geom-variance= (pushed to exercises).
+
+Out of scope entirely:
+- Neural networks, transformers — =lec30-a-nn-transformers-out-of-scope= ("they're not for the exam").
+- Anything after lec_29 — =lec30-a-exam-scope-boundary= ("the exam contains stuff that we did until yesterday").
+- All-pairs shortest paths, CLRS ch. 23 — =lec29-c-all-pairs-dropped=.
+- Fibonacci heaps — =lec29-c-fibonacci-heap-dropped=.
+- Amortized analysis, CLRS ch. 16 — =lec24-c-amortized-analysis-skipped= (jumped 15 → 17).
+
+Deprioritised rather than excluded (in scope, low expected value, explicitly risk-accepted):
+- Measure theory, $\sigma$-algebras, Vitali sets, continuous distributions — =lec07-c-measure-theory-added=, =lec08-c-continuous-distributions-added=. Non-canonical, proof-free, and structurally unaskable on a CLRS-sourced paper (Finding 1.1). Zero hours.
+- Graph proofs (SCC, Dijkstra correctness, parenthesis theorem). Statements and runtimes only, no proof encoding. Justification: three lectures, two problem-set items, no notes, no =theorems.org= entries, and the composition model predicts them weakly. This is the deliberate hole in the plan and it costs up to 8 points if S4 displaces to graphs. Say now if you want it funded instead.
+
+Held despite the prior analysis's framing:
+- =exam_01='s own content stays fully prepared (D7).
+- RB-DELETE at the level of the four-case map and the double-colour device, not full pseudocode (=lec19-c-fixup-half-only=).
+
+* PHASE 2 — FORECAST
+
+** Grading scale — assumption resolved, and it fired against us
+
+Supplied scheme, converted to points on a 40-point paper:
+
+#+begin_example
+5  fail          0   – 49.9 %      < 20.0
+4  pass         50.0 – 62.4 %    20.0 – 24.9
+3  average      62.5 – 74.9 %    25.0 – 29.9
+2  good         75.0 – 87.4 %    30.0 – 34.9
+1  exceptional  87.5 – 100  %    35.0 – 40.0
+#+end_example
+
+Boundaries fall on exact half-points: 20, 25, 30, 35. No rounding ambiguity.
+
+*"Better than 2" = grade 1 = ≥ 35/40.* The Phase 1 default of 32/40 was wrong twice over: grade 1 needs 87.5 %, not 80 %, and 80 % is itself a 2. The document's own contingency therefore applies verbatim — the 55-hour budget does not buy a 1 with margin, and the plan must either be re-targeted at a secure 2 or reallocated hard toward the one slot that can produce a 1.
+
+The second contingency was also miscalculated. Phase 1 said that if the boundary were 30/40 "the plan clears comfortably." It does not: see the branch table.
+
+** Slot metadata
+
+| Slot | Pts | A/R                      | Prep   |
+|------+-----+--------------------------+--------|
+| S1   |   8 | slot anchored, content ↻ | P1     |
+| S2   |   8 | technique anchored, ↻    | P2     |
+| S3   |   8 | slot anchored, content ↻ | P3, P4 |
+| S4   |   6 | least stable slot        | P3, P4 |
+| S5   |  10 | slot anchored, theorem ↻ | P5     |
+
+*** S1 — 8 pts — construct + prove a loop invariant, 4 subparts
+
+1. BUBBLESORT again, CLRS Prob. 2-2 verbatim — medium-low
+2. INSERTION-SORT, CLRS 2.1; =lec02-b-correctness-two-steps= — medium
+3. SELECTION-SORT / MERGE, CLRS Ex. 2.2-2, §2.3.1 — medium
+4. BUILD-MAX-HEAP invariant, =ch_06= §6.3 — medium-low
+5. RANDOMIZE-IN-PLACE, =lec10-b-randomize-in-place= — medium-low (P5)
+
+*** S2 — 8 pts — mechanical classification, 4 × 2 pts, no proof
+
+1. 4 master items, ≥2 case 2, mixed $k$, =exam_01= §2 — high
+2. One true-gap item, no case applies, =lec05-b-master-theorem-gaps= — medium
+3. One Akra–Bazzi / unbalanced split, =lec06-b-akra-bazzi-p-procedure= — medium
+4. One substitution proof, explicit constants, =lec04-a-induction-no-asymptotic-hypothesis= — medium
+
+*** S3 — 8 pts — representation → algorithms → auxiliary ops → runtimes
+
+1. Hash tables, =lec15-b-hash-tables-important=, =lec16-b-open-addressing-bounds= — medium-high
+2. B-trees, =lec25-b-btrees-most-important=, =lec26-b-defining-properties= — medium
+3. BST, full operation set, =lec17-b-theta-h-height= — medium
+4. Heaps again, max variant, =exam_01= §3 mirrored — medium-low
+5. Stacks / queues / linked lists / sentinels, =ch_10= — low-medium, unfunded
+
+*** S4 — 6 pts — define properties + produce pseudocode
+
+1. B-TREE-SPLIT-CHILD / B-TREE-INSERT, =lec26-b-split-child= — medium
+2. BST insert/delete + TRANSPLANT, =ch_12= §12.3, =lec17-b-delete-successor= — medium
+3. RB-INSERT again, or rotations, =exam_01= §4, =lec18-b-right-rotate-exercise= P70 — medium
+4. RB-DELETE at case-map level only, capped by =lec19-c-fixup-half-only= — medium-low
+5. Graph representation + BFS/DFS, =lec27-b-bfs-dfs-core= — low-medium (P7, unfunded)
+
+*** S5 — 10 pts — 2 pts algorithm + 8 pts single open proof
+
+1. Comparison-sort lower bound Thm 8.1, =lec12-b-comparison-sort-lower-bound= — medium (P5)
+2. Randomized quicksort Thm 7.4, =lec12-b-lemma73-comparison-probability= — medium (P5)
+3. BUILD-MAX-HEAP is $O(n)$, =lec10-b-build-heap-on= — medium (P5)
+4. Chained hashing Thm 11.2, =lec16-b-chaining-proof-complete= — medium (P5)
+5. RB height Lemma 13.1, =lec18-b-lemma-height= — medium-low (P3 statement)
+6. Huffman again, Lem 15.2/15.3/Thm 15.4, =exam_01= §5 — medium-low (P6)
+7. Activity selection Thm 15.1, =theorems.org= l. 434 — medium-low (P6 skeleton)
+8. RANDOMIZED-SELECT 9.2 / SELECT 9.3, =lec14-b-select-worst-case= — low-medium, uncovered
+9. RANDOMLY-PERMUTE Lem 5.4, =theorems.org= l. 217 — low-medium, uncovered
+10. INTERVAL-SEARCH Thm 17.2, =lec25-b-interval-search-correctness= — low, uncovered
+11. Graph theorems (parenthesis, SCC, Dijkstra) — low, uncovered
+
+Candidates 8–11 carry roughly 25 % of the S5 probability mass and are the acknowledged cost of the BS3 allocation. See §"Revised strategic fork" — under the true target that cost is no longer acceptable at the current price.
+
+** Preparation items and hours
+
+| ID   | h    | Buys                              |
+|------+------+-----------------------------------|
+| P0   | 1.0  | S1, S2 correctness of form        |
+| P1   | 4.0  | S1                                |
+| P2   | 4.5  | S2                                |
+| P3   | 10.0 | S3, S4                            |
+| P4   | 4.0  | S3, S4, throughput (BS5)          |
+| P5   | 7.5  | S5                                |
+| P6   | 2.0  | S5 verbatim branch + miss floor   |
+| P8   | 1.0  | subpart insurance                 |
+| D1   | 1.5  | measurement — baseline            |
+| D2   | 1.5  | measurement — decay               |
+| D3   | 2.0  | measurement — mock A              |
+| D4   | 2.0  | measurement — mock B              |
+| P7   | 1.5  | UNFUNDED — graph statement sheet  |
+
+- P0 :: Exam-rule card: always state loop termination (=lec10-a=); never $O/\Theta$ in an induction hypothesis (=lec04-a=); watershed-comparison procedure; $\mathbb{Z}_p$ field caveat (=lec16-b-field-caveat=, flagged from past exams).
+- P1 :: Loop-invariant machine: one skeleton, 4 instances (bubblesort, insertion sort, selection sort, BUILD-MAX-HEAP), each 1 encoding + 2 spaced cold reps.
+- P2 :: Recurrence engine: 3 master cases with exact side conditions, $k \ge 0$, regularity; watershed drill to <30 s; gap recognition; PGC statement + recognition rule; Akra–Bazzi $p$-bracketing; substitution with explicit constants.
+- P3 :: Structure matrix: 5 structures × 4 cells {definition/representation, core algorithms, auxiliary operations, runtimes} — heaps (min *and* max), hash tables (chaining + open addressing incl. his own delete, =lec16-c-delete-not-in-book=), BST, red-black, B-tree.
+- P4 :: Timed cold pseudocode production, 9 procedures, 3 passes, clock running.
+- P5 :: S5 proof set: Thm 8.1, Thm 7.4, BUILD-MAX-HEAP $O(n)$, Thm 11.2 — each 1 encoding pass + 2 spaced cold reproductions.
+- P6 :: Huffman set retained (Lem 15.2 → 15.3 → Thm 15.4) + partial-credit protocol for an unseen S5.
+- P8 :: Landau property proofs ×5 (=lec03-a-landau-proofs=, "possible small proofs for the exam").
+- D1–D4 :: Baseline =exam_01= closed-book; post-gap re-sit for decay delta; mocks A and B on slot structure with rotated content, marked.
+- P7 :: Graph statement sheet — BFS/DFS $O(V+E)$, parenthesis theorem, edge classification, topological sort, safe-edge line, relaxation, Dijkstra non-negativity, MST runtimes. First item added if a day frees up.
+
+Funded total: *41.0 h against ~55 h available = 75 %*, inside the 80 % ceiling (44.0 h), leaving ~14 h unallocated of which only *3.0 h is deployable* without overturning the Phase 1 ceiling.
+
+** Points floor
+
+Floor definition applied strictly: every anchored element lands; no rotation candidate you prepared appears in any slot.
+
+| Slot  | Pts | Floor |
+|-------+-----+-------|
+| S1    |   8 |   6.0 |
+| S2    |   8 |   6.0 |
+| S3    |   8 |   2.0 |
+| S4    |   6 |   1.5 |
+| S5    |  10 |   2.0 |
+| Total |  40 |  17.5 |
+
+*17.5/40 = 43.75 % = grade 5.* Under the supplied scheme the strict floor is a fail, not a shortfall. This is new information: previously it read as "44 % against an 80 % target."
+
+Reasoning unchanged from Phase 1: S1 (a) generalises, the missing obligation is always "$A'$ is a permutation of $A$", while (b)–(d) lose partial credit constructing a precise invariant for an unseen loop cold; S2's technique is instance-invariant but the floor assumes one of four items is a gap or Akra–Bazzi instance outside the master machine; S3's template is a container and an unprepared structure leaves nothing to put in it; S4 the same minus the generic "define a BST / how trees are stored" subpart, which survives; S5 the algorithm subpart plus proof scaffolding with no theorem.
+
+The strict floor requires S1 and S2 to rotate out *as well*, which contradicts their anchored status. With S1 and S2 holding at 7.5 the true worst branch is 21.5 = 53.75 % = grade 4. The practical downside of executing the plan is therefore a pass, not a fail — but only if the anchors actually hold, which is what P1 and P2 buy and why they execute first in Block 1.
+
+** Branch distribution — current 41 h plan
+
+S1 and S2 are treated as certain at 7.5. S3, S4, S5 are binary at the Phase 1 coverage probabilities (0.85 / 0.80 / 0.45); hit and miss values are the Phase 1 per-slot figures.
+
+| S3 | S4 | S5 |  Pts |     p | Grade |
+|----+----+----+------+-------+-------|
+| ✓  | ✓  | ✓  | 36.0 | 0.306 |     1 |
+| ✓  | ✓  | ✗  | 30.0 | 0.374 |     2 |
+| ✓  | ✗  | ✓  | 32.5 | 0.077 |     2 |
+| ✓  | ✗  | ✗  | 26.5 | 0.094 |     3 |
+| ✗  | ✓  | ✓  | 31.0 | 0.054 |     2 |
+| ✗  | ✓  | ✗  | 25.0 | 0.066 |     3 |
+| ✗  | ✗  | ✓  | 27.5 | 0.014 |     3 |
+| ✗  | ✗  | ✗  | 21.5 | 0.017 |     4 |
+
+Expectation 31.25, which reproduces the Phase 1 figure of 31.3 exactly and confirms the decomposition.
+
+| Grade | P     |
+|-------+-------|
+|     1 | 30.6% |
+|     2 | 50.5% |
+|     3 | 17.3% |
+|     4 |  1.7% |
+
+Two facts that the slot-level view could not show:
+
+1. *The modal branch lands on exactly 30.0* — the 2/3 boundary — with p ≈ 0.37. A second branch lands on exactly 25.0, the 3/4 boundary. Together 44 % of the mass sits on a boundary, where a single lost half-point costs a full grade. Phase 1's "very high probability of clearing a 2" was an artefact of not knowing where the 2 began.
+2. *A grade 1 is unreachable unless S5 lands.* Maximum attainable with an S5 miss is $8+8+7+5+3 = 31$. Hence $P(1) = p_3 p_4 p_5$ and $P(1) \le p_5 = 0.45$. Every hour not spent raising S5 coverage is an hour that cannot buy a 1.
+
+Caveats, stated rather than buried: the coverage probabilities are Phase 1 subjective estimates and are not calibrated; the arithmetic is exact given them, the inputs are not. S3 and S4 draw on the same structure matrix and are positively correlated, which fattens both tails — the independence assumption understates both P(1) and P(3).
+
+** Revised strategic fork
+
+The old 32-point target sat between two boundaries and was served by a balanced allocation. The real boundaries are 30 and 35, and they pull in opposite directions. The current plan serves neither.
+
+*** Branch A — target grade 1 (≥ 35)
+
+Requires S3 ∧ S4 ∧ S5. S5 has the highest elasticity: $\partial P(1)/\partial p_5 = 0.68$ against $0.36$ for $p_3$ and $0.38$ for $p_4$. For *expected points* raising S5 and S3 coverage cost about the same per hour; for *P(grade 1)* S5 wins by roughly 40 %. P5 breadth becomes the top marginal purchase — the exact opposite of its rank-5 position in the cut order, and the opposite of "cut the 4th proof before the 3rd."
+
+*** Branch B — target a secure 2 (≥ 30, ideally 32 for margin)
+
+S5 is nearly irrelevant: grade ≥2 holds under (S3 ∧ S4) ∨ (S5 ∧ (S3 ∨ S4)). P5 collapses to P6's miss-floor protocol plus two proofs; the freed ~4 h goes to P3 breadth (ch. 10 structures), P7, and P4 reps. This is the Phase 1 contingency, correct in direction, but it should be funded from slack rather than by cannibalising P5 unless the 1 is formally abandoned.
+
+*This is a decision, not a calculation.* It has to be made before Block 2 opens on 23 Sept, and it is available now — the scheme arrived 15 days early.
+
+** Deployment of the remaining 3 hours
+
+Marginal purchases, ranked by points per hour:
+
+| Item                         |   h | Δ pts | pts/h |
+|------------------------------+-----+-------+-------|
+| S1 + S2 to full marks (reps) | 2.0 |  +1.0 |  0.50 |
+| 5th S5 proof (Branch A)      | 1.9 |  +0.6 |  0.32 |
+| ch. 10 structures → S3       | 1.5 |  +0.4 |  0.23 |
+| P7 graph sheet → S4          | 1.5 | +0.35 |  0.23 |
+
+S1 and S2 to 8/8 is the best ratio on the board and is under-priced in Phase 1. Both slots are anchored, both are fully funded, and the 0.5-point haircut on each is pure execution risk rather than coverage risk. Buying it moves the 37 %-probability modal branch from 30.0 to 31.0 — off the boundary. That is the highest-value hour in the plan and it appears nowhere in the current allocation.
+
+With 3.0 h deployed (2.0 h ceiling reps + the 5th S5 proof, $p_5: 0.45 \to 0.55$), at 44.0 h = the 80 % ceiling:
+
+| Metric | Now  | +3 h |
+|--------+------+------|
+| E[pts] | 31.3 | 32.9 |
+| P(1)   |  31% |  37% |
+| P(≤3)  |  19% |  16% |
+
+*Ceiling decision required.* Fourteen hours idle while the modal outcome sits on a grade boundary is the largest unforced error in the plan. Breaking the ceiling to ~50 h (91 %) and spending +9 h — 2 h ceiling reps, 5.6 h for three further S5 proofs ($p_5 \to 0.70$), 1.5 h P7 — gives E ≈ 34.0, P(1) ≈ 52 %, P(≤3) ≈ 9 %. Whether the 80 % ceiling is a fatigue constraint or a planning convention is a Phase 1 question I have not overturned; it now costs roughly 15 points of P(grade 1) and should be answered explicitly rather than inherited.
+
+** Cut order — now target-conditional
+
+Ranked by points per hour, which maximises *expected points*. That objective is wrong at the margin here: with boundaries at 30 and 35, a point that moves 26→27 is worth nothing. Read the ranking with the branch it protects.
+
+| Rank | Item | pts/h | Protects              |
+|------+------+-------+-----------------------|
+|    1 | P0   |  1.00 | two slots, never cut   |
+|    2 | P3   |  0.71 | the plan itself        |
+|    3 | P6   |  0.50 | verbatim + S5 floor    |
+|    4 | P8   |  0.50 | subpart insurance      |
+|    5 | P5   |  0.49 | *the only route to 1*  |
+|    6 | P1   |  0.38 | anchor completion      |
+|    7 | P4   |  0.38 | throughput             |
+|    8 | P2   |  0.33 | anchor completion      |
+|    9 | P7   |  0.20 | unfunded by default    |
+
+Under *Branch A*, P5 moves to rank 2: cutting proofs is cutting the target, and the instruction "cut the 4th before the 3rd" is exactly backwards — the 4th proof is the marginal unit of P(grade 1). Under *Branch B*, P5 drops below P7 and the two lowest-confidence proofs are cut first.
+
+P1 and P2 sit low on ratio *because the floor already credits them* — they are anchor completion, not insurance — and must still execute *first* in Block 1. They are the items that decay least across the 13–22 Sept gap, and the floor is only a floor if the anchors are actually secured.
+
+* PHASE 3 — THE PLAN
+
+** Sizing header
+
+- Days: 11 (9–12 Sept, 4 days; 23–29 Sept, 7 days). 8 Sept spent on this document.
+- Available: 11 × 4.5–5 h = *49.5–55.0 h*.
+- Scheduled: *38.5 h* = 70–78 % depending on which end of the daily budget holds. Inside the ceiling on the pessimistic reading, which is the reading that matters.
+- Per day: 3.5 h scheduled against a 4.5–5 h budget. The remaining 1.0–1.5 h/day is *slack — unallocated, not a task*.
+- Branch committed: *A* (target ≥ 35). Switchable to B at the Day 8 trigger; see Decision rules.
+
+*** What the lost day cost, stated plainly
+
+Against the Phase 2 item budget the plan funds P3 6.0/10.0, P4 2.25/4.5, P5 5.5/7.5, P2 3.5/4.5, P1 3.0/4.0, with 4.75 h of repair and consolidation absorbing part of the shortfall. Roughly 75–80 % of the Phase 2 allocation, and the shortfall lands hardest on breadth (P3) and throughput (P4). Revised inputs: $p_3 = 0.80$, $p_4 = 0.72$, $p_5 = 0.50$ (P6 counted). E[pts] ≈ 31.0, P(grade 1) ≈ 20–25 % after dispersion, P(≥ 2) ≈ 80 %. The lost day changed the outcome by well under a point, because the binding constraint was never the last hour — it is the product structure of $p_3 p_4 p_5$.
+
+** BLOCK 1 — 9–12 September
+
+*** Day 1 — Wed 9 Sept — recurrence engine [0/4]
+:GOAL: Write the master theorem with all three case conditions and the polynomial growth condition verbatim from memory, and classify 10 unseen recurrences to case + tight bound in under 30 s each with zero errors.
+
+- [ ] Write the exam-rule card: loop-termination line, no $O/\Theta$ in an induction hypothesis, watershed procedure, $\mathbb{Z}_p$ field caveat. One A5 side. Sources =material.org= =lec10-a-loop-termination=, =lec04-a-induction-no-asymptotic-hypothesis=, =lec16-b-field-caveat= — 45 min
+
+  - Rationale :: S1 and S2 form; the two Category A items that actually cashed out on =exam_01= are both rules of form, not content.
+
+- [ ] Encode master theorem statement + 3 cases with exact side conditions ($k \ge 0$ in case 2, regularity in case 3), from =material.org= =lec04-a-master-theorem= and =lec05-b-compare-driving-watershed=, checked against =theorems.org= l. 114 — 60 min
+
+  - Rationale :: S2 anchored technique; the side conditions are where partial credit is lost.
+
+- [ ] Watershed drill, 12 items: the four from =exam_01= §2, =ps_total= P51 (stooge sort), and CLRS Ex. 4.5-1(a)–(d) plus three self-made. Clock each. Target < 30 s — 75 min
+
+  - Rationale :: S2; =lec05-b-master-theorem-gaps= plus the observed $3T(n/2)+n/\lg n$ perturbation mean the drill must be *compute the watershed*, never recall an instance.
+
+- [ ] Encode gap recognition + polynomial growth condition with the corrected quantifier order, from =lec06-a-polynomial-growth-condition= and =lec07-b-pgc-quantifier-order= — 30 min
+  - Rationale :: S2 rotation candidate 2 and 3; the book's version is wrong and he said so.
+
+*** Day 2 — Thu 10 Sept — loop-invariant machine [0/5]
+:GOAL: Reproduce the four-part invariant skeleton cold and instantiate it for bubblesort and insertion sort in under 15 minutes each, termination stated in both.
+
+- [ ] Encode the skeleton (statement / initialisation / maintenance / termination + the explicit termination sentence) and instantiate on BUBBLESORT, all four subparts of =exam_01= §1 — 60 min
+
+  - Rationale :: S1 anchor; the verbatim-reuse branch is covered at zero marginal cost here.
+
+- [ ] Instantiate on INSERTION-SORT, CLRS 2.1 — 45 min
+
+  - Rationale :: S1 rotation candidate 1, =lec02-b-correctness-two-steps=.
+
+- [ ] Instantiate on SELECTION-SORT, CLRS Ex. 2.2-2 — 45 min
+
+  - Rationale :: S1 rotation candidate 2; same elementary register as bubblesort.
+
+- [ ] Cold rep: 8 fresh recurrences, no notes, timed — 30 min
+
+  - Rationale :: S2 spaced rep 1 of 3.
+
+- [ ] Encode the five Landau property proofs (transitivity, reflexivity, symmetry, sum, product), =lec03-a-landau-proofs= — 30 min
+
+  - Rationale :: subpart insurance; he called them "possible small proofs for the exam", which by D1 means a 1–2-point subpart, so this is capped at 30 min and not revisited.
+
+*** Day 3 — Thu 11 Sept — hash tables + first S5 proof [0/4]
+:GOAL: Fill the 4-cell matrix for hash tables closed-book, and reproduce the comparison-sort lower bound proof cold in under 20 minutes.
+
+- [ ] Build the hash-table cells: representation and load factor; chaining; open addressing with double hashing and his own delete; runtimes $\Theta(1+\alpha)$, $O(1/(1-\alpha))$, $\frac{1}{\alpha}\ln\frac{1}{1-\alpha}$. Sources =ch_11_hash_tables.org= §§11.1–11.4, =lec16-b-double-hashing=, =lec16-b-open-addressing-bounds=, =lec16-c-delete-not-in-book= — 105 min
+  - Rationale :: S3 rotation candidate 1 at medium-high, the single highest-probability uncovered structure; results only, no proofs of 11.6–11.8 per the exclusion list.
+- [ ] Encode Thm 8.1, comparison-sort lower bound, from =theorems.org= l. 291 — 60 min
+  - Rationale :: S5 candidate 1; optimality register, canonical, short enough to write in 20 min under exam conditions.
+- [ ] Cold rep: one invariant instance drawn blind from the three encoded — 30 min
+  - Rationale :: S1 spaced rep 1 of 3.
+- [ ] Cold rep: 6 recurrences, no notes — 15 min
+  - Rationale :: S2 spaced rep 2 of 3.
+
+*** Day 4 — Fri 12 Sept — baseline + gap artefact [0/5]
+:GOAL: A per-subpart scored baseline on =exam_01= and a six-card artefact that fits in a jacket pocket.
+
+- [ ] Sit =exam_01= closed-book, timed at 90 min, no interruptions — 90 min
+  - Rationale :: measurement instrument for decay, not for readiness (D7). Whatever it scores, it is the reference point for 23 Sept.
+- [ ] Mark it per subpart against the printed point weights; record five slot scores in a table — 30 min
+  - Rationale :: slot-level scores are what the Block 2 triggers key on.
+- [ ] Build the gap artefact: six index cards — (1) exam-rule card, (2) master theorem 3 cases + PGC + watershed procedure, (3) invariant skeleton + termination sentence, (4) heap 4 cells min/max, (5) hash 4 cells, (6) Thm 8.1 proof spine in five lines — 60 min
+  - Rationale :: gap protocol deliverable; memorised material decays hard across ten days and this is the only thing crossing with you.
+- [ ] Cold rep: Thm 8.1 spine, no notes — 15 min
+  - Rationale :: S5 spaced rep 1 of 3.
+- [ ] Cold rep: hash 4 cells, no notes — 15 min
+  - Rationale :: S3 spaced rep 1 of 3.
+
+Note: card 4 (heaps) is written from =ch_06_heapsort.org= during the artefact hour without a prior encoding session — heaps are the one structure already at exam standard, having been the July S3.
+
+** GAP PROTOCOL — 13–22 September
+
+Not a note. A schedule. 15–20 min/day on the phone, recall *first*, check the card *second* — reading the card without attempting recall does nothing.
+
+| Date   | Cards         | Min | Context                    |
+|--------+---------------+-----+----------------------------|
+| Sat 13 | 1, 2          |  15 | travel to Graz             |
+| Sun 14 | 3             |  15 | conference                 |
+| Mon 15 | 4             |  15 | conference                 |
+| Tue 16 | 5             |  15 | conference                 |
+| Wed 17 | 6             |  15 | conference                 |
+| Thu 18 | 1, 2          |  20 | travel back                |
+| Fri 19 | 3, 4          |  20 |                            |
+| Sat 20 | 5, 6          |  20 |                            |
+| Sun 21 | all six, skim |  20 |                            |
+| Mon 22 | 2, 6          |  20 | the two that decay hardest |
+
+Total ≈ 2.9 h, outside the working budget. Cards 2 and 6 get four passes each because a procedure with side conditions and a proof spine are the two things that will not survive ten days on one pass.
+
+** BLOCK 2 — 23–29 September
+
+*** Day 5 — Wed 23 Sept — decay measurement + re-encode [0/4]
+:GOAL: Know the per-slot delta against 12 Sept, and have every slot that dropped more than 2 points patched the same day.
+
+- [ ] Re-sit =exam_01= closed-book, timed at 75 min — 75 min
+  - Rationale :: measures decay against a known reference; the only legitimate use of a paper you have already sat.
+- [ ] Mark and tabulate the five slot deltas — 15 min
+- [ ] Patch pass driven by the delta table only: rebuild the exam-rule card, master theorem, and invariant skeleton from memory, and re-read only what the deltas show broken — 60 min
+  - Rationale :: bounded by the delta table, not by "review Block 1". The unbounded version of this task is what killed =plan.org= days 2–5 (BS7).
+- [ ] Encode Thm 7.4, expected running time of randomized quicksort, from =theorems.org= l. 255 — 60 min
+  - Rationale :: S5 candidate 2; =lec12-b-lemma73-comparison-probability= is the load-bearing lemma and the one to get exactly right.
+
+*** Day 6 — Thu 24 Sept — trees, tranche 1 [0/4]
+:GOAL: Fill the 4-cell matrix for BST and red-black closed-book, and write RB-INSERT plus RB-INSERT-FIXUP cold in under 12 minutes.
+
+- [ ] BST cells: representation and three pointers, six operations, $\Theta(h)$ (Thms 12.2, 12.3), TRANSPLANT and the four delete cases. =ch_12_binary_search_trees.org= §§12.1–12.3, =lec17-b-theta-h-height=, =lec17-b-delete-successor= — 60 min
+  - Rationale :: S3 candidate 3 / S4 candidate 2.
+- [ ] Red-black cells: five properties, black-height, Lemma 13.1 statement and its induction spine, rotations, insert fixup cases 1–3 by uncle colour, delete four-case map and the double-colour device. =ch_13_red_black_trees.org=, =lec18-b-fixup-cases=, =lec19-b-fixup-four-cases= — 75 min
+  - Rationale :: S4 candidate 3 and the verbatim branch; delete is capped at the case map per =lec19-c-fixup-half-only=.
+- [ ] Timed cold pseudocode, pass 1: RB-INSERT, RB-INSERT-FIXUP, LEFT-ROTATE, RIGHT-ROTATE. Clock each, record seconds — 45 min
+  - Rationale :: S4(c) was 4 points of pure production; BS5 says throughput is the unmodelled failure mode. =ps_total= P70 is the sourced instance.
+- [ ] Cold rep: Thm 8.1, no notes — 30 min
+  - Rationale :: S5 spaced rep 2 of 3.
+
+*** Day 7 — Fri 25 Sept — B-trees + heap proof [0/4]
+:GOAL: State the B-tree defining properties and write B-TREE-SPLIT-CHILD cold; hash cells reproduced with no gaps.
+
+- [ ] Build B-tree cells from scratch — no =ch_= file exists. Properties ($t-1$ to $2t-1$ keys, all leaves at equal depth, root exception), search, preemptive split on descent, split-child with $2t-1 = (t-1)+1+(t-1)$, disk-read bound. Sources =lec25-b-btree-balance-property=, =lec26-b-defining-properties=, =lec26-b-root-exception=, =lec26-b-split-child=, =lec26-b-odd-median=, =ps_total= P100 — 90 min
+  - Rationale :: S3 candidate 2 / S4 candidate 1; the only funded structure with no notes behind it, hence the largest single block on the day. BS1.
+- [ ] Cold rep: hash 4 cells — 15 min
+  - Rationale :: S3 spaced rep 2 of 3.
+- [ ] Timed cold pseudocode, pass 1b: MIN-HEAPIFY, BUILD-MIN-HEAP, MIN-HEAP-DECREASE-KEY, TREE-INSERT, TREE-DELETE with TRANSPLANT — 60 min
+  - Rationale :: S3/S4 production; the min forms specifically, per Finding 1.4.
+- [ ] Encode BUILD-MAX-HEAP is $O(n)$, including $\sum_{h} h/2^h = 2$ via the differentiated geometric series. =lec10-b-build-heap-on=, =ch_06= §6.3 — 45 min
+  - Rationale :: S5 candidate 3; absent from =theorems.org= (D6), so it exists nowhere in your files and must be built.
+
+*** Day 8 — Sat 26 Sept — Mock A [0/4]
+:GOAL: Score Mock A under exam conditions and know which two slots are weakest.
+
+Mock A, built to the slot structure with rotated content — do not look at these items before sitting:
+- S1 (8) SELECTION-SORT loop invariant, four subparts in Problem 2-2's shape
+- S2 (8) four recurrences: one case 1, one case 2 with $k=1$, one true gap ($2T(n/2)+n/\lg n$), one Akra–Bazzi ($T(n/5)+T(7n/10)+n$)
+- S3 (8) hash tables: representation, chaining, collision resolution, load factor, runtimes
+- S4 (6) BST: define, storage, insert and delete with TRANSPLANT
+- S5 (10) comparison-sort lower bound: state and prove
+
+- [ ] Sit Mock A, timed at 90 min, closed-book — 120 min
+  - Rationale :: first measurement against rotated content; =exam_01= cannot do this job (D7).
+- [ ] Mark per subpart, record slot scores next to the 12 Sept and 23 Sept columns — 30 min
+- [ ] Cold rep: Thm 7.4 — 30 min
+  - Rationale :: S5 spaced rep 2 of 3.
+- [ ] Encode Thm 11.2, successful search in chained hashing, from =theorems.org= l. 358 — 30 min
+  - Rationale :: S5 candidate 4; shortened because the indicator skeleton is shared with Thm 7.4 encoded on Day 5, so this is a re-instantiation, not a new technique.
+
+*** Day 9 — Sun 27 Sept — repair + Huffman [0/3]
+:GOAL: Every subpart that lost points on Mock A re-executed correctly, cold, and the Huffman chain reproduced end to end.
+
+- [ ] Repair the *two lowest-scoring slots only* from Mock A. Not every error — two slots — 105 min
+  - Rationale :: bounded by count. An unbounded repair task is the exact shape that killed the June plan (BS7).
+- [ ] Cold rep: BUILD-MAX-HEAP $O(n)$ — 30 min
+  - Rationale :: S5 spaced rep 2 of 3.
+- [ ] Encode the Huffman chain: Lem 15.2 → Lem 15.3 → Thm 15.4, =theorems.org= ll. 448, 479, 515 — 75 min
+  - Rationale :: S5 candidate 6 and the verbatim branch; the exchange argument in 15.2 is also the transferable skeleton for the partial-credit protocol on an unseen optimality proof.
+
+*** Day 10 — Mon 28 Sept — Mock B [0/4]
+:GOAL: Score Mock B ≥ 33/40 with S1 + S2 ≥ 15/16.
+
+Mock B, different rotation:
+- S1 (8) INSERTION-SORT loop invariant
+- S2 (8) two case-2 items with different $k$, one case-3 item requiring the regularity check, one substitution proof with explicit constants
+- S3 (8) B-trees: properties, search, split-child, insert, runtimes
+- S4 (6) red-black: properties, RB-DELETE case map and the double-colour device
+- S5 (10) BUILD-MAX-HEAP is $O(n)$: state and prove
+
+- [ ] Sit Mock B, timed at 90 min, closed-book — 120 min
+- [ ] Mark, compare slot-by-slot against Mock A — 30 min
+- [ ] Timed reps on the four slowest procedures from either mock — 30 min
+  - Rationale :: throughput; the mocks are the only place the writing speed is actually measured.
+- [ ] Cold rep: Thm 11.2 — 30 min
+  - Rationale :: S5 spaced rep 2 of 3.
+
+*** Day 11 — Tue 29 Sept — consolidation, no new material [0/4]
+:GOAL: All four S5 proof spines and all five structure matrices reproduced cold in one sitting inside 2.5 h.
+
+- [ ] Cold sweep, four proof spines back to back, timed: Thm 8.1, Thm 7.4, BUILD-MAX-HEAP $O(n)$, Thm 11.2 — 90 min
+  - Rationale :: S5 spaced rep 3 of 3, under the fatigue conditions of the actual paper.
+- [ ] Cold sweep, five structures × four cells: heaps, hash, BST, red-black, B-tree — 60 min
+  - Rationale :: S3/S4 spaced rep 3 of 3.
+- [ ] Rewrite the exam-rule card from memory; rehearse the partial-credit protocol once on an unseen theorem (state it, give the algorithm, name optimal substructure and the exchange argument, attempt the base case) — 30 min
+  - Rationale :: the protocol is worth ~3/10 in the 50 % branch where S5 misses; it needs one rehearsal, not zero.
+- [ ] Pack: pens, ID, registration number, watch. Stop by 20:00 — 30 min
+
+*** 30 September — exam morning
+:GOAL: Arrive with the two decay-prone cards refreshed and nothing else touched.
+
+- [ ] Read card 1 (exam rules) and card 2 (master theorem, three cases, side conditions) once. Nothing else — 20 min
+  - Rationale :: the side conditions and the two form rules are the highest-value, lowest-risk items to have live. No proofs, no new material, no mock.
+
+** SIZING CHECK
+
+|     Day | Date       |     Scheduled | Budget      | Slack       |
+|---------+------------+---------------+-------------+-------------|
+|       1 | Wed 9 Sep  |          3.50 | 4.5–5.0     | 1.0–1.5     |
+|       2 | Thu 10 Sep |          3.50 | 4.5–5.0     | 1.0–1.5     |
+|       3 | Fri 11 Sep |          3.50 | 4.5–5.0     | 1.0–1.5     |
+|       4 | Sat 12 Sep |          3.50 | 4.5–5.0     | 1.0–1.5     |
+|       — | 13–22 Sep  | 0 (2.9 phone) | —           | —           |
+|       5 | Wed 23 Sep |          3.50 | 4.5–5.0     | 1.0–1.5     |
+|       6 | Thu 24 Sep |          3.50 | 4.5–5.0     | 1.0–1.5     |
+|       7 | Fri 25 Sep |          3.50 | 4.5–5.0     | 1.0–1.5     |
+|       8 | Sat 26 Sep |          3.50 | 4.5–5.0     | 1.0–1.5     |
+|       9 | Sun 27 Sep |          3.50 | 4.5–5.0     | 1.0–1.5     |
+|      10 | Mon 28 Sep |          3.50 | 4.5–5.0     | 1.0–1.5     |
+|      11 | Tue 29 Sep |          3.50 | 4.5–5.0     | 1.0–1.5     |
+| *Total* |            |       *38.50* | *49.5–55.0* | *11.0–16.5* |
+
+Ratio 70–78 %. No day exceeds 3.5 h scheduled. Slack is empty by construction and is not assigned a use.
+
+Proof rep accounting, since the rule was one encoding plus at least two spaced cold reproductions and all three count against the budget:
+
+| Proof                 | Encode | Rep 1 | Rep 2 | Rep 3 |
+|-----------------------+--------+-------+-------+-------|
+| Thm 8.1               | D3     | D4    | D6    | D11   |
+| Thm 7.4               | D5     | D8    | D11   | —     |
+| BUILD-MAX-HEAP $O(n)$ | D7     | D9    | D11   | —     |
+| Thm 11.2              | D8     | D10   | D11   | —     |
+| Huffman chain         | D9     | D11   | —     | —     |
+
+Huffman gets one rep, not two. That is a knowing violation of the sizing rule, taken because it is the verbatim branch at roughly 12 % and because the chain is already fully written in =theorems.org=, so it is a re-reading rather than a construction. If a day frees up, its second rep is the first thing to add.
+
+** DECISION RULES
+
+*** Behind — trigger conditions, not feelings
+
+You are behind if *any* of these fires:
+- The 23 Sept re-sit scores more than 6 points below the 12 Sept baseline. Meaning: the gap protocol failed and Block 2 is now relearning rather than buying coverage.
+- Mock A on 26 Sept scores under 28/40.
+- Two or more of the four S5 proofs fail cold reproduction on their *second* rep — "fail" meaning you cannot get to the end without opening =theorems.org=.
+- Any single timed pseudocode procedure still exceeds 5 minutes on Day 10.
+
+*** Cut order if a day is lost
+
+1. *First:* the timed pseudocode passes (Day 6 and Day 7 blocks reduced to one pass each, Day 10's dropped). Throughput insurance, not coverage.
+2. *Second:* the Huffman encoding on Day 9. It is the verbatim branch only.
+3. *Third:* Thm 11.2 on Day 8. It shares its skeleton with Thm 7.4, so it is the cheapest proof to lose and the most redundant.
+
+Never cut, in any circumstance: the exam-rule card, the recurrence engine, the invariant machine on two instances, the 12 Sept baseline, the gap artefact, Mock A.
+
+*** Branch switch
+
+If two or more triggers fire by the end of Day 8, switch to Branch B for Days 9–11: drop Thm 11.2 and BUILD-MAX-HEAP from the rep schedule entirely, move those ~2.5 h into repair and the structure matrix, and accept a secure 2. The switch is only available on Day 8 or 9 — after Mock B it is too late to convert hours into breadth.
+
+*** Minimum floor
+
+Complete even if everything else collapses: the exam-rule card; the recurrence engine with the three case conditions; the invariant machine on two instances; the four-cell matrix for heaps, red-black and hash tables; one S5 proof reproducible cold. That subset scores somewhere between 21 and 29.5 depending on the rotation — a 4 at worst, a 3 at best. It is not a target, it is the thing that stops a collapse from becoming a fifth attempt.
+
+** OPEN QUESTIONS
+
+- *Exam duration.* Nothing in any supplied file states it. I have assumed 90 minutes and timed both mocks to it. If it is 120 minutes, the throughput budget (P4) is over-funded and roughly 1.5 h should move to S5 breadth. If it is 60 minutes, the plan is materially wrong: the paper becomes production-limited, S5's 8-point proof is probably unfinishable, and the correct strategy inverts toward banking S1–S4 fast and writing an S5 skeleton. Verify before Day 5.
+- *Partial credit granularity.* Whether marks are awarded per subpart or per slot. This sets the value of the partial-credit protocol, and it is the difference between an S5 miss being worth 3 points and being worth 0. If it is per-slot and all-or-nothing, Branch A collapses and Branch B is the only rational target.
+- *A September sitting of this course from a previous year.* The only evidence that would directly test whether he varies between sittings within one academic year, which is the assumption load-bearing on D8. Ask whoever else is retaking; the paper is in circulation among exactly that group. If such a paper exists and differs structurally from its July counterpart, the anchor/rotate model is wrong and the whole allocation needs revisiting.
+- *Graph cutoff.* =lec30-a-exam-scope-boundary= puts the boundary at lec_29, which includes BFS, DFS, MST and Dijkstra. Confirm this is the scope the *September* paper uses rather than the July one. If graphs are formally in and you want P7 funded, it costs 1.5 h out of slack, and the honest effect is small: it converts an S4-displacement disaster from ~1.5 points to ~4.
+- *Whether the proseminar grade couples to this exam at all.* You hold a 1 from the proseminar under Kimani. If the lecture exam grade is standalone, everything above holds. If there is any weighting between them, the point target changes and so does the branch decision. This is a five-minute check and it can move the target by a full grade.
