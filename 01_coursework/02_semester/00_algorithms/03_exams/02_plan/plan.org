@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-09-08>
-#+lastmod: <2026-09-09 11:03>
+#+lastmod: <2026-09-09 20:56>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -394,22 +394,23 @@ Against the Phase 2 item budget the plan funds P3 6.0/10.0, P4 2.25/4.5, P5 5.5/
 
 ** BLOCK 1 — 9–12 September
 
-*** Day 1 — Wed 9 Sept — recurrence engine [0/4]
+*** Day 1 — Wed 9 Sept — recurrence engine [4/4]
 :GOAL: Write the master theorem with all three case conditions and the polynomial growth condition verbatim from memory, and classify 10 unseen recurrences to case + tight bound in under 30 s each with zero errors.
 
-- [ ] Write the exam-rule card: loop-termination line, no $O/\Theta$ in an induction hypothesis, watershed procedure, $\mathbb{Z}_p$ field caveat. One A5 side. Sources =material.org= =lec10-a-loop-termination=, =lec04-a-induction-no-asymptotic-hypothesis=, =lec16-b-field-caveat= — 45 min
+- [X] Write the exam-rule card: loop-termination line, no $O/\Theta$ in an induction hypothesis, watershed procedure, $\mathbb{Z}_p$ field caveat. One A5 side. Sources =material.org= =lec10-a-loop-termination=, =lec04-a-induction-no-asymptotic-hypothesis=, =lec16-b-field-caveat= — 45 min
 
   - Rationale :: S1 and S2 form; the two Category A items that actually cashed out on =exam_01= are both rules of form, not content.
 
-- [ ] Encode master theorem statement + 3 cases with exact side conditions ($k \ge 0$ in case 2, regularity in case 3), from =material.org= =lec04-a-master-theorem= and =lec05-b-compare-driving-watershed=, checked against =theorems.org= l. 114 — 60 min
+- [X] Encode master theorem statement + 3 cases with exact side conditions ($k \ge 0$ in case 2, regularity in case 3), from =material.org= =lec04-a-master-theorem= and =lec05-b-compare-driving-watershed=, checked against =theorems.org= l. 114 — 60 min
 
   - Rationale :: S2 anchored technique; the side conditions are where partial credit is lost.
 
-- [ ] Watershed drill, 12 items: the four from =exam_01= §2, =ps_total= P51 (stooge sort), and CLRS Ex. 4.5-1(a)–(d) plus three self-made. Clock each. Target < 30 s — 75 min
+- [X] Watershed drill, 12 items: the four from =exam_01= §2, =ps_total= P51 (stooge sort), and CLRS Ex. 4.5-1(a)–(d) plus three self-made. Clock each. Target < 30 s — 75 min
 
   - Rationale :: S2; =lec05-b-master-theorem-gaps= plus the observed $3T(n/2)+n/\lg n$ perturbation mean the drill must be *compute the watershed*, never recall an instance.
 
-- [ ] Encode gap recognition + polynomial growth condition with the corrected quantifier order, from =lec06-a-polynomial-growth-condition= and =lec07-b-pgc-quantifier-order= — 30 min
+- [X] Encode gap recognition + polynomial growth condition with the corrected quantifier order, from =lec06-a-polynomial-growth-condition= and =lec07-b-pgc-quantifier-order= — 30 min
+
   - Rationale :: S2 rotation candidate 2 and 3; the book's version is wrong and he said so.
 
 *** Day 2 — Thu 10 Sept — loop-invariant machine [0/5]
