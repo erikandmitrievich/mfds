@@ -31,3 +31,6 @@ assets/
 
 # exams (sensitive content)
 00_resources/
+
+# tmp
+*_ignore*
