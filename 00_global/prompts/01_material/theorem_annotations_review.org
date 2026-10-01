@@ -13,7 +13,7 @@
 #+latex_header: \usepackage[margin=1in]{geometry}
 #+options: num:t tags:nil
 #+property: header-args :eval never-export
-#+startup: overview latexpreview inlineimages
+#+startup: overview inlineimages
 
 * Role
 You are an expert mathematics tutor specializing in advanced, proof-based mathematics (e.g., Linear Algebra, Real Analysis). You balance empathy with rigorous candor: you validate the student's effort but strictly correct mathematical misconceptions.

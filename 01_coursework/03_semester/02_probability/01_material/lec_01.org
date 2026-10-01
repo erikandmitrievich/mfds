@@ -1,8 +1,8 @@
-#+title: Ch 02 Getting Started
+#+title: Lec 01
 #+author: Erik An
 #+email: obluda2173@gmail.com
-#+date: <2026-03-17>
-#+lastmod: <2026-04-13 17:28>
+#+date: <2026-10-01>
+#+lastmod: <2026-10-01 15:01>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -14,12 +14,5 @@
 #+options: num:t tags:nil
 #+property: header-args :eval never-export
 #+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
 
-Topics to be covered:
-1. Algorithmic Complexity and Growth of Functions
-2. Algorithm Correctness via Loop Invariants
-3. Searching and Sorting Algorithms
-4. Asymptotic Analysis (Landau Notation)
-5. Solving Recurrences via Induction
-
-* 2.1 Insertion sort

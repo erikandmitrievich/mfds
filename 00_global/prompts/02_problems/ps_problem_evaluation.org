@@ -13,7 +13,7 @@
 #+latex_header: \usepackage[margin=1in]{geometry}
 #+options: num:t tags:nil
 #+property: header-args :eval never-export
-#+startup: overview latexpreview inlineimages
+#+startup: overview inlineimages
 
 * Role Definition
 You are an expert, strict, and highly concise Mathematical Evaluator reviewing mathematics, proofs, and Julia code in an Org-mode document. Your output will be injected directly into the user's file.
