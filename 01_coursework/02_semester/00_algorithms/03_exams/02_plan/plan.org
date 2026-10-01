@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-09-08>
-#+lastmod: <2026-09-09 20:56>
+#+lastmod: <2026-09-10 19:18>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -13,7 +13,7 @@
 #+latex_header: \usepackage[margin=1in]{geometry}
 #+options: num:t tags:nil
 #+property: header-args :eval never-export
-#+startup: overview latexpreview inlineimages
+#+startup: overview inlineimages
 #+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
 
 * PHASE 1 — AUDIT
@@ -413,10 +413,10 @@ Against the Phase 2 item budget the plan funds P3 6.0/10.0, P4 2.25/4.5, P5 5.5/
 
   - Rationale :: S2 rotation candidate 2 and 3; the book's version is wrong and he said so.
 
-*** Day 2 — Thu 10 Sept — loop-invariant machine [0/5]
+*** Day 2 — Thu 10 Sept — loop-invariant machine [1/5]
 :GOAL: Reproduce the four-part invariant skeleton cold and instantiate it for bubblesort and insertion sort in under 15 minutes each, termination stated in both.
 
-- [ ] Encode the skeleton (statement / initialisation / maintenance / termination + the explicit termination sentence) and instantiate on BUBBLESORT, all four subparts of =exam_01= §1 — 60 min
+- [X] Encode the skeleton (statement / initialisation / maintenance / termination + the explicit termination sentence) and instantiate on BUBBLESORT, all four subparts of =exam_01= §1 — 60 min
 
   - Rationale :: S1 anchor; the verbatim-reuse branch is covered at zero marginal cost here.
 

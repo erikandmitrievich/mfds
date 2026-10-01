@@ -267,7 +267,7 @@ HEADER_TEMPLATE = r"""#+title: @TITLE@
 #+latex_header: \usepackage[margin=1in]{geometry}
 #+options: num:t tags:nil
 #+property: header-args :eval never-export
-#+startup: overview latexpreview inlineimages
+#+startup: overview inlineimages
 #+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
 
 """
@@ -275,7 +275,7 @@ HEADER_TEMPLATE = r"""#+title: @TITLE@
 BANK_HEADER = r"""#+title: Analysis 2 — Problem Bank
 #+author: Erik An
 #+options: num:nil tags:nil
-#+startup: overview latexpreview
+#+startup: overview
 
 """
 

@@ -13,7 +13,7 @@
 #+latex_header: \usepackage[margin=1in]{geometry}
 #+options: num:t tags:nil
 #+property: header-args :eval never-export
-#+startup: overview latexpreview inlineimages
+#+startup: overview inlineimages
 
 * Mathematical Induction
 ** Introduction
