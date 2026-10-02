@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """extract_ps.py — a problem-set PDF -> ps_NN.org, via the Anthropic API.
 
-Sends ps_NN_source.pdf to the model with the ps_extraction rule as the system
-prompt and writes the returned org to ps_NN.org.
+Sends ps_NN_source.pdf to the model and writes the returned org to ps_NN.org.
+The system prompt is built from two Org files, each with its #+ header dropped:
+math_notation.org inside <math_notation> tags (the repository's math rules,
+which the extraction rule delegates to), followed by the ps_extraction rule.
 
 The output file is also where worked solutions live, so the write is guarded:
 --force lifts the plain "file exists" refusal, but a file whose ** Solution
@@ -11,7 +13,7 @@ manual move (move it aside, or use --stdout to diff by hand). The tool cannot
 destroy worked math.
 
 Paths are resolved by the justfile; this script takes concrete paths.
-Env: ANTHROPIC_API_KEY.
+Env: ANTHROPIC_API_KEY_MFDS.
 """
 
 from __future__ import annotations
@@ -32,13 +34,25 @@ SOLUTION_RE = re.compile(r"^\*\*\s+Solution\b", re.I)
 HEADING_RE = re.compile(r"^\*+\s")
 
 
-def load_system_prompt(rule_path: Path) -> str:
-    """The rule file from its first Org heading on (drop the #+ metadata head)."""
-    lines = rule_path.read_text(encoding="utf-8").splitlines()
+def org_body(path: Path) -> str:
+    """An Org file from its first heading on (drop the #+ metadata head)."""
+    lines = path.read_text(encoding="utf-8").splitlines()
     for i, ln in enumerate(lines):
         if ln.startswith("* "):
             return "\n".join(lines[i:]).strip()
     return "\n".join(lines).strip()
+
+
+def build_system_prompt(rule_path: Path, notation_path: Path) -> str:
+    """Notation first, extraction rule second.
+
+    The notation is reference material, so it goes above the instructions, and
+    the rule's closing BEGIN EXTRACTION stays the last thing in the prompt. The
+    rule refers to the notation by its tag, not by position.
+    """
+    notation = org_body(notation_path)
+    rule = org_body(rule_path)
+    return f"<math_notation>\n{notation}\n</math_notation>\n\n{rule}"
 
 
 def has_solution_work(path: Path) -> bool:
@@ -105,6 +119,9 @@ def main() -> int:
     )
     ap.add_argument("--pdf", required=True, type=Path, help="ps_NN_source.pdf")
     ap.add_argument("--rule", required=True, type=Path, help="ps_extraction rule")
+    ap.add_argument("--notation", required=True, type=Path,
+                    help="math_notation.org (math rules the extraction rule "
+                         "delegates to)")
     ap.add_argument("--out", required=True, type=Path, help="ps_NN.org target")
     ap.add_argument("--model", default=DEFAULT_MODEL)
     ap.add_argument("--max-tokens", type=int, default=DEFAULT_MAX_TOKENS)
@@ -117,12 +134,12 @@ def main() -> int:
                     help="resolve paths and report; make no API call")
     args = ap.parse_args()
 
-    if not args.pdf.exists():
-        print(f"no source pdf: {args.pdf}", file=sys.stderr)
-        return 1
-    if not args.rule.exists():
-        print(f"no rule file: {args.rule}", file=sys.stderr)
-        return 1
+    for label, p in (("source pdf", args.pdf),
+                     ("rule file", args.rule),
+                     ("notation file", args.notation)):
+        if not p.exists():
+            print(f"no {label}: {p}", file=sys.stderr)
+            return 1
 
     out_exists = args.out.exists()
     solved = out_exists and has_solution_work(args.out)
@@ -131,10 +148,11 @@ def main() -> int:
         kib = args.pdf.stat().st_size // 1024
         tag = ("  [HAS SOLUTIONS]" if solved
                else "  [EXISTS]" if out_exists else "")
-        print(f"pdf    {args.pdf}  ({kib} KiB)")
-        print(f"rule   {args.rule}")
-        print(f"out    {args.out}{tag}")
-        print(f"model  {args.model}   max_tokens {args.max_tokens}")
+        print(f"pdf       {args.pdf}  ({kib} KiB)")
+        print(f"rule      {args.rule}")
+        print(f"notation  {args.notation}")
+        print(f"out       {args.out}{tag}")
+        print(f"model     {args.model}   max_tokens {args.max_tokens}")
         if solved:
             print("would REFUSE: out has solution work (not overwritable)")
         elif out_exists and not args.force:
@@ -153,7 +171,7 @@ def main() -> int:
             print(f"refusing: {args.out} exists (pass --force)", file=sys.stderr)
             return 1
 
-    system = load_system_prompt(args.rule)
+    system = build_system_prompt(args.rule, args.notation)
     print(f"extracting {args.pdf.name} -> {args.out.name} [{args.model}] ...",
           file=sys.stderr)
     msg = call_api(args.pdf, system, args.model, args.max_tokens)
