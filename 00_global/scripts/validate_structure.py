@@ -152,7 +152,13 @@ SCHEMA = {
 
     "PROMPTS": Node(
         children=(ChildRule(r"^0[1-3]_[a-z_]+$", kind="PROMPT_FACET", required=True, rule_id="L001"),),
-        files=(),
+        # The one file at the prompts root. Not a prompt -- no task runs from
+        # it -- but the math rules every math-writing prompt includes, so it
+        # sits above the facets it serves. Exact name, not <slug>.org: the root
+        # must not become a third home for prompts; a second shared file is a
+        # second rule. Required because `just ps-extract` passes it as
+        # --notation and fails without it.
+        files=(FileRule(r"^math_notation\.org$", required=True, rule_id="L002"),),
     ),
     # Facet directories are flat. A prompt is either reusable across runs --
     # and lives here as machinery -- or it is bound to one exam run, in which
