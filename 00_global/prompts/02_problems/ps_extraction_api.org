@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-07-26>
-#+lastmod: <2026-07-26 11:08>
+#+lastmod: <2026-10-02 19:05>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -27,7 +27,7 @@ This prompt is consumed by a script (~extract_ps.py~), not a human in a chat. Yo
 ** CORE DIRECTIVES
 1.  *READ*: Analyze the attached PDF thoroughly.
 2.  *EXTRACT*: Identify every distinct problem or question.
-3.  *TRANSCRIBE*: Convert source text and equations into text and LaTeX.
+3.  *TRANSCRIBE*: Convert source text and equations into text and LaTeX written per the notation file (see *Mathematical Notation*).
 4.  *DO NOT SOLVE*: Never attempt to solve the problems. Solution bodies stay empty (Rule 7 scaffolding is the only content ever placed there).
 5.  *DO NOT SUMMARIZE*: Do not shorten or paraphrase.
 6.  *DO NOT FABRICATE*: Never invent content to fill a gap. Mark it instead (Rule 10).
@@ -67,22 +67,21 @@ There is no Time Estimates section. Do not emit one.
 - Never emit two or more consecutive blank lines.
 
 ** Mathematical Notation
-- All mathematical expressions MUST be converted to LaTeX.
-- *Permitted math-mode entry delimiters (exhaustive)*: ~$...$~ and ~$$...$$~. Do NOT use ~\[ \]~, ~\( \)~, or any other delimiter to enter math mode.
-- *Environments inside math mode*: Any standard environment from the loaded packages (~amsmath~, ~amssymb~, ~mathtools~) is permitted *inside* ~$...$~ or ~$$...$$~: ~\begin{align*}...\end{align*}~, ~\begin{pmatrix}...\end{pmatrix}~, ~\begin{bmatrix}...\end{bmatrix}~, ~\begin{cases}...\end{cases}~, ~\begin{vmatrix}...\end{vmatrix}~, etc.
-- *Inline Math*: single dollar signs (~$x^2 + y^2 = z^2$~).
-- *Display Math*: ~$$...$$~ for standalone equations, large matrices, or anything unreadable inline. For multi-line derivations or aligned systems, wrap ~\begin{align*}...\end{align*}~ inside ~$$...$$~.
-- *Punctuation Constraint*: No trailing punctuation (periods, commas, colons) inside the math delimiters. Place it *outside* the closing ~$~ or ~$$~.
-  - *Bad*: ~$A \in \mathbb{R}^{3\times3},$~
-  - *Good*: ~$A \in \mathbb{R}^{3\times3}$,~
-- No Unicode math (use ~$\times$~, not "×").
-- *Hyphen Constraint*: Never place a hyphen directly after a closing ~$~ — Org's LaTeX preview breaks on ~$...$-something~. Insert a space: ~$\mathbb{K}$ -vector space~, not ~$\mathbb{K}$-vector space~.
+All math follows ~math_notation.org~ (the /notation file/), which the script supplies with this prompt inside ~<math_notation>~ tags. It is the only math rule set: delimiters, containers, environments, what Org must see, and symbol spelling are all decided there, not here. Where this prompt and the notation file disagree about math, the notation file wins.
+
+In this prompt, "notation §N" means section N of the notation file. Its section numbers are unrelated to the Rule numbers below.
+
+The notation file is written for any Org file that holds math. Extraction adds four things:
+- Every mathematical expression in the source becomes LaTeX, including single symbols in running prose (see the Rule 1 example).
+- Keep the source's layout: inline in the source stays inline, displayed in the source stays displayed. Deviate only where the notation file requires it (e.g. a matrix goes to display math, notation §1.9).
+- If the source numbers a displayed formula, keep the source's own label with ~\tag{...}~ (notation §1.7), so the problem's in-text references to it stay valid.
+- Before emitting, run the notation §5 checklist over every Quote Block.
 
 * EXTRACTION RULES (STRICT)
 
 ** 1. Verbatim Text Preservation
 Preserve the exact wording of the statement inside the Quote Block, subject to exactly three permitted transformations:
-1. Math is converted to LaTeX per *Mathematical Notation*.
+1. Math is written in LaTeX per *Mathematical Notation*. This includes the two layout changes the notation file forces: a formula may move from inline to display (notation §1.9), and punctuation that ends a display formula is dropped (notation §1.2).
 2. Typos are preserved verbatim per Rule 3 (not corrected).
 3. Citations are stripped per Rule 6.
 No other rewording, abbreviation, paraphrase, or "cleanup".
@@ -163,24 +162,21 @@ Given a function $f(x) = x^2 + 2x$, find the derivtive.
 - Problem 3: "derivtive" → "derivative"
 ```
 
-** Example 2 — Multi-part, display math, partial Julia, no typos
+** Example 2 — Multi-part, display math, cases, partial Julia, no typos
+In the source, the matrix in (a) sat inline and ended the sentence with a period. It moves to display math (notation §1.9) and the period is dropped (notation §1.2). The hyphen after $\lambda$ forces ~\(...\)~ (notation §2.1).
 ```org
 * Problem 5 :determinant:eigenvalue:linear_system:
 ** Task
 #+begin_quote
-Let $A \in \mathbb{R}^{2\times2}$.
+Let $A \in \mathbb{R}^{2 \times 2}$.
 
-(a) Compute $\det(A)$ where $A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$.
+(a) Compute $\det(A)$ where
+\[ A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} \]
 
-(b) Using Julia, find the eigenvalues of $A$.
+(b) Using Julia, find each eigenvalue $\lambda$ of $A$ and its \(\lambda\)-eigenspace.
 
 (c) Show that the system
-
-$$\begin{align*}
-x + 2y &= 5 \\
-3x + 4y &= 11
-\end{align*}$$
-
+\[ \begin{cases} x + 2y = 5 \\ 3x + 4y = 11 \end{cases} \]
 has a unique solution.
 #+end_quote
 

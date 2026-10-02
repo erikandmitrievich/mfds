@@ -8,9 +8,12 @@
 
 set shell := ["bash", "-euo", "pipefail", "-c"]
 
-root    := justfile_directory()
-scripts := root / "00_global/scripts"
-py      := "python3"
+root     := justfile_directory()
+scripts  := root / "00_global/scripts"
+prompts  := root / "00_global/prompts"
+# the repository's math rules; every prompt that writes math includes it
+notation := prompts / "math_notation.org"
+py       := "python3"
 
 _default:
     @just --list --unsorted
@@ -65,9 +68,10 @@ ps-extract COURSE NN *ARGS="":
     nn=$(printf '%02d' "{{NN}}"); \
     ps="$dir/02_problems/ps_$nn"; \
     {{py}} {{scripts}}/ps_extraction.py \
-        --pdf  "$ps/ps_${nn}_source.pdf" \
-        --rule "{{root}}/00_global/prompts/02_problems/ps_extraction_api.org" \
-        --out  "$ps/ps_${nn}.org" {{ARGS}}
+        --pdf      "$ps/ps_${nn}_source.pdf" \
+        --rule     "{{prompts}}/02_problems/ps_extraction_api.org" \
+        --notation "{{notation}}" \
+        --out      "$ps/ps_${nn}.org" {{ARGS}}
 
 # ---------------------------------------------------------------------------
 # exam preparation
