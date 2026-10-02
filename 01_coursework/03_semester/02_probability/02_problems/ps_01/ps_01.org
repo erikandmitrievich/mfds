@@ -1,0 +1,61 @@
+#+title: Ps 01
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-10-02>
+#+lastmod: <2026-10-02 19:20>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 1 :subspace:
+** Task
+#+begin_quote
+*Conceptual.* Take $\Omega = \mathbb{R}$, where an outcome $\omega$ is a temperature measured in degrees Celsius. A sensor answers only the two questions
+
+\[ A = \{ \omega \in \Omega \mid \omega < 18 \}, \quad B = \{ \omega \in \Omega \mid \omega < 22 \} \]
+
+Find a sigma-algebra containing $A$ and $B$ with as few sets as possible, and justify why no smaller sigma-algebra can work. Is $\{20\}$ an event in this sigma-algebra?
+#+end_quote
+
+** Solution
+
+* Problem 2 :projection:
+** Task
+#+begin_quote
+*Mathematical.* Let $(\Omega, \mathcal{F}, \mathbb{P})$ be a probability space and let $A, B \in \mathcal{F}$. Starting from the definition of a probability space, prove
+
+\[ \mathbb{P}(A \setminus B) = \mathbb{P}(A) - \mathbb{P}(A \cap B) \]
+
+and use it to derive the two-event union formula
+
+\[ \mathbb{P}(A \cup B) = \mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B) \]
+#+end_quote
+
+** Solution
+
+* Problem 3 :subspace:
+** Task
+#+begin_quote
+*Python/data.* Use ~lecture_01_examples.ipynb~ as a starting point. Let $\Omega = \{1, \dots, 6\}$ and $\mathcal{F} = 2^\Omega$. Choose nonnegative probabilities $p_1, \dots, p_6$, not all equal, that sum to one and define $\mathbb{P}(\{k\}) = p_k$ for $k = 1, \dots, 6$. Compute the model value of $\mathbb{P}(A)$ for $A = \{2, 4, 6\}$. For two different random seeds, simulate $n = 5000$ rolls and plot the relative frequency $\widehat{p}_m(A)$ based on the first $m$ rolls, for $m = 1, \dots, n$, together with $\mathbb{P}(A)$. Compare the deviations at $m = 50, 500, 5000$, explain the early and late fluctuations, and explain why the experiment illustrates but does not prove convergence.
+#+end_quote
+
+** Solution
+
+* Problem 4 :subspace:
+** Task
+#+begin_quote
+*Additional mathematical exercise: De Morgan's law.* Let $\Omega$ be a sample space and let $A_k \subseteq \Omega$ for every $k \in \mathbb{N}$. With complements taken relative to $\Omega$, prove
+\[ \bigcap_{k=1}^{\infty} A_k = \left( \bigcup_{k=1}^{\infty} A_k^c \right)^c \]
+Start with an arbitrary $\omega \in \Omega$ and express membership on each side using "for every" and "there exists." Then let $\mathcal{F}$ be a sigma-algebra on $\Omega$ with $A_k \in \mathcal{F}$ for every $k$. Use the identity and the definition of a sigma-algebra to show that $\bigcap_{k=1}^{\infty} A_k \in \mathcal{F}$.
+#+end_quote
+
+** Solution
