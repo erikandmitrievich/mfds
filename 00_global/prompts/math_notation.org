@@ -1,0 +1,309 @@
+#+title: Math Notation
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-10-01>
+#+lastmod: <2026-10-01 13:54>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* How to use this file
+
+- This file is the only place where the math rules of this repository are written.
+- Every prompt that writes math includes this file. When a prompt and this file disagree about math, this file wins.
+- Math lives in Org files and is shown with real LaTeX. The packages are =amsmath=, =amssymb= and =mathtools=. Use nothing that needs another package.
+- Math is correct only if both are true:
+  1. Org sees it as math (section 2).
+  2. LaTeX compiles it with no errors.
+- Keep the notation of the source. If a lecture writes =A^*= for the adjoint, write =A^*=. Section 3 fixes how a symbol is /spelled/, not which symbol is used.
+
+* 1. Where math goes
+
+Choose the container by what you are writing.
+
+| What you are writing                        | Use                                 | Section |
+|---------------------------------------------+-------------------------------------+---------|
+| a symbol or short formula inside a sentence | ~$...$~                             |     1.1 |
+| one formula on its own line                 | ~\[ ... \]~                         |     1.2 |
+| a chain of steps (equalities, inequalities) | ~align*~                            |     1.3 |
+| the reason for one step                     | ~&& \text{(reason)}~ at the row end |     1.4 |
+| a sentence in the middle of a chain         | ~\intertext{...}~                   |     1.5 |
+| several separate formulas, one per line     | ~gather*~                           |     1.6 |
+| a formula you will point to later           | ~\tag{1}~                           |     1.7 |
+| a function by cases, a system of equations  | ~cases~ inside ~\[ ... \]~          |     1.8 |
+| a matrix or a vector                        | ~pmatrix~, ~bmatrix~, ~vmatrix~     |     1.9 |
+| an augmented matrix                         | ~array~ with a bar                  |    1.10 |
+| a formula too long for one line             | ~align*~ with ~&\quad~              |    1.11 |
+
+** 1.1 Inside a sentence: =$...$=
+
+Good:
+#+begin_example
+Let $x \in \mathbb{R}$ with $x > 0$. Then $\sqrt{x}$ exists.
+#+end_example
+
+** 1.2 One formula on its own line: =\[ ... \]=
+
+- Do not use =$$...$$=. It is old TeX syntax, and =\tag= does not work inside it.
+- Do not end display math with a period or a comma.
+
+Good:
+#+begin_example
+The sum of the first $n$ numbers is
+\[ \sum_{k=1}^{n} k = \frac{n(n+1)}{2} \]
+#+end_example
+
+** 1.3 A chain of steps: =align*=
+
+- One step per row.
+- Put =&= right before the relation sign (===, =\leq=, =\implies=, ...).
+- Put =\\= between rows. Never after the last row: it adds an empty row.
+- If there is only one row, it is not a chain. Use =\[ ... \]=.
+
+Good:
+#+begin_example
+\begin{align*}
+(a+b)^2 &= (a+b)(a+b) \\
+        &= a^2 + 2ab + b^2
+\end{align*}
+#+end_example
+
+** 1.4 The reason for a step: =&& \text{(...)}=
+
+=&&= starts a new column, so all reasons line up on the right.
+
+Good:
+#+begin_example
+\begin{align*}
+\lim_{n \to \infty} \frac{4n^2 - 2n + 1}{n^2 - n + 6}
+  &= \lim_{n \to \infty} \frac{4 - \frac{2}{n} + \frac{1}{n^2}}{1 - \frac{1}{n} + \frac{6}{n^2}} && \text{(divide by } n^2 \text{)} \\
+  &= 4 && \text{(since } \tfrac{1}{n} \to 0 \text{)}
+\end{align*}
+#+end_example
+
+** 1.5 A sentence in the middle of a chain: =\intertext{...}=
+
+=\intertext= keeps the alignment of the rows before and after it. If the alignment does not need to continue, end the block, write the sentence as normal text, and start a new block.
+
+Good:
+#+begin_example
+\begin{align*}
+f(x) &= x^2 - 1 \\
+\intertext{so at $x = 1$ we get}
+f(1) &= 0
+\end{align*}
+#+end_example
+
+Note: =\intertext{...}= is text, so =$...$= inside it is allowed. This is the only place where =$= may appear inside a math block.
+
+** 1.6 Several separate formulas: =gather*=
+
+Use it when the formulas are not steps of one chain. Each row is centered.
+
+Good:
+#+begin_example
+\begin{gather*}
+a + b = b + a \\
+(a + b) + c = a + (b + c)
+\end{gather*}
+#+end_example
+
+** 1.7 A formula you will point to later: =\tag{...}=
+
+- Put =\tag{1}= (or =\tag{*}=) at the end of the formula or row.
+- In the text, write "(1)" by hand.
+- =\tag= works in =\[ ... \]=, =align*= and =gather*=. It does not work in =$$...$$= or =$...$=.
+
+Good:
+#+begin_example
+\begin{align*}
+a_{n+1} &= 2a_n + 1 \tag{1} \\
+a_0     &= 0 \tag{2}
+\end{align*}
+By (1) and (2), $a_n = 2^n - 1$ for all $n$.
+
+\[ x^2 + y^2 = 1 \tag{*} \]
+#+end_example
+
+** 1.8 Cases and systems: =cases= inside =\[ ... \]=
+
+=\begin{cases}= must be on the same line as =\[= (see 2.2).
+
+Good:
+#+begin_example
+\[ \lvert x \rvert = \begin{cases}
+  x  & \text{if } x \geq 0 \\
+  -x & \text{if } x < 0
+\end{cases} \]
+
+\[ \begin{cases} x + y = 3 \\ x - y = 1 \end{cases} \]
+#+end_example
+
+** 1.9 Matrices and vectors
+
+- =pmatrix= gives round brackets, =bmatrix= square brackets, =vmatrix= a determinant.
+- The matrix environment must have something before it on the same line (see 2.2).
+- Put matrices in display math. Inline is only for short vectors.
+
+Good:
+#+begin_example
+Let $v = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$.
+\[ A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}, \quad \det A = \begin{vmatrix} 1 & 2 \\ 3 & 4 \end{vmatrix} = -2 \]
+
+\begin{align*}
+A &= \begin{bmatrix} 2 & 1 \\ 4 & 5 \end{bmatrix} \\
+  &\sim \begin{bmatrix} 2 & 1 \\ 0 & 3 \end{bmatrix} && (R_2 \to R_2 - 2R_1)
+\end{align*}
+#+end_example
+
+** 1.10 An augmented matrix: =array= with a bar
+
+In ={cc|c}=, each =c= is one centered column and =|= draws the bar.
+
+Good:
+#+begin_example
+\[ \left[ \begin{array}{cc|c} 2 & 1 & 1 \\ 4 & 5 & 2 \end{array} \right] \]
+#+end_example
+
+** 1.11 A formula too long for one line
+
+Break before a =+= or =-=. Start the next row with =&\quad= so it is pushed a little to the right.
+
+Good:
+#+begin_example
+\begin{align*}
+p(x) &= a_0 + a_1 x + a_2 x^2 \\
+     &\quad + a_3 x^3 + a_4 x^4
+\end{align*}
+#+end_example
+
+* 2. Org must see the math
+
+Org decides what is math before LaTeX runs. If Org does not see math, nothing is shown, and no error appears. Preview also hides many LaTeX errors. So follow these rules exactly.
+
+** 2.1 Inline =$...$= has three rules
+
+1. No space right after the opening =$= and no space right before the closing =$=.
+2. Punctuation goes after the closing =$=, not before it.
+3. Right after the closing =$= there must be a space, punctuation, a bracket, or the end of the line. Never a letter, a digit or a hyphen.
+   If a letter or hyphen must follow, write that one formula as =\(...\)=. It has no such rules.
+
+Bad:
+#+begin_example
+Let $ x $ be real, $x = 1,$ the $n$-th term, all $x$s.
+#+end_example
+
+Good:
+#+begin_example
+Let $x$ be real, $x = 1$, the \(n\)-th term, all \(x\)s.
+#+end_example
+
+** 2.2 A line that starts with =\begin{...}= is a block on its own
+
+Org reads such a line as the start of a separate block, even inside =\[ ... \]= or =$$...$$=. The =\[= and =\]= around it become plain text.
+
+- Only =align*= and =gather*= may start a line.
+- Every other environment (=cases=, =pmatrix=, =bmatrix=, =vmatrix=, =array=, =aligned=) needs something before it on the same line: =\[ \begin{cases}=, =A = \begin{pmatrix}=.
+- Never put =align*= or =gather*= inside =\[ ... \]=, =$$...$$= or =$...$=. They are already display math.
+
+Bad:
+#+begin_example
+\[
+\begin{aligned}
+a &= b \\
+  &= c
+\end{aligned}
+\]
+
+$$\begin{align*}
+a &= b
+\end{align*}$$
+#+end_example
+
+Good:
+#+begin_example
+\begin{align*}
+a &= b \\
+  &= c
+\end{align*}
+#+end_example
+
+** 2.3 Other rules
+
+- No empty line inside math.
+- No =$= inside math. Write =\text{for } x=, not =\text{for $x$}=. (=\intertext= is the one exception, see 1.5.)
+- =&= only inside =align*=, a matrix, =cases= or =array=.
+- Inside a list item, indent the block like the item's text. Otherwise Org ends the list.
+
+Good:
+#+begin_example
+- Part (a)
+
+  \begin{align*}
+  x &= 1 \\
+    &= 2 - 1
+  \end{align*}
+#+end_example
+
+* 3. One spelling per symbol
+
+Each meaning gets one spelling. Always use the middle column.
+
+| Meaning                       | Write                                                      | Do not write                               |
+|-------------------------------+------------------------------------------------------------+--------------------------------------------|
+| defined as                    | ~\coloneqq~                                                | ~:=~                                       |
+| a function from A to B        | ~f\colon A \to B~                                          | ~f: A \to B~                               |
+| x is sent to                  | ~x \mapsto x^2~                                            |                                            |
+| tends to, maps to             | ~\to~                                                      | ~\rightarrow~                              |
+| implies, if and only if       | ~\implies~, ~\iff~                                         | ~\Rightarrow~, ~\Leftrightarrow~           |
+| less or equal, more or equal  | ~\leq~, ~\geq~                                             | ~\le~, ~\ge~                               |
+| not equal                     | ~\neq~                                                     | ~\ne~                                      |
+| subset (may be equal), proper | ~\subseteq~, ~\subsetneq~                                  | ~\subset~                                  |
+| epsilon, phi                  | ~\varepsilon~, ~\varphi~                                   | ~\epsilon~, ~\phi~                         |
+| number sets                   | ~\mathbb{N}~, ~\mathbb{R}~, ...                            | ~\N~, ~\R~                                 |
+| set of x with a property      | ~\{ x \in A \mid x > 0 \}~                                 | ~:~ or a bare bar as the separator         |
+| transpose                     | ~A^\top~                                                   | ~A^T~, ~A^{T}~                             |
+| a named function              | ~\det~ ~\dim~ ~\ker~ ~\lim~ ~\max~ ~\sup~ ~\log~ ~\sin~    | the name without a backslash               |
+| a name LaTeX does not know    | ~\operatorname{rank}~                                      | ~\text{rank}~, ~\mathrm{rank}~             |
+| words inside math             | ~\text{ for all }~ (spaces inside braces)                  | words without ~\text~                      |
+| dots                          | ~\dots~ (LaTeX picks the height)                           | ~...~                                      |
+| multiply                      | ~\cdot~                                                    | ~*~                                        |
+| sizes, cross product          | ~\times~, e.g. ~\mathbb{R}^{n \times n}~                   |                                            |
+| tall brackets                 | ~\left( ... \right)~ only around fractions, sums, matrices | ~\left( a, b \right)~ around short content |
+| a condition after a formula   | ~x^2 \geq 0 \quad \text{for all } x \in \mathbb{R}~        |                                            |
+| integral                      | ~\int_a^b f(x) \, dx~                                      |                                            |
+| end of a proof                | ~$\blacksquare$~ at the end of the last line               |                                            |
+
+Absolute value and norm: =\lvert x \rvert= and =\lVert x \rVert=. A bare bar =|= cannot tell left from right, so the spacing can come out wrong.
+
+* 4. Never use
+
+| Never                                             | Use instead                      |
+|---------------------------------------------------+----------------------------------|
+| ~$$...$$~                                         | ~\[ ... \]~                      |
+| ~equation~, ~align~, ~gather~ (numbered, no star) | the starred form and ~\tag{...}~ |
+| ~\label~, ~\ref~, ~\eqref~                        | ~\tag{1}~ and "(1)" in the text  |
+| ~\newcommand~, ~\def~, ~\DeclareMathOperator~     | write the full command           |
+| ~\displaystyle~                                   | display math                     |
+| Unicode math (×, ≤, ℝ, →, ∀)                      | LaTeX commands                   |
+| ~$...$~ alone on its own line                     | ~\[ ... \]~                      |
+| ~align*~ with one row                             | ~\[ ... \]~                      |
+| ~\\~ after the last row                           | nothing                          |
+| ~\quad \text{(reason)}~ for reasons               | ~&& \text{(reason)}~             |
+
+* 5. Checklist before you answer
+
+1. Every formula is in the right container (section 1).
+2. Every =$...$= follows the three rules in 2.1.
+3. No line starts with =\begin{...}= unless it is =align*= or =gather*=.
+4. No =$$=, no empty line inside math, no =\\= after the last row.
+5. Every symbol uses the spelling from section 3.

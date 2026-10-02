@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-27>
-#+lastmod: <2026-09-08 00:00>
+#+lastmod: <2026-10-02 19:30>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -36,6 +36,9 @@ loud.
 exist where, what files may be named, what must be present. Neither reads file
 contents. Header conventions, =CUSTOM_ID= format and math-delimiter rules are
 content questions and belong to a separate validator that does not exist yet.
+The math rules themselves are already written down, in
+=00_global/prompts/math_notation.org=; that file is their spec, and nothing
+checks them.  [UNENFORCED]
 
 * Naming rules — apply everywhere
 
@@ -86,16 +89,26 @@ required — at least one facet directory must be present).
 
 #+begin_example
 prompts/
+    math_notation.org                 L002   required; the repo's math rules
     0N_<facet>/                       L001   01|02|03 only
         <slug>.org                    L011   reusable across runs
 #+end_example
+
+=math_notation.org= (=L002=, required) is the only file at the prompts root. It
+is not a prompt — no task runs from it. It is the repository's math rule set,
+and every prompt that writes math includes it: =just ps-extract= passes it to
+=ps_extraction.py= as =--notation=. It sits above the facet directories because
+it serves all of them. It is required because the pipeline fails without it.
+
+The rule is an exact name, not a =<slug>.org= pattern, so the root cannot become
+a third home for prompts. A second shared file means a second rule.
 
 Facet directories are *flat*. The node has no child rules, so any directory here
 is a finding. There is no =00_general/=: the reusable prompts are the =.org=
 files sitting directly in the facet directory, and nothing else is in it.
 
 A prompt lives in exactly one of two places, and the axis is *lifetime*, not
-subject:
+subject (=math_notation.org= is not a prompt, so it is not a third):
 
 - *Reusable across runs* → =00_global/prompts/0N_<facet>/<slug>.org=. Machinery:
   parameterised, naming no particular file, course, professor or date.
@@ -363,6 +376,7 @@ GLOBAL               G001 dir  archive
                      G004 dir  scripts                            required
 ARCHIVE              A001 file [a-z0-9_]+\.(org|pdf)
 PROMPTS              L001 dir  0[1-3]_[a-z_]+                     required
+                     L002 file math_notation\.org                 required
 PROMPT_FACET         L011 file [a-z0-9_]+\.org
 BOOKS                B001 dir  \d{2}_[a-z0-9_]+
 BOOKS_SUBJECT        B010 file [a-z0-9_]+_book\.pdf
