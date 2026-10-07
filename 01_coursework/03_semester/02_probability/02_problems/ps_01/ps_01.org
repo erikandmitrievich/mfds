@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-02>
-#+lastmod: <2026-10-02 19:20>
+#+lastmod: <2026-10-03 15:54>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -54,7 +54,9 @@ and use it to derive the two-event union formula
 ** Task
 #+begin_quote
 *Additional mathematical exercise: De Morgan's law.* Let $\Omega$ be a sample space and let $A_k \subseteq \Omega$ for every $k \in \mathbb{N}$. With complements taken relative to $\Omega$, prove
+
 \[ \bigcap_{k=1}^{\infty} A_k = \left( \bigcup_{k=1}^{\infty} A_k^c \right)^c \]
+
 Start with an arbitrary $\omega \in \Omega$ and express membership on each side using "for every" and "there exists." Then let $\mathcal{F}$ be a sigma-algebra on $\Omega$ with $A_k \in \mathcal{F}$ for every $k$. Use the identity and the definition of a sigma-algebra to show that $\bigcap_{k=1}^{\infty} A_k \in \mathcal{F}$.
 #+end_quote
 
