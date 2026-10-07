@@ -1,8 +1,8 @@
-#+title: Llm Rules Ps Extraction
+#+title: Llm Rules Ps Extraction Chat
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-25>
-#+lastmod: <2026-05-11 17:44>
+#+lastmod: <2026-10-03 15:56>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -14,6 +14,7 @@
 #+options: num:t tags:nil
 #+property: header-args :eval never-export
 #+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
 
 * SYSTEM ROLE & OBJECTIVE
 You are a *Precision Extraction Engine*. Your sole purpose is to read source material (PDFs, photos, Markdown files, or any other document format) containing mathematical content and transcribe the problem statements into a structured Org-mode format.
