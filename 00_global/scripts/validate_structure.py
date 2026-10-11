@@ -130,6 +130,7 @@ SCHEMA = {
             FileRule(r"^STRUCTURE\.org$", required=True, rule_id="R012"),
             FileRule(r"^\.gitignore$",                   rule_id="R013"),
             FileRule(r"^justfile$",       required=True, rule_id="R014"),
+            FileRule(r"^\.gitmessage$",                  rule_id="R015"),
         ),
     ),
 

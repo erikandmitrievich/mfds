@@ -1,0 +1,73 @@
+
+
+# <type>(<scope>)[!]: <summary>
+#
+# <body>
+#
+# <footers>
+#
+# mfds commit convention. validate_commits.py is its executable form;
+# when the two disagree, the validator wins and this file is fixed.
+# [Hnnn] = enforced by that rule. No id = judgement, nothing checks it.
+# Applies from the commit that added this file; earlier history is
+# exempt.
+#
+# == SUMMARY: line 1 ===================================================
+# H001  <type>(<scope>)[!]: <summary>
+# H002  at most 72 characters
+# H003  line 2 is blank; the summary never wraps
+# H005  lowercase after the colon, no final period
+# H006  no filler: minor, misc, stuff, things, wip, tweaks, various
+# H007  no "+"; two changes are two commits
+# H008  first word not past tense or gerund (added, updating, ...)
+#       Imperative: "If applied, this commit will <summary>."
+#       Identifiers as on disk: ps_09 p_03, ch_14.2, lec_01, exam_01.
+#
+# == CONTENT: 01_coursework/ ===========================================
+# type = facet directory, scope = course directory without NN_
+#
+# H004  material   01_material/
+#       problems   02_problems/
+#       exams      03_exams/
+# H010  scope required; names an existing course ("just courses")
+# H012  every changed path is inside <course>/0N_<type>/
+# H011  first word is one of:
+#       scaffold   ps_NN or chapter skeleton from source
+#       draft      partial work                          -> H013
+#       solve      problem complete
+#       add        notes, q&a, paper, plan, day file
+#       revise     improve content that was already correct
+#       correct    fix a mathematical error              -> H030
+#       move       rename, renumber, relocate
+#       remove     delete
+# H013  draft ends with what is open: draft ps_09 p_01 (step 3 open)
+#
+# == MACHINERY: everything outside 01_coursework/ ======================
+# H004  feat       new capability: script, recipe, validator rule,
+#                  prompt behaviour
+#       fix        tooling gives a wrong result
+#       refactor   restructure or rename, behaviour unchanged
+#       docs       README.md and STRUCTURE.org prose only
+#       chore      .gitignore, bulk mechanical edits, housekeeping
+#       revert     undo an earlier commit; body names it
+# H020  scope required; the component of at least one changed path
+#       ("just commit-scopes"): a script stem, a prompt slug,
+#       structure (STRUCTURE.org + its validator), commits (this
+#       file + its validator), readme, justfile, gitignore,
+#       coursework (mechanical change across courses)
+# H021  no 01_coursework/ path unless the scope is coursework
+#
+# == BODY ==============================================================
+# Why, not what; then what you verified (findings, counts).
+# H030  required for feat, fix, refactor, revert, correct, and "!"
+# H032  wrap at 72; URLs and trailer lines exempt
+#
+# == FOOTERS ===========================================================
+# H031  "!" if and only if a BREAKING CHANGE: footer. Use when a path
+#       or CUSTOM_ID that something outside this commit references
+#       (org links, image paths, Doom config) now points nowhere;
+#       the footer says what must be updated.
+#       Co-Authored-By: <model> <noreply@anthropic.com>
+#
+# Passed through unchecked: Merge, Revert "...", fixup!/squash!/amend!
+# H040  pre-push rejects fixup!/squash!/amend! on their way out
