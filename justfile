@@ -15,6 +15,8 @@ scripts  := root / "00_global/scripts"
 prompts  := root / "00_global/prompts"
 # the repository's math rules; every prompt that writes math includes it
 notation := prompts / "math_notation.org"
+# screenshots for material extraction: the macOS screenshot location
+inbox    := env_var_or_default("MFDS_INBOX", env_var("HOME") / "Pictures/Screenshots")
 py       := "python3"
 
 _default:
@@ -74,6 +76,35 @@ validate-commits *REVS:
 [group('git')]
 commit-scopes:
     @{{py}} {{scripts}}/validate_commits.py --scopes
+
+# ---------------------------------------------------------------------------
+# material
+# ---------------------------------------------------------------------------
+
+# extract the inbox screenshots into the course's staging file
+[group('material')]
+material-extract COURSE *ARGS="":
+    @dir=$(just course-dir {{COURSE}}); \
+    {{py}} {{scripts}}/material_extraction.py \
+        --inbox    "{{inbox}}" \
+        --rule     "{{prompts}}/01_material/notes_material_extraction_api.org" \
+        --notation "{{notation}}" \
+        --out      "$dir/01_material/_extracted_ignore.org" {{ARGS}}
+
+# move every image in the inbox to the Trash
+[group('material')]
+inbox-clear:
+    @shopt -s nullglob nocaseglob; \
+    files=("{{inbox}}"/*.png "{{inbox}}"/*.jpg "{{inbox}}"/*.jpeg); \
+    if [ ${#files[@]} -eq 0 ]; then echo "nothing to clear in {{inbox}}"; exit 0; fi; \
+    if command -v trash >/dev/null; then \
+        trash "${files[@]}"; \
+    else \
+        for f in "${files[@]}"; do \
+            osascript -e "tell application \"Finder\" to delete (POSIX file \"$f\")" >/dev/null; \
+        done; \
+    fi; \
+    echo "moved ${#files[@]} file(s) from {{inbox}} to the Trash"
 
 # ---------------------------------------------------------------------------
 # problem sets
