@@ -9,17 +9,19 @@
 # mfds commit convention. validate_commits.py is its executable form;
 # when the two disagree, the validator wins and this file is fixed.
 # [Hnnn] = enforced by that rule. No id = judgement, nothing checks it.
-# Applies from the commit that added this file; earlier history is
-# exempt.
+# Checked on every commit after the one that added this file; that
+# commit and everything before it are exempt.
 #
 # == SUMMARY: line 1 ===================================================
 # H001  <type>(<scope>)[!]: <summary>
 # H002  at most 72 characters
 # H003  line 2 is blank; the summary never wraps
 # H005  lowercase after the colon, no final period
-# H006  no filler: minor, misc, stuff, things, wip, tweaks, various
-# H007  no "+"; two changes are two commits
+# H006  no opening filler (minor, misc, some, small, ...), never wip
+# H007  no " + " joining two changes; two changes are two commits
 # H008  first word not past tense or gerund (added, updating, ...)
+#       H006 and H008 judge the first word where it is free, in
+#       machinery; content verbs are a closed list (H011).
 #       Imperative: "If applied, this commit will <summary>."
 #       Identifiers as on disk: ps_09 p_03, ch_14.2, lec_01, exam_01.
 #
@@ -70,4 +72,4 @@
 #       Co-Authored-By: <model> <noreply@anthropic.com>
 #
 # Passed through unchecked: Merge, Revert "...", fixup!/squash!/amend!
-# H040  pre-push rejects fixup!/squash!/amend! on their way out
+# H040  a checked range rejects them: squash before pushing
