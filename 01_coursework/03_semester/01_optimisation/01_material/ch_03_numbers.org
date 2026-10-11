@@ -1,0 +1,206 @@
+#+title: Ch 03 Numbers
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-10-11>
+#+lastmod: <2026-10-11 15:49>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Definition:  Idealized floating point numbers
+:PROPERTIES:
+:CUSTOM_ID: def:idealized-fp-numbers
+:LECTURE_REF: 3.3.1
+:END:
+
+For a positive integer $m$, the idealized floating point numbers are
+
+\[ \mathbb{R}^{[m]} \coloneqq \bigcup_{\alpha \in \mathbb{Z}} \{ \pm(1 + k2^{-m})2^{\alpha} \mid k = 0, 1, \dots, 2^m - 1 \} \cup \{0\} \]
+
+The idealized machine precision is
+
+\[ \mathrm{eps}^{[m]} \coloneqq 2^{-m} \]
+
+** Questions
+
+* Lemma:       Relative error of idealized rounding
+:PROPERTIES:
+:CUSTOM_ID: lem:idealized-rounding-error
+:LECTURE_REF: 3.3.2
+:END:
+
+For every $x \in \mathbb{R}$, the mapping $\mathrm{fl}^{[m]}\colon \mathbb{R} \to \mathbb{R}^{[m]}$ satisfies
+
+\[ \lvert \mathrm{fl}^{[m]}(x) - x \rvert \leq \mathrm{eps}^{[m]} \lvert x \rvert \tag{3.3} \]
+
+#+begin_proof
+Consider $x > 0$. There is $\alpha \in \mathbb{Z}$ such that $x \in [2^{\alpha}, 2^{\alpha+1})$. The definition of $\mathrm{fl}^{[m]}$ yields
+
+\[ \lvert \mathrm{fl}^{[m]}(x) - x \rvert \leq \lvert 2^{\alpha-m} \rvert = 2^{-m}2^{\alpha} \leq \mathrm{eps}^{[m]} \lvert x \rvert \]
+
+The inequality also holds for $x = 0$ and for $x < 0$ we derive
+
+\[ \lvert \mathrm{fl}^{[m]}(x) - x \rvert = \lvert -\mathrm{fl}^{[m]}(x) + x \rvert = \lvert \mathrm{fl}^{[m]}(-x) - (-x) \rvert \]
+
+so that the estimate for $-x > 0$ applies. $\blacksquare$
+#+end_proof
+
+** Questions
+
+* Theorem:     Fundamental Theorem of Computational Precision
+:PROPERTIES:
+:CUSTOM_ID: thm:fundamental-computational-precision
+:LECTURE_REF: 3.3.3
+:END:
+
+For $x \in \mathbb{R}$, there is $\lvert \varepsilon \rvert \leq \mathrm{eps}$ such that
+
+\[ \mathrm{fl}^{(\mathrm{eps})}(x) = x(1 + \varepsilon) \tag{3.10} \]
+
+For $x, y \in \mathbb{R}^{(\mathrm{eps})}$, there is $\lvert \varepsilon \rvert \leq \mathrm{eps}$ such that
+
+\[ x * y = (x \star y)(1 + \varepsilon) \tag{3.11} \]
+
+#+begin_proof
+We may assume $x \neq 0$ and define $\varepsilon = \frac{\mathrm{fl}^{(\mathrm{eps})}(x) - x}{x}$. Then (3.10) holds and according to the axiom of computation we have
+
+\[ \lvert \varepsilon \rvert = \left\lvert \frac{\mathrm{fl}^{(\mathrm{eps})}(x) - x}{x} \right\rvert \leq \mathrm{eps} \]
+
+The claim (3.11) follows analogously. $\blacksquare$
+#+end_proof
+
+** Questions
+
+* Definition:  Floating point numbers
+:PROPERTIES:
+:CUSTOM_ID: def:fp-numbers
+:LECTURE_REF: 3.3.5
+:END:
+
+The floating point numbers (for the 64-bit IEEE standard) are
+
+\[ \mathbb{R}_{64} \coloneqq \bigcup_{\alpha=-1022}^{1023} \{ \pm(1, a_1 a_2 \dots a_{52})_2 \cdot 2^{\alpha} \mid a_k \in \{0, 1\} \} \]
+
+and we define
+
+\[ R_{64} \coloneqq \max(\mathbb{R}_{64}), \qquad r_{64} \coloneqq \min(\{ x \in \mathbb{R}_{64} \mid x > 0 \}) \]
+
+** Questions
+
+*** TODO Why from $\alpha = -1022$ to $1023$?
+
+*** TODO Why there is $\pm$ in
+
+* Theorem:     Truncation of idealized floating point numbers
+:PROPERTIES:
+:CUSTOM_ID: thm:truncation-idealized-fp
+:LECTURE_REF: 3.3.6
+:END:
+
+The set $\mathbb{R}_{64}$ is
+
+\[ \mathbb{R}_{64} = \bigcup_{\alpha=-1022}^{1023} \{ \pm(1 + k2^{-52})2^{\alpha} \mid k = 0, 1, \dots, 2^{52} - 1 \} \subseteq \mathbb{R}^{[52]} \tag{3.13} \]
+
+so that it is a union of equally spaced numbers with gaps $2^{\alpha-52}$.
+
+#+begin_proof
+The binary representation in (3.12) yields
+
+\[ (1, a_1 a_2 \dots a_{52})_2 = 1 + \sum_{k=1}^{52} a_k 2^{-k} \]
+
+and /Corollary 2.2.20/ implies
+
+\[ \{ 1 + k\,2^{-52} \mid k = 0, 1, \dots, 2^{52} - 1 \} = \left\{ 1 + \sum_{j=1}^{52} a_j 2^{-j} \mid a_j \in \{0, 1\} \right\} \]
+
+This concludes the proof. $\blacksquare$
+#+end_proof
+
+** Questions
+
+* Lemma:       Largest and smallest positive floating point numbers
+:PROPERTIES:
+:CUSTOM_ID: lem:largest-smallest-positive-fp
+:LECTURE_REF: 3.3.7
+:END:
+
+The largest and smallest positive floating point numbers are
+
+\[ R_{64} = 2^{1024}(1 - 2^{-53}) > 10^{308}, \qquad r_{64} = 2^{-1022} < 3 \cdot 10^{-308} \]
+
+#+begin_proof
+The claim $r_{64} = 2^{-1022}$ is obvious. For $R_{64}$, we observe
+
+\begin{align*}
+R_{64} &= (1 + (2^{52} - 1)2^{-52})2^{1023} \\
+       &= (2 - 2^{-52})2^{1023} \\
+       &= (1 - 2^{-53})2^{1024}
+\end{align*}
+
+$\blacksquare$
+#+end_proof
+
+** Questions
+
+* Definition:  Machine precision
+:PROPERTIES:
+:CUSTOM_ID: def:machine-precision-64
+:LECTURE_REF: 3.3.8
+:END:
+
+The number $\mathrm{eps}_{64} \coloneqq 2^{-52}$ is called /machine precision/.
+
+** Questions
+
+* Theorem:     Precision of computer arithmetics
+:PROPERTIES:
+:CUSTOM_ID: thm:precision-computer-arithmetics-64
+:LECTURE_REF: 3.3.11
+:END:
+
+For all $x, y \in \mathbb{R}_{64}$ satisfying $\lvert x \star y \rvert \in [r_{64}, R_{64}]$, we have
+
+\[ \left\lvert \frac{x * y - (x \star y)}{x \star y} \right\rvert \leq \mathrm{eps}_{64} \tag{3.16} \]
+
+#+begin_proof
+The assertion follows directly from (3.15) and (3.14). $\blacksquare$
+#+end_proof
+
+** Questions
+
+* Definition:  Subnormal floating point numbers
+:PROPERTIES:
+:CUSTOM_ID: def:subnormal-fp-numbers
+:LECTURE_REF: 3.3.12
+:END:
+
+The /subnormal/ floating point numbers are
+
+\begin{align*}
+\mathbb{R}_{64,\mathrm{sub}} &= \{ \pm k \cdot \mathrm{eps}_{64} \cdot r_{64} \mid k = 1, \dots, \mathrm{eps}_{64}^{-1} - 1 \} \\
+                             &= \{ \pm k 2^{-1074} \mid k = 1, \dots, 2^{52} - 1 \}
+\end{align*}
+
+** Questions
+
+* Definition:  Machine numbers
+:PROPERTIES:
+:CUSTOM_ID: def:machine-numbers-64
+:LECTURE_REF: 3.3.14
+:END:
+
+The set of /machine numbers/ is
+
+\[ \mathrm{Float}\,64 = \mathbb{R}_{64} \cup \mathbb{R}_{64,\mathrm{sub}} \cup \{ \pm 0, \pm \mathrm{Inf}, \mathrm{NaN} \} \]
+
+where $\pm \mathrm{Inf} = \pm \infty$ and $\mathrm{NaN}$ is Not a Number such as $0/0$.
+
+** Questions
