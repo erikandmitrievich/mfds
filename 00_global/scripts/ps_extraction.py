@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""extract_ps.py — a problem-set PDF -> ps_NN.org, via the Anthropic API.
+"""ps_extraction.py — a problem-set PDF -> ps_NN.org, via the Anthropic API.
 
 Sends ps_NN_source.pdf to the model and writes the returned org to ps_NN.org.
 The system prompt is built from two Org files, each with its #+ header dropped:
@@ -13,6 +13,7 @@ manual move (move it aside, or use --stdout to diff by hand). The tool cannot
 destroy worked math.
 
 Paths are resolved by the justfile; this script takes concrete paths.
+Shared helpers live in extraction_common.py.
 Env: ANTHROPIC_API_KEY_MFDS.
 """
 
@@ -21,38 +22,15 @@ from __future__ import annotations
 import argparse
 import base64
 import re
-import os
 import sys
 from pathlib import Path
 
-DEFAULT_MODEL = "claude-opus-4-8"
-DEFAULT_MAX_TOKENS = 16384
+from extraction_common import (DEFAULT_MODEL, build_system_prompt, call_api,
+                               print_usage, reply_text, truncated, unfence)
 
-# ```org ... ``` — the rule wraps its output in one fenced block.
-FENCE_RE = re.compile(r"^\s*```(?:org)?\s*\n(.*?)\n```\s*$", re.S)
+DEFAULT_MAX_TOKENS = 16384
 SOLUTION_RE = re.compile(r"^\*\*\s+Solution\b", re.I)
 HEADING_RE = re.compile(r"^\*+\s")
-
-
-def org_body(path: Path) -> str:
-    """An Org file from its first heading on (drop the #+ metadata head)."""
-    lines = path.read_text(encoding="utf-8").splitlines()
-    for i, ln in enumerate(lines):
-        if ln.startswith("* "):
-            return "\n".join(lines[i:]).strip()
-    return "\n".join(lines).strip()
-
-
-def build_system_prompt(rule_path: Path, notation_path: Path) -> str:
-    """Notation first, extraction rule second.
-
-    The notation is reference material, so it goes above the instructions, and
-    the rule's closing BEGIN EXTRACTION stays the last thing in the prompt. The
-    rule refers to the notation by its tag, not by position.
-    """
-    notation = org_body(notation_path)
-    rule = org_body(rule_path)
-    return f"<math_notation>\n{notation}\n</math_notation>\n\n{rule}"
 
 
 def has_solution_work(path: Path) -> bool:
@@ -76,40 +54,17 @@ def has_solution_work(path: Path) -> bool:
     return False
 
 
-def unfence(text: str) -> tuple[str, bool]:
-    """Strip the ```org fence. Second value is False if no closing fence was
-    found (a truncation smell; stop_reason is the authoritative check)."""
-    m = FENCE_RE.match(text.strip())
-    if m:
-        return m.group(1).strip() + "\n", True
-    return text.strip() + "\n", False
-
-
-def call_api(pdf: Path, system: str, model: str, max_tokens: int):
-    try:
-        from anthropic import Anthropic
-    except ImportError:
-        sys.exit("anthropic SDK not installed: pip install anthropic")
-
-    client = Anthropic(api_key=os.environ["ANTHROPIC_API_KEY_MFDS"])
+def pdf_content(pdf: Path) -> list[dict]:
+    """The user turn: the PDF as a document block, then the instruction."""
     data = base64.standard_b64encode(pdf.read_bytes()).decode()
-    return client.messages.create(
-        model=model,
-        max_tokens=max_tokens,
-        # temperature=0,
-        system=system,
-        messages=[{
-            "role": "user",
-            "content": [
-                {"type": "document",
-                 "source": {"type": "base64",
-                            "media_type": "application/pdf",
-                            "data": data}},
-                {"type": "text",
-                 "text": "Process the attached PDF according to the rules."},
-            ],
-        }],
-    )
+    return [
+        {"type": "document",
+         "source": {"type": "base64",
+                    "media_type": "application/pdf",
+                    "data": data}},
+        {"type": "text",
+         "text": "Process the attached PDF according to the rules."},
+    ]
 
 
 def main() -> int:
@@ -174,17 +129,12 @@ def main() -> int:
     system = build_system_prompt(args.rule, args.notation)
     print(f"extracting {args.pdf.name} -> {args.out.name} [{args.model}] ...",
           file=sys.stderr)
-    msg = call_api(args.pdf, system, args.model, args.max_tokens)
+    msg = call_api(pdf_content(args.pdf), system, args.model, args.max_tokens)
 
-    text = "".join(b.text for b in msg.content if getattr(b, "type", None) == "text")
-    content, fenced = unfence(text)
+    content, fenced = unfence(reply_text(msg))
+    print_usage(msg)
 
-    usage = getattr(msg, "usage", None)
-    if usage:
-        print(f"tokens: in {usage.input_tokens}  out {usage.output_tokens}",
-              file=sys.stderr)
-
-    if getattr(msg, "stop_reason", None) == "max_tokens":
+    if truncated(msg):
         print("WARNING: hit max_tokens — output truncated. Re-run with a "
               "larger --max-tokens. Not writing; dumping to stdout.",
               file=sys.stderr)
