@@ -34,3 +34,6 @@ assets/
 
 # tmp
 *_ignore*
+
+# python bytecode
+__pycache__/
