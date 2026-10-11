@@ -1,0 +1,25 @@
+#!/bin/sh
+# Commit message gate. Tracked at 00_global/scripts/hooks/commit-msg;
+# enabled by `just git-setup`.
+#
+# Checks the message against .gitmessage, and the staged paths against its
+# type and scope. This is early feedback, not the gate: --no-verify skips it,
+# and a message-only --amend stages nothing, so the path rules cannot run.
+# The range check (just validate-commits) re-checks the real commits.
+
+set -eu
+
+root=$(git rev-parse --show-toplevel)
+
+status=0
+python3 "$root/00_global/scripts/validate_commits.py" --message-file "$1" || status=$?
+
+case "$status" in
+  0) exit 0 ;;
+  2) echo "validate_commits.py: schema bug or git error - the validator is broken, not the message" >&2 ;;
+  *) msg=$(git rev-parse --git-path COMMIT_EDITMSG)
+     echo "commit aborted; the message is kept in $msg" >&2
+     echo "  edit and retry:  git commit -e -F $msg" >&2
+     echo "  bypass once:     git commit --no-verify" >&2 ;;
+esac
+exit 1
