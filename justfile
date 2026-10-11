@@ -1,7 +1,8 @@
 # The pipeline, executable.
 #
 # STRUCTURE.org says what the repo is. validate_structure.py enforces it.
-# This file says what you *do* to it. Together they are the three specs;
+# .gitmessage says what a commit is. validate_commits.py enforces it.
+# This file says what you *do* to the repo. Together they are the specs;
 # when any two disagree, one of them is wrong.
 #
 #   just                 list recipes
@@ -63,6 +64,16 @@ git-setup:
     @cd {{root}} && git config commit.template .gitmessage
     @echo "core.hooksPath  -> 00_global/scripts/hooks"
     @echo "commit.template -> .gitmessage"
+
+# check every commit after the one that added .gitmessage, or only REVS
+[group('git')]
+validate-commits *REVS:
+    @{{py}} {{scripts}}/validate_commits.py -- {{REVS}}
+
+# the scopes the tree admits: courses, then components
+[group('git')]
+commit-scopes:
+    @{{py}} {{scripts}}/validate_commits.py --scopes
 
 # ---------------------------------------------------------------------------
 # problem sets

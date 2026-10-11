@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-27>
-#+lastmod: <2026-10-11 11:25>
+#+lastmod: <2026-10-11 11:48>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -75,9 +75,10 @@ produces a =ROOT/DIR= finding. Adding it means adding a rule.  [UNENFORCED]
 
 =.gitmessage= is the commit convention: the spec for commit messages, and the
 text git opens for every commit once =just git-setup= has pointed
-=commit.template= at it. This file only admits it; the rules live there. It is
-required because a configured clone depends on it: with the file gone, git
-refuses to start a commit ("could not read '.gitmessage'").
+=commit.template= at it. This file only admits it; the rules live there, and
+=00_global/scripts/validate_commits.py= enforces them. It is required because a
+configured clone depends on it: with the file gone, git refuses to start a
+commit ("could not read '.gitmessage'"), and the validator refuses to run.
 
 * 00_global/
 
