@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-11>
-#+lastmod: <2026-10-11 15:30>
+#+lastmod: <2026-10-11 15:50>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -66,8 +66,8 @@ If the batch holds no item at all, the response is the report alone.
 
 ** Whitespace & Layout
 - The property drawer follows its heading *immediately*. A blank line between the heading and ~:PROPERTIES:~ breaks Org's recognition of the drawer.
-- Exactly one blank line between: the drawer's ~:END:~ and the body; two paragraphs; the last body element and ~** Questions~; ~** Questions~ and the next ~*~ heading; any heading of the report and its body.
-- Display math sits directly under the line that introduces it, with no blank line in between, as in the notation file's examples. After it, a blank line only where the source starts a new paragraph.
+- Exactly one blank line between: the drawer's ~:END:~ and the body; two paragraphs; text and display math; the last body element and ~** Questions~; ~** Questions~ and the next ~*~ heading; any heading of the report and its body.
+- Display math (~\[ ... \]~, ~align*~, ~gather*~) always stands on its own, with one blank line before it and one after it, also when the sentence continues after the formula and also inside a list item or a proof. Text never touches a display formula: without the blank lines, the rendered formula sticks to the surrounding text. This is layout, not math notation, so it holds even though the notation file's examples set display math flush against the text.
 - Never emit two or more consecutive blank lines.
 
 ** Mathematical Notation
@@ -216,9 +216,11 @@ A metric space is a pair $(X, d_X)$ where $X$ is a set and $d_X\colon X \times X
 1. $d_X(x, y) = 0$ iff $x = y$,
 
 2. symmetry:
+
    \[ d_X(x, y) = d_X(y, x) \]
 
 3. triangle inequality:
+
    \[ d_X(x, z) \leq d_X(x, y) + d_X(y, z) \]
 
 ** Questions
@@ -251,14 +253,16 @@ Let $X$ be a compact metric space. Then every Cauchy sequence in $X$ converges t
 
 #+begin_proof
 Let $(x_n)$ be a Cauchy sequence in $X$. By compactness, $(x_n)$ has a subsequence $(x_{n_j})$ converging to some $x \in X$. Let $\varepsilon > 0$. Choose $N$ such that $d(x_n, x_m) < \varepsilon/2$ for all $n, m \geq N$, and choose $j$ with $n_j \geq N$ and $d(x_{n_j}, x) < \varepsilon/2$. Then for all $n \geq N$
+
 \[ d(x_n, x) \leq d(x_n, x_{n_j}) + d(x_{n_j}, x) < \varepsilon \]
+
 Hence $x_n \to x$. $\blacksquare$
 #+end_proof
 
 ** Questions
 ```
 
-~ε~ became ~\varepsilon~ and the source's □ became ~$\blacksquare$~ at the end of the last line (notation §3). The sentence after the display formula continues the same paragraph, so no blank line separates them.
+~ε~ became ~\varepsilon~ and the source's □ became ~$\blacksquare$~ at the end of the last line (notation §3). The display formula has a blank line on each side, although the sentence continues after it.
 
 ** Example 3 — Theorem with an equivalence proof and a cross-reference
 
