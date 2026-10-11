@@ -1,0 +1,88 @@
+#+title: Ps 01
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-10-10>
+#+lastmod: <2026-10-11 10:40>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 1 :machine_numbers:floating_point:
+** Task
+
+#+begin_quote
+Recall the set
+
+\[ \mathbb{R}^{[m]} = \bigcup_{\alpha \in \mathbb{Z}} \left\{ \pm(1 + k2^{-m})2^\alpha : k = 0, 1, \dots, 2^m - 1 \right\} \cup \{0\} \]
+
+(a) For $m = 3$, list all elements of $\mathbb{R}^{[3]}$ in $[1, 2)$ and in $[2, 4)$. What is the spacing between consecutive numbers in each interval?
+
+(b) For arbitrary $m \geq 1$, prove that every integer $n$ with $1 \leq n \leq 2^{m+1}$ belongs to $\mathbb{R}^{[m]}$, whereas $2^{m+1} + 1$ does not.
+
+(c) Restrict the exponent to $A \leq \alpha \leq B$, where $A, B \in \mathbb{Z}$ and $A \leq B$. Determine the number of positive elements and the smallest and largest positive values. Specialize your formulas to $m = 52$, $A = -1022$, and $B = 1023$ to obtain $r_{64}$ and $R_{64}$ from the notes.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+* Problem 2 :floating_point:error_analysis:
+** Task
+
+#+begin_quote
+Work in the idealized model $\mathbb{R}^{(\mathrm{eps})}$, with $0 < \mathrm{eps} < 1$. Write $\mathrm{fl} = \mathrm{fl}^{(\mathrm{eps})}$ and denote computer addition by $\oplus$.
+
+(a) Use the axiom of computation to show that
+
+\[ \mathrm{fl}(x) = x(1 + \delta_0), \quad a \oplus b = (a + b)(1 + \delta_1), \quad \lvert \delta_0 \rvert, \lvert \delta_1 \rvert \leq \mathrm{eps} \]
+
+for $x \in \mathbb{R}$ and $a, b \in \mathbb{R}^{(\mathrm{eps})}$. Explain explicitly how to handle $x = 0$ and $a + b = 0$.
+
+(b) Let $a, b, c \in \mathbb{R}^{(\mathrm{eps})}$, let $s = a + b + c \neq 0$ be the exact sum, and let $\widehat{s} = (a \oplus b) \oplus c$. Prove that
+
+(c) If $a, b, c > 0$, deduce that
+
+\[ \lvert \widehat{s} - s \rvert \leq \mathrm{eps} \lvert s \rvert + \mathrm{eps}(1 + \mathrm{eps}) \lvert a + b \rvert \]
+
+
+(c) If $a, b, c > 0$, deduce that
+\[ \frac{\lvert \widehat{s} - s \rvert}{\lvert s \rvert} \leq 2\mathrm{eps} + \mathrm{eps}^2 \]
+
+Why does the bound in part (b) not guarantee a small relative error when $\lvert a + b + c \rvert$ is much smaller than $\lvert a + b \rvert$?
+
+In Python, exponentiation is written **, not ^.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+* Problem 3 :floating_point:programming:
+** Task
+
+#+begin_quote
+The file /curiosities.ipynb/ on Moodle contains Julia snippets from the lecture. Code and observe analogous phenomena in Python by using
+
+import numpy as np
+
+import matplotlib.pyplot as plt
+
+Notice that native Python and numpy deal differently with integers.
+#+end_quote
+
+** Solution
