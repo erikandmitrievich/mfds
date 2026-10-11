@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-27>
-#+lastmod: <2026-10-02 19:30>
+#+lastmod: <2026-10-11 11:14>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -66,6 +66,7 @@ LICENSE                                                   required   R011
 STRUCTURE.org     this file                               required   R012
 justfile          task runner; entry point for validation required   R014
 .gitignore                                                optional   R013
+.gitmessage       commit rules                            optional   R015
 #+end_example
 
 Nothing else may sit at the repo root. =02_thesis/= has been discussed as a
