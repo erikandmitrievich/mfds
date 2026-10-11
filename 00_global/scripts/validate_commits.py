@@ -13,6 +13,8 @@ Usage:
     validate_commits.py REVS...            commits in REVS after the cutoff
     validate_commits.py --message-file F   one message, against staged paths
     validate_commits.py --scopes           the scopes the tree admits
+    validate_commits.py --prepare F [--source S]
+                                           prefill type(scope) into F
 
 The cutoff is the commit that added .gitmessage. It is read from history, not
 stored, so there is no baseline: every later commit is checked, the cutoff and
@@ -501,6 +503,43 @@ def run_scopes() -> int:
     return 0
 
 
+def derive(paths: list[str]) -> tuple[str, str]:
+    """(line-1 prefix, comment) for a set of staged paths; either may be empty."""
+    ws = [where(p) for p in paths]
+    content = sorted({w.content for w in ws if w.content})
+    loose = [w for w in ws if not w.content]
+    if content and loose:
+        return "", "# staged paths mix coursework and machinery - split the commit (H012, H021)"
+    if content:
+        if len(content) == 1:
+            return f"{content[0]}: ", ""
+        return "", f"# staged paths span {', '.join(content)} - split the commit (H012)"
+    comps = sorted({w.component for w in ws})
+    if len(comps) == 1:
+        return f"({comps[0]}): ", ""            # the type is a decision; leave it
+    return "", f"# staged components: {', '.join(comps)} - the scope names the main one (H020)"
+
+
+def run_prepare(path: Path, source: str) -> int:
+    """Prefill line 1 from the staged paths. Never fails a commit."""
+    if source not in ("", "template"):
+        return 0            # -m/-F, merge, squash, amend: a message already exists
+    paths = staged_paths()
+    if not paths:
+        return 0
+    head, note = derive(paths)
+    lines = path.read_text().split("\n")
+    if head:
+        if lines and not lines[0].strip():
+            lines[0] = head
+        else:
+            lines.insert(0, head)
+    if note:
+        lines.insert(1, note)
+    path.write_text("\n".join(lines))
+    return 0
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="validate commit messages against .gitmessage")
     mode = ap.add_mutually_exclusive_group()
@@ -508,6 +547,11 @@ def main(argv=None) -> int:
                       help="check one message against the staged paths (commit-msg)")
     mode.add_argument("--scopes", action="store_true",
                       help="print the courses and components the tree admits")
+    mode.add_argument("--prepare", type=Path, metavar="F",
+                      help="prefill type(scope) into F from the staged paths "
+                           "(prepare-commit-msg)")
+    ap.add_argument("--source", default="",
+                    help="with --prepare: git's message source ($2 of the hook)")
     ap.add_argument("revs", nargs="*",
                     help="rev-list arguments; default: every commit after the cutoff")
     args = ap.parse_args(argv)
@@ -518,6 +562,8 @@ def main(argv=None) -> int:
         return run_message(args.message_file)
     if args.scopes:
         return run_scopes()
+    if args.prepare:
+        return run_prepare(args.prepare, args.source)
     return run_range(args.revs)
 
 

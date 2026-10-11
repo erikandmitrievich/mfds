@@ -1,0 +1,16 @@
+#!/bin/sh
+# Commit message prefill. Tracked at 00_global/scripts/hooks/prepare-commit-msg;
+# enabled by `just git-setup`.
+#
+# When git opens the editor on the template, line 1 gets the type and scope
+# the staged paths determine: "problems(algorithms): " for content, and
+# "(ps_extraction): " for machinery, where the type is left to you. When the
+# staged paths cannot share one commit, a comment says why instead.
+# Never blocks a commit: if this fails, the template simply arrives empty.
+#
+#   $1  message file
+#   $2  source: empty, template, message, merge, squash or commit
+
+root=$(git rev-parse --show-toplevel) || exit 0
+python3 "$root/00_global/scripts/validate_commits.py" --prepare "$1" --source "${2:-}" || true
+exit 0
