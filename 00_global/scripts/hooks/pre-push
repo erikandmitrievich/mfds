@@ -1,0 +1,41 @@
+#!/bin/sh
+# Commit gate for pushes. Tracked at 00_global/scripts/hooks/pre-push;
+# enabled by `just git-setup`.
+#
+# Checks every commit about to leave this clone against its real diff. This
+# is the gate: commit-msg sees only the staged delta on --amend and is skipped
+# by --no-verify. Commits up to and including the one that added .gitmessage
+# are never checked (validate_commits.py excludes them itself).
+#
+# Git feeds one line per ref on stdin:
+#   <local ref> <local sha> <remote ref> <remote sha>
+
+set -eu
+
+root=$(git rev-parse --show-toplevel)
+check="$root/00_global/scripts/validate_commits.py"
+
+is_zero() { case "$1" in *[!0]*) return 1 ;; esac; return 0; }
+
+status=0
+while read -r local_ref local_sha remote_ref remote_sha; do
+    is_zero "$local_sha" && continue                        # deleting a ref
+    if is_zero "$remote_sha" || ! git cat-file -e "$remote_sha^{commit}" 2>/dev/null; then
+        set -- "$local_sha" --not --remotes                 # new ref: what no remote has
+    else
+        set -- "$remote_sha..$local_sha"
+    fi
+    rc=0
+    python3 "$check" -- "$@" </dev/null || rc=$?
+    if [ "$rc" -gt "$status" ]; then status=$rc; fi
+done
+
+case "$status" in
+  0) exit 0 ;;
+  2) echo "validate_commits.py: schema bug or git error - the validator is broken, not the commits" >&2 ;;
+  *) echo "push aborted; fix the commits above while they are still local:" >&2
+     echo "  git rebase -i --autosquash <last pushed commit>" >&2
+     echo "  (reword bad messages; fixup!/squash! fold in on their own)" >&2
+     echo "  bypass once:  git push --no-verify" >&2 ;;
+esac
+exit 1
