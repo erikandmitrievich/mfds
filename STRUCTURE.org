@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-27>
-#+lastmod: <2026-10-11 11:14>
+#+lastmod: <2026-10-11 11:22>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -371,6 +371,7 @@ ROOT                 R001 dir  00_global                          required
                      R012 file STRUCTURE\.org                     required
                      R013 file \.gitignore
                      R014 file justfile                           required
+                     R015 file \.gitmessage
 GLOBAL               G001 dir  archive
                      G002 dir  prompts                            required
                      G003 dir  books
