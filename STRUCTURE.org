@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-27>
-#+lastmod: <2026-10-11 11:48>
+#+lastmod: <2026-10-11 15:40>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -104,9 +104,10 @@ prompts/
 
 =math_notation.org= (=L002=, required) is the only file at the prompts root. It
 is not a prompt — no task runs from it. It is the repository's math rule set,
-and every prompt that writes math includes it: =just ps-extract= passes it to
-=ps_extraction.py= as =--notation=. It sits above the facet directories because
-it serves all of them. It is required because the pipeline fails without it.
+and every prompt that writes math includes it: =just ps-extract= and
+=just material-extract= pass it to their scripts as =--notation=. It sits above
+the facet directories because it serves all of them. It is required because the
+pipeline fails without it.
 
 The rule is an exact name, not a =<slug>.org= pattern, so the root cannot become
 a third home for prompts. A second shared file means a second rule.
@@ -214,11 +215,19 @@ lec_NN.org / lec_NN-NN.org    M004   lecture-aligned notes; NN-NN = a range
 <slug>.org                    M002   topic-aligned (induction.org,
                                      theorems.org); must NOT start ch_ or lec_
 _<slug>_source[_<qualifier>].pdf   M003   upstream source document
+_extracted_ignore.org         M002   material extraction staging; gitignored
 #+end_example
 
 =theorems.org= has no rule of its own here; it is an ordinary =M002= slug file.
 =M003= permits a qualifier (=_analysis_source_02_semester.pdf=), so more than
 one source PDF per course is legal.
+
+=_extracted_ignore.org= is where =just material-extract= appends its batches.
+It is an =M002= slug by pattern and scratch by intent: the leading =_= marks it
+as non-content, =*_ignore*= in =.gitignore= keeps it out of history, and its
+items are refiled into =ch_= / =lec_= files by hand, after which it is emptied.
+Its screenshots never enter the tree: they are read from outside the repository
+(=MFDS_INBOX=).  [UNENFORCED]
 
 The =lecture_org/= + =lecture_pdf/= format split and the =lecture_notes/=
 nesting are *deprecated* — retrofit older courses to the flat shape. The
