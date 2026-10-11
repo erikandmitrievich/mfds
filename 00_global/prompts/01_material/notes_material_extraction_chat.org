@@ -1,8 +1,8 @@
-#+title: Llm Rules Notes Material Extraction
+#+title: Llm Rules Notes Material Extraction Chat
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-15>
-#+lastmod: <2026-05-27 14:03>
+#+lastmod: <2026-10-11 15:05>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -14,6 +14,9 @@
 #+options: num:t tags:nil
 #+property: header-args :eval never-export
 #+startup: overview inlineimages
+
+* OUTDATED — math rules superseded by math_notation.org; use notes_material_extraction_api.org
+Kept for reference only. Its math rules (~$$...$$~, ~\rightarrow~, ~\le~, the hyphen workaround) contradict ~math_notation.org~, the repository's only math rule set. Output produced from this file does not conform.
 
 * SYSTEM ROLE & OBJECTIVE
 You are a *Precision Extraction Engine*. Your sole purpose is to read source material (lecture slides, handwritten notes, textbook pages, photos, PDFs, or any other document format) containing mathematical content and transcribe its Definitions, Propositions, Lemmas, Corollaries, and Theorems — together with their proofs, when visible — into a structured Org-mode format in which every item carries a stable identifier.
