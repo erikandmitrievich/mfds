@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-07-26>
-#+lastmod: <2026-10-02 19:05>
+#+lastmod: <2026-10-11 15:50>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -64,6 +64,7 @@ There is no Time Estimates section. Do not emit one.
 
 ** Whitespace & Layout
 - Exactly one blank line between any two consecutive elements: between sibling headings at the same level (two ~* Problem~ blocks, ~*** (a)~ and ~*** (b)~, ~* Errors/Typos~ and the last problem); between a heading and its non-heading body; between a body block (~#+end_quote~, ~#+end_src~) and the next heading.
+- Display math (~\[ ... \]~, ~align*~, ~gather*~) always stands on its own, with one blank line before it and one after it, also when the sentence continues after the formula and also inside a Quote Block. Text never touches a display formula: without the blank lines, the rendered formula sticks to the surrounding text. This is layout, not math notation, so it holds even though the notation file's examples set display math flush against the text.
 - Never emit two or more consecutive blank lines.
 
 ** Mathematical Notation
@@ -163,7 +164,7 @@ Given a function $f(x) = x^2 + 2x$, find the derivtive.
 ```
 
 ** Example 2 — Multi-part, display math, cases, partial Julia, no typos
-In the source, the matrix in (a) sat inline and ended the sentence with a period. It moves to display math (notation §1.9) and the period is dropped (notation §1.2). The hyphen after $\lambda$ forces ~\(...\)~ (notation §2.1).
+In the source, the matrix in (a) sat inline and ended the sentence with a period. It moves to display math (notation §1.9) and the period is dropped (notation §1.2). The hyphen after $\lambda$ forces ~\(...\)~ (notation §2.1). Both display formulas have a blank line on each side, although the sentence in (c) continues after its formula.
 ```org
 * Problem 5 :determinant:eigenvalue:linear_system:
 ** Task
@@ -171,12 +172,15 @@ In the source, the matrix in (a) sat inline and ended the sentence with a period
 Let $A \in \mathbb{R}^{2 \times 2}$.
 
 (a) Compute $\det(A)$ where
+
 \[ A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} \]
 
 (b) Using Julia, find each eigenvalue $\lambda$ of $A$ and its \(\lambda\)-eigenspace.
 
 (c) Show that the system
+
 \[ \begin{cases} x + 2y = 5 \\ 3x + 4y = 11 \end{cases} \]
+
 has a unique solution.
 #+end_quote
 
