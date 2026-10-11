@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-27>
-#+lastmod: <2026-10-11 11:22>
+#+lastmod: <2026-10-11 11:25>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -66,12 +66,18 @@ LICENSE                                                   required   R011
 STRUCTURE.org     this file                               required   R012
 justfile          task runner; entry point for validation required   R014
 .gitignore                                                optional   R013
-.gitmessage       commit rules                            optional   R015
+.gitmessage       commit spec; git's commit template      required   R015
 #+end_example
 
 Nothing else may sit at the repo root. =02_thesis/= has been discussed as a
 reservation for a thesis tree; it is *not* in the schema, and creating it today
 produces a =ROOT/DIR= finding. Adding it means adding a rule.  [UNENFORCED]
+
+=.gitmessage= is the commit convention: the spec for commit messages, and the
+text git opens for every commit once =just git-setup= has pointed
+=commit.template= at it. This file only admits it; the rules live there. It is
+required because a configured clone depends on it: with the file gone, git
+refuses to start a commit ("could not read '.gitmessage'").
 
 * 00_global/
 
@@ -154,10 +160,11 @@ scripts/
 #+end_example
 
 Git hooks are repo machinery and are versioned here rather than in =.git/=.
-Enable with:
+Enable them, together with the commit template, once per clone:
 
 #+begin_src sh
-git config core.hooksPath 00_global/scripts/hooks
+just git-setup    # core.hooksPath -> 00_global/scripts/hooks
+                  # commit.template -> .gitmessage
 #+end_src
 
 Only =.py= is admitted under =scripts/= (=T001=). A shell script or a Julia
@@ -371,7 +378,7 @@ ROOT                 R001 dir  00_global                          required
                      R012 file STRUCTURE\.org                     required
                      R013 file \.gitignore
                      R014 file justfile                           required
-                     R015 file \.gitmessage
+                     R015 file \.gitmessage                       required
 GLOBAL               G001 dir  archive
                      G002 dir  prompts                            required
                      G003 dir  books

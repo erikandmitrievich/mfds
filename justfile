@@ -5,6 +5,7 @@
 # when any two disagree, one of them is wrong.
 #
 #   just                 list recipes
+#   just git-setup       once per clone: hooks and commit template
 
 set shell := ["bash", "-euo", "pipefail", "-c"]
 
@@ -51,11 +52,17 @@ validate-debt:
 [group('validate structure')]
 validate-check: validate
 
-# point git at the tracked hooks (run once per clone)
-[group('validate structure')]
-validate-hooks:
+# ---------------------------------------------------------------------------
+# git
+# ---------------------------------------------------------------------------
+
+# once per clone: tracked hooks, and .gitmessage as the commit template
+[group('git')]
+git-setup:
     @cd {{root}} && git config core.hooksPath 00_global/scripts/hooks
-    @echo "core.hooksPath -> 00_global/scripts/hooks"
+    @cd {{root}} && git config commit.template .gitmessage
+    @echo "core.hooksPath  -> 00_global/scripts/hooks"
+    @echo "commit.template -> .gitmessage"
 
 # ---------------------------------------------------------------------------
 # problem sets
