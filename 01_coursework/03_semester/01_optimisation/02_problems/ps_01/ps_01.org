@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-10>
-#+lastmod: <2026-10-12 11:43>
+#+lastmod: <2026-10-12 12:01>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -96,12 +96,10 @@ for $x \in \mathbb{R}$ and $a, b \in \mathbb{R}^{(\mathrm{eps})}$. Explain expli
 
 (b) Let $a, b, c \in \mathbb{R}^{(\mathrm{eps})}$, let $s = a + b + c \neq 0$ be the exact sum, and let $\widehat{s} = (a \oplus b) \oplus c$. Prove that
 
-(c) If $a, b, c > 0$, deduce that
-
 \[ \lvert \widehat{s} - s \rvert \leq \mathrm{eps} \lvert s \rvert + \mathrm{eps}(1 + \mathrm{eps}) \lvert a + b \rvert \]
 
-
 (c) If $a, b, c > 0$, deduce that
+
 \[ \frac{\lvert \widehat{s} - s \rvert}{\lvert s \rvert} \leq 2\mathrm{eps} + \mathrm{eps}^2 \]
 
 Why does the bound in part (b) not guarantee a small relative error when $\lvert a + b + c \rvert$ is much smaller than $\lvert a + b \rvert$?
@@ -112,9 +110,39 @@ In Python, exponentiation is written **, not ^.
 ** Solution
 *** (a)
 
+Assume the axiom of computation in the form $\lvert \operatorname{fl}(x) - x \rvert \leq \mathrm{eps} \lvert x \rvert$ for all $x \in \mathbb{R}$, together with $a \oplus b = \operatorname{fl}(a + b)$.
+
+If $x \neq 0$, set $\delta_0 \coloneqq (\operatorname{fl}(x) - x)/x$. Then $\operatorname{fl}(x) = x(1 + \delta_0)$, and the axiom gives $\lvert \delta_0 \rvert \leq \mathrm{eps}$.
+
+If $x = 0$, the axiom gives $\lvert \operatorname{fl}(0) \rvert \leq 0$, so $\operatorname{fl}(0) = 0 = 0 \cdot (1 + \delta_0)$ for every $\delta_0$. Take $\delta_0 = 0$.
+
+Applying this to $x = a + b$ gives $a \oplus b = (a + b)(1 + \delta_1)$ with $\lvert \delta_1 \rvert \leq \mathrm{eps}$. The case $a + b = 0$ is the case $x = 0$, with $\delta_1 = 0$.
+
 *** (b)
 
+Let $y \coloneqq a \oplus b \in \mathbb{R}^{(\mathrm{eps})}$. By (a), $y = (a + b)(1 + \delta_1)$ and $\widehat{s} = y \oplus c = (y + c)(1 + \delta_2)$ with $\lvert \delta_1 \rvert, \lvert \delta_2 \rvert \leq \mathrm{eps}$. Hence
+
+\begin{align*}
+\widehat{s} &= (a + b)(1 + \delta_1)(1 + \delta_2) + c(1 + \delta_2) \\
+            &= s + s\delta_2 + (a + b)\delta_1(1 + \delta_2)
+\end{align*}
+
+By the triangle inequality and $\lvert 1 + \delta_2 \rvert \leq 1 + \mathrm{eps}$,
+\[ \lvert \widehat{s} - s \rvert \leq \mathrm{eps} \lvert s \rvert + \mathrm{eps}(1 + \mathrm{eps}) \lvert a + b \rvert \]
+
 *** (c)
+
+Since $a, b, c > 0$, we have $0 < a + b < s$, so $s \neq 0$ and (b) gives
+
+\[ \lvert \widehat{s} - s \rvert \leq \mathrm{eps} \lvert s \rvert + \mathrm{eps}(1 + \mathrm{eps}) \lvert s \rvert = (2\mathrm{eps} + \mathrm{eps}^2) \lvert s \rvert \]
+
+Dividing by $\lvert s \rvert$ gives the claim.
+
+Without positivity, dividing (b) by $\lvert s \rvert$ only gives
+
+\[ \frac{\lvert \widehat{s} - s \rvert}{\lvert s \rvert} \leq \mathrm{eps} + \mathrm{eps}(1 + \mathrm{eps}) \frac{\lvert a + b \rvert}{\lvert s \rvert} \]
+
+If $\lvert s \rvert \ll \lvert a + b \rvert$ (cancellation, $c \approx -(a + b)$), the factor $\lvert a + b \rvert / \lvert s \rvert$ is large, so the bound is not small. The cause is the rounding error $(a + b)\delta_1$ of the first addition: it can be as large as $\mathrm{eps} \lvert a + b \rvert$, and it is measured against the much smaller $\lvert s \rvert$.
 
 * Problem 3 :floating_point:programming:
 ** Task
