@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-10>
-#+lastmod: <2026-10-12 12:01>
+#+lastmod: <2026-10-12 12:49>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -110,39 +110,43 @@ In Python, exponentiation is written **, not ^.
 ** Solution
 *** (a)
 
-Assume the axiom of computation in the form $\lvert \operatorname{fl}(x) - x \rvert \leq \mathrm{eps} \lvert x \rvert$ for all $x \in \mathbb{R}$, together with $a \oplus b = \operatorname{fl}(a + b)$.
+By the axiom of computation, $\lvert \operatorname{fl}(x) - x \rvert \leq \mathrm{eps} \lvert x \rvert$ for all $x \in \mathbb{R}$, and $a \oplus b = \operatorname{fl}(a + b)$.
 
-If $x \neq 0$, set $\delta_0 \coloneqq (\operatorname{fl}(x) - x)/x$. Then $\operatorname{fl}(x) = x(1 + \delta_0)$, and the axiom gives $\lvert \delta_0 \rvert \leq \mathrm{eps}$.
+If $x \neq 0$, set $\delta_0 \coloneqq (\operatorname{fl}(x) - x)/x$. Then $\operatorname{fl}(x) = x(1 + \delta_0)$ and $\lvert \delta_0 \rvert \leq \mathrm{eps}$.
 
-If $x = 0$, the axiom gives $\lvert \operatorname{fl}(0) \rvert \leq 0$, so $\operatorname{fl}(0) = 0 = 0 \cdot (1 + \delta_0)$ for every $\delta_0$. Take $\delta_0 = 0$.
+If $x = 0$, the axiom gives $\lvert \operatorname{fl}(0) \rvert \leq 0$, so $\operatorname{fl}(0) = 0 = 0 \cdot (1 + \delta_0)$ for any $\delta_0$. Take $\delta_0 = 0$.
 
-Applying this to $x = a + b$ gives $a \oplus b = (a + b)(1 + \delta_1)$ with $\lvert \delta_1 \rvert \leq \mathrm{eps}$. The case $a + b = 0$ is the case $x = 0$, with $\delta_1 = 0$.
+Applying this to $x = a + b$ gives $a \oplus b = (a + b)(1 + \delta_1)$ with $\lvert \delta_1 \rvert \leq \mathrm{eps}$, and $\delta_1 = 0$ if $a + b = 0$.
 
 *** (b)
 
-Let $y \coloneqq a \oplus b \in \mathbb{R}^{(\mathrm{eps})}$. By (a), $y = (a + b)(1 + \delta_1)$ and $\widehat{s} = y \oplus c = (y + c)(1 + \delta_2)$ with $\lvert \delta_1 \rvert, \lvert \delta_2 \rvert \leq \mathrm{eps}$. Hence
+Let $y \coloneqq a \oplus b \in \mathbb{R}^{(\mathrm{eps})}$. By (a), $y = (a + b)(1 + \delta_1)$ and $\widehat{s} = (y + c)(1 + \delta_2)$ with $\lvert \delta_1 \rvert, \lvert \delta_2 \rvert \leq \mathrm{eps}$. Hence
 
 \begin{align*}
-\widehat{s} &= (a + b)(1 + \delta_1)(1 + \delta_2) + c(1 + \delta_2) \\
-            &= s + s\delta_2 + (a + b)\delta_1(1 + \delta_2)
+\widehat{s} &= [(a + b)(1 + \delta_1) + c](1 + \delta_2) \\
+            &= (a + b)(1 + \delta_1)(1 + \delta_2) + c(1 + \delta_2) && \text{(distribute } 1 + \delta_2 \text{)} \\
+            &= (a + b)(1 + \delta_2) + (a + b)\delta_1(1 + \delta_2) + c(1 + \delta_2) && \text{(split } 1 + \delta_1 \text{)} \\
+            &= (a + b + c)(1 + \delta_2) + (a + b)\delta_1(1 + \delta_2) && \text{(factor out } 1 + \delta_2 \text{)} \\
+            &= s + s\delta_2 + (a + b)\delta_1(1 + \delta_2) && \text{(} s = a + b + c \text{)}
 \end{align*}
 
 By the triangle inequality and $\lvert 1 + \delta_2 \rvert \leq 1 + \mathrm{eps}$,
+
 \[ \lvert \widehat{s} - s \rvert \leq \mathrm{eps} \lvert s \rvert + \mathrm{eps}(1 + \mathrm{eps}) \lvert a + b \rvert \]
 
 *** (c)
 
-Since $a, b, c > 0$, we have $0 < a + b < s$, so $s \neq 0$ and (b) gives
+Since $a, b, c > 0$, we have $0 < a + b < s$, so (b) gives
 
 \[ \lvert \widehat{s} - s \rvert \leq \mathrm{eps} \lvert s \rvert + \mathrm{eps}(1 + \mathrm{eps}) \lvert s \rvert = (2\mathrm{eps} + \mathrm{eps}^2) \lvert s \rvert \]
 
 Dividing by $\lvert s \rvert$ gives the claim.
 
-Without positivity, dividing (b) by $\lvert s \rvert$ only gives
+Dividing (b) by $\lvert s \rvert$ in general gives
 
 \[ \frac{\lvert \widehat{s} - s \rvert}{\lvert s \rvert} \leq \mathrm{eps} + \mathrm{eps}(1 + \mathrm{eps}) \frac{\lvert a + b \rvert}{\lvert s \rvert} \]
 
-If $\lvert s \rvert \ll \lvert a + b \rvert$ (cancellation, $c \approx -(a + b)$), the factor $\lvert a + b \rvert / \lvert s \rvert$ is large, so the bound is not small. The cause is the rounding error $(a + b)\delta_1$ of the first addition: it can be as large as $\mathrm{eps} \lvert a + b \rvert$, and it is measured against the much smaller $\lvert s \rvert$.
+If $\lvert s \rvert \ll \lvert a + b \rvert$, the factor $\lvert a + b \rvert / \lvert s \rvert$ is large, so the bound is not small.
 
 * Problem 3 :floating_point:programming:
 ** Task
@@ -157,3 +161,64 @@ Notice that native Python and numpy deal differently with integers.
 #+end_quote
 
 ** Solution
+
+#+begin_src python :results output
+import numpy as np
+import matplotlib.pyplot as plt
+
+# integers: native int is unbounded, np.int64 wraps
+a, b = 2**63 - 1, -2**63
+print(a + 1, b - 1)
+print(np.int64(a) + 1, np.int64(b) - 1)
+
+# machine epsilon, underflow
+x = 2**-52
+print(5 + x == 5)
+print(2**-1074, 2**-1075, 2**-1075 == 0)
+
+# order of summation
+f = lambda x, y: 4*x**4 + 2*y**2 - y**4
+g = lambda x, y: 4*x**4 - y**4 + 2*y**2
+print(f(13860.0, 19601.0), g(13860.0, 19601.0))
+
+# cancellation
+a = 4999999
+f = lambda x: x**3 - 6*a*x**2 + 12*a**2*x - 8*a**3
+g = lambda x: (x - 2*a)**3
+print(f(10.0**7), g(10.0**7))
+
+f = lambda x: 1/(x - np.sqrt(x**2 - 1))
+g = lambda x: x + np.sqrt(x**2 - 1)
+print(f(10**7) - g(10**7))
+
+# ill-conditioned system
+A = np.array([[1.2969, 0.8648], [0.2161, 0.1441]])
+b = np.array([0.8642, 0.1440])
+x = np.array([2, -2])
+print(np.linalg.norm(A @ x - b))
+bt = b + 1e-8 * np.array([-1, 1])
+xt = np.array([0.9911, -0.4870])
+print(np.linalg.norm(A @ xt - bt))
+
+# (x - 2)^9 expanded
+f = lambda x: x**9 - 18*x**8 + 144*x**7 - 672*x**6 + 2016*x**5 - 4032*x**4 + 5376*x**3 - 4608*x**2 + 2304*x - 512
+g = lambda x: (x - 2)**9
+x = np.linspace(1.925, 2.075, 1000)
+plt.plot(x, f(x), label="f")
+plt.plot(x, g(x), label="g")
+plt.legend()
+plt.savefig("ps_01_p3.png")
+#+end_src
+
+#+RESULTS:
+: 9223372036854775808 -9223372036854775809
+: -9223372036854775808 9223372036854775807
+: True
+: 5e-324 0.0 True
+: 0.0 2.0
+: 393216.0 8.0
+: -115892.1481480971
+: 1.1443916996305594e-16
+: 1.1443916996305594e-16
+
+[[file:ps_01_p3.png]]
