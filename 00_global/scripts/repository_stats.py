@@ -10,11 +10,7 @@ describing different repositories, it:
     numbers, and the size figure is the size of what is actually committed;
   * classifies paths with the validator's own vocabulary (00_global vs
     01_coursework, the 01_material / 02_problems / 03_exams split, the exam
-    stage names), so a metric never silently drifts from a rule;
-  * reuses the provenance check (#+model:/#+prompt:/#+date:) that
-    validate_structure.py runs under --content, and reports coverage on
-    01_extracted/ build products -- the one repo-specific invariant that a name
-    check cannot express.
+    stage names), so a metric never silently drifts from a rule.
 
 Run:
     just stats
@@ -49,7 +45,6 @@ STAGE_LABEL = {
     "03_preparation": "preparation",
     "04_revision":    "revision",
 }
-PROVENANCE_KEYS = ("#+model:", "#+prompt:", "#+date:")
 
 # directories the git fallback walk ignores; aligned with the validator
 IGNORE_DIRS = {".git", "__pycache__", "node_modules", ".venv",
@@ -141,7 +136,7 @@ def new_metrics():
         # coursework-area extras
         "lectures": 0, "chapters": 0, "material_other": 0,
         "problem_sets": set(),
-        "extracted": 0, "extracted_with_prov": 0,
+        "extracted": 0,
         "day_files": 0, "plans": 0, "revision_files": 0, "resource_files": 0,
         "stages": set(),
     }
@@ -275,12 +270,6 @@ def parse_org(lines, m):
             m["prose_words"] += len(line.split())
 
 
-def head_has_provenance(lines):
-    head = [ln for ln in lines[:15]]
-    present = {k for ln in head for k in PROVENANCE_KEYS if ln.startswith(k)}
-    return all(k in present for k in PROVENANCE_KEYS)
-
-
 def count_code_file(lines):
     return sum(1 for l in lines
                if l.strip() and not l.strip().startswith("#"))
@@ -397,8 +386,6 @@ class RepoStats:
             if ext == ".org":
                 if stage == "01_extracted":
                     target["extracted"] += 1
-                    if lines and head_has_provenance(lines):
-                        target["extracted_with_prov"] += 1
                 elif stage == "03_preparation" and RE_DAY.match(extra.get("name", "")):
                     target["day_files"] += 1
                 elif stage == "02_plan":
@@ -443,7 +430,6 @@ def summarize(m):
         "material_other": m["material_other"],
         "problem_sets": len(m["problem_sets"]),
         "extracted": m["extracted"],
-        "extracted_with_prov": m["extracted_with_prov"],
         "day_files": m["day_files"], "plans": m["plans"],
         "revision_files": m["revision_files"],
         "stages": m["stages"],
@@ -458,7 +444,7 @@ def add_into(acc, s):
               "display_math", "math", "math_lines", "headings", "links",
               "timestamps", "footnotes", "citations", "table_rows", "drawers",
               "done", "total_tasks", "lectures", "chapters", "problem_sets",
-              "extracted", "extracted_with_prov", "day_files"):
+              "extracted", "day_files"):
         acc[k] += s[k]
     acc["size_mb"] += s["size_mb"]
     for lang, c in s["code_breakdown"].items():
@@ -537,9 +523,7 @@ def report(stats: RepoStats, top: int):
                 present = [x for x in order if x in s["stages"]]
                 print(f"    {'Exam stages:':<26} {', '.join(present)}")
                 if s["extracted"]:
-                    pct = s["extracted_with_prov"] / s["extracted"] * 100
-                    print(f"    {'  Extracted products:':<26} {s['extracted']:>6}  "
-                          f"(provenance {s['extracted_with_prov']}/{s['extracted']}, {pct:.0f}%)")
+                    print(f"    {'  Extracted products:':<26} {s['extracted']:>6}")
                 if s["day_files"]:
                     print(f"    {'  Prep day files:':<26} {s['day_files']:>6}")
                 if s["revision_files"]:
@@ -614,9 +598,7 @@ def report(stats: RepoStats, top: int):
     print(f"  {'Lectures / chapters:':<30} {grand['lectures']} / {grand['chapters']}")
     print(f"  {'Problem sets:':<30} {grand['problem_sets']}")
     if grand["extracted"]:
-        pct = grand["extracted_with_prov"] / grand["extracted"] * 100
-        print(f"  {'Extracted products:':<30} {grand['extracted']}"
-              f"  (provenance {grand['extracted_with_prov']}/{grand['extracted']}, {pct:.0f}%)")
+        print(f"  {'Extracted products:':<30} {grand['extracted']}")
     print(f"  {'Prep day files:':<30} {grand['day_files']}")
     if grand["total_tasks"]:
         pct = grand["done"] / grand["total_tasks"] * 100
@@ -634,9 +616,7 @@ def _print_totals(acc, indent):
           f"  (inline={acc['inline_math']:,}, display={acc['display_math']:,})")
     print(f"{pad}{'Headings:':<26} {acc['headings']:>6,}")
     if acc["extracted"]:
-        pct = acc["extracted_with_prov"] / acc["extracted"] * 100
-        print(f"{pad}{'Extracted (w/ prov):':<26} "
-              f"{acc['extracted']} ({acc['extracted_with_prov']}, {pct:.0f}%)")
+        print(f"{pad}{'Extracted products:':<26} {acc['extracted']:>6,}")
     if acc["total_tasks"]:
         pct = acc["done"] / acc["total_tasks"] * 100
         print(f"{pad}{'Tasks:':<26} {acc['done']}/{acc['total_tasks']} ({pct:.0f}%)")
