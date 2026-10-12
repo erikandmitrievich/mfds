@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-27>
-#+lastmod: <2026-10-11 15:40>
+#+lastmod: <2026-10-12 10:52>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -244,6 +244,7 @@ finding, not a near-miss.
     ps_NN.org  or  ps_NN.pdf   P002   required (either extension satisfies it)
     ps_NN_source.pdf           P003   the original problem sheet
     ps_NN.ipynb                P004   code — only when a problem needs it
+    ps_NN_chat.org             P005   model chat about the sheet; gitignored
     assets/                    P001
         p_NN[_NN|_a]*[_<slug>].{png,gif,svg}    P010
 #+end_example
@@ -252,6 +253,13 @@ Every problem set is a =ps_NN/= directory, even if it would hold a single
 file — the uniform shape is the point. There is no rule admitting loose files
 directly under =02_problems/=: an aggregate such as =ps_total.org= currently has
 no legal home and reports as =PROBLEMS/FILE=.  [DECIDE]
+
+=ps_NN_chat.org= (=P005=) is the gptel chat about the sheet: one
+=* Problem N= heading per problem, each with a =GPTEL_TOPIC= property so that a
+conversation sees only its own problem. It is local by design: =.gitignore=
+keeps it out of history, as it does =ps_NN.pdf=. Only gptel edits it. Its saved
+state marks the model's text by character position, so a hand edit or a script
+misattributes everything after the edit.  [UNENFORCED]
 
 ** 03_exams/   [PROVISIONAL — ratify once all semester-2 courses conform; algorithms is still on the pre-split layout]
 
@@ -333,7 +341,8 @@ repo-wide =_= question — out of scope here.)
 
 * Source vs derived files   [DECIDE]
 
-- =.org= and =.ipynb= are *source* — always tracked.
+- =.org= and =.ipynb= are *source* — always tracked, except =ps_NN_chat.org=,
+  which is local by design (=P005=).
 - =_source.*= files are upstream input — always tracked.
 - =X.pdf= exported from =X.org= is *derived*. Recommendation: gitignore it and
   rebuild on demand. If you instead choose to commit exports, commit them for
@@ -417,6 +426,7 @@ PS                   P001 dir  assets
                      P002 file ps_{n}\.(org|pdf)                  required
                      P003 file ps_{n}_source\.pdf
                      P004 file ps_{n}\.ipynb
+                     P005 file ps_{n}_chat\.org
 PS_ASSETS            P010 file p_\d{2}(_(\d{2}|[a-z]))*(_[a-z][a-z0-9_]*)?\.(png|gif|svg)
 EXAMS                E010 dir  00_resources     ]
                      E011 dir  01_extracted     ]
