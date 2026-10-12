@@ -120,9 +120,11 @@ def main() -> int:
         print(f"not a directory: {args.ps_dir}", file=sys.stderr)
         return 1
 
-    org_files = sorted(args.ps_dir.rglob("ps_*.org"))
+    # ps_NN.org only: ps_*.org would also catch ps_NN_chat.org and, on a
+    # re-run, this script's own ps_total.org.
+    org_files = sorted(args.ps_dir.rglob("ps_[0-9][0-9].org"))
     if not org_files:
-        print(f"no ps_*.org under {args.ps_dir}", file=sys.stderr)
+        print(f"no ps_NN.org under {args.ps_dir}", file=sys.stderr)
         return 1
 
     lines = []
