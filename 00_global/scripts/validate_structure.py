@@ -237,6 +237,7 @@ SCHEMA = {
             FileRule(r"^ps_{n}\.(org|pdf)$",        required=True, rule_id="P002"),
             FileRule(r"^ps_{n}_source\.pdf$",                      rule_id="P003"),
             FileRule(r"^ps_{n}\.ipynb$",                           rule_id="P004"),
+            FileRule(r"^ps_{n}_chat\.org$",                        rule_id="P005"),
         ),
     ),
     "PS_ASSETS": Node(
