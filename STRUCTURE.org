@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-27>
-#+lastmod: <2026-10-12 10:52>
+#+lastmod: <2026-10-12 11:10>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -39,6 +39,15 @@ content questions and belong to a separate validator that does not exist yet.
 The math rules themselves are already written down, in
 =00_global/prompts/math_notation.org=; that file is their spec, and nothing
 checks them.  [UNENFORCED]
+
+The =LLM= property is a content rule too, and this paragraph is its spec. Code
+writes it at the moment it inserts a model's text, with the model id as its
+value: =material_extraction.py= in the drawer of every item, and the Q&A
+command of the Emacs config (=mfds-gptel-answer=) in the entry that holds the
+answer, which is the question itself or, below the question's own text, an
+=Answer= sub-heading. An entry with =LLM= has a body the model wrote. Without
+it, the body was written by hand, so nothing may require the property and
+nobody types it. Notes older than the property do not carry it.  [UNENFORCED]
 
 * Naming rules — apply everywhere
 
