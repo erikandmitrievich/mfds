@@ -288,7 +288,7 @@ SCHEMA = {
     ),
     "EXAM_PAPERS": Node(
         children=(),
-        files=(FileRule(r"^[a-z0-9_]+_source\.(pdf|jpeg|png)$", rule_id="E032"),),
+        files=(FileRule(r"^[a-z0-9_]+_source\.(pdf|jpeg|jpg|png)$", rule_id="E032"),),
     ),
     # Prompts authored for this run. Permissive, mirroring E070: the slug is
     # named by the task, not by convention. Nothing is required -- a run that
