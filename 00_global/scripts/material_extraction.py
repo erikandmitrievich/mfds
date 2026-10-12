@@ -25,6 +25,10 @@ Checks, in code rather than in the prompt:
                    because it is reviewed before anything leaves the staging
                    file.
 
+Marks, in code rather than in the prompt: every item's drawer gets
+":LLM: <model>", the --model the batch was sent to. An LLM line the reply
+wrote itself is dropped; an item with no drawer gets one holding only LLM.
+
 Existing CUSTOM_IDs and LECTURE_REFs are read from every .org file next to
 --out, i.e. the course's 01_material/, staging file included.
 
@@ -65,6 +69,7 @@ ITEM_HEAD_RE = re.compile(
 TOP_HEAD_RE = re.compile(r"^\* ")
 SUB_HEAD_RE = re.compile(r"^\*\*+ ")
 PROP_RE = re.compile(r"^:([A-Za-z_]+):[ \t]*(.*?)\s*$")
+LLM_PROP_RE = re.compile(r"^\s*:LLM:", re.I)
 CUSTOM_ID_RE = re.compile(r"^(def|prop|lem|cor|thm):[a-z0-9]+(?:-[a-z0-9]+)*$")
 MARKERS = {"uncertain": re.compile(r"\[\?:"),
            "illegible": re.compile(r"\[ILLEGIBLE:"),
@@ -297,6 +302,39 @@ def align(org: str) -> tuple[str, list[Item], list[str]]:
     return "\n".join(out).rstrip("\n") + "\n", items, warn
 
 
+def stamp(org: str, model: str) -> tuple[str, int]:
+    """Put ":LLM: <model>" last in the drawer of every item.
+
+    The mark is written here, never by the rule, so an LLM line in the reply
+    is dropped. An item without a drawer (check() warns about it) gets one
+    holding only LLM, so the mark survives a hand-made fix of the drawer.
+    Returns (org, number of items stamped)."""
+    mark = f":LLM: {model}"
+    lines = org.splitlines()
+    out: list[str] = []
+    n = i = 0
+    while i < len(lines):
+        ln = lines[i]
+        out.append(ln)
+        i += 1
+        if not ITEM_HEAD_RE.match(ln):
+            continue
+        n += 1
+        if i < len(lines) and lines[i].strip() == ":PROPERTIES:":
+            out.append(lines[i])
+            i += 1
+            while i < len(lines) and lines[i].strip() != ":END:":
+                if not LLM_PROP_RE.match(lines[i]):
+                    out.append(lines[i])
+                i += 1
+            out.append(mark)                    # :END: follows on the next pass
+            if i == len(lines):
+                out.append(":END:")             # unterminated in the reply
+        else:
+            out.extend([":PROPERTIES:", mark, ":END:"])
+    return "\n".join(out).rstrip("\n") + "\n", n
+
+
 def check(items: list[Item], used_ids: set[str],
           used_refs: set[tuple[str, str]]) -> list[str]:
     warn, seen = [], set()
@@ -459,6 +497,7 @@ def main() -> int:
         return 1
 
     org, items, struct_warn = align(org)
+    org, _ = stamp(org, args.model)
     findings = struct_warn + check(items, used_ids, used_refs)
     block = batch_block(org, len(shots), datetime.now())
 
