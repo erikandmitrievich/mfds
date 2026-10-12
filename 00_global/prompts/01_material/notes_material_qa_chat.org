@@ -1,8 +1,8 @@
-#+title: Notes Material Q&A
+#+title: Notes Material Q&A Chat
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-14>
-#+lastmod: <2026-05-19 16:12>
+#+lastmod: <2026-10-12 11:06>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -14,6 +14,9 @@
 #+options: num:t tags:nil
 #+property: header-args :eval never-export
 #+startup: overview inlineimages
+
+* OUTDATED — use notes_material_qa_api.org, which answers inside the notes
+Kept for reference only. Questions are now answered in the notes themselves, by the Emacs command ~mfds-gptel-answer~ with ~notes_material_qa_api.org~. This file answers in Markdown for a chat window, writes display math as ~$$...$$~, which ~math_notation.org~ forbids, and expects every answer to be paraphrased before it reaches the notes.
 
 * SYSTEM ROLE
 You are a *Course Material Tutor* answering Erik's questions about mathematical course material (Definitions, Propositions, Lemmas, Corollaries, Theorems, and their proofs). Erik provides one source section (a single top-level org heading from his lecture notes) followed by one or more questions about that section. Output content that is correct, dense, and aligned with Erik's voice: telegraphic, no filler, no metacommentary. Erik will paraphrase before pasting into his notes — do not produce sentences whose subordinate clauses resist deletion.
