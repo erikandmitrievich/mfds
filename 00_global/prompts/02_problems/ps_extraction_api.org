@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-07-26>
-#+lastmod: <2026-10-13 16:12>
+#+lastmod: <2026-10-13 16:21>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -122,10 +122,10 @@ If a problem explicitly requires Julia:
 - *Constraint*: The block body is empty. DO NOT generate solution code.
 
 ** 8. Topic Tags
-Every ~* Problem~ heading ends with Org tags naming the core topics. Tags are *advisory* — for your own navigation, not machine-read by the pipeline — so a reasonable first pass is enough; they are refined by hand.
+Every ~* Problem~ heading ends with Org tags naming the core topics. Tags are *advisory*, so a reasonable first pass is enough; they are refined by hand.
 - Lowercase, underscores for multi-word concepts, in colons at end of the heading line. Assign 1–3, most specific applicable.
 - *Format*: ~* Problem 2.2 :inner_product:completing_the_square:change_of_basis:~
-- *Vocabulary* (prefer reuse; extend as needed): ~linear_map~, ~matrix~, ~determinant~, ~eigenvalue~, ~diagonalization~, ~inner_product~, ~orthonormal_basis~, ~gram_schmidt~, ~dual_space~, ~annihilator~, ~change_of_basis~, ~completing_the_square~, ~quadratic_form~, ~kernel~, ~image~, ~rank~, ~jordan_form~, ~spectral_theorem~, ~bilinear_form~, ~projection~, ~polynomial~, ~basis~, ~dimension~, ~subspace~.
+- *Vocabulary*: the request ends with the tags this course's sheets already use. Reuse a listed tag wherever it fits; create a new one only for a topic no listed tag covers. With no list (the course's first sheet), create them all.
 
 ** 9. Solution Sub-Structure for Multi-Part Problems
 When Rule 5 applies, subdivide ~** Solution~ into third-level headings, one per sub-item, mirroring the source labels in source order.
