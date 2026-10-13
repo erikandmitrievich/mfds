@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-27>
-#+lastmod: <2026-10-13 16:06>
+#+lastmod: <2026-10-13 16:09>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -356,9 +356,12 @@ repo-wide =_= question — out of scope here.)
 
 * Source vs derived files   [DECIDE]
 
-- =.org= and =.ipynb= are *source* — always tracked, except =ps_NN_chat.org=,
-  which is local by design (=P005=).
-- =_source.*= files are upstream input — always tracked.
+- =.org= is *source* — always tracked, except two local files: the chat
+  =ps_NN_chat.org= (=P005=) and the staging file =_extracted_ignore.org=.
+- =.ipynb= is source too, but local only: =.gitignore= keeps every notebook out
+  of history, =ps_NN.ipynb= (=P004=) included.
+- =_source.*= files are upstream input — local only (=*_source*= in
+  =.gitignore=). The repository does not republish them.
 - =X.pdf= exported from =X.org= is *derived*. Recommendation: gitignore it and
   rebuild on demand. If you instead choose to commit exports, commit them for
   *every* =.org= — no partial coverage, which is the current inconsistent state.
