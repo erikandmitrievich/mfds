@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-02>
-#+lastmod: <2026-10-13 08:31>
+#+lastmod: <2026-10-13 08:39>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -132,3 +132,26 @@ Start with an arbitrary $\omega \in \Omega$ and express membership on each side 
 #+end_quote
 
 ** Solution
+
+Let $\omega \in \Omega$. By definition,
+
+\begin{align*}
+\omega \in \bigcap_{k=1}^{\infty} A_k &\iff \text{for every } k,\ \omega \in A_k, \\
+\omega \in \bigcup_{k=1}^{\infty} A_k^c &\iff \text{there exists } k \text{ with } \omega \notin A_k.
+\end{align*}
+
+The second statement is the negation of the first, so
+
+\[ \omega \in \bigcap_{k=1}^{\infty} A_k \iff \omega \notin \bigcup_{k=1}^{\infty} A_k^c \iff \omega \in \left( \bigcup_{k=1}^{\infty} A_k^c \right)^c. \]
+
+Since $\omega$ was arbitrary, the identity holds.
+
+Now let $\mathcal{F}$ be a \(\sigma\)-algebra with $A_k \in \mathcal{F}$ for all $k$. Then
+
+\begin{align*}
+A_k^c &\in \mathcal{F} \text{ for all } k && \text{(closed under complements)} \\
+\bigcup_{k=1}^{\infty} A_k^c &\in \mathcal{F} && \text{(closed under countable unions)} \\
+\left( \bigcup_{k=1}^{\infty} A_k^c \right)^c &\in \mathcal{F} && \text{(closed under complements)}
+\end{align*}
+
+By the identity, the last set equals $\bigcap_{k=1}^{\infty} A_k$, so $\bigcap_{k=1}^{\infty} A_k \in \mathcal{F}$. $\blacksquare$
