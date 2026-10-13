@@ -219,11 +219,11 @@ SCHEMA = {
     "MATERIAL": Node(
         children=(),
         files=(
-            FileRule(r"^ch_\d{2}_[a-z0-9_]+\.org$",              rule_id="M001"),
-            FileRule(r"^lec_\d{2}(-\d{2})?\.org$",               rule_id="M004"),
-            FileRule(r"^(?!ch_|lec_)[a-z0-9_]+\.org$",           rule_id="M002"),
-            FileRule(r"^_[a-z0-9_]+_source(_[a-z0-9_]+)?\.pdf$", rule_id="M003"),
-            FileRule(r"^\.gitkeep$",                             rule_id="M010"),
+            FileRule(r"^ch_\d{2}_[a-z0-9_]+\.org$",                      rule_id="M001"),
+            FileRule(r"^lec_\d{2}(-\d{2})?\.org$",                       rule_id="M004"),
+            FileRule(r"^(?!ch_|lec_)[a-z0-9_]+\.org$",                   rule_id="M002"),
+            FileRule(r"^_[a-z0-9_]+_source(_[a-z0-9_]+)?\.(pdf|ipynb)$", rule_id="M003"),
+            FileRule(r"^\.gitkeep$",                                     rule_id="M010"),
         ),
     ),
 
