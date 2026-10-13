@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-27>
-#+lastmod: <2026-10-13 16:09>
+#+lastmod: <2026-10-13 16:15>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -275,6 +275,13 @@ conversation sees only its own problem. It is local by design: =.gitignore=
 keeps it out of history, as it does =ps_NN.pdf=. Only gptel edits it. Its saved
 state marks the model's text by character position, so a hand edit or a script
 misattributes everything after the edit.  [UNENFORCED]
+
+Some courses have no problem sheets: each lecture handout ends in its exercises.
+There =ps_NN/= holds lecture =NN='s exercises, so =NN= is the lecture number,
+and a lecture without exercises leaves a gap. The handout is kept once, as
+=01_material/_lec_NN_source.pdf= (=M003=), and =ps_NN/= has no
+=ps_NN_source.pdf=: =just ps-extract= reads the handout when that file is
+missing.  [UNENFORCED]
 
 ** 03_exams/   [PROVISIONAL — ratify once all semester-2 courses conform; algorithms is still on the pre-split layout]
 
