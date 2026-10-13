@@ -120,10 +120,11 @@ ps-extract COURSE NN *ARGS="":
     [ -f "$pdf" ] || pdf="$dir/01_material/_lec_${nn}_source.pdf"; \
     [ -f "$pdf" ] || { echo "no source pdf: neither ps_$nn/ps_${nn}_source.pdf nor 01_material/_lec_${nn}_source.pdf" >&2; exit 1; }; \
     {{py}} {{scripts}}/ps_extraction.py \
-        --pdf      "$pdf" \
-        --rule     "{{prompts}}/02_problems/ps_extraction_api.org" \
-        --notation "{{notation}}" \
-        --out      "$ps/ps_${nn}.org" {{ARGS}}
+        --pdf       "$pdf" \
+        --rule      "{{prompts}}/02_problems/ps_extraction_api.org" \
+        --notation  "{{notation}}" \
+        --tags-from "$dir/02_problems" \
+        --out       "$ps/ps_${nn}.org" {{ARGS}}
 
 # ---------------------------------------------------------------------------
 # exam preparation
