@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-02>
-#+lastmod: <2026-10-13 07:58>
+#+lastmod: <2026-10-13 08:31>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -78,6 +78,48 @@ Finite additivity: \(\sigma\)-additivity with $A_n = \emptyset$ for $n \geq 3$, 
 #+end_quote
 
 ** Solution
+
+Take $p = (0.08, 0.10, 0.12, 0.15, 0.20, 0.35)$. Since $A = \{2\}\cup\{4\}\cup\{6\}$ is a disjoint union,
+
+$$\mathbb P(A) = p_2 + p_4 + p_6 = 0.60.$$
+
+#+begin_src python :results output raw
+import numpy as np
+import matplotlib.pyplot as plt
+
+faces = np.arange(1, 7)
+probs = np.array([0.08, 0.10, 0.12, 0.15, 0.20, 0.35])
+A, P_A, n = [2, 4, 6], 0.6, 5000
+m = np.arange(1, n + 1)
+checkpoints = (50, 500, 5000)
+devs = {}
+
+for seed in [1, 2]:
+    rolls = np.random.default_rng(seed).choice(faces, size=n, p=probs)
+    p_hat = np.cumsum(np.isin(rolls, A)) / m
+    plt.plot(m, p_hat, lw=1, label=f"seed {seed}")
+    devs[seed] = [abs(p_hat[k - 1] - P_A) for k in checkpoints]
+
+plt.axhline(P_A, color="black", ls="--", label="P(A) = 0.6")
+plt.xscale("log"); plt.xlabel("m"); plt.ylabel("relative frequency"); plt.legend()
+plt.show()
+
+print("| $m$ | seed 1 abs. dev | seed 2 abs. dev | $\\sqrt{0.24/m}$ |")
+print("|-")
+for i, k in enumerate(checkpoints):
+    print(f"| {k} | {devs[1][i]:.3f} | {devs[2][i]:.3f} | {np.sqrt(0.24 / k):.3f} |")
+#+end_src
+
+#+RESULTS:
+|  $m$ | seed 1 abs. dev | seed 2 abs. dev | $\sqrt{0.24/m}$ |
+|------+-----------------+-----------------+-----------------|
+|   50 |           0.060 |           0.000 |           0.069 |
+|  500 |           0.012 |           0.016 |           0.022 |
+| 5000 |           0.002 |           0.011 |           0.007 |
+
+*Fluctuations.* One roll changes $\widehat p_m$ by at most $1/m$. For small $m$ the jumps are large and the two seeds differ visibly. For large $m$ the steps are tiny and the deviation shrinks roughly like $1/\sqrt m$, but it does not reach zero. Seed 2 has zero deviation at $m=50$ but $0.011$ at $m=5000$: along one path the deviation need not shrink monotonically; only its typical size does.
+
+*Not a proof.* Convergence is a statement about the limit $m\to\infty$ over (almost) all sample paths. We see only finitely many rolls on two paths, and the simulation already assumes the model it is supposed to confirm .
 
 * Problem 4 :subspace:
 ** Task
