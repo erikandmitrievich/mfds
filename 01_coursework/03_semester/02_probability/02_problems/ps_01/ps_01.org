@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-02>
-#+lastmod: <2026-10-13 08:39>
+#+lastmod: <2026-10-13 16:25>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -16,7 +16,7 @@
 #+startup: overview inlineimages
 #+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
 
-* Problem 1 :subspace:
+* Problem 1 :sigma_algebra:
 ** Task
 #+begin_quote
 *Conceptual.* Take $\Omega = \mathbb{R}$, where an outcome $\omega$ is a temperature measured in degrees Celsius. A sensor answers only the two questions
@@ -38,7 +38,7 @@ Minimal: any \(\sigma\)-algebra $\ni A, B$ contains $B^c$ and $B \cap A^c = B\se
 
 $\{20\}$: no. $20 \in [18,22)$, and every set in $\sigma(A,B)$ contains either all of $[18,22)$ or none of it .
 
-* Problem 2 :projection:
+* Problem 2 :probability_space:inclusion_exclusion:
 ** Task
 #+begin_quote
 *Mathematical.* Let $(\Omega, \mathcal{F}, \mathbb{P})$ be a probability space and let $A, B \in \mathcal{F}$. Starting from the definition of a probability space, prove
@@ -71,7 +71,7 @@ Finite additivity: \(\sigma\)-additivity with $A_n = \emptyset$ for $n \geq 3$, 
 &= \mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A\cap B)
 \end{align*}
 
-* Problem 3 :subspace:
+* Problem 3 :relative_frequency:simulation:
 ** Task
 #+begin_quote
 *Python/data.* Use ~lecture_01_examples.ipynb~ as a starting point. Let $\Omega = \{1, \dots, 6\}$ and $\mathcal{F} = 2^\Omega$. Choose nonnegative probabilities $p_1, \dots, p_6$, not all equal, that sum to one and define $\mathbb{P}(\{k\}) = p_k$ for $k = 1, \dots, 6$. Compute the model value of $\mathbb{P}(A)$ for $A = \{2, 4, 6\}$. For two different random seeds, simulate $n = 5000$ rolls and plot the relative frequency $\widehat{p}_m(A)$ based on the first $m$ rolls, for $m = 1, \dots, n$, together with $\mathbb{P}(A)$. Compare the deviations at $m = 50, 500, 5000$, explain the early and late fluctuations, and explain why the experiment illustrates but does not prove convergence.
@@ -121,7 +121,7 @@ for i, k in enumerate(checkpoints):
 
 *Not a proof.* Convergence is a statement about the limit $m\to\infty$ over (almost) all sample paths. We see only finitely many rolls on two paths, and the simulation already assumes the model it is supposed to confirm .
 
-* Problem 4 :subspace:
+* Problem 4 :sigma_algebra:de_morgan:
 ** Task
 #+begin_quote
 *Additional mathematical exercise: De Morgan's law.* Let $\Omega$ be a sample space and let $A_k \subseteq \Omega$ for every $k \in \mathbb{N}$. With complements taken relative to $\Omega$, prove

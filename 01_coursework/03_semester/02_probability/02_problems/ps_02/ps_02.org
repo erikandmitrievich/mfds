@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-13>
-#+lastmod: <2026-10-13 09:04>
+#+lastmod: <2026-10-13 16:25>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -16,7 +16,7 @@
 #+startup: overview inlineimages
 #+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
 
-* Problem 1 :counting:subspace:
+* Problem 1 :counting:uniform_law:
 ** Task
 #+begin_quote
 Conceptual. A program claims to choose a subset of $\{1, \dots, 10\}$ uniformly. It first chooses its size uniformly from $\{0, 1, \dots, 10\}$, then chooses uniformly among the subsets of that size. For a fixed subset $S$ with $|S| = k$, derive $\mathbb{P}(S \text{ is selected})$. Compare this probability for $k = 0, 1, 5$ with the value $2^{-10}$ required by a uniform choice among all subsets. Compare the induced distribution of subset size under the two procedures, and propose a correct algorithm for choosing uniformly among all $2^{10}$ subsets.
