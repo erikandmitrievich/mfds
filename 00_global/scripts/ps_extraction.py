@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """ps_extraction.py — a problem-set PDF -> ps_NN.org, via the Anthropic API.
 
-Sends ps_NN_source.pdf to the model and writes the returned org to ps_NN.org.
+Sends the sheet's source PDF to the model and writes the returned org to
+ps_NN.org. The source is ps_NN_source.pdf, or, in a course whose exercises
+close each lecture handout, the handout itself; the justfile picks which. Such
+a course has no ps_NN/ before its first extraction, so the write creates it.
 The system prompt is built from two Org files, each with its #+ header dropped:
 math_notation.org inside <math_notation> tags (the repository's math rules,
 which the extraction rule delegates to), followed by the ps_extraction rule.
@@ -72,7 +75,8 @@ def main() -> int:
         description=__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    ap.add_argument("--pdf", required=True, type=Path, help="ps_NN_source.pdf")
+    ap.add_argument("--pdf", required=True, type=Path,
+                    help="ps_NN_source.pdf, or the lecture handout")
     ap.add_argument("--rule", required=True, type=Path, help="ps_extraction rule")
     ap.add_argument("--notation", required=True, type=Path,
                     help="math_notation.org (math rules the extraction rule "
@@ -148,6 +152,7 @@ def main() -> int:
         sys.stdout.write(content)
         return 0
 
+    args.out.parent.mkdir(exist_ok=True)
     args.out.write_text(content, encoding="utf-8")
     print(f"wrote {args.out}", file=sys.stderr)
     return 0
