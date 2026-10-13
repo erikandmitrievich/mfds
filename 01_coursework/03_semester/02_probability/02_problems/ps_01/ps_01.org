@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-02>
-#+lastmod: <2026-10-03 15:54>
+#+lastmod: <2026-10-13 07:39>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -27,6 +27,16 @@ Find a sigma-algebra containing $A$ and $B$ with as few sets as possible, and ju
 #+end_quote
 
 ** Solution
+
+Atoms (disjoint, cover $\mathbb{R}$):
+
+\[ A = (-\infty,18), \quad B\setminus A = [18,22), \quad B^c = [22,\infty) \]
+
+\[ \sigma(A,B) = \{\text{unions of atoms}\} = \{\emptyset,\ A,\ B\setminus A,\ B^c,\ B,\ A\cup B^c,\ A^c,\ \mathbb{R}\}, \quad 2^3 = 8 \text{ sets} \]
+
+Minimal: any \(\sigma\)-algebra $\ni A, B$ contains $B^c$ and $B \cap A^c = B\setminus A$, hence all unions of atoms $\Rightarrow$ $\geq 8$ sets. The family above is closed under unions and complements (complement = union of the remaining atoms) $\Rightarrow$ it is a \(\sigma\)-algebra.
+
+$\{20\}$: no. $20 \in [18,22)$, and every set in $\sigma(A,B)$ contains either all of $[18,22)$ or none of it .
 
 * Problem 2 :projection:
 ** Task
