@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-02>
-#+lastmod: <2026-10-13 07:39>
+#+lastmod: <2026-10-13 07:58>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -51,6 +51,25 @@ and use it to derive the two-event union formula
 #+end_quote
 
 ** Solution
+
+$A\setminus B = A \cap B^c \in \mathcal{F}$.
+
+Finite additivity: \(\sigma\)-additivity with $A_n = \emptyset$ for $n \geq 3$, using $\mathbb{P}(\emptyset) = 0$.
+
+\[ A = (A\setminus B) \sqcup (A\cap B) \]
+
+\begin{align*}
+\implies \mathbb{P}(A) &= \mathbb{P}(A\setminus B) + \mathbb{P}(A\cap B) \\
+\implies \mathbb{P}(A\setminus B) &= \mathbb{P}(A) - \mathbb{P}(A\cap B)
+\end{align*}
+
+\[ A\cup B = (A\setminus B) \sqcup B \]
+
+\begin{align*}
+\implies \mathbb{P}(A\cup B) &= \mathbb{P}(A\setminus B) + \mathbb{P}(B) \\
+&= \mathbb{P}(A) - \mathbb{P}(A\cap B) + \mathbb{P}(B) \\
+&= \mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A\cap B)
+\end{align*}
 
 * Problem 3 :subspace:
 ** Task
