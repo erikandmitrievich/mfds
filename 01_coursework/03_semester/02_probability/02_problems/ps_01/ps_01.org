@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-02>
-#+lastmod: <2026-10-13 16:25>
+#+lastmod: <2026-10-13 16:28>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -84,6 +84,7 @@ Take $p = (0.08, 0.10, 0.12, 0.15, 0.20, 0.35)$. Since $A = \{2\}\cup\{4\}\cup\{
 $$\mathbb P(A) = p_2 + p_4 + p_6 = 0.60.$$
 
 #+begin_src python :results output raw
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -102,7 +103,8 @@ for seed in [1, 2]:
 
 plt.axhline(P_A, color="black", ls="--", label="P(A) = 0.6")
 plt.xscale("log"); plt.xlabel("m"); plt.ylabel("relative frequency"); plt.legend()
-plt.show()
+os.makedirs("assets", exist_ok=True)
+plt.savefig("assets/p_03.png")
 
 print("| $m$ | seed 1 abs. dev | seed 2 abs. dev | $\\sqrt{0.24/m}$ |")
 print("|-")
@@ -116,6 +118,8 @@ for i, k in enumerate(checkpoints):
 |   50 |           0.060 |           0.000 |           0.069 |
 |  500 |           0.012 |           0.016 |           0.022 |
 | 5000 |           0.002 |           0.011 |           0.007 |
+
+[[file:assets/p_03.png]]
 
 *Fluctuations.* One roll changes $\widehat p_m$ by at most $1/m$. For small $m$ the jumps are large and the two seeds differ visibly. For large $m$ the steps are tiny and the deviation shrinks roughly like $1/\sqrt m$, but it does not reach zero. Seed 2 has zero deviation at $m=50$ but $0.011$ at $m=5000$: along one path the deviation need not shrink monotonically; only its typical size does.
 
