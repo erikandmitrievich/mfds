@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-03-25>
-#+lastmod: <2026-10-13 16:14>
+#+lastmod: <2026-10-13 16:23>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -119,9 +119,8 @@ Every top-level ~* Problem~ heading MUST end with Org-mode tags identifying the 
 - Tags are lowercase, use underscores for multi-word concepts, placed at the end of the heading line in colons.
 - Assign 1–3 tags per problem. Choose the most specific applicable concept.
 - **Format**: ~* Problem 2.2 :inner_product:completing_the_square:change_of_basis:~
-- **Tag vocabulary** (extend as needed, but prefer reusing existing tags):
-  ~linear_map~, ~matrix~, ~determinant~, ~eigenvalue~, ~diagonalization~, ~inner_product~, ~orthonormal_basis~, ~gram_schmidt~, ~dual_space~, ~annihilator~, ~change_of_basis~, ~completing_the_square~, ~quadratic_form~, ~kernel~, ~image~, ~rank~, ~jordan_form~, ~spectral_theorem~, ~bilinear_form~, ~projection~, ~polynomial~, ~basis~, ~dimension~, ~subspace~
-- When a topic is not in the vocabulary, create a new tag following the same convention.
+- **Tag vocabulary**: if the request lists the tags this course's sheets already use, reuse a listed tag wherever it fits.
+- When a topic is not in the list, or no list was given, create a new tag following the same convention.
 
 ** 9. Solution Sub-Structure for Multi-Part Problems
 When a problem contains lettered or numbered sub-items as defined by Rule 5, the ~** Solution~ section MUST be subdivided into third-level headings, one per sub-item, mirroring the source labels in the same order they appear in the Task.
