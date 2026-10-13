@@ -9,6 +9,10 @@ The system prompt is built from two Org files, each with its #+ header dropped:
 math_notation.org inside <math_notation> tags (the repository's math rules,
 which the extraction rule delegates to), followed by the ps_extraction rule.
 
+The tag vocabulary is the course's own: --tags-from names its 02_problems/, and
+the tags on the * headings of every ps_NN/ps_NN.org there go with the request
+as the list to reuse (Rule 8). --dry-run prints the list.
+
 The output file is also where worked solutions live, so the write is guarded:
 --force lifts the plain "file exists" refusal, but a file whose ** Solution
 carries real work is refused *unconditionally*. Regenerating a solved set is a
@@ -34,6 +38,9 @@ from extraction_common import (DEFAULT_MODEL, build_system_prompt, call_api,
 DEFAULT_MAX_TOKENS = 16384
 SOLUTION_RE = re.compile(r"^\*\*\s+Solution\b", re.I)
 HEADING_RE = re.compile(r"^\*+\s")
+# a top-level heading that ends in tags: * Problem 2 :counting:uniform_law:
+TAGS_RE = re.compile(r"^\*\s.*\s:((?:[a-z0-9_]+:)+)\s*$")
+SHEET_GLOB = "ps_[0-9][0-9]/ps_[0-9][0-9].org"
 
 
 def has_solution_work(path: Path) -> bool:
@@ -57,16 +64,34 @@ def has_solution_work(path: Path) -> bool:
     return False
 
 
-def pdf_content(pdf: Path) -> list[dict]:
-    """The user turn: the PDF as a document block, then the instruction."""
+def course_tags(problems: Path) -> list[str]:
+    """The tags on the * headings of the course's sheets, sorted.
+
+    Hand-corrected tags of earlier sheets are the course's vocabulary, so a
+    tag fixed once is offered to every later extraction.
+    """
+    tags: set[str] = set()
+    for sheet in problems.glob(SHEET_GLOB):
+        for ln in sheet.read_text(encoding="utf-8").splitlines():
+            m = TAGS_RE.match(ln)
+            if m:
+                tags.update(t for t in m.group(1).split(":") if t)
+    return sorted(tags)
+
+
+def pdf_content(pdf: Path, tags: list[str]) -> list[dict]:
+    """The user turn: the PDF as a document block, then the instruction and
+    the course's tags (Rule 8)."""
     data = base64.standard_b64encode(pdf.read_bytes()).decode()
+    text = "Process the attached PDF according to the rules."
+    if tags:
+        text += "\n\nTags already used in this course: " + ", ".join(tags)
     return [
         {"type": "document",
          "source": {"type": "base64",
                     "media_type": "application/pdf",
                     "data": data}},
-        {"type": "text",
-         "text": "Process the attached PDF according to the rules."},
+        {"type": "text", "text": text},
     ]
 
 
@@ -82,6 +107,9 @@ def main() -> int:
                     help="math_notation.org (math rules the extraction rule "
                          "delegates to)")
     ap.add_argument("--out", required=True, type=Path, help="ps_NN.org target")
+    ap.add_argument("--tags-from", type=Path, metavar="DIR",
+                    help="the course's 02_problems/; the tags of its sheets "
+                         "are sent as the vocabulary to reuse")
     ap.add_argument("--model", default=DEFAULT_MODEL)
     ap.add_argument("--max-tokens", type=int, default=DEFAULT_MAX_TOKENS)
     ap.add_argument("--force", action="store_true",
@@ -99,6 +127,10 @@ def main() -> int:
         if not p.exists():
             print(f"no {label}: {p}", file=sys.stderr)
             return 1
+    if args.tags_from and not args.tags_from.is_dir():
+        print(f"no problems dir: {args.tags_from}", file=sys.stderr)
+        return 1
+    tags = course_tags(args.tags_from) if args.tags_from else []
 
     out_exists = args.out.exists()
     solved = out_exists and has_solution_work(args.out)
@@ -111,6 +143,8 @@ def main() -> int:
         print(f"rule      {args.rule}")
         print(f"notation  {args.notation}")
         print(f"out       {args.out}{tag}")
+        print(f"tags      {len(tags)}  {', '.join(tags)}" if tags else
+              "tags      none")
         print(f"model     {args.model}   max_tokens {args.max_tokens}")
         if solved:
             print("would REFUSE: out has solution work (not overwritable)")
@@ -133,7 +167,8 @@ def main() -> int:
     system = build_system_prompt(args.rule, args.notation)
     print(f"extracting {args.pdf.name} -> {args.out.name} [{args.model}] ...",
           file=sys.stderr)
-    msg = call_api(pdf_content(args.pdf), system, args.model, args.max_tokens)
+    msg = call_api(pdf_content(args.pdf, tags), system, args.model,
+                   args.max_tokens)
 
     content, fenced = unfence(reply_text(msg))
     print_usage(msg)
