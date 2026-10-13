@@ -110,14 +110,17 @@ inbox-clear:
 # problem sets
 # ---------------------------------------------------------------------------
 
-# extract a problem-set PDF into ps_NN.org
+# extract ps_NN_source.pdf, or else lecture NN's handout, into ps_NN.org
 [group('problem sets')]
 ps-extract COURSE NN *ARGS="":
     @dir=$(just course-dir {{COURSE}}); \
     nn=$(printf '%02d' "{{NN}}"); \
     ps="$dir/02_problems/ps_$nn"; \
+    pdf="$ps/ps_${nn}_source.pdf"; \
+    [ -f "$pdf" ] || pdf="$dir/01_material/_lec_${nn}_source.pdf"; \
+    [ -f "$pdf" ] || { echo "no source pdf: neither ps_$nn/ps_${nn}_source.pdf nor 01_material/_lec_${nn}_source.pdf" >&2; exit 1; }; \
     {{py}} {{scripts}}/ps_extraction.py \
-        --pdf      "$ps/ps_${nn}_source.pdf" \
+        --pdf      "$pdf" \
         --rule     "{{prompts}}/02_problems/ps_extraction_api.org" \
         --notation "{{notation}}" \
         --out      "$ps/ps_${nn}.org" {{ARGS}}
