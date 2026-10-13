@@ -1,0 +1,71 @@
+#+title: Ps 03
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-10-13>
+#+lastmod: <2026-10-13 16:31>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 1 :bayes_theorem:conditional_probability:
+** Task
+#+begin_quote
+Conceptual. A test has sensitivity 0.98 and specificity 0.95. Display the model as either a probability tree or a $2 \times 2$ probability table. Derive $\mathbb{P}(D \mid T^+)$ as a function of the prevalence $\mathbb{P}(D)$, evaluate it at $\mathbb{P}(D) = 0.01$ and $\mathbb{P}(D) = 0.50$, and use the comparison to explain both why prevalence is needed and why $\mathbb{P}(T^+ \mid D)$ cannot simply be read in the reverse direction.
+#+end_quote
+
+** Solution
+
+* Problem 2 :total_probability:bayes_theorem:independence:
+** Task
+#+begin_quote
+Mathematical.
+
+(a) Twenty percent of incoming messages are spam. A filter flags 92% of spam messages and 3% of non-spam messages. Compute the probability that a message is flagged and the probability that a flagged message is spam.
+
+(b) For two fair coin tosses, prove that the events /first toss is heads/, /second toss is heads/, and /the two tosses agree/ are pairwise independent but not mutually independent.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+* Problem 3 :bayes_theorem:simulation:
+** Task
+#+begin_quote
+Python/data. Fix sensitivity 0.95 and specificity 0.99. Across prevalences from 0.001 to 0.5, compute and plot the exact value of $\mathbb{P}(D \mid T^+)$. Determine the prevalence at which the posterior first exceeds 1/2 and mark it on the plot. At several prevalences, simulate populations and overlay the empirical fractions among positive tests. Present one low-prevalence and one high-prevalence comparison, clearly distinguishing exact probabilities from Monte Carlo estimates and explaining the discrepancy.
+#+end_quote
+
+** Solution
+
+* Problem 4 :independence:total_probability:bayes_theorem:
+** Task
+#+begin_quote
+A randomly chosen urn. Urn 1 contains four red and one blue ball; urn 2 contains one red and four blue balls. All balls are individually labeled. Choose an urn once, with probability 1/2 for each, and draw twice with replacement from that same urn. For each fixed choice of urn, all 25 ordered pairs of ball labels are equally likely. Let $B_j$ be the event that urn $j$ is chosen, for $j = 1, 2$, and let $R_i$ be the event that draw $i$ is red, for $i = 1, 2$.
+
+(a) Compute $\mathbb{P}(R_1)$, $\mathbb{P}(R_2)$, and $\mathbb{P}(R_1 \cap R_2)$. Are $R_1$ and $R_2$ independent? Justify your answer.
+
+(b) Compute $\mathbb{P}(B_1 \mid R_1 \cap R_2)$, the probability that urn 1 was chosen given that both draws were red.
+
+(c) Generalize the model to red-draw probabilities $p, q \in (0, 1)$ for urns 1 and 2, respectively. Keep $\mathbb{P}(B_1) = \mathbb{P}(B_2) = 1/2$, and assume that under each conditioned law $\mathbb{P}(\cdot \mid B_j)$ the two red-draw events are independent, each with probability $p$ for $j = 1$ and $q$ for $j = 2$. Prove that
+
+\[ \mathbb{P}(R_1 \cap R_2) - \mathbb{P}(R_1)\mathbb{P}(R_2) = \frac{(p - q)^2}{4} \]
+
+Deduce exactly when $R_1$ and $R_2$ are independent under the full probability law $\mathbb{P}$. Explain why replacement alone does not guarantee independence when the urn is randomly chosen.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
