@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-05-27>
-#+lastmod: <2026-10-12 11:10>
+#+lastmod: <2026-10-13 16:06>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -223,13 +223,19 @@ ch_NN_<slug>.org              M001   chapter-aligned notes
 lec_NN.org / lec_NN-NN.org    M004   lecture-aligned notes; NN-NN = a range
 <slug>.org                    M002   topic-aligned (induction.org,
                                      theorems.org); must NOT start ch_ or lec_
-_<slug>_source[_<qualifier>].pdf   M003   upstream source document
+_<slug>_source[_<qualifier>].{pdf,ipynb}
+                              M003   upstream source document or notebook
 _extracted_ignore.org         M002   material extraction staging; gitignored
 #+end_example
 
 =theorems.org= has no rule of its own here; it is an ordinary =M002= slug file.
 =M003= permits a qualifier (=_analysis_source_02_semester.pdf=), so more than
 one source PDF per course is legal.
+
+A source may also be a notebook. When a lecture comes as a PDF and a notebook,
+both keep the lecture's stem: =_lec_03_source.pdf= and =_lec_03_source.ipynb=.
+Like every =_source= file they are gitignored (=*_source*=) and exist only in
+the local tree, where =just validate= still checks their names.
 
 =_extracted_ignore.org= is where =just material-extract= appends its batches.
 It is an =M002= slug by pattern and scratch by intent: the leading =_= marks it
@@ -428,7 +434,7 @@ COURSE               C010 dir  01_material
                      C012 dir  03_exams
 MATERIAL             M001 file ch_\d{2}_[a-z0-9_]+\.org
                      M002 file (?!ch_|lec_)[a-z0-9_]+\.org
-                     M003 file _[a-z0-9_]+_source(_[a-z0-9_]+)?\.pdf
+                     M003 file _[a-z0-9_]+_source(_[a-z0-9_]+)?\.(pdf|ipynb)
                      M004 file lec_\d{2}(-\d{2})?\.org
 PROBLEMS             Q001 dir  ps_(?P<n>\d{2})                    required
 PS                   P001 dir  assets
