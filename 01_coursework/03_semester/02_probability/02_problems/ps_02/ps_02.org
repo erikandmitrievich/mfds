@@ -1,0 +1,126 @@
+#+title: Ps 02
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-10-13>
+#+lastmod: <2026-10-13 09:04>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 1 :counting:subspace:
+** Task
+#+begin_quote
+Conceptual. A program claims to choose a subset of $\{1, \dots, 10\}$ uniformly. It first chooses its size uniformly from $\{0, 1, \dots, 10\}$, then chooses uniformly among the subsets of that size. For a fixed subset $S$ with $|S| = k$, derive $\mathbb{P}(S \text{ is selected})$. Compare this probability for $k = 0, 1, 5$ with the value $2^{-10}$ required by a uniform choice among all subsets. Compare the induced distribution of subset size under the two procedures, and propose a correct algorithm for choosing uniformly among all $2^{10}$ subsets.
+#+end_quote
+
+** Solution
+
+The program picks the size $K$ uniformly, so $\mathbb P(K=k)=\frac1{11}$. Given $K=k$, each of the $\binom{10}{k}$ subsets of size $k$ is equally likely. For $|S|=k$,
+
+\[ \mathbb P(S \text{ selected}) = \mathbb P(K=k)\,\mathbb P(S \mid K=k) = \frac{1}{11\binom{10}{k}}. \]
+
+Compare with $2^{-10} = 1/1024 \approx 0.00098$:
+
+| k | C(10,k) | P(S)             | ratio to 2⁻¹⁰ |
+|---+---------+------------------+---------------|
+| 0 |       1 | 1/11 ≈ 0.0909    | ≈ 93          |
+| 1 |      10 | 1/110 ≈ 0.0091   | ≈ 9.3         |
+| 5 |     252 | 1/2772 ≈ 0.00036 | ≈ 0.37        |
+
+Small subsets are heavily over-selected and mid-sized ones under-selected, so the program is not uniform.
+
+*Size distribution.* Under the program, $\mathbb P(K=k)=\frac1{11}$ for every $k$. Under a uniform choice of subset, $\mathbb P(K=k)=\binom{10}{k}2^{-10}$, which is $\mathrm{Bin}(10,\tfrac12)$: sizes near $5$ dominate ($\mathbb P(K=5)\approx 0.246$) and $\mathbb P(K=0)=2^{-10}$.
+
+*Correct algorithm.* For each $i\in\{1,\dots,10\}$, independently flip a fair coin and include $i$ on heads. A fixed $S$ requires a specific outcome on each of the 10 flips, so $\mathbb P(S \text{ selected}) = 2^{-10}$ for every $S$ .
+
+* Problem 2 :counting:inclusion_exclusion:
+** Task
+#+begin_quote
+Mathematical.
+
+(a) An eight-character identifier is generated uniformly from 26 uppercase letters, 26 lowercase letters, and 10 digits, with replacement. How many identifiers contain at least one character from each of the three categories? State the corresponding probability and justify the inclusion-exclusion terms.
+
+(b) Let $A_1, \dots, A_M \subseteq \Omega$. Prove the pointwise identity
+
+\[ \mathbf{1}_{\bigcup_{s=1}^{M} A_s}(\omega) = \sum_{\emptyset \neq J \subseteq \{1, \dots, M\}} (-1)^{|J|+1} \mathbf{1}_{\bigcap_{s \in J} A_s}(\omega) \]
+
+Hint. If $\omega$ belongs to exactly $h$ of the events, show that the right-hand side equals
+
+\[ \sum_{k=1}^{h} (-1)^{k+1} \binom{h}{k} = 1 \]
+
+Deduce the general inclusion-exclusion formulas for cardinalities and probabilities.
+#+end_quote
+
+** Solution
+*** (a)
+
+The alphabet has $62$ characters, so there are $62^8$ identifiers in total. Let $U$, $L$, $D$ be the sets of identifiers containing *no* uppercase letter, *no* lowercase letter and *no* digit, respectively. We want $62^8 - |U \cup L \cup D|$.
+
+Each term counts strings drawn from a restricted alphabet, with every position chosen independently:
+
+- $|U| = |L| = 36^8$ (only $26+10$ characters allowed), $|D| = 52^8$;
+
+- $|U\cap L| = 10^8$ (digits only), $|U \cap D| = |L \cap D| = 26^8$ (one letter case only);
+
+- $|U\cap L\cap D| = 0^8 = 0$ (no characters allowed).
+
+By inclusion-exclusion,
+
+\begin{align*}
+N &= 62^8 - (2\cdot 36^8 + 52^8) + (10^8 + 2\cdot 26^8) - 0 \\
+  &= 159\,655\,911\,367\,680,
+\end{align*}
+
+\[ \mathbb P(\text{all three categories}) = \frac{N}{62^8} \approx 0.731. \]
+
+*** (b)
+
+Fix $\omega$ and let $H = \{s : \omega \in A_s\}$, $h = |H|$. Then $\mathbf 1_{\bigcap_{s\in J}A_s}(\omega) = 1$ iff $J \subseteq H$.
+
+If $h = 0$, both sides are $0$. If $h \geq 1$, only the nonempty $J\subseteq H$ contribute, and there are $\binom hk$ of them with $|J| = k$, so
+
+\[ \text{RHS} = \sum_{k=1}^{h} (-1)^{k+1}\binom hk = 1 - \sum_{k=0}^{h}(-1)^k\binom hk = 1 - (1-1)^h = 1 = \text{LHS}. \]
+
+*Cardinalities.* For finite $A_s$, sum the identity over $\omega \in \bigcup_s A_s$, using $\sum_\omega \mathbf 1_B(\omega) = |B|$:
+
+\[ \Big|\bigcup_{s=1}^M A_s\Big| = \sum_{\emptyset\neq J} (-1)^{|J|+1}\Big|\bigcap_{s\in J}A_s\Big|. \]
+
+*Probabilities.* For $A_s \in \mathcal F$, take expectations of both sides, using linearity and $\mathbb E[\mathbf 1_B] = \mathbb P(B)$:
+
+\[ \mathbb P\Big(\bigcup_{s=1}^M A_s\Big) = \sum_{\emptyset\neq J} (-1)^{|J|+1}\,\mathbb P\Big(\bigcap_{s\in J}A_s\Big). \]
+
+* Problem 3 :counting:inclusion_exclusion:
+** Task
+#+begin_quote
+Python/data. A data set has 15 labeled rows, four of which are flagged. A five-row test set is selected uniformly without replacement. Use ~itertools.combinations~ to enumerate all test sets and compute the exact probability that at least two flagged rows are selected. Verify the result with a combinatorial formula and with Monte Carlo simulation.
+#+end_quote
+
+** Solution
+
+* Problem 4 :counting:probability_space:
+** Task
+#+begin_quote
+Urn probabilities. An urn contains four red, three blue, and two green balls, all individually labeled. Three balls are drawn without replacement, with every ordered triple of distinct ball labels equally likely.
+
+(a) Specify the probability space $(\Omega_{\text{nrep}}, \mathcal{F}_{\text{nrep}}, \mathbb{P}_{\text{nrep}})$. Justify why the events below can also be counted using uniformly distributed three-element subsets of ball labels.
+
+(b) Compute the probabilities that exactly two drawn balls are red and one is blue; that all three have the same color; and that at least one is green. Give exact fractions and justify each counting formula. Use a complement for the last event.
+
+(c) Compute the probability that all three colors appear. Then repeat this calculation for sampling with replacement, where every ordered triple of ball labels is equally likely. Specify the new probability space $(\Omega_{\text{rep}}, \mathcal{F}_{\text{rep}}, \mathbb{P}_{\text{rep}})$ and explain the difference between the two probabilities.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
