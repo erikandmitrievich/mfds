@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-13>
-#+lastmod: <2026-10-13 16:25>
+#+lastmod: <2026-10-15 17:31>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -105,6 +105,35 @@ Python/data. A data set has 15 labeled rows, four of which are flagged. A five-r
 #+end_quote
 
 ** Solution
+
+$X$ = number of flagged rows in the test set. Choosing $k$ of the 4 flagged and $5-k$ of the 11 unflagged rows,
+
+\[ \mathbb P(X \ge 2) = \sum_{k=2}^{4} \frac{\binom4k\binom{11}{5-k}}{\binom{15}5} = \frac{990+220+11}{3003} = \frac{37}{91} \approx 0.4066. \]
+
+By symmetry the choice of flagged rows is irrelevant; take =A=--=D=.
+
+#+begin_src python :results output
+import itertools
+import random
+from fractions import Fraction
+
+rows = "ABCDEFGHIJKLMNO"
+flagged = set("ABCD")
+
+sets = list(itertools.combinations(rows, 5))
+print(Fraction(sum(len(flagged & set(s)) >= 2 for s in sets), len(sets)))
+
+random.seed(0)
+n = 100_000
+p = sum(len(flagged & set(random.sample(rows, 5))) >= 2 for _ in range(n)) / n
+print(f"{p:.4f} +/- {1.96 * (p * (1 - p) / n) ** 0.5:.4f}")
+#+end_src
+
+#+RESULTS:
+: 37/91
+: 0.4093 +/- 0.0030
+
+Enumeration matches the formula; $37/91$ lies in the 95% Monte Carlo interval.
 
 * Problem 4 :counting:probability_space:
 ** Task
