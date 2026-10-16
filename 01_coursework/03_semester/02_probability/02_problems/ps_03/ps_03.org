@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-13>
-#+lastmod: <2026-10-13 16:31>
+#+lastmod: <2026-10-15 17:36>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -46,6 +46,54 @@ Python/data. Fix sensitivity 0.95 and specificity 0.99. Across prevalences from 
 #+end_quote
 
 ** Solution
+
+\[ \mathbb P(D \mid T^+) = \frac{0.95\,\pi}{0.95\,\pi + 0.01\,(1-\pi)}. \]
+
+The posterior odds are $\frac{0.95}{0.01}\cdot\frac{\pi}{1-\pi}$, which is increasing in $\pi$. So $\mathbb P(D \mid T^+) > 1/2$ iff $\frac{\pi}{1-\pi} > \frac{1}{95}$ iff $\pi > \pi^* = 1/96 \approx 0.0104$.
+
+#+begin_src python :results output
+import numpy as np
+import matplotlib.pyplot as plt
+
+sens, spec = 0.95, 0.99
+ppv = lambda pi: sens * pi / (sens * pi + (1 - spec) * (1 - pi))
+pi_star = (1 - spec) / (sens + 1 - spec)
+
+rng = np.random.default_rng(0)
+N = 10_000
+
+def simulate(pi):
+    D = rng.random(N) < pi
+    T = rng.random(N) < np.where(D, sens, 1 - spec)
+    return (D & T).sum() / T.sum(), T.sum()
+
+sim = [0.001, 0.003, 0.01, 0.03, 0.1, 0.5]
+mc = {pi: simulate(pi) for pi in sim}
+
+grid = np.geomspace(0.001, 0.5, 500)
+plt.semilogx(grid, ppv(grid), label="exact")
+plt.plot(sim, [mc[pi][0] for pi in sim], "o", label=f"Monte Carlo, $N = {N}$")
+plt.plot(pi_star, 0.5, "kx", label=r"$\pi^* = 1/96$")
+plt.axvline(pi_star, ls=":", c="gray")
+plt.xlabel(r"prevalence $\pi$")
+plt.ylabel(r"$\mathbb{P}(D \mid T^+)$")
+plt.legend()
+plt.savefig("assets/p_03.png", dpi=150)
+
+print(f"pi* = {pi_star:.4f}")
+for pi in (0.001, 0.5):
+    p, (est, m) = ppv(pi), mc[pi]
+    print(f"pi = {pi}: exact {p:.4f}, MC {est:.4f}, positives {m}, SE {np.sqrt(p * (1 - p) / m):.4f}")
+#+end_src
+
+#+RESULTS:
+: pi* = 0.0104
+: pi = 0.001: exact 0.0868, MC 0.0924, positives 119, SE 0.0258
+: pi = 0.5: exact 0.9896, MC 0.9869, positives 4902, SE 0.0015
+
+[[file:assets/p_03.png]]
+
+Given $m$ positive tests, the number of true positives is $\mathrm{Bin}(m, p)$ with $p = \mathbb P(D \mid T^+)$. The Monte Carlo estimate therefore has standard error $\sqrt{p(1-p)/m}$. At $\pi = 0.001$, positives are rare and mostly false ($m = 119$, about 10 of them true), so the SE is $0.026$, about 30% of $p$. At $\pi = 0.5$, $m = 4902$ and $p$ is close to 1, so the SE is $0.0015$. Both deviations are within 2 SE .
 
 * Problem 4 :independence:total_probability:bayes_theorem:
 ** Task
