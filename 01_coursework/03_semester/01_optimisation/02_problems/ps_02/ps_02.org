@@ -1,0 +1,108 @@
+#+title: Ps 02
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-10-18>
+#+lastmod: <2026-10-19 10:58>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 1 :floating_point:machine_numbers:error_analysis:
+** Task
+#+begin_quote
+Let $\eta = r_{64} \, \mathrm{eps}_{64} = 2^{-1074}$.
+
+(a) Show that
+
+\[ \lvert \mathrm{fl}_{64}(x) - x \rvert \leq \frac{\eta}{2}, \qquad 0 < x < r_{64} \]
+
+(b) Determine $\mathrm{fl}_{64}(x)$ and the relative error for $x = \frac{3}{2}\eta$ and $x = \frac{1}{2}\eta$.
+
+(c) Check your results in Python.
+#+end_quote
+
+** Solution
+
+*** (a)
+
+\begin{align*}
+0.f \cdot 2^{-1022} &= k \cdot 2^{-52} \cdot 2^{-1022} = k\eta, \quad k = 0, \dots, 2^{52}-1 && \text{(subnormals and } 0\text{)} \\
+r_{64} &= 2^{-1022} = 2^{52}\eta \\
+&\implies \mathbb{F}_{64} \cap [0, r_{64}] = \{ k\eta : k = 0, \dots, 2^{52} \} \\
+x \in (0, r_{64}) &\implies x \in [k\eta, (k+1)\eta] \text{ for some } k \in \{0, \dots, 2^{52}-1\} \\
+&\implies \lvert \mathrm{fl}_{64}(x) - x \rvert \leq \frac{\eta}{2} && \text{(round to nearest)}
+\end{align*}
+
+*** (b)
+
+\begin{align*}
+x_1 &= \frac{3}{2}\eta && \text{(midpoint of } \eta, 2\eta\text{)} \\
+\mathrm{fl}_{64}(x_1) &= 2\eta && \text{(tie, round to even: } k = 2\text{)} \\
+\varepsilon_{\text{rel}} &= \frac{\lvert 2\eta - \frac{3}{2}\eta \rvert}{\frac{3}{2}\eta} = \frac{\frac{1}{2}\eta}{\frac{3}{2}\eta} = \frac{1}{3}
+\end{align*}
+
+\begin{align*}
+x_2 &= \frac{1}{2}\eta && \text{(midpoint of } 0, \eta\text{)} \\
+\mathrm{fl}_{64}(x_2) &= 0 && \text{(tie, round to even: } k = 0\text{)} \\
+\varepsilon_{\text{rel}} &= \frac{\lvert 0 - \frac{1}{2}\eta \rvert}{\frac{1}{2}\eta} = 1
+\end{align*}
+
+*** (c)
+
+#+begin_src python :results output
+import sys
+
+eta = 2**(-1074)
+
+x1 = 1.5 * eta
+rel_err1 = abs(x1 / eta - 1.5) / 1.5
+
+x2 = 0.5 * eta
+rel_err2 = abs(x2 / eta - 0.5) / 0.5
+
+print(f"{eta == sys.float_info.min * sys.float_info.epsilon = }")
+print(f"{x1 == 2 * eta = }")
+print(f"{rel_err1 = }")
+print(f"{x2 == 0 = }")
+print(f"{rel_err2 = }")
+#+end_src
+
+#+RESULTS:
+: eta == sys.float_info.min * sys.float_info.epsilon = True
+: x1 == 2 * eta = True
+: rel_err1 = 0.3333333333333333
+: x2 == 0 = True
+: rel_err2 = 1.0
+
+* Problem 2 :programming:machine_numbers:
+** Task
+#+begin_quote
+Translate the Julia routines in Section 6.2 into Python: ~myLU~ without pivoting, then ~myLUpivot~ with partial pivoting. Also translate ~myL~ and ~myU~ for solving $L y = b$ and $U x = y$. Combine the routines to solve $Ax = b$ and test your code.
+#+end_quote
+
+** Solution
+
+* Problem 3 :programming:machine_numbers:error_analysis:
+** Task
+#+begin_quote
+Check the Examples 6.4.3 and 6.4.4 in Python. Increase and decrease the machine precision and change $\varepsilon$ accordingly.
+#+end_quote
+
+** Solution
+
+* Problem 4 :floating_point:programming:
+** Task
+#+begin_quote
+Construct a strictly diagonally dominant $A \in \mathbb{R}^{3 \times 3}$ with exactly representable 64-bit entries for which ~myLU~ does produce a zero pivot. Why does this not contradict Remark 6.2.3?
+#+end_quote
+
+** Solution
