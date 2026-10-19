@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-18>
-#+lastmod: <2026-10-19 10:58>
+#+lastmod: <2026-10-19 11:05>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -90,6 +90,73 @@ Translate the Julia routines in Section 6.2 into Python: ~myLU~ without pivoting
 #+end_quote
 
 ** Solution
+
+#+begin_src python :results output
+import numpy as np
+
+def myLU(A):
+    n = len(A)
+    L = np.eye(n)
+    U = A.astype(float)
+    for k in range(n - 1):
+        for j in range(k + 1, n):
+            L[j, k] = U[j, k] / U[k, k]
+            U[j, k + 1:] -= L[j, k] * U[k, k + 1:]
+            U[j, k] = 0.0
+    return L, U
+
+def myLUpivot(A):
+    n = len(A)
+    P = np.eye(n)
+    L = np.eye(n)
+    U = A.astype(float)
+    for k in range(n - 1):
+        p = k + np.argmax(np.abs(U[k:, k]))
+        U[[k, p]] = U[[p, k]]
+        P[[k, p]] = P[[p, k]]
+        L[[k, p], :k] = L[[p, k], :k]
+        for j in range(k + 1, n):
+            L[j, k] = U[j, k] / U[k, k]
+            U[j, k + 1:] -= L[j, k] * U[k, k + 1:]
+            U[j, k] = 0.0
+    return P, L, U
+
+def myL(L, b):
+    n = len(b)
+    y = b.astype(float)
+    for k in range(1, n):
+        y[k] = b[k] - L[k, :k] @ y[:k]
+    return y
+
+def myU(U, y):
+    n = len(y)
+    x = y.astype(float)
+    for k in range(n - 1, -1, -1):
+        x[k] = (y[k] - U[k, k + 1:] @ x[k + 1:]) / U[k, k]
+    return x
+
+A = np.array([[2, 1, 1], [4, -6, 0], [-2, 7, 2]], dtype=float)
+b = np.array([5, -2, 9], dtype=float)
+
+L, U = myLU(A)
+y = myL(L, b)
+x = myU(U, y)
+
+P, L_p, U_p = myLUpivot(A)
+y_p = myL(L_p, P @ b)
+x_p = myU(U_p, y_p)
+
+print(f"{np.allclose(L @ U, A) = }")
+print(f"{np.allclose(L_p @ U_p, P @ A) = }")
+print(f"x (without pivoting): {x}")
+print(f"x (with pivoting):    {x_p}")
+#+end_src
+
+#+RESULTS:
+: np.allclose(L @ U, A) = True
+: np.allclose(L_p @ U_p, P @ A) = True
+: x (without pivoting): [1. 1. 2.]
+: x (with pivoting):    [1. 1. 2.]
 
 * Problem 3 :programming:machine_numbers:error_analysis:
 ** Task
