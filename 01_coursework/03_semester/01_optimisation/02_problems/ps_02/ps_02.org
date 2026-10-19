@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-18>
-#+lastmod: <2026-10-19 11:37>
+#+lastmod: <2026-10-19 12:39>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -259,3 +259,39 @@ Construct a strictly diagonally dominant $A \in \mathbb{R}^{3 \times 3}$ with ex
 #+end_quote
 
 ** Solution
+
+\[ A = \begin{pmatrix} 1.75 & 1.5 & 0 \\ \eta & 2\eta & 0 \\ 0 & 0 & 1 \end{pmatrix}, \qquad \eta = 2^{-1074} \]
+
+\begin{align*}
+\ell_{21} &= \mathrm{fl}_{64}\left(\frac{4}{7}\eta\right) = \eta \\
+\tilde{a}^{(2)}_{2,2} &= \mathrm{fl}_{64}\left(2\eta - \mathrm{fl}_{64}\left(\frac{3}{2}\eta\right)\right) = 2\eta - 2\eta = 0 && \text{(Problem 1(b))} \\
+a^{(2)}_{2,2} &= 2\eta - \frac{4}{7}\eta \cdot \frac{3}{2} = \frac{8}{7}\eta \neq 0
+\end{align*}
+
+No contradiction: Remark 6.2.3 holds in exact arithmetic, but subnormal rounding errors are not bounded by $\frac{\mathrm{eps}_{64}}{2}$ (here $\frac{3}{4}$ and $\frac{1}{3}$).
+
+#+begin_src python :results output
+import numpy as np
+
+def myLU(A):
+    n = len(A)
+    L = np.eye(n, dtype=A.dtype)
+    U = A.copy()
+    for k in range(n - 1):
+        for j in range(k + 1, n):
+            L[j, k] = U[j, k] / U[k, k]
+            U[j, k + 1:] -= L[j, k] * U[k, k + 1:]
+            U[j, k] = 0
+    return L, U
+
+eta = 2**-1074
+A = np.array([[1.75, 1.5, 0], [eta, 2 * eta, 0], [0, 0, 1]])
+
+with np.errstate(divide="ignore", invalid="ignore"):  # next step divides by the zero pivot
+    L, U = myLU(A)
+
+print(f"U[1, 1] = {U[1, 1]}")
+#+end_src
+
+#+RESULTS:
+: U[1, 1] = 0.0
