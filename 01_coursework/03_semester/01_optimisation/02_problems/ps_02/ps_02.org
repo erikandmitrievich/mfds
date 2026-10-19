@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-18>
-#+lastmod: <2026-10-19 12:39>
+#+lastmod: <2026-10-19 13:02>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -166,7 +166,7 @@ Check the Examples 6.4.3 and 6.4.4 in Python. Increase and decrease the machine 
 
 ** Solution
 
-$\varepsilon = 2^{-(p+2)}$ is the largest power of 2 with $\mathrm{fl}(2 - \frac{1}{\varepsilon}) = \mathrm{fl}(1 - \frac{1}{\varepsilon}) = -\frac{1}{\varepsilon}$ for a $p$-bit significand (the spacing below $\frac{1}{\varepsilon}$ is $2^{-p}/\varepsilon$); $p = 53$ gives the notes' $2^{-55}$.
+$\varepsilon = 2^{-(p+2)}$ is the largest power of 2 with $\mathrm{fl}(2 - \frac{1}{\varepsilon}) = \mathrm{fl}(1 - \frac{1}{\varepsilon}) = -\frac{1}{\varepsilon}$ for a \(p\)-bit significand (the spacing below $\frac{1}{\varepsilon}$ is $2^{-p}/\varepsilon$); $p = 53$ gives the notes' $2^{-55}$.
 
 #+begin_src python :results output
 import numpy as np
