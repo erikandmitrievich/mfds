@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-18>
-#+lastmod: <2026-10-19 11:05>
+#+lastmod: <2026-10-19 11:37>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -165,6 +165,92 @@ Check the Examples 6.4.3 and 6.4.4 in Python. Increase and decrease the machine 
 #+end_quote
 
 ** Solution
+
+$\varepsilon = 2^{-(p+2)}$ is the largest power of 2 with $\mathrm{fl}(2 - \frac{1}{\varepsilon}) = \mathrm{fl}(1 - \frac{1}{\varepsilon}) = -\frac{1}{\varepsilon}$ for a $p$-bit significand (the spacing below $\frac{1}{\varepsilon}$ is $2^{-p}/\varepsilon$); $p = 53$ gives the notes' $2^{-55}$.
+
+#+begin_src python :results output
+import numpy as np
+from mpmath import mp, mpf
+
+def myLU(A):
+    n = len(A)
+    L = np.eye(n, dtype=A.dtype)
+    U = A.copy()
+    for k in range(n - 1):
+        for j in range(k + 1, n):
+            L[j, k] = U[j, k] / U[k, k]
+            U[j, k + 1:] -= L[j, k] * U[k, k + 1:]
+            U[j, k] = 0
+    return L, U
+
+def myLUpivot(A):
+    n = len(A)
+    P = np.eye(n, dtype=A.dtype)
+    L = np.eye(n, dtype=A.dtype)
+    U = A.copy()
+    for k in range(n - 1):
+        p = k + np.argmax(np.abs(U[k:, k]))
+        U[[k, p]] = U[[p, k]]
+        P[[k, p]] = P[[p, k]]
+        L[[k, p], :k] = L[[p, k], :k]
+        for j in range(k + 1, n):
+            L[j, k] = U[j, k] / U[k, k]
+            U[j, k + 1:] -= L[j, k] * U[k, k + 1:]
+            U[j, k] = 0
+    return P, L, U
+
+def myL(L, b):
+    y = b.copy()
+    for k in range(1, len(b)):
+        y[k] = b[k] - L[k, :k] @ y[:k]
+    return y
+
+def myU(U, y):
+    n = len(y)
+    x = y.copy()
+    for k in range(n - 1, -1, -1):
+        x[k] = (y[k] - U[k, k + 1:] @ x[k + 1:]) / U[k, k]
+    return x
+
+mp.prec = 113  # quadruple precision; np.longdouble is just float64 on Apple Silicon
+
+for num, p in [(np.float16, 11), (np.float32, 24), (np.float64, 53), (mpf, 113)]:
+    eps = num(2) ** -(p + 2)
+    A = np.array([[eps, num(1)], [num(1), num(1)]])
+    b = np.array([num(1), num(2)])
+    # Example 6.4.3
+    L, U = myLU(A)
+    y = myL(L, b)
+    x = myU(U, y)
+    ok = ((L == [[1, 0], [1 / eps, 1]]).all() and (U == [[eps, 1], [0, -1 / eps]]).all()
+          and (y == [1, -1 / eps]).all())
+    # Example 6.4.4
+    P, Lp, Up = myLUpivot(A)
+    yp = myL(Lp, P @ b)
+    xp = myU(Up, yp)
+    ok_p = ((Lp == [[1, 0], [eps, 1]]).all() and (Up == [[1, 1], [0, 1]]).all()
+            and (yp == [2, 1]).all())
+    x_eps = np.array([1 / (1 - eps), (1 - 2 * eps) / (1 - eps)])
+    print(f"{num.__name__}, eps = 2^-{p + 2}:")
+    print(f"  6.4.3: L, U, y as in notes: {ok}, x = {x.astype(float)}")
+    print(f"  6.4.4: L, U, y as in notes: {ok_p}, x = {xp.astype(float)}, x_eps = {x_eps.astype(float)}")
+#+end_src
+
+#+RESULTS:
+#+begin_example
+float16, eps = 2^-13:
+  6.4.3: L, U, y as in notes: True, x = [0. 1.]
+  6.4.4: L, U, y as in notes: True, x = [1. 1.], x_eps = [1. 1.]
+float32, eps = 2^-26:
+  6.4.3: L, U, y as in notes: True, x = [0. 1.]
+  6.4.4: L, U, y as in notes: True, x = [1. 1.], x_eps = [1. 1.]
+float64, eps = 2^-55:
+  6.4.3: L, U, y as in notes: True, x = [0. 1.]
+  6.4.4: L, U, y as in notes: True, x = [1. 1.], x_eps = [1. 1.]
+mpf, eps = 2^-115:
+  6.4.3: L, U, y as in notes: True, x = [0. 1.]
+  6.4.4: L, U, y as in notes: True, x = [1. 1.], x_eps = [1. 1.]
+#+end_example
 
 * Problem 4 :floating_point:programming:
 ** Task
