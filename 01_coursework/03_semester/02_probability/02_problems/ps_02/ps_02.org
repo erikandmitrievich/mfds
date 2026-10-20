@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-13>
-#+lastmod: <2026-10-15 17:31>
+#+lastmod: <2026-10-20 08:01>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -150,6 +150,32 @@ Urn probabilities. An urn contains four red, three blue, and two green balls, al
 ** Solution
 *** (a)
 
+Let $L = R \cup B \cup G$ be the $9$ labels, with $\lvert R \rvert = 4$, $\lvert B \rvert = 3$, $\lvert G \rvert = 2$.
+
+\[ \Omega_{\text{nrep}} \coloneqq \{ (\omega_1, \omega_2, \omega_3) \in L^3 \mid \omega_1, \omega_2, \omega_3 \text{ distinct} \}, \quad \lvert \Omega_{\text{nrep}} \rvert = 9 \cdot 8 \cdot 7 = 504 \]
+
+with $\mathcal{F}_{\text{nrep}} \coloneqq 2^{\Omega_{\text{nrep}}}$ and $\mathbb{P}_{\text{nrep}}$ uniform.
+
+The events below ignore order. Each three-element subset of $L$ has exactly $3! = 6$ orderings in $\Omega_{\text{nrep}}$, so the drawn set is uniform over the $\binom{9}{3} = 84$ subsets.
+
 *** (b)
 
+Counting subsets:
+
+\begin{gather*}
+\mathbb{P}(\text{2 red, 1 blue}) = \frac{\binom{4}{2}\binom{3}{1}}{\binom{9}{3}} = \frac{18}{84} = \frac{3}{14} \\
+\mathbb{P}(\text{same color}) = \frac{\binom{4}{3} + \binom{3}{3} + \binom{2}{3}}{\binom{9}{3}} = \frac{5}{84} \\
+\mathbb{P}(\text{at least 1 green}) = 1 - \frac{\binom{7}{3}}{\binom{9}{3}} = \frac{7}{12}
+\end{gather*}
+
+Labels are chosen independently within each color, so the counts multiply. "Same color" splits into the disjoint cases $R$, $B$, $G$, where $\binom{2}{3} = 0$. The complement "no green" draws from the $7$ non-green labels.
+
 *** (c)
+
+\[ \mathbb{P}_{\text{nrep}}(\text{all colors}) = \frac{4 \cdot 3 \cdot 2}{84} = \frac{2}{7} \]
+
+With replacement, $\Omega_{\text{rep}} \coloneqq L^3$, $\mathcal{F}_{\text{rep}} \coloneqq 2^{\Omega_{\text{rep}}}$, and $\mathbb{P}_{\text{rep}}$ is uniform on the $9^3 = 729$ triples. To count ordered triples, assign colors to positions ($3!$ ways), then pick a label per position:
+
+\[ \mathbb{P}_{\text{rep}}(\text{all colors}) = \frac{3! \cdot 4 \cdot 3 \cdot 2}{729} = \frac{16}{81} \]
+
+The same $144$ ordered triples are favorable in both spaces ($144/504 = 2/7$). Replacement only adds the $225$ triples with a repeated label. Each of these repeats a color, so the probability drops .
