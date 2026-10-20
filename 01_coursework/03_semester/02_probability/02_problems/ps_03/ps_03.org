@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-13>
-#+lastmod: <2026-10-15 17:36>
+#+lastmod: <2026-10-20 08:19>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -23,6 +23,21 @@ Conceptual. A test has sensitivity 0.98 and specificity 0.95. Display the model 
 #+end_quote
 
 ** Solution
+
+Let $p \coloneqq \mathbb{P}(D)$.
+
+|    | T⁺        | T⁻        | total |
+|----+-----------+-----------+-------|
+| D  | 0.98p     | 0.02p     | p     |
+| Dᶜ | 0.05(1-p) | 0.95(1-p) | 1-p   |
+
+\[ \mathbb{P}(D \mid T^+) = \frac{0.98p}{0.98p + 0.05(1-p)} \]
+
+At $p = 0.01$ this is $0.0098/0.0593 \approx 0.165$;
+
+at $p = 0.50$ it is $0.49/0.515 \approx 0.951$.
+
+The test fixes only $\mathbb{P}(T^+ \mid D)$ and $\mathbb{P}(T^+ \mid D^c)$; how many positives are true depends on $p$. At $p = 0.01$, false positives ($0.0495$) outnumber true positives ($0.0098$) five to one, so $\mathbb{P}(D \mid T^+)$ is far from $\mathbb{P}(T^+ \mid D) = 0.98$.
 
 * Problem 2 :total_probability:bayes_theorem:independence:
 ** Task
