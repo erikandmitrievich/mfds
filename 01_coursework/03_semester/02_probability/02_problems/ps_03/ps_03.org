@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-13>
-#+lastmod: <2026-10-20 08:19>
+#+lastmod: <2026-10-20 08:26>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -52,7 +52,23 @@ Mathematical.
 ** Solution
 *** (a)
 
+Let $S$ be the event that a message is spam and $F$ the event that it is flagged. By total probability and Bayes,
+
+\begin{gather*}
+\mathbb{P}(F) = 0.92 \cdot 0.2 + 0.03 \cdot 0.8 = 0.208 \\
+\mathbb{P}(S \mid F) = \frac{0.184}{0.208} = \frac{23}{26} \approx 0.885
+\end{gather*}
+
 *** (b)
+
+Take $\Omega = \{H, T\}^2$ with the uniform law, and let $A = \{HH, HT\}$ (first heads), $B = \{HH, TH\}$ (second heads), $C = \{HH, TT\}$ (agree). Each has probability $1/2$, and every intersection of two or three of them equals $\{HH\}$:
+
+\begin{gather*}
+\mathbb{P}(A \cap B) = \mathbb{P}(A \cap C) = \mathbb{P}(B \cap C) = \frac{1}{4} = \frac{1}{2} \cdot \frac{1}{2} \\
+\mathbb{P}(A \cap B \cap C) = \frac{1}{4} \neq \frac{1}{8}
+\end{gather*}
+
+Hence pairwise but not mutually independent.
 
 * Problem 3 :bayes_theorem:simulation:
 ** Task
