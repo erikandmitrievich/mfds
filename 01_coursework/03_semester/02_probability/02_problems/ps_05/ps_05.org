@@ -1,0 +1,92 @@
+#+title: Ps 05
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-10-22>
+#+lastmod: <2026-10-22 16:42>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 1 :categorical:bernoulli:poisson:
+** Task
+#+begin_quote
+*Conceptual.* For each scenario below, define the random variable, state its possible values, choose a law from this lecture, interpret every parameter, and list the assumptions that justify your choice.
+
+(a) The class label of one image, chosen from a fixed finite set of classes.
+
+(b) The number of defective items among 50 manufactured items.
+
+(c) The number of inspected items up to and including the first defective item.
+
+(d) The number of website requests during a fixed ten-second interval.
+
+(e) An integer selected uniformly from $\{1, \dots, 20\}$.
+
+Then choose two scenarios and change one modeling assumption in each. Explain why the original law is no longer justified, or identify a different law and justify its use.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+*** (d)
+
+*** (e)
+
+* Problem 2 :geometric:poisson:memorylessness:
+** Task
+#+begin_quote
+*Mathematical.*
+
+(a) Let $p \in (0, 1)$ and $G \sim \operatorname{Geometric}(p)$. Derive $P(G \geq k)$ for every $k \in \mathbb{N}$, and distinguish this event from $\{G > k\}$. Then prove
+
+\[ P(G > m + n \mid G > m) = P(G > n) \quad \text{for all } m, n \in \mathbb{N}_0 \]
+
+checking that the conditioning event has positive probability.
+
+(b) Let $\lambda > 0$ and $X \sim \operatorname{Poisson}(\lambda)$. Write $P(X \geq 3)$ as a complement, expand the required PMF terms, and simplify to a closed formula in $\lambda$.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+* Problem 3 :total_variation:binomial_poisson_approximation:simulation:
+** Task
+#+begin_quote
+*Python/data.* Use =lecture_05_examples.ipynb= as a starting point. For each fixed $\lambda \in \{1, 5, 10\}$ and each $n \in \{\lambda, 2\lambda, 5\lambda, 10\lambda, 50\lambda, 100\lambda\}$, let
+
+\[ X_n \sim \operatorname{Binomial}(n, \lambda/n), \quad Y \sim \operatorname{Poisson}(\lambda) \]
+
+Here $p \coloneqq \lambda/n \in (0, 1]$, and the case $n = \lambda$ is a binomial count with success probability one. Compare these fixed model laws; no Monte Carlo simulation is needed.
+
+(a) Plot $d_{\mathrm{TV}}(p_{X_n}, p_Y)$ against $n$, using one curve for each $\lambda$. Include the full Poisson probability above $n$, as in (10).
+
+(b) For each $\lambda$, keep the integer threshold $c_\lambda \coloneqq 2\lambda$ fixed while $n$ varies. Plot the absolute tail-probability error
+
+\[ \lvert P(X_n \geq c_\lambda) - P(Y \geq c_\lambda) \rvert \]
+
+Evaluate each distribution object's =sf= method at $c_\lambda - 1$ to compute the probability of a count at least $c_\lambda$.
+
+(c) Select one parameter pair $(\lambda, n)$ with a small total-variation distance and one with a larger distance. Display both PMFs for each pair, state the computed distances, and explain the contrast using $n$, $p = \lambda/n$, the possible count values, and the rare-event assumptions.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
