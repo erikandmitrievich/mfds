@@ -1,0 +1,98 @@
+#+title: Ps 04
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-10-22>
+#+lastmod: <2026-10-22 16:37>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 1 :uniform_law:transformation:density:
+** Task
+#+begin_quote
+*Conceptual: an exact value and a rounded display.* Let $X$ be an idealized measurement uniformly distributed on $[0, 1]$. We choose the density $f_X(x) \coloneqq 1$ for every $x \in (0, 1)$ and $f_X(x) \coloneqq 0$ otherwise. Let $Y$ be the value obtained by rounding $X$ to the nearest hundredth; if $X$ is exactly halfway between two such values, round upward. For example, the unrounded value $0.3718$ produces the displayed value $0.37$. Thus $X$ is the unrounded measurement, whereas $Y$ is the number on the display.
+
+(a) Suppose the display reads $0.37$. Determine the interval of possible values of $X$, including which endpoints belong to the interval. Express the event $\{Y = 0.37\}$ in terms of $X$, and sketch the interval on a number line. Use the sketch to explain whether the display determines $X$ exactly.
+
+(b) Now consider a new measurement, before observing its display. Under the stated uniform model, calculate
+
+\[ F_X(0.37) = P(X \leq 0.37), \quad P(X = 0.37), \quad P(Y = 0.37), \quad f_X(0.37) \]
+
+These are unconditional quantities: do not condition on the display reading $0.37$. Show each calculation and explain what the quantity describes.
+
+(c) Use the interval from part (a) and the calculations from part (b) to explain why $P(Y = 0.37) > 0$ and $P(X = 0.37) = 0$ do not contradict each other. Distinguish the density value $f_X(0.37)$ from the probability obtained by integrating $f_X$ over that interval.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+* Problem 2 :uniform_law:transformation:quantile_function:
+** Task
+#+begin_quote
+*Mathematical.* Let $X$ be uniformly distributed on $[0, 2]$, with density $f_X(x) \coloneqq 1/2$ for every $x \in (0, 2)$ and $f_X(x) \coloneqq 0$ otherwise. Define $Y \coloneqq X^2$. Derive the CDF $F_Y(y)$ and one density $f_Y(y)$ for every $y \in \mathbb{R}$, specifying any chosen endpoint values. Then derive $F_Y^{-1}(u)$ for every $u \in (0, 1)$.
+#+end_quote
+
+** Solution
+
+* Problem 3 :empirical_cdf:simulation:quantile_function:
+** Task
+#+begin_quote
+*Python/data.* Use =lecture_04_examples.ipynb= as a starting point. For each sample size $n \in \{500, 10\,000\}$, generate $n$ independent observations $x_1, \dots, x_n$ from the uniform model on $[0, 2]$ in Exercise 2, and set $y_i \coloneqq x_i^2$ for every $i \in \{1, \dots, n\}$. Keep the model and a reported random seed fixed throughout the comparison.
+
+(a) Define $\widehat{F}_n(y) \coloneqq n^{-1} \sum_{i=1}^{n} \mathbf{1}_{\{y_i \leq y\}}$ for every $y \in \mathbb{R}$. Plot both empirical CDFs together with the theoretical CDF $F_Y$ from Exercise 2.
+
+(b) Use the same grid $G \coloneqq \{4j/1000 : j = 0, \dots, 1000\}$ for both sample sizes. Report the maximum absolute difference on this grid,
+
+\[ D_n \coloneqq \max_{y \in G} \lvert \widehat{F}_n(y) - F_Y(y) \rvert \]
+
+(c) Tabulate $\widehat{F}_n^{-1}(u)$ and $F_Y^{-1}(u)$ for each $u \in \{0.1, 0.5, 0.9\}$. Use =method="inverted_cdf"= in =np.quantile= to match the generalized-inverse definition.
+
+(d) Describe the differences visible in your plots and tables. Does the larger sample have the smaller value of $D_n$ in this run? Explain why a comparison of two simulated samples does not guarantee the same ordering in every run.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+*** (d)
+
+* Problem 4 :uniform_law:transformation:conditional_probability:
+** Task
+#+begin_quote
+*Additional mathematical exercise: a non-monotone transformation.* Let $X$ be uniformly distributed on $[-1, 2]$, with density $f_X(x) \coloneqq 1/3$ for every $x \in (-1, 2)$ and $f_X(x) \coloneqq 0$ otherwise. Define $Y \coloneqq X^2$.
+
+(a) Sketch the function $x \mapsto x^2$ on $[-1, 2]$. For every $y \geq 0$, express $\{Y \leq y\}$ in terms of $X$. Then derive $F_Y(y)$ for every $y \in \mathbb{R}$, accounting for both square roots and the endpoints of $[-1, 2]$. Use the sketch to explain why the formula for strictly increasing transformations does not apply on the whole interval.
+
+(b) Find one density $f_Y\colon \mathbb{R} \to [0, \infty)$ of $Y$. Specify $f_Y(y)$ for every $y \in \mathbb{R}$, including the endpoints of each interval in your piecewise definition. Verify that
+
+\[ \int_{-\infty}^{y} f_Y(t) \, dt = F_Y(y) \quad \text{for every } y \in \mathbb{R} \]
+
+(c) Determine $F_Y^{-1}(u)$ for every $u \in (0, 1)$, using the definition of the generalized inverse. In particular, compute the median $F_Y^{-1}(1/2)$.
+
+(d) Fix $y \in (0, 4]$. First verify that $P(Y \leq y) > 0$, and then compute $P(X < 0 \mid Y \leq y)$. Determine for which $y$ this conditional probability is greater than, equal to, or less than $P(X < 0)$. Explain the comparison using the intervals of possible values of $X$.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+*** (d)
