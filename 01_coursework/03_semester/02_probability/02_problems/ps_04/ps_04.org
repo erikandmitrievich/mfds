@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-22>
-#+lastmod: <2026-10-27 07:39>
+#+lastmod: <2026-10-27 07:45>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -74,6 +74,34 @@ The density value $f_X(0.37) = 1$ is not a probability; probabilities come from 
 #+end_quote
 
 ** Solution
+
+Since $0 \leq X \leq 2$, we have $0 \leq Y \leq 4$, so $F_Y(y) = 0$ for $y < 0$ and $F_Y(y) = 1$ for $y \geq 4$. For $0 \leq y < 4$,
+
+\begin{align*}
+F_Y(y) &= P(X^2 \leq y) \\
+       &= P(X \leq \sqrt{y}) && \text{(since } X \geq 0 \text{)} \\
+       &= \int_0^{\sqrt{y}} \frac{1}{2} \, dx \\
+       &= \frac{\sqrt{y}}{2}
+\end{align*}
+
+Altogether,
+
+\[ F_Y(y) = \begin{cases}
+  0 & \text{if } y < 0 \\
+  \frac{\sqrt{y}}{2} & \text{if } 0 \leq y < 4 \\
+  1 & \text{if } y \geq 4
+\end{cases} \]
+
+The CDF $F_Y$ is continuous and continuously differentiable except at $0$ and $4$, so its derivative, completed by any values at $0$ and $4$, is a density. Choosing $0$ there,
+
+\[ f_Y(y) = \begin{cases}
+  \frac{1}{4\sqrt{y}} & \text{if } 0 < y < 4 \\
+  0 & \text{otherwise}
+\end{cases} \]
+
+The CDF increases continuously and strictly from $0$ to $1$ on $[0, 4]$, so for every $u \in (0, 1)$ the quantile $F_Y^{-1}(u)$ is the unique $y \in (0, 4)$ with $F_Y(y) = u$. Solving $\frac{\sqrt{y}}{2} = u$ gives
+
+\[ F_Y^{-1}(u) = 4u^2 \]
 
 * Problem 3 :empirical_cdf:simulation:quantile_function:
 ** Task
