@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-22>
-#+lastmod: <2026-10-22 16:37>
+#+lastmod: <2026-10-27 07:39>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -33,11 +33,39 @@ These are unconditional quantities: do not condition on the display reading $0.3
 #+end_quote
 
 ** Solution
+
 *** (a)
+
+Ties round up, so $0.365 \mapsto 0.37$ but $0.375 \mapsto 0.38$. The possible values of $X$ form the interval $[0.365, 0.375)$, and
+
+\[ \{Y = 0.37\} = \{0.365 \leq X < 0.375\} \]
+
+#+begin_example
+        0.365       0.37        0.375
+  --------[===========+===========)--------> x
+#+end_example
+
+Every value in the segment is displayed as $0.37$, so the display does not determine $X$: it only tells us that $X$ lies in this interval of length $0.01$.
 
 *** (b)
 
+\begin{gather*}
+F_X(0.37) = \int_0^{0.37} 1 \, dx = 0.37 \\
+P(X = 0.37) = \int_{0.37}^{0.37} 1 \, dx = 0 \\
+P(Y = 0.37) = P(0.365 \leq X < 0.375) = \int_{0.365}^{0.375} 1 \, dx = 0.01 \\
+f_X(0.37) = 1
+\end{gather*}
+
+- $F_X(0.37)$: probability that the measurement is at most $0.37$.
+- $P(X = 0.37)$: probability that the measurement is exactly $0.37$.
+- $P(Y = 0.37)$: probability that the display reads $0.37$.
+- $f_X(0.37)$: probability per unit length near $0.37$.
+
 *** (c)
+
+No contradiction: $\{X = 0.37\}$ fixes $X$ at a single point, while $\{Y = 0.37\} = \{0.365 \leq X < 0.375\}$ only confines it to an interval of length $0.01$ containing that point. The display reading $0.37$ does not mean $X = 0.37$.
+
+The density value $f_X(0.37) = 1$ is not a probability; probabilities come from integrating $f_X$ over a set. Over the point $\{0.37\}$ (length $0$) the integral is $0$; over $[0.365, 0.375)$ (length $0.01$) it is $1 \cdot 0.01 = 0.01$.
 
 * Problem 2 :uniform_law:transformation:quantile_function:
 ** Task
