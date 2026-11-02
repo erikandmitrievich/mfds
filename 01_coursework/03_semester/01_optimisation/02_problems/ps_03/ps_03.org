@@ -1,0 +1,230 @@
+#+title: Ps 03
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-10-27>
+#+lastmod: <2026-10-27 11:54>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 1 :condition_number:logarithm:exponential:
+** Task
+#+begin_quote
+Let $f\colon (0,\infty) \to \mathbb{R}$, $f(x) = \log x$, and $g\colon \mathbb{R} \to (0,\infty)$, $g(y) = e^y$.
+
+(a) Determine the absolute and relative condition numbers of $f$ and $g$. State where the relative condition numbers are defined.
+
+(b) Where is $f$ relatively ill-conditioned?
+
+(c) Show that $\kappa_f^{\mathrm{rel}}(x)\,\kappa_g^{\mathrm{rel}}(f(x)) = 1$ whenever both factors are well-defined.
+#+end_quote
+
+** Solution
+*** (a)
+
+For differentiable $h$: $\kappa_h^{\mathrm{abs}}(x) = \lvert h'(x) \rvert$ and $\kappa_h^{\mathrm{rel}}(x) = \kappa_h^{\mathrm{abs}}(x) \frac{\lvert x \rvert}{\lvert h(x) \rvert}$, defined for $x \neq 0$, $h(x) \neq 0$.
+
+\begin{align*}
+\kappa_f^{\mathrm{abs}}(x) &= \frac{1}{x} \\
+\kappa_f^{\mathrm{rel}}(x) &= \frac{1}{x} \cdot \frac{x}{\lvert \log x \rvert} = \frac{1}{\lvert \log x \rvert} && \text{(} x \in (0, \infty) \setminus \{1\}\text{, since } f(1) = 0\text{)} \\
+\kappa_g^{\mathrm{abs}}(y) &= e^y \\
+\kappa_g^{\mathrm{rel}}(y) &= e^y \cdot \frac{\lvert y \rvert}{e^y} = \lvert y \rvert && \text{(} y \in \mathbb{R} \setminus \{0\}\text{; } g > 0 \text{ everywhere)}
+\end{align*}
+
+*** (b)
+
+$f$ is relatively ill-conditioned near $x = 1$: $\kappa_f^{\mathrm{rel}}(x) \to \infty$ as $x \to 1$, and $\kappa_f^{\mathrm{rel}}(x) > 1$ exactly for $x \in (e^{-1}, e) \setminus \{1\}$. There $\log x \approx x - 1$, the same ill-conditioning as the cancellation in $x - 1$.
+
+Near $0$ and $\infty$ it is well-conditioned ($\kappa_f^{\mathrm{rel}} \to 0$), although $\kappa_f^{\mathrm{abs}}(x) = 1/x \to \infty$ as $x \to 0^+$.
+
+*** (c)
+
+Both factors are defined iff $x \neq 1$ (for the second: $f(x) = \log x \neq 0$), and then
+
+\[ \kappa_f^{\mathrm{rel}}(x)\,\kappa_g^{\mathrm{rel}}(f(x)) = \frac{1}{\lvert \log x \rvert} \cdot \lvert \log x \rvert = 1 \]
+
+This is the chain rule for $g = f^{-1}$: $g'(f(x))\,f'(x) = 1$ and $g(f(x)) = x$ give
+
+\[ \kappa_f^{\mathrm{rel}}(x)\,\kappa_g^{\mathrm{rel}}(f(x)) = \frac{\lvert f'(x) \rvert \lvert x \rvert}{\lvert f(x) \rvert} \cdot \frac{\lvert g'(f(x)) \rvert \lvert f(x) \rvert}{\lvert x \rvert} = 1 \]
+
+so a problem and its inverse have reciprocal relative condition numbers: $\exp$ is well-conditioned near $0$ exactly where $\log$ is ill-conditioned near $1$.
+
+* Problem 2 :operator_norm:matrix_norm:
+** Task
+#+begin_quote
+Let $A \in \mathbb{R}^{m \times n}$.
+
+(a) Endow $\mathbb{R}^m$ and $\mathbb{R}^n$ with the sum-norm $\lVert x \rVert_1 = \sum_i \lvert x_i \rvert$ for $x \in \mathbb{R}^n$. Show that the corresponding operator norm of $A$ is the column sum norm
+
+\[ \lVert A \rVert_1 = \max_{j=1,\dots,n} \sum_{i=1}^{m} \lvert a_{i,j} \rvert \]
+
+(b) Endow $\mathbb{R}^m$ and $\mathbb{R}^n$ with the max-norm $\lVert x \rVert_\infty = \max_i \lvert x_i \rvert$ for $x \in \mathbb{R}^n$. Show that the corresponding operator norm of $A$ is the row sum norm
+
+\[ \lVert A \rVert_\infty = \max_{i=1,\dots,m} \sum_{j=1}^{n} \lvert a_{i,j} \rvert \]
+#+end_quote
+
+** Solution
+*** (a)
+
+Let $C \coloneqq \max_j \sum_{i=1}^m \lvert a_{i,j} \rvert$, attained at $j^*$.
+
+\begin{align*}
+\lVert Ax \rVert_1 &= \sum_{i=1}^m \Bigl\lvert \sum_{j=1}^n a_{i,j} x_j \Bigr\rvert \leq \sum_{j=1}^n \lvert x_j \rvert \sum_{i=1}^m \lvert a_{i,j} \rvert \leq C \lVert x \rVert_1 && \text{(triangle inequality, swap sums)} \\
+\lVert A e_{j^*} \rVert_1 &= \sum_{i=1}^m \lvert a_{i,j^*} \rvert = C = C \lVert e_{j^*} \rVert_1
+\end{align*}
+
+The first line gives $\lVert A \rVert_1 \leq C$, the second $\lVert A \rVert_1 \geq C$.
+
+*** (b)
+
+Let $R \coloneqq \max_i \sum_{j=1}^n \lvert a_{i,j} \rvert$, attained at $i^*$, and $\sigma_j \coloneqq 1$ if $a_{i^*,j} \geq 0$, $\sigma_j \coloneqq -1$ otherwise, so $\lVert \sigma \rVert_\infty = 1$ and $a_{i^*,j} \sigma_j = \lvert a_{i^*,j} \rvert$.
+
+\begin{align*}
+\lVert Ax \rVert_\infty &= \max_i \Bigl\lvert \sum_{j=1}^n a_{i,j} x_j \Bigr\rvert \leq \max_i \sum_{j=1}^n \lvert a_{i,j} \rvert \lvert x_j \rvert \leq R \lVert x \rVert_\infty && \text{(triangle inequality)} \\
+\lVert A \sigma \rVert_\infty &\geq \lvert (A \sigma)_{i^*} \rvert = \sum_{j=1}^n \lvert a_{i^*,j} \rvert = R = R \lVert \sigma \rVert_\infty
+\end{align*}
+
+The first line gives $\lVert A \rVert_\infty \leq R$, the second $\lVert A \rVert_\infty \geq R$.
+
+* Problem 3 :condition_number:cancellation:
+** Task
+#+begin_quote
+Let $f\colon (\mathbb{R} \setminus \{0\})^2 \to \mathbb{R}$, $(x_1, x_2) \mapsto x_1/x_2$, and endow $\mathbb{R}^2$ with $\lVert \cdot \rVert_\infty$.
+
+(a) Determine $\kappa_f^{\mathrm{abs}}(x)$ and $\kappa_f^{\mathrm{rel}}(x)$.
+
+(b) Discuss the relative conditioning in the cases $\lvert x_1 \rvert \gg \lvert x_2 \rvert$ and $\lvert x_2 \rvert \gg \lvert x_1 \rvert$.
+
+(c) Investigate the absolute and relative conditioning of $g\colon \mathbb{R}^2 \to \mathbb{R}$, $(x_1, x_2) \mapsto x_1 - x_2$.
+#+end_quote
+
+** Solution
+*** (a)
+
+For differentiable $f$, $\kappa_f^{\mathrm{abs}}(x) = \lVert Df(x) \rVert_{op}$ with $Df(x)\colon (\mathbb{R}^2, \lVert \cdot \rVert_\infty) \to (\mathbb{R}, \lvert \cdot \rvert)$. By Problem 2(b) with $m = 1$, this is the absolute row sum of the $1 \times 2$ matrix $Df(x)$.
+
+\begin{align*}
+Df(x) &= \begin{pmatrix} \frac{1}{x_2} & -\frac{x_1}{x_2^2} \end{pmatrix} \\
+\kappa_f^{\mathrm{abs}}(x) &= \frac{1}{\lvert x_2 \rvert} + \frac{\lvert x_1 \rvert}{x_2^2} = \frac{\lvert x_1 \rvert + \lvert x_2 \rvert}{x_2^2} \\
+\kappa_f^{\mathrm{rel}}(x) &= \kappa_f^{\mathrm{abs}}(x) \frac{\lVert x \rVert_\infty}{\lvert f(x) \rvert} = \frac{(\lvert x_1 \rvert + \lvert x_2 \rvert) \lVert x \rVert_\infty}{\lvert x_1 \rvert \lvert x_2 \rvert} = 1 + \frac{\lVert x \rVert_\infty}{\min\{\lvert x_1 \rvert, \lvert x_2 \rvert\}}
+\end{align*}
+
+using $\lvert x_1 \rvert + \lvert x_2 \rvert = \lVert x \rVert_\infty + \min\{\lvert x_1 \rvert, \lvert x_2 \rvert\}$ and $\lvert x_1 \rvert \lvert x_2 \rvert = \lVert x \rVert_\infty \min\{\lvert x_1 \rvert, \lvert x_2 \rvert\}$. Both are defined on the whole domain.
+
+*** (b)
+
+$\kappa_f^{\mathrm{rel}}(x) \geq 2$, with equality iff $\lvert x_1 \rvert = \lvert x_2 \rvert$, and it depends only on the ratio of the magnitudes:
+
+\begin{align*}
+\lvert x_1 \rvert \gg \lvert x_2 \rvert &\implies \kappa_f^{\mathrm{rel}}(x) \approx \frac{\lvert x_1 \rvert}{\lvert x_2 \rvert} \gg 1 && \text{(error in the denominator } x_2 \text{ dominates)} \\
+\lvert x_2 \rvert \gg \lvert x_1 \rvert &\implies \kappa_f^{\mathrm{rel}}(x) \approx \frac{\lvert x_2 \rvert}{\lvert x_1 \rvert} \gg 1 && \text{(error in the numerator } x_1 \text{ dominates)}
+\end{align*}
+
+Ill-conditioned in both cases, well-conditioned only for $\lvert x_1 \rvert \approx \lvert x_2 \rvert$. The cause is the normwise measure: an input error $\delta \lVert x \rVert_\infty$ is a relative error $\delta \lVert x \rVert_\infty / \min\{\lvert x_1 \rvert, \lvert x_2 \rvert\}$ in the smaller component. Componentwise relative perturbations, such as rounding the inputs, are harmless:
+
+\[ \tilde x_i = x_i (1 + \delta_i), \ \lvert \delta_i \rvert \leq \delta < 1 \implies \frac{\lvert f(\tilde x) - f(x) \rvert}{\lvert f(x) \rvert} = \frac{\lvert \delta_1 - \delta_2 \rvert}{\lvert 1 + \delta_2 \rvert} \leq \frac{2\delta}{1 - \delta} \]
+
+*** (c)
+
+\begin{align*}
+Dg(x) &= \begin{pmatrix} 1 & -1 \end{pmatrix} \\
+\kappa_g^{\mathrm{abs}}(x) &= 2 && \text{(Problem 2(b), } m = 1\text{)} \\
+\kappa_g^{\mathrm{rel}}(x) &= \frac{2 \lVert x \rVert_\infty}{\lvert x_1 - x_2 \rvert} && \text{(} x_1 \neq x_2\text{)}
+\end{align*}
+
+Absolutely, $g$ is well-conditioned everywhere. Relatively, $\kappa_g^{\mathrm{rel}}(x) \geq 1$ since $\lvert x_1 - x_2 \rvert \leq 2 \lVert x \rVert_\infty$, and
+
+- $x_1 x_2 \leq 0$: $\lvert x_1 - x_2 \rvert = \lvert x_1 \rvert + \lvert x_2 \rvert \geq \lVert x \rVert_\infty$, so $\kappa_g^{\mathrm{rel}}(x) \leq 2$: well-conditioned.
+
+- $x_1 \approx x_2$, i.e. $\lvert x_1 - x_2 \rvert \ll \lVert x \rVert_\infty$: $\kappa_g^{\mathrm{rel}}(x) \gg 1$, unbounded as $x_2 \to x_1$: cancellation.
+
+Unlike (b), this survives componentwise perturbations: $\delta_1 = \delta \operatorname{sgn} x_1$, $\delta_2 = -\delta \operatorname{sgn} x_2$ give
+
+\[ \frac{\lvert g(\tilde x) - g(x) \rvert}{\lvert g(x) \rvert} = \frac{\lvert x_1 \delta_1 - x_2 \delta_2 \rvert}{\lvert x_1 - x_2 \rvert} = \delta \frac{\lvert x_1 \rvert + \lvert x_2 \rvert}{\lvert x_1 - x_2 \rvert} \approx \kappa_g^{\mathrm{rel}}(x) \, \delta \quad (x_1 \approx x_2) \]
+
+so rounding the inputs alone can destroy the result.
+
+* Problem 4 :condition_number:linear_system:eigenvalue:
+** Task
+#+begin_quote
+Use Euclidean norms and consider
+
+\[ A_\epsilon = \begin{pmatrix} 2 + \epsilon & 2 - \epsilon \\ 2 - \epsilon & 2 + \epsilon \end{pmatrix}, \qquad b = \begin{pmatrix} 4 \\ 4 \end{pmatrix}, \qquad 0 < \epsilon \leq 2 \]
+
+(a) Determine the eigenvalues of $A_\epsilon$ and its condition number $\kappa(A_\epsilon) = \lVert A_\epsilon \rVert_{op} \lVert A_\epsilon^{-1} \rVert_{op}$.
+
+(b) For $t \neq 0$, let $b_t = b + t(1,-1)^\top$. Solve $A_\epsilon x = b$ and $A_\epsilon x_t = b_t$, and show that
+
+\[ \frac{\lVert x_t - x \rVert_2 / \lVert x \rVert_2}{\lVert b_t - b \rVert_2 / \lVert b \rVert_2} = \kappa(A_\epsilon) \]
+
+What is this ratio if $b_t = b + t(1, 1)^\top$ instead?
+
+(c) Compare the observed amplification ratios with those predicted in part (b) in Python using \texttt{numpy.linalg.solve}. Set $t = 2^{-20}$ and $\epsilon = 2^{-k}$ for $k \in \{1, 10, 20, 30, 40\}$.
+#+end_quote
+
+** Solution
+*** (a)
+
+\begin{align*}
+A_\epsilon \begin{pmatrix} 1 \\ 1 \end{pmatrix} &= 4 \begin{pmatrix} 1 \\ 1 \end{pmatrix}, \qquad A_\epsilon \begin{pmatrix} 1 \\ -1 \end{pmatrix} = 2\epsilon \begin{pmatrix} 1 \\ -1 \end{pmatrix} \implies \lambda_1 = 4, \ \lambda_2 = 2\epsilon \\
+\lVert A_\epsilon \rVert_{op} &= \max_i \lvert \lambda_i \rvert = 4, \qquad \lVert A_\epsilon^{-1} \rVert_{op} = \max_i \lvert \lambda_i \rvert^{-1} = \frac{1}{2\epsilon} && \text{(} A_\epsilon \text{ symmetric, } 0 < 2\epsilon \leq 4\text{)} \\
+\kappa(A_\epsilon) &= \frac{4}{2\epsilon} = \frac{2}{\epsilon}
+\end{align*}
+
+*** (b)
+
+\begin{align*}
+x &= (1, 1)^\top && \text{(} b = 4(1, 1)^\top\text{, eigenvalue } 4\text{)} \\
+x_t &= x + t A_\epsilon^{-1} (1, -1)^\top = x + \frac{t}{2\epsilon} (1, -1)^\top && \text{(eigenvalue } 2\epsilon\text{)} \\
+\frac{\lVert x_t - x \rVert_2}{\lVert x \rVert_2} &= \frac{\lvert t \rvert \sqrt{2} / (2\epsilon)}{\sqrt{2}} = \frac{\lvert t \rvert}{2\epsilon}, \qquad \frac{\lVert b_t - b \rVert_2}{\lVert b \rVert_2} = \frac{\lvert t \rvert \sqrt{2}}{4 \sqrt{2}} = \frac{\lvert t \rvert}{4} \\
+\frac{\lVert x_t - x \rVert_2 / \lVert x \rVert_2}{\lVert b_t - b \rVert_2 / \lVert b \rVert_2} &= \frac{\lvert t \rvert / (2\epsilon)}{\lvert t \rvert / 4} = \frac{2}{\epsilon} = \kappa(A_\epsilon)
+\end{align*}
+
+For $b_t = b + t(1, 1)^\top = (1 + \frac{t}{4}) b$: $x_t = (1 + \frac{t}{4}) x$, so both relative changes are $\frac{\lvert t \rvert}{4}$ and the ratio is $1$.
+
+$b$ along the eigenvector of $\lambda_1$ and $b_t - b$ along that of $\lambda_2$ is the worst case, attaining the bound $\kappa(A_\epsilon)$; a perturbation parallel to $b$ is never amplified.
+
+*** (c)
+
+#+begin_src python :results output
+import numpy as np
+
+t = 2**-20
+b = np.array([4.0, 4.0])
+rel = lambda u, v: np.linalg.norm(u - v) / np.linalg.norm(v)
+
+def ratio(A, d):
+    x = np.linalg.solve(A, b)
+    bt = b + t * np.array(d)
+    xt = np.linalg.solve(A, bt)
+    return rel(xt, x) / rel(bt, b)
+
+print(f"{'k':>2} {'kappa':>14} {'(1,-1)':>19} {'(1,-1)/kappa-1':>15} {'(1,1)':>15}")
+for k in [1, 10, 20, 30, 40]:
+    eps = 2.0**-k
+    A = np.array([[2 + eps, 2 - eps], [2 - eps, 2 + eps]])
+    r_m, r_p = ratio(A, [1.0, -1.0]), ratio(A, [1.0, 1.0])
+    dev = r_m * eps / 2 - 1
+    print(f"{k:2} {2 / eps:14.0f} {r_m:19.4f} {dev:15.1e} {r_p:15.12f}")
+#+end_src
+
+#+RESULTS:
+:  k          kappa              (1,-1)  (1,-1)/kappa-1           (1,1)
+:  1              4              4.0000         0.0e+00  1.000000000000
+: 10           2048           2048.0000         1.2e-10  1.000000000000
+: 20        2097152        2097152.0000         0.0e+00  1.000000000000
+: 30     2147483648     2147483647.0000        -4.7e-10  0.999999999534
+: 40  2199023255552  2199023255552.0000         0.0e+00  1.414213562373
+
+Observed and predicted ratios agree for every $k$, up to relative deviations below $10^{-9}$, including the amplification by $\kappa(A_\epsilon) \approx 2.2 \cdot 10^{12}$ at $k = 40$.
+
+For $k = 30, 40$ this is better than the error analysis guarantees: $\hat x$ and $\hat x_t$ are only accurate to a relative error of about $\kappa(A_\epsilon)\,\mathrm{eps}_{64} = 2^{k-51}$, larger than the relative change $\frac{t}{4} = 2^{-22}$ caused by $(1,1)$. It works because $\epsilon = 2^{-k}$ makes the arithmetic almost exact: $\frac{2 - \epsilon}{2 + \epsilon} = 1 - \epsilon + O(\epsilon^2)$ rounds to exactly $\ell_{21} = 1 - \epsilon$ since $\epsilon^2 \ll \mathrm{eps}_{64}$, so the computed factors satisfy $\hat L \hat U = A_\epsilon + O(\epsilon^2)$ instead of $A_\epsilon + O(\mathrm{eps}_{64})$.
