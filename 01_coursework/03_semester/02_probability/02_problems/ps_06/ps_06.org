@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-02>
-#+lastmod: <2026-11-02 15:30>
+#+lastmod: <2026-11-02 17:15>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -23,6 +23,56 @@
 #+end_quote
 
 ** Solution
+
+\[ f_X(x) = \frac{1}{0.05 - (-0.05)} = 10 \quad \text{for } -0.05 \leq x \leq 0.05 \]
+
+\[ \int_{-0.05}^{0.05} 10 \, dx = 10(0.05) - 10(-0.05) = 1 \]
+
+#+begin_src python :results file link :exports both
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(-0.08, 0.08, 1000)
+y = np.where((x >= -0.05) & (x <= 0.05), 10, 0)
+
+plt.figure(figsize=(6, 4))
+plt.plot(x, y, color='blue', linewidth=2)
+plt.fill_between(x, y, color='blue', alpha=0.2)
+
+plt.title(r"Density of $X \sim \operatorname{Unif}(-0.05, 0.05)$")
+plt.xlabel("Measurement Error (mm)")
+plt.ylabel(r"Density (mm$^{-1}$)")
+plt.ylim(0, 12)
+plt.grid(True, linestyle='--', alpha=0.6)
+
+filename = "assets/ps_01_p_01.png"
+plt.tight_layout()
+plt.savefig(filename)
+return filename
+#+end_src
+
+#+RESULTS:
+[[file:assets/ps_01_p_01.png]]
+
+\begin{align*}
+f_X(0) &= 10 \\
+P(X = 0) &= 0 \\
+P(-0.01 \leq X \leq 0.01) &= \int_{-0.01}^{0.01} 10 \, dx \\
+                          &= 10(0.01) - 10(-0.01) \\
+                          &= 0.2
+\end{align*}
+
+Let $Y = 1000X$. The support in micrometers is $[-50, 50]$.
+
+\[ f_Y(y) = \frac{1}{50 - (-50)} = 0.01 \quad \text{for } -50 \leq y \leq 50 \]
+
+\begin{align*}
+P(-10 \leq Y \leq 10) &= \int_{-10}^{10} 0.01 \, dy \\
+                      &= 0.01(10) - 0.01(-10) \\
+                      &= 0.2
+\end{align*}
+
+Probability is a dimensionless area. Changing measurement units scales the horizontal support, so the density height must scale inversely to keep the total probability area exactly $1$.
 
 * Problem 2 :density:quantile_function:
 ** Task
