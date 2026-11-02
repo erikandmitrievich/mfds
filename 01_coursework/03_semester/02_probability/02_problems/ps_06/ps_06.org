@@ -1,0 +1,45 @@
+#+title: Ps 06
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-11-02>
+#+lastmod: <2026-11-02 15:30>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 1 :uniform_law:density:transformation:
+** Task
+#+begin_quote
+*Conceptual.* A measurement error is modeled as $X \sim \operatorname{Unif}(-0.05, 0.05)$ millimeters. Sketch its density with labeled axes and units, verify by integration that it is normalized, and compute $f_X(0)$, $P(X = 0)$, and $P(-0.01 \leq X \leq 0.01)$. Now express the same error in micrometers as $Y = 1000X$, derive $f_Y$, and recompute the corresponding interval probability. Use the comparison to explain why density heights depend on units while probabilities do not.
+#+end_quote
+
+** Solution
+
+* Problem 2 :density:quantile_function:
+** Task
+#+begin_quote
+*Mathematical.* For a constant $c > 0$, let
+
+\[ f(x) = c(1 - x)\mathbf{1}_{[0,1]}(x) \]
+
+Determine $c$, derive the CDF and quantile function, and calculate the $0.9$-quantile.
+#+end_quote
+
+** Solution
+
+* Problem 3 :simulation:memorylessness:empirical_cdf:
+** Task
+#+begin_quote
+*Python/data.* Use ~lecture_06_examples.ipynb~ as a starting point. Simulate 30,000 independent waiting times with law $\operatorname{Exp}(2)$. Fix $s = 0.5$; retain only waits exceeding $s$, then subtract $s$ to obtain the remaining waits. Plot the empirical survival curves of the original and remaining waits together with $e^{-2t}$ for $t \geq 0$. For both samples, tabulate the empirical $0.1$, $0.5$, and $0.9$ quantiles alongside the exponential quantiles, using ~method="inverted_cdf"~ in ~np.quantile~. Report the largest absolute discrepancy from the theoretical survival curve on a stated finite grid. Repeat the survival-curve comparison for 30,000 independent waits with law $\operatorname{Unif}(0, 1)$, keeping $s = 0.5$, and derive \(P(T > s + t \mid T > s)\) for every $t \geq 0$ under that model. Explain why the two models behave differently and identify SciPy's reciprocal-rate argument.
+#+end_quote
+
+** Solution
