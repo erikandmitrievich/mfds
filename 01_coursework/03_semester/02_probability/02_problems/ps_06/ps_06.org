@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-02>
-#+lastmod: <2026-11-02 17:15>
+#+lastmod: <2026-11-02 17:27>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -81,10 +81,55 @@ Probability is a dimensionless area. Changing measurement units scales the horiz
 
 \[ f(x) = c(1 - x)\mathbf{1}_{[0,1]}(x) \]
 
-Determine $c$, derive the CDF and quantile function, and calculate the $0.9$-quantile.
+Determine $c$, derive the CDF and quantile function, and calculate the \(0.9\)-quantile.
 #+end_quote
 
 ** Solution
+
+\begin{align*}
+\int_{0}^{1} c(1 - x) \, dx &= 1 \\
+c \left[ x - \frac{x^2}{2} \right]_{0}^{1} &= 1 \\
+c \left( 1 - \frac{1}{2} \right) &= 1 \\
+\frac{c}{2} &= 1 \\
+c &= 2
+\end{align*}
+
+\[ f(x) = 2(1 - x)\mathbf{1}_{[0,1]}(x) \]
+
+\[ F(x) = \begin{cases}
+  0 & \text{if } x < 0 \\
+  \int_{0}^{x} 2(1 - t) \, dt & \text{if } 0 \leq x \leq 1 \\
+  1 & \text{if } x > 1
+\end{cases} \]
+
+\begin{align*}
+\int_{0}^{x} 2(1 - t) \, dt &= \left[ 2t - t^2 \right]_{0}^{x} \\
+                            &= 2x - x^2
+\end{align*}
+
+\[ F(x) = \begin{cases}
+  0 & \text{if } x < 0 \\
+  2x - x^2 & \text{if } 0 \leq x \leq 1 \\
+  1 & \text{if } x > 1
+\end{cases} \]
+
+To find the quantile function \( Q(p) \), set \( F(x) = p \) for \( p \in (0, 1) \).
+
+\begin{align*}
+2x - x^2 &= p \\
+x^2 - 2x + p &= 0
+\end{align*}
+
+\[ x = \frac{2 \pm \sqrt{4 - 4p}}{2} = 1 \pm \sqrt{1 - p} \]
+
+Since \( x \in [0, 1] \), we must take the negative root.
+
+\[ Q(p) = 1 - \sqrt{1 - p} \quad \text{for } 0 < p < 1 \]
+
+\begin{align*}
+Q(0.9) &= 1 - \sqrt{1 - 0.9} \\
+       &= 1 - \sqrt{0.1}
+\end{align*}
 
 * Problem 3 :simulation:memorylessness:empirical_cdf:
 ** Task
