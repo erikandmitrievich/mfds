@@ -1,0 +1,63 @@
+* Problem 1 :condition_number:cancellation:floating_point:
+** Task
+#+begin_quote
+Consider the following functions
+
+\begin{align*}
+f_1(x) &= x^3 - 6ax^2 + 12a^2 x - 8a^3 = (x - 2a)^3, \quad a = \tfrac{1}{2} \cdot 10^7 - 1 = 4999999 \\
+f_2(x) &= \frac{1}{x - \sqrt{x^2 - 1}} \\
+f_3(x) &= 1 - \sqrt{1 - x^2} \\
+f_4(x) &= x^9 - 18x^8 + 144x^7 - 672x^6 + 2016x^5 - 4032x^4 + 5376x^3 - 4608x^2 + 2304x - 512 = (x - 2)^9 \\
+f_5(x) &= \frac{1}{1 + 2x} - \frac{1 - x}{1 + x}
+\end{align*}
+
+a) Determine $\kappa^{(rel)}_{f_1}(10^7)$. Which of the two versions in Python provides the more accurate value of $f_1(10^7)$?
+
+b) Evaluate $f_2$ at $x_0 = 10^7$ in Python. Reformulate $f_2$ to avoid cancelations and plot both versions in the vicinity of $x_0$.
+
+c) Determine $\lim_{x \to 0} \kappa^{(rel)}_{f_3}(x)$. Reformulate $f_3$ to avoid cancelations when evaluating in Python at $x_0 = 10^{-7}$. Plot both versions in the vicinity of $x_0$.
+
+d) Plot both versions of $f_4$ in Python in the interval $[1.925, 2.075]$.
+
+e) Determine $\lim_{x \to 0} \kappa^{(rel)}_{f_5}(0)$. Plot $f_5$ in Python in the interval $[-5 \cdot 10^{-8}, 5 \cdot 10^{-8}]$. Reformulate $f_5$ and obtain a more accurate plot.
+#+end_quote
+
+** Solution
+*** a)
+
+*** b)
+
+*** c)
+
+*** d)
+
+*** e)
+
+* Problem 2 :matrix_norm:linear_system:error_analysis:
+** Task
+#+begin_quote
+For $x \in \mathbb{R}^n$, you only observe
+
+\[ y = Ax, \quad A = \frac{1}{9} \begin{pmatrix} 3 & 2 & 1 & 0 & \cdots & 0 \\ 2 & 3 & \ddots & \ddots & & \vdots \\ 1 & \ddots & \ddots & \ddots & \ddots & 0 \\ 0 & \ddots & \ddots & \ddots & \ddots & 1 \\ \vdots & & \ddots & \ddots & 3 & 2 \\ 0 & \cdots & 0 & 1 & 2 & 3 \end{pmatrix} \]
+
+a) Write a function constr_A(n) that builds $A$ provided that $n \geq 5$.
+
+b) For fixed $n$ and a suitable signal $x \in \mathbb{R}^n$, compute $A$ and plot $y = Ax$.
+
+c) Add independent, identically distributed Gaussian noise $\epsilon \in \mathbb{R}^n$ to $y$, i.e.,
+
+\[ \tilde{y} = y + \epsilon \]
+
+and reconstruct $A^{-1}\tilde{y}$. Plot $A^{-1}y$ and $A^{-1}\tilde{y}$ for different noise intensities.
+
+d) Plot $\lVert A^{-1} \rVert_1$ against $n$ for $5 \leq n \leq 100$.
+#+end_quote
+
+** Solution
+*** a)
+
+*** b)
+
+*** c)
+
+*** d)
