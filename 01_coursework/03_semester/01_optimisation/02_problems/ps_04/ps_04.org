@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-03>
-#+lastmod: <2026-11-03 13:03>
+#+lastmod: <2026-11-03 14:58>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -43,13 +43,122 @@ e) Determine $\lim_{x \to 0} \kappa^{(rel)}_{f_5}(0)$. Plot $f_5$ in Python in t
 ** Solution
 *** a)
 
+\[ \kappa^{(\mathrm{rel})}_{f_1}(x) = \frac{\lvert f_1'(x) \rvert \lvert x \rvert}{\lvert f_1(x) \rvert} = \frac{3 \lvert x \rvert}{\lvert x - 2a \rvert}, \qquad \kappa^{(\mathrm{rel})}_{f_1}(10^7) = \frac{3 \cdot 10^7}{2} = 1.5 \cdot 10^7 \]
+
+#+begin_src python :results output
+a = 4999999
+f1 = lambda x: x**3 - 6*a*x**2 + 12*a**2*x - 8*a**3
+g1 = lambda x: (x - 2*a)**3
+print(f1(1e7), g1(1e7))
+#+end_src
+
+#+RESULTS:
+: 393216.0 8.0
+
+The factored version $g_1$ is exact. The expanded $f_1$ returns $393216 = 3 \cdot 2^{17}$: its terms are $\approx 10^{21}$, where all floats are multiples of $2^{17}$, so the sum cannot be $8$. This is the algorithm, not the conditioning: rounding the input would only cause a relative error of $\kappa^{(\mathrm{rel})}_{f_1}(10^7) \cdot \frac{\mathrm{eps}_{64}}{2} \approx 1.7 \cdot 10^{-9}$.
+
 *** b)
+
+\[ g_2(x) \coloneqq x + \sqrt{x^2 - 1} = \frac{x^2 - (x^2 - 1)}{x - \sqrt{x^2 - 1}} = f_2(x) \]
+
+#+begin_src python :results output
+import numpy as np
+import matplotlib.pyplot as plt
+
+f2 = lambda x: 1 / (x - np.sqrt(x**2 - 1))
+g2 = lambda x: x + np.sqrt(x**2 - 1)
+print(f2(1e7), g2(1e7))
+
+x = np.linspace(0.9e7, 1.1e7, 1000)
+plt.plot(x, f2(x), label="$f_2$")
+plt.plot(x, g2(x), label="$g_2$")
+plt.legend()
+plt.savefig("./assets/p_01b.png")
+#+end_src
+
+#+RESULTS:
+: 19884107.85185185 19999999.999999948
+
+[[file:assets/p_01b.png]]
+
+$f_2(10^7)$ is off by 0.6%. Near $10^7$ floats are spaced $2^{-29}$ apart, so $x - \sqrt{x^2 - 1} \approx 5 \cdot 10^{-8}$ comes out as $k \cdot 2^{-29}$ with $k \in \mathbb{N}$, and $f_2$ only takes the values $2^{29}/k$: the steps in the plot.
 
 *** c)
 
+\[ g_3(x) \coloneqq \frac{x^2}{1 + \sqrt{1 - x^2}} = \frac{(1 - \sqrt{1 - x^2})(1 + \sqrt{1 - x^2})}{1 + \sqrt{1 - x^2}} = f_3(x) \]
+
+\[ \kappa^{(\mathrm{rel})}_{f_3}(x) = \frac{\lvert f_3'(x) \rvert \lvert x \rvert}{\lvert g_3(x) \rvert} = \frac{x^2}{\sqrt{1 - x^2}} \cdot \frac{1 + \sqrt{1 - x^2}}{x^2} = 1 + \frac{1}{\sqrt{1 - x^2}} \to 2 \quad (x \to 0) \]
+
+#+begin_src python :results output
+import numpy as np
+import matplotlib.pyplot as plt
+
+f3 = lambda x: 1 - np.sqrt(1 - x**2)
+g3 = lambda x: x**2 / (1 + np.sqrt(1 - x**2))
+print(f3(1e-7), g3(1e-7))
+
+x = np.linspace(0.9e-7, 1.1e-7, 1000)
+plt.plot(x, f3(x), label="$f_3$")
+plt.plot(x, g3(x), label="$g_3$")
+plt.legend()
+plt.savefig("./assets/p_01c.png")
+#+end_src
+
+#+RESULTS:
+: 4.9960036108132044e-15 5.000000000000011e-15
+
+[[file:assets/p_01c.png]]
+
+$f_3$ is well-conditioned near $0$, but $1 - \sqrt{1 - x^2}$ cancels: $f_3(10^{-7})$ has relative error $8 \cdot 10^{-4}$, and $f_3$ only takes multiples of $2^{-53}$, the steps in the plot.
+
 *** d)
 
+#+begin_src python :results output
+import numpy as np
+import matplotlib.pyplot as plt
+
+f4 = lambda x: (x**9 - 18*x**8 + 144*x**7 - 672*x**6 + 2016*x**5
+                - 4032*x**4 + 5376*x**3 - 4608*x**2 + 2304*x - 512)
+g4 = lambda x: (x - 2)**9
+
+x = np.linspace(1.925, 2.075, 1000)
+plt.plot(x, f4(x), label="expanded")
+plt.plot(x, g4(x), label="factored")
+plt.legend()
+plt.savefig("./assets/p_01d.png")
+#+end_src
+
+#+RESULTS:
+
+[[file:assets/p_01d.png]]
+
+The expanded form cancels terms up to $2016 \cdot 2^5 \approx 6.5 \cdot 10^4$; their rounding errors, $\approx 10^{-11}$, are as large as $(x - 2)^9 \leq 7.5 \cdot 10^{-11}$.
+
 *** e)
+
+\[ g_5(x) \coloneqq \frac{2x^2}{(1 + 2x)(1 + x)} = \frac{(1 + x) - (1 - x)(1 + 2x)}{(1 + 2x)(1 + x)} = f_5(x) \]
+
+\[ \kappa^{(\mathrm{rel})}_{f_5}(x) = \bigl\lvert x (\log \lvert g_5 \rvert)'(x) \bigr\rvert = \Bigl\lvert 2 - \frac{2x}{1 + 2x} - \frac{x}{1 + x} \Bigr\rvert \to 2 \quad (x \to 0) \]
+
+#+begin_src python :results output
+import numpy as np
+import matplotlib.pyplot as plt
+
+f5 = lambda x: 1 / (1 + 2*x) - (1 - x) / (1 + x)
+g5 = lambda x: 2 * x**2 / ((1 + 2*x) * (1 + x))
+
+x = np.linspace(-5e-8, 5e-8, 1000)
+plt.plot(x, f5(x), label="$f_5$")
+plt.plot(x, g5(x), label="$g_5$")
+plt.legend()
+plt.savefig("./assets/p_01e.png")
+#+end_src
+
+#+RESULTS:
+
+[[file:assets/p_01e.png]]
+
+$f_5$ subtracts two numbers $\approx 1 - 2x$ whose rounding errors, $\approx 10^{-16}$, are comparable to $f_5(x) \approx 2x^2 \leq 5 \cdot 10^{-15}$; $g_5$ has no cancellation.
 
 * Problem 2 :matrix_norm:linear_system:error_analysis:
 ** Task
@@ -74,8 +183,113 @@ d) Plot $\lVert A^{-1} \rVert_1$ against $n$ for $5 \leq n \leq 100$.
 ** Solution
 *** a)
 
+$a_{j,k} = \frac{1}{9} \max\{3 - \lvert j - k \rvert, 0\}$:
+
+#+begin_src python :results output
+import numpy as np
+
+def constr_A(n):
+    i = np.arange(n)
+    return np.maximum(3 - np.abs(i[:, None] - i), 0) / 9
+
+print(9 * constr_A(6))
+#+end_src
+
+#+RESULTS:
+: [[3. 2. 1. 0. 0. 0.]
+:  [2. 3. 2. 1. 0. 0.]
+:  [1. 2. 3. 2. 1. 0.]
+:  [0. 1. 2. 3. 2. 1.]
+:  [0. 0. 1. 2. 3. 2.]
+:  [0. 0. 0. 1. 2. 3.]]
+
 *** b)
+
+#+begin_src python :results output
+import numpy as np
+import matplotlib.pyplot as plt
+
+def constr_A(n):
+    i = np.arange(n)
+    return np.maximum(3 - np.abs(i[:, None] - i), 0) / 9
+
+n = 100
+k = np.arange(n)
+x = np.zeros(n)
+x[20:40] = 1                     # box
+x[55] = 1                        # spike
+x += np.exp(-((k - 78) / 6)**2)  # bump
+y = constr_A(n) @ x
+
+plt.plot(k, x, ".-", label="$x$")
+plt.plot(k, y, ".-", label="$y = Ax$")
+plt.legend()
+plt.savefig("./assets/p_02b.png")
+#+end_src
+
+#+RESULTS:
+
+[[file:assets/p_02b.png]]
+
+$A$ is a moving average with weights $\frac{1}{9}(1, 2, 3, 2, 1)$: it smears the edges and turns the spike into the kernel, while the smooth bump barely changes.
 
 *** c)
 
+#+begin_src python :results output
+import numpy as np
+import matplotlib.pyplot as plt
+
+def constr_A(n):
+    i = np.arange(n)
+    return np.maximum(3 - np.abs(i[:, None] - i), 0) / 9
+
+n = 100
+k = np.arange(n)
+x = np.zeros(n)
+x[20:40] = 1
+x[55] = 1
+x += np.exp(-((k - 78) / 6)**2)
+A = constr_A(n)
+y = A @ x
+
+rng = np.random.default_rng(0)
+fig, axs = plt.subplots(3, 1, sharex=True, figsize=(6.4, 7))
+for ax, p in zip(axs, [-6, -4, -2]):
+    y_t = y + 10.0**p * rng.standard_normal(n)
+    ax.plot(k, np.linalg.solve(A, y), label=r"$A^{-1}y$")
+    ax.plot(k, np.linalg.solve(A, y_t), label=r"$A^{-1}\tilde{y}$")
+    ax.set_title(rf"$\sigma = 10^{{{p}}}$")
+    ax.legend()
+fig.tight_layout()
+fig.savefig("./assets/p_02c.png")
+#+end_src
+
+#+RESULTS:
+
+[[file:assets/p_02c.png]]
+
+With $\varepsilon \sim \mathcal{N}(0, \sigma^2 I)$, noise of 1% ($\sigma = 10^{-2}$) destroys the reconstruction. The error has period $3$: for $x_k = \cos(k\theta)$ and $3 \leq k \leq n - 2$, $(Ax)_k = \frac{1}{9}(1 + 2\cos\theta)^2 \cos(k\theta)$ vanishes at $\theta = \frac{2\pi}{3}$, so $A^{-1}$ amplifies the period-3 part of the noise most.
+
 *** d)
+
+#+begin_src python :results output
+import numpy as np
+import matplotlib.pyplot as plt
+
+def constr_A(n):
+    i = np.arange(n)
+    return np.maximum(3 - np.abs(i[:, None] - i), 0) / 9
+
+ns = np.arange(5, 101)
+norms = [np.linalg.norm(np.linalg.inv(constr_A(n)), 1) for n in ns]
+plt.plot(ns, norms, ".", label=r"$\Vert A^{-1} \Vert_1$")
+plt.plot(ns, ns**2 / 2, label="$n^2/2$")
+plt.legend()
+plt.savefig("./assets/p_02d.png")
+#+end_src
+
+#+RESULTS:
+
+[[file:assets/p_02d.png]]
+
+Since $\lVert A \rVert_1 = 1$ for $n \geq 5$, this is $\kappa_1(A)$, the worst-case noise amplification in c), and it grows like $\frac{n^2}{2}$.
