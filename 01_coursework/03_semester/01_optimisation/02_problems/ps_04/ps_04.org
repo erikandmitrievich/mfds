@@ -1,3 +1,21 @@
+#+title: Ps 04
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-11-03>
+#+lastmod: <2026-11-03 13:03>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
 * Problem 1 :condition_number:cancellation:floating_point:
 ** Task
 #+begin_quote
