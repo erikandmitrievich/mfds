@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-02>
-#+lastmod: <2026-11-02 17:27>
+#+lastmod: <2026-11-03 08:06>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -128,7 +128,8 @@ Since \( x \in [0, 1] \), we must take the negative root.
 
 \begin{align*}
 Q(0.9) &= 1 - \sqrt{1 - 0.9} \\
-       &= 1 - \sqrt{0.1}
+       &= 1 - \sqrt{0.1} \\
+       &\approx 0.6838
 \end{align*}
 
 * Problem 3 :simulation:memorylessness:empirical_cdf:
