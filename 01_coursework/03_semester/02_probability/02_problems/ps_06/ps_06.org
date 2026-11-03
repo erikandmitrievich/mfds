@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-02>
-#+lastmod: <2026-11-03 08:06>
+#+lastmod: <2026-11-03 13:36>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -139,3 +139,106 @@ Q(0.9) &= 1 - \sqrt{1 - 0.9} \\
 #+end_quote
 
 ** Solution
+
+SciPy uses the =scale= parameter for the exponential distribution, which is the reciprocal of the rate \(\lambda\). For \(\operatorname{Exp}(2)\), the argument is =scale=0.5=.
+
+For \(T \sim \operatorname{Unif}(0, 1)\) and \(s = 0.5\), the conditional survival probability is:
+
+\[ P(T > s + t \mid T > s) = \frac{1 - (s + t)}{1 - s} = \frac{1 - 0.5 - t}{1 - 0.5} = 1 - 2t \quad \text{for } 0 \leq t \leq 0.5 \]
+
+The exponential model is memoryless: the remaining wait time distribution perfectly matches the fresh wait time distribution. The uniform model is not memoryless: knowing the elapsed wait time strictly reduces the maximum possible remaining wait time, altering its distribution.
+
+#+begin_src python :results output :exports both
+import numpy as np
+from scipy import stats
+
+rng = np.random.default_rng(202606)
+n_samples = 30_000
+s = 0.5
+
+# Exponential simulation
+exp_dist = stats.expon(scale=0.5)
+fresh_exp = exp_dist.rvs(size=n_samples, random_state=rng)
+rem_exp = fresh_exp[fresh_exp > s] - s
+
+# Quantiles
+levels = [0.1, 0.5, 0.9]
+q_fresh = np.quantile(fresh_exp, levels, method="inverted_cdf")
+q_rem = np.quantile(rem_exp, levels, method="inverted_cdf")
+q_theory = exp_dist.ppf(levels)
+
+print("Exponential Quantiles (0.1, 0.5, 0.9):")
+print(f"Theoretical:       {np.round(q_theory, 5)}")
+print(f"Fresh empirical:   {np.round(q_fresh, 5)}")
+print(f"Rem empirical:     {np.round(q_rem, 5)}")
+
+# Discrepancy
+def empirical_survival(sample, thresholds):
+    sorted_sample = np.sort(sample)
+    return 1.0 - np.searchsorted(sorted_sample, thresholds, side="right") / sorted_sample.size
+
+t_grid = np.linspace(0, 4, 1000)
+emp_surv = empirical_survival(fresh_exp, t_grid)
+theory_surv = exp_dist.sf(t_grid)
+
+max_diff = np.max(np.abs(emp_surv - theory_surv))
+print(f"\nMax absolute discrepancy on t in [0, 4]: {max_diff:.5f}")
+#+end_src
+
+#+RESULTS:
+: Exponential Quantiles (0.1, 0.5, 0.9):
+: Theoretical:       [0.05268 0.34657 1.15129]
+: Fresh empirical:   [0.0525  0.34863 1.16011]
+: Rem empirical:     [0.0524  0.34961 1.16624]
+:
+: Max absolute discrepancy on t in [0, 4]: 0.00463
+
+#+begin_src python :results file link :exports both
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats
+
+rng = np.random.default_rng(202606)
+n_samples = 30_000
+s = 0.5
+
+def empirical_survival(sample, thresholds):
+    sorted_sample = np.sort(sample)
+    return 1.0 - np.searchsorted(sorted_sample, thresholds, side="right") / sorted_sample.size
+
+exp_dist = stats.expon(scale=0.5)
+fresh_exp = exp_dist.rvs(size=n_samples, random_state=rng)
+rem_exp = fresh_exp[fresh_exp > s] - s
+
+unif_dist = stats.uniform(loc=0, scale=1)
+fresh_unif = unif_dist.rvs(size=n_samples, random_state=rng)
+rem_unif = fresh_unif[fresh_unif > s] - s
+
+fig, axes = plt.subplots(1, 2, figsize=(10, 4))
+
+t_grid_exp = np.linspace(0, 4, 1000)
+axes[0].plot(t_grid_exp, exp_dist.sf(t_grid_exp), 'k:', linewidth=2, label="Theoretical")
+axes[0].plot(t_grid_exp, empirical_survival(fresh_exp, t_grid_exp), 'b-', alpha=0.6, label="Fresh empirical")
+axes[0].plot(t_grid_exp, empirical_survival(rem_exp, t_grid_exp), 'r--', alpha=0.6, label="Remaining empirical")
+axes[0].set_title(r"Exponential: Memoryless")
+axes[0].set_xlabel("time threshold t")
+axes[0].set_ylabel("survival probability")
+axes[0].legend()
+
+t_grid_unif = np.linspace(0, 1, 500)
+axes[1].plot(t_grid_unif, unif_dist.sf(t_grid_unif), 'k:', linewidth=2, label="Fresh theoretical")
+axes[1].plot(t_grid_unif, np.maximum(0, 1 - 2*t_grid_unif), 'g:', linewidth=2, label="Remaining theoretical")
+axes[1].plot(t_grid_unif, empirical_survival(fresh_unif, t_grid_unif), 'b-', alpha=0.6, label="Fresh empirical")
+axes[1].plot(t_grid_unif, empirical_survival(rem_unif, t_grid_unif), 'r--', alpha=0.6, label="Remaining empirical")
+axes[1].set_title(r"Uniform: Not Memoryless")
+axes[1].set_xlabel("time threshold t")
+axes[1].legend()
+
+filename = "assets/ps_06_p_03.png"
+plt.tight_layout()
+plt.savefig(filename)
+return filename
+#+end_src
+
+#+RESULTS:
+[[file:assets/ps_06_p_03.png]]
