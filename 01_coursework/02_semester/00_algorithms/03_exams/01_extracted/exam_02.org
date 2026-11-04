@@ -1,0 +1,103 @@
+#+title: Exam 02
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-11-04>
+#+lastmod: <2026-11-04 15:43>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Exam Information
+Family name:
+First name:
+Registration number:
+
+| 1 |   |
+| 2 |   |
+| 3 |   |
+| 4 |   |
+| 5 |   |
+|---+---|
+| G |   |
+Mark:
+
+EXAM IN ALGORITHMS AND DATA STRUCTURES (2026/09/30)
+
+* Problem 1
+*Correctness of selection sort:*
+Selection sort repeatedly finds the smallest element in the unsorted part of the array and moves it to the beginning of that part. The procedure is
+
+#+begin_verse
+1: *procedure* ~SELECTIONSORT~$(A, n)$
+2:     *for* $i = 1$ *to* $n - 1$ *do*
+3:         $m \leftarrow i$
+4:         *for* $j = i + 1$ *to* $n$ *do*
+5:             *if* $A[j] < A[m]$ *then*
+6:                 $m \leftarrow j$
+7:             *end if*
+8:         *end for*
+9:         exchange $A[i]$ with $A[m]$
+10:     *end for*
+11: *end procedure*
+#+end_verse
+
+(a) *Sorting:* Let $A'$ denote the array $A$ after ~SELECTIONSORT~$(A, n)$ is executed. To prove that ~SELECTIONSORT~ is correct, you need to prove that it terminates and that
+$$A'[1] \le A'[2] \le \cdots \le A'[n]$$.
+In order to show that ~SELECTIONSORT~ actually sorts, what else do you need to prove? *(1 point)*
+
+(b) State a precise loop invariant for the *for* $j = i + 1$ *to* $n$ loop in lines 4--8 and prove that it holds. *(3 points)*
+
+(c) Using the termination condition of the loop invariant stated and proved above, state a loop invariant for the *for* $i = 1$ *to* $n - 1$ loop in lines 2--10 that allows you to prove the inequality above for the $A'$ array. *(2 points)*
+
+(d) Prove that the loop invariant above holds and conclude that ~SELECTIONSORT~ works. *(2 points)*
+
+* Problem 2
+*Runtime analysis:*
+For the following recursions, give asymptotically tight upper and lower bounds for $T(n)$.
+
+(a) $T(n) = 9T\left(\frac{n}{3}\right) + n^{2}$, *(2 points)*
+
+(b) $T(n) = 2T\left(\frac{n}{2}\right) + \frac{n}{\lg^{2}(n)}$, *(2 points)*
+
+(c) $T(n) = 8T\left(\frac{n}{2}\right) + n^{3}\lg n$, *(2 points)*
+
+(d) $T(n) = 3T\left(\frac{n}{9}\right) + n^{1/2}$. *(2 points)*
+
+* Problem 3
+*Hash Tables:*
+Describe what a hash table is and what it is usually used for. Especially, talk about the following points:
+
+(a) Explain how a hash table can be represented in the computer. *(2 points)*
+
+(b) Explain what a hash function is and give two examples for hash functions. *(1 point)*
+
+(c) Describe the algorithms ~HASH-INSERT~ and ~HASH-SEARCH~ for inserting and searching in a hash table. *(2 points)*
+
+(d) Define the load factor of a hash table and what an open-address hash table is. *(1 point)*
+
+(e) What is the average number of probes at most required for inserting an element into a hash table with load factor $\alpha$? What is the full formulation of the result including all required assumptions? *(2 points)*
+
+* Problem 4
+*B-Trees:*
+
+(a) Define the properties of a B-Tree. *(1 point)*
+
+(b) Provide the algorithms for inserting an element into a B-tree. *(5 points)*
+
+* Problem 5
+*Quicksort:*
+
+(a) Explain what a randomized algorithm is. What is the difference between average runtime and expected runtime? *(2 points)*
+
+(b) What is the expected running time of ~RANDOMIZED-QUICKSORT~? *(1 point)*
+
+(c) Prove the claim about the expected running time of ~RANDOMIZED-QUICKSORT~ (Theorem 7.4). Include formulations of the important Lemmas that are used in the proof. *(7 points)*
