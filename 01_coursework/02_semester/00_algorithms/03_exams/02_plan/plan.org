@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-06>
-#+lastmod: <2026-11-06 15:01>
+#+lastmod: <2026-11-06 15:19>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -50,9 +50,9 @@
 - Rough odds: a 1 at 20–25%, a 2 or better at about 70%, a pass very likely. These come from my slot estimates, not from data.
 - Beyond 16 h, each extra hour adds only one or two percentage points to the chance of a 1, which is why the extensions are optional.
 
-* Fri 6 Nov — 3.4 h [0/4]
+* Fri 6 Nov — 3.4 h [1/4]
 
-- [ ] Fr1 · 10 min · *Exam-rule card.* Rewrite your September card from memory, then compare it with the original.
+- [X] Fr1 · 10 min · *Exam-rule card.* Rewrite your September card from memory, then compare it with the original.
 - [ ] Fr2 · 75 min · *Recurrences (S2)* [0/6]
   - [ ] 10 min · From blank: the three master-theorem cases with exact conditions ($\epsilon > 0$; $k \ge 0$; regularity $a f(n/b) \le c f(n)$ with $c < 1$) and Lemma 4.2's form $T(n) = \Theta(n^{\log_b a}) + \sum_j a^j f(n/b^j)$. Check against =ch_04= §4.5 and Lemmas 4.2–4.3 in =theorems.org=.
   - [ ] 10 min · Explicit (no PS problem covers it): from that sum, derive both log-in-the-denominator results. $f = n^{\log_b a}/\lg n$ gives $\Theta(n^{\log_b a} \lg\lg n)$ (harmonic sum); $f = n^{\log_b a}/\lg^2 n$ gives $\Theta(n^{\log_b a})$ (convergent sum). These three lines are your S2(b) answer: he said case 2 needs $k \ge 0$ and called $2T(n/2) + n/\lg n$ a gap (lec05-b), so citing an extended case 2 risks the points.
