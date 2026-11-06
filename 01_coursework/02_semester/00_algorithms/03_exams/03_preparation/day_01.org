@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-06>
-#+lastmod: <2026-11-06 15:19>
+#+lastmod: <2026-11-06 19:41>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -33,3 +33,189 @@ For any $T(n) = aT(\dfrac{n}{b}) + f(n)$, extract $a$ and $b$, and compute $w(n)
 ** $\mathbb{Z}_{p}$ field caveat
 
 In a field, only nonzero elements have multiplicative inverses, an $1 \neq 0$ (so a field has at least 2 elements).
+
+* Fr2
+
+** Master Theorem
+
+Let $a > 0, b > 1$ be constants. Let $f(n) \ge 0$ be the driving function. Define recurrence $T(n)$ on $n \in \mathbb{N}$ by:
+
+$$T(n) = a T(\frac{n}{b}) + f(n)$$
+
+such that:
+
+$$aT(\frac{n}{b}) = a'T(\lfloor \frac{n}{b} \rfloor) + a''T(\lceil \frac{n}{b} \rceil)\ :\ a', a'' \ge 0,\ a = a' + a''$$
+
+1. If $\exists \epsilon > 0 : f(n) = O(n^{\log_b(a - \epsilon)})$, then $T(n) = \Theta(n^{\log_b(a)})$
+
+2. If $\exists k \ge 0 : f(n) = \Theta(n^{\log_b(a)} \lg^{k}(n))$, then $T(n) = \Theta(n^{\log_b(a)} \lg^{k+1}(n))$
+
+3. If $\exists \epsilon > 0 : f(n) = \Omega(n^{\log_b(a + \epsilon)})$, and $af(\frac{n}{b}) < cf(n)$ for $c < 1$ and $\forall$ sufficienlty large $n$, then $T(n) = \Theta(f(n))$
+
+** Problem 18
+
+- $T(n) = 2T\!\left(\dfrac{n}{4}\right) + \Theta(1)$
+
+  \begin{align*}
+  f(n) &= \Theta(1) \\
+  w(n) &= n^{\log_4(2)} \\
+       &= n^{1/2} \\
+  \frac{f(n)}{w(n)} &= \frac{\Theta(1)}{n^{1/2}} = \Theta(n^{-1/2}) = O(n^{-\varepsilon}),\ \varepsilon = \frac{1}{2} \to \text{case 1} \\
+  \therefore T(n) &= \Theta(n^{1/2})
+  \end{align*}
+
+- $T(n) = 2T\!\left(\dfrac{n}{4}\right) + \Theta(\sqrt{n})$
+
+  \begin{align*}
+  f(n) &= \Theta(\sqrt{n}) \\
+  w(n) &= n^{\log_4(2)} \\
+       &= n^{1/2} \\
+  \frac{f(n)}{w(n)} &= \frac{\Theta(\sqrt{n})}{n^{1/2}} = \Theta(1) \to \text{case 2} \\
+  \therefore T(n) &= \Theta(n^{1/2}\lg(n))
+  \end{align*}
+
+- $T(n) = 2T\!\left(\dfrac{n}{4}\right) + \Theta(\sqrt{n} \lg^2 n)$
+
+  \begin{align*}
+  f(n) &= \Theta(n^{1/2} \lg^2(n)) \\
+  w(n) &= n^{\log_4(2)} \\
+       &= n^{1/2} \\
+  \frac{f(n)}{w(n)} &= \frac{\Theta(n^{1/2} \lg^2(n))}{n^{1/2}} = \Theta(\lg^2(n)) \to \text{case 2} \\
+  \therefore T(n) &= \Theta(n^{1/2} \lg^{3}(n))
+  \end{align*}
+
+- $T(n) = 2T\!\left(\dfrac{n}{4}\right) + \Theta(n)$
+
+  \begin{align*}
+  f(n) &= \Theta(n),\ \text{take } g(n) = n \\
+  w(n) &= n^{1/2} \\
+  \frac{f(n)}{w(n)} &= \Theta\!\left(\frac{n}{n^{1/2}}\right) = \Theta(n^{1/2}) = \Omega(n^{\varepsilon}),\ \varepsilon = \tfrac{1}{2} \to \text{case 3} \\
+  2\,g\!\left(\tfrac{n}{4}\right) &= \tfrac{n}{2} = \tfrac{1}{2}\,g(n),\ c = \tfrac{1}{2} < 1 \\
+  \therefore T(n) &= \Theta(n)
+  \end{align*}
+
+- $T(n) = 2T\!\left(\dfrac{n}{4}\right) + \Theta(n^2)$
+
+  \begin{align*}
+  f(n) &= \Theta(n^2),\ \text{take } g(n) = n^2 \\
+  w(n) &= n^{1/2} \\
+  \frac{f(n)}{w(n)} &= \Theta(n^{3/2}) = \Omega(n^{\varepsilon}),\ \varepsilon = \frac{3}{2} \to \text{case 3} \\
+  2g(\frac{n}{4}) &= \frac{n^2}{8} = \frac{1}{8} g(n),\ c = \frac{1}{8} < 1 \\
+  \therefore T(n) &= \Theta(n^2)
+  \end{align*}
+
+** exam_02 Q2 b skipped
+
+\[ T(n) = 2T\left(\frac{n}{2}\right) + \frac{n}{\lg^{2}(n)} \]
+
+\begin{align*}
+f(n) &= \frac{n}{\lg^{2}(n)} \\
+w(n) &= n \\
+\frac{f(n)}{w(n)} &= \frac{\frac{n}{\lg^{2}(n)}}{n} = \frac{n}{n\lg^{2}(n)} = \lg^{-2}(n) \\
+k &= -2 < 0 \implies \text{no case applies} \\
+\end{align*}
+
+\begin{align*}
+\text{Lemma 4.2},\ n = 2^m\ \colon\ T(n) &= \Theta(w(n)) + \sum_{j=0}^{m-1} a^{j}f(\frac{n}{b_j}) \\
+                                         &= \Theta(w(n)) + w(n) \sum_{i=1}^{m} \frac{1}{i^{p}}
+\end{align*}
+
+
+** exam_02 Q2 a, c, d
+
+- $T(n) = 9T\left(\frac{n}{3}\right) + n^{2}$
+
+  \begin{align*}
+  f(n) &= n^2 \\
+  w(n) &= n^{\log_3(9)} = n^{2} \\
+  \frac{f(n)}{w(n)} &= \frac{n^2}{n^2} = 1 = \Theta(\lg^k(n)), k = 0 \to \text{case 2} \\
+  \therefore T(n) &= \Theta(n^2 \lg(n))
+  \end{align*}
+
+- $T(n) = 8T\left(\frac{n}{2}\right) + n^{3}\lg n$
+
+  \begin{align*}
+  f(n) &= n^3 \lg(n) \\
+  w(n) &= n^{\log_2(8)} = n^{3} \\
+  \frac{f(n)}{w(n)} &= \frac{n^3 \lg(n)}{n^3} = \lg(n) = \Theta(\lg^{k}n),\ k = 1 \to \text{case 2} \\
+  \therefore T(n) &= \Theta(n^{3} \lg^{2}(n))
+  \end{align*}
+
+- $T(n) = 3T\left(\frac{n}{9}\right) + n^{1/2}$
+
+  \begin{align*}
+  f(n) &= n^{1/2} \\
+  w(n) &= n^{1/2} \\
+  \frac{f(n)}{w(n)} &= 1 = \Theta(\lg^k(n)),\ k = 0 \to \text{case 2} \\
+  \therefore T(n) &= \Theta(n^{1/2} \lg(n))
+  \end{align*}
+
+** exam_01 Q1
+
+Bubblesort works by repeatedly swapping adjacent elements that are out of order. The procedure is
+
+#+begin_src text
+1: procedure BUBBLESORT(A, n)
+2:     for i = 1 to n - 1 do
+3:         for j = n downto i + 1 do
+4:             if A[j] < A[j-1] then
+5:                 exchange A[j] with A[j - 1]
+6:             end if
+7:         end for
+8:     end for
+9: end procedure
+#+end_src
+
+(a) (1 point)
+
+Let $A'$ denote the array $A$ after =BUBBLESORT(A, n)= is executed. To prove that =BUBBLESORT= is correct, you need to prove that it terminates and that
+
+$$A'[1] \le A'[2] \le \cdots \le A'[n].$$
+
+In order to show that =BUBBLESORT= actually sorts, what else do you need to prove?
+
+(b) (3 points)
+
+State a precise loop invariant for the =for j = n downto i + 1= loop in lines 3--7 and prove that it holds.
+
+(c) (2 points)
+
+Using the termination condition of the loop invariant stated and proved above, state a loop invariant for the =for i = 1 to n - 1= loop in lines 2--8 that allows you to prove the inequality above for the $A'$ array.
+
+(d) (2 points)
+
+Prove that the loop invariant above holds and conclude that =BUBBLESORT= works.
+
+*** (a)
+
+That the $A^{\prime}$ is a permutation of $A$.
+
+*** (b)
+
+$A_i$: $A$ when the outer loop variable takes the value $i$ ($A_1$ = input, $A_n = A'$). $\mathrm{perm}(X, Y)$: $X$ is a permutation of $Y$.
+
+*Invariant.*
+1. $A[j] \le A[k]\ \forall\, j \le k \le n$
+2. $\mathrm{perm}(A[j..n],\, A_i[j..n])$, $A[1..j-1] = A_i[1..j-1]$
+
+*Initialisation.* $j = n$:
+1. $A[n] \le A[n]$
+2. $A = A_i$
+
+*Maintenance.* Let $a = A[j-1]$, $b = A[j]$ before line 4. Lines 4--6 set
+$$A[j-1] = \min(a,b), \quad A[j] = \max(a,b),$$
+and leave $A[k]$ for $k \ge j+1$ unchanged.
+1. $A[j-1] = \min(a,b) \le \max(a,b) = A[j]$, and $\min(a,b) \le b \le A[k]\ \forall\, k \ge j+1$ by (1). So $A[j-1] \le A[k]\ \forall\, j-1 \le k \le n$.
+2. Only positions $j-1, j$ were exchanged, and $A[j-1] = A_i[j-1]$ by (2). So $\mathrm{perm}(A[j-1..n],\, A_i[j-1..n])$ and $A[1..j-2] = A_i[1..j-2]$.
+
+*Termination.* $j = i$:
+1. $A[i] \le A[k]\ \forall\, i \le k \le n$
+2. $\mathrm{perm}(A[i..n],\, A_i[i..n])$, $A[1..i-1] = A_i[1..i-1]$
+
+*** (c)
+
+*Invariant.*
+1. $A[1] \le \dots \le A[i-1] \le A[k]\ \forall\, i \le k \le n$
+2. $\mathrm{perm}(A, A_1)$
+
+*** (d)
