@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-06>
-#+lastmod: <2026-11-06 15:19>
+#+lastmod: <2026-11-06 19:31>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -53,16 +53,16 @@
 * Fri 6 Nov — 3.4 h [1/4]
 
 - [X] Fr1 · 10 min · *Exam-rule card.* Rewrite your September card from memory, then compare it with the original.
-- [ ] Fr2 · 75 min · *Recurrences (S2)* [0/6]
-  - [ ] 10 min · From blank: the three master-theorem cases with exact conditions ($\epsilon > 0$; $k \ge 0$; regularity $a f(n/b) \le c f(n)$ with $c < 1$) and Lemma 4.2's form $T(n) = \Theta(n^{\log_b a}) + \sum_j a^j f(n/b^j)$. Check against =ch_04= §4.5 and Lemmas 4.2–4.3 in =theorems.org=.
-  - [ ] 10 min · Explicit (no PS problem covers it): from that sum, derive both log-in-the-denominator results. $f = n^{\log_b a}/\lg n$ gives $\Theta(n^{\log_b a} \lg\lg n)$ (harmonic sum); $f = n^{\log_b a}/\lg^2 n$ gives $\Theta(n^{\log_b a})$ (convergent sum). These three lines are your S2(b) answer: he said case 2 needs $k \ge 0$ and called $2T(n/2) + n/\lg n$ a gap (lec05-b), so citing an extended case 2 risks the points.
-  - [ ] 15 min · P18 (a)–(e): case 1, case 2 with $k = 0$ and $k = 2$, case 3 twice. Write out the regularity check for (d) and (e).
+- [-] Fr2 · 75 min · *Recurrences (S2)* [3/6]
+  - [X] 10 min · From blank: the three master-theorem cases with exact conditions ($\epsilon > 0$; $k \ge 0$; regularity $a f(n/b) \le c f(n)$ with $c < 1$) and Lemma 4.2's form $T(n) = \Theta(n^{\log_b a}) + \sum_j a^j f(n/b^j)$. Check against =ch_04= §4.5 and Lemmas 4.2–4.3 in =theorems.org=.
+  - [ ] 10 min · Explicit (no PS problem has this shape). When $f = n^{\log_b a}/\lg^p n$, the master theorem as taught doesn't apply ($k \ge 0$ required). Write the three-line recursion-tree sum for =exam_02= Q2(b) and for $2T(n/2) + n/\lg n$: the levels give $n^{\log_b a} \sum_{i=1}^{\log_b n} i^{-p}$, which converges for $p = 2$, giving $\Theta(n^{\log_b a})$, and is harmonic for $p = 1$, giving $\Theta(n^{\log_b a} \lg\lg n)$.
+  - [X] 15 min · P18 (a)–(e): case 1, case 2 with $k = 0$ and $k = 2$, case 3 twice. Write out the regularity check for (d) and (e).
   - [ ] 5 min · P20.
-  - [ ] 20 min · The 8 paper items, cold: =exam_01= Q2 (a)–(d) and =exam_02= Q2 (a)–(d).
+  - [X] 20 min · The 8 paper items, cold: =exam_01= Q2 (a)–(d) and =exam_02= Q2 (a)–(d).
   - [ ] 15 min · Regimes P18 and the papers miss: D1 $2T(n/2) + n/\lg n$, D2 $4T(n/2) + n^2/\lg^2 n$, D3 $8T(n/2) + n^2/\lg n$, D4 $3T(n/2) + n^2$, and P51(b) (the recurrence only).
   - Done when every item is right and written as watershed → case → condition check → answer, in ≤ 90 s each. Answers: [[*Answers]].
-- [ ] Fr3 · 60 min · *Bubblesort (S1)*, explicit: no PS problem [0/3]
-  - [ ] 25 min · From blank: =exam_01= Q1 (a)–(d).
+- [-] Fr3 · 60 min · *Bubblesort (S1)*, explicit: no PS problem [1/3]
+  - [X] 25 min · From blank: =exam_01= Q1 (a)–(d).
   - [ ] 15 min · Check: (a) $A'$ is a permutation of $A$; (b) inner invariant with initialization, maintenance and termination, where the termination statement is exactly what (c) needs; (c)–(d) outer invariant, maintenance through (b), conclusion; an explicit "the loop terminates" for both loops (lec10-a). Compare with your September write-up, or use CLRS 2.1's proof as the template.
   - [ ] 20 min · Fix, then rewrite (b)–(d) from blank once more.
 - [ ] Fr4 · 60 min · *Heaps (S3)* [0/4]
