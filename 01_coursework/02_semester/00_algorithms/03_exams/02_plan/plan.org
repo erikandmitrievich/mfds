@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-06>
-#+lastmod: <2026-11-06 19:31>
+#+lastmod: <2026-11-07 12:40>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -61,10 +61,10 @@
   - [X] 20 min · The 8 paper items, cold: =exam_01= Q2 (a)–(d) and =exam_02= Q2 (a)–(d).
   - [ ] 15 min · Regimes P18 and the papers miss: D1 $2T(n/2) + n/\lg n$, D2 $4T(n/2) + n^2/\lg^2 n$, D3 $8T(n/2) + n^2/\lg n$, D4 $3T(n/2) + n^2$, and P51(b) (the recurrence only).
   - Done when every item is right and written as watershed → case → condition check → answer, in ≤ 90 s each. Answers: [[*Answers]].
-- [-] Fr3 · 60 min · *Bubblesort (S1)*, explicit: no PS problem [1/3]
+- [-] Fr3 · 60 min · *Bubblesort (S1)*, explicit: no PS problem [2/3]
   - [X] 25 min · From blank: =exam_01= Q1 (a)–(d).
   - [ ] 15 min · Check: (a) $A'$ is a permutation of $A$; (b) inner invariant with initialization, maintenance and termination, where the termination statement is exactly what (c) needs; (c)–(d) outer invariant, maintenance through (b), conclusion; an explicit "the loop terminates" for both loops (lec10-a). Compare with your September write-up, or use CLRS 2.1's proof as the template.
-  - [ ] 20 min · Fix, then rewrite (b)–(d) from blank once more.
+  - [X] 20 min · Fix, then rewrite (b)–(d) from blank once more.
 - [ ] Fr4 · 60 min · *Heaps (S3)* [0/4]
   - [ ] 25 min · From blank: =exam_01= Q3 (a)–(d), min versions. Explicit: no PS problem asks this; P47 covers the same content as a Julia implementation, so skip it.
   - [ ] 10 min · Check against =ch_06= with max mirrored to min; fix.
