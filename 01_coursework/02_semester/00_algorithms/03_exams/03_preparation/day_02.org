@@ -1,0 +1,46 @@
+#+title: Day 02
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-11-07>
+#+lastmod: <2026-11-07 18:12>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Sa1
+
+- $T(n) = 9T\left(\frac{n}{3}\right) + n^{2}$
+
+  \begin{align*}
+  f(n) &= n^2 \\
+  w(n) &= n^{\log_3(9)} = n^{2} \\
+  \frac{f(n)}{w(n)} &= \frac{n^2}{n^2} = 1 = \Theta(\lg^{k}(n)),\ k = 0 \to \text{case 2} \\
+  \therefore T(n) &= \Theta(n^2 \lg(n))
+  \end{align*}
+
+- $T(n) = 8T\left(\frac{n}{2}\right) + n^{3}\lg n$
+
+  \begin{align*}
+  f(n) &= n^3 \lg(n) \\
+  w(n) &= n^{\log_2(8)} = n^3 \\
+  \frac{f(n)}{w(n)} &= \frac{n^3 \lg(n)}{n^3} = \lg(n) = \Theta(\lg^{k}(n)),\ k = 1 \to \text{case 2} \\
+  \therefore T(n) &= \Theta(n^{3} \lg^{2}(n))
+  \end{align*}
+
+- $T(n) = 3T\left(\frac{n}{9}\right) + n^{1/2}$
+
+  \begin{align*}
+  f(n) &= n^{1/2} \\
+  w(n) &= n^{\log_9(3)} = n^{1/2} \\
+  \frac{f(n)}{w(n)} &= \frac{n^{1/2}}{n^{1/2}} = 1 = \Theta(\lg^k(n)),\ k = 0 \to \text{case 2} \\
+  \therefore T(n) &= \Theta(n^{1/2} \lg(n))
+  \end{align*}
