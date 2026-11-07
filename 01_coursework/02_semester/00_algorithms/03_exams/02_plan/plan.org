@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-06>
-#+lastmod: <2026-11-07 12:40>
+#+lastmod: <2026-11-07 17:59>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -65,8 +65,8 @@
   - [X] 25 min · From blank: =exam_01= Q1 (a)–(d).
   - [ ] 15 min · Check: (a) $A'$ is a permutation of $A$; (b) inner invariant with initialization, maintenance and termination, where the termination statement is exactly what (c) needs; (c)–(d) outer invariant, maintenance through (b), conclusion; an explicit "the loop terminates" for both loops (lec10-a). Compare with your September write-up, or use CLRS 2.1's proof as the template.
   - [X] 20 min · Fix, then rewrite (b)–(d) from blank once more.
-- [ ] Fr4 · 60 min · *Heaps (S3)* [0/4]
-  - [ ] 25 min · From blank: =exam_01= Q3 (a)–(d), min versions. Explicit: no PS problem asks this; P47 covers the same content as a Julia implementation, so skip it.
+- [-] Fr4 · 60 min · *Heaps (S3)* [1/4]
+  - [X] 25 min · From blank: =exam_01= Q3 (a)–(d), min versions. Explicit: no PS problem asks this; P47 covers the same content as a Julia implementation, so skip it.
   - [ ] 10 min · Check against =ch_06= with max mirrored to min; fix.
   - [ ] 15 min · P41, P42, P43.
   - [ ] 10 min · What a variant would add: max versions, the loop invariant of =BUILD-MAX-HEAP= (also an S1 candidate), the $O(n)$ bound via $\sum_h h/2^h = 2$, the recurrence $T(n) \le T(2n/3) + \Theta(1)$ for =MAX-HEAPIFY=, and =HEAPSORT=.
