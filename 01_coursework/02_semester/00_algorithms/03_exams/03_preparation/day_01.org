@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-06>
-#+lastmod: <2026-11-07 17:59>
+#+lastmod: <2026-11-07 18:45>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -104,20 +104,21 @@ $$aT(\frac{n}{b}) = a'T(\lfloor \frac{n}{b} \rfloor) + a''T(\lceil \frac{n}{b} \
   \therefore T(n) &= \Theta(n^2)
   \end{align*}
 
-** exam_02 Q2 b skipped
+** exam_02 Q2 b
+
+- $\Theta(\lg^k(n)), k > -1$: $\Theta(w \lg^{k+1}(n))$
+
+- $\Theta(\lg^k(n)), k = -1$: $\Theta(w \lg(\lg(n)))$
+
+- $\Theta(\lg^k(n)), k < -1$: $\Theta(w)$
 
 \[ T(n) = 2T\left(\frac{n}{2}\right) + \frac{n}{\lg^{2}(n)} \]
 
 \begin{align*}
-f(n) &= \frac{n}{\lg^{2}(n)} \\
-w(n) &= n \\
-\frac{f(n)}{w(n)} &= \frac{\frac{n}{\lg^{2}(n)}}{n} = \frac{n}{n\lg^{2}(n)} = \lg^{-2}(n) \\
-k &= -2 < 0 \implies \text{no case applies} \\
-\end{align*}
-
-\begin{align*}
-\text{Lemma 4.2},\ n = 2^m\ \colon\ T(n) &= \Theta(w(n)) + \sum_{j=0}^{m-1} a^{j}f(\frac{n}{b_j}) \\
-                                         &= \Theta(w(n)) + w(n) \sum_{i=1}^{m} \frac{1}{i^{p}}
+f(n) &= \frac{n}{\lg^2(n)} \\
+w(n) &= n^{\log_2(2)} = n \\
+\frac{f(n)}{w(n)} &= \frac{n/\lg^2(n)}{n} = \lg^{-2}(n) = \Theta(\lg^k n),\ k = -2 < -1 \to \text{case 2, } k < -1 \\
+\therefore T(n) &= \Theta(n)
 \end{align*}
 
 ** exam_02 Q2 a, c, d
