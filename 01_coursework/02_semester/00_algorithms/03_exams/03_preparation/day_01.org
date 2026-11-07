@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-06>
-#+lastmod: <2026-11-07 12:39>
+#+lastmod: <2026-11-07 17:59>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -235,3 +235,48 @@ Hence $B[1] \leq \ldots \leq B[i-1] \leq B[i] \leq B[k]\ \forall k \geq i+1$, i.
 *Termination.* $i = n$: $A[1] \leq \ldots \leq A[n - 1] \leq A[n]$.
 
 *Conclusion.* Both loops have fixed bounds, so =BUBBLESORT= terminates. At exit $A = A^{\prime}$, so $A^{\prime}$ is sorted. By the remark, every inner loop only permutes $A$, so $A^{\prime}$ is a permutation of the input. Hence =BUBBLESORT= sorts.
+
+* Fr3
+
+** exam_01 Q3
+
+*** Task
+
+Describe what a heap is and what it is usually used for. Especially, talk about the following points:
+
+(a) Explain how a heap is represented in an array.
+
+(b) Describe the algorithms =MIN-HEAPIFY= and =BUILD-MIN-HEAP= for constructing a min heap.
+
+(c) Explain which algorithms are needed to turn a min heap into a min priority queue, and describe the algorithm =MIN-HEAP-DECREASE-KEY=.
+
+(d) What are the running times of =MIN-HEAPIFY= and =MIN-HEAP-DECREASE-KEY=?
+
+*** (a)
+
+A min-heap is a nearly complete binary tree satisfying the min-heap property:
+
+$A[\mathrm{Parent}(i)] \leq A[i]$ for every non-root $i$, so the minimum is at the root.
+
+Heaps are used for priority queues and heapsorts.
+
+*** (b)
+
+=MIN-HEAPIFY(A, i)=: assumes the subtrees rooted at $\mathrm{Left}(i)$ and $\mathrm{Right}(i)$ are min-heaps. Finds the smallest of $A[i]$ and its children; if it is a child, swaps it with $A[i]$ and recurses on that child.
+
+=BUILD-MIN-HEAP(A)=: calls =MIN-HEAPIFY= for $i = \lfloor n/2 \rfloor$ down to $1$ (non-leaf nodes); the backwards order guarantees both child subtrees of $i$ are min-heaps when $i$ is processed.
+
+*** (c)
+
+A min-priority queue needs four operations on top of the heap:
+
+1. =MIN-HEAP-MINIMUM=: return $A[1]$.
+2. =MIN-HEAP-EXTRACT-MIN=: return $A[1]$, move $A[n]$ to $A[1]$, decrease $n$, call =MIN-HEAPIFY(A, 1)=.
+3. =MIN-HEAP-DECREASE-KEY(A, i, key)=: lower $A[i]$ to $key$ (below).
+4. =MIN-HEAP-INSERT(A, key)=: increase $n$, set $A[n] = \infty$, call =MIN-HEAP-DECREASE-KEY(A, n, key)=.
+
+=MIN-HEAP-DECREASE-KEY(A, i, key)=: requires $key \le A[i]$. Set $A[i] = key$. The children were already $\ge$ the old key, so only the parent can violate the min-heap property. While $i > 1$ and $A[\mathrm{Parent}(i)] > A[i]$: swap $A[i]$ with $A[\mathrm{Parent}(i)]$, set $i = \mathrm{Parent}(i)$.
+
+*** (d)
+
+Both are $O(\log n)$. A heap with $n$ elements has height $\lfloor \log_2 n \rfloor$. Each step does $O(1)$ work and moves one level: =MIN-HEAPIFY= moves down, =MIN-HEAP-DECREASE-KEY= moves up.
