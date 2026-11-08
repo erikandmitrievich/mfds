@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-07>
-#+lastmod: <2026-11-07 18:12>
+#+lastmod: <2026-11-08 11:55>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -44,3 +44,78 @@
   \frac{f(n)}{w(n)} &= \frac{n^{1/2}}{n^{1/2}} = 1 = \Theta(\lg^k(n)),\ k = 0 \to \text{case 2} \\
   \therefore T(n) &= \Theta(n^{1/2} \lg(n))
   \end{align*}
+
+* Sa2
+
+** CLRS 15.3 notes
+
+*** Huffman codes
+
+\[ B(T) = \sum_{c \in C} c.freq \cdot d_r(c) \]
+Where:
+
+- $T$ :: a character tree
+
+- $B(T)$ :: total number of bits in a file, also called the *cost* of the tree $T$.
+
+- $C$ / $c$:: the alphabet / the character
+
+- $c.freq$ :: frequency of the character in file
+
+- $d_{r}(c)$ :: how deep in tree is the character
+
+*** Constructing a Huffman code
+
+#+begin_src julia :results output
+let
+    struct Node
+        char::Char
+        freq::Int
+        left::Union{Node,Nothing}
+        right::Union{Node,Nothing}
+    end
+
+    Node(c::Char, f::Int) = Node(c, f, nothing, nothing)
+
+    function extract_min!(Q)
+        i = argmin(map(q -> q.freq, Q))
+        return popat!(Q, i)
+    end
+
+    function huffman(C)
+        n = length(C)
+        Q = copy(C)
+        for i in 1:(n-1)
+            x = extract_min!(Q)
+            y = extract_min!(Q)
+            z = Node('\0', x.freq + y.freq, x, y)
+            push!(Q, z)
+        end
+        return extract_min!(Q)
+    end
+
+    function printcodes(t, code="")
+        if t.left === nothing
+            println(t.char, ": ", code)
+        else
+            printcodes(t.left, code * "0")
+            printcodes(t.right, code * "1")
+        end
+    end
+
+    C = [Node('a',45), Node('b',13), Node('c',12), Node('d',16), Node('e',9), Node('f',5)]
+    printcodes(huffman(C))
+end
+#+end_src
+
+#+RESULTS:
+: a: 0
+: c: 100
+: b: 101
+: f: 1100
+: e: 1101
+: d: 111
+
+*** Addition
+
+The running time of Huffman's algorithm depends on how the min-priority queue $Q$ is implemented. If $Q$ is binary min-heap, knowing that =huffman='s for loop executes exactly =n-1= times, the loop contributes $O(n\lg(n))$ (with each heap operation running $O(\lg(n))$).
