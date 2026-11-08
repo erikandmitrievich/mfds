@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-07>
-#+lastmod: <2026-11-08 11:55>
+#+lastmod: <2026-11-08 16:53>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -119,3 +119,81 @@ end
 *** Addition
 
 The running time of Huffman's algorithm depends on how the min-priority queue $Q$ is implemented. If $Q$ is binary min-heap, knowing that =huffman='s for loop executes exactly =n-1= times, the loop contributes $O(n\lg(n))$ (with each heap operation running $O(\lg(n))$).
+
+** Huffman's correctness
+
+*** Notation
+
+$d_T(c)$ is the depth of leaf $c$ in $T$, i.e. the length of the codeword of $c$, and
+
+\[ B(T) = \sum_{c \in C} c.\mathit{freq} \cdot d_T(c) \]
+
+Two codewords have equal length and differ only in the last bit if and only if their leaves are siblings.
+
+*** Lemma 15.2 (greedy choice)
+
+If $x, y \in C$ have the lowest frequencies, then $\exists$ an optimal tree $T$ in which $x, y$ are sibling leaves of maximum depth.
+
+*(E) Swap.* Let $T_{u \leftrightarrow v}$ be $T$ with leaves with only $u, v$ being swapped. Thus
+
+
+\begin{align*}
+B(T) - B(T_{u \leftrightarrow v}) &= u.freq \cdot d_T(u) + v.freq \cdot d_T(v) \\
+                                  &\quad - (u.freq \cdot d_T(v) + v.freq \cdot d_T(u)) \\
+                                  &= (v.freq - u.freq)(d_T(v) - d_T(u))
+\end{align*}
+
+Hence, $u.freq \leq v.freq \text{ and } d_T(u) \leq d_T(v) \implies B(T_{u \leftrightarrow v}) \leq B(T)$.
+
+*Proof.*
+
+1. WLOG $T$ is full. Let $T$ be optimal, and $x.freq \leq y.freq \leq c.freq \quad \forall c \in C \setminus \{x, y\}$
+
+2. Let $a$ be a leaf of maximum depth $D$.
+
+3. Let $T^{\prime} \coloneqq T_{x \leftrightarrow a}$. Since $x.freq \leq a.freq$ and $d_T(x) \leq d_T(a)$, by (E) $B(T^{\prime}) \leq B(T)$. Denote $b$ a sibling of leaf $x$ in $T^{\prime}$.
+
+4. Let $T^{\prime \prime} \coloneqq T^{\prime}_{y \leftrightarrow b}$. Since $y.freq \leq b.freq$ and $d_{T^{\prime}}(y) \leq d_{T^{\prime}}(b)$, by (E) $B(T^{\prime \prime}) \leq B(T^{\prime})$.
+
+5. Hence, $x, y$ are siblings at depth $D$ in $T^{\prime \prime}$. Since $B(T^{\prime \prime}) \leq B(T^{\prime}) \leq B(T)$ and $T$ is optimal, $T^{\prime \prime}$ is optimal.
+
+*** Lemma 15.3 (optimal substructure)
+
+Let $x, y \in C$ have lowest frequencies. Let $C^{\prime} \coloneqq (C \setminus \{x, y\}) \cup \{z\}$ with $z.freq \coloneqq x.freq + y.freq$, let $T^{\prime}$ be an optimal tree for $C^{\prime}$, and let $T$ be $T^{\prime}$ with the leaf $z$ replaced by an internal node with children $x, y$. Then $T$ is optimal for $C$.
+
+*(M) Merge.* $d_{T}(c) = d_{T^{\prime}}(c) \quad \forall c \in C \setminus \{x, y\}$, and $d_{T}(x) = d_{T}(y) = d_{T^{\prime}}(z) + 1$:
+
+\begin{align*}
+x.freq \cdot d_{T}(x) + y.freq \cdot d_{T}(y) &= (x.freq + y.freq)(d_{T^{\prime}}(z) + 1) \\
+&= z.freq \cdot d_{T^{\prime}}(z) + x.freq + y.freq
+\end{align*}
+
+Hence, $B(T) = B(T^{\prime}) + x.freq + y.freq$ for every tree $T^{\prime}$ for $C^{\prime}$. Conversely, contracting two sibling leaves $x, y$ of a tree for $C$ into a leaf $z$ lowers $B$ by $x.freq + y.freq$.
+
+*Proof.*
+
+1. By Lemma 15.2 $\exists$ an optimal tree $T^{\prime \prime}$ for $C$ in which $x, y$ are siblings. This is the only use of $x, y$ having the lowest frequencies.
+
+2. Let $T^{\prime \prime \prime}$ be $T^{\prime \prime}$ with the common parent of $x, y$ replaced by a leaf $z$. It is a tree for $C^{\prime}$.
+
+3. Then,
+
+   \begin{align*}
+   B(T) &= B(T^{\prime}) + x.freq + y.freq \\
+        &\leq B(T^{\prime \prime \prime}) + x.freq + y.freq \\
+        &= B(T^{\prime \prime})
+   \end{align*}
+
+ As $T^{\prime \prime}$ is optimal, so is $T$.
+
+*** Theorem 15.4
+
+=HUFFMAN= produces an optimal prefix-free code.
+
+*Proof.*
+
+Induction on $n = \lvert C \rvert \geq 2$.
+
+- $n = 2$: both leaves of the output have depth $1$, the minimum possible.
+
+- $n > 2$: =HUFFMAN= merges the two lowest $x, y$ into $z$ (as in Lemma 15.3), then runs exactly as $\operatorname{HUFFMAN}(C')$ with $\lvert C^{\prime} \rvert = n - 1$. So its output is $T^{\prime} \coloneqq \operatorname{HUFFMAN}(C^{\prime})$ with $z$ expanded into $x, y$. $T^{\prime}$ is optimal by induction, so the output is optimal by Lemma 15.3.
