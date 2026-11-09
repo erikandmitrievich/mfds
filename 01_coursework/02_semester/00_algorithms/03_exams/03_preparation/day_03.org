@@ -1,0 +1,61 @@
+#+title: Day 03
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-11-09>
+#+lastmod: <2026-11-09 18:13>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Su2
+
+** Task
+
+Describe what a heap is and what it is usually used for. Especially, talk about the following points:
+
+(a) Explain how a heap is represented in an array.
+
+(b) Describe the algorithms =MIN-HEAPIFY= and =BUILD-MIN-HEAP= for constructing a min heap.
+
+(c) Explain which algorithms are needed to turn a min heap into a min priority queue, and describe the algorithm =MIN-HEAP-DECREASE-KEY=.
+
+(d) What are the running times of =MIN-HEAPIFY= and =MIN-HEAP-DECREASE-KEY=?
+
+** (a)
+
+Heap is an almost complete binary tree, which satisfies min-heap property. Such that each parent node is less or equal to its child nodes.
+
+\[ \mathrm{parent}(i) = \lfloor i/2 \rfloor,\ \mathrm{left}(i) = 2i,\ \mathrm{right}(i) = 2i + 1 \]
+
+Heaps are used for priority queues.
+
+** (b)
+
+=MIN-HEAPIFY=: assumes the subtrees rooted at $\mathrm{left}(i), \mathrm{right}(i)$ are min-heaps. Finds the minimum element of parent and its children. If parent is not minimum, it is being swapped with minimum child. Then algorithm calls recursion on the swapped child.
+
+=BUILD-MIN-HEAP=: finds the last internal node of the tree ($\lfloor i/2 \rfloor$). Runs the =MIN-HEAPIFY= on all preceeding nodes sequentially (from $\lfloor i/2 \rfloor$ down to $1$).
+
+** (c)
+
+1. =MIN-HEAP-MINIMUM= - returns a $T[1]$ (root of the tree).
+
+2. =MIN-HEAP-EXTRACT-MIN= - returns and removes $T[1]$ from the tree, places $T[n]$ in its place and runs =MIN-HEAPIFY= on it, decreases $n$.
+
+3. =MIN-HEAP-DECREASE-KEY= - decrements a given node of a tree to a given value.
+
+4. =MIN-HEAP-INSERT= - increases $n$, sets $A[n] = \infty$, calls =MIN-MEAH-DECREASE-KEY= on $A[n]$ with new inserted value.
+
+=MIN-HEAP-DECREASE-KEY=: requires new key to be less than existing value, if complies, sets $A[i] = key$. While $i > 1$ and $T[\mathrm{parent}(i)] > T[i]$: swap $T[i]$ with $T[\mathrm{parent}(i)]$, set $i = \mathrm{parent}(i)$.
+
+** (d)
+
+Both are $O(\lg(n))$.
