@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-06>
-#+lastmod: <2026-11-09 15:48>
+#+lastmod: <2026-11-09 19:18>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -80,18 +80,18 @@
   - [X] 50 min · Lemma 15.2, Lemma 15.3 and Thm 15.4 from =theorems.org=; for each: read, close, rewrite, compare. Keep the edge case in 15.2 ($x.freq = b.freq$). =theorems.org= proves 15.4 with "immediate from 15.2 and 15.3", which skips the step tying the lemmas to the algorithm: write it as an induction on $|C|$.
   - [X] 35 min · From blank: =exam_01= Q5 (a)–(b).
   - [X] 5 min · Mark it against =theorems.org= and list what was missing.
-- [ ] Sa3 · 90 min · *Red-black insertion (S4)* [0/5]
-  - [ ] 15 min · BST definition and storage (=key=, =left=, =right=, =p=, =T.root=; =ch_12= §12.1, =ch_10= §10.3), the five properties, black-height, statement of Lemma 13.1.
+- [-] Sa3 · 90 min · *Red-black insertion (S4)* [1/5]
+  - [X] 15 min · BST definition and storage (=key=, =left=, =right=, =p=, =T.root=; =ch_12= §12.1, =ch_10= §10.3), the five properties, black-height, statement of Lemma 13.1.
   - [ ] 30 min · From blank: =LEFT-ROTATE=, =RB-INSERT=, =RB-INSERT-FIXUP=; compare line by line with =ch_13= until clean. Write the left-child half of the fixup in full and the mirror half as one line; that's how he presented both fixups.
   - [ ] 10 min · P70, P72.
   - [ ] 15 min · P73: draw the tree after each insertion and name the fixup case each one triggers.
   - [ ] 20 min · From blank: =exam_01= Q4 in ≤ 18 min, then fix.
 - [ ] Sa4 · 10 min · *Huffman outline* from memory: the algorithm, one line per lemma, the induction.
 
-* Sun 8 Nov — 3.4 h [0/8]
+* Sun 8 Nov — 3.4 h [1/8]
 
 - [ ] Su1 · 30 min · *Huffman, cold.* =exam_01= Q5 from blank, timed; fix only what failed.
-- [ ] Su2 · 15 min · *Heaps, cold.* =exam_01= Q3 outline and every running time, from blank.
+- [X] Su2 · 15 min · *Heaps, cold.* =exam_01= Q3 outline and every running time, from blank.
 - [ ] Su3 · 35 min · *Insertion sort (S1)*, explicit: no PS problem. Take =INSERTION-SORT= from CLRS 2.1 and answer the four subparts of =exam_01= Q1 for it, from blank. CLRS proves only the outer loop: the invariant of the inner while loop is yours to build, and its termination has two exits ($j = 0$ or $A[j] \le key$).
 - [ ] Su4 · 40 min · *BST operations (S3/S4 hedge)* [0/2]
   - [ ] 25 min · From blank: =TREE-SEARCH=, =TREE-MINIMUM=, =TREE-SUCCESSOR= (both cases), =TREE-INSERT=, =TRANSPLANT=, =TREE-DELETE= (four cases), Thms 12.2–12.3; compare with =ch_12=.
