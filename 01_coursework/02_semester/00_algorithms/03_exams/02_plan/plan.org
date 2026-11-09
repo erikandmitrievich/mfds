@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-06>
-#+lastmod: <2026-11-08 16:52>
+#+lastmod: <2026-11-09 15:48>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -72,14 +72,14 @@
   - [ ] 10 min · What a variant would add: max versions, the loop invariant of =BUILD-MAX-HEAP= (also an S1 candidate), the $O(n)$ bound via $\sum_h h/2^h = 2$, the recurrence $T(n) \le T(2n/3) + \Theta(1)$ for =MAX-HEAPIFY=, and =HEAPSORT=.
   - If you start late, move this to Saturday morning; don't drop it.
 
-* Sat 7 Nov — 3.8 h [1/4]
+* Sat 7 Nov — 3.8 h [2/4]
 
 - [X] Sa1 · 10 min · *Cold recurrences.* Master-theorem conditions, both log-denominator derivations, and four items picked at random from Fr2.
-- [-] Sa2 · 120 min · *Huffman (S5)*, explicit: no PS problem [2/4]
+- [X] Sa2 · 120 min · *Huffman (S5)*, explicit: no PS problem [4/4]
   - [X] 30 min · CLRS §15.3, which your files don't cover: prefix-free codes, the code tree as a full binary tree, $B(T) = \sum_{c \in C} c.freq \cdot d_T(c)$, =HUFFMAN= with a min-priority queue, $O(n \lg n)$.
   - [X] 50 min · Lemma 15.2, Lemma 15.3 and Thm 15.4 from =theorems.org=; for each: read, close, rewrite, compare. Keep the edge case in 15.2 ($x.freq = b.freq$). =theorems.org= proves 15.4 with "immediate from 15.2 and 15.3", which skips the step tying the lemmas to the algorithm: write it as an induction on $|C|$.
-  - [ ] 35 min · From blank: =exam_01= Q5 (a)–(b).
-  - [ ] 5 min · Mark it against =theorems.org= and list what was missing.
+  - [X] 35 min · From blank: =exam_01= Q5 (a)–(b).
+  - [X] 5 min · Mark it against =theorems.org= and list what was missing.
 - [ ] Sa3 · 90 min · *Red-black insertion (S4)* [0/5]
   - [ ] 15 min · BST definition and storage (=key=, =left=, =right=, =p=, =T.root=; =ch_12= §12.1, =ch_10= §10.3), the five properties, black-height, statement of Lemma 13.1.
   - [ ] 30 min · From blank: =LEFT-ROTATE=, =RB-INSERT=, =RB-INSERT-FIXUP=; compare line by line with =ch_13= until clean. Write the left-child half of the fixup in full and the mirror half as one line; that's how he presented both fixups.
