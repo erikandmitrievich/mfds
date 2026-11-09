@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-07>
-#+lastmod: <2026-11-08 16:53>
+#+lastmod: <2026-11-09 15:47>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -143,7 +143,7 @@ B(T) - B(T_{u \leftrightarrow v}) &= u.freq \cdot d_T(u) + v.freq \cdot d_T(v) \
                                   &= (v.freq - u.freq)(d_T(v) - d_T(u))
 \end{align*}
 
-Hence, $u.freq \leq v.freq \text{ and } d_T(u) \leq d_T(v) \implies B(T_{u \leftrightarrow v}) \leq B(T)$.
+Hence, $v.freq \geq u.freq \text{ and } d_{T}(v) \geq d_{T}(u) \implies B(T) \geq B(T_{u \leftrightarrow v})$
 
 *Proof.*
 
@@ -197,3 +197,72 @@ Induction on $n = \lvert C \rvert \geq 2$.
 - $n = 2$: both leaves of the output have depth $1$, the minimum possible.
 
 - $n > 2$: =HUFFMAN= merges the two lowest $x, y$ into $z$ (as in Lemma 15.3), then runs exactly as $\operatorname{HUFFMAN}(C')$ with $\lvert C^{\prime} \rvert = n - 1$. So its output is $T^{\prime} \coloneqq \operatorname{HUFFMAN}(C^{\prime})$ with $z$ expanded into $x, y$. $T^{\prime}$ is optimal by induction, so the output is optimal by Lemma 15.3.
+
+** exam_01 Q5
+
+*** Task
+
+(a) Provide the algorithm for constructing a Huffman code.
+
+(b) Prove that the Huffman code algorithm produces an optimal prefix-free code.
+
+*** (a)
+
+#+begin_example
+huffman(C)
+    n = len(C)
+    Q = C
+
+    for i in 1 to n - 1
+        allocate node z
+        x = extract_min(Q)
+        y = extract_min(Q)
+        z.left = x
+        z.right = y
+        z.freq = x.freq + y.freq
+        push(Q, z)
+    end
+    return extract_min(Q)
+end
+#+end_example
+
+*** (b)
+
+**** Lemma 15.2 [reconstruction]
+
+Let $x, y \in C$ have lowest frequencies. Then, $\exists$ an optimal $T$, such that $x, y$ are siblings at maximum depth.
+
+*(E) Swap.* Let $u, v \in C$. Let $T_{u \leftrightarrow v}$ be $T$ with only $u, v$ being swapped. Thus,
+
+\begin{align*}
+B(T) - B(T_{u \leftrightarrow v}) &= u.freq \cdot d_{T}(u) + v.freq \cdot d_{T}(v) \\
+&\quad - u.freq \cdot d_{T}(v) - v.freq \cdot d_{T}(u) \\
+&= (v.freq - u.freq)(d_{T}(v) - d_{T}(u))
+\end{align*}
+
+Hence, $v.freq \geq u.freq \text{ and } d_{T}(v) \geq d_{T}(u) \implies B(T) \geq B(T_{u \leftrightarrow v})$.
+
+*Proof.*
+
+1. WLOG let $T$ be full and optimal, and $x, y \in C \colon x.freq \leq y.freq \leq c.freq\ \forall c \in C \setminus \{x, y\}$
+
+2. Let $a$ be a leaf at maximum depth.
+
+3. Let $T' = T_{x \leftrightarrow a}$. Since $x.freq \leq a.freq \text{ and } d_{T}(x) \leq d_{T}(a)$, by (E) $B(T_{x \leftrightarrow a}) \leq B(T)$. Denote $b$ a sibling of $x$ in $T^{\prime}$.
+
+4. Let $T^{\prime \prime} = T^{\prime}_{y \leftrightarrow b}$. Since $y.freq \leq b.freq \text{ and } d_{T^{\prime}}(y) \leq d_{T^{\prime}}(b)$, by (E) $B(T^{\prime \prime}) \leq B(T^{\prime})$.
+
+5. Thus, $x, y$ are siblings at maximum depth in $T^{\prime \prime}$. Since $B(T^{\prime \prime}) \leq B(T^{\prime}) \leq B(T)$ and $T$ is optimal, thus, $T^{\prime \prime}$ is optimal.
+
+**** Lemma 15.3 [reconstruction]
+
+Let $x, y \in C$ have the lowest frequencies. Define $C^{\prime} \coloneqq (C \setminus \{x, y\}) \cup \{z\}$, and $z.freq \coloneqq x.freq + y.freq$. Let $T^{\prime}$ be an optimal tree for $C^{\prime}$. Then, $T$ defined as $T^{\prime}$ with leaf $z$ replaced by an internal node with children $x, y$ is an optimal tree for $C$.
+
+*(M) Merge.* $d_{T}(c) = d_{T^{\prime}}(c) \quad \forall c \in C \setminus \{x, y\}$, and $d_{T}(x) = d_{T}(y) = d_{T^{\prime}}(z) + 1$:
+
+\begin{align*}
+x.freq \cdot d_T(x) + y.freq \cdot d_{T}(y) &= (d_T(z) + 1)(x.freq + y.freq) \\
+&= z.freq \cdot d_T(z) + x.freq + y.freq \\
+\end{align*}
+
+Hence, $B(T) = B(T^{\prime}) + x.freq + y.freq$ for every tree $T^{\prime}$ for $C^{\prime}$. Conversely, contracting two siblings leaves $x, y$ of a tree for $C$ into a leaf $z$ lowers $B$ by $x.freq + y.freq$.
