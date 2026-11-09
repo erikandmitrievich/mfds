@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-07>
-#+lastmod: <2026-11-09 15:47>
+#+lastmod: <2026-11-09 19:18>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -266,3 +266,30 @@ x.freq \cdot d_T(x) + y.freq \cdot d_{T}(y) &= (d_T(z) + 1)(x.freq + y.freq) \\
 \end{align*}
 
 Hence, $B(T) = B(T^{\prime}) + x.freq + y.freq$ for every tree $T^{\prime}$ for $C^{\prime}$. Conversely, contracting two siblings leaves $x, y$ of a tree for $C$ into a leaf $z$ lowers $B$ by $x.freq + y.freq$.
+
+* Sa3
+
+** Theory
+
+*** BST
+
+Binary tree with $y.key \leq x.key \leq z.key$ for all $y$ in the left subtree and $z$ in the right subtree of $x$.
+
+Storage: linked nodes with $key$, $left$, $right$, $p$ (NIL if absent); $T.root$.
+
+*** Red-black tree
+
+BST + $color$ per node; NIL leaves = black sentinel $T.nil$.
+
+1. Every node is red or black.
+2. Root is black.
+3. Leaves (NIL) are black.
+4. Red node $\implies$ both children black.
+5. For each node $x$: all paths from $x$ down to a leaf have the same number of black nodes.
+
+$\operatorname{bh}(x)$: black nodes on any path from $x$ down to a leaf ($x$ excluded, leaf counted); $\operatorname{bh}(T) \coloneqq \operatorname{bh}(T.root)$.
+
+*** Lemma 13.1
+
+$n$ internal (non-NIL) nodes $\implies$ height $\leq 2 \lg(n + 1)$.
+
