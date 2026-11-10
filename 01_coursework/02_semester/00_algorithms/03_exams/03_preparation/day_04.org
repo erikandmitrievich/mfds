@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-10>
-#+lastmod: <2026-11-10 10:38>
+#+lastmod: <2026-11-10 11:32>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -107,3 +107,35 @@ w(n) &= n^{1/2} \\
 \frac{f(n)}{w(n)} &= 1 = \Theta(\lg^{k}(n)),\ k = 0 \to \text{case 2} \\
 \therefore T(n) &= \Theta(n^{1/2} \lg(n))
 \end{align*}
+
+* Mo3
+
+** Task
+
+(a) Define what a binary search tree is, and describe how binary trees are stored.
+
+(b) What are the properties that define a red-black tree?
+
+(c) Provide the algorithms for inserting a new element in a red-black tree.
+
+** (a)
+
+Binary search tree is a binary tree such that $y.key \leq x.key \leq z.key$, where $y, z$ are child nodes of $x$.
+
+Binary trees are stored in linked nodes, with each node having following attributes: $key,\ left,\ right,\ parent$; tree also contains $root$ value.
+
+** (b)
+
+1. All nodes are either red or black.
+
+2. Root is black.
+
+3. Leaves are black.
+
+4. Red node $\implies$ black children.
+
+5. From any node, amount of black nodes down to the leafs in all branches are equal.
+
+$\operatorname{bh}(i)$ counts the number of black nodes from a given node down to any of its leafs.
+
+** (c)
