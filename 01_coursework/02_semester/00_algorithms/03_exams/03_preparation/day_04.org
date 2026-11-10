@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-10>
-#+lastmod: <2026-11-10 11:32>
+#+lastmod: <2026-11-10 13:33>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -139,3 +139,125 @@ Binary trees are stored in linked nodes, with each node having following attribu
 $\operatorname{bh}(i)$ counts the number of black nodes from a given node down to any of its leafs.
 
 ** (c)
+
+* Mo4
+
+** Task
+
+Bubblesort works by repeatedly swapping adjacent elements that are out of order. The procedure is
+
+#+begin_src text
+1: procedure BUBBLESORT(A, n)
+2:     for i = 1 to n - 1 do
+3:         for j = n downto i + 1 do
+4:             if A[j] < A[j-1] then
+5:                 exchange A[j] with A[j - 1]
+6:             end if
+7:         end for
+8:     end for
+9: end procedure
+#+end_src
+
+(a) (1 point)
+
+Let $A'$ denote the array $A$ after =BUBBLESORT(A, n)= is executed. To prove that =BUBBLESORT= is correct, you need to prove that it terminates and that
+
+$$A'[1] \le A'[2] \le \cdots \le A'[n].$$
+
+In order to show that =BUBBLESORT= actually sorts, what else do you need to prove?
+
+(b) (3 points)
+
+State a precise loop invariant for the =for j = n downto i + 1= loop in lines 3--7 and prove that it holds.
+
+(c) (2 points)
+
+Using the termination condition of the loop invariant stated and proved above, state a loop invariant for the =for i = 1 to n - 1= loop in lines 2--8 that allows you to prove the inequality above for the $A'$ array.
+
+(d) (2 points)
+
+Prove that the loop invariant above holds and conclude that =BUBBLESORT= works.
+
+** (a)
+
+$A^{\prime}$ is a permutation of $A$.
+
+** (b)
+
+*Invariant.*
+
+At the start of each iteration of the loop in lines 3-7: $A[j] \leq A[k]\ \forall j \leq k \leq n$
+
+*Initialisation.*
+
+$j = n$: $A[n] \leq A[n]$, holds trivially.
+
+*Maintenance.*
+
+Let $A, B$ be the array before and after the iteration $i$.
+
+Lines 4-6 make: $B[j-1] = \min(A[j - 1], A[j]),\ B[j] = \max(A[j - 1], A[j])$. $B[k] = A[k]$ otherwise.
+
+So $B[j-1] \leq B[j]$ and $B[j - 1] \leq A[j] \leq A[k] = B[k],\ j \leq k \leq n$ by the invariant.
+
+Hence, $B[j - 1] \leq B[k]\ \forall j-1 \leq k \leq n$.
+
+*Termination.*
+
+$j = i$: $A[i] \leq A[k]\ \forall i \leq k \leq n$.
+
+** (c)
+
+*Invariant.*
+
+1. $A[1] \leq \ldots \leq A[i] \leq A[k]\ \forall i \leq k \leq n$
+2. $\operatorname{perm}(A, A_1)$
+
+** (d)
+
+* Mo5
+
+** Task
+
+Describe what a graph is and what it is usually used for. Especially, talk about the following points:
+
+(a) Explain how a graph can be represented in the computer. (2 points)
+
+(b) Describe the algorithms BFS and DFS. (2 points)
+
+(c) What does BFS compute? What is the full formulation of the result, including all required assumptions? (1 point)
+
+(d) Define the edge types of a depth-first search. What is a topological sort, and how can it be computed with DFS? (2 points)
+
+(e) What are the running times of BFS and DFS? (1 point)
+
+** (a)
+
+A graph $G = (V,\ E)$ has a set of verticies and a set of edges. In a directed graph the edges are ordered pairs; in a weighted graph, edge has a weight $w(u, v)$. Graphs can be used for networks where you look for shortest path.
+
+- Adjacency lists :: $Adj[u]$ stores each $v \coloneqq (u, v) \in E$. Space $\Theta(V + E)$.
+
+- Adjacency matrix :: $a_{uv} = 1$ if $(u,\ v) \in E$, else $0$. Space $\Theta(V^{2})$.
+
+** (b)
+
+#+begin_src
+BFS(G, s)
+  for each u in G.V:
+    u.d = inf
+    u.p = NULL
+
+  s.d = 0
+  ENQUEUE(Q, s)
+  while Q is not empty:
+    u = DEQUEUE(Q)
+
+    for v in Adj[u]:
+      if v.d == inf:
+        v.d = u.d
+        d.p = u
+        ENQUEUE(Q, v)
+
+
+
+#+end_src
