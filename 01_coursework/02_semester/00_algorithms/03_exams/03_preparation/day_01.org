@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-06>
-#+lastmod: <2026-11-07 18:45>
+#+lastmod: <2026-11-10 12:15>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -210,7 +210,7 @@ Hence, $B[j-1] \leq B[k]\ \forall j-1 \leq k \leq n$.
 
 *Termination.* $j = i$: $A[i] \leq A[k]\ \forall i \leq k \leq n$.
 
-*Remark.* THe loop only swaps $A[j-1]$ and $A[j]$, with $j - 1 \geq i$, so it permutes $A[i \ldots n]$, leaving $A[1 \ldots i-1]$ untouched.
+*Remark.* The loop only swaps $A[j-1]$ and $A[j]$, with $j - 1 \geq i$, so it permutes $A[i \ldots n]$, leaving $A[1 \ldots i-1]$ untouched.
 
 *** (c)
 
