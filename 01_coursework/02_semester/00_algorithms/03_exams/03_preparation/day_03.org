@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-09>
-#+lastmod: <2026-11-09 18:13>
+#+lastmod: <2026-11-10 10:19>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -52,9 +52,9 @@ Heaps are used for priority queues.
 
 3. =MIN-HEAP-DECREASE-KEY= - decrements a given node of a tree to a given value.
 
-4. =MIN-HEAP-INSERT= - increases $n$, sets $A[n] = \infty$, calls =MIN-MEAH-DECREASE-KEY= on $A[n]$ with new inserted value.
+4. =MIN-HEAP-INSERT= - increases $n$, sets $A[n] = \infty$, calls =MIN-HEAP-DECREASE-KEY= on $A[n]$ with new inserted value.
 
-=MIN-HEAP-DECREASE-KEY=: requires new key to be less than existing value, if complies, sets $A[i] = key$. While $i > 1$ and $T[\mathrm{parent}(i)] > T[i]$: swap $T[i]$ with $T[\mathrm{parent}(i)]$, set $i = \mathrm{parent}(i)$.
+=MIN-HEAP-DECREASE-KEY=: requires new key to be less than existing value, if complies, sets $T[i] = key$. While $i > 1$ and $T[\mathrm{parent}(i)] > T[i]$: swap $T[i]$ with $T[\mathrm{parent}(i)]$, set $i = \mathrm{parent}(i)$.
 
 ** (d)
 
