@@ -35,6 +35,12 @@ assets/
 # exams (sensitive content)
 00_resources/
 
+# extracted exam papers & lecture transcripts (keep local only, scrubbed from history)
+exam_0[0-9]*.org
+exam_v_[ab]*
+**/exam_01/page_*
+**/lec_recordings/**/*.txt
+
 # tmp
 *_ignore*
 
