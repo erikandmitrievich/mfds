@@ -1,0 +1,57 @@
+* Problem 1 :condition_number:floating_point:cancellation:programming:
+** Task
+#+begin_quote
+Consider the p-q-formula:
+
+\[ f(x) = x^2 - 2px + q, \qquad x_{1/2} = p \pm \sqrt{p^2 - q} \]
+
+a) Determine the partial conditioning of \(g_+\colon (p,q) \mapsto x_1\) and \(g_-\colon (p,q) \mapsto x_2\) for appropriate ranges of $p$ and $q$.
+
+b) Write a Python function /myNaivePQ(p,q)/ that returns the two roots of $f$.
+
+Vieta's formula yields
+
+\[ x^2 - 2px + q = (x - x_1)(x - x_2) \implies x_1 \cdot x_2 = q, \quad x_1 + x_2 = 2p \]
+
+c) Write a function /myPQ(p,q)/ according to Vieta's formula. Call both implementations for $p = 10^7$ and $q = 1$ in floating point numbers.
+#+end_quote
+
+** Solution
+*** a)
+
+*** b)
+
+*** c)
+
+* Problem 2 :condition_number:floating_point:error_analysis:
+** Task
+#+begin_quote
+Consider
+
+\[ f, f^{(\text{eps})} \colon \mathbb{R}^2 \times \mathbb{R}^2 \to \mathbb{R}, \qquad f(x, y) = \langle x, y \rangle, \qquad f^{(\text{eps})}(x, y) = \bigoplus_{k=1}^{2} (x_k \odot y_k) \]
+
+a) Verify that $f^{(\text{eps})}$ is partially backwards stable when considered as the map $f^{(\text{eps})}\colon \mathbb{R}^4 \to \mathbb{R}$, and recall that $x_k \odot y_k$ means $\operatorname{fl}^{(\text{eps})}(x_k) \odot \operatorname{fl}^{(\text{eps})}(y_k)$.
+
+b) What is the partial conditioning of $f\colon \mathbb{R}^4_+ \to \mathbb{R}$, where $\mathbb{R}_+ = (0, \infty)$.
+#+end_quote
+
+** Solution
+*** a)
+
+*** b)
+
+* Problem 3 :error_analysis:matrix_norm:
+** Task
+#+begin_quote
+Prove the following for $\Omega = (\mathbb{R} \setminus \{0\})^d$: Let $f\colon \Omega \to \mathbb{R}$ be a problem and $f^{(\text{eps})}\colon \Omega \to \mathbb{R}$ an algorithm. If $f^{(\text{eps})}$ is partially backward stable, then it is backward stable provided that $\Omega$ is equipped with the maximum norm.
+#+end_quote
+
+** Solution
+
+* Problem 4 :error_analysis:condition_number:
+** Task
+#+begin_quote
+Prove the following: If the relative conditioning does not vanish, then every backward stable algorithm is forward stable.
+#+end_quote
+
+** Solution
