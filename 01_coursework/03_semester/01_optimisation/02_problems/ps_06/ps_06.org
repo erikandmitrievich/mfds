@@ -1,3 +1,21 @@
+#+title: Ps 06
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-11-15>
+#+lastmod: <2026-11-15 18:10>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
 * Problem 1 :floating_point:cancellation:programming:
 ** Task
 #+begin_quote
@@ -27,9 +45,94 @@ c) Decide which formula provides the more accurate result.
 ** Solution
 *** a)
 
+#+begin_src python :results output
+def var_1(x):
+    n = len(x)
+    x_bar = (1 / n) * sum(x)
+    s = 0
+
+    for x_k in x:
+        s += (x_k - x_bar) ** 2
+
+    return (1 / (n - 1)) * s
+#+end_src
+
 *** b)
 
+#+begin_src python :results output
+def var_2(x):
+    n = len(x)
+    s = 0
+
+    for x_k in x:
+        s += x_k ** 2
+
+    s = s - (1 / n) * (sum(x) ** 2)
+
+    return (1 / (n - 1)) * s
+#+end_src
+
 *** c)
+
+#+begin_src python :results output
+def var_1(x):
+    n = len(x)
+    x_bar = (1 / n) * sum(x)
+    s = 0
+
+    for x_k in x:
+        s += (x_k - x_bar) ** 2
+
+    return (1 / (n - 1)) * s
+
+def var_2(x):
+    n = len(x)
+    s = 0
+
+    for x_k in x:
+        s += x_k ** 2
+
+    s = s - (1 / n) * (sum(x) ** 2)
+
+    return (1 / (n - 1)) * s
+
+x = [10000000.0, 10000000.1, 10000000.2]
+
+print(f"var_1(x) = {var_1(x)}")
+print(f"var_2(x) = {var_2(x)}\n")
+print(f"var_1 deviation: {abs(var_1(x) - 0.01) / 0.01:.8%}")
+print(f"var_2 deviation: {abs(var_2(x) - 0.01) / 0.01:.6%}")
+#+end_src
+
+#+RESULTS:
+: var_1(x) = 0.0099999999254942
+: var_2(x) = 0.03125
+:
+: var_1 deviation: 0.00000075%
+: var_2 deviation: 212.500000%
+
+The first formula is more accurate. In the second formula, both terms are about $3 \cdot 10^{14}$, where doubles are $0.0625$ apart, so their exact difference of $0.02$ is lost to rounding (catastrophic cancellation):
+
+#+begin_src python :results output
+import math
+
+x = [10000000.0, 10000000.1, 10000000.2]
+a = sum(x_k ** 2 for x_k in x)
+b = sum(x) ** 2 / len(x)
+
+print(f"a     = {a}")
+print(f"b     = {b}")
+print(f"a - b = {a - b}  (exact: 0.02)")
+print(f"spacing of doubles near a: {math.ulp(a)}")
+#+end_src
+
+#+RESULTS:
+: a     = 300000006000000.0
+: b     = 300000005999999.94
+: a - b = 0.0625  (exact: 0.02)
+: spacing of doubles near a: 0.0625
+
+The first formula subtracts first ($x_k - \bar{x}$), while the data are still nearly exact, so no information is lost.
 
 * Problem 2 :fixed_point:error_analysis:floating_point:
 ** Task
