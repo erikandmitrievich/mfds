@@ -1,0 +1,96 @@
+* Problem 1 :floating_point:cancellation:programming:
+** Task
+#+begin_quote
+If bad conditioned computations are not avoidable, then put them at the beginning, NOT at the end.
+
+The sample variance of data $x_1, \dots, x_n \in \mathbb{R}$ is
+
+\[ \operatorname{Var}(x_1, \dots, x_n) = \frac{1}{n-1} \sum_{k=1}^{n} (x_k - \bar{x})^2, \qquad \bar{x} = \frac{1}{n} \sum_{k=1}^{n} x_k \]
+
+This formula coincides with
+
+\[ \operatorname{Var}(x_1, \dots, x_n) = \frac{1}{n-1} \left( \sum_{k=1}^{n} x_k^2 - \frac{1}{n} \left( \sum_{k=1}^{n} x_k \right)^2 \right) \]
+
+a) Implement the first formula for the sample variance.
+
+b) Implement the second formula for the sample variance.
+
+The mean of the data
+
+\[ \begin{aligned} x_1 &= 10{,}000{,}000.0 \\ x_2 &= 10{,}000{,}000.1 \\ x_3 &= 10{,}000{,}000.2 \end{aligned} \]
+
+is $\bar{x} = x_2$ and the variance is $\operatorname{Var}(x_1, x_2, x_3) = 2(0.1)^2 / 2 = 0.01$.
+
+c) Decide which formula provides the more accurate result.
+#+end_quote
+
+** Solution
+*** a)
+
+*** b)
+
+*** c)
+
+* Problem 2 :fixed_point:error_analysis:floating_point:
+** Task
+#+begin_quote
+Consider the fixed-point iteration $x_{k+1} = \Phi(x_k)$ associated with
+
+\[ \Phi\colon \mathbb{R} \to \mathbb{R}, \qquad \Phi(x) = \frac{1}{4}(x+1) \]
+
+(a) Determine a fixed point $x^*$ of $\Phi$ and the smallest contraction constant $\theta$.
+
+(b) For some fixed $R > 0$, you consider initializations $x_0 \in [x^* - R, x^* + R]$. For the algorithm $\Phi^{(\mathrm{eps})}$, you may assume that $1, \frac{1}{4} \in \mathbb{R}^{(\mathrm{eps})}$. Determine an explicit constant $C_R$, independent of eps, such that
+
+\[ \sup_{x \in B_R} \lvert \Phi^{(\mathrm{eps})}(x) - \Phi(x) \rvert \leq C_R \, \mathrm{eps} \]
+
+Give a sufficient condition on eps, in terms of $R$, ensuring that $\Phi^{(\mathrm{eps})}([x^* - R, x^* + R]) \subseteq [x^* - R, x^* + R]$.
+
+(c) Choose $R = 1/3$ and consider the computed iteration
+
+\[ x_0^{(\mathrm{eps})} = 0, \qquad x_{k+1}^{(\mathrm{eps})} = \Phi^{(\mathrm{eps})}(x_k^{(\mathrm{eps})}) \]
+
+Determine the smallest $k_{\min}$ for which the approximation error bound is smaller than the computational error bound. Do Python experiments and plot $k$ versus the logarithmic error.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+* Problem 3 :error_analysis:
+** Task
+#+begin_quote
+Proof Theorem 13.3.6 and Lemma 13.3.7. Is the claim in Lemma 13.3.7 the best we can do?
+#+end_quote
+
+** Solution
+
+* Problem 4 :polynomial:flops:horner:
+** Task
+#+begin_quote
+Let
+
+\[ p(x) = a_0 + a_1 x + \dots + a_n x^n, \qquad n \geq 1 \]
+
+(a) How many flops do we need to naively evaluate $p$ at $x$
+
+(b) How many flops do we need if we reuse the powers of $x$?
+
+(c) How many flops do we need if we use the nested representation
+
+\[ p(x) = a_0 + x \left( a_1 + x(a_2 + \dots + x a_n) \right) \]
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+* Errors/Typos
+- Problem 3: "Proof Theorem" → "Prove Theorem"
+- Problem 4: part (a) "to naively evaluate $p$ at $x$" → ends without a closing question mark (unlike parts (b) and (c))
