@@ -1,0 +1,76 @@
+#+title: Ps 08
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-11-16>
+#+lastmod: <2026-11-16 12:11>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 1 :independence:covariance:conditional_probability:
+** Task
+#+begin_quote
+*Conceptual.* The joint PMF of two binary features $U, V$ is
+
+\[ \begin{array}{c|cc} & V = 0 & V = 1 \\ \hline U = 0 & 0.30 & 0.20 \\ U = 1 & 0.10 & 0.40 \end{array} \]
+
+Use the event-conditioning formula from Lecture 3 for the conditional probabilities below. Compute both marginal PMFs, the two conditional probabilities $P(V = 1 \mid U = 0)$ and $P(V = 1 \mid U = 1)$, and the covariance and correlation. Test independence by factorization. Present a coherent interpretation of whether observing $U$ changes what is known about $V$, and distinguish that statement from a causal claim.
+#+end_quote
+
+** Solution
+
+* Problem 2 :density:independence:covariance:
+** Task
+#+begin_quote
+*Mathematical.* Let $(X, Y)$ have joint density
+
+\[ f_{X,Y}(x, y) = \begin{cases} 2, & 0 < x < y < 1 \\ 0, & \text{otherwise} \end{cases} \]
+
+Verify normalization and draw the support. Derive $f_X$ and $f_Y$. Decide whether $X$ and $Y$ are independent. Finally compute $E[X]$, $E[Y]$, $\operatorname{Cov}(X, Y)$, and $\operatorname{Corr}(X, Y)$, showing the limits of every integral.
+#+end_quote
+
+** Solution
+
+* Problem 3 :simulation:covariance:independence:
+** Task
+#+begin_quote
+*Python/data.* Generate $n = 2000$ observations from each of two models:
+
+\[ \text{A: } X, Y \stackrel{\text{iid}}{\sim} \mathcal{N}(0, 1), \qquad \text{B: } X \sim \operatorname{Unif}(-1, 1), \ Y = X^2 + 0.05\varepsilon, \quad \varepsilon \sim \mathcal{N}(0, 1) \]
+
+with $X$ and $\varepsilon$ independent. Report the sample covariance and correlation for both models. Produce side-by-side scatterplots and a second display of the mean of $Y$ within ten bins of $X$. Explain why the two correlations can be similarly close to zero although the dependence structures are fundamentally different.
+#+end_quote
+
+** Solution
+
+* Problem 4 :correlation:variance:
+** Task
+#+begin_quote
+*Additional mathematical.* Perfect correlation. Let $X, Y$ be real-valued random variables on the same probability space, with finite second moments and strictly positive variances. Write $\rho_{X,Y} \coloneqq \operatorname{Corr}(X, Y)$.
+
+(a) Let $Z$ be a real-valued random variable with $E[Z^2] = 0$. Prove that $P(Z = 0) = 1$.
+
+/Hint:/ Consider the events $\{ \lvert Z \rvert \geq 1/n \}$, for $n \in \mathbb{N}$.
+
+(b) Prove that $\lvert \rho_{X,Y} \rvert = 1$ if and only if there exist constants $a \in \mathbb{R} \setminus \{0\}$ and $b \in \mathbb{R}$ such that
+
+\[ P(Y = aX + b) = 1 \]
+
+Show that, in this case,
+
+\[ a = \rho_{X,Y} \frac{\operatorname{sd}(Y)}{\operatorname{sd}(X)}, \qquad b = E[Y] - a E[X] \]
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
