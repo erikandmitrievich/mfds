@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-16>
-#+lastmod: <2026-11-16 12:11>
+#+lastmod: <2026-11-16 18:25>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -46,6 +46,62 @@
 #+end_quote
 
 ** Solution
+
+#+begin_src python :results output
+import numpy as np
+import matplotlib.pyplot as plt
+
+rng = np.random.default_rng(0)
+B, ns = 2000, [20, 200, 2000]
+mu, sigma2 = 1.0, 1.0  # model moments of Exp(1)
+
+# 1. Simulation: B samples of size n -> B means, B variances
+err_mean, err_var = {}, {}
+for n in ns:
+    X = rng.exponential(scale=1.0, size=(B, n))
+    err_mean[n] = np.mean(X, axis=1) - mu
+    err_var[n] = np.var(X, axis=1, ddof=1) - sigma2
+
+# 2. Bias, RMSE, Monte Carlo s.e. of the bias
+print(f"{'est':>5} {'n':>5} {'bias':>8} {'MC s.e.':>8} {'RMSE':>7}")
+for name, err in [("mean", err_mean), ("var", err_var)]:
+    for n in ns:
+        e = err[n]
+        print(f"{name:>5} {n:>5} {e.mean():>8.4f} {e.std(ddof=1) / np.sqrt(B):>8.4f} "
+              f"{np.sqrt(np.mean(e**2)):>7.4f}")
+
+# 3. One figure: error distributions across n
+fig, axes = plt.subplots(1, 2, figsize=(9, 4))
+for ax, err, title in [(axes[0], err_mean, "sample mean"), (axes[1], err_var, "sample variance")]:
+    ax.boxplot([err[n] for n in ns], flierprops=dict(markersize=2))
+    ax.set_xticks([1, 2, 3], [str(n) for n in ns])
+    ax.axhline(0, color="gray", lw=0.8)
+    ax.set_title(f"{title}: estimate − 1")
+    ax.set_xlabel("n")
+axes[0].set_ylabel("error")
+fig.tight_layout()
+fig.savefig("assets/p_03.png", dpi=150)
+
+# 4. Contamination: one sample, n = 200, one value replaced by 100
+x = rng.exponential(scale=1.0, size=200)
+y = x.copy()
+y[0] = 100.0
+for name, s in [("clean", x), ("contaminated", y)]:
+    print(f"{name:>13}: mean {np.mean(s):.3f}  median {np.median(s):.3f}  "
+          f"var {np.var(s, ddof=1):.3f}")
+
+#+end_src
+
+#+RESULTS:
+:   est     n     bias  MC s.e.    RMSE
+:  mean    20  -0.0007   0.0049  0.2188
+:  mean   200   0.0001   0.0016  0.0708
+:  mean  2000  -0.0008   0.0005  0.0223
+:   var    20   0.0017   0.0139  0.6206
+:   var   200   0.0096   0.0046  0.2038
+:   var  2000  -0.0021   0.0014  0.0616
+:         clean: mean 1.086  median 0.786  var 1.286
+:  contaminated: mean 1.577  median 0.786  var 50.206
 
 * Problem 4 :variance:expectation:
 ** Task
