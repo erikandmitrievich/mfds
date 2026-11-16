@@ -1,0 +1,75 @@
+#+title: Ps 07
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-11-16>
+#+lastmod: <2026-11-16 12:11>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 1 :binomial:expectation:variance:
+** Task
+#+begin_quote
+*Conceptual.* Consider two models for an hourly alert count. Under model A, $X_A \sim \text{Binomial}(4, 0.1)$. Under model B, $P(X_B = 0) = 0.96$ and $P(X_B = 10) = 0.04$. Display both PMFs, compute their expectations and variances from the definitions, and calculate $P(X_A \geq 1)$ and $P(X_B \geq 1)$. Use the results to explain why an expected count of $0.4$ is meaningful although it is unattainable, and why equal expectations do not imply comparable alert behavior.
+#+end_quote
+
+** Solution
+
+* Problem 2 :variance:indicator:expectation:
+** Task
+#+begin_quote
+*Mathematical.*
+
+(a) Starting from the definition of variance, prove $\operatorname{Var}(X) = E[X^2] - E[X]^2$ and $\operatorname{Var}(aX + b) = a^2 \operatorname{Var}(X)$.
+
+(b) In $n$ independent draws from $\{1, \dots, K\}$, every label is equally likely. Let $D_{n,K}$ be the number of distinct labels observed. Introduce suitable indicator variables and derive $E[D_{n,K}]$. State explicitly where independence is used and where it is not.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+* Problem 3 :simulation:expectation:variance:
+** Task
+#+begin_quote
+*Python/data.* Let $X \sim \text{Exp}(1)$, so the exact mean and variance are both one. For each $n \in \{20, 200, 2000\}$, run $B = 2000$ independent simulations and estimate the mean and variance using ~np.mean~ and ~np.var(..., ddof=1)~. Report empirical bias and RMSE for both estimators and use one figure to compare their error distributions across $n$. Finally, take one sample with $n = 200$, replace one observation by $100$, and compare its mean, median, and variance before and after contamination. Explain the distinction between model moments, sample estimates, and Monte Carlo error.
+#+end_quote
+
+** Solution
+
+* Problem 4 :variance:expectation:
+** Task
+#+begin_quote
+*Additional mathematical.* Let $X$ be a real-valued random variable on $(\Omega, \mathcal{F}, P)$ with $E[X^2] < \infty$, and set $\mu \coloneqq E[X]$.
+
+(a) Prove that, for every $c \in \mathbb{R}$,
+
+\[ E[(X - c)^2] = \operatorname{Var}(X) + (\mu - c)^2 \]
+
+Deduce that $c = \mu$ is the unique constant minimizing $E[(X - c)^2]$, and identify the minimum value.
+
+(b) Suppose additionally that $a, b \in \mathbb{R}$, $a < b$, and
+
+\[ a \leq X(\omega) \leq b \quad \text{for every } \omega \in \Omega \]
+
+Use part (a) to prove
+
+\[ \operatorname{Var}(X) \leq \frac{(b - a)^2}{4} \]
+
+Give a distribution for which equality holds.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
