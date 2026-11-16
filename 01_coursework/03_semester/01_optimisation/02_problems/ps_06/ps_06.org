@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-15>
-#+lastmod: <2026-11-15 18:10>
+#+lastmod: <2026-11-16 08:41>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -190,9 +190,21 @@ Let
 ** Solution
 *** (a)
 
+Term $a_k x^k$ costs $k$ multiplications.
+
+\[ \sum_{k=1}^{n} k + n = \frac{n(n+1)}{2} + n \]
+
 *** (b)
 
+$n-1$ multiplications for $x^2, \dots, x^n$, $n$ for $a_k x^k$, $n$ additions:
+
+\[ (n-1) + n + n = 3n - 1 \]
+
 *** (c)
+
+One multiplication and one addition per nesting level.
+
+\[ 2n \]
 
 * Errors/Typos
 - Problem 3: "Proof Theorem" → "Prove Theorem"
