@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-16>
-#+lastmod: <2026-11-16 12:11>
+#+lastmod: <2026-11-16 18:49>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -51,6 +51,53 @@ with $X$ and $\varepsilon$ independent. Report the sample covariance and correla
 #+end_quote
 
 ** Solution
+
+#+begin_src python :results output
+import numpy as np
+import matplotlib.pyplot as plt
+
+rng = np.random.default_rng(0)
+n = 2000
+
+# Model A: X, Y iid N(0,1)
+xa = rng.standard_normal(n)
+ya = rng.standard_normal(n)
+
+# Model B: X ~ Unif(-1,1), Y = X^2 + 0.05 eps
+xb = rng.uniform(-1, 1, n)
+yb = xb**2 + 0.05 * rng.standard_normal(n)
+
+models = [("A", xa, ya), ("B", xb, yb)]
+
+for name, x, y in models:
+    print(f"{name}: cov {np.cov(x, y)[0, 1]:.4f}  corr {np.corrcoef(x, y)[0, 1]:.4f}")
+
+
+def binned_means(x, y, k=10):
+    """Sort by x, split into k equal-count bins, return the mean of x and y per bin."""
+    order = np.argsort(x)
+    bx = [b.mean() for b in np.array_split(x[order], k)]
+    by = [b.mean() for b in np.array_split(y[order], k)]
+    return bx, by
+
+
+fig, axes = plt.subplots(2, 2, figsize=(9, 7), sharex="col", sharey="col")
+for j, (name, x, y) in enumerate(models):
+    axes[0, j].scatter(x, y, s=3, alpha=0.4)
+    axes[0, j].set_title(f"Model {name}: scatter")
+    bx, by = binned_means(x, y)
+    axes[1, j].plot(bx, by, "o-")
+    axes[1, j].set_title(f"Model {name}: mean of Y in 10 bins of X")
+    axes[1, j].set_xlabel("X")
+    for i in range(2):
+        axes[i, j].set_ylabel("Y")
+fig.tight_layout()
+fig.savefig("assets/p_03.png", dpi=150)
+#+end_src
+
+#+RESULTS:
+: A: cov -0.0166  corr -0.0167
+: B: cov -0.0070  corr -0.0397
 
 * Problem 4 :correlation:variance:
 ** Task
