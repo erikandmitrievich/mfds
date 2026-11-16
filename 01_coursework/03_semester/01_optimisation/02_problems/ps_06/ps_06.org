@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-15>
-#+lastmod: <2026-11-16 08:41>
+#+lastmod: <2026-11-16 11:59>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -194,17 +194,91 @@ Term $a_k x^k$ costs $k$ multiplications.
 
 \[ \sum_{k=1}^{n} k + n = \frac{n(n+1)}{2} + n \]
 
+#+begin_src python :results output
+n = 10
+a = range(n + 1)
+
+def p(x):
+    flops = 0
+    p = a[0]
+
+    for k in range(1, n + 1):
+        power = x
+
+        for _ in range(k - 1):
+            power *= x
+            flops += 1
+
+        p += a[k] * power
+        flops += 2
+
+    return flops
+
+print(p(5))
+print(n * (n + 1) // 2 + n)
+#+end_src
+
+#+RESULTS:
+: 65
+: 65
+
 *** (b)
 
 $n-1$ multiplications for $x^2, \dots, x^n$, $n$ for $a_k x^k$, $n$ additions:
 
 \[ (n-1) + n + n = 3n - 1 \]
 
+#+begin_src python :results output
+n = 10
+a = range(n + 1)
+
+def p(x):
+    flops = 2
+    p = a[0] + a[1] * x
+    power = x
+
+    for k in range(2, n + 1):
+        power *= x
+        p += a[k] * power
+        flops += 3
+
+    return flops
+
+print(p(5))
+print(3 * n - 1)
+#+end_src
+
+#+RESULTS:
+: 29
+: 29
+
 *** (c)
 
 One multiplication and one addition per nesting level.
 
 \[ 2n \]
+
+#+begin_src python :results output
+n = 10
+a = range(n + 1)
+
+def p(x):
+    flops = 0
+    p = a[n]
+
+    for k in range(n - 1, -1, -1):
+        p = a[k] + x * p
+        flops += 2
+
+    return flops
+
+print(p(5))
+print(2 * n)
+#+end_src
+
+#+RESULTS:
+: 20
+: 20
 
 * Errors/Typos
 - Problem 3: "Proof Theorem" → "Prove Theorem"
