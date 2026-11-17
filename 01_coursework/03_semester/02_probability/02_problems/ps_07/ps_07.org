@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-16>
-#+lastmod: <2026-11-16 18:25>
+#+lastmod: <2026-11-17 07:32>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -37,7 +37,41 @@
 ** Solution
 *** (a)
 
+Let $\mu = E[X]$ and assume $E[X^2] < \infty$. Since $\mu$ is a constant, linearity of expectation gives
+
+\begin{align*}
+\operatorname{Var}(X) &= E[(X-\mu)^2] \\
+&= E[X^2] - 2\mu E[X] + \mu^2 \\
+&= E[X^2] - \mu^2 \\
+&= E[X^2] - E[X]^2.
+\end{align*}
+
+By linearity, $E[aX+b] = a\mu + b$, so $(aX+b) - E[aX+b] = a(X-\mu)$. Therefore
+
+\[
+\operatorname{Var}(aX+b) = E\big[a^2 (X-\mu)^2\big] = a^2 E[(X-\mu)^2] = a^2 \operatorname{Var}(X).
+\]
+
 *** (b)
+
+Let $X_1, \dots, X_n$ be the draws, i.i.d. uniform on $\{1, \dots, K\}$. For $k = 1, \dots, K$ define
+\[
+I_k = \mathbf{1}\{X_i = k \text{ for some } i \le n\}, \qquad D_{n,K} = \sum_{k=1}^K I_k.
+\]
+
+1. *Linearity (no independence used).*
+   \[ E[D_{n,K}] = \sum_{k=1}^K E[I_k] = \sum_{k=1}^K P(I_k = 1). \]
+   Linearity holds for arbitrary random variables. The $I_k$ are in fact dependent: $\sum_k I_k \le n$, so for $n < K$ we have $P(I_1 = \dots = I_K = 1) = 0$, while $\prod_k P(I_k = 1) > 0$.
+
+2. *Complement (independence of the draws used).*
+   \[ P(I_k = 0) = P(X_1 \ne k, \dots, X_n \ne k) = \prod_{i=1}^n P(X_i \ne k) = \left(1 - \tfrac{1}{K}\right)^n. \]
+   The product step is the only place independence is used. The value $P(X_i \ne k) = 1 - 1/K$ comes from uniformity, which also makes the bound identical for every $k$.
+
+3. *Result.*
+
+   \[ E[D_{n,K}] = K \left[ 1 - \left( 1 - \tfrac{1}{K} \right)^n \right]. \]
+
+   Check: $n = 1$ gives $1$, and $n \to \infty$ gives $K$ .
 
 * Problem 3 :simulation:expectation:variance:
 ** Task
