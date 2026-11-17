@@ -1,0 +1,114 @@
+#+title: Lec 01: Randomness, Data, and Probability Models
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-11-17>
+#+lastmod: <2026-11-17 10:45>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Data and probability models
+
+Observed data and a probability model are different mathematical objects:
+
+\[ \text{data: what was observed} \neq \text{model: how data could arise} \]
+
+A probability model can be useful without being a literal description of reality. A process may even be deterministic, but too complex or insufficiently known to model directly.
+
+This course studies the consequences of specified probability models through proofs and examples. Statistical inference belongs to the separate statistics course; the table below distinguishes the two directions.
+
+| Probability theory                                              | Statistics                                                                 |
+|-----------------------------------------------------------------+----------------------------------------------------------------------------|
+| The model and its probabilities are fixed and treated as known. | Data are observed, while the model is unknown or only partially specified. |
+| We derive probabilities, typical behavior, and predictions.     | We use data to estimate, compare, or test plausible models.                |
+
+Schematically,
+
+\[ \text{fixed model} \longrightarrow \text{possible data}, \qquad \text{observed data} \longrightarrow \text{information about the model} \]
+
+* Outcomes, events, and relative frequency
+
+*Definition 1 (Sample space and event).* The /sample space/ $\Omega$ is the nonempty set of all outcomes allowed by the model. For a given sample space $\Omega$, an /event/ is a subset $A \subseteq \Omega$. For a realized outcome $\omega \in \Omega$, the event occurs exactly when $\omega \in A$.
+
+For events $A, B \subseteq \Omega$, complements, unions, and intersections represent logical operations:
+
+\begin{align*}
+A^c &= \Omega \setminus A && \text{not } A, \\
+A \cup B & && A \text{ or } B, \text{ or both,} \\
+A \cap B & && A \text{ and } B, \\
+A \setminus B & && A, \text{ but not } B
+\end{align*}
+
+The events $A$ and $B$ are /disjoint/ if $A \cap B = \emptyset$. The impossible event is $\emptyset$, and the certain event is $\Omega$.
+
+Let $\Omega$ be a sample space, let $n \in \mathbb{N} = \{1, 2, \dots\}$, let $A \subseteq \Omega$, and let $\omega_i \in \Omega$ for $i = 1, \dots, n$ be the observed outcomes. Define the indicator $\mathbf{1}_A \colon \Omega \to \{0, 1\}$, for $\omega \in \Omega$, and the relative frequency by
+
+\[ \mathbf{1}_A(\omega) = \begin{cases} 1, & \omega \in A, \\ 0, & \omega \notin A, \end{cases} \qquad \widehat{p}_n(A) = \frac{1}{n} \sum_{i=1}^{n} \mathbf{1}_A(\omega_i) \]
+
+The relative frequency $\widehat{p}_n(A)$ is the fraction of these $n$ observations that lie in $A$. For any sample space $\Omega$, $n \in \mathbb{N}$, events $A, B \subseteq \Omega$, and fixed observations $\omega_i \in \Omega$, $i = 1, \dots, n$, the relative frequencies satisfy
+
+\[ 0 \leq \widehat{p}_n(A) \leq 1, \qquad \widehat{p}_n(\emptyset) = 0, \qquad \widehat{p}_n(\Omega) = 1 \]
+
+and, for disjoint $A, B$,
+
+\[ \widehat{p}_n(A \cup B) = \widehat{p}_n(A) + \widehat{p}_n(B) \]
+
+* Probability spaces
+
+A sigma-algebra is a catalogue of the yes/no questions to which the model assigns probabilities. It is closed under the corresponding logical operations.
+
+*Definition 2 (Sigma-algebra).* Let $\Omega$ be a sample space and let $2^\Omega = \{ A : A \subseteq \Omega \}$ be its /power set/, the collection of all its subsets. A collection $\mathcal{F} \subseteq 2^\Omega$ is a /sigma-algebra/ on $\Omega$ if:
+
+1. $\emptyset \in \mathcal{F}$;
+2. $A \in \mathcal{F}$ implies $A^c \in \mathcal{F}$;
+3. $A_1, A_2, \dots \in \mathcal{F}$ implies $\bigcup_{k=1}^{\infty} A_k \in \mathcal{F}$.
+
+The members of $\mathcal{F}$ are called events.
+
+Thus $\Omega$ describes what may happen, while $\mathcal{F}$ describes which distinctions the model makes.
+
+Let $\mathcal{F}$ be a sigma-algebra on a sample space $\Omega$. Then $\Omega = \emptyset^c \in \mathcal{F}$. For a sequence of events $A_k \in \mathcal{F}$, $k \in \mathbb{N}$, De Morgan's law gives
+
+\[ \bigcap_{k=1}^{\infty} A_k = \left( \bigcup_{k=1}^{\infty} A_k^c \right)^c \in \mathcal{F} \]
+
+All complements are relative to $\Omega$. Thus a sigma-algebra is also closed under countable intersections. Exercise 4 asks for a proof of the identity.
+
+*Example 1 (Coarse information).* For a die, let $\Omega = \{1, 2, 3, 4, 5, 6\}$ and $A = \{2, 4, 6\}$. Then
+
+\[ \mathcal{F} = \{\emptyset, A, A^c, \Omega\} \]
+
+is a sigma-algebra that records only whether the outcome is even or odd. In contrast, $2^\Omega$ distinguishes all subsets of $\Omega$.
+
+For a finite or countable sample space $\Omega$, we often choose $\mathcal{F} = 2^\Omega$. On $\Omega = \mathbb{R}$, a standard choice is the /Borel sigma-algebra/ $\mathcal{B}(\mathbb{R})$, the smallest sigma-algebra containing all open intervals.
+
+*Definition 3 (Measurable space, probability measure, and probability space).* Let $\Omega$ be a sample space and let $\mathcal{F}$ be a sigma-algebra on $\Omega$. The pair $(\Omega, \mathcal{F})$ is called a /measurable space/. A function $\mathbb{P} \colon \mathcal{F} \to [0, 1]$ is a /probability measure/ if
+
+\[ \mathbb{P}(\Omega) = 1 \]
+
+and, for every sequence of events $A_k \in \mathcal{F}$, $k \in \mathbb{N}$, that are /pairwise disjoint/, meaning $A_k \cap A_\ell = \emptyset$ whenever $k \neq \ell$,
+
+\[ \mathbb{P}\left( \bigcup_{k=1}^{\infty} A_k \right) = \sum_{k=1}^{\infty} \mathbb{P}(A_k) \]
+
+The triplet $(\Omega, \mathcal{F}, \mathbb{P})$ is a /probability space/.
+
+*Proposition 1 (First consequences).* Let $(\Omega, \mathcal{F}, \mathbb{P})$ be a probability space and let $A, B \in \mathcal{F}$. Then
+
+\begin{align*}
+\mathbb{P}(\emptyset) &= 0, \qquad \mathbb{P}(A^c) = 1 - \mathbb{P}(A), \\
+A \subseteq B &\implies \mathbb{P}(A) \leq \mathbb{P}(B), \\
+\mathbb{P}(A \cup B) &= \mathbb{P}(A) + \mathbb{P}(B) - \mathbb{P}(A \cap B), \\
+\mathbb{P}(A \cup B) &\leq \mathbb{P}(A) + \mathbb{P}(B)
+\end{align*}
+
+For a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, an event $A \in \mathcal{F}$, a sample size $n \in \mathbb{N}$, and observed outcomes $\omega_i \in \Omega$, $i = 1, \dots, n$, the distinction from data remains essential:
+
+\[ \mathbb{P}(A) = \text{value assigned by the model}, \qquad \widehat{p}_n(A) = \text{value computed from the sample} \]
