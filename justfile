@@ -91,6 +91,19 @@ material-extract COURSE *ARGS="":
         --notation "{{notation}}" \
         --out      "$dir/01_material/_extracted_ignore.org" {{ARGS}}
 
+# transcribe lecture NN's handout (_lec_NN_source.pdf) into lec_NN.org
+[group('material')]
+lec-transcribe COURSE NN *ARGS="":
+    @dir=$(just course-dir {{COURSE}}); \
+    nn=$(printf '%02d' "{{NN}}"); \
+    pdf="$dir/01_material/_lec_${nn}_source.pdf"; \
+    [ -f "$pdf" ] || { echo "no handout: 01_material/_lec_${nn}_source.pdf" >&2; exit 1; }; \
+    {{py}} {{scripts}}/lec_transcription.py \
+        --pdf      "$pdf" \
+        --rule     "{{prompts}}/01_material/lec_transcription_api.org" \
+        --notation "{{notation}}" \
+        --out      "$dir/01_material/lec_${nn}.org" {{ARGS}}
+
 # move every image in the inbox to the Trash
 [group('material')]
 inbox-clear:
