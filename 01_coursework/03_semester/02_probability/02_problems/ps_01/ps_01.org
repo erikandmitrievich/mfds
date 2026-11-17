@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-10-02>
-#+lastmod: <2026-10-13 16:28>
+#+lastmod: <2026-11-17 12:57>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -28,15 +28,26 @@ Find a sigma-algebra containing $A$ and $B$ with as few sets as possible, and ju
 
 ** Solution
 
-Atoms (disjoint, cover $\mathbb{R}$):
+Atoms:
 
-\[ A = (-\infty,18), \quad B\setminus A = [18,22), \quad B^c = [22,\infty) \]
+\begin{align*}
+A &= (-\infty, 18) \\
+B \setminus A &= [18, 22) \\
+A^{c} \cap B^{c} &= [22, \infty)
+\end{align*}
 
-\[ \sigma(A,B) = \{\text{unions of atoms}\} = \{\emptyset,\ A,\ B\setminus A,\ B^c,\ B,\ A\cup B^c,\ A^c,\ \mathbb{R}\}, \quad 2^3 = 8 \text{ sets} \]
+Thus,
 
-Minimal: any \(\sigma\)-algebra $\ni A, B$ contains $B^c$ and $B \cap A^c = B\setminus A$, hence all unions of atoms $\Rightarrow$ $\geq 8$ sets. The family above is closed under unions and complements (complement = union of the remaining atoms) $\Rightarrow$ it is a \(\sigma\)-algebra.
+\begin{align*}
+\mathcal{F} &= \{\text{unions of atoms}\} \\
+&= \{ \emptyset,\ A,\ (B \setminus A),\ B^{c},\ B,\ (A \cup A^{c} \cap B^{c}),\ (B \setminus A) \cup B^{c},\ \mathbb{R} \}
+\end{align*}
 
-$\{20\}$: no. $20 \in [18,22)$, and every set in $\sigma(A,B)$ contains either all of $[18,22)$ or none of it .
+Any \(\sigma\)-algebra $\ni A, B$ contains $B^c$ and $B \cap A^c = B\setminus A$, hence all unions of atoms $\Rightarrow$ $\geq 8$ sets. The family above is closed under unions and complements (complement = union of the remaining atoms) $\Rightarrow$ it is a \(\sigma\)-algebra.
+
+Is $\{20\}$ an event in this sigma-algebra?
+
+No, as $\{20\} \notin \mathcal{F}$.
 
 * Problem 2 :probability_space:inclusion_exclusion:
 ** Task
