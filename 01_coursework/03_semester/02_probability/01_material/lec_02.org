@@ -1,0 +1,114 @@
+#+title: Lec 02: Finite Probability Spaces and Counting
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-11-19>
+#+lastmod: <2026-11-19 12:02>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Finite probability laws
+
+Let $\Omega$ be finite and $\mathcal{F} = 2^\Omega$. Singleton probabilities
+
+\[ p(\omega) = \mathbb{P}(\{\omega\}), \qquad \omega \in \Omega \]
+
+determine the probability law when
+
+\[ p(\omega) \geq 0, \qquad \sum_{\omega \in \Omega} p(\omega) = 1 \]
+
+For every event $A \subseteq \Omega$,
+
+\[ \mathbb{P}(A) = \sum_{\omega \in A} p(\omega) \]
+
+If every outcome is assigned the same probability, then
+
+\[ p(\omega) = \frac{1}{\lvert \Omega \rvert} \quad \text{and} \quad \mathbb{P}(A) = \frac{\lvert A \rvert}{\lvert \Omega \rvert} \]
+
+This counting formula is valid only after a uniform law has been justified. A finite sample space need not be uniform.
+
+* Two urn experiments as probability spaces
+
+Let
+
+\[ U_{\mathrm{R}} = \{r_1, \dots, r_5\}, \qquad U_{\mathrm{B}} = \{b_1, \dots, b_7\}, \qquad U = U_{\mathrm{R}} \cup U_{\mathrm{B}} \]
+
+An outcome records four ordered draws of labeled balls.
+
+** With replacement
+
+The probability space is
+
+\[ \Omega_{\mathrm{rep}} = U^4, \qquad \mathcal{F}_{\mathrm{rep}} = 2^{\Omega_{\mathrm{rep}}}, \qquad \mathbb{P}_{\mathrm{rep}}(\{\omega\}) = \frac{1}{12^4} \]
+
+Let $A_{\mathrm{rep}}$ denote the event that exactly two of the four draws are red; the subscript identifies the replacement experiment. Since the draws are ordered, $\binom{4}{2}$ chooses the red positions. Replacement then gives $5^2$ choices for their red labels and $7^2$ choices for the blue labels. Hence
+
+\[ \mathbb{P}_{\mathrm{rep}}(A_{\mathrm{rep}}) = \frac{\binom{4}{2} \cdot 5^2 \cdot 7^2}{12^4} = \binom{4}{2} \left( \frac{5}{12} \right)^2 \left( \frac{7}{12} \right)^2 \approx 0.3545 \]
+
+** Without replacement
+
+For integers $0 \leq k \leq N$, the /falling factorial/ is $N^{\underline{k}} \coloneqq N(N-1) \cdots (N-k+1) = N!/(N-k)!$, with $N^{\underline{0}} \coloneqq 1$. It counts ordered selections of $k$ distinct objects from $N$ objects. Repeated labels are now excluded:
+
+\[ \Omega_{\mathrm{nrep}} = \{ (u_1, \dots, u_4) \in U^4 \mid u_i \neq u_j \text{ for } i \neq j \} \]
+
+\[ \mathcal{F}_{\mathrm{nrep}} = 2^{\Omega_{\mathrm{nrep}}}, \qquad \mathbb{P}_{\mathrm{nrep}}(\{\omega\}) = \frac{1}{12^{\underline{4}}} \]
+
+For the analogous event $A_{\mathrm{nrep}}$, order is irrelevant. Every four-ball subset has exactly $4!$ orderings, so the induced law on four-element subsets is uniform. There are $\binom{12}{4}$ subsets in total, and $\binom{5}{2} \binom{7}{2}$ contain two red and two blue balls. Hence
+
+\[ \mathbb{P}_{\mathrm{nrep}}(A_{\mathrm{nrep}}) = \frac{\binom{5}{2} \binom{7}{2}}{\binom{12}{4}} \approx 0.4242 \]
+
+Thus the verbal event is similar, but $\Omega$, $\mathcal{F}$, and $\mathbb{P}$ belong to different experiments.
+
+** Ordered and unordered representations
+
+For $N$ labeled objects and $k$ draws, the urn spaces give:
+
+| Sampling design                 | Sample space          | Cardinality                                      |
+| ordered, with replacement       | all tuples            | $N^k$                                            |
+| ordered, without replacement    | distinct-entry tuples | $N^{\underline{k}} = N!/(N-k)!$                  |
+| unordered, without replacement  | $k$-element subsets   | $\binom{N}{k} = N^{\underline{k}}/k!$            |
+
+The last identity holds because every $k$-element subset has $k!$ orderings. Unordered multisets produced by sampling with replacement are generally not equally likely, so their number is not automatically a denominator in a probability calculation.
+
+* A complement calculation: repeated digits in a PIN
+
+If all four-digit PINs in $\{0, 1, \dots, 9\}^4$ are equally likely, then
+
+\[ \mathbb{P}(\text{all digits distinct}) = \frac{10^{\underline{4}}}{10^4} = 0.504 \]
+
+Therefore the probability of at least one repeated digit is $1 - 0.504 = 0.496$.
+
+* Complements and inclusion-exclusion
+
+For events $A, B, C \subseteq \Omega$,
+
+\[ \lvert A \cup B \cup C \rvert = \lvert A \rvert + \lvert B \rvert + \lvert C \rvert - \lvert A \cap B \rvert - \lvert A \cap C \rvert - \lvert B \cap C \rvert + \lvert A \cap B \cap C \rvert \]
+
+The subtraction corrects double counting; the final term restores elements that were subtracted too often.
+
+The corresponding probability formula is
+
+\[ \mathbb{P}(A \cup B \cup C) = \mathbb{P}(A) + \mathbb{P}(B) + \mathbb{P}(C) - \mathbb{P}(A \cap B) - \mathbb{P}(A \cap C) - \mathbb{P}(B \cap C) + \mathbb{P}(A \cap B \cap C) \]
+
+It follows by multiplying the indicator identity by $p(\omega)$ and summing over $\omega \in \Omega$.
+
+For a uniformly selected integer from $\{1, \dots, 100\}$, inclusion-exclusion gives
+
+\[ \mathbb{P}(\text{divisible by 2, 3, or 5}) = \frac{50 + 33 + 20 - 16 - 10 - 6 + 3}{100} = 0.74 \]
+
+* Birthday collisions
+
+Let $1 \leq n \leq 365$ and assume every ordered sequence of $n$ birthdays from 365 days is equally likely. If $A$ is the event that at least two birthdays agree, then it is easier to count $A^c$:
+
+\[ \mathbb{P}(A) = 1 - \frac{365^{\underline{n}}}{365^n} = 1 - \prod_{k=0}^{n-1} \frac{365 - k}{365} \]
+
+For $n > 365$, a collision is certain and $\mathbb{P}(A) = 1$. In particular, $\mathbb{P}(A) \approx 0.5073$ for $n = 23$. The value is exact for the stated model; real birthday data need not satisfy its assumptions.
