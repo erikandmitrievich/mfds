@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-19>
-#+lastmod: <2026-11-19 12:02>
+#+lastmod: <2026-11-19 16:54>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -72,12 +72,12 @@ Thus the verbal event is similar, but $\Omega$, $\mathcal{F}$, and $\mathbb{P}$ 
 
 For $N$ labeled objects and $k$ draws, the urn spaces give:
 
-| Sampling design                 | Sample space          | Cardinality                                      |
-| ordered, with replacement       | all tuples            | $N^k$                                            |
-| ordered, without replacement    | distinct-entry tuples | $N^{\underline{k}} = N!/(N-k)!$                  |
-| unordered, without replacement  | $k$-element subsets   | $\binom{N}{k} = N^{\underline{k}}/k!$            |
+| Sampling design                | Sample space          | Cardinality                           |
+| ordered, with replacement      | all tuples            | $N^k$                                 |
+| ordered, without replacement   | distinct-entry tuples | $N^{\underline{k}} = N!/(N-k)!$       |
+| unordered, without replacement | \(k\)-element subsets | $\binom{N}{k} = N^{\underline{k}}/k!$ |
 
-The last identity holds because every $k$-element subset has $k!$ orderings. Unordered multisets produced by sampling with replacement are generally not equally likely, so their number is not automatically a denominator in a probability calculation.
+The last identity holds because every \(k\)-element subset has $k!$ orderings. Unordered multisets produced by sampling with replacement are generally not equally likely, so their number is not automatically a denominator in a probability calculation.
 
 * A complement calculation: repeated digits in a PIN
 
@@ -97,7 +97,11 @@ The subtraction corrects double counting; the final term restores elements that 
 
 The corresponding probability formula is
 
-\[ \mathbb{P}(A \cup B \cup C) = \mathbb{P}(A) + \mathbb{P}(B) + \mathbb{P}(C) - \mathbb{P}(A \cap B) - \mathbb{P}(A \cap C) - \mathbb{P}(B \cap C) + \mathbb{P}(A \cap B \cap C) \]
+\begin{align*}
+\mathbb{P}(A \cup B \cup C) &= \mathbb{P}(A) + \mathbb{P}(B) + \mathbb{P}(C) \\
+&\quad - \mathbb{P}(A \cap B) - \mathbb{P}(A \cap C) - \mathbb{P}(B \cap C) \\
+&\quad + \mathbb{P}(A \cap B \cap C)
+\end{align*}
 
 It follows by multiplying the indicator identity by $p(\omega)$ and summing over $\omega \in \Omega$.
 
