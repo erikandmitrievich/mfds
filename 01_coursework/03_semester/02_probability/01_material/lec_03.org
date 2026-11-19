@@ -1,0 +1,141 @@
+#+title: Lec 03: Conditional Probability, Bayes' Theorem, and Independence
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-11-19>
+#+lastmod: <2026-11-19 17:05>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Conditional probability
+
+Let $A, B \in \mathcal{F}$ with $\mathbb{P}(B) > 0$. The conditional probability of $A$ given $B$ is
+
+\[ \mathbb{P}(A \mid B) = \frac{\mathbb{P}(A \cap B)}{\mathbb{P}(B)} \]
+
+Conditioning restricts the relevant outcomes to $B$, then renormalizes their total probability to one. For a finite uniform law,
+
+\[ \mathbb{P}(A \mid B) = \frac{\lvert A \cap B \rvert}{\lvert B \rvert} \]
+
+For each fixed $B$ with positive probability, the map $A \mapsto \mathbb{P}(A \mid B)$ is itself a probability measure on $(\Omega, \mathcal{F})$.
+
+*Example 1 (Two dice).* Roll two fair dice. If $A$ is the event that both dice show six and $B$ the event that at least one die shows six, then
+
+\[ \mathbb{P}(A \mid B) = \frac{1}{11} \]
+
+The new information changes the relevant universe from 36 outcomes to the 11 outcomes in $B$.
+
+* Multiplication and chain rules
+
+Rearranging the definition gives
+
+\[ \mathbb{P}(A \cap B) = \mathbb{P}(A \mid B)\mathbb{P}(B) \]
+
+If both conditioning directions are defined, then
+
+\[ \mathbb{P}(A \mid B)\mathbb{P}(B) = \mathbb{P}(B \mid A)\mathbb{P}(A) \]
+
+More generally, provided the conditioning events have positive probability,
+
+\[ \mathbb{P}\left( \bigcap_{i=1}^{n} A_i \right) = \mathbb{P}(A_1) \prod_{i=2}^{n} \mathbb{P}\left( A_i \mid \bigcap_{j=1}^{i-1} A_j \right) \]
+
+#+begin_proof
+The proof follows by induction. For $n = 2$, the statement is the multiplication rule. For the induction step, note that
+
+\begin{align*}
+\mathbb{P}\left( \bigcap_{i=1}^{n+1} A_i \right) &= \mathbb{P}\left( \left( \bigcap_{i=1}^{n} A_i \right) \cap A_{n+1} \right) \\
+&= \mathbb{P}\left( \bigcap_{i=1}^{n} A_i \right) \mathbb{P}\left( A_{n+1} \mid \bigcap_{j=1}^{n} A_j \right) \\
+&= \mathbb{P}(A_1) \prod_{i=2}^{n} \mathbb{P}\left( A_i \mid \bigcap_{j=1}^{i-1} A_j \right) \mathbb{P}\left( A_{n+1} \mid \bigcap_{j=1}^{n} A_j \right)
+\end{align*}
+
+The second equality is the multiplication rule, and the last equality follows from the induction hypothesis. $\blacksquare$
+#+end_proof
+
+For example, an urn contains five red and seven blue balls. Without replacement, if $R_i$ denotes red on draw $i$, then
+
+\[ \mathbb{P}(R_1 \cap R_2) = \mathbb{P}(R_2 \mid R_1)\mathbb{P}(R_1) = \frac{4}{11} \cdot \frac{5}{12} \]
+
+* Total probability and Bayes' theorem
+
+Events $B_1, \dots, B_K \in \mathcal{F}$ form a partition of $\Omega$ if they are pairwise disjoint and
+
+\[ \Omega = \bigcup_{j=1}^{K} B_j \]
+
+If every partition cell has positive probability, then
+
+\[ \mathbb{P}(A) = \sum_{j=1}^{K} \mathbb{P}(A \mid B_j)\mathbb{P}(B_j) \]
+
+Indeed, the events $A \cap B_j$ are pairwise disjoint and have union $A$.
+
+For $\mathbb{P}(A) > 0$, Bayes' theorem gives
+
+\[ \mathbb{P}(B_j \mid A) = \frac{\mathbb{P}(A \mid B_j)\mathbb{P}(B_j)}{\sum_{\ell=1}^{K} \mathbb{P}(A \mid B_\ell)\mathbb{P}(B_\ell)} \]
+
+For the special partition $(A, A^c)$, let $B$ be an event with $\mathbb{P}(B) > 0$, and assume $0 < \mathbb{P}(A) < 1$. Bayes' theorem becomes the binary Bayes rule
+
+\[ \mathbb{P}(A \mid B) = \frac{\mathbb{P}(B \mid A)\mathbb{P}(A)}{\mathbb{P}(B \mid A)\mathbb{P}(A) + \mathbb{P}(B \mid A^c)\mathbb{P}(A^c)} \]
+
+The two terms in the denominator are the two mutually exclusive routes by which $B$ can occur.
+
+** Diagnostic-test example
+
+Let $D$ denote a condition and $T^+$ a positive test. This is the binary formula with $A = D$ and $B = T^+$. Suppose
+
+\[ \mathbb{P}(D) = 0.01, \quad \mathbb{P}(T^+ \mid D) = 0.95, \quad \mathbb{P}(T^+ \mid D^c) = 0.10 \]
+
+The partition $(D, D^c)$ gives
+
+\[ \mathbb{P}(T^+) = 0.95 \cdot 0.01 + 0.10 \cdot 0.99 = 0.1085 \]
+
+Therefore
+
+\[ \mathbb{P}(D \mid T^+) = \frac{0.95 \cdot 0.01}{0.95 \cdot 0.01 + 0.10 \cdot 0.99} \approx 0.0876 \]
+
+Equivalently, in a model population of 10 000, there are 95 true positives and 990 false positives. Thus $95/1085$ positive tests come from $D$.
+
+* Independence
+
+*Definition 1 (Independent events).* Events $A, B \in \mathcal{F}$ are independent, written $A \perp\!\!\!\perp B$, if
+
+\[ \mathbb{P}(A \cap B) = \mathbb{P}(A)\mathbb{P}(B) \]
+
+If $\mathbb{P}(B) > 0$, this is equivalent to
+
+\[ \mathbb{P}(A \mid B) = \mathbb{P}(A) \]
+
+Thus observing $B$ does not change the modeled probability of $A$. If $A \perp\!\!\!\perp B$, then each of $A^c \perp\!\!\!\perp B$, $A \perp\!\!\!\perp B^c$, and $A^c \perp\!\!\!\perp B^c$ also holds.
+
+Independence is different from disjointness. If $A \cap B = \emptyset$ and both events have positive probability, then
+
+\[ \mathbb{P}(A \cap B) = 0 \neq \mathbb{P}(A)\mathbb{P}(B) \]
+
+so the events are not independent.
+
+In the urn model, $R_1$ and $R_2$ are independent with replacement because
+
+\[ \mathbb{P}(R_2 \mid R_1) = \frac{5}{12} = \mathbb{P}(R_2) \]
+
+They are dependent without replacement because $4/11 \neq 5/12$.
+
+** Pairwise versus mutual independence
+
+Events $A_1, \dots, A_K$ are mutually independent if, for every nonempty $J \subseteq \{1, \dots, K\}$,
+
+\[ \mathbb{P}\left( \bigcap_{j \in J} A_j \right) = \prod_{j \in J} \mathbb{P}(A_j) \]
+
+Pairwise independence requires this equality only for pairs.
+
+For two fair coin tosses, let $A$ be first toss heads, $B$ second toss heads, and $C$ that both tosses agree. Each event has probability $1/2$, and each pairwise intersection has probability $1/4$. However,
+
+\[ \mathbb{P}(A \cap B \cap C) = \frac{1}{4} \neq \frac{1}{8} = \mathbb{P}(A)\mathbb{P}(B)\mathbb{P}(C) \]
+
+The three events are pairwise independent but not mutually independent.
