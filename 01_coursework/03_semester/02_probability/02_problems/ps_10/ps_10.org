@@ -1,0 +1,60 @@
+#+title: Ps 10
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-11-21>
+#+lastmod: <2026-11-21 13:52>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 1 :indicator:bernoulli:variance:
+** Task
+#+begin_quote
+*Conceptual.* In the opening Bernoulli model with $p = 0.2$, $n = 200$, and $\varepsilon = 0.1$, the exact tail probability is approximately $0.000604$, Chebyshev gives $0.08$, and Hoeffding gives $0.0367$. Reconstruct the event controlled by all three numbers and verify the two bounds from their assumptions. Draw a probability-scale diagram that represents the logical content of the three statements. Then respond to the claims "Hoeffding estimates the probability as 3.67%" and "Chebyshev is false because its number differs from the exact probability." Explain why the tighter of two valid bounds need not use more detailed distributional information.
+#+end_quote
+
+** Solution
+
+* Problem 2 :bernoulli:variance:independence:
+** Task
+#+begin_quote
+*Mathematical.* Let $n \in \mathbb{N}$, $p \in (0, 1)$, $\varepsilon > 0$, and $\delta \in (0, 1)$. Let $X_1, \dots, X_n$ be independent Bernoulli variables with parameter $p$, and define $\overline{X}_n = n^{-1} \sum_{i=1}^{n} X_i$.
+
+(a) Starting from Chebyshev's and Hoeffding's inequalities, derive two sufficient integer sample sizes that each guarantee
+
+\[ P(|\overline{X}_n - p| \geq \varepsilon) \leq \delta \]
+
+Use the known variance $p(1 - p)$ in Chebyshev's bound.
+
+(b) Evaluate both guarantees for $p = 0.2$, $\varepsilon = 0.05$, and $\delta = 0.05$, rounding up to an integer, and identify the smaller guarantee.
+
+(c) Before integer rounding, determine how each requirement changes when the tolerance is halved, and when the target failure probability is replaced by $\delta/10$. Explain why these sufficient sample sizes need not be the smallest sample sizes for which the exact tail probability is at most $\delta$.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+* Problem 3 :binomial:simulation:bernoulli:
+** Task
+#+begin_quote
+*Python/data.* Fix $p = 0.2$ and $\varepsilon = 0.1$. For a grid of sample sizes from 20 to 500, compute the exact value of
+
+\[ P(|\overline{X}_n - p| \geq \varepsilon) \]
+
+using the binomial PMF. On the same logarithmic plot show the Chebyshev bound $p(1 - p)/(n\varepsilon^2)$, the Hoeffding bound $2e^{-2n\varepsilon^2}$, and Monte Carlo estimates based on at least 50,000 repetitions for selected $n$. Cap displayed bounds at one but retain their raw values for calculations. Explain the staircase pattern of the exact probability, compare the decay rates, and identify ranges where a bound is valid but uninformative.
+#+end_quote
+
+** Solution
