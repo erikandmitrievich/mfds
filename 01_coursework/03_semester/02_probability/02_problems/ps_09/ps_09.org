@@ -1,0 +1,97 @@
+#+title: Ps 09
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-11-21>
+#+lastmod: <2026-11-21 13:52>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Problem 1 :convolution:covariance:independence:
+** Task
+#+begin_quote
+*Conceptual.* Let $D_1, D_2$ each be uniform on $\{1, \dots, 6\}$. In model A the dice are independent; in model B, $D_2 = 7 - D_1$.
+
+(a) Derive the joint PMF and the complete distribution of $D_1 + D_2$ in each model.
+
+(b) Compute $\operatorname{Cov}(D_1, D_2)$ and $\operatorname{Var}(D_1 + D_2)$ in both models.
+
+(c) Exhibit a pair of die values for which the joint-PMF factorization fails in model B. Use your sum laws to explain why convolving the marginals works in model A but not in model B.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+* Problem 2 :convolution:density:independence:
+** Task
+#+begin_quote
+*Mathematical.* Let $\lambda > 0$, and let $X \sim \text{Unif}(0, 1)$ and $Y \sim \text{Exp}(\lambda)$ be independent. Set $W \coloneqq X + Y$.
+
+(a) Draw the support conditions in the convolution integral. Derive an everywhere-defined density $f_W$, treating $w < 0$, $0 \leq w \leq 1$, and $w > 1$ separately.
+
+(b) Verify normalization and compute $P(W \leq 1)$.
+
+(c) Compute $\mathbb{E}[W]$ and $\operatorname{Var}(W)$. State which parts of your solution use independence.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+* Problem 3 :convolution:simulation:independence:
+** Task
+#+begin_quote
+*Python/data.* Use ~lecture_09_examples.ipynb~ and the biased-die PMF
+
+\[ (p_1, \dots, p_6) = (0.05, 0.10, 0.15, 0.20, 0.20, 0.30), \quad p_j \coloneqq P(D = j), \quad j \in \{1, \dots, 6\} \]
+
+(a) Implement repeated convolution with ~numpy.convolve~ for the sum of $n = 1, 2, 5, 20$ independent throws. Explain how array indices correspond to sum values. Verify total mass, mean, and variance against the formulas for iid sums.
+
+(b) Produce a four-panel figure of the exact PMFs, marking each mean and labeling each support. Describe the changes without claiming that the plots prove a limit theorem.
+
+(c) For $n = 5$ or $n = 20$, simulate at least 100,000 sums. Compare empirical and exact PMFs in a figure and report the maximum absolute error. Explain the independence assumption encoded by the code.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+*** (c)
+
+* Problem 4 :convolution:independence:transformation:
+** Task
+#+begin_quote
+*Additional mathematical.* Let $X, Y$ be iid integer-valued random variables with common PMF $p$, and define $D \coloneqq X - Y$.
+
+(a) Derive the PMF of $D$ in terms of $p$. Prove that
+
+\[ P(D = k) = P(D = -k) \quad \text{for every } k \in \mathbb{Z} \]
+
+(b) Prove that
+
+\[ P(D = k) \leq P(D = 0) \quad \text{for every } k \in \mathbb{Z} \]
+
+Thus the difference is most likely to be zero, even when the original PMF is not symmetric. Your proof should apply to both finite and infinite integer supports.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
