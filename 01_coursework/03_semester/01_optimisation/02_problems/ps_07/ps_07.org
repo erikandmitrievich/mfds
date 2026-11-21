@@ -1,0 +1,95 @@
+* Problem 1 :linear_system:eigenvalue:
+** Task
+#+begin_quote
+Consider the matrices
+
+\[ A_1 = \begin{pmatrix} 2 & 0 & 1 \\ 1 & 2 & 0 \\ 0 & 1 & 2 \end{pmatrix}, \quad A_2 = \begin{pmatrix} 2 & 0 & 1 \\ 1 & 1 & 0 \\ 0 & 1 & 1 \end{pmatrix}, \quad A_3 = \begin{pmatrix} 1 & 0 & 1 \\ 1 & 1 & 0 \\ 0 & 1 & 1 \end{pmatrix} \]
+
+a) Which of these 3 matrices is strictly diagonally dominant?
+
+b) Investigate the convergence of Jacobi's method with respect to $A_1$, $A_2$, and $A_3$ and the right-handside $b = (0, 0, 0)^\top$ and the initial vector $x^{(0)} = (1, 1, 1)^\top$ by explicitly computing and simplifying the recursion.
+#+end_quote
+
+** Solution
+*** a)
+
+*** b)
+
+* Problem 2 :linear_system:programming:
+** Task
+#+begin_quote
+Jacobi:
+
+\[ x_i^{(k+1)} = \frac{1}{a_{i,i}} \left( b_i - \sum_{j \neq i} a_{i,j} x_j^{(k)} \right), \quad i = 1, \dots, n \tag{1} \]
+
+\[ = \frac{1}{a_{i,i}} \left( b_i - \sum_{j=1}^{n} a_{i,j} x_j^{(k)} \right) + x_i^{(k)} \tag{2} \]
+
+Gauss-Seidel:
+
+\[ x_i^{(k+1)} = \frac{1}{a_{i,i}} \left( b_i - \sum_{j=1}^{i-1} a_{i,j} x_j^{(k+1)} - \sum_{j=i+1}^{n} a_{i,j} x_j^{(k)} \right), \quad i = 1, \dots, n \tag{3} \]
+
+a) Implement both schemes in Python as myJacobi and myGaussSeidel in-situ, i.e., without keeping all the iterates.
+
+b) Find some illustrative examples and observe the rule of thumb: Gauss-Seidel requires fewer iterations than Jacobi's method.
+
+c) Implement a parallel version of Jacobi's method, find some illustrative examples, and observe that it is indeed faster (you can do this either in Python or Julia)
+#+end_quote
+
+** Solution
+*** a)
+
+*** b)
+
+*** c)
+#+begin_src julia :results value :exports both :tangle julia/p_2c.jl
+#+end_src
+
+* Problem 3 :linear_system:eigenvalue:
+** Task
+#+begin_quote
+Given a matrix $X \in \mathbb{R}^{n \times d}$, a vector $y \in \mathbb{R}^n$, and $\lambda > 0$, ridge regression minimizes
+
+\[ J(w) = \frac{1}{2} \lVert X w - y \rVert_2^2 + \frac{\lambda}{2} \lVert w \rVert_2^2, \quad w \in \mathbb{R}^d \]
+
+(a) Compute the gradient and Hessian of $J$. Show that its minimizer $w^*$ satisfies
+
+\[ A_\lambda w^* = b, \quad A_\lambda = X^\top X + \lambda I_d, \quad b = X^\top y \]
+
+Prove that $A$ is symmetric positive definite whenever $\lambda > 0$.
+
+(b) Richardson iteration with parameter $\omega > 0$ is
+
+\[ w^{(k+1)} = w^{(k)} + \omega \left( b - A w^{(k)} \right) \]
+
+Show that this is gradient descent applied to $J$ with step size $\omega$.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+* Problem 4 :condition_number:eigenvalue:linear_system:
+** Task
+#+begin_quote
+Consider the definitions of the previous problem and use
+
+\[ X = \begin{pmatrix} 1 & 0 \\ 0 & 1 \\ 1 & 1 \end{pmatrix}, \quad y = \begin{pmatrix} 1 \\ 2 \\ 2 \end{pmatrix}, \quad \lambda = 1 \]
+
+(a) Determine the eigenvalues of $A_\lambda = X^\top X + \lambda I_2$ and its condition number
+
+\[ \kappa_2(A_\lambda) = \frac{\lambda_{\max}(A_\lambda)}{\lambda_{\min}(A_\lambda)} \]
+
+Explain how increasing $\lambda$ affects conditioning and the solution $w^*$.
+
+(b) Solve the minimization problem with $\lambda = 1$ by applying each method, Richardson, Jacobi, and Gauss-Seidl in Python.
+#+end_quote
+
+** Solution
+*** (a)
+
+*** (b)
+
+* Errors/Typos
+- Problem 3: "$A$ is symmetric positive definite" → "$A_\lambda$ is symmetric positive definite"
+- Problem 4: "Gauss-Seidl" → "Gauss-Seidel"
