@@ -1,0 +1,173 @@
+#+title: Lec 09: Sums of Random Variables and Convolution
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-11-21>
+#+lastmod: <2026-11-21 14:10>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Sums and dependence
+
+Suppose $X, Y \sim \text{Bernoulli}(1/2)$, and let $W \coloneqq X + Y$. The same two marginal laws can coexist with very different sum laws:
+
+|                    | $\mathbb{P}(W = 0)$ | $\mathbb{P}(W = 1)$ | $\mathbb{P}(W = 2)$ |
+|--------------------+---------------------+---------------------+---------------------|
+| $X, Y$ independent | $1/4$               | $1/2$               | $1/4$               |
+| $Y = X$            | $1/2$               | $0$                 | $1/2$               |
+| $Y = 1 - X$        | $0$                 | $1$                 | $0$                 |
+
+Thus the marginal laws do not determine the law of a sum unless dependence information is supplied.
+
+* The distribution of a sum
+
+Let $X, Y \colon \Omega \to \mathbb{R}$ be random variables on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, and set $W \coloneqq X + Y$. If $X, Y$ are integer-valued, then
+
+\[ p_W(w) = \sum_{x \in \mathbb{Z}} p_{X,Y}(x, w - x) \quad \text{for every } w \in \mathbb{Z} \]
+
+If $(X, Y)$ has a joint density $f_{X,Y}$, define
+
+\[ h(w) \coloneqq \int_{\mathbb{R}} f_{X,Y}(x, w - x) \, dx \quad \text{for every } w \in \mathbb{R} \]
+
+One choice of density of $W$ is $f_W(w) \coloneqq h(w)$ where $h(w) < \infty$, and $f_W(w) \coloneqq 0$ otherwise. The exceptional set has length zero, so this convention does not change probability integrals. Neither formula requires independence.
+
+* Convolution
+
+Let $g, h \colon \mathbb{Z} \to [0, \infty)$ have finite sums. Define
+
+\[ (g * h)(w) \coloneqq \sum_{x \in \mathbb{Z}} g(x) h(w - x) \quad \text{for every } w \in \mathbb{Z} \]
+
+For nonnegative integrable Borel functions $g, h \colon \mathbb{R} \to [0, \infty)$, define
+
+\[ (g * h)(w) \coloneqq \int_{\mathbb{R}} g(x) h(w - x) \, dx \]
+
+where finite, and set it to zero at the exceptional coordinates where the integral is infinite.
+
+If $X, Y$ are independent integer-valued random variables, then $p_{X+Y} = p_X * p_Y$. If instead they are independent with densities $f_X, f_Y$, one choice is $f_{X+Y} = f_X * f_Y$. Independence allows us to replace the joint law by the product of the marginals.
+
+For a PMF or density $g$, define $g^{*1} \coloneqq g$ and $g^{*n} \coloneqq g^{*(n-1)} * g$ for every integer $n \geq 2$. If $X_1, \dots, X_n$ are mutually independent with common PMF $p$ or common density $f$, the sum $T_n \coloneqq \sum_{i=1}^{n} X_i$ has PMF $p^{*n}$ or density $f^{*n}$. Pairwise independence alone is not the assumption here.
+
+/Supplementary identity./ For PMFs, or for densities with equalities understood almost everywhere, convolution is commutative and associative:
+
+\[ g * h = h * g, \quad (g * h) * r = g * (h * r) \]
+
+The convolution of PMFs is a PMF, and the convolution of densities is a density. The full algebra proof is supplementary reading.
+
+* Two examples
+
+** Two fair dice
+
+For $D_1, D_2 \overset{\text{iid}}{\sim} \text{Unif}(\{1, \dots, 6\})$ and every $w \in \mathbb{Z}$,
+
+\[ \mathbb{P}(D_1 + D_2 = w) = \begin{cases}
+\dfrac{6 - \lvert 7 - w \rvert}{36}, & w = 2, \dots, 12, \\
+0, & \text{otherwise}
+\end{cases} \]
+
+The numerator counts the entries on the anti-diagonal $d_1 + d_2 = w$ of the $6 \times 6$ joint table.
+
+** Two independent uniforms
+
+Let $X, Y \overset{\text{iid}}{\sim} \text{Unif}(0, 1)$. Then
+
+\begin{align*}
+f_{X+Y}(w) &= \int_{\mathbb{R}} \mathbf{1}_{[0,1]}(x) \mathbf{1}_{[0,1]}(w - x) \, dx \\
+           &= \text{length}\left( [0, 1] \cap [w - 1, w] \right)
+\end{align*}
+
+so
+
+\[ f_{X+Y}(w) = \begin{cases}
+w, & 0 \leq w \leq 1, \\
+2 - w, & 1 < w \leq 2, \\
+0, & \text{otherwise}
+\end{cases} \]
+
+Support conditions determine the integration limits.
+
+* Moments of sums
+
+Let $n \in \mathbb{N}$, let $X_1, \dots, X_n$ be real-valued random variables on the same probability space, and set $T_n \coloneqq \sum_{i=1}^{n} X_i$. If all $X_i$ are integrable, then
+
+\[ \mathbb{E}[T_n] = \sum_{i=1}^{n} \mathbb{E}[X_i] \]
+
+without independence. If all $X_i$ have finite second moments, then
+
+\[ \operatorname{Var}(T_n) = \sum_{i=1}^{n} \operatorname{Var}(X_i) + 2 \sum_{1 \leq i < j \leq n} \operatorname{Cov}(X_i, X_j) \]
+
+For two real-valued random variables $X, Y$ on the same probability space with finite second moments, this gives
+
+\[ \operatorname{Var}(X + Y) = \operatorname{Var}(X) + \operatorname{Var}(Y) + 2 \operatorname{Cov}(X, Y) \]
+
+These identities do not require covariance matrices. If the variables are independent, the covariance terms vanish. In particular, if the variables are iid with mean $\mu$ and variance $\sigma^2$,
+
+\[ \mathbb{E}[T_n] = n\mu, \quad \operatorname{Var}(T_n) = n\sigma^2 \]
+
+* Poisson sums
+
+Let $\lambda, \nu > 0$, and let $X \sim \text{Poisson}(\lambda)$ and $Y \sim \text{Poisson}(\nu)$ be independent. For every $k \in \mathbb{N}_0$,
+
+\begin{align*}
+\mathbb{P}(X + Y = k) &= \sum_{j=0}^{k} e^{-\lambda} \frac{\lambda^j}{j!} e^{-\nu} \frac{\nu^{k-j}}{(k - j)!} \\
+                      &= \frac{e^{-(\lambda+\nu)}}{k!} \sum_{j=0}^{k} \binom{k}{j} \lambda^j \nu^{k-j} \\
+                      &= e^{-(\lambda+\nu)} \frac{(\lambda + \nu)^k}{k!}
+\end{align*}
+
+The last step is the binomial theorem. Since the sum is a nonnegative integer, its entire PMF is that of $\text{Poisson}(\lambda + \nu)$.
+
+* Moment-generating functions
+
+Let $X \colon \Omega \to \mathbb{R}$ be a random variable. Its moment-generating function (MGF) is
+
+\[ M_X(u) \coloneqq \mathbb{E}[e^{uX}] \]
+
+at every $u \in \mathbb{R}$ for which the expectation is finite. In particular, $M_X(0) = 1$.
+
+Let $n \in \mathbb{N}$, let $X_1, \dots, X_n$ be mutually independent, and set $T_n \coloneqq \sum_{i=1}^{n} X_i$. At every $u \in \mathbb{R}$ with $M_{X_i}(u) < \infty$ for all $i$,
+
+\[ M_{T_n}(u) = \prod_{i=1}^{n} M_{X_i}(u) \]
+
+If the summands have the same law as $X$, then $M_{T_n}(u) = M_X(u)^n$.
+
+For $p \in [0, 1]$ and $X \sim \text{Bernoulli}(p)$,
+
+\[ M_X(u) = (1 - p) + p e^u \quad \text{for every } u \in \mathbb{R} \]
+
+Consequently, for a binomial count $S_n \sim \text{Binomial}(n, p)$,
+
+\[ M_{S_n}(u) = (1 - p + p e^u)^n \quad \text{for every } u \in \mathbb{R} \]
+
+If $X$ takes values in a finite set $A \subseteq \mathbb{R}$, differentiating the finite sum shows, for every $k \in \mathbb{N}$,
+
+\[ M_X^{(k)}(0) = \sum_{x \in A} x^k p_X(x) = \mathbb{E}[X^k] \]
+
+** Supplementary formulas
+
+If there exists $a > 0$ such that $M_X(u) < \infty$ for every $u \in (-a, a)$, differentiation under the expectation is justified and $M_X^{(k)}(u) = \mathbb{E}[X^k e^{uX}]$ for every $k \in \mathbb{N}$ and $u \in (-a, a)$. The general domination argument is supplementary.
+
+For $\lambda > 0$, $\mu \in \mathbb{R}$, and $\sigma > 0$, the following MGFs are finite for every $u \in \mathbb{R}$:
+
+| law of $X$                   | $M_X(u)$                           |
+|------------------------------+------------------------------------|
+| $\text{Poisson}(\lambda)$    | $\exp\{\lambda(e^u - 1)\}$         |
+| $\mathcal{N}(\mu, \sigma^2)$ | $\exp\{\mu u + \sigma^2 u^2 / 2\}$ |
+
+The uniqueness theorem says that two MGFs finite and equal on an open interval containing zero determine the same distribution. This theorem is stated without proof and is not needed for Lecture 10's tail bounds.
+
+For independent summands, multiplying MGFs and using uniqueness gives the additional closure rules
+
+\begin{gather*}
+\text{Binomial}(m, p) + \text{Binomial}(n, p) \implies \text{Binomial}(m + n, p) \\
+\mathcal{N}(\mu_1, \sigma_1^2) + \mathcal{N}(\mu_2, \sigma_2^2) \implies \mathcal{N}(\mu_1 + \mu_2, \sigma_1^2 + \sigma_2^2)
+\end{gather*}
+
+for $m, n \in \mathbb{N}$, $p \in [0, 1]$, $\mu_1, \mu_2 \in \mathbb{R}$, and $\sigma_1, \sigma_2 > 0$.
