@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-21>
-#+lastmod: <2026-11-21 13:52>
+#+lastmod: <2026-11-23 18:47>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -24,6 +24,29 @@
 
 ** Solution
 
+Let $S \coloneqq 200 \, \overline{X}_{200} \sim \operatorname{Binomial}(200, 0.2)$. All three numbers concern
+
+\[ A \coloneqq \{\lvert \overline{X}_{200} - 0.2 \rvert \geq 0.1\} = \{S \leq 20\} \cup \{S \geq 60\} \]
+
+\begin{align*}
+\mathbb{P}(A) &= \sum_{\lvert k - 40 \rvert \geq 20} \binom{200}{k} 0.2^k \, 0.8^{200 - k} \approx 0.000604 && \text{(exact)} \\
+\mathbb{P}(A) &\leq \frac{0.2 \cdot 0.8}{200 \cdot 0.1^2} = 0.08 && \text{(Chebyshev: } \operatorname{Var}(X_i) = 0.16 \text{)} \\
+\mathbb{P}(A) &\leq 2e^{-4} = 0.03663\dots \leq 0.0367 && \text{(Hoeffding: } 0 \leq X_i \leq 1 \text{)}
+\end{align*}
+
+#+begin_example
+           0                 0.0367                0.08      0.1     1
+           |-----------------+---------------------+---------|--//---|
+exact      *                                                            P(A) = 0.000604
+Hoeffding  [=================]                                          P(A) <= 0.0367
+Chebyshev  [=======================================]                    P(A) <= 0.08
+#+end_example
+
+- Hoeffding asserts only $\mathbb{P}(A) \leq 0.0367$. That is a bound, not an estimate, and the true value is $60$ times smaller.
+- Chebyshev is true, since $0.000604 \leq 0.08$. It is loose, not false.
+
+From the mean $0.2$ and variance $0.0008$ alone, $0.08$ cannot be improved: $\mathbb{P}(Y = 0.1) = \mathbb{P}(Y = 0.3) = 0.04$, $\mathbb{P}(Y = 0.2) = 0.92$ attains it. Hoeffding does not use $p$, but independence and boundedness rule out such $Y$.
+
 * Problem 2 :bernoulli:variance:independence:
 ** Task
 #+begin_quote
@@ -43,9 +66,38 @@ Use the known variance $p(1 - p)$ in Chebyshev's bound.
 ** Solution
 *** (a)
 
+Chebyshev with $\operatorname{Var}(X_i) = p(1 - p)$ and Hoeffding with $0 \leq X_i \leq 1$ bound $\mathbb{P}(\lvert \overline{X}_n - p \rvert \geq \varepsilon)$ by the left sides below:
+
+\begin{align*}
+\frac{p(1 - p)}{n \varepsilon^2} \leq \delta &\iff n \geq \frac{p(1 - p)}{\delta \varepsilon^2} \\
+2e^{-2n\varepsilon^2} \leq \delta &\iff n \geq \frac{\log(2/\delta)}{2\varepsilon^2}
+\end{align*}
+
+Hence each of
+
+\[ n_C \coloneqq \left\lceil \frac{p(1 - p)}{\delta \varepsilon^2} \right\rceil, \qquad n_H \coloneqq \left\lceil \frac{\log(2/\delta)}{2\varepsilon^2} \right\rceil \]
+
+and every larger $n$ guarantees $\mathbb{P}(\lvert \overline{X}_n - p \rvert \geq \varepsilon) \leq \delta$.
+
 *** (b)
 
+\begin{align*}
+n_C &= \left\lceil \frac{0.2 \cdot 0.8}{0.05 \cdot 0.05^2} \right\rceil = 1280 \\
+n_H &= \left\lceil \frac{\log 40}{2 \cdot 0.05^2} \right\rceil = \lceil 737.78\dots \rceil = 738
+\end{align*}
+
+Hoeffding's $n_H = 738$ is the smaller guarantee.
+
 *** (c)
+
+With $N_C(\varepsilon, \delta)$, $N_H(\varepsilon, \delta)$ the expressions inside the ceilings:
+
+\begin{align*}
+N_C(\varepsilon/2, \delta) &= 4 N_C(\varepsilon, \delta), & N_C(\varepsilon, \delta/10) &= 10 N_C(\varepsilon, \delta) \\
+N_H(\varepsilon/2, \delta) &= 4 N_H(\varepsilon, \delta), & N_H(\varepsilon, \delta/10) &= N_H(\varepsilon, \delta) + \frac{\log 10}{2\varepsilon^2}
+\end{align*}
+
+Both come from upper bounds valid for every model satisfying the assumptions. The exact binomial tail lies below these bounds, so it can reach $\delta$ at a smaller $n$.
 
 * Problem 3 :binomial:simulation:bernoulli:
 ** Task
@@ -58,3 +110,56 @@ using the binomial PMF. On the same logarithmic plot show the Chebyshev bound $p
 #+end_quote
 
 ** Solution
+
+$S_n \coloneqq n \overline{X}_n \sim \operatorname{Binomial}(n, p)$. The event is tested in integers, because in floating point ~0.3 - 0.2 < 0.1~:
+
+\[ \lvert \overline{X}_n - 0.2 \rvert \geq 0.1 \iff \lvert 10 S_n - 2n \rvert \geq n \iff S_n \leq \lfloor n/10 \rfloor \text{ or } S_n \geq \lceil 3n/10 \rceil \]
+
+#+begin_src python :results output :exports both
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import binom
+
+p, eps = 0.2, 0.1
+ns = np.arange(20, 501)
+
+
+def exact(n):
+    k = np.arange(n + 1)
+    return binom.pmf(k, n, p)[np.abs(10 * k - 2 * n) >= n].sum()
+
+
+tail = np.array([exact(n) for n in ns])
+cheb = p * (1 - p) / (ns * eps**2)
+hoef = 2 * np.exp(-2 * ns * eps**2)
+
+rng = np.random.default_rng(10)
+n_mc = np.array([20, 50, 100, 150, 200, 250])
+mc = [np.mean(np.abs(10 * rng.binomial(n, p, 100_000) - 2 * n) >= n) for n in n_mc]
+
+print("Hoeffding > 1 for n <=", ns[hoef > 1].max())
+print("Chebyshev < Hoeffding for n <=", ns[cheb < hoef].max())
+print("fitted slope of log(exact):", round(np.polyfit(ns, np.log(tail), 1)[0], 3))
+
+plt.style.use("seaborn-v0_8-colorblind")
+plt.semilogy(ns, tail, drawstyle="steps-mid", label="exact")
+plt.semilogy(ns, np.minimum(cheb, 1), "--", label="Chebyshev")
+plt.semilogy(ns, np.minimum(hoef, 1), "-.", label="Hoeffding")
+plt.semilogy(n_mc, mc, "o", mfc="none", label="Monte Carlo")
+plt.xlabel("n")
+plt.ylabel("probability")
+plt.legend()
+plt.savefig("assets/p_03.png")
+#+end_src
+
+#+RESULTS:
+: Hoeffding > 1 for n <= 34
+: Chebyshev < Hoeffding for n <= 144
+: fitted slope of log(exact): -0.031
+
+[[file:assets/p_03.png]]
+
+- Staircase: the tail drops when $\lceil 3n/10 \rceil$ increases ($n \equiv 1, 4, 7 \pmod{10}$) and jumps up when $\lfloor n/10 \rfloor$ increases ($n \equiv 0 \pmod{10}$), since a PMF term leaves or enters the event. Between these $n$ it creeps up, because $S_{n+1} \geq S_n$.
+- Decay: Chebyshev $16/n$ falls polynomially, Hoeffding $2e^{-0.02n}$ exponentially, and the exact tail faster still, at about $e^{-0.031n}$.
+- Uninformative: Hoeffding is $> 1$ for $n \leq 34$, while Chebyshev stays $\leq 0.8$. The larger bound adds nothing: Hoeffding for $n \leq 144$, Chebyshev for $n \geq 145$.
+- Monte Carlo is shown only for $n \leq 250$, because beyond that $10^5$ repetitions see too few hits.
