@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-21>
-#+lastmod: <2026-11-21 13:52>
+#+lastmod: <2026-11-23 16:29>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -31,9 +31,62 @@
 ** Solution
 *** (a)
 
+Let $W \coloneqq D_1 + D_2$, so $\mathbb{P}(W = w) = \sum_{d} \mathbb{P}(D_1 = d, D_2 = w - d)$.
+
+*Model A.* By independence, $\mathbb{P}_A(D_1 = d_1, D_2 = d_2) = \frac{1}{36}$ for $(d_1, d_2) \in \{1, \dots, 6\}^2$, and $0$ otherwise. Then $\mathbb{P}_A(W = w)$ is $\frac{1}{36}$ times the number of cells on the anti-diagonal $d_1 + d_2 = w$, which is $w - 1$ for $w \leq 7$ and $13 - w$ for $w \geq 7$:
+
+$$\mathbb{P}_A(W = w) = \begin{cases} \dfrac{6 - \lvert 7 - w \rvert}{36}, & w = 2, \dots, 12, \\ 0, & \text{otherwise} \end{cases}$$
+
+*Model B.* $\mathbb{P}_B(D_1 = d_1, D_2 = d_2) = \frac{1}{6}$ if $d_1 \in \{1, \dots, 6\}$ and $d_2 = 7 - d_1$, and $0$ otherwise. Every nonzero cell has $d_1 + d_2 = 7$, so $\mathbb{P}_B(W = 7) = 1$ and $\mathbb{P}_B(W = w) = 0$ for $w \neq 7$.
+
 *** (b)
 
+For $i = 1, 2$ and in both models, $\mathbb{P}(D_i = k) = \frac{1}{6}$ for $k = 1, \dots, 6$, so
+
+\begin{align*}
+\mathbb{E}[D_i] &= \sum_{k=1}^{6} k \, \mathbb{P}(D_i = k) = \frac{1}{6} \sum_{k=1}^{6} k = \frac{21}{6} = \frac{7}{2} \\
+\mathbb{E}[D_i^2] &= \sum_{k=1}^{6} k^2 \, \mathbb{P}(D_i = k) = \frac{1}{6} \sum_{k=1}^{6} k^2 = \frac{91}{6} \\
+\operatorname{Var}(D_i) &= \mathbb{E}[D_i^2] - (\mathbb{E}[D_i])^2 = \frac{91}{6} - \frac{49}{4} = \frac{35}{12}
+\end{align*}
+
+In both models,
+
+\begin{align*}
+\operatorname{Cov}(D_1, D_2) &= \mathbb{E}[D_1 D_2] - \mathbb{E}[D_1]\,\mathbb{E}[D_2], \qquad \mathbb{E}[D_1 D_2] = \sum_{d_1} \sum_{d_2} d_1 d_2 \, \mathbb{P}(D_1 = d_1, D_2 = d_2) \\
+\operatorname{Var}(D_1 + D_2) &= \operatorname{Var}(D_1) + \operatorname{Var}(D_2) + 2 \operatorname{Cov}(D_1, D_2)
+\end{align*}
+
+*Model A.* By independence, $\mathbb{E}_A[D_1 D_2] = \mathbb{E}[D_1]\,\mathbb{E}[D_2]$, so $\operatorname{Cov}_A(D_1, D_2) = 0$ and $\operatorname{Var}_A(D_1 + D_2) = \frac{35}{12} + \frac{35}{12} = \frac{35}{6}$.
+
+*Model B.* Only the cells with $d_2 = 7 - d_1$ have positive probability $\frac{1}{6}$, so
+
+\begin{align*}
+\mathbb{E}_B[D_1 D_2] &= \frac{1}{6} \sum_{d=1}^{6} d (7 - d) = \frac{7 \cdot 21 - 91}{6} = \frac{28}{3} \\
+\operatorname{Cov}_B(D_1, D_2) &= \frac{28}{3} - \frac{49}{4} = -\frac{35}{12} \\
+\operatorname{Var}_B(D_1 + D_2) &= \frac{35}{12} + \frac{35}{12} - 2 \cdot \frac{35}{12} = 0
+\end{align*}
+
+consistent with $D_1 + D_2 = 7$ being constant by (a).
+
 *** (c)
+
+Take $(d_1, d_2) = (1, 1)$. In model B, $D_1 = 1$ forces $D_2 = 6$, so
+
+$$\mathbb{P}_B(D_1 = 1, D_2 = 1) = 0 \neq \frac{1}{36} = \mathbb{P}(D_1 = 1)\,\mathbb{P}(D_2 = 1)$$
+
+and the factorization fails.
+
+Compare the sum formula from (a) with the convolution of the marginals:
+
+\begin{align*}
+\mathbb{P}(W = w) &= \sum_{d} \mathbb{P}(D_1 = d, D_2 = w - d) \\
+(p_{D_1} * p_{D_2})(w) &= \sum_{d} \mathbb{P}(D_1 = d)\,\mathbb{P}(D_2 = w - d)
+\end{align*}
+
+The terms are equal exactly when the joint PMF factorizes.
+
+- Model A: it factorizes, so the convolution is the sum law from (a).
+- Model B: it fails. At $w = 2$ the only term is $d = 1$: $\mathbb{P}_B(D_1 = 1, D_2 = 1) = 0$, but $\mathbb{P}(D_1 = 1)\,\mathbb{P}(D_2 = 1) = \frac{1}{36}$.
 
 * Problem 2 :convolution:density:independence:
 ** Task
