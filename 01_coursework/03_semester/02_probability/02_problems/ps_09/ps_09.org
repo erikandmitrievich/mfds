@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-21>
-#+lastmod: <2026-11-23 16:29>
+#+lastmod: <2026-11-23 17:48>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -112,7 +112,12 @@ The terms are equal exactly when the joint PMF factorizes.
 #+begin_quote
 *Python/data.* Use ~lecture_09_examples.ipynb~ and the biased-die PMF
 
-\[ (p_1, \dots, p_6) = (0.05, 0.10, 0.15, 0.20, 0.20, 0.30), \quad p_j \coloneqq P(D = j), \quad j \in \{1, \dots, 6\} \]
+\begin{gather}
+\label{eq:1}
+(p_1, \dots, p_6) = (0.05, 0.10, 0.15, 0.20, 0.20, 0.30), \\
+p_j \coloneqq P(D = j), \\
+j \in \{1, \dots, 6\}
+\end{gather}
 
 (a) Implement repeated convolution with ~numpy.convolve~ for the sum of $n = 1, 2, 5, 20$ independent throws. Explain how array indices correspond to sum values. Verify total mass, mean, and variance against the formulas for iid sums.
 
@@ -124,9 +129,87 @@ The terms are equal exactly when the joint PMF factorizes.
 ** Solution
 *** (a)
 
+\[ p_{T_n} = p^{*n}, \quad \mathbb{E}[T_n] = n\mu, \quad \operatorname{Var}(T_n) = n\sigma^2, \quad \mu = 4.3, \ \sigma^2 = 2.31 \]
+
+~p[k]~ $= P(D = k + 1)$ and each convolution shifts the offset by $1$, so ~pmf[k]~ $= P(T_n = n + k)$ for $k = 0, \dots, 5n$.
+
+#+name: p3-setup
+#+begin_src python :results none
+import numpy as np
+
+p = np.array([0.05, 0.10, 0.15, 0.20, 0.20, 0.30])
+faces = np.arange(1, 7)
+mu = faces @ p
+sigma2 = faces**2 @ p - mu**2
+
+
+def sum_pmf(n):
+    pmf = p
+    for _ in range(n - 1):
+        pmf = np.convolve(pmf, p)
+    return np.arange(n, 6 * n + 1), pmf
+#+end_src
+
+#+begin_src python :noweb yes :results output :exports both
+<<p3-setup>>
+for n in (1, 2, 5, 20):
+    t, pmf = sum_pmf(n)
+    mean = t @ pmf
+    var = t**2 @ pmf - mean**2
+    print(n, np.round([pmf.sum(), mean, n * mu, var, n * sigma2], 4))
+#+end_src
+
+#+RESULTS:
+: 1 [1.   4.3  4.3  2.31 2.31]
+: 2 [1.   8.6  8.6  4.62 4.62]
+: 5 [ 1.   21.5  21.5  11.55 11.55]
+: 20 [ 1.  86.  86.  46.2 46.2]
+
 *** (b)
 
+#+begin_src python :noweb yes :results none :exports both
+<<p3-setup>>
+import matplotlib.pyplot as plt
+
+fig, axes = plt.subplots(2, 2)
+for ax, n in zip(axes.flat, (1, 2, 5, 20)):
+    t, pmf = sum_pmf(n)
+    ax.bar(t, pmf)
+    ax.axvline(n * mu, color="r")
+    ax.set_title(f"support {{{n}, ..., {6 * n}}}")
+fig.tight_layout()
+fig.savefig("assets/ps_09_p_03_b.png")
+#+end_src
+
+[[file:assets/ps_09_p_03_b.png]]
+
+The support widens and the mean moves right linearly in $n$, while the spread grows only like $\sqrt{n}$. The skewed single-throw PMF becomes a single, nearly symmetric peak. These are four fixed $n$, not evidence of a limit.
+
 *** (c)
+
+#+begin_src python :noweb yes :results output :exports both
+<<p3-setup>>
+import matplotlib.pyplot as plt
+
+rng = np.random.default_rng(9)
+sums = rng.choice(faces, size=(100_000, 20), p=p).sum(axis=1)
+
+t, exact = sum_pmf(20)
+empirical = np.bincount(sums - 20, minlength=t.size) / 100_000
+print(round(np.abs(empirical - exact).max(), 4))
+
+plt.bar(t, empirical, label="empirical")
+plt.plot(t, exact, "r", label="exact")
+plt.legend()
+plt.savefig("assets/ps_09_p_03_c.png")
+#+end_src
+
+#+RESULTS:
+: 0.0016
+
+[[file:assets/ps_09_p_03_c.png]]
+
+Each row holds $20$ mutually independent draws from $p$, the iid assumption behind $p^{*20}$.
 
 * Problem 4 :convolution:independence:transformation:
 ** Task
