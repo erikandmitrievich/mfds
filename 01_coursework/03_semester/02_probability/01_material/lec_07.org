@@ -1,0 +1,121 @@
+#+title: Lec 07: Expectation, Variance, and Functions of Random Variables
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-11-23>
+#+lastmod: <2026-11-23 15:23>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* The expected value
+
+Fix a probability space $(\Omega, \mathcal{F}, \mathbb{P})$. For a real-valued random variable $X$ on this space, write $\mathbb{P}_X$ for its law. We call $X$ integrable if $\mathbb{E}[|X|] < \infty$.
+
+For a discrete $X$ with countable support $S$ and PMF $p_X$,
+
+\[ \mathbb{E}[X] = \sum_{x \in S} x p_X(x), \qquad \mathbb{E}[|X|] < \infty \]
+
+If $X$ has a density $f_X$,
+
+\[ \mathbb{E}[X] = \int_{-\infty}^{\infty} x f_X(x) \, dx, \qquad \mathbb{E}[|X|] < \infty \]
+
+The unified definition is
+
+\[ \mathbb{E}[X] = \int_{\Omega} X \, d\mathbb{P} = \int_{\mathbb{R}} x \, d\mathbb{P}_X(x) \]
+
+For nonnegative $X$, these formulas also define an expectation in $[0, \infty]$; finiteness is not required.
+
+Expectation is a deterministic summary of the model's law. It has the same units as $X$, but need not be a possible value. For example, a fair die has expectation $3.5$, although no roll equals $3.5$.
+
+* Expected values of functions
+
+Let $X \colon \Omega \to \mathbb{R}$ be a random variable and let $g \colon \mathbb{R} \to \mathbb{R}$ be Borel-measurable. If $\mathbb{E}[|g(X)|] < \infty$, the law of the unconscious statistician gives
+
+\[ \mathbb{E}[g(X)] = \begin{cases}
+\sum_{x \in S} g(x) p_X(x), & X \text{ discrete} \\
+\int_{-\infty}^{\infty} g(x) f_X(x) \, dx, & X \text{ has a density}
+\end{cases} \]
+
+Here $S$ is the countable support and $p_X$ the PMF in the discrete case, and $f_X$ is the density in the continuous case. For nonnegative $g$, both formulas also hold without the integrability assumption, allowing $+\infty$. Thus one can calculate $\mathbb{E}[g(X)]$ without first deriving the distribution of $g(X)$.
+
+For example, if $\lambda > 0$ and $T \sim \mathrm{Exp}(\lambda)$, then
+
+\[ \mathbb{E}[T] = \int_0^{\infty} t \lambda e^{-\lambda t} \, dt = \frac{1}{\lambda}, \qquad \mathbb{E}[T^2] = \int_0^{\infty} t^2 \lambda e^{-\lambda t} \, dt = \frac{2}{\lambda^2} \]
+
+* Linearity and indicators
+
+Let $m \in \mathbb{N}$. For integrable random variables $X_1, \dots, X_m$ on the same probability space and constants $a_1, \dots, a_m, c \in \mathbb{R}$,
+
+\[ \mathbb{E}\left[ c + \sum_{j=1}^{m} a_j X_j \right] = c + \sum_{j=1}^{m} a_j \mathbb{E}[X_j] \]
+
+No independence assumption is needed.
+
+For an event $A$,
+
+\[ \mathbb{E}[\mathbf{1}_A] = \mathbb{P}(A) \]
+
+Therefore, if $C = \sum_{j=1}^{m} \mathbf{1}_{A_j}$ counts how many events occur, then
+
+\[ \mathbb{E}[C] = \sum_{j=1}^{m} \mathbb{P}(A_j) \]
+
+Again, the events need not be independent.
+
+As an example, draw $n$ labels independently and uniformly from $\{ 1, \dots, K \}$. If $D_{n,K}$ is the number of distinct labels observed, then
+
+\[ D_{n,K} = \sum_{j=1}^{K} \mathbf{1}_{A_j} \]
+
+where $A_j$ is the event that label $j$ appears. Since
+
+\[ \mathbb{P}(A_j) = 1 - \left( 1 - \frac{1}{K} \right)^n \]
+
+we obtain
+
+\[ \mathbb{E}[D_{n,K}] = K \left[ 1 - \left( 1 - \frac{1}{K} \right)^n \right] \]
+
+* Moments and variance
+
+Let $X$ be a real-valued random variable and $k \in \mathbb{N}$. If $\mathbb{E}[|X|^k] < \infty$, then $\mathbb{E}[X^k]$ is the $k$-th raw moment. A finite second moment implies $\mathbb{E}[|X|] < \infty$, since $|X| \leq 1 + X^2$. If $\mathbb{E}[X^2] < \infty$, define
+
+\[ \mu = \mathbb{E}[X], \qquad \mathrm{Var}(X) = \mathbb{E}[(X - \mu)^2], \qquad \mathrm{sd}(X) = \sqrt{\mathrm{Var}(X)} \]
+
+Variance has squared units; standard deviation has the same units as $X$.
+
+Expanding the square and using linearity yields
+
+\[ \mathrm{Var}(X) = \mathbb{E}[X^2] - \mathbb{E}[X]^2 \]
+
+For $a, b \in \mathbb{R}$,
+
+\[ \mathbb{E}[aX + b] = a\mathbb{E}[X] + b, \qquad \mathrm{Var}(aX + b) = a^2 \mathrm{Var}(X) \]
+
+Adding a constant changes the mean but not the spread. Multiplying by $a$ multiplies standard deviation by $|a|$.
+
+| Law                       | $\mathbb{E}[X]$ | $\mathrm{Var}(X)$ |
+|---------------------------+-----------------+-------------------|
+| $\mathrm{Bernoulli}(p)$   | $p$             | $p(1-p)$          |
+| $\mathrm{Binomial}(n, p)$ | $np$            | $np(1-p)$         |
+| $\mathrm{Poisson}(\lambda)$ | $\lambda$     | $\lambda$         |
+| $\mathrm{Unif}(a, b)$     | $(a+b)/2$       | $(b-a)^2/12$      |
+| $\mathrm{Exp}(\lambda)$   | $1/\lambda$     | $1/\lambda^2$     |
+| $\mathcal{N}(\mu, \sigma^2)$ | $\mu$        | $\sigma^2$        |
+
+* Model and sample moments
+
+The quantities $\mathbb{E}[X]$ and $\mathrm{Var}(X)$ belong to the model. From observed data $x_1, \dots, x_n$, we compute
+
+\[ \overline{x}_n = \frac{1}{n} \sum_{i=1}^{n} x_i, \qquad \hat{\sigma}_n^2(x_{1:n}) = \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \overline{x}_n)^2 \]
+
+Here $x_{1:n} = (x_1, \dots, x_n)$ and $n \geq 2$. These summaries vary from sample to sample; we compare them with the known moments of a specified model. If a simulation is repeated $B$ times and gives estimates $\hat{q}^{(1)}, \dots, \hat{q}^{(B)}$ of an exact target $q$, empirical Monte Carlo error can be summarized by
+
+\[ \widehat{\mathrm{Bias}}_{\mathrm{MC}} = \frac{1}{B} \sum_{b=1}^{B} (\hat{q}^{(b)} - q), \qquad \widehat{\mathrm{RMSE}}_{\mathrm{MC}} = \left[ \frac{1}{B} \sum_{b=1}^{B} (\hat{q}^{(b)} - q)^2 \right]^{1/2} \]
+
+Means and variances are sensitive to unusually large observations because they depend on $x_i$ and $x_i^2$, respectively.

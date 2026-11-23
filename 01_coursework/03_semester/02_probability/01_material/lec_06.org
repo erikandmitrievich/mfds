@@ -1,0 +1,126 @@
+#+title: Lec 06: Standard Continuous Distributions
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-11-23>
+#+lastmod: <2026-11-23 15:24>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+All distributional statements below concern real-valued random variables on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$. Displayed density formulas specify chosen functions; a distribution does not determine its density uniquely.
+
+* From Poisson counts to exponential waiting times
+
+Fix a rate $\rho > 0$, and let $N_t$ count stable-rate arrivals by time $t \geq 0$, with $N_0 = 0$ and $N_t \sim \text{Poisson}(\rho t)$ for every $t > 0$. Define the first-arrival time
+
+\[ T \coloneqq \inf\{ t \geq 0 : N_t \geq 1 \} \]
+
+Since $\{T > t\} = \{N_t = 0\}$ for every $t \geq 0$,
+
+\[ \mathbb{P}(T > t) = e^{-\rho t} \quad \text{for every } t \geq 0 \]
+
+Moreover, for each fixed $t \geq 0$, as $h \downarrow 0$,
+
+\[ \mathbb{P}(t < T \leq t + h) = \rho e^{-\rho t} h + o(h) \]
+
+so $\rho e^{-\rho t}$ is the local probability per unit time.
+
+* Densities and probabilities
+
+Let $X$ have density $f_X$. For every $C \in \mathcal{B}(\mathbb{R})$ and every $x \in \mathbb{R}$,
+
+\[ \mathbb{P}(X \in C) = \int_C f_X(x) \, dx, \qquad F_X(x) = \int_{-\infty}^{x} f_X(t) \, dt \]
+
+If the chosen density $f_X$ is continuous at $x \in \mathbb{R}$, then for small $h > 0$,
+
+\[ \mathbb{P}(x < X \leq x + h) \approx f_X(x) h \]
+
+Thus a density is probability per unit of the horizontal variable. It may exceed one, but its total area is one. For every $x \in \mathbb{R}$, $\mathbb{P}(X = x) = 0$.
+
+* Uniform and exponential laws
+
+Let $a, b \in \mathbb{R}$ with $a < b$. We write $X \sim \text{Unif}(a, b)$ when $X$ has the density
+
+\[ f_X(x) \coloneqq \frac{1}{b - a} \mathbf{1}_{[a,b]}(x) \quad \text{for every } x \in \mathbb{R} \]
+
+For every $x \in \mathbb{R}$ and every $u \in (0, 1)$, its CDF and quantile function satisfy
+
+\[ F_X(x) = \begin{cases}
+  0, & x < a, \\
+  (x - a)/(b - a), & a \leq x \leq b, \\
+  1, & x > b,
+\end{cases} \qquad F_X^{-1}(u) = a + (b - a)u \]
+
+Let $\lambda > 0$. We write $T \sim \text{Exp}(\lambda)$ when $T$ has the density
+
+\[ f_T(t) \coloneqq \lambda e^{-\lambda t} \mathbf{1}_{[0,\infty)}(t) \quad \text{for every } t \in \mathbb{R} \]
+
+For every $t \geq 0$,
+
+\[ F_T(t) = 1 - e^{-\lambda t}, \qquad \overline{F}_T(t) \coloneqq 1 - F_T(t) = e^{-\lambda t} \]
+
+For $t < 0$, we have $F_T(t) = 0$ and $\overline{F}_T(t) = 1$. Moreover,
+
+\[ F_T^{-1}(u) = -\frac{\log(1 - u)}{\lambda} \quad \text{for every } u \in (0, 1) \]
+
+The exponential law is memoryless: for every $s, t \geq 0$,
+
+\[ \mathbb{P}(T > s + t \mid T > s) = \frac{e^{-\lambda(s+t)}}{e^{-\lambda s}} = \mathbb{P}(T > t) \]
+
+* Location and scale
+
+Let $Z$ have density $f_Z$, CDF $F_Z$, and quantile function $F_Z^{-1}$. Further, let $\mu \in \mathbb{R}$, let $\sigma > 0$, and define $X \coloneqq \mu + \sigma Z$. One choice of density of $X$ is
+
+\[ f_X(x) \coloneqq \frac{1}{\sigma} f_Z\left( \frac{x - \mu}{\sigma} \right) \quad \text{for every } x \in \mathbb{R} \]
+
+The factor $1/\sigma$ preserves the total area under the density. The CDF and quantile function satisfy
+
+\begin{align*}
+F_X(x) &= F_Z\left( \frac{x - \mu}{\sigma} \right) && \text{for every } x \in \mathbb{R}, \\
+F_X^{-1}(u) &= \mu + \sigma F_Z^{-1}(u) && \text{for every } u \in (0, 1)
+\end{align*}
+
+* The normal law
+
+Define $\phi \colon \mathbb{R} \to [0, \infty)$ and $\Phi \colon \mathbb{R} \to [0, 1]$, for every $z \in \mathbb{R}$, by
+
+\[ \phi(z) \coloneqq \frac{1}{\sqrt{2\pi}} e^{-z^2/2}, \qquad \Phi(z) \coloneqq \int_{-\infty}^{z} \phi(t) \, dt \]
+
+For $\mu \in \mathbb{R}$ and $\sigma > 0$, we write $X \sim \mathcal{N}(\mu, \sigma^2)$ when $X$ has the density
+
+\[ f_X(x) \coloneqq \frac{1}{\sigma} \phi\left( \frac{x - \mu}{\sigma} \right) \quad \text{for every } x \in \mathbb{R} \]
+
+For $X \sim \mathcal{N}(\mu, \sigma^2)$, standardization gives
+
+\[ Z \coloneqq \frac{X - \mu}{\sigma} \sim \mathcal{N}(0, 1) \]
+
+For every $a, b \in \mathbb{R}$ with $a < b$,
+
+\[ \mathbb{P}(a \leq X \leq b) = \Phi\left( \frac{b - \mu}{\sigma} \right) - \Phi\left( \frac{a - \mu}{\sigma} \right) \]
+
+Also, $F_X^{-1}(u) = \mu + \sigma \Phi^{-1}(u)$ for every $u \in (0, 1)$. The normal law is a model for unconstrained measurements driven by many small additive contributions. Lecture 15 states the central limit theorem under explicit assumptions and applies it without proof.
+
+* SciPy and model choice
+
+For a SciPy distribution object ~dist~, use
+
+| mathematics | $f_X(x)$ | $F_X(x)$ | $\overline{F}_X(x)$ | $F_X^{-1}(u)$ | sample |
+| SciPy       | pdf      | cdf      | sf                  | ppf           | rvs    |
+
+with the argument supplied in parentheses. The course uses the exponential rate $\lambda > 0$, while SciPy uses ~scale=1/lambda_~.
+
+| Mechanism                   | Model                      | Value range  |
+| no subinterval favored      | $\text{Unif}(a, b)$        | $[a, b]$     |
+| first stable-rate arrival   | $\text{Exp}(\lambda)$      | $[0, \infty)$ |
+| many small additive effects | $\mathcal{N}(\mu, \sigma^2)$ | $\mathbb{R}$ |
+
+Each displayed range has probability one under its model. Endpoint values of a chosen density do not affect probabilities.

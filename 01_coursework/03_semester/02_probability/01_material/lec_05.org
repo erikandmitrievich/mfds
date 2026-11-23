@@ -1,0 +1,172 @@
+#+title: Lec 05: Standard Discrete Distributions
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-11-23>
+#+lastmod: <2026-11-23 15:25>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* One-draw distributions
+
+Each model in this handout is defined on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$, and all random variables are real-valued. Different examples may use different probability spaces. The PMF of each discrete law is zero outside its stated value set; its support consists of those values with positive mass.
+
+Let $K \in \mathbb{N}$ with $K \geq 2$, and let $\pi \coloneqq (\pi_1, \dots, \pi_K) \in [0, 1]^K$ satisfy $\sum_{k=1}^{K} \pi_k = 1$. A random variable $X$ has the /categorical distribution/, written $X \sim \operatorname{Categorical}(\pi)$, if
+
+\[ \mathbb{P}(X = k) = \pi_k \quad \text{for every } k \in \{1, \dots, K\} \]
+
+Let $p \in [0, 1]$. A random variable $X$ has the /Bernoulli distribution/, written $X \sim \operatorname{Bernoulli}(p)$, if
+
+\[ \mathbb{P}(X = 1) = p, \qquad \mathbb{P}(X = 0) = 1 - p \]
+
+The labels /success/ and /failure/ identify the outcomes coded as 1 and 0.
+
+Let $A \subseteq \mathbb{Z}$ be finite and nonempty. A random variable $X$ is /uniform on $A$/, written $X \sim \operatorname{Unif}(A)$, if
+
+\[ \mathbb{P}(X = k) = \frac{1}{\lvert A \rvert} \quad \text{for every } k \in A \]
+
+Uniformity must be justified by the sampling mechanism; it is not automatic for a finite value set.
+
+* Fixed trials: the binomial distribution
+
+Let $n \in \mathbb{N}$, $p \in [0, 1]$, and let $A_1, \dots, A_n \in \mathcal{F}$ be mutually independent events with $\mathbb{P}(A_i) = p$ for every $i \in \{1, \dots, n\}$. Define $S_n \coloneqq \sum_{i=1}^{n} \mathbf{1}_{A_i}$. Then $S_n \sim \operatorname{Binomial}(n, p)$, which means that
+
+\[ \mathbb{P}(S_n = k) = \binom{n}{k} p^k (1 - p)^{n-k} \quad \text{for every } k \in \{0, \dots, n\} \tag{1} \]
+
+We interpret a factor $0^0$ as 1 in (1) [?: source cross-reference prints "(??)"], so the formula also includes $p = 0$ and $p = 1$. For each fixed set of $k$ successful trials, independence gives probability $p^k (1 - p)^{n-k}$. There are $\binom{n}{k}$ such sets, and the corresponding events are disjoint.
+
+For all integers $a, b$ with $0 \leq a \leq b \leq n$,
+
+\[ \mathbb{P}(a \leq S_n \leq b) = \sum_{k=a}^{b} \binom{n}{k} p^k (1 - p)^{n-k} \]
+
+Moreover, for every integer $c$,
+
+\[ \mathbb{P}(S_n \geq c) = 1 - F_{S_n}(c - 1) \]
+
+The binomial derivation requires a fixed number of trials, two outcomes per trial, a common success probability, and mutual independence.
+
+* Waiting for the first success: the geometric distribution
+
+Consider success events $A_1, A_2, \dots \in \mathcal{F}$ such that every finite subfamily is mutually independent and $\mathbb{P}(A_i) = p$ for every $i \in \mathbb{N}$, where $p \in (0, 1)$.
+
+A random variable $G\colon \Omega \to \mathbb{N}$ has the /geometric distribution/, written $G \sim \operatorname{Geometric}(p)$, if its probability mass function satisfies, for every $x \in \mathbb{R}$,
+
+\[ p_G(x) = \mathbb{P}(G = x) = \begin{cases}
+(1 - p)^{x-1} p, & x \in \mathbb{N}, \\
+0, & x \notin \mathbb{N}
+\end{cases} \tag{2} \]
+
+In the independent-trial model, the probability of no success in the first $m$ trials is $(1 - p)^m$, which tends to zero as $m \to \infty$. Hence a first success occurs with probability one. For every outcome $\omega$ on which at least one success occurs, we define its trial number by
+
+\[ G(\omega) \coloneqq \min\{ i \in \mathbb{N} \mid \omega \in A_i \} \]
+
+On the event that no success ever occurs, we may set $G(\omega) \coloneqq 1$; this event has probability zero, so the chosen value does not affect the law of $G$. For every $k \in \mathbb{N}$, the first success occurs on trial $k$ exactly when the first $k - 1$ trials fail and trial $k$ succeeds. Independence gives probability $(1 - p)^{k-1} p$, proving (2) [?: source cross-reference prints "(??)"].
+
+For every $k \in \mathbb{N}_0$, summing the geometric series gives
+
+\[ \mathbb{P}(G > k) = (1 - p)^k, \qquad F_G(k) = 1 - (1 - p)^k \tag{3} \]
+
+For all $m, n \in \mathbb{N}_0$, the conditioning event has probability $(1 - p)^m > 0$. By (3) [?: source cross-reference prints "(??)"] and the definition of conditional probability,
+
+\[ \mathbb{P}(G > m + n \mid G > m) = \frac{(1 - p)^{m+n}}{(1 - p)^m} = (1 - p)^n = \mathbb{P}(G > n) \]
+
+This property is called /memorylessness/.
+
+The variable $G$ counts all trials up to and including the first success. The boundary case $p = 1$ is treated separately: the first success is on trial 1 with probability one.
+
+* Exposure counts: the Poisson distribution
+
+We now count arrivals during a fixed observation interval, such as the number of calls received in one hour, rather than successes in a fixed number of trials.
+
+Let $\lambda > 0$. A random variable $X$ has the /Poisson distribution/, written $X \sim \operatorname{Poisson}(\lambda)$, if
+
+\[ \mathbb{P}(X = k) = e^{-\lambda} \frac{\lambda^k}{k!} \quad \text{for every } k \in \mathbb{N}_0 \tag{4} \]
+
+The masses in (4) [?: source cross-reference prints "(??)"] are nonnegative and sum to one by the exponential series:
+
+\[ \sum_{k=0}^{\infty} e^{-\lambda} \frac{\lambda^k}{k!} = e^{-\lambda} e^{\lambda} = 1 \]
+
+** Motivation from an arrival model
+
+We derive (4) [?: source cross-reference prints "(??)"] from assumptions on individual arrivals. For every $t \geq 0$, let $N_t$ count arrivals during exposure $(0, t]$, so $N_0 = 0$ and the counts are nondecreasing. Assume that events specifying counts in disjoint exposure intervals are mutually independent. Also assume that $N_{t+h} - N_t$ has the same distribution as $N_h$ for every $t, h \geq 0$. Thus the additional count depends in distribution only on the exposure size.
+
+For every $k \in \mathbb{N}_0$ and $t \geq 0$, define $p_k(t) \coloneqq \mathbb{P}(N_t = k)$. Suppose there is a fixed rate $\rho > 0$ such that, as $h \downarrow 0$,
+
+\[ p_0(h) = 1 - \rho h + o(h), \qquad p_1(h) = \rho h + o(h), \qquad \mathbb{P}(N_h \geq 2) = o(h) \tag{5} \]
+
+Each $o(h)$ denotes a possibly different remainder whose quotient by $h$ tends to zero. Splitting according to zero, one, or at least two additional arrivals gives, for every fixed $t \geq 0$,
+
+\begin{align*}
+p_0(t + h) &= p_0(t)(1 - \rho h) + o(h), \\
+p_k(t + h) &= p_k(t)(1 - \rho h) + p_{k-1}(t) \rho h + o(h) \quad \text{for every } k \in \mathbb{N} \tag{6}
+\end{align*}
+
+For every $k \in \mathbb{N}_0$, $t \geq 0$, and $h > 0$, the bound
+
+\[ \lvert p_k(t + h) - p_k(t) \rvert \leq 1 - p_0(h) \]
+
+gives continuity; the same bound applies from the left when $0 < h \leq t$. Consequently, the right and left difference quotients obtained from (6) [?: source cross-reference prints "(??)"] agree. For every $t > 0$, they give
+
+\[ p_0'(t) = -\rho p_0(t), \qquad p_k'(t) = \rho p_{k-1}(t) - \rho p_k(t) \quad \text{for every } k \in \mathbb{N} \tag{7} \]
+
+The initial values are $p_0(0) = 1$ and $p_k(0) = 0$ for every $k \in \mathbb{N}$. Solving the first equation in (7) [?: source cross-reference prints "(??)"], and then multiplying the equation for $p_k$ by $e^{\rho t}$ and integrating inductively, yields
+
+\[ p_k(t) = e^{-\rho t} \frac{(\rho t)^k}{k!} \quad \text{for every } t > 0 \text{ and } k \in \mathbb{N}_0 \]
+
+In the arrival model, $\lambda \coloneqq \rho t$ is the total intensity over exposure $t$, whereas $\rho$ is a per-unit rate. For example, a rate of 3 calls per minute gives $\lambda = 6$ over two minutes.
+
+* Binomial-to-Poisson approximation
+
+Let $\lambda > 0$, and let $(p_n)_{n \in \mathbb{N}}$ be a sequence in $(0, 1)$ such that $n p_n \to \lambda$ as $n \to \infty$. Then, for every fixed $k \in \mathbb{N}_0$,
+
+\[ \binom{n}{k} p_n^k (1 - p_n)^{n-k} \longrightarrow e^{-\lambda} \frac{\lambda^k}{k!} \quad \text{as } n \to \infty \tag{8} \]
+
+where the expression on the left is considered for $n \geq k$. The key exponential factor satisfies
+
+\[ n \log(1 - p_n) = (n p_n) \frac{\log(1 - p_n)}{p_n} \longrightarrow -\lambda \]
+
+because $p_n \to 0$ and $\log(1 - x)/x \to -1$ as $x \downarrow 0$.
+
+For fixed $n \in \mathbb{N}$ and $p \in (0, 1)$, equation (8) [?: source cross-reference prints "(??)"] motivates using $\operatorname{Poisson}(np)$ to approximate $\operatorname{Binomial}(n, p)$ when $n$ is large and $p$ is small. The theorem does not supply a finite-$n$ error bound; the probability or tail of interest must still be checked.
+
+* Model-choice summary
+
+| Mechanism                       | Distribution                 | Value set                                       |
+|---------------------------------+------------------------------+-------------------------------------------------|
+| one of $K$ categories           | $\operatorname{Categorical}(\pi)$ | $\{1, \dots, K\}$                          |
+| one binary result               | $\operatorname{Bernoulli}(p)$ | $\{0, 1\}$                                      |
+| uniform on a finite integer set | $\operatorname{Unif}(A)$     | $A \subseteq \mathbb{Z}$ finite, nonempty       |
+| successes in fixed trials       | $\operatorname{Binomial}(n, p)$ | $\{0, \dots, n\}$                             |
+| trial of first success          | $\operatorname{Geometric}(p)$ | $\mathbb{N}$                                    |
+| events in an exposure           | $\operatorname{Poisson}(\lambda)$ | $\mathbb{N}_0$                              |
+
+Let $X, Y$ take values in $\mathbb{N}_0$, with PMFs $p_X, p_Y$. Define their /total-variation distance/ by
+
+\[ d_{\mathrm{TV}}(p_X, p_Y) \coloneqq \frac{1}{2} \sum_{k=0}^{\infty} \lvert p_X(k) - p_Y(k) \rvert \tag{9} \]
+
+The distance in (9) [?: source cross-reference prints "(??)"] compares two model distributions, not simulated samples. In particular, if $X \sim \operatorname{Binomial}(n, p)$ and $Y \sim \operatorname{Poisson}(np)$, with $n \in \mathbb{N}$ and $p \in (0, 1]$, then
+
+\[ d_{\mathrm{TV}}(p_X, p_Y) = \frac{1}{2} \left[ \sum_{k=0}^{n} \lvert p_X(k) - p_Y(k) \rvert + \mathbb{P}(Y > n) \right] \tag{10} \]
+
+The final term in (10) [?: source cross-reference prints "(??)"] includes all Poisson mass above $n$, where the binomial PMF is zero.
+
+* Errors/Typos
+- Fixed trials: the binomial distribution: cross-reference prints "in (??)" → likely intended "in (1)"
+- Waiting for the first success: cross-reference prints "proving (??)" → likely intended "proving (2)"
+- Waiting for the first success: cross-reference prints "By (??)" → likely intended "By (3)"
+- Exposure counts: cross-reference prints "The masses in (??)" → likely intended "The masses in (4)"
+- Motivation from an arrival model: cross-reference prints "We derive (??)" → likely intended "We derive (4)"
+- Motivation from an arrival model: cross-reference prints "obtained from (??) agree" → likely intended "obtained from (6)"
+- Motivation from an arrival model: cross-reference prints "first equation in (??)" → likely intended "first equation in (7)"
+- Binomial-to-Poisson approximation: cross-reference prints "equation (??)" → likely intended "equation (8)"
+- Model-choice summary: cross-reference prints "The distance in (??)" → likely intended "The distance in (9)"
+- Model-choice summary: cross-reference prints "The final term in (??)" → likely intended "The final term in (10)"
