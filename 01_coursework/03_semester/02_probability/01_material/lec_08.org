@@ -1,0 +1,142 @@
+#+title: Lec 08: Joint Distributions, Dependence, and Covariance
+#+author: Erik An
+#+email: obluda2173@gmail.com
+#+date: <2026-11-23>
+#+lastmod: <2026-11-23 15:18>
+#+latex: \newpage
+#+latex_header: \setlength{\parindent}{0pt}
+#+latex_header: \setlength{\parskip}{1em}
+#+latex_header: \usepackage{amsmath}
+#+latex_header: \usepackage{amssymb}
+#+latex_header: \usepackage{mathtools}
+#+latex_header: \usepackage{amsthm}
+#+latex_header: \usepackage[margin=1in]{geometry}
+#+options: num:t tags:nil
+#+property: header-args :eval never-export
+#+startup: overview inlineimages
+#+columns: %50ITEM(Item) %8LECTURE_REF(Lecture) %34CUSTOM_ID(ID)
+
+* Introductory example
+
+Two binary random variables can each be Bernoulli($1/2$) while their relationship differs:
+
+[GRAPHIC: Three joint PMF tables for binary $X, Y$, labelled "independent", "duplicate", "opposite". independent: $X=0, Y=0$: $1/4$; $X=0, Y=1$: $1/4$; $X=1, Y=0$: $1/4$; $X=1, Y=1$: $1/4$. duplicate: $X=0, Y=0$: $1/2$; $X=0, Y=1$: $0$; $X=1, Y=0$: $0$; $X=1, Y=1$: $1/2$. opposite: $X=0, Y=0$: $0$; $X=0, Y=1$: $1/2$; $X=1, Y=0$: $1/2$; $X=1, Y=1$: $0$.]
+
+All six marginal PMFs agree, but
+
+\[ \mathbb{P}(Y = 1 \mid X = 1) = \frac{1}{2}, \quad 1, \quad 0 \]
+
+respectively. Marginal laws describe coordinates separately; the joint law also stores their dependence.
+
+* Joint and marginal laws
+
+Fix a probability space $(\Omega, \mathcal{F}, \mathbb{P})$. For real-valued random variables $X, Y$ on this space,
+
+\[ \mathbf{X} = (X, Y)^\top \]
+
+is a random vector and $\mathbb{P}_{X,Y}$ denotes its joint law.
+
+For discrete variables, let $S_X, S_Y \subseteq \mathbb{R}$ be countable sets with $\mathbb{P}(X \in S_X) = \mathbb{P}(Y \in S_Y) = 1$. All sums over coordinates below run over these sets. The joint PMF is
+
+\[ p_{X,Y}(x, y) = \mathbb{P}(X = x, Y = y), \qquad \sum_{x} \sum_{y} p_{X,Y}(x, y) = 1 \]
+
+For a nonnegative Borel-measurable joint density $f_{X,Y} \colon \mathbb{R}^2 \to [0, \infty)$ and every Borel set $B \subseteq \mathbb{R}^2$,
+
+\[ \mathbb{P}\left( (X, Y) \in B \right) = \iint_B f_{X,Y}(x, y) \, dx \, dy, \qquad \iint_{\mathbb{R}^2} f_{X,Y}(x, y) \, dx \, dy = 1 \]
+
+The marginal laws are obtained by removing one coordinate:
+
+\[ p_X(x) = \sum_{y} p_{X,Y}(x, y), \qquad p_Y(y) = \sum_{x} p_{X,Y}(x, y) \]
+
+and
+
+\[ f_X(x) = \int_{\mathbb{R}} f_{X,Y}(x, y) \, dy, \qquad f_Y(y) = \int_{\mathbb{R}} f_{X,Y}(x, y) \, dx \]
+
+The density formulas specify a choice of $f_X, f_Y$ wherever the respective integrals are finite; set the value to 0 wherever an integral is infinite. Such exceptional values form a set of length zero, so the formulas hold almost everywhere. Here /almost everywhere/ means outside a set whose indicator has integral zero (length zero on $\mathbb{R}$, area zero on $\mathbb{R}^2$). Densities remain everywhere-defined functions; changing them on such sets does not change the probability law.
+
+* Independence
+
+The variables $X$ and $Y$ are independent if
+
+\[ \mathbb{P}(X \in A, Y \in B) = \mathbb{P}(X \in A) \mathbb{P}(Y \in B) \]
+
+for all Borel sets $A, B \subseteq \mathbb{R}$.
+
+Equivalently,
+
+\[ p_{X,Y}(x, y) = p_X(x) p_Y(y) \]
+
+for all $x, y$ in the discrete case, or
+
+\[ f_{X,Y}(x, y) = f_X(x) f_Y(y) \]
+
+for almost every $(x, y) \in \mathbb{R}^2$ when a joint density exists.
+
+* Covariance and correlation
+
+Let $h \colon \mathbb{R}^2 \to \mathbb{R}$ be Borel-measurable with $\mathbb{E}[\lvert h(X, Y) \rvert] < \infty$. Then joint LOTUS gives
+
+\[ \mathbb{E}[h(X, Y)] = \sum_{x} \sum_{y} h(x, y) p_{X,Y}(x, y) \]
+
+in the discrete case, and
+
+\[ \mathbb{E}[h(X, Y)] = \int_{\mathbb{R}} \int_{\mathbb{R}} h(x, y) f_{X,Y}(x, y) \, dx \, dy \]
+
+when a joint density exists. For nonnegative Borel-measurable $h$, the same formulas hold without the integrability assumption, with $+\infty$ allowed.
+
+Suppose $\mathbb{E}[X^2] < \infty$ and $\mathbb{E}[Y^2] < \infty$. Products are integrable because $2 \lvert XY \rvert \leq X^2 + Y^2$; the same argument applies to the centered variables. Their covariance is
+
+\[ \operatorname{Cov}(X, Y) = \mathbb{E}[(X - \mathbb{E}[X])(Y - \mathbb{E}[Y])] = \mathbb{E}[XY] - \mathbb{E}[X] \mathbb{E}[Y] \]
+
+If both standard deviations are positive,
+
+\[ \operatorname{Corr}(X, Y) = \frac{\operatorname{Cov}(X, Y)}{\operatorname{sd}(X) \operatorname{sd}(Y)} = \rho_{X,Y} \]
+
+For constants $a, b, c, d \in \mathbb{R}$, useful identities are
+
+\begin{gather*}
+\operatorname{Cov}(aX + b, cY + d) = ac \operatorname{Cov}(X, Y) \\
+\lvert \operatorname{Corr}(X, Y) \rvert \leq 1
+\end{gather*}
+
+Under the finite-second-moment assumptions above, independence implies $\mathbb{E}[XY] = \mathbb{E}[X] \mathbb{E}[Y]$, and therefore
+
+\[ \text{independence} \implies \text{zero covariance} \]
+
+The converse is false. If $X \sim \operatorname{Unif}(-1, 1)$ and $Y = X^2$, then symmetry gives
+
+\[ \operatorname{Cov}(X, Y) = \mathbb{E}[X^3] - \mathbb{E}[X] \mathbb{E}[X^2] = 0 \]
+
+but the variables are dependent: the events $A = \{ \lvert X \rvert \leq 1/2 \}$ and $B = \{ Y \leq 1/4 \}$ are equal, and
+
+\[ \mathbb{P}(A \cap B) = \frac{1}{2} \neq \frac{1}{4} = \mathbb{P}(A) \mathbb{P}(B) \]
+
+* Supplementary material
+
+Conditional PMFs will be introduced with conditional expectation in Lecture 16. The conditional-law formulas and covariance matrices below are optional reading for Lecture 8; they are not prerequisites for its exercises.
+
+** Conditional laws
+
+For a fixed $x \in \mathbb{R}$ with $p_X(x) > 0$, and every $y \in \mathbb{R}$,
+
+\[ p_{Y \mid X}(y \mid x) = \frac{p_{X,Y}(x, y)}{p_X(x)} \]
+
+If a joint density exists, use the marginal density chosen by integration above. For a fixed $x$ with $f_X(x) > 0$, its slice integral is positive and finite, and for every $y \in \mathbb{R}$,
+
+\[ f_{Y \mid X}(y \mid x) = \frac{f_{X,Y}(x, y)}{f_X(x)} \]
+
+For every such fixed $x$, the corresponding conditional law has total mass one. No ratio is asserted at a zero denominator. In a PMF table, conditioning means selecting a row or column and renormalizing it.
+
+When $X$ has a density, $\mathbb{P}(X = x) = 0$ for every $x$. The conditional-density formula is therefore not a division of event probabilities. It specifies one version; the conditional law is determined only outside a set of conditioning values with $X$-probability zero.
+
+** Covariance matrices
+
+Let $d \in \mathbb{N}$ and let $\mathbf{X} = (X_1, \dots, X_d)^\top$ have finite second moments in every coordinate. Taking vector and matrix expectations entry by entry, define
+
+\[ \boldsymbol{\mu} = \mathbb{E}[\mathbf{X}], \qquad \boldsymbol{\Sigma} = \operatorname{Cov}(\mathbf{X}) = \mathbb{E}\left[ (\mathbf{X} - \boldsymbol{\mu})(\mathbf{X} - \boldsymbol{\mu})^\top \right] \]
+
+Then, for all $i, j \in \{ 1, \dots, d \}$ and every deterministic $\mathbf{a} \in \mathbb{R}^d$,
+
+\[ \Sigma_{ij} = \operatorname{Cov}(X_i, X_j), \qquad \mathbf{a}^\top \boldsymbol{\Sigma} \mathbf{a} = \operatorname{Var}(\mathbf{a}^\top \mathbf{X}) \geq 0 \]
+
+Thus every covariance matrix is symmetric and positive semidefinite.
