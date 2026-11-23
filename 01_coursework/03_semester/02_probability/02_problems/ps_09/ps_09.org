@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-21>
-#+lastmod: <2026-11-23 17:48>
+#+lastmod: <2026-11-23 18:10>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -35,7 +35,7 @@ Let $W \coloneqq D_1 + D_2$, so $\mathbb{P}(W = w) = \sum_{d} \mathbb{P}(D_1 = d
 
 *Model A.* By independence, $\mathbb{P}_A(D_1 = d_1, D_2 = d_2) = \frac{1}{36}$ for $(d_1, d_2) \in \{1, \dots, 6\}^2$, and $0$ otherwise. Then $\mathbb{P}_A(W = w)$ is $\frac{1}{36}$ times the number of cells on the anti-diagonal $d_1 + d_2 = w$, which is $w - 1$ for $w \leq 7$ and $13 - w$ for $w \geq 7$:
 
-$$\mathbb{P}_A(W = w) = \begin{cases} \dfrac{6 - \lvert 7 - w \rvert}{36}, & w = 2, \dots, 12, \\ 0, & \text{otherwise} \end{cases}$$
+\[ \mathbb{P}_A(W = w) = \begin{cases} \dfrac{6 - \lvert 7 - w \rvert}{36}, & w = 2, \dots, 12, \\ 0, & \text{otherwise} \end{cases} \]
 
 *Model B.* $\mathbb{P}_B(D_1 = d_1, D_2 = d_2) = \frac{1}{6}$ if $d_1 \in \{1, \dots, 6\}$ and $d_2 = 7 - d_1$, and $0$ otherwise. Every nonzero cell has $d_1 + d_2 = 7$, so $\mathbb{P}_B(W = 7) = 1$ and $\mathbb{P}_B(W = w) = 0$ for $w \neq 7$.
 
@@ -72,7 +72,7 @@ consistent with $D_1 + D_2 = 7$ being constant by (a).
 
 Take $(d_1, d_2) = (1, 1)$. In model B, $D_1 = 1$ forces $D_2 = 6$, so
 
-$$\mathbb{P}_B(D_1 = 1, D_2 = 1) = 0 \neq \frac{1}{36} = \mathbb{P}(D_1 = 1)\,\mathbb{P}(D_2 = 1)$$
+\[ \mathbb{P}_B(D_1 = 1, D_2 = 1) = 0 \neq \frac{1}{36} = \mathbb{P}(D_1 = 1)\,\mathbb{P}(D_2 = 1) \]
 
 and the factorization fails.
 
@@ -91,7 +91,7 @@ The terms are equal exactly when the joint PMF factorizes.
 * Problem 2 :convolution:density:independence:
 ** Task
 #+begin_quote
-*Mathematical.* Let $\lambda > 0$, and let $X \sim \text{Unif}(0, 1)$ and $Y \sim \text{Exp}(\lambda)$ be independent. Set $W \coloneqq X + Y$.
+*Mathematical.* Let $\lambda > 0$, and let $X \sim \operatorname{Unif}(0, 1)$ and $Y \sim \operatorname{Exp}(\lambda)$ be independent. Set $W \coloneqq X + Y$.
 
 (a) Draw the support conditions in the convolution integral. Derive an everywhere-defined density $f_W$, treating $w < 0$, $0 \leq w \leq 1$, and $w > 1$ separately.
 
@@ -112,12 +112,11 @@ The terms are equal exactly when the joint PMF factorizes.
 #+begin_quote
 *Python/data.* Use ~lecture_09_examples.ipynb~ and the biased-die PMF
 
-\begin{gather}
-\label{eq:1}
+\begin{gather*}
 (p_1, \dots, p_6) = (0.05, 0.10, 0.15, 0.20, 0.20, 0.30), \\
 p_j \coloneqq P(D = j), \\
 j \in \{1, \dots, 6\}
-\end{gather}
+\end{gather*}
 
 (a) Implement repeated convolution with ~numpy.convolve~ for the sum of $n = 1, 2, 5, 20$ independent throws. Explain how array indices correspond to sum values. Verify total mass, mean, and variance against the formulas for iid sums.
 
@@ -131,7 +130,7 @@ j \in \{1, \dots, 6\}
 
 \[ p_{T_n} = p^{*n}, \quad \mathbb{E}[T_n] = n\mu, \quad \operatorname{Var}(T_n) = n\sigma^2, \quad \mu = 4.3, \ \sigma^2 = 2.31 \]
 
-~p[k]~ $= P(D = k + 1)$ and each convolution shifts the offset by $1$, so ~pmf[k]~ $= P(T_n = n + k)$ for $k = 0, \dots, 5n$.
+~p[k]~ $= \mathbb{P}(D = k + 1)$ and each convolution shifts the offset by $1$, so ~pmf[k]~ $= \mathbb{P}(T_n = n + k)$ for $k = 0, \dots, 5n$.
 
 #+name: p3-setup
 #+begin_src python :results none
@@ -218,11 +217,11 @@ Each row holds $20$ mutually independent draws from $p$, the iid assumption behi
 
 (a) Derive the PMF of $D$ in terms of $p$. Prove that
 
-\[ P(D = k) = P(D = -k) \quad \text{for every } k \in \mathbb{Z} \]
+\[ \mathbb{P}(D = k) = \mathbb{P}(D = -k) \quad \text{for every } k \in \mathbb{Z} \]
 
 (b) Prove that
 
-\[ P(D = k) \leq P(D = 0) \quad \text{for every } k \in \mathbb{Z} \]
+\[ \mathbb{P}(D = k) \leq \mathbb{P}(D = 0) \quad \text{for every } k \in \mathbb{Z} \]
 
 Thus the difference is most likely to be zero, even when the original PMF is not symmetric. Your proof should apply to both finite and infinite integer supports.
 #+end_quote
@@ -230,4 +229,25 @@ Thus the difference is most likely to be zero, even when the original PMF is not
 ** Solution
 *** (a)
 
+$-Y$ has PMF $\tilde{p}(y) \coloneqq p(-y)$ and is independent of $X$. Since $D = X + (-Y)$, for every $k \in \mathbb{Z}$,
+
+\[ p_D(k) = (p * \tilde{p})(k) = \sum_{x \in \mathbb{Z}} p(x) \tilde{p}(k - x) = \sum_{x \in \mathbb{Z}} p(x) p(x - k) \]
+
+Substitute $y = x + k$. This is a bijection of $\mathbb{Z}$, and the terms are nonnegative, so reindexing is allowed:
+
+\begin{align*}
+p_D(-k) &= \sum_{x \in \mathbb{Z}} p(x) p(x + k) \\
+        &= \sum_{y \in \mathbb{Z}} p(y - k) p(y) = p_D(k)
+\end{align*}
+
 *** (b)
+
+Since $(a - b)^2 \geq 0$, we have $ab \leq \tfrac{1}{2}(a^2 + b^2)$. So for every $k \in \mathbb{Z}$,
+
+\begin{align*}
+p_D(k) &= \sum_{x \in \mathbb{Z}} p(x) p(x - k) \\
+       &\leq \frac{1}{2} \sum_{x \in \mathbb{Z}} p(x)^2 + \frac{1}{2} \sum_{x \in \mathbb{Z}} p(x - k)^2 \\
+       &= \sum_{x \in \mathbb{Z}} p(x)^2 = p_D(0)
+\end{align*}
+
+All terms are nonnegative and $\sum_x p(x)^2 \leq \sum_x p(x) = 1$, so every series converges. The argument therefore holds for both finite and infinite supports.
