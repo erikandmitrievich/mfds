@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-21>
-#+lastmod: <2026-11-23 18:10>
+#+lastmod: <2026-11-23 19:04>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -112,11 +112,7 @@ The terms are equal exactly when the joint PMF factorizes.
 #+begin_quote
 *Python/data.* Use ~lecture_09_examples.ipynb~ and the biased-die PMF
 
-\begin{gather*}
-(p_1, \dots, p_6) = (0.05, 0.10, 0.15, 0.20, 0.20, 0.30), \\
-p_j \coloneqq P(D = j), \\
-j \in \{1, \dots, 6\}
-\end{gather*}
+\[ \begin{gathered} (p_1, \dots, p_6) = (0.05, 0.10, 0.15, 0.20, 0.20, 0.30), \\ p_j \coloneqq P(D = j), \\ j \in \{1, \dots, 6\} \end{gathered} \]
 
 (a) Implement repeated convolution with ~numpy.convolve~ for the sum of $n = 1, 2, 5, 20$ independent throws. Explain how array indices correspond to sum values. Verify total mass, mean, and variance against the formulas for iid sums.
 
