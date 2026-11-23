@@ -2,7 +2,7 @@
 #+author: Erik An
 #+email: obluda2173@gmail.com
 #+date: <2026-11-21>
-#+lastmod: <2026-11-21 14:04>
+#+lastmod: <2026-11-23 12:12>
 #+latex: \newpage
 #+latex_header: \setlength{\parindent}{0pt}
 #+latex_header: \setlength{\parskip}{1em}
@@ -31,7 +31,39 @@ b) Investigate the convergence of Jacobi's method with respect to $A_1$, $A_2$, 
 ** Solution
 *** a)
 
+\[ \vert{}a_{ii}\vert{} > \sum_{j \neq i} \vert{}a_{ij}\vert{} \quad \forall i \in \{1, \dots, n\} \]
+
+\begin{align*}
+A_1&: \; 2 > 1, \; 2 > 1, \; 2 > 1 \\
+A_2&: \; 1 \not> 1 \quad (i = 2) \\
+A_3&: \; 1 \not> 1 \quad (i = 1)
+\end{align*}
+
+Thus,
+
+\[ A_1 = \begin{pmatrix} 2 & 0 & 1 \\ 1 & 2 & 0 \\ 0 & 1 & 2 \end{pmatrix} \]
+
 *** b)
+
+\[ x^{(k+1)} = -D^{-1}(L+U)\,x^{(k)}, \quad L+U = \begin{pmatrix} 0 & 0 & 1 \\ 1 & 0 & 0 \\ 0 & 1 & 0 \end{pmatrix} = P \]
+
+\[ \det A_i \neq 0 \;\Rightarrow\; x^* = 0, \quad \mathbf{1} = (1,1,1)^\top = x^{(0)}, \quad P\mathbf{1} = \mathbf{1} \]
+
+\[ A_1: \; D = 2I \]
+
+\[ x^{(k)} = \left(-\tfrac{1}{2}P\right)^k \mathbf{1} = \left(-\tfrac{1}{2}\right)^k \mathbf{1} \to 0 \]
+
+\[ A_2: \; D = \operatorname{diag}(2,1,1) \]
+
+\[ x^{(k+1)} = -\begin{pmatrix} \tfrac{1}{2}x_3^{(k)} \\ x_1^{(k)} \\ x_2^{(k)} \end{pmatrix} \]
+
+\[ x^{(1)} = -\begin{pmatrix} 1/2 \\ 1 \\ 1 \end{pmatrix}, \quad x^{(2)} = \begin{pmatrix} 1/2 \\ 1/2 \\ 1 \end{pmatrix}, \quad x^{(3)} = -\tfrac{1}{2}\mathbf{1} \]
+
+\[ \left(-D^{-1}P\right)^3 = -\tfrac{1}{2}I \;\Rightarrow\; x^{(3m+r)} = \left(-\tfrac{1}{2}\right)^m x^{(r)} \to 0 \]
+
+\[ A_3: \; D = I \]
+
+\[ x^{(k)} = (-P)^k \mathbf{1} = (-1)^k \mathbf{1} \not\to 0 \]
 
 * Problem 2 :linear_system:programming:
 ** Task
